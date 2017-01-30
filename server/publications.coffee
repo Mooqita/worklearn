@@ -8,7 +8,6 @@
 #######################################################
 Meteor.publish "posts", (template_name) ->
 	check template_name, String
-	console.log template_name
 
 	filters = []
 	roles = ['all']
@@ -26,7 +25,6 @@ Meteor.publish "posts", (template_name) ->
 
 		filters.push f2
 
-	console.log template_name
 	# adding a filter for all posts our current role allows us to see
 	f1 =
 		template: template_name
@@ -43,8 +41,6 @@ Meteor.publish "posts", (template_name) ->
 
 	self = this
 
-	console.log template_name
-
 	handler =
 		added: (id) ->
 			item = Posts.findOne(id)
@@ -58,7 +54,6 @@ Meteor.publish "posts", (template_name) ->
 			self.changed('posts', item._id, item)
 			console.log('Post changed: ' + id)
 
-	console.log template_name
 	handle = Posts.find(filter, mod).observeChanges(handler)
 
 	self.ready()
