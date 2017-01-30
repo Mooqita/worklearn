@@ -1,0 +1,36 @@
+<template name="dropfile">
+  <div class="dropcontainer">
+		<form id="dropbox_{{box_id}}" class="dropbox {{upload_style}}"
+					method="post" action="" enctype="multipart/form-data">
+			<div class="dropbox__input">
+				<div class="fa fa-upload dropbox__icon" aria-hidden="true"></div>
+
+				<input class="dropbox__file" type="file" name="files[]"
+							 id="file" data-multiple-caption="{count} files selected" multiple />
+
+				<label for="file">
+					<em>Choose a file</em>
+					<span class="dropbox__dragndrop"> or drag it here</span>.
+				</label>
+
+				{{#each files}}
+					{{name}}
+				{{/each}}
+
+				<button class="dropbox__button" type="submit">Upload</button>
+			</div>
+
+			<div class="dropbox__uploading">
+				Uploading
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</div>
+
+			<div class="dropbox__success">Done!</div>
+
+			<div class="dropbox__error">
+				Error!
+				<a id="restart" class="box__restart" role="button">Try again!</a>
+			</div>
+		</form>
+  </div>
+</template>

@@ -1,0 +1,50 @@
+///////////////////////////////////////////////
+// fonts
+////////////////////////////////////////////////
+@import "{}/client/client/style/_color.scss";
+
+////////////////////////////////////////////////
+// post format
+////////////////////////////////////////////////
+.post{
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+	-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .15);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, .15);
+
+}
+
+.post-banner{
+	margin-left: -19px;
+	margin-right: -19px;
+	padding: 0;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.post-banner h2{
+	padding: 10px 10px 20px 10px;
+}
+
+.post-banner a{
+	color: $white;
+}
+
+.post-banner a:hover{
+	color: $highlight-1;
+}
+
+.clear-edit{
+	font: inherit;
+	color: inherit;
+	background: inherit;
+	padding: 4px;
+	padding-left: 10px;
+	margin: 0px;
+	border: inherit;
+  -webkit-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
+          box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
+
+}

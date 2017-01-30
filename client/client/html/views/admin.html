@@ -1,0 +1,100 @@
+<template name="admin">
+	{{#if isInRole 'admin'}}
+		<div class="media">
+			<div class="media-left">
+				{{#if currentUser.profile.avatar}}
+					<img class="img-circle" src="{{currentUser.profile.avatar}}" height="128px">
+				{{/if}}
+				{{currentUser.profile.given_name}}
+				{{currentUser.profile.family_name}}
+			</div>
+
+			<div class="media-body">
+				<h1 class="media-heading">
+					Admin Panel {{>popout title='yeah' content='yeah'}}
+				</h1>
+
+				<div class="well">
+					<a class="btn btn-highlight" href="/admin/upwork/oauth">Upwork Oauth</a>
+
+					<hr>
+
+					<h4> <strong> Database Permission </strong> </h4>
+					{{#if isInRole 'db_admin'}}
+						<form id="db_permission" class="form-horizontal">
+							<div class="form-group">
+								<label for="collection" class="col-sm-2 control-label">Role</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="role"
+												 placeholder="Role required e.g. 'all' or 'admin'" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="collection" class="col-sm-2 control-label">Collection</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="collection"
+												 placeholder="Collection name" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="field" class="col-sm-2 control-label">Field</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="field"
+												 placeholder="Field name">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="field" class="col-sm-2 control-label">Actions</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="actions"
+												 placeholder="Action (add, modify, delete)" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="field" class="col-sm-2 control-label">Types</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="types"
+												 placeholder="Types e.g. string" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-highlight">Add permission</button>
+								</div>
+							</div>
+						</form>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
+
+<template name="admin_upwork_oauth">
+	{{#if isInRole 'admin'}}
+		<a class="btn btn-highlight" href="/admin/upwork/oauth" id="upwork_oauth_refresh">Restart UpWork OAuth</a> <br>
+
+		{{#if upwork_oauth_url}}
+			<a class="btn btn-highlight" href="{{upwork_oauth_url}}">Register on UpWork</a> <br>
+		{{/if}}
+
+		{{#if upwork_oauth_token}}
+			<a class="btn btn-highlight" href="/admin/upwork/oauth" id="upwork_oauth_finish">Finish OAuth</a> <br>
+		{{/if}}
+
+		{{#unless upwork_oauth_finished}}
+			Please wait getting oauth token. <br>
+		{{else}}
+			UpWork connected successfully.
+		{{/unless}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
