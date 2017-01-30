@@ -8,7 +8,7 @@
 @add_admin = () ->
 	secret = Secrets.findOne()
 	user =
-		email: 'admin@moocita.com',
+		email: 'admin@worklearn.com',
 		password: secret.mkpswd,
 		profile:
 			avatar: ""
@@ -19,13 +19,13 @@
 	admin = Accounts.createUser(user)
 	console.log user.profile.given_name+' '+user.email
 
-	Roles.setUserRoles(admin, ['admin', 'db_admin'])
+	Roles.setUserRoles(admin, ['admin', 'db_admin', 'editor'])
 	return admin
 
 
 #####################################################
 @initialize_database = () ->
-	if not Accounts.findUserByEmail('admin@moocita.com')
+	if not Accounts.findUserByEmail('admin@worklearn.com')
 		add_admin()
 
 	return true
