@@ -87,21 +87,24 @@
 
 <template name="publication">
 	<div class="post background-white">
-		<div class="post-banner background-highlight">
-			<h2>
 				{{#if isInRole 'editor'}}
-					<input placeholder="Title"
-								 class="form-control post-field clear-edit" type="text"
-								 id="title" tabindex="1" value="{{title}}">
+					<div class="post-banner background-highlight">
+						<h2>
+							<input placeholder="Title"
+										 class="form-control post-field clear-edit" type="text"
+										 id="title" tabindex="1" value="{{title}}">
+						</h2>
+					</div>
 				{{else}}
 					{{#if title}}
-						{{title}}
+						<div class="post-banner background-highlight">
+							<h2>
+								{{title}}
+							</h2>
+						</div>
 					{{else}}
-						There is no title available
 					{{/if}}
 				{{/if}}
-			</h2>
-		</div>
 
 		<div class="row">
 			<div class="col-md-4">
