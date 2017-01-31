@@ -87,24 +87,24 @@
 
 <template name="publication">
 	<div class="post background-white">
-				{{#if isInRole 'editor'}}
-					<div class="post-banner background-highlight">
-						<h2>
-							<input placeholder="Title"
-										 class="form-control post-field clear-edit" type="text"
-										 id="title" tabindex="1" value="{{title}}">
-						</h2>
-					</div>
-				{{else}}
-					{{#if title}}
-						<div class="post-banner background-highlight">
-							<h2>
-								{{title}}
-							</h2>
-						</div>
-					{{else}}
-					{{/if}}
-				{{/if}}
+		{{#if isInRole 'editor'}}
+			<div class="post-banner background-highlight">
+				<h2>
+					<input placeholder="Title"
+								 class="form-control post-field clear-edit" type="text"
+								 id="title" tabindex="1" value="{{title}}">
+				</h2>
+			</div>
+		{{else}}
+			{{#if title}}
+				<div class="post-banner background-highlight">
+					<h2>
+						{{title}}
+					</h2>
+				</div>
+			{{else}}
+			{{/if}}
+		{{/if}}
 
 		<div class="row">
 			<div class="col-md-4">
@@ -192,29 +192,34 @@
 
 <template name="post">
 	<div class="post background-white">
-		<div class="post-banner background-highlight">
-			{{#if figure}}
+		{{#if figure}}
+			<div class="post-banner background-highlight">
 				<img class="img-responsive" src="{{figure}}" alt="{{label}}">
-			{{else}}
-				<h2>
-					{{#if isInRole 'editor'}}
+			</div>
+		{{else}}
+			{{#if isInRole 'editor'}}
+				<div class="post-banner background-highlight">
+					<h2>
 						<input placeholder="Title"
 									 class="form-control post-field clear-edit" type="text"
 									 id="title" tabindex="1" value="{{title}}">
-					{{else}}
-						{{#if title}}
+					</h2>
+				</div>
+			{{else}}
+				{{#if title}}
+					<div class="post-banner background-highlight">
+						<h2>
 							{{title}}
-						{{else}}
-							This Post does not have a title
-						{{/if}}
-					{{/if}}
-				</h2>
+						</h2>
+					</div>
+				{{else}}
+				{{/if}}
 			{{/if}}
+		{{/if}}
 
-			{{#if isInRole 'editor'}}
-				{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
-			{{/if}}
-		</div>
+		{{#if isInRole 'editor'}}
+			{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+		{{/if}}
 
 		{{#if figure}}
 			<h2>
@@ -225,8 +230,6 @@
 				{{else}}
 					{{#if title}}
 						{{title}}
-					{{else}}
-						This Post does not have a title
 					{{/if}}
 				{{/if}}
 			</h2>
