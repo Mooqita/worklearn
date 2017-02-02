@@ -18,23 +18,26 @@
 					<span class="icon-bar"></span>
 				</button>
 			</div>
+
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" style="font-size: 1.2em;">
-				</ul>
+				{{#if currentUser}}
+					<ul class="nav navbar-nav navbar-right">
+						{{> atNavButton}}
+					</ul>
 
-				<ul class="nav navbar-nav navbar-right" style="font-size: 1.2em;">
-					<div class="form-inline">
-						{{#if currentUser}}
-							<a class="navbar-text" href="/profile">
-								Hallo <em>{{currentUser.profile.given_name}}</em>
+					<ul class="nav navbar-nav navbar-right">
+						<p class="navbar-text">
+							Hallo
+							<a href="/profile" class="navbar-link">
+								<em>{{currentUser.profile.given_name}}</em>
 							</a>
-						{{/if}}
-
-						{{>shareit}}
-					</div>
-
-					{{> atNavButton}}
-				</ul>
+						</p>
+					</ul>
+				{{else}}
+					<ul class="nav navbar-nav navbar-right">
+						{{>share}}
+					</ul>
+				{{/if}}
 			</div>
 		</div>
 	</div>

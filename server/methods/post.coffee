@@ -7,6 +7,14 @@
 ################################################################
 Meteor.methods
 	add_post: (template) ->
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		if !Roles.userIsInRole(user._id, 'editor')
+			throw new Meteor.Error('Not permitted.')
+
 		post =
 			template: template
 			owner_id: Meteor.userId()

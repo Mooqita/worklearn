@@ -68,6 +68,16 @@ Template.publication.events
 
 #########################################################
 Template.post.events
+	'click #remove_figure': (event) ->
+		sAlert.error('jhkjh')
+
+		Meteor.call 'set_post_field', '', this._id, 'figure', '', undefined,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				else
+					sAlert.success('Figure cleared')
+
 	'change .post-field': (event) ->
 		console.log(event.target.id)
 		data = event.target.value

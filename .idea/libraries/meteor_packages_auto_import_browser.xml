@@ -108,7 +108,6 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_pwd_link.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_error.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_result.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/fortawesome_fontawesome/4.7.0/web.browser/upstream/css/font-awesome.css" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/observe-sequence/1.0.14/web.browser/observe_sequence.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/ensure_signed_in.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_pwd_form_btn.js" />
@@ -185,8 +184,6 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/summernote_summernote/0.8.1/web.browser/dist/summernote.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/webapp-hashing/1.0.9/web.browser/webapp-hashing.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/summernote_summernote/0.8.1/web.browser/dist/summernote.css" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/spiderable/1.0.13/web.browser/spiderable.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/spiderable/1.0.13/web.browser/spiderable_client.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/spacebars/1.0.13/web.browser/spacebars-runtime.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/softwarerero_accounts-t9n/1.3.7/web.browser/t9n/da.coffee" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/softwarerero_accounts-t9n/1.3.7/web.browser/t9n/de.coffee" />
@@ -260,6 +257,10 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.0/web.browser/materializer.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.0/web.browser/view.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/session/1.1.7/web.browser/session.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share-svg.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share.css" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share-vars.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/mongo-id/1.0.6/web.browser/id.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/kadira_flow-router/2.12.1/web.browser/test/client/triggers.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/kadira_flow-router/2.12.1/web.browser/test/client/_helpers.js" />
@@ -287,10 +288,6 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/juliancwirko_s-alert/3.2.0/web.browser/client/s-alert-collection.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/es5-shim/4.6.15/web.browser/client.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/juliancwirko_s-alert/3.2.0/web.browser/client/s-alert-template.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/pinterest/pinterest.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/googleplus/googleplus.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/twitter/twitter.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/facebook/facebook.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_client.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-twitter/1.1.12/web.browser/twitter.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_tests.js" />
@@ -298,13 +295,11 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/base64/1.0.10/web.browser/base64.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/test_responder.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_server.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/social.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_common.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-max-heap.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-heap.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/facebook/1.2.10/web.browser/facebook_client.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/deprecated.js" />
-        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/shareit.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/max-heap.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/facebook/1.2.10/web.browser/facebook_configure.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/fastclick.js" />
@@ -422,7 +417,6 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_pwd_link.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_error.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_result.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/fortawesome_fontawesome/4.7.0/web.browser/upstream/css/font-awesome.css" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/observe-sequence/1.0.14/web.browser/observe_sequence.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/ensure_signed_in.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/useraccounts_core/1.14.2/web.browser/lib/templates_helpers/at_pwd_form_btn.js" />
@@ -499,8 +493,6 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/summernote_summernote/0.8.1/web.browser/dist/summernote.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/webapp-hashing/1.0.9/web.browser/webapp-hashing.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/summernote_summernote/0.8.1/web.browser/dist/summernote.css" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/spiderable/1.0.13/web.browser/spiderable.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/spiderable/1.0.13/web.browser/spiderable_client.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/spacebars/1.0.13/web.browser/spacebars-runtime.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/softwarerero_accounts-t9n/1.3.7/web.browser/t9n/da.coffee" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/softwarerero_accounts-t9n/1.3.7/web.browser/t9n/de.coffee" />
@@ -574,6 +566,10 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.0/web.browser/materializer.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/blaze/2.3.0/web.browser/view.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/session/1.1.7/web.browser/session.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share-svg.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share.css" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share-vars.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/lukemadera_social-share/1.2.0/web.browser/social-share.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/mongo-id/1.0.6/web.browser/id.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/kadira_flow-router/2.12.1/web.browser/test/client/triggers.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/kadira_flow-router/2.12.1/web.browser/test/client/_helpers.js" />
@@ -601,10 +597,6 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/juliancwirko_s-alert/3.2.0/web.browser/client/s-alert-collection.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/es5-shim/4.6.15/web.browser/client.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/juliancwirko_s-alert/3.2.0/web.browser/client/s-alert-template.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/pinterest/pinterest.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/googleplus/googleplus.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/twitter/twitter.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/facebook/facebook.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_client.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-twitter/1.1.12/web.browser/twitter.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_tests.js" />
@@ -612,13 +604,11 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/base64/1.0.10/web.browser/base64.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/test_responder.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_server.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/client/views/social.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/httpcall_common.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-max-heap.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/min-heap.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/facebook/1.2.10/web.browser/facebook_client.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/http/1.2.10/web.browser/deprecated.js" />
-      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/joshowens_shareit/1.0.2/web.browser/shareit.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/binary-heap/1.0.10/web.browser/max-heap.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/facebook/1.2.10/web.browser/facebook_configure.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/fastclick/1.0.13/web.browser/fastclick.js" />

@@ -28,8 +28,6 @@ fourseven:scss
 
 juliancwirko:s-alert
 
-joshowens:shareit
-
 check
 alanning:roles
 
@@ -51,3 +49,5 @@ accounts-twitter
 useraccounts:core
 useraccounts:bootstrap
 useraccounts:flow-routing
+
+lukemadera:social-share

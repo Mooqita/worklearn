@@ -5,6 +5,14 @@
 #######################################################
 
 #######################################################
+@__action_permitted = (permission, action) ->
+	if not action in permission.actions
+		return false
+
+	return true
+
+
+#######################################################
 @__is_owner = (collection_name, id) ->
 	collection = get_collection collection_name
 	item = collection.findOne(id)
@@ -36,14 +44,6 @@
 		return true
 
 	return false
-
-
-#######################################################
-@__action_permitted = (permission, action) ->
-	if not action in permission.actions
-		return false
-
-	return true
 
 
 #######################################################
@@ -90,12 +90,15 @@
 	check action, String
 	check collection, String
 
-	roles = Meteor.user().roles
-	roles.push 'anonymous'
-	roles.push 'all'
+	roles = ['all']
+	user = Meteor.user()
 
-	if __is_owner collection, id
-		roles.push 'owner'
+	if user
+		roles.push user.roles ...
+		roles.push 'anonymous'
+
+		if __is_owner_publish collection, id, user._id
+			roles.push 'owner'
 
 	filter =
 		role:

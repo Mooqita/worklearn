@@ -43,8 +43,3 @@ family =
 
 AccountsTemplates.addFields([given, family])
 
-ShareIt.configure
-	iconOnly: true
-	applyColors: true
-	faSize: ''
-	faClass: ''

@@ -18,14 +18,18 @@
 							This comment is important otherwise
 							the grid system will break. Due to
 							the interpretation of the white spaces!
-							-->{{#unless currentUser}}<div class="	col-md-5 col-md-offset-0
+							--><div class="	col-md-5 col-md-offset-0
 															col-sm-8 col-sm-offset-2
 															col-xs-12 col-xs-offset-0
 															vcenter">
-								<div class="well" style="color: black; text-align: center">
-									{{> atForm}}
-								</div>
-							</div>{{/unless}}
+	 							{{#unless currentUser}}
+									<div class="well" style="color: black; text-align: center">
+										{{> atForm}}
+									</div>
+								{{else}}
+									{{>share}}
+								{{/unless}}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -33,7 +37,7 @@
 		</div>
 	</div>
 
-	{{#if isInRole 'admin'}}
+	{{#if isInRole 'editor'}}
 		<section class="container-fluid background-light">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -116,6 +120,12 @@
 
 				{{#if isInRole 'editor'}}
 					{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+
+					<div class="btn-group btn-group-justified">
+						<div class="btn btn-danger">
+							Remove figure.
+						</div>
+					</div>
 				{{/if}}
 			</div>
 
@@ -219,6 +229,11 @@
 
 		{{#if isInRole 'editor'}}
 			{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+			<div class="btn-group btn-group-justified">
+				<div class="btn btn-danger" id="remove_figure">
+					Remove figure
+				</div>
+			</div>
 		{{/if}}
 
 		{{#if figure}}
