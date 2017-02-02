@@ -4,11 +4,33 @@
 #
 #######################################################
 
+##############################################
+get_editor_id = () ->
+	editor_id = Template.instance().editor_id.get()
+	if not editor_id
+		sAlert.error('Object does not have a editor_id')
+
+	return editor_id
+
+
+##############################################
+get_textarea = () ->
+	editor_id = get_editor_id()
+	frm = $('#editor_'+editor_id)
+	return frm
+
+
 #######################################################
 load_content = (self) ->
 	collection = global[self.collection_name]
 	item = collection.findOne(self.item_id)
 	return item[self.field]
+
+
+##############################################
+Template.summernote.onCreated ->
+	editor_id = Math.floor(Math.random()*10000000)
+	this.editor_id = new ReactiveVar(editor_id)
 
 #######################################################
 Template.summernote.rendered = () ->
@@ -17,21 +39,22 @@ Template.summernote.rendered = () ->
 		focus: true
 
 	value = load_content(this.data)
-	name = '#' + this.data.field + '_editor'
-	res = $(name).summernote(conf)
-
-	console.log(res)
-	console.log(value)
-
+	area = get_textarea()
+	console.log(area)
+	res = area.summernote(conf)
 	res.summernote('code', value)
+
+
+##############################################
+Template.summernote.helpers
+	editor_id: ->
+		return get_editor_id()
+
 
 #######################################################
 Template.summernote.events
 	'click #save': ( event, template ) ->
-		name = '#' + this.field + '_editor'
-		content = $(name).summernote('code')
-
-		console.log content
+		content = get_textarea().summernote('code')
 
 		collection = this.collection_name
 		method = this.method
