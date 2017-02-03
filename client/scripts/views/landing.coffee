@@ -7,6 +7,7 @@ Template.landing.onCreated ->
 	self = this
 	self.autorun () ->
 		self.subscribe 'posts', 'post'
+		self.subscribe 'posts', 'headline'
 		self.subscribe 'posts', 'publication'
 
 #########################################################
@@ -28,6 +29,12 @@ Template.landing.helpers
 		has = Posts.find(filter).count() > 0
 		return has
 
+	has_headlines: ->
+		filter =
+			template: 'headline'
+		has = Posts.find(filter).count() > 0
+		return has
+
 	has_posts : ->
 		filter =
 			template: 'post'
@@ -37,6 +44,16 @@ Template.landing.helpers
 	publications: ->
 		filter =
 			template: 'publication'
+
+		mod =
+			sort:
+				pub_year:1
+
+		return Posts.find(filter, mod)
+
+	headlines: ->
+		filter =
+			template: 'headline'
 
 		mod =
 			sort:

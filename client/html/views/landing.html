@@ -65,34 +65,26 @@
 		</section>
 	{{/if}}
 
-	<section class="container-fluid background-white padding-top padding-bottom">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="row">
-					<div class="col-md-5">
-						<div class="logo">
-							<em>W</em>ork <em>L</em>earn
-						</div>
-					</div>
-
-					<div class="col-md-7">
-						<h1>The Work Learn Initiative</h1>
-					</div>
-				</div>
-
-				<div class="row">
-					<p class="text-left">Over the past decades classic work environments have changed rapidly from manual intensive labor to cognitive demanding jobs. We see the societal impact of this development in the socio-economic changes not only in cities with declining heavy industry but around the globe. This development benefits mostly a minority that already has access to excellent education and wealth and thereby widens the social, economic, and educational gap between developed and developing countries as well as rural and urban regions. With artificial intelligence beginning to take over tasks such as driving cabs, grading essays, or tracking medication this development is predicted to accelerate in the near future. </p>
-					<p class="text-left">One manifestation of this development is the global gig economy. This is labor market characterized by the prevalence of freelance work in contrast to more permanent jobs. The McKinsey Global Institute surveyed ~8,000 respondents across Europe and the United States and found that 20-30% of the working-age population in this sample engaged in independent work. The early days of the gig economy already exposed many challenges such as missing health care, disability insurance, retirement funds, or education for workers in online labor markets. Despite these challenges we believe that it is possible to shape this new labor market to be global and fair.</p>
+ 	{{#if has_headlines}}
+		<section class="container-fluid background-white padding-top padding-bottom">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					{{#each headlines}}
+						{{>_post}}
+					{{/each}}
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	{{/if}}
 
  	{{#if has_posts}}
 		<section class="container-fluid background-grey padding-top">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<h1>Recent Posts</h1>
+					<div class="section_headline background-white">
+						<h1>Recent Posts</h1>
+					</div>
+
 					{{#each posts}}
 						{{>_post}}
 					{{/each}}
@@ -105,7 +97,10 @@
 		<section class="container-fluid background-theme-light padding-top">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<h1>Publications</h1>
+					<div class="section_headline background-white">
+						<h1>Publications</h1>
+						<!--p>Can we write something here?</p-->
+					</div>
 
 					{{#each publications}}
 						{{>_post}}
@@ -117,11 +112,10 @@
 </template>
 
 <template name="_post">
-	<div class="post background-white">
+	{{>Template.dynamic template=template}}
 
-		{{>Template.dynamic template=template}}
-
-		{{#if isInRole 'editor'}}
+	{{#if isInRole 'editor'}}
+		<div class="post post_edit background-white">
 			<div class="post-banner">
 				<div class="row">
 					<div class="col-md-6">
@@ -133,6 +127,7 @@
 							<select class="form-control tool-bar" id="template_select">
 								<option value="">not set</option>
 								<option value="post" {{is_template "post"}}>Post</option>
+								<option value="headline" {{is_template "headline"}}>Headline</option>
 								<option value="publication" {{is_template "publication"}}>Publication</option>
 							</select>
 						</div>
@@ -182,143 +177,17 @@
 					</div>
 				</div>
 			</div>
-		{{/if}}
-	</div>
-</template>
-
-<!-----------------------------------------
-|
-|  Publication Template
-|
-------------------------------------------->
-<template name="publication">
-	{{#if isInRole 'editor'}}
-		<div class="post-banner background-theme">
-			<h2>
-				<input placeholder="Title"
-							 class="form-control post-field clear-edit" type="text"
-							 id="title" tabindex="1" value="{{title}}">
-			</h2>
 		</div>
-	{{else}}
-		{{#if title}}
-			<div class="post-banner background-theme">
-				<h2>
-					{{title}}
-				</h2>
-			</div>
-		{{else}}
-		{{/if}}
 	{{/if}}
-
-	<div class="row">
-		<div class="col-md-4">
-			{{#if figure}}
-				<a href="{{paper_url}}">
-					<img class="img-responsive figure-padding" src="{{figure}}" alt="{{label}}">
-				</a>
-
-				{{#if isInRole 'editor'}}
-					<div class="btn-group btn-group-justified">
-						<div class="btn btn-contrast" id="remove_figure">
-							Remove figure.
-						</div>
-					</div>
-				{{/if}}
-			{{/if}}
-
-			{{#if isInRole 'editor'}}
-				{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
-			{{/if}}
-		</div>
-
-		<div class="col-md-8">
-			<h4 class="double-header">
-				<em>
-					<i>
-						{{#if isInRole 'editor'}}
-							<input placeholder="authors"
-										 class="form-control post-field clear-edit" type="text"
-										 id="title" tabindex="1" value="{{authors}}">
-						{{else}}
-							{{#if authors}}
-								{{authors}}
-							{{else}}
-								Unknown authors
-							{{/if}}
-						{{/if}}
-					</i>
-				</em>
-			</h4>
-
-			{{#if isInRole 'editor'}}
-				<div class="row">
-					<div class="col-md-3">
-						<h4>
-							<input placeholder="Publication Year"
-										 class="form-control post-field clear-edit" type="text"
-										 id="pub_year" tabindex="1" value="{{pub_year}}">
-						</h4>
-					</div>
-
-					<div class="col-md-9">
-						<h4>
-						<input placeholder="Publication Venue"
-									 class="form-control post-field clear-edit" type="text"
-									 id="conference" tabindex="1" value="{{conference}}">
-						</h4>
-					</div>
-				</div>
-			{{else}}
-				<h4>
-					{{pub_year}},
-					{{conference}}
-				</h4>
-			{{/if}}
-
-			{{#if isInRole 'editor'}}
-				<textarea  class="form-control post-field clear-edit" placeholder="Abstract"
-											 id="abstract" tabindex="3" rows="12">{{abstract}}</textarea>
-			{{else}}
-				{{#if abstract}}
-					<p>{{abstract}}</p>
-				{{else}}
-					<p>There is no abstract available</p>
-				{{/if}}
-			{{/if}}
-		</div>
-	</div>
-
-	<div class="post-banner background-theme">
-		{{#if paper_url}}
-			<div class="btn-group btn-group-justified">
-				<a class="btn btn-translucent" id="download_paper" href="{{paper_url}}" target="_blank">
-					<h3>Download Paper</h3>
-				</a>
-			</div>
-
-			{{#if isInRole 'editor'}}
-				<div class="btn-group btn-group-justified">
-					<div class="btn btn-contrast" id="remove_paper">
-						Remove paper.
-					</div>
-				</div>
-			{{/if}}
-		{{/if}}
-
-		{{#if isInRole 'editor'}}
-			{{>dropfile method='set_post_field' field='paper' item_id=_id box_id='paper'}}
-		{{/if}}
-	</div>
 </template>
 
 
 <!-----------------------------------------
 |
-|  Post Template
+|  Headline Template
 |
 ------------------------------------------->
-<template name="post">
+<template name="headline">
 	{{#if figure}}
 		<div class="post-banner">
 			<img class="img-responsive" src="{{figure}}" alt="{{label}}">
@@ -333,7 +202,7 @@
 		{{/if}}
 	{{else}}
 		{{#if isInRole 'editor'}}
-			<div class="post-banner">
+			<div class="post-banner background-theme">
 				<h2>
 					<input placeholder="Title"
 								 class="post-field clear-edit" type="text"
@@ -342,7 +211,7 @@
 			</div>
 		{{else}}
 			{{#if title}}
-				<div class="post-banner">
+				<div class="post-banner background-theme">
 					<h2>
 						{{title}}
 					</h2>
@@ -379,6 +248,209 @@
 				{{else}}
 					This post is empty
 				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+
+<!-----------------------------------------
+|
+|  Post Template
+|
+------------------------------------------->
+<template name="post">
+	<div class="post background-white">
+		{{#if figure}}
+			<div class="post-banner">
+				<img class="img-responsive" src="{{figure}}" alt="{{label}}">
+			</div>
+
+			{{#if isInRole 'editor'}}
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-contrast" id="remove_figure">
+						Remove figure
+					</div>
+				</div>
+			{{/if}}
+		{{else}}
+			{{#if isInRole 'editor'}}
+				<div class="post-banner background-theme">
+					<h2>
+						<input placeholder="Title"
+									 class="post-field clear-edit" type="text"
+									 id="title" tabindex="1" value="{{title}}">
+					</h2>
+				</div>
+			{{else}}
+				{{#if title}}
+					<div class="post-banner background-theme">
+						<h2>
+							{{title}}
+						</h2>
+					</div>
+				{{/if}}
+			{{/if}}
+		{{/if}}
+
+		{{#if isInRole 'editor'}}
+			{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+		{{/if}}
+
+		{{#if figure}}
+			<h2>
+				{{#if isInRole 'editor'}}
+					<input placeholder="Title"
+								 class="form-control post-field clear-edit" type="text"
+								 id="title" tabindex="1" value="{{title}}">
+				{{else}}
+					{{#if title}}
+						{{title}}
+					{{/if}}
+				{{/if}}
+			</h2>
+		{{/if}}
+
+		<div class="row">
+			<div class="col-md-12">
+				{{#if isInRole 'editor'}}
+					{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+				{{else}}
+					{{#if abstract}}
+						{{{abstract}}}
+					{{else}}
+						This post is empty
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+
+
+ <!-----------------------------------------
+|
+|  Publication Template
+|
+------------------------------------------->
+<template name="publication">
+	<div class="post background-white">
+		{{#if isInRole 'editor'}}
+			<div class="post-banner background-theme">
+				<h2>
+					<input placeholder="Title"
+								 class="form-control post-field clear-edit" type="text"
+								 id="title" tabindex="1" value="{{title}}">
+				</h2>
+			</div>
+		{{else}}
+			{{#if title}}
+				<div class="post-banner background-theme">
+					<h2>
+						{{title}}
+					</h2>
+				</div>
+			{{else}}
+			{{/if}}
+		{{/if}}
+
+		<div class="row">
+			<div class="col-md-4">
+				{{#if figure}}
+					<a href="{{paper_url}}">
+						<img class="img-responsive figure-padding" src="{{figure}}" alt="{{label}}">
+					</a>
+
+					{{#if isInRole 'editor'}}
+						<div class="btn-group btn-group-justified">
+							<div class="btn btn-contrast" id="remove_figure">
+								Remove figure.
+							</div>
+						</div>
+					{{/if}}
+				{{/if}}
+
+				{{#if isInRole 'editor'}}
+					{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+				{{/if}}
+			</div>
+
+			<div class="col-md-8">
+				<h4 class="double-header">
+					<em>
+						<i>
+							{{#if isInRole 'editor'}}
+								<input placeholder="authors"
+											 class="form-control post-field clear-edit" type="text"
+											 id="title" tabindex="1" value="{{authors}}">
+							{{else}}
+								{{#if authors}}
+									{{authors}}
+								{{else}}
+									Unknown authors
+								{{/if}}
+							{{/if}}
+						</i>
+					</em>
+				</h4>
+
+				{{#if isInRole 'editor'}}
+					<div class="row">
+						<div class="col-md-3">
+							<h4>
+								<input placeholder="Publication Year"
+											 class="form-control post-field clear-edit" type="text"
+											 id="pub_year" tabindex="1" value="{{pub_year}}">
+							</h4>
+						</div>
+
+						<div class="col-md-9">
+							<h4>
+							<input placeholder="Publication Venue"
+										 class="form-control post-field clear-edit" type="text"
+										 id="conference" tabindex="1" value="{{conference}}">
+							</h4>
+						</div>
+					</div>
+				{{else}}
+					<h4>
+						{{pub_year}},
+						{{conference}}
+					</h4>
+				{{/if}}
+
+				{{#if isInRole 'editor'}}
+					<textarea  class="form-control post-field clear-edit" placeholder="Abstract"
+												 id="abstract" tabindex="3" rows="12">{{abstract}}</textarea>
+				{{else}}
+					{{#if abstract}}
+						<p>{{abstract}}</p>
+					{{else}}
+						<p>There is no abstract available</p>
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+
+		<div class="post-banner background-theme">
+			{{#if paper_url}}
+				<div class="btn-group btn-group-justified">
+					<a class="btn btn-translucent" id="download_paper" href="{{paper_url}}" target="_blank">
+						<h3>Download Paper</h3>
+					</a>
+				</div>
+
+				{{#if isInRole 'editor'}}
+					<div class="btn-group btn-group-justified">
+						<div class="btn btn-contrast" id="remove_paper">
+							Remove paper.
+						</div>
+					</div>
+				{{/if}}
+			{{/if}}
+
+			{{#if isInRole 'editor'}}
+				{{>dropfile method='set_post_field' field='paper' item_id=_id box_id='paper'}}
 			{{/if}}
 		</div>
 	</div>

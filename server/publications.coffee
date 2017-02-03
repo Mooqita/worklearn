@@ -50,18 +50,18 @@ Meteor.publish "posts", (template_name) ->
 			if item.paper
 				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
 			self.added('posts', item._id, item)
-			console.log('Post added: ' + id)
+			console.log('Post of ' + item.template + ' added: ' + id)
 
 		changed: (id) ->
 			item = Posts.findOne(id)
 			if item.paper
 				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
 			self.changed('posts', item._id, item)
-			console.log('Post changed: ' + id)
+			console.log('Post ' + item.template + ' changed: ' + id)
 
 		removed: (id) ->
 			self.removed("posts", id)
-			console.log('Post removed: ' + id)
+			console.log('Post ' + item.template + ' removed: ' + id)
 
 	handle = Posts.find(filter, mod).observeChanges(handler)
 
