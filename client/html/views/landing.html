@@ -10,7 +10,7 @@
 													col-xs-12 col-xs-offset-0
 													vcenter">
 								<h1 style="padding-bottom: 50px">
-									The future of online work and education.
+									Let us think about the future of online work and education.
 								</h1>
 							</div><!--
 							This comment is important otherwise
@@ -36,7 +36,7 @@
 	</div>
 
 	{{#if isInRole 'editor'}}
-		<section class="container-fluid">
+		<section class="container-fluid padding-top">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<div class="well">
@@ -65,7 +65,7 @@
 		</section>
 	{{/if}}
 
-	<section class="container-fluid">
+	<section class="container-fluid background-grey padding-top">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				{{#each posts}}
@@ -75,7 +75,7 @@
 		</div>
 	</section>
 
-	<section class="container-fluid">
+	<section class="container-fluid background-theme-light padding-top">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				{{#each publications}}
@@ -185,7 +185,7 @@
 		<div class="col-md-4">
 			{{#if figure}}
 				<a href="{{paper_url}}">
-					<img class="img-responsive" src="{{figure}}" alt="{{label}}">
+					<img class="img-responsive figure-padding" src="{{figure}}" alt="{{label}}">
 				</a>
 
 				{{#if isInRole 'editor'}}
@@ -290,18 +290,20 @@
 ------------------------------------------->
 <template name="post">
 	{{#if figure}}
-		<div class="post-banner background-theme">
+		<div class="post-banner">
 			<img class="img-responsive" src="{{figure}}" alt="{{label}}">
 		</div>
 
-		<div class="btn-group btn-group-justified">
-			<div class="btn btn-contrast" id="remove_figure">
-				Remove figure
+		{{#if isInRole 'editor'}}
+			<div class="btn-group btn-group-justified">
+				<div class="btn btn-contrast" id="remove_figure">
+					Remove figure
+				</div>
 			</div>
-		</div>
+		{{/if}}
 	{{else}}
 		{{#if isInRole 'editor'}}
-			<div class="post-banner background-theme">
+			<div class="post-banner">
 				<h2>
 					<input placeholder="Title"
 								 class="post-field clear-edit" type="text"
@@ -310,12 +312,11 @@
 			</div>
 		{{else}}
 			{{#if title}}
-				<div class="post-banner background-theme">
+				<div class="post-banner">
 					<h2>
 						{{title}}
 					</h2>
 				</div>
-			{{else}}
 			{{/if}}
 		{{/if}}
 	{{/if}}

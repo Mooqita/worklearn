@@ -124,7 +124,18 @@ footer{
 }
 
 .background-white{
+	color: $text;
 	background: #fff;
+}
+
+.background-grey{
+	color: $text;
+	background: #eee;
+}
+
+.background-theme-light {
+	color: $text;
+	background: $theme-light;
 }
 
 .background-theme {
@@ -142,16 +153,24 @@ footer{
     float: none;
 }
 
-.img-circle {
-	border-radius: 50% !important;
-}
-
 .padding-bottom{
 	padding-bottom: 60px;
 }
 
 .padding-top{
 	padding-top: 40px;
+}
+
+///////////////////////////////////////////////
+// image modifiers
+////////////////////////////////////////////////
+
+.img-circle {
+	border-radius: 50% !important;
+}
+
+.figure-padding {
+	padding-bottom: 35px;
 }
 
 ///////////////////////////////////////////////
