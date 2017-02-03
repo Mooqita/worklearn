@@ -12,20 +12,17 @@ get_editor_id = () ->
 
 	return editor_id
 
-
 ##############################################
 get_textarea = () ->
 	editor_id = get_editor_id()
 	frm = $('#editor_'+editor_id)
 	return frm
 
-
 #######################################################
 load_content = (self) ->
 	collection = global[self.collection_name]
 	item = collection.findOne(self.item_id)
 	return item[self.field]
-
 
 ##############################################
 Template.summernote.onCreated ->
@@ -40,16 +37,13 @@ Template.summernote.rendered = () ->
 
 	value = load_content(this.data)
 	area = get_textarea()
-	console.log(area)
 	res = area.summernote(conf)
 	res.summernote('code', value)
-
 
 ##############################################
 Template.summernote.helpers
 	editor_id: ->
 		return get_editor_id()
-
 
 #######################################################
 Template.summernote.events

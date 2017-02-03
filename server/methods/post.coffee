@@ -24,3 +24,15 @@ Meteor.methods
 
 	set_post_field: (collection, item_id, field, data, type)->
 		modify_field('Posts', item_id, field, data)
+
+	set_post_visibility: (item_id, who) ->
+		check item_id, String
+		check who, String
+
+		mod =
+			$set:
+				visible_to: [who]
+
+		n = Posts.update(item_id, mod)
+		return n
+

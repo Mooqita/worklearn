@@ -15,7 +15,7 @@
 				</h1>
 
 				<div class="well">
-					<a class="btn btn-highlight" href="/admin/upwork/oauth">Upwork Oauth</a>
+					<a class="btn btn-theme" href="/admin/upwork/oauth">Upwork Oauth</a>
 
 					<hr>
 
@@ -64,7 +64,7 @@
 
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" class="btn btn-highlight">Add permission</button>
+									<button type="submit" class="btn btn-theme">Add permission</button>
 								</div>
 							</div>
 						</form>
@@ -79,14 +79,14 @@
 
 <template name="admin_upwork_oauth">
 	{{#if isInRole 'admin'}}
-		<a class="btn btn-highlight" href="/admin/upwork/oauth" id="upwork_oauth_refresh">Restart UpWork OAuth</a> <br>
+		<a class="btn btn-theme" href="/admin/upwork/oauth" id="upwork_oauth_refresh">Restart UpWork OAuth</a> <br>
 
 		{{#if upwork_oauth_url}}
-			<a class="btn btn-highlight" href="{{upwork_oauth_url}}">Register on UpWork</a> <br>
+			<a class="btn btn-theme" href="{{upwork_oauth_url}}">Register on UpWork</a> <br>
 		{{/if}}
 
 		{{#if upwork_oauth_token}}
-			<a class="btn btn-highlight" href="/admin/upwork/oauth" id="upwork_oauth_finish">Finish OAuth</a> <br>
+			<a class="btn btn-theme" href="/admin/upwork/oauth" id="upwork_oauth_finish">Finish OAuth</a> <br>
 		{{/if}}
 
 		{{#unless upwork_oauth_finished}}

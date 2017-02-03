@@ -42,7 +42,7 @@ Template.dropfile.onCreated ->
 		Session.set('dropped_files', Math.random())
 
 	if this.data.name in dropped_files
-		console.log('dropfile name: "' + this.data.name + '" already in use.')
+		sAlert.log('dropfile name: "' + this.data.name + '" already in use.')
 		return
 
 	box_id = Math.floor(Math.random()*10000000)

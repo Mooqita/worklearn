@@ -28,6 +28,9 @@ Meteor.publish "posts", (template_name) ->
 	# adding a filter for all posts our current role allows us to see
 	f1 =
 		template: template_name
+		deleted:
+			$ne:
+				true
 		visible_to:
 			$in: roles
 	filters.push f1
@@ -44,15 +47,21 @@ Meteor.publish "posts", (template_name) ->
 	handler =
 		added: (id) ->
 			item = Posts.findOne(id)
-			item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
+			if item.paper
+				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
 			self.added('posts', item._id, item)
 			console.log('Post added: ' + id)
 
 		changed: (id) ->
 			item = Posts.findOne(id)
-			item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
+			if item.paper
+				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
 			self.changed('posts', item._id, item)
 			console.log('Post changed: ' + id)
+
+		removed: (id) ->
+			self.removed("posts", id)
+			console.log('Post removed: ' + id)
 
 	handle = Posts.find(filter, mod).observeChanges(handler)
 

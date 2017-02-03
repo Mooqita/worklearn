@@ -122,7 +122,7 @@
 @modify_field = (collection_name, id, field, value) ->
 	__deny_action('modify', collection_name, id, field)
 
-	check value, String, Number
+	check value, Match.OneOf String, Number, Boolean
 
 	s = {}
 	s[field] = value

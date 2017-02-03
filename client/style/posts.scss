@@ -1,7 +1,8 @@
 ///////////////////////////////////////////////
 // fonts
 ////////////////////////////////////////////////
-@import "{}/client/client/style/_color.scss";
+@import "{}/client/style/_color.scss";
+@import "{}/client/style/_fonts.scss";
 
 ////////////////////////////////////////////////
 // post format
@@ -28,15 +29,9 @@
 	padding: 10px 10px 20px 10px;
 }
 
-.post-banner a{
-	color: $white;
-}
-
-.post-banner a:hover{
-	color: $highlight-1;
-}
-
 .clear-edit{
+	display: block;
+	width: 100%;
 	font: inherit;
 	color: inherit;
 	background: inherit;
