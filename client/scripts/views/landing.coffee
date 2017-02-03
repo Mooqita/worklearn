@@ -22,6 +22,18 @@ Template.landing.events
 
 #########################################################
 Template.landing.helpers
+	has_publications : ->
+		filter =
+			template: 'publication'
+		has = Posts.find(filter).count() > 0
+		return has
+
+	has_posts : ->
+		filter =
+			template: 'post'
+		has = Posts.find(filter).count() > 0
+		return has
+
 	publications: ->
 		filter =
 			template: 'publication'

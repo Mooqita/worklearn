@@ -65,25 +65,55 @@
 		</section>
 	{{/if}}
 
-	<section class="container-fluid background-grey padding-top">
+	<section class="container-fluid background-white padding-top padding-bottom">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				{{#each posts}}
-					{{>_post}}
-				{{/each}}
+				<div class="row">
+					<div class="col-md-5">
+						<div class="logo">
+							<em>W</em>ork <em>L</em>earn
+						</div>
+					</div>
+
+					<div class="col-md-7">
+						<h1>The Work Learn Initiative</h1>
+					</div>
+				</div>
+
+				<div class="row">
+					<p class="text-left">Over the past decades classic work environments have changed rapidly from manual intensive labor to cognitive demanding jobs. We see the societal impact of this development in the socio-economic changes not only in cities with declining heavy industry but around the globe. This development benefits mostly a minority that already has access to excellent education and wealth and thereby widens the social, economic, and educational gap between developed and developing countries as well as rural and urban regions. With artificial intelligence beginning to take over tasks such as driving cabs, grading essays, or tracking medication this development is predicted to accelerate in the near future. </p>
+					<p class="text-left">One manifestation of this development is the global gig economy. This is labor market characterized by the prevalence of freelance work in contrast to more permanent jobs. The McKinsey Global Institute surveyed ~8,000 respondents across Europe and the United States and found that 20-30% of the working-age population in this sample engaged in independent work. The early days of the gig economy already exposed many challenges such as missing health care, disability insurance, retirement funds, or education for workers in online labor markets. Despite these challenges we believe that it is possible to shape this new labor market to be global and fair.</p>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="container-fluid background-theme-light padding-top">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				{{#each publications}}
-					{{>_post}}
-				{{/each}}
+ 	{{#if has_posts}}
+		<section class="container-fluid background-grey padding-top">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<h1>Recent Posts</h1>
+					{{#each posts}}
+						{{>_post}}
+					{{/each}}
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	{{/if}}
+
+	{{#if has_publications}}
+		<section class="container-fluid background-theme-light padding-top">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<h1>Publications</h1>
+
+					{{#each publications}}
+						{{>_post}}
+					{{/each}}
+				</div>
+			</div>
+		</section>
+ {{/if}}
 </template>
 
 <template name="_post">
