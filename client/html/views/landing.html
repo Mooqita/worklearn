@@ -188,56 +188,6 @@
 |
 ------------------------------------------->
 <template name="headline">
-	{{#if figure}}
-		<div class="post-banner">
-			<img class="img-responsive" src="{{figure}}" alt="{{label}}">
-		</div>
-
-		{{#if isInRole 'editor'}}
-			<div class="btn-group btn-group-justified">
-				<div class="btn btn-contrast" id="remove_figure">
-					Remove figure
-				</div>
-			</div>
-		{{/if}}
-	{{else}}
-		{{#if isInRole 'editor'}}
-			<div class="post-banner background-theme">
-				<h2>
-					<input placeholder="Title"
-								 class="post-field clear-edit" type="text"
-								 id="title" tabindex="1" value="{{title}}">
-				</h2>
-			</div>
-		{{else}}
-			{{#if title}}
-				<div class="post-banner background-theme">
-					<h2>
-						{{title}}
-					</h2>
-				</div>
-			{{/if}}
-		{{/if}}
-	{{/if}}
-
-	{{#if isInRole 'editor'}}
-		{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
-	{{/if}}
-
-	{{#if figure}}
-		<h2>
-			{{#if isInRole 'editor'}}
-				<input placeholder="Title"
-							 class="form-control post-field clear-edit" type="text"
-							 id="title" tabindex="1" value="{{title}}">
-			{{else}}
-				{{#if title}}
-					{{title}}
-				{{/if}}
-			{{/if}}
-		</h2>
-	{{/if}}
-
 	<div class="row">
 		<div class="col-md-12">
 			{{#if isInRole 'editor'}}

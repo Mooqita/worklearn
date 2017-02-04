@@ -32,8 +32,9 @@ Template.summernote.onCreated ->
 #######################################################
 Template.summernote.rendered = () ->
 	conf =
-		height: 200,
+		height: 200
 		focus: true
+		prettifyHtml:true
 
 	value = load_content(this.data)
 	area = get_textarea()
