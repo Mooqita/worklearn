@@ -13,12 +13,25 @@
   margin-bottom: 20px;
 	-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .15);
           box-shadow: 1px 1px 5px rgba(0, 0, 0, .15);
-
 }
 
 .post_edit{
 	margin-top: -20px;
 	padding-top: 0px;
+}
+
+.post_start_edit{
+	height: 0px;
+	top: -10px;
+	left: 0px;
+	position: relative;
+	text-align: right;
+	z-index: 1;
+}
+
+.post_start_right{
+	height: 100px;
+	display: inline-block;
 }
 
 .section_headline{

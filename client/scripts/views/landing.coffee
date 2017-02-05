@@ -3,6 +3,9 @@
 #########################################################
 
 #########################################################
+editing_post = ''
+
+#########################################################
 Template.landing.onCreated ->
 	self = this
 	self.autorun () ->
@@ -108,6 +111,15 @@ Template._post.events
 				if err
 					sAlert.error(err)
 
+	'click #edit': () ->
+		ed = Session.get("editing_post")
+
+		if ed == this._id
+			Session.set("editing_post", "")
+			return
+
+		Session.set("editing_post", this._id)
+
 #########################################################
 Template._post.helpers
 	is_visible: (val) ->
@@ -118,9 +130,17 @@ Template._post.helpers
 		if val == this.template
 			return "selected"
 
+	is_editing: () ->
+		return this._id == Session.get("editing_post")
+
 #########################################################
 # Paper
 #########################################################
+
+#########################################################
+Template.publication.helpers
+	is_editing: () ->
+		return this._id == Session.get("editing_post")
 
 #########################################################
 Template.publication.events
@@ -157,6 +177,11 @@ Template.publication.events
 #########################################################
 
 #########################################################
+Template.post.helpers
+	is_editing: () ->
+		return this._id == Session.get("editing_post")
+
+#########################################################
 Template.post.events
 	'click #remove_figure': (event) ->
 		Meteor.call 'set_post_field', '', this._id, 'figure', '', undefined,
@@ -177,4 +202,13 @@ Template.post.events
 					sAlert.error(err)
 				else
 					sAlert.success(field + ' updated')
+
+#########################################################
+# Headline
+#########################################################
+
+#########################################################
+Template.headline.helpers
+	is_editing: () ->
+		return this._id == Session.get("editing_post")
 
