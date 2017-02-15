@@ -9,6 +9,7 @@
 #######################################################
 @Posts = new Mongo.Collection("posts")
 @Files = new Mongo.Collection("files")
+@Hits = new Mongo.Collection("hits")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")

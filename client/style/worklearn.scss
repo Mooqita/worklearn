@@ -39,7 +39,7 @@
 ////////////////////////////////////////////////
 
 *{
-	border-radius: 0 !important;
+//	border-radius: 0 !important;
 }
 
 html,body{
@@ -126,21 +126,31 @@ footer{
 .background-white{
 	color: $text;
 	background: #fff;
+	border-color: #fff;
 }
 
 .background-grey{
 	color: $text;
 	background: #eee;
+	border-color: #eee;
 }
 
 .background-theme-light {
 	color: $text;
 	background: $theme-light;
+	border-color: $theme-light;
 }
 
 .background-theme {
 	color: $text-on-theme;
 	background: $theme;
+	border-color: $theme;
+}
+
+.background-contrast {
+	color: $text-on-theme;
+	background: $contrast-on-theme;
+	border-color: $contrast-on-theme;
 }
 
 .menu-button{
@@ -159,6 +169,10 @@ footer{
 
 .padding-top{
 	padding-top: 40px;
+}
+
+.form-wide-padding .form-group {
+    margin-bottom:30px;
 }
 
 .logo {
@@ -183,52 +197,31 @@ footer{
 // Buttons
 ////////////////////////////////////////////////
 
-.btn-theme {
-	color: $text-on-theme;
-	border-color: $theme-dark;
-	background-color: $theme;
-}
-
-.btn-theme:hover {
+.btn:hover{
 	padding-left: 13px;
 	padding-top: 7px;
 	padding-right: 11px;
 	padding-bottom: 5px;
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
+          box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
+}
+
+.btn-theme {
 	color: $text-on-theme;
-  -webkit-box-shadow: inset 1px 1px 3px rgba($theme-dark, 1.0);
-          box-shadow: inset 1px 1px 3px rgba($theme-dark, 1.0);
+	border-color: $theme;
+	background-color: $theme;
 }
 
 .btn-contrast {
 	color: $text-on-theme;
-	border: none;
+	border-color: $contrast-on-theme;
 	background-color: $contrast-on-theme;
-}
-
-.btn-contrast:hover {
-	padding-left: 13px;
-	padding-top: 7px;
-	padding-right: 11px;
-	padding-bottom: 5px;
-	color: $text-on-theme;
-  -webkit-box-shadow: inset 1px 1px 3px rgba($contrast-on-theme-dark, 1.0);
-          box-shadow: inset 1px 1px 3px rgba($contrast-on-theme-dark, 1.0);
 }
 
 .btn-translucent {
 	color: $text-on-theme;
 	border: none;
 	background-color: inherit;
-}
-
-.btn-translucent:hover {
-	padding-left: 13px;
-	padding-top: 7px;
-	padding-right: 11px;
-	padding-bottom: 5px;
-	color: $text-on-theme;
-  -webkit-box-shadow: inset 1px 1px 3px rgba($theme-dark, 1.0);
-          box-shadow: inset 1px 1px 3px rgba($theme-dark, 1.0);
 }
 
 
@@ -310,13 +303,13 @@ footer{
 // tool bar
 //////////////////////////////////////////////
 .tool-button {
-	border: 5px solid $theme;
 	height: 40px;
 	min-width: 40px;
 	text-align: center;
 	font-size: 19px;
-	color: $theme;
 	display: inline-block;
+	border-width: 5px;
+	border-style: solid;
 	padding-top: 2px;
 	padding-left: 2px;
 	padding-right: 2px;
@@ -324,23 +317,26 @@ footer{
 }
 
 .tool-button:hover{
-	border-color: $theme-dark;
-	color: $theme-dark;
+	padding-top: 3px;
+	padding-left: 3px;
+	padding-right: 1px;
+	padding-bottom: 1px;
 }
 
 .tool-button:active{
 	padding-top: 3px;
 	padding-left: 3px;
+	padding-right: 1px;
+	padding-bottom: 1px;
 }
 
 .tool-bar{
-	border: 5px solid $theme;
-	background: $theme;
+	border-width: 5px;
+	border-style: solid;
 	height: 40px;
 	min-width: 40px;
 	text-align: center;
 	font-size: 1em;
-	color: #fff;
 	padding-top: 2px;
 	padding-left: 2px;
 	padding-right: 2px;
@@ -349,12 +345,10 @@ footer{
 
 .tool-bar-right{
 	border-left: none;
-	min-width: 200px;
 	text-align: left;}
 
 .tool-bar-left{
 	border-right: none;
-	min-width: 200px;
 	text-align: right;
 }
 

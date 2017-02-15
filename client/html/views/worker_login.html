@@ -1,0 +1,33 @@
+<!------------------------------------------------
+|
+|	Challenge entry point
+|
+-------------------------------------------------->
+<template name="worker_login">
+	{{#unless currentUser}}
+		{{>sign_worker}}
+	{{else}}
+		{{#if template_exists}}
+			{{>Template.dynamic template=template_path}}
+		{{else}}
+			{{>ER_404}}
+		{{/if}}
+	{{/unless}}
+</template>
+
+<template name="sign_worker">
+	<h1>Please enter your worker ID</h1>
+
+	<hr>
+
+	<p>
+		To match your work on our platform and your payment on crowdflower we need your crowdflower ID.
+	</p>
+
+	<form id="id_form" class="form-inline">
+		<div class="form-group">
+			<input type="text" class="form-control" id="worker_id" placeholder="Enter your worker id here">
+		</div>
+		<button type="submit" class="btn btn-default">submit</button>
+	</form>
+</template>

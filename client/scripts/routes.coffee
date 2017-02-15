@@ -15,14 +15,20 @@ FlowRouter.route('/',
 		BlazeLayout.render("full_width_layout", {content: 'landing'}))
 
 ##########################################################
-FlowRouter.route('/file/:collection/:item_id/:field/:file_name',
-	name: 'file',
+FlowRouter.route('/hit/:template/:index',
+	name: 'hit',
 	action: (params) ->
-		BlazeLayout.render("base_layout", {content: 'file_download'}))
+		BlazeLayout.render("base_layout", {content: 'worker_login'}))
 
 ##########################################################
 FlowRouter.route('/admin',
 	name: 'admin',
 	action: (params) ->
 		BlazeLayout.render("base_layout", {content: 'admin'}))
+
+##########################################################
+FlowRouter.route('/file/:collection/:item_id/:field/:file_name',
+	name: 'file',
+	action: (params) ->
+		BlazeLayout.render("base_layout", {content: 'file_download'}))
 

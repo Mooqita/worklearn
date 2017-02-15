@@ -1,0 +1,14 @@
+<template name="response_code">
+	{{#if done}}
+		{{get_response}}
+	{{else}}
+		{{not_done_message}}
+	{{/if}}
+
+	{{#if isInRole 'admin'}}
+		<div class="well">
+			<h3>Admin info</h3>
+			{{get_response}}
+		</div>
+	{{/if}}
+</template>

@@ -58,13 +58,78 @@ Template.admin.events
 				else
 					sAlert.info('Permission add requested: '+ res)
 
+#########################################################
+# hashes
+#########################################################
+
+#########################################################
+calc_hashes = (tmpl) ->
+	num = tmpl.num.get()
+	salt = tmpl.salt.get()
+	template = tmpl.template.get()
+	host = location.hostname
+	port = if location.port then ':' + location.port else ''
+
+	res = []
+	for i in [1..num]
+		index = Math.floor Math.random()*1000000000
+		item =
+			url: host + port + "/hit/" + template + '/' + index
+			hash: calculate_response_hash(index, salt, template)
+		res.push item
+
+	return res
+
+
+#########################################################
+Template.hashes.onCreated ->
+	this.num = new ReactiveVar(0)
+	this.salt = new ReactiveVar("")
+	this.hashes = new ReactiveVar([])
+	this.template = new ReactiveVar("")
+
+#########################################################
+Template.hashes.events
+	'change #num': (event) ->
+		val = event.target.value
+		Template.instance().num.set(val)
+		Template.instance().hashes.set(calc_hashes(Template.instance()))
+
+	'change #salt': (event) ->
+		val = event.target.value
+		Template.instance().salt.set(val)
+		Template.instance().hashes.set(calc_hashes(Template.instance()))
+
+	'change #template': (event) ->
+		val = event.target.value
+		Template.instance().template.set(val)
+		Template.instance().hashes.set(calc_hashes(Template.instance()))
+
+
+#########################################################
+Template.hashes.helpers
+	num:() ->
+		return Template.instance().num.get()
+
+	salt:() ->
+		return Template.instance().salt.get()
+
+	template:() ->
+		return Template.instance().template.get()
+
+	hashes: () ->
+		return Template.instance().hashes.get()
+
+
+#########################################################
+# upwork_oauth
+#########################################################
 
 #########################################################
 Template.admin_upwork_oauth.onCreated ->
 	self = this
 	self.autorun () ->
 		self.subscribe 'upwork_oauth'
-
 
 #########################################################
 Template.admin_upwork_oauth.events

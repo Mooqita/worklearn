@@ -1,0 +1,55 @@
+<template name="input_wrapper">
+	{{#if label}}
+		<label for="{{field}}" class="col-sm-4 control-label">{{label}}</label>
+		<div class="col-sm-8">
+			{{> UI.contentBlock}}
+		</div>
+	{{else}}
+		{{> UI.contentBlock}}
+	{{/if}}
+</template>
+
+
+<template name="select_input">
+	{{#input_wrapper label=label field=field}}
+		<select class="form-control post-field {{classes}}" id="{{field}}">
+			{{#each options}}
+				<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+			{{/each}}
+		</select>
+	{{/input_wrapper}}
+</template>
+
+<template name="basic_input">
+	{{#input_wrapper label=label field=field}}
+		<input placeholder="{{placeholder}}"
+				 class="form-control post-field{{classes}}" type="{{type}}"
+				 id="{{field}}" tabindex="1" value="{{value}}"/>
+	{{/input_wrapper}}
+</template>
+
+
+<template name="text_input">
+	{{#input_wrapper label=label field=field}}
+		<textarea  class="form-control post-field {{classes}}" placeholder="{{placeholder}}"
+							 id="{{field}}" rows="12">{{value}}</textarea>
+	{{/input_wrapper}}
+</template>
+
+
+<template name="summernote">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<textarea class="form-control" type="text"
+									rows="12" id="editor_{{editor_id}}"
+									placeholder="{{placeholder}}">{{value}}</textarea>
+			</div>
+			<div class="form-group">
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="save">Save</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</template>

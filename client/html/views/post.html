@@ -1,0 +1,319 @@
+<!-----------------------------------------
+|
+|  Post entry Template
+|
+------------------------------------------->
+<template name="_post">
+	{{#if can_edit_post _id 'editor'}}
+		<div class="post_start_edit">
+			<div class="post_start_right">
+				<div class="ribbon ribbon-theme" id="edit">
+					<h1>Edit</h1>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+
+	<div style="min-height: 100px">
+		{{>Template.dynamic template=template}}
+	</div>
+
+	{{#if is_editing _id}}
+		<div class="post post_edit background-white">
+			<div class="post-banner" style="	padding-right: 35px; padding-left: 35px;">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-6">
+							{{>select_input label='Template' method='set_post_field'
+								collection_name='Posts' field='template' item_id=_id
+								options=templates}}
+						</div>
+
+						<div class="col-sm-6">
+							{{>select_input label='Visibility' method='set_post_visibility'
+								collection_name='Posts'	field='visible_to' item_id=_id
+								options=visibility}}
+						</div>
+
+						<div class="col-sm-6">
+							{{>basic_input label='Group' method='set_post_field' collection_name='Posts'
+									field='post_group' item_id=_id placholder="Enter post group" type="text" }}
+						</div>
+
+						<div class="col-md-6 col-sm-6 col-sm-12">
+							{{>basic_input label='Order' method='set_post_field' collection_name='Posts'
+								field='view_order' item_id=_id placholder="Lower displayed first" type="number" }}
+						</div>
+
+						<div class="col-md-6 col-sm-6 col-sm-12">
+							{{#input_wrapper label="Delete"}}
+								<div class="input-group">
+									<span class="form-control">
+										{{#if deleted}}
+											Post is deleted.
+										{{else}}
+											Delete post:
+										{{/if}}
+									</span>
+
+									<div class="input-group-btn">
+										{{#if deleted}}
+											<div class="btn btn-danger" id="reinstate_post">
+												<i class="glyphicon glyphicon-repeat" aria-hidden="true"></i>
+											</div>
+										{{else}}
+											<div class="btn btn-danger" id="remove_post">
+												<i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i>
+											</div>
+										{{/if}}
+									</div>
+								</div>
+							{{/input_wrapper}}
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	{{/if}}
+</template>
+
+
+<!-----------------------------------------
+|
+|  Empty Template
+|
+------------------------------------------->
+<template name="empty">
+	{{#if is_editing _id}}
+		{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+	{{else}}
+		{{#if abstract}}
+			{{{abstract}}}
+		{{else}}
+			This post is empty
+		{{/if}}
+	{{/if}}
+</template>
+
+
+ <!-----------------------------------------
+|
+|  Headline Template
+|
+------------------------------------------->
+<template name="headline">
+	<div class="post background-white">
+		<h1 class="logo">
+			{{#if is_editing _id}}
+				{{>basic_input method='set_post_field' collection_name='Posts'
+						field='title' item_id=_id placholder="Title" type="text" }}
+			{{else}}
+				{{#if title}}
+					{{{letter}}}
+				{{else}}
+					This post is empty
+				{{/if}}
+			{{/if}}
+		</h1>
+
+		{{#if is_editing _id}}
+			{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+		{{else}}
+			{{#if abstract}}
+				{{{abstract}}}
+			{{else}}
+				This post is empty
+			{{/if}}
+		{{/if}}
+	</div>
+</template>
+
+<!-----------------------------------------
+|
+|  Post Template
+|
+------------------------------------------->
+<template name="post">
+	<div class="post background-white">
+		{{#if figure}}
+			<div class="post-banner">
+				<img class="img-responsive" src="{{figure}}" alt="{{label}}">
+			</div>
+
+			{{#if is_editing _id}}
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-contrast" id="remove_figure">
+						Remove figure
+					</div>
+				</div>
+			{{/if}}
+		{{else}}
+			{{#if is_editing _id}}
+				<div class="post-banner background-theme">
+					<h2>
+						{{>basic_input method='set_post_field' collection_name='Posts' field='title'
+							placeholder='Title' item_id=_id}}
+					</h2>
+				</div>
+			{{else}}
+				{{#if title}}
+					<div class="post-banner background-theme">
+						<h2>
+							{{{title}}}
+						</h2>
+					</div>
+				{{else}}
+				{{/if}}
+			{{/if}}
+		{{/if}}
+
+		{{#if is_editing _id}}
+			{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+		{{/if}}
+
+		{{#if figure}}
+			<h2>
+				{{>basic_input method='set_post_field' collection_name='Posts'
+						field='title' item_id=_id placholder="Title" type="text" }}
+			</h2>
+		{{/if}}
+
+		<div class="row">
+			<div class="col-md-12">
+				{{#if is_editing _id}}
+					{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+				{{else}}
+					{{#if abstract}}
+						{{{abstract}}}
+					{{else}}
+						This post is empty
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+
+
+ <!-----------------------------------------
+|
+|  Publication Template
+|
+------------------------------------------->
+<template name="publication">
+	<div class="post background-white">
+		{{#if is_editing _id}}
+			<div class="post-banner background-theme">
+				<h2>
+					{{>basic_input method='set_post_field' collection_name='Posts'
+					field='title' item_id=_id placholder="Title" type="text" }}
+				</h2>
+			</div>
+		{{else}}
+			{{#if title}}
+				<div class="post-banner background-theme">
+					<h2>
+						{{title}}
+					</h2>
+				</div>
+			{{else}}
+			{{/if}}
+		{{/if}}
+
+		<div class="row">
+			<div class="col-md-4">
+				{{#if figure}}
+					<a href="{{paper_url}}">
+						<img class="img-responsive figure-padding" src="{{figure}}" alt="{{label}}">
+					</a>
+
+					{{#if is_editing _id}}
+						<div class="btn-group btn-group-justified">
+							<div class="btn btn-contrast" id="remove_figure">
+								Remove figure.
+							</div>
+						</div>
+					{{/if}}
+				{{/if}}
+
+				{{#if is_editing _id}}
+					{{>dropfile method='set_post_field' field='figure' item_id=_id box_id='figure'}}
+				{{/if}}
+			</div>
+
+			<div class="col-md-8">
+				<h4 class="double-header">
+					<em>
+						<i>
+							{{#if is_editing _id}}
+								{{>basic_input method='set_post_field' collection_name='Posts'
+													field='authors' item_id=_id placholder="Authors" type="text" }}
+							{{else}}
+								{{#if authors}}
+									{{{authors}}}
+								{{else}}
+									Authors unknown
+								{{/if}}
+							{{/if}}
+						</i>
+					</em>
+				</h4>
+
+				{{#if is_editing _id}}
+					<div class="row">
+						<div class="col-md-3">
+							<h4>
+								{{>basic_input method='set_post_field' collection_name='Posts'
+									field='pub_year' item_id=_id placholder="Publication year" type="text" }}
+							</h4>
+						</div>
+
+						<div class="col-md-9">
+							<h4>
+								{{>basic_input method='set_post_field' collection_name='Posts'
+									field='conference' item_id=_id placholder="Publication venue" type="text" }}
+							</h4>
+						</div>
+					</div>
+				{{else}}
+					<h4>
+						{{pub_year}},
+						{{conference}}
+					</h4>
+				{{/if}}
+
+				{{#if is_editing _id}}
+					{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+				{{else}}
+					{{#if abstract}}
+						{{{abstract}}}
+					{{else}}
+						This post is empty
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+
+		<div class="post-banner background-theme">
+			{{#if paper_url}}
+				<div class="btn-group btn-group-justified">
+					<a class="btn btn-translucent" id="download_paper" href="{{paper_url}}" target="_blank">
+						<h3>Download Paper</h3>
+					</a>
+				</div>
+
+				{{#if is_editing _id}}
+					<div class="btn-group btn-group-justified">
+						<div class="btn btn-contrast" id="remove_paper">
+							Remove paper.
+						</div>
+					</div>
+				{{/if}}
+			{{/if}}
+
+			{{#if is_editing _id}}
+				{{>dropfile method='set_post_field' field='paper' item_id=_id box_id='paper'}}
+			{{/if}}
+		</div>
+	</div>
+</template>

@@ -1,81 +1,102 @@
 <template name="admin">
 	{{#if isInRole 'admin'}}
-		<div class="media">
-			<div class="media-left">
-				{{#if currentUser.profile.avatar}}
-					<img class="img-circle" src="{{currentUser.profile.avatar}}" height="128px">
-				{{/if}}
-				{{currentUser.profile.given_name}}
-				{{currentUser.profile.family_name}}
-			</div>
+		<h2>Configure Upwork</h2>
 
-			<div class="media-body">
-				<h1 class="media-heading">
-					Admin Panel {{>popout title='yeah' content='yeah'}}
-				</h1>
-
-				<div class="well">
-					<a class="btn btn-theme" href="/admin/upwork/oauth">Upwork Oauth</a>
-
-					<hr>
-
-					<h4> <strong> Database Permission </strong> </h4>
-					{{#if isInRole 'db_admin'}}
-						<form id="db_permission" class="form-horizontal">
-							<div class="form-group">
-								<label for="collection" class="col-sm-2 control-label">Role</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="role"
-												 placeholder="Role required e.g. 'all' or 'admin'" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="collection" class="col-sm-2 control-label">Collection</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="collection"
-												 placeholder="Collection name" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="field" class="col-sm-2 control-label">Field</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="field"
-												 placeholder="Field name">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="field" class="col-sm-2 control-label">Actions</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="actions"
-												 placeholder="Action (add, modify, delete)" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="field" class="col-sm-2 control-label">Types</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="types"
-												 placeholder="Types e.g. string" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" class="btn btn-theme">Add permission</button>
-								</div>
-							</div>
-						</form>
-					{{/if}}
-				</div>
-			</div>
+		<div class="well">
+			<a class="btn btn-theme" href="/admin/upwork/oauth">Upwork Oauth</a>
 		</div>
+
+		{{>hashes}}
+
+		{{#if isInRole 'db_admin'}}
+			<h2> Database Permission </h2>
+			<div class="well">
+				<form id="db_permission" class="form-horizontal">
+					<div class="form-group">
+						<label for="collection" class="col-sm-2 control-label">Role</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="role"
+										 placeholder="Role required e.g. 'all' or 'admin'" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="collection" class="col-sm-2 control-label">Collection</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="collection"
+										 placeholder="Collection name" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="field" class="col-sm-2 control-label">Field</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="field"
+										 placeholder="Field name">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="field" class="col-sm-2 control-label">Actions</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="actions"
+										 placeholder="Action (add, modify, delete)" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="field" class="col-sm-2 control-label">Types</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="types"
+										 placeholder="Types e.g. string" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-theme">Add permission</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		{{/if}}
 	{{else}}
 		{{>ER_404}}
 	{{/if}}
 </template>
+
+
+<template name="hashes">
+	<h2>Get Response Hash</h2>
+	<div class="well">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="num" class="col-sm-4 control-label">Number of hashes</label>
+				<div class="col-sm-8">
+					<input type="number" class="form-control" id="num" value="{{num}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="salt" class="col-sm-4 control-label">Salt</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="salt" value="{{salt}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="template" class="col-sm-4 control-label">Template Name</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="template" value="{{template}}">
+				</div>
+			</div>
+		</form>
+
+		<h3>url, response</h3>
+		{{#each hashes}}
+			<a href="{{url}}">{{url}}</a>, {{hash}} <br>
+		{{/each}}
+	</div>
+</template>
+
 
 <template name="admin_upwork_oauth">
 	{{#if isInRole 'admin'}}

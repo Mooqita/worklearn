@@ -5,17 +5,9 @@
 
 #Accounts.ui.config()
 
-#PREDAID
-#TODO: distinguish between the reviews-that-I-wrote-averages and reviews-that-I-received-averages
-#TODO: add author field!!!!
-#TODO: add reviewer id
-#TODO: UI indicator if paper has a comparison
+#worklearn
+#TODO: move hash generation to server.
 
-#MOOCITA
-#TODO: error handling using juliancwirko:s-alert package
-#TODO: logout delete all local data
-#TODO: Message when text is to short.
-#TODO: Make sure that after publication no changes can be made but you can start a new solution
 
 given =
 	_id: "given_name"

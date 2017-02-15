@@ -34,7 +34,6 @@ alanning:roles
 raix:ui-dropped-event
 session
 random
-summernote:summernote
 
 service-configuration
 accounts-password
@@ -51,3 +50,7 @@ useraccounts:bootstrap
 useraccounts:flow-routing
 
 lukemadera:social-share
+
+perak:codemirror
+summernote:summernote
+jparker:crypto-sha256

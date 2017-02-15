@@ -6,8 +6,8 @@
 #######################################################
 
 #######################################################
-Meteor.publish "posts", (template_name) ->
-	check template_name, String
+Meteor.publish "posts", (group_name) ->
+	check group_name, Match.OneOf String, undefined, null
 
 	filters = []
 	roles = ['all']
@@ -20,14 +20,14 @@ Meteor.publish "posts", (template_name) ->
 
 		# adding a filter for all posts we authored
 		f2 =
-			template: template_name
+			#post_group: group_name
 			owner_id: user._id
 
 		filters.push f2
 
 	# adding a filter for all posts our current role allows us to see
 	f1 =
-		template: template_name
+		post_group: group_name
 		deleted:
 			$ne:
 				true

@@ -1,0 +1,23 @@
+<template name="country_state">
+	<div class="row">
+		<div class="col-sm-6">
+			<select id="country" class="form-control">
+				<option>Select country</option>
+				{{#each countries}}
+					<option value="{{index}}" {{is_selected_country country}}>{{country}}</option>
+				{{/each}}
+			</select>
+		</div>
+
+		{{#if state}}
+			<div class="col-sm-6">
+				<select id="state" class="form-control">
+					<option>Select state</option>
+					{{#each states}}
+						<option value="{{.}}" {{is_selected_state .}}>{{.}}</option>
+					{{/each}}
+				</select>
+			</div>
+		{{/if}}
+	</div>
+</template>
