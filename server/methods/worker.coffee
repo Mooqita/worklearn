@@ -1,6 +1,5 @@
 Meteor.methods
 	sign_in_worker: (worker_id) ->
-
 		filter =
 			username: worker_id
 

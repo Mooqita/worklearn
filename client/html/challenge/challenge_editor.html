@@ -1,0 +1,50 @@
+<template name="challenge_dashboard">
+	{{#unless challenge}}
+		<h1>Challenges you designed</h1>
+
+		<hr>
+
+		<div class="input-group" style="padding-bottom: 15px">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
+			</span>
+
+			<input type="text" class="form-control" placeholder="Search your challenges ...">
+		</div>
+
+		{{#unless challenges}}
+			<div class="well">
+				<p>No challenges yet.</p>
+			</div>
+		{{/unless}}
+
+		{{#each challenges}}
+			<a href="{{challenge_url}}">{{challenge_url}}</a>
+		{{/each}}
+	{{else}}
+		{{>challenge_editor challenge}}
+	{{/unless}}
+</template>
+
+<template name="challenge_editor">
+	<div class="well">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template name</label>
+					{{>basic_input method="set_field" collection_name="Challenges" item_id=_id field="name"
+							placeholder="Template name" type="text"}}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template identifier</label>
+					<label class="form-control"><em>{{_id}}</em></label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{>code_input method="set_field" collection_name="Challenges" item_id=_id field="template"}}
+</template>

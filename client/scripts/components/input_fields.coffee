@@ -8,14 +8,14 @@
 get_editor_id = () ->
 	editor_id = Template.instance().editor_id.get()
 	if not editor_id
-		sAlert.error('Object does not have a editor_id')
+		sAlert.error("Object does not have a editor_id")
 
 	return editor_id
 
 ##############################################
 get_textarea = () ->
 	editor_id = get_editor_id()
-	frm = $('#editor_'+editor_id)
+	frm = $("#editor_"+editor_id)
 	return frm
 
 
@@ -38,7 +38,7 @@ Template.select_input.helpers
 
 #########################################################
 Template.select_input.events
-	'change .post-field': (event) ->
+	"change .post-field": (event) ->
 		target = event.target
 		value = target.options[target.selectedIndex].value;
 		field = event.target.id
@@ -52,7 +52,7 @@ Template.select_input.events
 				if err
 					sAlert.error(err)
 				if res
-					sAlert.success("Updated field: " + field)
+					sAlert.success("Updated: " + field)
 
 
 #########################################################
@@ -66,7 +66,7 @@ Template.basic_input.helpers
 
 #########################################################
 Template.basic_input.events
-	'change .post-field': (event) ->
+	"change .post-field": (event) ->
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -78,7 +78,7 @@ Template.basic_input.events
 				if err
 					sAlert.error(err)
 				if res
-					sAlert.success("Updated field: " + field)
+					sAlert.success("Updated: " + field)
 
 #########################################################
 # Text
@@ -97,7 +97,7 @@ Template.text_input.helpers
 
 #########################################################
 Template.text_input.events
-	'change .post-field': (event) ->
+	"change .post-field": (event) ->
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -109,32 +109,32 @@ Template.text_input.events
 				if err
 					sAlert.error(err)
 				if res
-					sAlert.success("Updated field: " + field)
+					sAlert.success("Updated: " + field)
 
 #########################################################
-# summernote input
+# wysiwyg_input input
 #########################################################
 
 ##############################################
-Template.summernote.onCreated ->
+Template.wysiwyg_input.onCreated ->
 	editor_id = Math.floor(Math.random()*10000000)
 	this.editor_id = new ReactiveVar(editor_id)
 
 #######################################################
-Template.summernote.onRendered () ->
+Template.wysiwyg_input.onRendered () ->
 	conf =
 		height: 200
 		prettifyHtml: true
 		codemirror:
-			theme: 'monokai'
+			theme: "monokai"
 
 	value = get_field_value(this.data)
 	area = get_textarea()
 	res = area.summernote(conf)
-	res.summernote('code', value)
+	res.summernote("code", value)
 
 ##############################################
-Template.summernote.helpers
+Template.wysiwyg_input.helpers
 	editor_id: ->
 		return get_editor_id()
 
@@ -146,29 +146,71 @@ Template.summernote.helpers
 			height: 200
 			prettifyHtml: false
 			codemirror:
-				theme: 'monokai'
+				theme: "monokai"
 
 		value = get_field_value(this)
 		area = get_textarea()
 		res = area.summernote(conf)
-		res.summernote('code', value)
+		res.summernote("code", value)
 
 
 #######################################################
-Template.summernote.events
-	'click #save': ( event, template ) ->
-		content = get_textarea().summernote('code')
+Template.wysiwyg_input.events
+	"click #save": ( event, template ) ->
+		content = get_textarea().summernote("code")
 
 		collection = this.collection_name
 		method = this.method
 		field = this.field
 		item = this.item_id
-		type = 'string'
+		type = "string"
 
 		Meteor.call method, collection, item, field, content, type,
 			(err, rsp)->
 				if err
-					sAlert.error('Changes not saved!' + err)
-				else
-					sAlert.success('Changes saved!')
+					sAlert.error("Changes not saved!" + err)
+				if res
+					sAlert.success("Updated: " + field)
+
+#########################################################
+# code_input input
+#########################################################
+
+##############################################
+Template.code_input.onCreated ->
+	editor_id = Math.floor(Math.random()*10000000)
+	this.editor_id = new ReactiveVar(editor_id)
+
+###################################################
+Template.code_input.helpers
+	editor_id: ->
+		return "editor_"+get_editor_id()
+
+	editorCode: ->
+		res = get_field_value(this)
+		return res
+
+	editorOptions: ()->
+		res =
+			lineNumbers: true
+			mode: "htmlmixed"
+
+		return res
+
+#######################################################
+Template.code_input.events
+	"click #save": ( event, template ) ->
+		content = get_textarea()[0].value
+		collection = this.collection_name
+		method = this.method
+		field = this.field
+		item = this.item_id
+		type = "string"
+
+		Meteor.call method, collection, item, field, content, type,
+			(err, rsp)->
+				if err
+					sAlert.error("Changes not saved!" + err)
+				if rsp
+					sAlert.success("Updated: " + field)
 

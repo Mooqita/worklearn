@@ -1,8 +1,22 @@
 #######################################################
+@compile_template = (name, html_text) ->
+	try
+		compiled = SpacebarsCompiler.compile html_text, { isTemplate:true }
+		renderer = eval compiled
+		console.log 'redered:', renderer
+
+		#Template[name] = new Template(name, renderer)
+		UI.Template.__define__ name, renderer
+
+	catch err
+		console.log 'Error compiling template:' + html_text
+		console.log err.message
+
+#######################################################
 @get_field_value = (self, field, item_id, collection_name) ->
 	collection_name = collection_name || self.collection_name
 	item_id = item_id || self.item_id
-	field = field || self.item_id
+	field = field || self.field
 
 	collection = global[collection_name]
 	if not collection

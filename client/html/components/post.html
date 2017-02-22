@@ -85,7 +85,7 @@
 ------------------------------------------->
 <template name="empty">
 	{{#if is_editing _id}}
-		{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+		{{>code_input method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
 	{{else}}
 		{{#if abstract}}
 			{{{abstract}}}
@@ -117,7 +117,7 @@
 		</h1>
 
 		{{#if is_editing _id}}
-			{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+			{{>code_input method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
 		{{else}}
 			{{#if abstract}}
 				{{{abstract}}}
@@ -181,7 +181,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				{{#if is_editing _id}}
-					{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+					{{>code_input method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
 				{{else}}
 					{{#if abstract}}
 						{{{abstract}}}
@@ -283,7 +283,7 @@
 				{{/if}}
 
 				{{#if is_editing _id}}
-					{{>summernote method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
+					{{>code_input method='set_post_field' collection_name='Posts' field='abstract' item_id=_id}}
 				{{else}}
 					{{#if abstract}}
 						{{{abstract}}}

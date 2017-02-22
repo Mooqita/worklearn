@@ -267,7 +267,6 @@ s_a[254] = ""
 
 Template.country_state.onCreated ->
 	data = Template.instance().data
-	console.log data
 
 	country = get_field_value(data, data.c_field) || ""
 	state = get_field_value(data, data.s_field) || ""
@@ -298,11 +297,13 @@ Template.country_state.helpers
 		return states.split('|')
 
 	is_selected_country: (country) ->
-		if country == get_field_value(this, this.c_field)
+		self = Template.instance().data
+		if country == get_field_value(self, self.c_field)
 			return "selected"
 
 	is_selected_state: (state) ->
-		if state == get_field_value(this, this.s_field)
+		self = Template.instance().data
+		if state == get_field_value(self, self.s_field)
 			return "selected"
 
 
@@ -314,8 +315,6 @@ Template.country_state.events
 		Template.instance().country.set text
 		Template.instance().country_index.set index
 
-		console.log this
-
 		item_id = this.item_id
 		method = this.method
 		collection = this.collection_name
@@ -326,17 +325,25 @@ Template.country_state.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+				if res
+					sAlert.success("Updated country")
 
 	'change #state': (event) ->
 		obj = event.target
-		text = obj.options[obj.selectedIndex].value
+		text = obj.options[obj.selectedIndex].text
 		Template.instance().state.set text
 
 		item_id = this.item_id
+		method = this.method
+		collection = this.collection_name
+		item_id = this.item_id
+		field = this.s_field
 
-		Meteor.call this.method, this.collection, item_id, this.s_field, text, undefined,
+		Meteor.call method, collection, item_id, field, text, undefined,
 			(err, res) ->
 				if err
 					sAlert.error(err)
+				if res
+					sAlert.success("Updated state")
 
 

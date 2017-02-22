@@ -1,15 +1,17 @@
 <template name="likert_item">
-	<div class="btn-toolbar" role="toolbar"
-			 aria-label="Likert scale range {{low_label}} to {{high_label}}">
+	{{#input_wrapper label=label field=field edit=edit}}
+		<div class="btn-toolbar" role="toolbar"
+				 aria-label="Likert scale range {{low_label}} to {{high_label}}">
 
-		<div class="btn-group" data-toggle="buttons">
-			<a class="btn btn-link disabled" disabled>{{{low_label}}}</a>
-			{{#each levels}}
-				<label class="btn btn-default likert_value {{selected .}}">
-					<input type="radio" name="likert_value" value="{{.}}"> {{.}}
-				</label>
-			{{/each}}
-			<a class="btn btn-link disabled" disabled>{{{high_label}}}</a>
+			<div class="btn-group" data-toggle="buttons">
+				<a class="btn btn-link disabled" disabled>{{{low_label}}}</a>
+				{{#each levels}}
+					<label class="btn btn-default likert_value {{selected .}}">
+						<input type="radio" name="likert_value" value="{{.}}"> {{.}}
+					</label>
+				{{/each}}
+				<a class="btn btn-link disabled" disabled>{{{high_label}}}</a>
+			</div>
 		</div>
-	</div>
+	{{/input_wrapper}}
 </template>

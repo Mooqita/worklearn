@@ -4,16 +4,32 @@
 |
 -------------------------------------------------->
 <template name="worker_login">
-	{{#unless currentUser}}
-		{{>sign_worker}}
+	{{#if currentUser}}
+		{{>load_template}}
 	{{else}}
-		{{#if template_exists}}
-			{{>Template.dynamic template=template_path}}
-		{{else}}
-			{{>ER_404}}
-		{{/if}}
-	{{/unless}}
+		{{>sign_worker}}
+	{{/if}}
 </template>
+
+<template name="load_template">
+	{{#if template_exists}}
+		{{#if response}}
+			{{>Template.dynamic template=template_path data=response}}
+		{{else}}
+			{{>add_response}}
+		{{/if}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
+
+<template name="add_response">
+	<h1>
+		Please wait we prepare the task
+		<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+	</h1>
+</template>
+
 
 <template name="sign_worker">
 	<h1>Please enter your worker ID</h1>

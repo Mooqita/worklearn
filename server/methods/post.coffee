@@ -7,6 +7,8 @@
 ################################################################
 Meteor.methods
 	add_post: (group_name) ->
+		check group_name, String
+
 		user = Meteor.user()
 
 		if not user

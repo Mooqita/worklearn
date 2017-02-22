@@ -1,29 +1,44 @@
 Template.likert_item.onCreated ->
-	if this.data.from is undefined
-		this.data.from = 1
+	f = this.data.from
+	if f is undefined
+		f = 1
+	t = this.data.to
+	if t is undefined
+		t = 7
 
-	if this.data.to is undefined
-		this.data.to = 5
+	this.from = new ReactiveVar(f)
+	this.to = new ReactiveVar(t)
+
 
 Template.likert_item.helpers
 	selected: (val) ->
-		return 'btn-theme'
-
-		if val == this.value
+		self = Template.instance().data
+		value = get_field_value(self)
+		if val == value
 			return 'btn-theme'
 
 	levels: () ->
-		return [this.from..this.to]
+		f = Template.instance().from.get()
+		t = Template.instance().to.get()
+		res = [f..t]
+
+		return res
 
 Template.likert_item.events
 	'click .likert_value': (event, template) ->
-		item_id = 0
-		field = ''
+		value = Number(event.target.innerText)
+		self = Template.instance().data
+		item_id = self.item_id
+		method = self.method
+		collection = self.collection_name
+		item_id = self.item_id
+		field = self.field
 
-		Meteor.call 'update_field', item_id, field, this,
+		console.log value
+
+		Meteor.call method, collection, item_id, field, value,
 			(err, res)->
 				if(err)
 					sAlert.error(err)
-					console.log(err)
-				if(res)
-					sAlert.success('Changes saved! Thx!')
+				if res
+					sAlert.success("Updated: " + field)

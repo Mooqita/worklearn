@@ -6,14 +6,18 @@
 
 ################################################################
 Meteor.methods
-	add_hit: () ->
+	add_challenge: () ->
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		hit =
-			owner_id: Meteor.userId()
+		if !Roles.userIsInRole(user._id, 'editor')
+			throw new Meteor.Error('Not permitted.')
 
-		id = Hits.insert hit
+		challenge =
+			owner_id: Meteor.userId()
+			content: ''
+
+		id = Challenges.insert challenge
 		return id
