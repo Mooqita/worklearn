@@ -8,6 +8,9 @@ Template.landing.onCreated ->
 	self.autorun () ->
 		self.subscribe 'posts'
 		self.subscribe 'posts', 'frontpage'
+		self.subscribe 'posts', 'workshop'
+		self.subscribe 'posts', 'project'
+		self.subscribe 'posts', 'paper'
 
 #########################################################
 Template.landing.events
