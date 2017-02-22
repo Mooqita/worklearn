@@ -38,9 +38,17 @@ Meteor.methods
 				types: types
 				actions: actions
 
-		Permissions.upsert filter, mod,
-			(err, res) ->
-				if err
-					console.log(err)
-				if res
-					console.log("New permissions added: " + res)
+		res = Permissions.upsert filter, mod
+		return res
+
+	remove_permission: (id) ->
+		user = Meteor.user()
+		if !user
+			throw new Meteor.Error('Not logged in.')
+
+		if !Roles.userIsInRole(user._id, 'db_admin')
+			throw new Meteor.Error('Not permitted.')
+
+		check(id, String)
+
+		Permissions.remove(id)

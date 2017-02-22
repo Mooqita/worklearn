@@ -20,10 +20,12 @@
 
 	collection = global[collection_name]
 	if not collection
+		console.log "collection not found"
 		return undefined
 
 	item = collection.findOne(item_id)
 	if not item
+		console.log "item not found"
 		return undefined
 
 	return item[field]

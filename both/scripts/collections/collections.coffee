@@ -11,6 +11,7 @@
 @Files = new Mongo.Collection("files")
 
 #######################################################
+@Permissions = new Mongo.Collection("permissions")
 @Challenges = new Mongo.Collection("challenges")
 @Responses = new Mongo.Collection("responses")
 

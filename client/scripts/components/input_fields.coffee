@@ -62,7 +62,8 @@ Template.select_input.events
 #########################################################
 Template.basic_input.helpers
 	value: () ->
-		return get_field_value(this)
+		value = get_field_value(this)
+		return value
 
 #########################################################
 Template.basic_input.events

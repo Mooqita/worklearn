@@ -151,3 +151,16 @@ Meteor.publish "files", (collection_name, item_id, field) ->
 	this.added('files', Random.id(), data)
 	console.log('File: '+collection_name+"."+field+' submitted!')
 
+#######################################################
+Meteor.publish "permissions", () ->
+	if !this.userId
+		throw new Meteor.Error('Not permitted.')
+
+	if !Roles.userIsInRole(this.userId, 'admin')
+		throw new Meteor.Error('Not permitted.')
+
+	crs = Permissions.find()
+	console.log('Permissions: ' + crs.count() + ' submitted!')
+	return crs
+
+

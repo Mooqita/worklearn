@@ -5,7 +5,6 @@
 #######################################################
 
 #######################################################
-@Permissions = new Mongo.Collection("permissions")
 @Secrets = new Mongo.Collection("secrets")
 @DBFiles = new Mongo.Collection("dbfiles")
 
