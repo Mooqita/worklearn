@@ -1,0 +1,7 @@
+<template name="dynamic_template_loader">
+	{{#if template_exists}}
+		{{>Template.dynamic template=template data=data}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>

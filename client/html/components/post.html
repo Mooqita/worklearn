@@ -15,7 +15,7 @@
 	{{/if}}
 
 	<div style="min-height: 100px">
-		{{>Template.dynamic template=template}}
+		{{>dynamic_template_loader template=template data=.}}
 	</div>
 
 	{{#if is_editing _id}}

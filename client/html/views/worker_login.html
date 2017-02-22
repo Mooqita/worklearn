@@ -12,14 +12,10 @@
 </template>
 
 <template name="load_template">
-	{{#if template_exists}}
-		{{#if response}}
-			{{>Template.dynamic template=template_path data=response}}
-		{{else}}
-			{{>add_response}}
-		{{/if}}
+	{{#if response}}
+		{{>dynamic_template_loader template=template_path data=response}}
 	{{else}}
-		{{>ER_404}}
+		{{>add_response}}
 	{{/if}}
 </template>
 

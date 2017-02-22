@@ -44,31 +44,12 @@ Template.load_template.onCreated ->
 	self.autorun () ->
 		index = FlowRouter.getParam("index")
 		challenge_template = FlowRouter.getParam("challenge_template")
-		self.subscribe "challenge_template", challenge_template
 		self.subscribe "response", challenge_template, index
 
 ########################################
 Template.load_template.helpers
-	template_exists: ->
-		tn = FlowRouter.getParam("challenge_template")
-		tmpl = Template[tn]
-
-		if tmpl
-			Session.set('templateName', tn);
-			return true
-
-		challenge = Challenges.findOne(tn)
-		if not challenge
-			return false
-
-		tmpl_code = challenge.template
-		compile_template challenge._id, tmpl_code
-		Session.set('templateName',challenge._id);
-
-		return true
-
 	template_path: ->
-		return Session.get('templateName')
+		return FlowRouter.getParam("challenge_template")
 
 	response: ->
 		filter =
