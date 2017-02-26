@@ -31,8 +31,6 @@ Template.select_input.helpers
 		if !(field instanceof Array)
 			field = [field]
 
-		console.log field
-
 		if val in field
 			return "selected"
 
@@ -46,6 +44,9 @@ Template.select_input.events
 		method = this.method
 		collection = this.collection_name
 		item_id = this.item_id
+
+		if this.session_var
+			Session.set this.session_var, value
 
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->

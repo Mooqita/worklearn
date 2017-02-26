@@ -84,11 +84,20 @@
 
 
 #######################################################
-@__deny_action = (action, collection, id, field) ->
+@__deny_action = (action, collection_name, id, field) ->
+	if not collection_name
+		console.log "collection is: " + collection_name
+
+	if not field
+		console.log "filed is: " + field
+
+	if not id
+		console.log "id is: " + id
+
 	check id, String
 	check field, String
 	check action, String
-	check collection, String
+	check collection_name, String
 
 	roles = ['all']
 	user = Meteor.user()
@@ -97,14 +106,14 @@
 		roles.push user.roles ...
 		roles.push 'anonymous'
 
-		if __is_owner_publish collection, id, user._id
+		if __is_owner_publish collection_name, id, user._id
 			roles.push 'owner'
 
 	filter =
 		role:
 			$in: roles
 		field: field
-		collection: collection
+		collection: collection_name
 
 	permissions = Permissions.find(filter)
 

@@ -22,10 +22,8 @@ Template.sign_worker.events
 		Meteor.call "sign_in_worker", id,
 			(err, rsp)->
 				if err
-					console.log err
 					sAlert.error "We could not log you in! " + err
 				else
-					console.log rsp
 					Meteor.loginWithToken rsp.token,
 						(err, rsp)->
 							if err
@@ -58,7 +56,6 @@ Template.load_template.helpers
 			owner_id: Meteor.userId()
 
 		response = Responses.findOne(filter)
-		console.log response
 		return response
 
 ########################################

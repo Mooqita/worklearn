@@ -34,8 +34,6 @@ Template.likert_item.events
 		item_id = self.item_id
 		field = self.field
 
-		console.log value
-
 		Meteor.call method, collection, item_id, field, value,
 			(err, res)->
 				if(err)

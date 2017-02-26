@@ -6,18 +6,18 @@
 
 ################################################################
 Meteor.methods
-	add_challenge: () ->
+	add_template: () ->
 		user = Meteor.user()
 
 		if not user
-			throw new Meteor.Error("Not permitted.")
+			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, "editor")
-			throw new Meteor.Error("Not permitted.")
+		if !Roles.userIsInRole(user._id, 'editor')
+			throw new Meteor.Error('Not permitted.')
 
-		challenge =
+		template =
 			owner_id: Meteor.userId()
-			template_id: ""
+			code: ""
 
-		id = Challenges.insert challenge
+		id = Templates.insert template
 		return id

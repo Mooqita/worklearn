@@ -27,24 +27,25 @@
 </template>
 
 <template name="challenge_editor">
+	<h1>Challenge Editor</h1>
 	<div class="well">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="form-group">
-					<label>Template name</label>
-					{{>basic_input method="set_field" collection_name="Challenges" item_id=_id field="name"
-							placeholder="Template name" type="text"}}
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="add_template">Add new template</div>
 				</div>
 			</div>
-
 			<div class="col-md-6">
-				<div class="form-group">
-					<label>Template identifier</label>
-					<label class="form-control"><em>{{_id}}</em></label>
-				</div>
+				{{>select_input method="set_field" collection_name="Challenges" item_id=_id field="template_id"
+					session_var="current_template" options=templates}}
 			</div>
 		</div>
 	</div>
 
-	{{>code_input method="set_field" collection_name="Challenges" item_id=_id field="template"}}
+	{{>template_editor template}}
 </template>
+
+<template name="template_editor_loader">
+	{{>template_editor template}}
+</template>
+

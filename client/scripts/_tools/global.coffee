@@ -3,7 +3,6 @@
 	try
 		compiled = SpacebarsCompiler.compile html_text, { isTemplate:true }
 		renderer = eval compiled
-		console.log 'redered:', renderer
 
 		#Template[name] = new Template(name, renderer)
 		UI.Template.__define__ name, renderer
@@ -20,12 +19,12 @@
 
 	collection = global[collection_name]
 	if not collection
-		console.log "collection not found"
+		console.log "collection not found: " + collection_name
 		return undefined
 
 	item = collection.findOne(item_id)
 	if not item
-		console.log "item not found"
+		console.log "item: (" + item_id + ") not found in: " + collection_name
 		return undefined
 
 	return item[field]

@@ -43,6 +43,7 @@ Template.landing.helpers
 
 		list = Posts.find(filter, mod).fetch().map(func)
 		groups = _.uniq(list, true);
+		
 		return groups
 
 	posts: (group) ->

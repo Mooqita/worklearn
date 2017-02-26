@@ -8,7 +8,7 @@
 #######################################################
 Meteor.publish "challenges", () ->
 	if !this.userId
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error("Not permitted.")
 
 	filter =
 		owner_id: this.userId
@@ -18,7 +18,7 @@ Meteor.publish "challenges", () ->
 			name: 1
 
 	crs = Challenges.find filter, options
-	console.log('Challenge indices: ' + crs.count() + ' submitted!')
+	console.log("Challenge indices: " + crs.count() + " submitted!")
 	return crs
 
 
@@ -27,14 +27,14 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 	check challenge_id, String
 
 	if !this.userId
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error("Not permitted.")
 
 	filter =
 		owner_id: this.userId
 		_id: challenge_id
 
 	crs = Challenges.find filter
-	console.log('Challenges: ' + crs.count() + ' submitted!')
+	console.log("Challenges: " + crs.count() + " submitted!")
 	return crs
 
 
@@ -43,7 +43,7 @@ Meteor.publish "challenge_template", (challenge_id) ->
 	check challenge_id, String
 
 	if !this.userId
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error("Not permitted.")
 
 	filter =
 		_id: challenge_id
@@ -54,7 +54,7 @@ Meteor.publish "challenge_template", (challenge_id) ->
 			template: 1
 
 	crs = Challenges.find filter, mod
-	console.log('Challenge templates: ' + crs.count() + ' submitted!')
+	console.log("Challenge templates: " + crs.count() + " submitted!")
 	return crs
 
 
@@ -64,7 +64,7 @@ Meteor.publish "response", (challenge_template, index) ->
 	check index, String
 
 	if !this.userId
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error("Not permitted.")
 
 	filter =
 		challenge_template: challenge_template
@@ -72,7 +72,7 @@ Meteor.publish "response", (challenge_template, index) ->
 		index: index
 
 	crs = Responses.find filter
-	console.log('Responses: ' + crs.count() + ' submitted!')
+	console.log("Responses: " + crs.count() + " submitted!")
 	return crs
 
 
@@ -81,11 +81,11 @@ Meteor.publish "posts", (group_name) ->
 	check group_name, Match.OneOf String, undefined, null
 
 	filters = []
-	roles = ['all']
+	roles = ["all"]
 
 	if this.userId
 		# find all user roles
-		roles.push 'anonymous'
+		roles.push "anonymous"
 		user = Meteor.users.findOne this.userId
 		roles.push user.roles ...
 
@@ -119,20 +119,20 @@ Meteor.publish "posts", (group_name) ->
 		added: (id) ->
 			item = Posts.findOne(id)
 			if item.paper
-				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
-			self.added('posts', item._id, item)
-			console.log('Post of ' + item.template + ' added: ' + id)
+				item["paper_url"] = "/file/Posts/" + item._id + "/paper/" + item.title
+			self.added("posts", item._id, item)
+			console.log("Post of " + item.template + " added: " + id)
 
 		changed: (id) ->
 			item = Posts.findOne(id)
 			if item.paper
-				item['paper_url'] = '/file/Posts/' + item._id + '/paper/' + item.title
-			self.changed('posts', item._id, item)
-			console.log('Post ' + item.template + ' changed: ' + id)
+				item["paper_url"] = "/file/Posts/" + item._id + "/paper/" + item.title
+			self.changed("posts", item._id, item)
+			console.log("Post " + item.template + " changed: " + id)
 
 		removed: (id) ->
 			self.removed("posts", id)
-			console.log('Post ' + item.template + ' removed: ' + id)
+			console.log("Post " + item.template + " removed: " + id)
 
 	handle = Posts.find(filter, mod).observeChanges(handler)
 
@@ -148,19 +148,37 @@ Meteor.publish "files", (collection_name, item_id, field) ->
 	data =
 		data: colllection.findOne(item_id)[field]
 
-	this.added('files', Random.id(), data)
-	console.log('File: '+collection_name+"."+field+' submitted!')
+	this.added("files", Random.id(), data)
+	console.log("File: "+collection_name+"."+field+" submitted!")
 
 #######################################################
 Meteor.publish "permissions", () ->
 	if !this.userId
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error("Not permitted.")
 
-	if !Roles.userIsInRole(this.userId, 'admin')
-		throw new Meteor.Error('Not permitted.')
+	if !Roles.userIsInRole(this.userId, "admin")
+		throw new Meteor.Error("Not permitted.")
 
 	crs = Permissions.find()
-	console.log('Permissions: ' + crs.count() + ' submitted!')
+	console.log("Permissions: " + crs.count() + " submitted!")
 	return crs
 
+#######################################################
+Meteor.publish "templates", () ->
+	mod =
+		fields:
+			_id : 1
+			name: 1
 
+	crs = Templates.find({}, mod)
+	console.log("Templates: " + crs.count() + " submitted!")
+	return crs
+
+#######################################################
+Meteor.publish "template_by_id", (template_id) ->
+	filter =
+		_id : template_id
+
+	crs = Templates.find(filter)
+	console.log("Template loaded: " + crs.count() + " submitted!")
+	return crs

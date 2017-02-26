@@ -7,6 +7,7 @@
 #######################################################
 
 #######################################################
+@Templates = new Mongo.Collection("templates")
 @Posts = new Mongo.Collection("posts")
 @Files = new Mongo.Collection("files")
 

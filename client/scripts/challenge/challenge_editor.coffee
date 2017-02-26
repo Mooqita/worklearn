@@ -27,6 +27,22 @@ Template.challenge_dashboard.events
 				else
 					sAlert.info("Challenge added")
 
+	"click #add_template": () ->
+		self = this
+
+		Meteor.call "add_template",
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				else
+					sAlert.info("Template added")
+					Meteor.call "set_field", "Challenges", "template_id", self._id, res,
+						(err, res) ->
+							if err
+								sAlert.error(err)
+							else
+								sAlert.success("Challenge set")
+
 ###################################################
 Template.challenge_dashboard.helpers
 	challenge: () ->
@@ -40,8 +56,6 @@ Template.challenge_dashboard.helpers
 	challenge_url: () ->
 		return "/challenge_dashboard/"+this._id
 
-
-'''
 ###################################################
 #
 # Editor
@@ -50,95 +64,19 @@ Template.challenge_dashboard.helpers
 
 ###################################################
 Template.challenge_editor.onCreated ->
-	self = this
-	challenge_id = FlowRouter.getParam("challenge_id")
-
-	self.autorun () ->
-		self.subscribe "challenge_by_id", challenge_id
-
-###################################################
-Template.challenge_editor.onRendered ->
-	elements =[
-		document.querySelector("#component_container")
-		document.querySelector("#challenge_container")]
-
-	options =
-		removeOnSpill: true
-
-		copy: (el, source) ->
-			expect = document.getElementById("component_container")
-			copy = source.id == expect.id
-			return copy
-
-		moves: (el, container, handle) ->
-			return container.id != "challenge_container"
-
-		accepts: (el, target) ->
-			expect = document.getElementById("challenge_container")
-			accept = target.id == expect.id
-			return accept
-
-	drake = dragula(elements, options)
-
-	drake.on "drop", (el) ->
-		challenge_id = FlowRouter.getParam("challenge_id")
-		challenge = Challenges.findOne(challenge_id)
-
-		try
-			obj = JSON.parse(challenge.content)
-			obj.components.push({"template":el.id})
-
-			item_id = FlowRouter.getParam("challenge_id")
-
-			Meteor.call "set_field", "Challenges", item_id, "content", JSON.stringify(obj),
-				(err, res)->
-					if err
-						sAlert.error(err)
-					else
-						sAlert.success("Field updated")
-
-		catch error
-			console.log error
-			sAlert.error error
-
-		el.remove()
-
+	id = FlowRouter.getParam("challenge_id")
+	challenge = Challenges.findOne(id)
+	tn = challenge.template_id
+	Session.set "current_template", tn
 
 ###################################################
 Template.challenge_editor.helpers
-	components: () ->
-		return [
-			{id:"text_area_edit", label:"Text Area"}
-			{id:"text_input_edit", label:"Text Input"}
-			{id:"number_input_edit", label:"Number"}
-			{id:"likert_edit", label:"Likert"}
-			{id:"response_edit", label:"Response Code"}
-			{id:"country_edit", label:"Country"}
-			{id:"select_input_edit", label:"Select"}
-			{id:"code_input_edit", label:"Code"}
-			{id:"text",label:"Text"}
-			{id:"header",label:"Head line"}
-		]
+	templates: () ->
+		tmpls = Templates.find().fetch()
+		res = ({label:t.name, value:t._id} for t in tmpls)
+		return res
 
-	challenge_components: () ->
-		challenge_id = FlowRouter.getParam("challenge_id")
-		challenge = Challenges.findOne(challenge_id)
+	template: () ->
+		tn = Session.get "current_template"
+		return Templates.findOne tn
 
-		if not challenge
-			return []
-
-		if not challenge.content
-			return []
-
-		obj = JSON.parse(challenge.content)
-		return obj.components
-
-	content: () ->
-		challenge_id = FlowRouter.getParam("challenge_id")
-		challenge = Challenges.findOne(challenge_id)
-
-		if not challenge
-			return undefined
-
-		return challenge.content
-'''
