@@ -1,0 +1,69 @@
+<!--template name="worker_survey">
+	<h1>Survey On Online Work Environments</h1>
+
+	<hr>
+
+	<form class="form-wide-padding">
+		<div class="form-group">
+			<label class="control-label">Where are you living?</label>
+			{{>country_state state=true method="set_field" collection_name="Responses"
+			c_field="country" s_field="state" item_id=_id}}
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">What do you like about working online?</label>
+
+			<p>
+				Please tell us what you like about working as online.
+				Please provide only one reason per line. e.g.:
+			</p>
+
+			<p>
+				reason 1<br>
+				reason 2<br>
+				...
+			</p>
+
+			{{>text_input method="set_field" collection_name="Responses" field="like_work"
+			item_id=_id placeholder="Tell us what you like about working online."}}
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">What would you like to improve?</label>
+
+			<p>
+				We are also interested in the things you think should
+				be improved in the world of online work. Again, please
+				provide only one improvement per line. e.g.:
+			</p>
+
+			<p>
+				improvement 1<br>
+				improvement 2<br>
+				...
+			</p>
+
+			{{>text_input method="set_field" collection_name="Responses"
+			field="change_work" item_id=_id placeholder="Tell us what you think should be improved."}}
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">What work type do you prefer?</label>
+
+			<p>Do you prefer work that pays more and is more complex or do you prefer work that pays less and is less complex.</p>
+
+			{{>likert_item method="set_field" collection_name="Responses"
+			field="work_preference" item_id=_id placholder="" low_label="easy<br>low pay"
+			high_label="complex<br>high pay" }}
+		</div>
+	</form>
+
+	<hr>
+
+	<h1>Response code</h1>
+	<div class="well">
+		{{>response_code required=(array "work_preference" "change_work" "like_work" "country")
+		salt="9827409385" collection_name="Responses" item_id=_id
+		not_done_message="Please finish the survey. The response code will be shown here."}}
+	</div>
+</template-->

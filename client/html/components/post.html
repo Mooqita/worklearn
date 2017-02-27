@@ -56,29 +56,27 @@
 					</div>
 
 					<div class="col-sm-6">
-						{{#input_wrapper label="Delete"}}
-							<div class="input-group">
-								<span class="form-control">
-									{{#if deleted}}
-										Post is deleted.
-									{{else}}
-										Delete post:
-									{{/if}}
-								</span>
+						<div class="input-group">
+							<span class="form-control">
+								{{#if deleted}}
+									Post is deleted.
+								{{else}}
+									Delete post:
+								{{/if}}
+							</span>
 
-								<div class="input-group-btn">
-									{{#if deleted}}
-										<div class="btn btn-danger" id="reinstate_post">
-											<i class="glyphicon glyphicon-repeat" aria-hidden="true"></i>
-										</div>
-									{{else}}
-										<div class="btn btn-danger" id="remove_post">
-											<i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i>
-										</div>
-									{{/if}}
-								</div>
+							<div class="input-group-btn">
+								{{#if deleted}}
+									<div class="btn btn-danger" id="reinstate_post">
+										<i class="glyphicon glyphicon-repeat" aria-hidden="true"></i>
+									</div>
+								{{else}}
+									<div class="btn btn-danger" id="remove_post">
+										<i class="glyphicon glyphicon-remove-circle" aria-hidden="true"></i>
+									</div>
+								{{/if}}
 							</div>
-						{{/input_wrapper}}
+						</div>
 					</div>
 				</div>
 			</form>
