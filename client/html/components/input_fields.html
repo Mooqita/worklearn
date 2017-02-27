@@ -1,92 +1,49 @@
-<template name="input_wrapper">
-	{{#if edit}}
-		<div class="well background-white" style="padding-top: 15px">
-			{{> UI.contentBlock}}
-
-			<hr>
-
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="{{field_name}}" class="col-sm-4 control-label">Field to modify</label>
-
-					<div class="col-sm-8">
-						{{>basic_input method="set_field" collection_name="templates"
-							field=field_name item_id=item_id placholder="Field name" edit=false}}
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="{{placeholder_name}}" class="col-sm-4 control-label"></label>
-
-					<div class="col-sm-8">
-						{{>basic_input method="set_field" collection_name="templates"
-							field=placeholder_name item_id=item_id placholder="Placeholder text" edit=false}}
-					</div>
-				</div>
-			</form>
-		</div>
-	{{else}}
-		{{> UI.contentBlock}}
-	{{/if}}
-</template>
-
-
 <template name="select_input">
-	{{#input_wrapper field=field edit=edit}}
-		<select class="form-control post-field {{classes}}" id="{{field}}">
-			{{#each options}}
-				<option value="{{value}}" {{is_selected value}}>{{label}}</option>
-			{{/each}}
-		</select>
-	{{/input_wrapper}}
+	<select class="form-control post-field {{classes}}" id="{{field}}">
+		{{#each options}}
+			<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+		{{/each}}
+	</select>
 </template>
 
 
 <template name="basic_input">
-	{{#input_wrapper field=field edit=edit}}
-		<input placeholder="{{placeholder}}"
-				 class="form-control post-field {{classes}}" type="{{type}}"
-				 id="{{field}}" tabindex="1" value="{{value}}"/>
-	{{/input_wrapper}}
+	<input placeholder="{{placeholder}}"
+			 class="form-control post-field {{classes}}" type="{{type}}"
+			 id="{{field}}" tabindex="1" value="{{value}}"/>
 </template>
 
 
 <template name="text_input">
-	{{#input_wrapper field=field edit=edit}}
-		<textarea  class="form-control post-field {{classes}}" placeholder="{{placeholder}}"
-							 id="{{field}}" rows="12">{{value}}</textarea>
-	{{/input_wrapper}}
+	<textarea  class="form-control post-field {{classes}}" placeholder="{{placeholder}}"
+						 id="{{field}}" rows="12">{{value}}</textarea>
 </template>
 
 <template name="wysiwyg_input">
-	{{#input_wrapper field=field edit=edit}}
-		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group">
-					<textarea class="form-control" type="text"
-										rows="12" id="editor_{{editor_id}}"
-										placeholder="{{placeholder}}">{{value}}</textarea>
-				</div>
-				<div class="form-group">
-					<div class="btn-group btn-group-justified">
-						<div class="btn btn-theme" id="save">Save</div>
-						</div>
-				</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<textarea class="form-control" type="text"
+									rows="12" id="editor_{{editor_id}}"
+									placeholder="{{placeholder}}">{{value}}</textarea>
+			</div>
+			<div class="form-group">
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="save">Save</div>
+					</div>
 			</div>
 		</div>
-	{{/input_wrapper}}
+	</div>
 </template>
 
 <template name="code_input">
-	{{#input_wrapper field=field edit=edit}}
-		<div class="well">
-			<div style="border: solid 1px #bbb; margin-bottom: 25px">
-				{{> CodeMirror id=editor_id options=editorOptions code=editorCode}}
-			</div>
-
-			<div class="btn-group btn-group-justified">
-				<div class="btn btn-theme" id="save">Save</div>
-			</div>
+	<div class="well">
+		<div style="border: solid 1px #bbb; margin-bottom: 25px">
+			{{> CodeMirror id=editor_id options=editorOptions code=editorCode}}
 		</div>
-	{{/input_wrapper}}
+
+		<div class="btn-group btn-group-justified">
+			<div class="btn btn-theme" id="save">Save</div>
+		</div>
+	</div>
 </template>
