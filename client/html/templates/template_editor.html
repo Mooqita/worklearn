@@ -1,0 +1,26 @@
+<template name="template_editor">
+	<div class="well">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template name</label>
+					{{>basic_input method="set_field" collection_name="Templates"
+							item_id=_id field="name" placeholder="Template name" type="text"}}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template identifier</label>
+					<label class="form-control"><em>{{_id}}</em></label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{#if template_loaded}}
+		{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
+	{{else}}
+		Loading template code <em><span class="glyphicon glyphicon-refresh spin"></span></em>
+	{{/if}}
+</template>

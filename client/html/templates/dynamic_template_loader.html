@@ -1,0 +1,15 @@
+<template name="dynamic_template_loader">
+	{{#if template_exists}}
+		{{#unless template_loaded}}
+			<h1>
+				Preparing content <em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</h1>
+		{{else}}
+			{{#Template.dynamic template=template_id data=data}}
+				{{> UI.contentBlock}}
+			{{/Template.dynamic}}
+		{{/unless}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
