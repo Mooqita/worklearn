@@ -1,12 +1,10 @@
 ########################################
 Template.worker_login.onCreated ->
 	self = this
-	Session.set('templateName','');
-
 	self.autorun () ->
 		index = FlowRouter.getParam("index")
-		challenge_template = FlowRouter.getParam("challenge_template")
-		self.subscribe "response", challenge_template, index
+		challenge_id = FlowRouter.getParam("challenge_id")
+		self.subscribe "challenge_by_id", challenge_id
 
 ########################################
 # sign_worker
@@ -33,27 +31,39 @@ Template.sign_worker.events
 								sAlert.success("You are logged in.")
 
 ########################################
-# load_template
+# load_response
 ########################################
 
 ########################################
-Template.load_template.onCreated ->
+Template.load_response.onCreated ->
 	self = this
+	self.loaded = new ReactiveVar(false)
 	self.autorun () ->
 		index = FlowRouter.getParam("index")
-		challenge_template = FlowRouter.getParam("challenge_template")
-		self.subscribe "response", challenge_template, index
+		challenge_id = FlowRouter.getParam("challenge_id")
+		self.subscribe "response", challenge_id, index,
+			onReady: () ->
+				self.loaded.set(true)
 
 ########################################
-Template.load_template.helpers
-	template_path: ->
-		return FlowRouter.getParam("challenge_template")
+Template.load_response.helpers
+	template_id: ->
+		challenge_id = FlowRouter.getParam("challenge_id")
+		challenge = Challenges.findOne challenge_id
+		return challenge.template_id
+
+	loaded: ->
+		res = Template.instance().loaded.get()
+		return res
 
 	response: ->
+		challenge_id = FlowRouter.getParam("challenge_id")
+		index = FlowRouter.getParam("index")
+
 		filter =
-			challenge_template: FlowRouter.getParam("challenge_template")
-			index: FlowRouter.getParam("index")
+			challenge_id: challenge_id
 			owner_id: Meteor.userId()
+			index: index
 
 		response = Responses.findOne(filter)
 		return response
@@ -65,7 +75,13 @@ Template.load_template.helpers
 ########################################
 Template.add_response.onCreated ->
 	index = FlowRouter.getParam("index")
-	challenge_template = FlowRouter.getParam("challenge_template")
-	Meteor.call "add_response", challenge_template, index
+	challenge_id = FlowRouter.getParam("challenge_id")
+	Meteor.call "add_response", challenge_id, index,
+		(err, res) ->
+			if err
+				sAlert.error err
+			else
+				sAlert. success "Response added"
+
 
 

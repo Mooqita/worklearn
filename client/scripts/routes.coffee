@@ -39,7 +39,7 @@ FlowRouter.route('/challenge_dashboard/:challenge_id',
 		BlazeLayout.render("base_layout", {content: 'challenge_dashboard'}))
 
 ##########################################################
-FlowRouter.route('/response/:challenge_template/:index',
+FlowRouter.route('/response/:challenge_id/:index',
 	name: 'response',
 	action: (params) ->
 		BlazeLayout.render("base_layout", {content: 'worker_login'}))

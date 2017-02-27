@@ -22,7 +22,7 @@
 
 .post_start_edit{
 	height: 0px;
-	top: -10px;
+	top: -25px;
 	left: 0px;
 	position: relative;
 	text-align: right;
@@ -75,4 +75,26 @@
   -webkit-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
           box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
 
+}
+
+.team-member {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.team-member img {
+  margin: 0 auto;
+	width: 180px;
+  border: 7px solid white;
+	-webkit-dropbox-shadow: 0px 0px 5px 0px $text;
+	-moz-dropbox-shadow: 0px 0px 5px 0px $text;
+	box-shadow: 0px 0px 5px 0px $text;
+}
+
+.team-member h4 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.team-member p {
+  margin-top: 0;
 }

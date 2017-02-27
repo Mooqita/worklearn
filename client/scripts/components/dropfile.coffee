@@ -113,7 +113,7 @@ Template.dropfile.events
 		for file in files
 			fileReader = new FileReader()
 			type = file.type
-			col = this.collection
+			col = this.collection_name
 			item = this.item_id
 			field = this.field
 			method = this.method

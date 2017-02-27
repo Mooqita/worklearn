@@ -6,9 +6,10 @@
 
 		#Template[name] = new Template(name, renderer)
 		UI.Template.__define__ name, renderer
+		console.log "Template compiled"
 
 	catch err
-		console.log 'Error compiling template:' + html_text
+		console.log "Error compiling template:" + html_text
 		console.log err.message
 
 #######################################################
@@ -48,15 +49,15 @@ Template.registerHelper "editing", () ->
 #######################################################
 # This allows us to write inline objects in Blaze templates
 # like so: {{> template param=(object key="value") }}
-# => The template's data context will look like this:
+# => The template"s data context will look like this:
 # { param: { key: "value" } }
-Template.registerHelper 'object', (param) ->
+Template.registerHelper "object", (param) ->
 	return param.hash
 
 #######################################################
 # This allows us to write inline arrays in Blaze templates
 # like so: {{> template param=(array 1 2 3) }}
-# => The template's data context will look like this:
+# => The template"s data context will look like this:
 # { param: [1, 2, 3] }
-Template.registerHelper 'array', (param...) ->
+Template.registerHelper "array", (param...) ->
 	return param.slice 0, param.length-1

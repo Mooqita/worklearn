@@ -7,6 +7,7 @@
 
 #worklearn
 #TODO: move hash generation to server.
+#TODO: template editor is not loading template code properly.
 
 
 given =

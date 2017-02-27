@@ -6,8 +6,8 @@
 
 ################################################################
 Meteor.methods
-	add_response: (challenge_template, index) ->
-		check challenge_template, String
+	add_response: (challenge_id, index) ->
+		check challenge_id, String
 		check index, Match.OneOf String, Number
 
 		user = Meteor.user()
@@ -16,7 +16,7 @@ Meteor.methods
 			throw new Meteor.Error('Not permitted.')
 
 		hit =
-			challenge_template: challenge_template
+			challenge_id: challenge_id
 			owner_id: Meteor.userId()
 			index: index
 

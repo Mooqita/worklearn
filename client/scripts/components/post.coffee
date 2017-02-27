@@ -3,30 +3,17 @@
 #########################################################
 
 #########################################################
-Template._post.events
-	'click #remove_post': ()->
-		Meteor.call 'set_post_field', '', this._id, 'deleted', true, undefined,
-			(err, res) ->
-				if err
-					sAlert.error(err)
+Template._post.helpers
+	children: (parent) ->
+		filter =
+			parent: parent._id
 
-	'click #reinstate_post': ()->
-		Meteor.call 'set_post_field', '', this._id, 'deleted', false, undefined,
-			(err, res) ->
-				if err
-					sAlert.error(err)
+		list = Posts.find(filter)
+		return list
 
-	'click #edit': () ->
-		ed = Session.get("editing_post")
-
-		if ed == this._id
-			Session.set("editing_post", "")
-			return
-
-		Session.set("editing_post", this._id)
 
 #########################################################
-Template._post.helpers
+Template._edit_tools.helpers
 	is_visible: (val) ->
 		if val in this.visible_to
 			return "selected"
@@ -45,7 +32,9 @@ Template._post.helpers
 			{value:"empty", label:"Empty"}
 			{value:"post", label:"Post"}
 			{value:"headline", label:"Headline"}
-			{value:"publication", label:"Publication"}]
+			{value:"publication", label:"Publication"}
+			{value:"team", label:"Team"}
+			{value:"member", label:"member"}]
 		return opts
 
 	visibility: () ->
@@ -56,6 +45,20 @@ Template._post.helpers
 			{value:"owner", label:"Only me"}]
 		return opts
 
+	parents: () ->
+		filter = {}
+		mod =
+			sort:
+				fields:
+					_id: 1
+					name: 1
+
+		list = Posts.find(filter, mod).fetch()
+		groups = [{value:"", label:"Select a parent"}]
+		groups.push ({value:x._id, label:x.title} for x in list)...
+
+		return groups
+
 
 #########################################################
 # Paper
@@ -64,7 +67,7 @@ Template._post.helpers
 #########################################################
 Template.publication.events
 	'click #remove_paper': (event) ->
-		Meteor.call 'set_post_field', '', this._id, 'paper', '', undefined,
+		Meteor.call 'set_field', 'Posts', this._id, 'paper', '', undefined,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -72,7 +75,7 @@ Template.publication.events
 					sAlert.success('Paper cleared')
 
 	'click #remove_figure': (event) ->
-		Meteor.call 'set_post_field', '', this._id, 'figure', '', undefined,
+		Meteor.call 'set_field', 'Posts', this._id, 'figure', '', undefined,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -86,7 +89,7 @@ Template.publication.events
 #########################################################
 Template.post.events
 	'click #remove_figure': (event) ->
-		Meteor.call 'set_post_field', '', this._id, 'figure', '', undefined,
+		Meteor.call 'set_field', 'Posts', this._id, 'figure', '', undefined,
 			(err, res) ->
 				if err
 					sAlert.error(err)

@@ -23,11 +23,9 @@ Meteor.methods
 			owner_id: Meteor.userId()
 			view_order: 0
 			pub_year: 0
+			parent: ""
 
 		Posts.insert post
-
-	set_post_field: (collection, item_id, field, data, type)->
-		modify_field('Posts', item_id, field, data)
 
 	set_post_visibility: (collection, item_id, field, data, type) ->
 		check item_id, String

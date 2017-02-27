@@ -6,75 +6,25 @@
 #######################################################
 
 #######################################################
-Meteor.publish "challenges", () ->
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		owner_id: this.userId
-
-	options =
-		fields:
-			name: 1
-
-	crs = Challenges.find filter, options
-	console.log("Challenge indices: " + crs.count() + " submitted!")
-	return crs
-
-
-#######################################################
-Meteor.publish "challenge_by_id", (challenge_id) ->
-	check challenge_id, String
-
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		owner_id: this.userId
-		_id: challenge_id
-
-	crs = Challenges.find filter
-	console.log("Challenges: " + crs.count() + " submitted!")
-	return crs
-
-
-#######################################################
-Meteor.publish "challenge_template", (challenge_id) ->
-	check challenge_id, String
-
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		_id: challenge_id
-
+Meteor.publish "templates", () ->
 	mod =
 		fields:
+			_id : 1
 			name: 1
-			template: 1
 
-	crs = Challenges.find filter, mod
-	console.log("Challenge templates: " + crs.count() + " submitted!")
+	crs = Templates.find({}, mod)
+	console.log("Templates: " + crs.count() + " submitted!")
 	return crs
-
 
 #######################################################
-Meteor.publish "response", (challenge_template, index) ->
-	check challenge_template, String
-	check index, String
-
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
+Meteor.publish "template_by_id", (template_id) ->
 	filter =
-		challenge_template: challenge_template
-		owner_id: this.userId
-		index: index
+		_id : template_id
 
-	crs = Responses.find filter
-	console.log("Responses: " + crs.count() + " submitted!")
+	crs = Templates.find(filter)
+
+	console.log("Template loaded: " + crs.count() + " submitted!")
 	return crs
-
 
 #######################################################
 Meteor.publish "posts", (group_name) ->
@@ -164,21 +114,53 @@ Meteor.publish "permissions", () ->
 	return crs
 
 #######################################################
-Meteor.publish "templates", () ->
-	mod =
+Meteor.publish "challenges", () ->
+	if !this.userId
+		throw new Meteor.Error("Not permitted.")
+
+	filter =
+		owner_id: this.userId
+
+	options =
 		fields:
-			_id : 1
 			name: 1
 
-	crs = Templates.find({}, mod)
-	console.log("Templates: " + crs.count() + " submitted!")
+	crs = Challenges.find filter, options
+	console.log("Challenge indices: " + crs.count() + " submitted!")
 	return crs
+
 
 #######################################################
-Meteor.publish "template_by_id", (template_id) ->
-	filter =
-		_id : template_id
+Meteor.publish "challenge_by_id", (challenge_id) ->
+	check challenge_id, String
 
-	crs = Templates.find(filter)
-	console.log("Template loaded: " + crs.count() + " submitted!")
+	if !this.userId
+		throw new Meteor.Error("Not permitted.")
+
+	filter =
+		owner_id: this.userId
+		_id: challenge_id
+
+	crs = Challenges.find filter
+	console.log("Challenges: " + crs.count() + " submitted!")
 	return crs
+
+
+#######################################################
+Meteor.publish "response", (challenge_id, index) ->
+	check challenge_id, String
+	check index, String
+
+	if !this.userId
+		throw new Meteor.Error("Not permitted.")
+
+	filter =
+		challenge_id: challenge_id
+		owner_id: this.userId
+		index: index
+
+	crs = Responses.find filter
+	console.log("Responses: " + crs.count() + " submitted!")
+	return crs
+
+
