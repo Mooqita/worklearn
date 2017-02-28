@@ -10,7 +10,7 @@ Template._post.helpers
 
 		mod =
 			sort:
-				view_order: 1
+				view_order:1
 
 		list = Posts.find(filter, mod)
 		return list

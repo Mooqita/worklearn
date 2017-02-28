@@ -75,6 +75,9 @@ Template.basic_input.events
 		collection = this.collection_name
 		item_id = this.item_id
 
+		if this.type == "number"
+			value = Number(value)
+
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err
