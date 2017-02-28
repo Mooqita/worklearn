@@ -59,8 +59,8 @@ Template.landing.helpers
 		mod =
 			sort:
 				post_group: 1
-				fields:
-					post_group: true
+			fields:
+				post_group: true
 		func = (x)->
 			return x.post_group;
 

@@ -8,7 +8,11 @@ Template._post.helpers
 		filter =
 			parent: parent._id
 
-		list = Posts.find(filter)
+		mod =
+			sort:
+				view_order: 1
+
+		list = Posts.find(filter, mod)
 		return list
 
 
@@ -48,10 +52,9 @@ Template._edit_tools.helpers
 	parents: () ->
 		filter = {}
 		mod =
-			sort:
-				fields:
-					_id: 1
-					name: 1
+			fields:
+				_id: 1
+				name: 1
 
 		list = Posts.find(filter, mod).fetch()
 		groups = [{value:"", label:"Select a parent"}]
