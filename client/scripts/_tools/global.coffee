@@ -1,4 +1,22 @@
 #######################################################
+@find_template_names = () ->
+	tmpls = [
+		{value:"", label:"Select template"}
+		{value:"empty", label:"Empty"}
+		{value:"post", label:"Post"}
+		{value:"headline", label:"Headline"}
+		{value:"publication", label:"Publication"}
+		{value:"team", label:"Team"}
+		{value:"member", label:"member"}]
+
+	d_tmpls = Templates.find().fetch()
+	d_tmpls = ({label:t.name, value:t._id} for t in d_tmpls)
+
+	tmpls.push d_tmpls...
+
+	return tmpls
+
+#######################################################
 @compile_template = (name, html_text) ->
 	try
 		compiled = SpacebarsCompiler.compile html_text, { isTemplate:true }

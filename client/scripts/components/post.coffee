@@ -31,15 +31,7 @@ Template._edit_tools.helpers
 			return "selected"
 
 	templates: () ->
-		opts = [
-			{value:"", label:"Use template"}
-			{value:"empty", label:"Empty"}
-			{value:"post", label:"Post"}
-			{value:"headline", label:"Headline"}
-			{value:"publication", label:"Publication"}
-			{value:"team", label:"Team"}
-			{value:"member", label:"member"}]
-		return opts
+		return find_template_names()
 
 	visibility: () ->
 		opts = [
@@ -54,7 +46,7 @@ Template._edit_tools.helpers
 		mod =
 			fields:
 				_id: 1
-				name: 1
+				title: 1
 
 		list = Posts.find(filter, mod).fetch()
 		groups = [{value:"", label:"Select a parent"}]

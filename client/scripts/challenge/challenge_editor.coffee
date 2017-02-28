@@ -72,8 +72,7 @@ Template.challenge_editor.onCreated ->
 ###################################################
 Template.challenge_editor.helpers
 	templates: () ->
-		tmpls = Templates.find().fetch()
-		res = ({label:t.name, value:t._id} for t in tmpls)
+		res = find_template_names()
 		return res
 
 	template: () ->

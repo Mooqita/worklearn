@@ -26,7 +26,6 @@ Template.dynamic_template_loader.onCreated ->
 Template.dynamic_template_loader.helpers
 	template_exists: ->
 		tn = this.template_id
-		console.log tn
 
 		tmpl = get_template(tn)
 		if tmpl
