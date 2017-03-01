@@ -21,6 +21,7 @@ Meteor.methods
 		url = 'http://ipinfo.io/' + con_ip
 
 		call = Meteor.bindEnvironment (err, res, body) ->
+			console.log body
 			ip = JSON.parse(body)
 
 			msg =
