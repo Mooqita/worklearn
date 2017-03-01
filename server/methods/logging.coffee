@@ -15,7 +15,9 @@ Meteor.methods
 	log_user: (fp) ->
 		con_ip = String(this.connection.clientAddress)
 		request = require('request')
-		request 'http://ipinfo.io/'+con_ip,
+		url = 'http://ipinfo.io/'+con_ip
+		console.log url
+		request url, 'http://ipinfo.io/'+con_ip,
 			(error, res, body) ->
   			console.log JSON.parse(body)
 
