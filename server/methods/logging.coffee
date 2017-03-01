@@ -14,6 +14,12 @@ merge = (dest, objs...) ->
 Meteor.methods
 	log_user: (fp) ->
 		con_ip = String(this.connection.clientAddress)
+		request = require('request')
+		request 'http://ipinfo.io/'+con_ip,
+			(error, res, body) ->
+  			console.log JSON.parse(body)
+
+		con_ip = String(this.connection.clientAddress)
 		headers = this.connection.httpHeaders
 		date = new Date()
 		user = this.userId
