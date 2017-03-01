@@ -13,6 +13,7 @@ merge = (dest, objs...) ->
 ################################################################
 Meteor.methods
 	log_user: (fp) ->
+		con_ip = this.connection.clientAddress
 		headers = this.connection.httpHeaders
 		date = new Date()
 		user = this.userId
@@ -22,6 +23,7 @@ Meteor.methods
 				date: date
 				print: fp
 				user: user
+				con_ip: con_ip
 
 			merge msg, headers
 			merge msg, ip
@@ -32,4 +34,4 @@ Meteor.methods
 			Logging.insert msg
 
 		IPinfo = require 'get-ipinfo'
-		IPinfo this.connection.clientAddress, call
+		IPinfo con_ip, call
