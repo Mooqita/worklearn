@@ -18,11 +18,20 @@ Meteor.methods
 		date = new Date()
 		user = this.userId
 		request = require('request')
-		url = 'http://ipinfo.io/' + con_ip
+		url = 'http://ipinfo.io/' + con_ip +"/json"
+		console.log url
 
 		call = Meteor.bindEnvironment (err, res, body) ->
+			console.log err
+			console.log res
 			console.log body
-			ip = JSON.parse(body)
+
+			if not err
+				ip = JSON.parse(body)
+			else
+				ip =
+					error: err
+					body: body
 
 			msg =
 				date: date
