@@ -1,3 +1,53 @@
+<template name="template_dashboard">
+	{{#unless template}}
+		<h1>Templates you designed</h1>
+
+		<hr>
+
+		<div class="input-group" style="padding-bottom: 15px">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="add_template" type="button">Add template</button>
+			</span>
+
+			<input type="text" class="form-control" placeholder="Search your templates ...">
+		</div>
+
+		{{#unless templates}}
+			<div class="well">
+				<p>No templates yet.</p>
+			</div>
+		{{/unless}}
+
+		{{#each templates}}
+			<div class="input-group" style="padding-bottom: 1px">
+				<span class="input-group-btn">
+					<a class="btn btn-theme" href="{{template_url}}">Edit</a>
+				</span>
+
+				<div class="form-control">{{name}}</div>
+			</div>
+		{{/each}}
+	{{else}}
+		{{>template_editor_load template}}
+	{{/unless}}
+</template>
+
+<template name="template_editor_load">
+	{{#if template_exists}}
+		{{#if template_loaded}}
+			{{#if template_compiled}}
+				{{>template_editor template}}
+			{{else}}
+				<h1>Compiling template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+			{{/if}}
+		{{else}}
+			<h1>Loading template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+		{{/if}}
+	{{else}}
+		<h1>We are sorry but the template does not exist :(.</h1>
+	{{/if}}
+</template>
+
 <template name="template_editor">
 	<div class="well">
 		<div class="row">
@@ -18,9 +68,5 @@
 		</div>
 	</div>
 
-	{{#if template_loaded}}
-		{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
-	{{else}}
-		Loading template code <em><span class="glyphicon glyphicon-refresh spin"></span></em>
-	{{/if}}
+	{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
 </template>

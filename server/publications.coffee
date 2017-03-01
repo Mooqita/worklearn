@@ -62,6 +62,8 @@ Meteor.publish "posts", (group_name) ->
 	mod =
 		fields:
 			paper: 0
+		sort:
+			view_order: 1
 
 	self = this
 

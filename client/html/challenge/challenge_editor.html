@@ -19,7 +19,13 @@
 		{{/unless}}
 
 		{{#each challenges}}
-			<a href="{{challenge_url}}">{{challenge_url}}</a>
+			<div class="input-group" style="padding-bottom: 1px">
+				<span class="input-group-btn">
+					<a class="btn btn-theme" href="{{challenge_url}}">Edit</a>
+				</span>
+
+				<div class="form-control">{{name}}</div>
+			</div>
 		{{/each}}
 	{{else}}
 		{{>challenge_editor challenge}}
@@ -42,10 +48,9 @@
 		</div>
 	</div>
 
-	{{>template_editor template}}
+	{{#each template}}
+		{{>template_editor_load}}
+	{{/each}}
 </template>
 
-<template name="template_editor_loader">
-	{{>template_editor template}}
-</template>
 

@@ -3,7 +3,7 @@
 ########################################
 
 ########################################
-@get_template_loaded = (template_id)->
+@get_compiled_template = (template_id)->
 	template = Template[template_id]
 
 	if template
@@ -31,7 +31,7 @@ Template.dynamic_template_loader.helpers
 		if tmpl
 			return true
 
-		tmpl = get_template_loaded(tn)
+		tmpl = get_compiled_template(tn)
 		if tmpl
 			return true
 
@@ -40,7 +40,7 @@ Template.dynamic_template_loader.helpers
 	template_loaded: ->
 		tn = this.template_id
 
-		tmpl = get_template_loaded(tn)
+		tmpl = get_compiled_template(tn)
 		if tmpl
 			return true
 

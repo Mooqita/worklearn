@@ -6,6 +6,7 @@
 
 #######################################################
 @Secrets = new Mongo.Collection("secrets")
+@Logging = new Mongo.Collection("logging")
 @DBFiles = new Mongo.Collection("dbfiles")
 
 #######################################################

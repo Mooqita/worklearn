@@ -27,6 +27,18 @@ FlowRouter.route('/file/:collection/:item_id/:field/:file_name',
 		BlazeLayout.render("base_layout", {content: 'file_download'}))
 
 ##########################################################
+FlowRouter.route('/template_dashboard',
+	name: 'challenge',
+	action: (params) ->
+		BlazeLayout.render("base_layout", {content: 'template_dashboard'}))
+
+##########################################################
+FlowRouter.route('/template_dashboard/:template_id',
+	name: 'challenge',
+	action: (params) ->
+		BlazeLayout.render("base_layout", {content: 'template_dashboard'}))
+
+##########################################################
 FlowRouter.route('/challenge_dashboard',
 	name: 'challenge',
 	action: (params) ->

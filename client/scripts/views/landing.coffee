@@ -5,6 +5,11 @@
 #########################################################
 Template.landing.onCreated ->
 	self = this
+	Fingerprint2 = require('fingerprintjs2')
+
+	new Fingerprint2().get (result, components) ->
+		Meteor.call "log_user", result
+
 	self.autorun () ->
 		self.subscribe 'posts'
 		self.subscribe 'posts', 'frontpage'

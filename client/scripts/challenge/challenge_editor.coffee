@@ -77,5 +77,5 @@ Template.challenge_editor.helpers
 
 	template: () ->
 		tn = Session.get "current_template"
-		return Templates.findOne tn
+		return Templates.find tn
 
