@@ -13,7 +13,7 @@ merge = (dest, objs...) ->
 ################################################################
 Meteor.methods
 	log_user: (fp) ->
-		con_ip = this.connection.clientAddress
+		con_ip = String(this.connection.clientAddress)
 		headers = this.connection.httpHeaders
 		date = new Date()
 		user = this.userId
