@@ -14,19 +14,15 @@ merge = (dest, objs...) ->
 Meteor.methods
 	log_user: (fp) ->
 		con_ip = String(this.connection.clientAddress)
-		request = require('request')
-		url = 'http://ipinfo.io/'+con_ip
-		console.log url
-		request url, 'http://ipinfo.io/'+con_ip,
-			(error, res, body) ->
-  			console.log JSON.parse(body)
-
-		con_ip = String(this.connection.clientAddress)
 		headers = this.connection.httpHeaders
 		date = new Date()
 		user = this.userId
+		request = require('request')
+		url = 'http://ipinfo.io/' + con_ip
 
-		call = Meteor.bindEnvironment (err, ip) ->
+		call = Meteor.bindEnvironment (err, res, body) ->
+			ip = JSON.parse(body)
+
 			msg =
 				date: date
 				print: fp
@@ -41,5 +37,4 @@ Meteor.methods
 
 			Logging.insert msg
 
-		IPinfo = require 'get-ipinfo'
-		IPinfo con_ip, call
+		request url, call
