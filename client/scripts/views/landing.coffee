@@ -5,10 +5,6 @@
 #########################################################
 Template.landing.onCreated ->
 	self = this
-	Fingerprint2 = require('fingerprintjs2')
-
-	new Fingerprint2().get (result, components) ->
-		Meteor.call "log_user", result
 
 	self.autorun () ->
 		self.subscribe 'posts'
@@ -16,6 +12,13 @@ Template.landing.onCreated ->
 		self.subscribe 'posts', 'workshop'
 		self.subscribe 'posts', 'project'
 		self.subscribe 'posts', 'paper'
+
+Template.landing.onRendered ->
+	Fingerprint2 = require('fingerprintjs2')
+
+	new Fingerprint2().get (result) ->
+		Meteor.call "log_user", result
+
 
 #########################################################
 Template.landing.events

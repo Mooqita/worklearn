@@ -25,7 +25,7 @@ Meteor.methods
 			console.log err
 			console.log body
 
-			if not err
+			if !err && res.statusCode == 200
 				ip = JSON.parse(body)
 			else
 				ip =
