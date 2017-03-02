@@ -23,7 +23,7 @@ Meteor.methods
 		console.log this.connection.clientAddress
 		console.log con_ip
 
-		con_ip = con_ip.split ","[0]
+		con_ip = con_ip.split(",")[0]
 		url = 'http://ipinfo.io/' + con_ip + "/json"
 
 		console.log con_ip
