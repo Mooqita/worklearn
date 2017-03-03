@@ -27,8 +27,8 @@ Meteor.methods
 
 		Posts.insert post
 
-	set_post_visibility: (collection, item_id, field, data, type) ->
-		check item_id, String
+	set_post_visibility: (collection_name, item_id, field, data, type) ->
+		__deny_action('modify', collection_name, item_id, field)
 		check data, Match.OneOf(String, [String])
 
 		if typeof data == 'string'
