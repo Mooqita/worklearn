@@ -55,9 +55,9 @@ Meteor.publish "responses", () ->
 	return crs
 
 #######################################################
-Meteor.publish "responses_with_data", (post_group) ->
+Meteor.publish "responses_with_data", (group_name) ->
 	restrict =
-		post_group: post_group
+		group_name: group_name
 
 	filter = filter_visible_to_user this.userId, restrict
 
