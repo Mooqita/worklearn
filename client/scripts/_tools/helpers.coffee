@@ -16,7 +16,10 @@ Template.registerHelper "_is_editing_template", (item_id) ->
 
 #######################################################
 Template.registerHelper "_can_edit_response", (item_id, required_role) ->
-	has_role = Roles.userIsInRole(Meteor.user(), [required_role])
+	has_role = true
+	if required_role
+		has_role = Roles.userIsInRole(Meteor.user(), [required_role])
+
 	item = Responses.findOne(item_id)
 	owns = item.owner_id == Meteor.userId()
 	return has_role && owns
