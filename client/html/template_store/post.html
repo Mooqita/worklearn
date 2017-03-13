@@ -14,7 +14,9 @@
 
 <template name="partner_list">
 	<div class="post background-white">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		<div class="text-center">
 			<h1 class="logo">
@@ -23,8 +25,8 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-		{{>basic_input method='set_field' collection_name='Posts' field='title'
-				placeholder='Title' item_id=_id}}
+			{{>basic_input method='set_field' collection_name='Posts' field='title'
+					placeholder='Title' item_id=_id}}
 		{{/if}}
 
 		<div class="row">
@@ -43,7 +45,10 @@
 
 <template name="partner">
 	<div class="col-xs-10 col-ms-6 col-sm-6 col-md-4">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
+
 		{{#if _is_editing_response _id}}
 			{{>dropfile method='set_field' collection_name='Posts' field='avatar'
 			item_id=_id box_id='avatar'}}
@@ -64,7 +69,9 @@
 |
 ------------------------------------------->
 <template name="empty">
-	{{>_edit_toggle}}
+	{{#if _can_edit_response _id}}
+		{{>_edit_toggle}}
+	{{/if}}
 
 	{{#if _is_editing_response _id}}
 		{{#_edit_tools}}
@@ -88,7 +95,9 @@
 ------------------------------------------->
 <template name="team">
 	<div>
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		<div class="text-center padding-bottom">
 			<h1 class="logo">
@@ -127,7 +136,9 @@
 ------------------------------------------->
 <template name="member">
 	<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		<div class="team-member">
 			<img src="{{avatar}}" class="img-responsive img-circle" alt="">
@@ -178,7 +189,9 @@
 ------------------------------------------->
 <template name="headline">
 	<div class="post background-white">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		<h1 class="logo">
 			{{#if _is_editing_response _id}}
@@ -216,7 +229,9 @@
 ------------------------------------------->
 <template name="post">
 	<div class="post background-white">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		{{#if figure}}
 			<div class="post-banner">
@@ -290,7 +305,9 @@
 ------------------------------------------->
 <template name="publication">
 	<div class="post background-white">
-		{{>_edit_toggle}}
+		{{#if _can_edit_response _id}}
+			{{>_edit_toggle}}
+		{{/if}}
 
 		{{#if _is_editing_response _id}}
 			<div class="post-banner background-theme">
