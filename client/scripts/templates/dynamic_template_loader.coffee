@@ -3,31 +3,20 @@
 ########################################
 
 ########################################
-@get_compiled_template = (template_id)->
-	template = Template[template_id]
-
-	if template
-		return template
-
-@get_template = (template_id)->
-	template = Templates.findOne(template_id)
-
-	return template
-
-
-########################################
 Template.dynamic_template_loader.onCreated ->
 	self = this
 	self.autorun () ->
 		template_id = self.data.template_id
-		self.subscribe "template_by_id", template_id
+		template = get_template_local(template_id)
+		if not template
+			self.subscribe "template_by_id", template_id
 
 ########################################
 Template.dynamic_template_loader.helpers
 	template_exists: ->
 		tn = this.template_id
 
-		tmpl = get_template(tn)
+		tmpl = get_template_local(tn)
 		if tmpl
 			return true
 
@@ -37,7 +26,7 @@ Template.dynamic_template_loader.helpers
 
 		return false
 
-	template_loaded: ->
+	template_compiled: ->
 		tn = this.template_id
 
 		tmpl = get_compiled_template(tn)

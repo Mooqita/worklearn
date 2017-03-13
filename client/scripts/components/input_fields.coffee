@@ -18,6 +18,34 @@ get_textarea = () ->
 	frm = $("#editor_"+editor_id)
 	return frm
 
+#########################################################
+# check input
+#########################################################
+
+#########################################################
+Template.check_input.helpers
+	checked: () ->
+		field = get_field_value Template.instance().data
+		if field
+			return "checked"
+
+		return ""
+
+#########################################################
+Template.check_input.events
+	"change .edit-field": (event) ->
+		field = event.target.id
+		value = event.target.checked
+		method = this.method
+		collection = this.collection_name
+		item_id = this.item_id
+
+		Meteor.call method, collection, item_id, field, value, undefined,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success("Updated: " + field)
 
 #########################################################
 # select input
@@ -36,7 +64,7 @@ Template.select_input.helpers
 
 #########################################################
 Template.select_input.events
-	"change .post-field": (event) ->
+	"change .edit-field": (event) ->
 		target = event.target
 		value = target.options[target.selectedIndex].value;
 		field = event.target.id
@@ -68,7 +96,7 @@ Template.basic_input.helpers
 
 #########################################################
 Template.basic_input.events
-	"change .post-field": (event) ->
+	"change .edit-field": (event) ->
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -102,7 +130,7 @@ Template.text_input.helpers
 
 #########################################################
 Template.text_input.events
-	"change .post-field": (event) ->
+	"change .edit-field": (event) ->
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -171,7 +199,7 @@ Template.wysiwyg_input.events
 		type = "string"
 
 		Meteor.call method, collection, item, field, content, type,
-			(err, rsp)->
+			(err, res)->
 				if err
 					sAlert.error("Changes not saved!" + err)
 				if res

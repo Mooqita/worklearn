@@ -1,9 +1,14 @@
 Meteor.methods
 	sign_in_worker: (worker_id) ->
-		filter =
-			username: worker_id
+		check worker_id, String
 
-		user = Meteor.users.findOne filter
+		if not worker_id
+			user = null
+		else
+			filter =
+				username: worker_id
+
+			user = Meteor.users.findOne filter
 
 		if not user
 			ud =

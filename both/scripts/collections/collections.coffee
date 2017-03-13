@@ -7,14 +7,11 @@
 #######################################################
 
 #######################################################
-@Templates = new Mongo.Collection("templates")
-@Posts = new Mongo.Collection("posts")
-@Files = new Mongo.Collection("files")
-
-#######################################################
 @Permissions = new Mongo.Collection("permissions")
-@Challenges = new Mongo.Collection("challenges")
+@Templates = new Mongo.Collection("templates")
 @Responses = new Mongo.Collection("responses")
+@Summaries = new Mongo.Collection("summaries")
+@Files = new Mongo.Collection("files")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")

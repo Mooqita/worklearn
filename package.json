@@ -5,11 +5,11 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "babel-runtime": "^6.22.0",
+    "babel-runtime": "^6.23.0",
     "dragula": "^3.7.2",
     "fingerprintjs2": "^1.5.0",
     "get-ipinfo": "^1.0.0",
     "meteor-node-stubs": "~0.2.0",
-    "request": "^2.79.0"
+    "request": "^2.81.0"
   }
 }

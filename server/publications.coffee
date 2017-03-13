@@ -7,94 +7,130 @@
 
 #######################################################
 Meteor.publish "templates", () ->
+	filter = filter_visible_to_user this.userId
+
 	mod =
 		fields:
 			_id : 1
 			name: 1
+			owner_id: 1
 
-	crs = Templates.find({}, mod)
+	crs = Templates.find(filter, mod)
 	console.log("Templates: " + crs.count() + " submitted!")
 	return crs
 
 #######################################################
 Meteor.publish "template_by_id", (template_id) ->
-	filter =
+	check template_id, String
+
+	restrict =
 		_id : template_id
 
-	crs = Templates.find(filter)
+	filter = filter_visible_to_user this.userId, restrict
 
+	crs = Templates.find(filter)
 	console.log("Template loaded: " + crs.count() + " submitted!")
 	return crs
 
 #######################################################
-Meteor.publish "posts", (group_name) ->
-	check group_name, Match.OneOf String, undefined, null
-
-	filters = []
-	roles = ["all"]
-
-	if this.userId
-		# find all user roles
-		roles.push "anonymous"
-		user = Meteor.users.findOne this.userId
-		roles.push user.roles ...
-
-		# adding a filter for all posts we authored
-		f2 =
-			#post_group: group_name
-			owner_id: user._id
-
-		filters.push f2
-
-	# adding a filter for all posts our current role allows us to see
-	f1 =
-		post_group: group_name
-		deleted:
-			$ne:
-				true
-		visible_to:
-			$in: roles
-	filters.push f1
-
-	filter =
-		$or: filters
+Meteor.publish "responses", () ->
+	filter = filter_visible_to_user this.userId
 
 	mod =
 		fields:
-			paper: 0
-		sort:
+			_id : 1
+			name: 1
+			index: 1
+			title: 1
+			deleted: 1
+			owner_id: 1
+			parent_id: 1
+			visible_to: 1
+			group_name: 1
 			view_order: 1
+			template_id: 1
 
-	self = this
+	crs = Responses.find filter, mod
+	console.log("Responses: " + crs.count() + " submitted!")
+	return crs
 
-	handler =
-		added: (id) ->
-			item = Posts.findOne(id)
-			if item.paper
-				item["paper_url"] = "/file/Posts/" + item._id + "/paper/" + item.title
-			self.added("posts", item._id, item)
-			console.log("Post of " + item.template + " added: " + id)
+#######################################################
+Meteor.publish "responses_with_data", (post_group) ->
+	restrict =
+		post_group: post_group
 
-		changed: (id) ->
-			item = Posts.findOne(id)
-			if item.paper
-				item["paper_url"] = "/file/Posts/" + item._id + "/paper/" + item.title
-			self.changed("posts", item._id, item)
-			console.log("Post " + item.template + " changed: " + id)
+	filter = filter_visible_to_user this.userId, restrict
 
-		removed: (id) ->
-			self.removed("posts", id)
-			console.log("Post " + item.template + " removed: " + id)
+	crs = Responses.find filter
+	console.log("Responses: " + crs.count() + " submitted!")
+	return crs
 
-	handle = Posts.find(filter, mod).observeChanges(handler)
+#######################################################
+Meteor.publish "response", (template_id, index) ->
+	check template_id, String
+	check index, String
 
-	self.ready()
-	self.onStop () ->
-    handle.stop()
+	restrict =
+		template_id: template_id
+		owner_id: this.userId
+		index: index
+
+	filter = filter_visible_to_user this.userId, restrict
+
+	crs = Responses.find filter
+	console.log("Responses: " + crs.count() + " submitted!")
+	return crs
+
+#######################################################
+Meteor.publish "response_by_id", (response_id) ->
+	check response_id, String
+
+	restrict =
+		_id: response_id
+
+	filter = filter_visible_to_user this.userId, restrict
+
+	crs = Responses.find filter
+	console.log("Responses: " + crs.count() + " submitted!")
+	return crs
+
+#######################################################
+Meteor.publish "sum_of_field", (template_id, field, value) ->
+		console.log "sum_of_field"
+		check template_id, String
+		check field, String
+		check value, String
+
+		filter = {}
+		filter[field] = value
+
+		self = this;
+		count = 0;
+		initializing = true;
+
+		handlers =
+			added: (id) ->
+				count++;
+				if (!initializing)
+					self.changed "summaries", value, {label:value, count: count}
+
+			removed: (id) ->
+				count--
+				self.changed "summaries", value, {label:value, count: count}
+
+
+		handle = Responses.find(filter).observe handlers
+
+		initializing = false;
+		self.added("summaries", value, {label:value, count: count});
+		self.ready()
+		self.onStop () ->
+			handle.stop()
+
 
 #######################################################
 Meteor.publish "files", (collection_name, item_id, field) ->
-	__deny_publish(collection_name, item_id, field, this.userId)
+	field_visible(collection_name, item_id, field, this.userId)
 
 	colllection = get_collection collection_name
 	data =
@@ -114,55 +150,4 @@ Meteor.publish "permissions", () ->
 	crs = Permissions.find()
 	console.log("Permissions: " + crs.count() + " submitted!")
 	return crs
-
-#######################################################
-Meteor.publish "challenges", () ->
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		owner_id: this.userId
-
-	options =
-		fields:
-			name: 1
-
-	crs = Challenges.find filter, options
-	console.log("Challenge indices: " + crs.count() + " submitted!")
-	return crs
-
-
-#######################################################
-Meteor.publish "challenge_by_id", (challenge_id) ->
-	check challenge_id, String
-
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		owner_id: this.userId
-		_id: challenge_id
-
-	crs = Challenges.find filter
-	console.log("Challenges: " + crs.count() + " submitted!")
-	return crs
-
-
-#######################################################
-Meteor.publish "response", (challenge_id, index) ->
-	check challenge_id, String
-	check index, String
-
-	if !this.userId
-		throw new Meteor.Error("Not permitted.")
-
-	filter =
-		challenge_id: challenge_id
-		owner_id: this.userId
-		index: index
-
-	crs = Responses.find filter
-	console.log("Responses: " + crs.count() + " submitted!")
-	return crs
-
 

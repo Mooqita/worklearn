@@ -6,7 +6,6 @@
 
 ###################################################
 Template.template_dashboard.onCreated ->
-	self = this
 	template_id = FlowRouter.getParam("template_id")
 
 ###################################################
@@ -35,28 +34,22 @@ Template.template_dashboard.helpers
 
 ###################################################
 #
-# loader
+# editor
 #
 ###################################################
 
 ###################################################
-Template.template_editor_load.onCreated ->
-	console.log "created"
-
-###################################################
-Template.template_editor_load.onRendered ->
+Template.template_editor.onCreated ->
 	this.loaded = new ReactiveVar(false)
-	console.log "rendered"
 	self = this
 	self.autorun () ->
 		tn = self.data._id
 		self.subscribe "template_by_id", tn,
 			onReady: ()->
-				console.log "subscribed template by id"
 				self.loaded.set(true)
 
 ###################################################
-Template.template_editor_load.helpers
+Template.template_editor.helpers
 	template_exists: () ->
 		tn = Template.instance().data._id
 		tmpl = Templates.findOne(tn)
@@ -79,21 +72,17 @@ Template.template_editor_load.helpers
 
 		tmpl = get_compiled_template(tn)
 		if tmpl
-			console.log "found compiled"
 			return true
 
 		template = Templates.findOne(tn)
 		if template.code == ""
-			console.log "code is empty"
 			return true
 
 		if not template.code
-			console.log "code not found"
 			return false
 
 		tmpl_code = template.code
 		compile_template tn, tmpl_code
-		console.log "code compiled"
 
 		return true
 
@@ -101,4 +90,28 @@ Template.template_editor_load.helpers
 		tn = Template.instance().data._id
 		template = Templates.findOne(tn)
 		return template
+
+	response_url: () ->
+		return "/response/"+this._id+"/1"
+
+
+###################################################
+#
+# template edit toggle
+#
+###################################################
+
+###################################################
+Template._edit_template_toggle.events
+	'click #edit': () ->
+		ed = Session.get("editing_template")
+
+		if ed == this.template._id
+			Session.set("editing_template", "")
+			return
+
+		Session.set("editing_template", this.template._id)
+
+		console.log ["setting", Session.get "editing_template"]
+
 

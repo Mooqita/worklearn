@@ -39,50 +39,16 @@
 			</div>
 		</div>
 	</div>
-	
-	{{#if isInRole 'editor'}}
-		<section class="container-fluid padding-top">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="well">
-						<div class="row">
-							<div class="col-md-6 vcenter">
-								<em>Select post group and add new element</em>
-							</div><!-- Important for vcenter
-						--><div class="col-md-6 vcenter">
-								<div class="input-group">
-									<div class="input-group-btn">
-										<div class="btn btn-theme tool-button" id="add_post">
-											<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-										</div>
-									</div>
 
-									<select class="form-control tool-bar tool-bar-right background-theme"
-													id="template_select" title="Select a group for your new post">
-										{{#each groups}}
-											<option value="{{.}}">{{.}}</option>
-										{{/each}}
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<section class="container-fluid background-grey padding-top">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				{{#each groups}}
+					{{>_post}}
+				{{/each}}
 			</div>
-		</section>
-	{{/if}}
-
-	{{#each groups}}
-		<section class="container-fluid background-grey padding-top">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					{{#each posts .}}
-						{{>_post}}
-					{{/each}}
-				</div>
-			</div>
-		</section>
-	{{/each}}
+		</div>
+	</section>
 </template>
 
 

@@ -20,19 +20,20 @@ get_files = () ->
 	return res
 
 ##############################################
-add_files = (n) ->
-	box_id = get_box_id()
+add_files = (n, box_id = null) ->
+	if not box_id
+		box_id = get_box_id()
 	d = dropped_files[box_id]
 	Array::push.apply d, n
 	dropped_files[box_id] = d
 	Session.set('dropped_files', Math.random())
 
 ##############################################
-get_form = () ->
-	box_id = get_box_id()
+get_form = (box_id = null) ->
+	if not box_id
+		box_id = get_box_id()
 	frm = $('#dropbox_'+box_id)
 	return frm
-
 
 ##############################################
 Template.dropfile.onCreated ->
@@ -75,9 +76,16 @@ Template.dropfile.helpers
 Template.dropfile.events
 	'dropped .dropbox': (event) ->
 		n = event.originalEvent.dataTransfer.files
-		add_files n
-		if not this.multiple
-			get_form().trigger('submit')
+		if n.length == 0
+			box_id = get_box_id()
+			event.originalEvent.dataTransfer.items[0].getAsString (data)->
+				add_files ['"'+data+'"'], box_id
+				if not this.multiple
+					get_form(box_id).trigger('submit')
+		else
+			add_files n
+			if not this.multiple
+				get_form().trigger('submit')
 
 	'change #file': (event)->
 		n = event.target.files
@@ -98,6 +106,8 @@ Template.dropfile.events
 		files = get_files()
 		box_id = get_box_id()
 
+		console.log files
+
 		if !files
 			throw new Meteor.Error("No files selected to upload.")
 
@@ -111,31 +121,47 @@ Template.dropfile.events
 		filesUp = 0
 
 		for file in files
-			fileReader = new FileReader()
-			type = file.type
 			col = this.collection_name
 			item = this.item_id
 			field = this.field
 			method = this.method
 
-			fileReader.onload = (ev) ->
-				filesRead += 1
-				raw = ev.srcElement.result
-				base = btoa(raw)
-				data = "data:"+type+";base64,"+base
+			if typeof file == "string"
+				type = "string"
+				data = file.toString()
 
 				Meteor.call method, col, item, field, data, type,
 					(err,rsp)->
-						filesUp += 1
+						frm.removeClass('is-uploading')
+						dropped_files[box_id] = []
+						sAlert.success('Upload done!')
+
 						if err
 							sAlert.error('File upload failed: ' + err)
 							frm.addClass('is-error')
-						if filesUp==filesToRead
-							frm.removeClass('is-uploading')
-							dropped_files[box_id] = []
-							sAlert.success('Upload done!')
 
-			fileReader.readAsBinaryString(file)
+			else
+				fileReader = new FileReader()
+				type = file.type
+
+				fileReader.onload = (ev) ->
+					filesRead += 1
+					raw = ev.srcElement.result
+					base = btoa(raw)
+					data = "data:"+type+";base64,"+base
+
+					Meteor.call method, col, item, field, data, type,
+						(err,rsp)->
+							filesUp += 1
+							if err
+								sAlert.error('File upload failed: ' + err)
+								frm.addClass('is-error')
+							if filesUp==filesToRead
+								frm.removeClass('is-uploading')
+								dropped_files[box_id] = []
+								sAlert.success('Upload done!')
+
+				fileReader.readAsBinaryString(file)
 
 		event.target.files = null
 

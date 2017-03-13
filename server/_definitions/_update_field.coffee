@@ -6,7 +6,7 @@
 
 #######################################################
 @__action_permitted = (permission, action) ->
-	if not action in permission.actions
+	if permission[action]!=true
 		return false
 
 	return true
@@ -32,6 +32,9 @@
 #######################################################
 @__is_owner_publish = (collection_name, id, user_id) ->
 	collection = get_collection collection_name
+	if not collection
+		throw new Meteor.Error('Collection not found:'+collection_name)
+
 	item = collection.findOne(id)
 
 	if not item
@@ -47,46 +50,9 @@
 
 
 #######################################################
-@__deny_publish = (collection, id, field, user_id) ->
-	check(id, String)
-	check(field, String)
-	check(collection, String)
-
-	roles = ['all']
-	if user_id
-		check(user_id, String)
-		user = Meteor.users.findOne(user_id)
-
-		if __is_owner_publish collection, id, user_id
-			roles.push 'owner'
-
-	if user
-		roles.push user.roles ...
-		roles.push 'anonymous'
-
-	filter =
-		role:
-			$in: roles
-		field: field
-		collection: collection
-
-	permissions = Permissions.find(filter)
-
-	if permissions.count() == 0
-		console.log('No permissions found for action: ' + roles)
-		throw new Meteor.Error('Not permitted.')
-
-	for permission in permissions.fetch()
-		if __action_permitted permission, 'read'
-			return false
-
-	throw new Meteor.Error('Not permitted.')
-
-
-#######################################################
 @__deny_action = (action, collection_name, id, field) ->
 	if not collection_name
-		console.log "collection is: " + collection_name
+		console.log "collection_name is: " + collection_name
 
 	if not field
 		console.log "filed is: " + field

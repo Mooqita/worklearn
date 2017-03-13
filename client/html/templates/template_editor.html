@@ -28,25 +28,10 @@
 			</div>
 		{{/each}}
 	{{else}}
-		{{>template_editor_load template}}
+		{{>template_editor template}}
 	{{/unless}}
 </template>
 
-<template name="template_editor_load">
-	{{#if template_exists}}
-		{{#if template_loaded}}
-			{{#if template_compiled}}
-				{{>template_editor template}}
-			{{else}}
-				<h1>Compiling template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
-			{{/if}}
-		{{else}}
-			<h1>Loading template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
-		{{/if}}
-	{{else}}
-		<h1>We are sorry but the template does not exist :(.</h1>
-	{{/if}}
-</template>
 
 <template name="template_editor">
 	<div class="well">
@@ -62,11 +47,32 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Template identifier</label>
-					<label class="form-control"><em>{{_id}}</em></label>
+					<a class="form-control" href="{{response_url}}"><em>{{_id}}</em></a>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
+	{{#if template_exists}}
+		{{#if template_loaded}}
+			{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
+		{{else}}
+			<h1>Loading template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+		{{/if}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
 </template>
+
+
+<template name="_edit_template_toggle">
+	{{#if _can_edit_template template._id 'editor'}}
+		<div style="top:10px; left:10px; position: fixed; z-index: 1">
+      <div class="tool-background" id="edit">
+        <span class="glyphicon glyphicon-edit"></span>
+      </div>
+    </div>
+	{{/if}}
+</template>
+
+

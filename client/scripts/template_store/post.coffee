@@ -6,13 +6,13 @@
 Template._post.helpers
 	children: (parent) ->
 		filter =
-			parent: parent._id
+			parent_id: parent._id
 
 		mod =
 			sort:
-				view_order:1
+				index:1
 
-		list = Posts.find(filter, mod)
+		list = Responses.find(filter, mod)
 		return list
 
 
@@ -48,52 +48,11 @@ Template._edit_tools.helpers
 				_id: 1
 				title: 1
 
-		list = Posts.find(filter, mod).fetch()
+		list = Responses.find(filter, mod).fetch()
 		groups = [{value:"", label:"Select a parent"}]
 		groups.push ({value:x._id, label:x.title} for x in list)...
 
 		return groups
-
-
-#########################################################
-# Paper
-#########################################################
-
-#########################################################
-Template.publication.events
-	'click #remove_paper': (event) ->
-		Meteor.call 'set_field', 'Posts', this._id, 'paper', '', undefined,
-			(err, res) ->
-				if err
-					sAlert.error(err)
-				else
-					sAlert.success('Paper cleared')
-
-	'click #remove_figure': (event) ->
-		Meteor.call 'set_field', 'Posts', this._id, 'figure', '', undefined,
-			(err, res) ->
-				if err
-					sAlert.error(err)
-				else
-					sAlert.success('Figure cleared')
-
-#########################################################
-# Post
-#########################################################
-
-#########################################################
-Template.post.events
-	'click #remove_figure': (event) ->
-		Meteor.call 'set_field', 'Posts', this._id, 'figure', '', undefined,
-			(err, res) ->
-				if err
-					sAlert.error(err)
-				else
-					sAlert.success('Figure cleared')
-
-#########################################################
-# Empty
-#########################################################
 
 #########################################################
 # Headline
@@ -105,6 +64,7 @@ Template.headline.helpers
 		words = this.title.split(' ')
 		res = ""
 		for w in words
-			res += "<em>"+w[0]+"</em>"+w.substring(1)
+			res += "<em>"+w[0]+"</em>"+w.substring(1)+" "
 
 		return res
+

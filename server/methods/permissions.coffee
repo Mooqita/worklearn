@@ -6,7 +6,7 @@
 
 ################################################################
 Meteor.methods
-	add_db_permission: (role, collection, field, types, actions) ->
+	add_db_permission: (role, collection, field) ->
 		user = Meteor.user()
 		if !user
 			throw new Meteor.Error('Not logged in.')
@@ -17,8 +17,6 @@ Meteor.methods
 		check(role, String)
 		check(field, String)
 		check(collection, String)
-		check(types, [String])
-		check(actions, [String])
 
 		secret = Secrets.findOne()
 
@@ -35,8 +33,8 @@ Meteor.methods
 
 		mod =
 			$set:
-				types: types
-				actions: actions
+				modify: true
+				read: true
 
 		res = Permissions.upsert filter, mod
 		return res

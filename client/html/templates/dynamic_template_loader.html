@@ -1,6 +1,6 @@
 <template name="dynamic_template_loader">
 	{{#if template_exists}}
-		{{#unless template_loaded}}
+		{{#unless template_compiled}}
 			<h1>
 				Preparing content <em><span class="glyphicon glyphicon-refresh spin"></span></em>
 			</h1>
@@ -10,6 +10,6 @@
 			{{/Template.dynamic}}
 		{{/unless}}
 	{{else}}
-		{{>ER_404}}
+		{{>ER_404 resource=template_id}}
 	{{/if}}
 </template>

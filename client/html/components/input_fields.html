@@ -1,21 +1,24 @@
+<template name="basic_input">
+	<input placeholder="{{placeholder}}"
+			 class="form-control edit-field" type="{{type}}"
+			 id="{{field}}" value="{{value}}"/>
+</template>
+
 <template name="select_input">
-	<select class="form-control post-field {{classes}}" id="{{field}}">
+	<select class="form-control edit-field" id="{{field}}">
 		{{#each options}}
 			<option value="{{value}}" {{is_selected value}}>{{label}}</option>
 		{{/each}}
 	</select>
 </template>
 
-
-<template name="basic_input">
-	<input placeholder="{{placeholder}}"
-			 class="form-control post-field {{classes}}" type="{{type}}"
-			 id="{{field}}" tabindex="1" value="{{value}}"/>
+<template name="check_input">
+	<input class="form-control edit-field" placeholder="{{placeholder}}"
+				 type="checkbox" id="{{field}}" {{checked}}/>
 </template>
 
-
 <template name="text_input">
-	<textarea  class="form-control post-field {{classes}}" placeholder="{{placeholder}}"
+	<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
 						 id="{{field}}" rows="12">{{value}}</textarea>
 </template>
 
@@ -37,13 +40,11 @@
 </template>
 
 <template name="code_input">
-	<div class="well">
-		<div style="border: solid 1px #bbb; margin-bottom: 25px">
-			{{> CodeMirror id=editor_id options=editorOptions code=editorCode}}
-		</div>
+	<div style="border: solid 1px #bbb; margin-bottom: 25px">
+		{{> CodeMirror id=editor_id options=editorOptions code=editorCode}}
+	</div>
 
-		<div class="btn-group btn-group-justified">
-			<div class="btn btn-theme" id="save">Save</div>
-		</div>
+	<div class="btn-group btn-group-justified">
+		<div class="btn btn-theme" id="save">Save</div>
 	</div>
 </template>

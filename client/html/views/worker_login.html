@@ -5,34 +5,17 @@
 -------------------------------------------------->
 <template name="worker_login">
 	{{#if currentUser}}
-		{{>load_response}}
+		{{>response_creator}}
 	{{else}}
 		{{>sign_worker}}
 	{{/if}}
 </template>
 
-<template name="load_response">
-	{{#if loaded}}
-		{{#if response}}
-			{{>dynamic_template_loader template_id=template_id data=response}}
-		{{else}}
-			{{>add_response}}
-		{{/if}}
-	{{else}}
-		<h1>
-			Searching for existing response
-			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		</h1>
+<template name="auto_login">
+	{{#if currentUser}}
+		{{>response_creator}}
 	{{/if}}
 </template>
-
-<template name="add_response">
-	<h1>
-		Please wait we prepare the task
-		<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-	</h1>
-</template>
-
 
 <template name="sign_worker">
 	<h1>Please enter your worker ID</h1>

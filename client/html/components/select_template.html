@@ -1,0 +1,9 @@
+<template name="select_template">
+	{{>select_input method='set_field' collection_name=collection_name
+		field='template_id' item_id=item_id options=templates}}
+</template>
+
+<template name="select_response">
+	{{>select_input method='set_field' collection_name=collection_name
+		field=field item_id=item_id options=responses}}
+</template>
