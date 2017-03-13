@@ -18,7 +18,7 @@ Template.landing.onRendered ->
 Template.landing.helpers
 	groups: () ->
 		filter=
-			post_group:'frontpage'
+			group_name:'frontpage'
 			parent_id: ''
 
 		mod =
