@@ -44,19 +44,6 @@ Meteor.methods
 		res = Responses.aggregate match, group
 		return res
 
-	save_response: (response_id) ->
-		check response_id, String
-
-		f1 =
-			parent_id: response_id
-
-		f2 =
-			_id: response_id
-
-		filter =
-			$or: [f1,f2]
-
-		crs = Responses.find filter
-		json = JSON.stringify(crs.fetch())
-		data = "data:application/json;charset=utf-8,"+json
+	backup_responses: () ->
+		data = exportData(Responses)
 		return data

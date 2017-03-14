@@ -6,10 +6,16 @@
 
 		<div class="input-group" style="padding-bottom: 15px">
 			<span class="input-group-btn">
-				<button class="btn btn-red" id="add_response" type="button">Add response now</button>
+				<button class="btn btn-theme" id="add_response" type="button">Add response now</button>
 			</span>
 
 			<input type="text" class="form-control" placeholder="Search your responses ...">
+
+			<span class="input-group-btn">
+				<div class="btn btn-theme" id="export_responses">
+					<span class="glyphicon glyphicon-download"></span>
+				</div>
+			</span>
 		</div>
 
 		{{#unless responses}}
@@ -29,35 +35,27 @@
 
 <template name="response_item">
 	<div class="input-group">
-		<span class="input-group-btn">
+		<div class="input-group-btn">
 			{{#if has_children .}}
 				{{#if expanded}}
-					<div class="btn btn-theme" id="expand">
+					<div class="btn btn-default" id="expand">
 						<span class="glyphicon glyphicon-triangle-bottom"></span>
 					</div>
 				{{else}}
-					<div class="btn btn-theme" id="expand">
+					<div class="btn btn-default" id="expand">
 						<span class="glyphicon glyphicon-triangle-right"></span>
 					</div>
 				{{/if}}
 			{{/if}}
 
-			{{>_edit_toggle class="btn btn-theme" _id=_id}}
+			<div class="btn btn-default">
+				{{>_edit_toggle class="btn btn-theme" _id=_id}}
+			</div>
 
-			<a class="btn btn-theme" href="{{response_url}} ">
+			<a class="btn btn-default" href="{{response_url}} ">
 				<span class="glyphicon glyphicon-fullscreen"></span>
 			</a>
-
-			{{#if file_data}}
-				<a class="btn btn-success" href="{{file_data}}" download="{{file_name}}">
-					<span class="glyphicon glyphicon-check"></span>
-				</a>
-			{{else}}
-				<div class="btn btn-theme" id="save_response">
-					<span class="glyphicon glyphicon-download"></span>
-				</div>
-			{{/if}}
-		</span>
+		</div>
 
 		{{#if _is_editing_response _id}}
 			{{>_edit_tools}}
@@ -65,7 +63,7 @@
 			{{>basic_input label='Name' method='set_field' collection_name='Responses'
 				field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
 
-			<span class="input-group-btn">
+			<div class="input-group-btn">
 				{{#if deleted}}
 					<div class="btn btn-success" id="delete_response">
 						<span class="glyphicon glyphicon-repeat"></span>
@@ -75,7 +73,7 @@
 						<span class="glyphicon glyphicon-remove"></span>
 					</div>
 				{{/if}}
-			</span>
+			</div>
 		{{/if}}
 	</div>
 

@@ -52,6 +52,25 @@ Template.response_dashboard.helpers
 		res = Responses.find(filter, mod)
 		return res
 
+########################################
+import { saveAs } from 'file-saver'
+
+Template.response_dashboard.events
+	"click #export_responses": () ->
+		Meteor.call "backup_responses",
+			(err, res) ->
+				sAlert.error("done export")
+				console.log [err,res]
+				if err
+					sAlert.error(err)
+				else
+					blob = convertBase64ToBlob res
+					saveAs blob, "responses.zip"
+
+
+########################################
+# Response Item
+########################################
 
 ########################################
 Template.response_item.onCreated ->
@@ -125,18 +144,6 @@ Template.response_item.events
 					sAlert.error(err)
 				else
 					sAlert.info("response added")
-
-	"click #save_response": () ->
-		self = this
-		inst = Template.instance()
-
-		Meteor.call "save_response", self._id,
-			(err, res) ->
-				if err
-					sAlert.error(err)
-				else
-					inst.file_data.set res
-					inst.file_name.set self._id+".json"
 
 
 ########################################

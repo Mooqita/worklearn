@@ -128,6 +128,22 @@
 			bottom: 5px;
 		}
 
+		.add-slide-container{
+			background: rgba(0,0,0,0.5);
+		}
+
+		.slide-preview .add-slide-btn{
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			z-index: 2;
+			top: 50%;
+			left: 50%;
+			margin: -30px 0 0 -30px;
+			font-size: 45px;
+			padding-left: 10px;
+		}
+
 		.slide-preview .tool-background{
 			background: rgba(5,5,5,0.5);
 			color: rgba(250,250,250,0.95);
@@ -293,8 +309,10 @@
 
 							<div class="col-lg-3 col-md-4 col-xs-6" id="add_slide">
 								<div style="margin-top: 100%;"></div>
-								<div class="tool-background">
-									<span class="glyphicon glyphicon-plus"></span>
+								<div class="slide-preview add-slide-container">
+									<div class="tool-background add-slide-btn">
+										<span class="glyphicon glyphicon-plus"></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -347,7 +365,7 @@
 			{{/unless}}
 
 			<div class="current-page">
-				{{name}}
+				{{index}} {{name}}
 			</div>
 
 			<div class="slide-window">
@@ -425,8 +443,10 @@
 														color: rgba(255,255,255,0.9);">
 									<h2>Summary</h2>
 									<hr>
-									{{>voting_summary voting=voting field=field
-											values=(array "Option One" "Option Two" "Option Three")}}
+									{{>voting_summary voting="udk" field="vote"
+									values=(array "Interactive Story Telling"
+																"Self Determination Theory"
+																"Artificial Intelligence")}}
 								</div>
 							</div>
 						</div>
@@ -438,7 +458,47 @@
 </template>
 
 
-<template name="voting_booth_berlin_udk">
+<template name="voting_summary">
+	<style>
+		.value-set {
+			min-width: 50px;
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		.value-set .input {
+			float: right;
+			padding-left: 10px;
+		}
+	</style>
+
+	<div class="value-set">
+		{{#each summary}}
+			<div>
+				<a id="url"><label>{{_id}}</label></a>
+				<div class="input">{{count}}</div>
+			</div>
+		{{else}}
+			Loading summary <em><span class="glyphicon glyphicon-refresh spin"></span></em>
+		{{/each}}
+	</div>
+</template>
+
+
+<template name="full_screen">
+	<div class="fullscreen" id="full_screen">
+		{{#unless _is_fullscreen}}
+			<div class="maximize tool-background" id="make_full_screen">
+				<span class="glyphicon glyphicon-fullscreen"></span>
+			</div>
+		{{/unless}}
+
+		{{> UI.contentBlock}}
+	</div>
+</template>
+
+
+<template name="udk">
 	<style>
 		.bg-d{
 			color: rgba(255,255,255,0.9);
@@ -479,12 +539,12 @@
 				<div class="col-sm-offset-1 col-md-offset-2 col-lg-offset-3 col-sm-10 col-md-8 col-lg-6">
 					{{#unless vote}}
 						<div class="bg-l">
-							<div id="Option One" class="bg-d option"
-									 style="background: rgba(60,160,180,0.75);">Option One</div>
-							<div id="Option Two" class="bg-d option"
-									 style="background: rgba(40,120,80,0.75);">Option Two</div>
-							<div id="Option Three" class="bg-d option"
-									 style="background: rgba(137, 111, 106, 0.75);">Option Three</div>
+							<div id="Interactive Story Telling" class="bg-d option"
+									 style="background: rgba(60,160,180,0.75);">Interactive Story Telling</div>
+							<div id="Self Determination Theory" class="bg-d option"
+									 style="background: rgba(40,120,80,0.75);">Self Determination Theory</div>
+							<div id="Artificial Intelligence" class="bg-d option"
+									 style="background: rgba(137, 111, 106, 0.75);">Artificial Intelligence</div>
 						</div>
 					{{else}}
 						<div class="bg-l" style="background: rgba(0,0,0,0.5);
@@ -496,8 +556,10 @@
 													color: rgba(255,255,255,0.9);">
 								<h2>Summary</h2>
 								<hr>
-								{{>voting_summary voting="voting_booth_berlin_udk" field="vote"
-								values=(array "Option One" "Option Two" "Option Three")}}
+								{{>voting_summary voting="udk" field="vote"
+								values=(array "Interactive Story Telling"
+															"Self Determination Theory"
+															"Artificial Intelligence")}}
 							</div>
 						</div>
 					{{/unless }}
@@ -506,44 +568,3 @@
 		</div>
 	</div>
 </template>
-
-
-<template name="voting_summary">
-	<style>
-		.value-set {
-			min-width: 50px;
-			display: inline-block;
-			margin-right: 10px;
-		}
-
-		.value-set .input {
-			float: right;
-			padding-left: 10px;
-		}
-	</style>
-
-	<div class="value-set">
-		{{#each summary}}
-			<div>
-				<label>{{_id}}</label>
-				<div class="input">{{count}}</div>
-			</div>
-		{{else}}
-			Loading summary <em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		{{/each}}
-	</div>
-</template>
-
-
-<template name="full_screen">
-	<div class="fullscreen" id="full_screen">
-		{{#unless _is_fullscreen}}
-			<div class="maximize tool-background" id="make_full_screen">
-				<span class="glyphicon glyphicon-fullscreen"></span>
-			</div>
-		{{/unless}}
-
-		{{> UI.contentBlock}}
-	</div>
-</template>
-

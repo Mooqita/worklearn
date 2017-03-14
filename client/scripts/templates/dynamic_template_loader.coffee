@@ -7,9 +7,17 @@ Template.dynamic_template_loader.onCreated ->
 	self = this
 	self.autorun () ->
 		template_id = self.data.template_id
+
 		template = get_template_local(template_id)
-		if not template
-			self.subscribe "template_by_id", template_id
+		if template
+			return
+
+		template = get_compiled_template(template_id)
+		if template
+			return
+
+		console.log template_id
+		self.subscribe "template_by_id", template_id
 
 ########################################
 Template.dynamic_template_loader.helpers

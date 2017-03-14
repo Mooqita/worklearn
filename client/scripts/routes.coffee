@@ -15,6 +15,10 @@ FlowRouter.route('/',
 		BlazeLayout.render("full_width_layout", {content: 'landing'}))
 
 ##########################################################
+# template stuff
+##########################################################
+
+##########################################################
 FlowRouter.route('/template_dashboard',
 	name: 'challenge',
 	action: (params) ->
@@ -25,6 +29,10 @@ FlowRouter.route('/template_dashboard/:template_id',
 	name: 'challenge',
 	action: (params) ->
 		BlazeLayout.render("base_layout", {content: 'template_dashboard'}))
+
+##########################################################
+# responses
+##########################################################
 
 ##########################################################
 FlowRouter.route('/response_dashboard',
@@ -39,16 +47,15 @@ FlowRouter.route('/response_dashboard/:response_id',
 		BlazeLayout.render("empty_layout", {content: 'response_dashboard'}))
 
 ##########################################################
-FlowRouter.route('/response_dashboard/:template_id/:index',
-	name: 'response',
-	action: (params) ->
-		BlazeLayout.render("empty_layout", {content: 'worker_login'}))
-
-##########################################################
-FlowRouter.route('/response_dashboard/:template_id/:index/auto_login',
-	name: 'response',
+FlowRouter.route('/:template_id/:index',
+	name: 'index',
 	action: (params) ->
 		BlazeLayout.render("empty_layout", {content: 'auto_login'}))
+
+
+##########################################################
+# admin stuff
+##########################################################
 
 ##########################################################
 FlowRouter.route('/admin',

@@ -13,6 +13,9 @@ Template.worker_login.onCreated ->
 
 ########################################
 Template.auto_login.onCreated ->
+	if Meteor.userId()
+		return
+
 	Fingerprint2 = require('fingerprintjs2')
 
 	new Fingerprint2().get (result) ->
