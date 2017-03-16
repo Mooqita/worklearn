@@ -437,11 +437,11 @@
 						<div class="row">
 							<div class="col-sm-offset-1 col-md-offset-2 col-lg-offset-3 col-sm-10 col-md-8 col-lg-6">
 
-								<div style="margin-top: 25px;
+								<div style="margin-top: 45px;
 														padding: 15px;
 														background: rgba(40,120,80,0.5);
 														color: rgba(255,255,255,0.9);">
-									<h2>Summary</h2>
+									<h1>Summary</h1>
 									<hr>
 									{{>voting_summary voting="udk" field="vote"
 									values=(array "Interactive Story Telling"
@@ -464,18 +464,29 @@
 			min-width: 50px;
 			display: inline-block;
 			margin-right: 10px;
+			font-size: 20px;
+			font-weight: 300;
 		}
 
 		.value-set .input {
 			float: right;
 			padding-left: 10px;
 		}
+
+		.value-set .slide-link{
+			color:rgba(187, 221, 250, 0.9)
+		}
 	</style>
 
 	<div class="value-set">
 		{{#each summary}}
 			<div>
-				<a id="url"><label>{{_id}}</label></a>
+				{{#if link}}
+					<a class="slide-link" id="url">{{_id}}</a>
+				{{else}}
+					<label style="font-weight: 300">{{_id}}</label>
+				{{/if}}
+
 				<div class="input">{{count}}</div>
 			</div>
 		{{else}}
@@ -554,9 +565,9 @@
 							<div style="padding: 15px;
 													background: rgba(40,120,80,0.5);
 													color: rgba(255,255,255,0.9);">
-								<h2>Summary</h2>
+								<h1>Summary</h1>
 								<hr>
-								{{>voting_summary voting="udk" field="vote"
+								{{>voting_summary voting="udk" field="vote" link=false
 								values=(array "Interactive Story Telling"
 															"Self Determination Theory"
 															"Artificial Intelligence")}}

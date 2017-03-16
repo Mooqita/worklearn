@@ -58,14 +58,16 @@ set_previous_slide = () ->
 Template.full_screen.onCreated () ->
 	document.addEventListener "keyup",
 		(event) ->
-			console.log event
+			cr = event.ctrlKey == true
+			fs = if Session.get "full_screen" then true else false
+
 			if event.code == "Escape"
 				Session.set "full_screen", false
 			if event.code == "Space"
-				if Session.get "full_screen"
+				if cr or fs
 					set_next_slide()
 			if event.code == "Backspace"
-				if Session.get "full_screen"
+				if cr or fs
 					set_previous_slide()
 
 	$(document).on 'webkitfullscreenchange mozfullscreenchange fullscreenchange',
