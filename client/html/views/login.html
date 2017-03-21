@@ -1,8 +1,12 @@
 <!------------------------------------------------
 |
-|	Challenge entry point
+|
 |
 -------------------------------------------------->
+<template name="login">
+	{{>loginButtons}}
+</template>
+
 <template name="worker_login">
 	{{#if currentUser}}
 		{{>response_creator}}

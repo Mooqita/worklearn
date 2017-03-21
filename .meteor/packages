@@ -35,6 +35,14 @@ raix:ui-dropped-event
 session@1.1.7
 random@1.0.10
 
+lukemadera:social-share
+
+perak:codemirror
+summernote:summernote
+jparker:crypto-sha256
+spacebars-compiler
+meteorhacks:aggregate
+
 service-configuration@1.0.11
 accounts-password@1.3.4
 accounts-base@1.2.14
@@ -49,14 +57,8 @@ useraccounts:core
 useraccounts:bootstrap
 useraccounts:flow-routing
 
-lukemadera:social-share
-
-perak:codemirror
-summernote:summernote
-jparker:crypto-sha256
-spacebars-compiler
 facebook-config-ui
 github-config-ui
 google-config-ui
 twitter-config-ui
-meteorhacks:aggregate
+

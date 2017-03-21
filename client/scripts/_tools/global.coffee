@@ -24,8 +24,7 @@
 
 
 #######################################################
-@find_template_names = () ->
-	tmpls = [
+@registered_templates = [
 		{value:"", label:"Select template"}
 		{value:"empty", label:"Empty"}
 		{value:"post", label:"Post"}
@@ -38,14 +37,17 @@
 		{value:"slide_deck", label:"Slide Deck"}
 		{value:"slide_title", label:"Slide with Title"}
 		{value:"slide_voting", label:"Slide with Voting"}
-		{value:"slide_content", label:"Slide with content"}]
+		{value:"slide_content", label:"Slide with content"}
+		{value:"student_view", label:"View for Students"}
+		{value:"hire_view", label:"View for Recruiters"}]
 
+@find_template_names = () ->
 	d_tmpls = Templates.find().fetch()
 	d_tmpls = ({label:t.name, value:t._id} for t in d_tmpls)
 
-	tmpls.push d_tmpls...
+	d_tmpls.push registered_templates...
 
-	return tmpls
+	return d_tmpls
 
 #######################################################
 @find_response_names = () ->

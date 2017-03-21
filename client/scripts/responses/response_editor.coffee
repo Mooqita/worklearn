@@ -67,6 +67,14 @@ Template.response_dashboard.events
 					blob = convertBase64ToBlob res
 					saveAs blob, "responses.zip"
 
+	"click #add_response": () ->
+		Meteor.call "add_response", "", 1, "",
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				else
+					sAlert.info("response added")
+
 
 ########################################
 # Response Item

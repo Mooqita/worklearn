@@ -8,8 +8,17 @@
 #worklearn
 #TODO: move hash generation to server.
 #TODO: template editor is not loading template code properly.
-#TODO: make unique fieelds
+#TODO: make unique fields
 
+#TODO: Students:Create profile
+#TODO: Students:Link code revisions
+#TODO: Students:give/receive reviews
+#TODO: Students:Get credit
+
+#TODO Companies: See profiles and credits
+#TODO Companies: See details/code links is privileged access
+
+#Learning materials!!!!! I think we need to offer online classes that allow humans to code/write/design for the first time! Give credits to students for creating content?
 
 given =
 	_id: "given_name"
@@ -36,4 +45,6 @@ family =
 	errStr: 'Please enter your family name'
 
 AccountsTemplates.addFields([given, family])
+
+
 

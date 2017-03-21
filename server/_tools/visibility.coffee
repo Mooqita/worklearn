@@ -51,6 +51,9 @@
 			#post_group: group_name
 			owner_id: user._id
 
+		for k,v of restrict
+			f2[k] = v
+
 		filters.push f2
 
 	# adding a filter for all elements our current role allows us to see

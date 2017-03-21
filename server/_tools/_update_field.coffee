@@ -50,7 +50,7 @@
 
 
 #######################################################
-@__deny_action = (action, collection_name, id, field) ->
+@deny_action = (action, collection_name, id, field) ->
 	if not collection_name
 		console.log "collection_name is: " + collection_name
 
@@ -95,7 +95,7 @@
 
 #######################################################
 @modify_field = (collection_name, id, field, value) ->
-	__deny_action('modify', collection_name, id, field)
+	deny_action('modify', collection_name, id, field)
 
 	check value, Match.OneOf String, Number, Boolean
 

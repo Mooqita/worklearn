@@ -6,6 +6,10 @@
 #######################################################
 
 #######################################################
+# templates
+#######################################################
+
+#######################################################
 Meteor.publish "templates", () ->
 	filter = filter_visible_to_user this.userId
 
@@ -32,6 +36,11 @@ Meteor.publish "template_by_id", (template_id) ->
 	console.log("Template loaded: " + crs.count() + " submitted!")
 	return crs
 
+
+#######################################################
+# responses
+#######################################################
+
 #######################################################
 Meteor.publish "responses", () ->
 	filter = filter_visible_to_user this.userId
@@ -51,7 +60,7 @@ Meteor.publish "responses", () ->
 			template_id: 1
 
 	crs = Responses.find filter, mod
-	console.log("Responses: " + crs.count() + " submitted!")
+	console.log("Responses without data: " + crs.count() + " submitted!")
 	return crs
 
 #######################################################
@@ -62,8 +71,36 @@ Meteor.publish "responses_with_data", (group_name) ->
 	filter = filter_visible_to_user this.userId, restrict
 
 	crs = Responses.find filter
-	console.log("Responses: " + crs.count() + " submitted!")
+	console.log("Responses with data: " + crs.count() + " submitted!")
 	return crs
+
+#######################################################
+Meteor.publish "response_by_id", (response_id) ->
+	check response_id, String
+
+	restrict =
+		_id: response_id
+
+	filter = filter_visible_to_user this.userId, restrict
+
+	crs = Responses.find filter
+	console.log("Responses by _id: " + crs.count() + " submitted!")
+	return crs
+
+
+#######################################################
+Meteor.publish "response_by_parent", (parent_id) ->
+	check parent_id, String
+
+	restrict =
+		_id: parent_id
+
+	filter = filter_visible_to_user this.userId, restrict
+
+	crs = Responses.find filter
+	console.log("Responses by _id: " + crs.count() + " submitted!")
+	return crs
+
 
 #######################################################
 Meteor.publish "response", (template_id, index) ->
@@ -78,55 +115,50 @@ Meteor.publish "response", (template_id, index) ->
 	filter = filter_visible_to_user this.userId, restrict
 
 	crs = Responses.find filter
-	console.log("Responses: " + crs.count() + " submitted!")
+	console.log("Responses template and index: " + crs.count() + " submitted!")
 	return crs
+
+
 
 #######################################################
-Meteor.publish "response_by_id", (response_id) ->
-	check response_id, String
-
-	restrict =
-		_id: response_id
-
-	filter = filter_visible_to_user this.userId, restrict
-
-	crs = Responses.find filter
-	console.log("Responses: " + crs.count() + " submitted!")
-	return crs
+# summaries
+#######################################################
 
 #######################################################
 Meteor.publish "sum_of_field", (template_id, field, value) ->
-		console.log "sum_of_field"
-		check template_id, String
-		check field, String
-		check value, String
+	check template_id, String
+	check field, String
+	check value, String
 
-		filter = {}
-		filter[field] = value
+	filter = {}
+	filter[field] = value
 
-		self = this;
-		count = 0;
-		initializing = true;
+	self = this;
+	count = 0;
+	initializing = true;
 
-		handlers =
-			added: (id) ->
-				count++;
-				if (!initializing)
-					self.changed "summaries", value, {label:value, count: count}
-
-			removed: (id) ->
-				count--
+	handlers =
+		added: (id) ->
+			count++;
+			if (!initializing)
 				self.changed "summaries", value, {label:value, count: count}
 
+		removed: (id) ->
+			count--
+			self.changed "summaries", value, {label:value, count: count}
 
-		handle = Responses.find(filter).observe handlers
+	handle = Responses.find(filter).observe handlers
 
-		initializing = false;
-		self.added("summaries", value, {label:value, count: count});
-		self.ready()
-		self.onStop () ->
-			handle.stop()
+	initializing = false;
+	self.added("summaries", value, {label:value, count: count});
+	self.ready()
+	self.onStop () ->
+		handle.stop()
 
+
+#######################################################
+# special
+#######################################################
 
 #######################################################
 Meteor.publish "files", (collection_name, item_id, field) ->

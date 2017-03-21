@@ -26,6 +26,34 @@ Meteor.methods
 		id = Responses.insert hit
 		return id
 
+	add_connection: (collector_id, target_id) ->
+		check collector_id, String
+		check target_id, String
+
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		filter =
+			_id:
+				$in:[collector_id, target_id]
+
+		l = Responses.find(filter).count()
+		if l != 2
+			throw new Meteor.Error('Illegal parameters')
+
+		filter =
+			_id: collector_id
+
+		mod =
+			$push:
+				connections: target_id
+
+		Responses.update(filter, mod)
+
+		return id
+
 	#######################################################
 	summarise_field: (template_id, field) ->
 		check template_id, String

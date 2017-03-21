@@ -15,7 +15,13 @@ FlowRouter.route('/',
 		BlazeLayout.render("full_width_layout", {content: 'landing'}))
 
 ##########################################################
-# template stuff
+FlowRouter.route('/login',
+	name: 'index',
+	action: (params) ->
+		BlazeLayout.render("full_width_layout", {content: 'login'}))
+
+##########################################################
+# templates
 ##########################################################
 
 ##########################################################
@@ -51,7 +57,6 @@ FlowRouter.route('/:template_id/:index',
 	name: 'index',
 	action: (params) ->
 		BlazeLayout.render("empty_layout", {content: 'auto_login'}))
-
 
 ##########################################################
 # admin stuff
