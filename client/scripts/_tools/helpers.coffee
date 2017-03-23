@@ -1,4 +1,13 @@
 #######################################################
+Template.registerHelper "_response_visibility", () ->
+	opts = [
+		{value:"", label:"Who can read your post"}
+		{value:"all", label:"Everyone"}
+		{value:"anonymous", label:"Registered Users"}
+		{value:"owner", label:"Only me"}]
+	return opts
+
+#######################################################
 Template.registerHelper "_is_fullscreen", () ->
 	return Session.get "full_screen"
 

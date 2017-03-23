@@ -106,8 +106,6 @@ Template.dropfile.events
 		files = get_files()
 		box_id = get_box_id()
 
-		console.log files
-
 		if !files
 			throw new Meteor.Error("No files selected to upload.")
 
@@ -120,6 +118,12 @@ Template.dropfile.events
 		filesRead = 0
 		filesUp = 0
 
+		cumulative_size = 0
+		max_size = this.max_size
+
+		if not max
+			max = 4000000
+
 		for file in files
 			col = this.collection_name
 			item = this.item_id
@@ -130,6 +134,13 @@ Template.dropfile.events
 				type = "string"
 				data = file.toString()
 
+				cumulative_size = cumulative_size + data.length
+				console.log [cumulative_size, max_size]
+				if cumulative_size > max_size
+					sAlert.error('File upload failed cumulative size larger than: ' + max_size)
+					frm.addClass('is-error')
+					return
+
 				Meteor.call method, col, item, field, data, type,
 					(err,rsp)->
 						frm.removeClass('is-uploading')
@@ -139,7 +150,6 @@ Template.dropfile.events
 						if err
 							sAlert.error('File upload failed: ' + err)
 							frm.addClass('is-error')
-
 			else
 				fileReader = new FileReader()
 				type = file.type
@@ -149,6 +159,15 @@ Template.dropfile.events
 					raw = ev.srcElement.result
 					base = btoa(raw)
 					data = "data:"+type+";base64,"+base
+
+					cumulative_size = cumulative_size + data.length
+					console.log [cumulative_size, max_size]
+					if cumulative_size > max_size
+						frm.removeClass('is-uploading')
+						dropped_files[box_id] = []
+						sAlert.error('File upload failed cumulative size larger than: ' + max_size)
+						frm.addClass('is-error')
+						return
 
 					Meteor.call method, col, item, field, data, type,
 						(err,rsp)->

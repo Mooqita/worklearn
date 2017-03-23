@@ -1,0 +1,137 @@
+<template name="review_style">
+	<style>
+		.background{
+			background: rgba(31, 11, 57, 0.78);
+			color: rgba(250,250,250,0.95);
+			margin: 1px;
+		}
+
+		.background:hover{
+			border: solid 1px rgba(250,250,250,0.95);
+			margin: 0px;
+		}
+
+		/*mooqita preview*/
+
+		.element-preview{
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			right: 5px;
+			bottom: 5px;
+		}
+
+		.element-preview .edit-field{
+			background: inherit;
+			font: inherit;
+			border: inherit;
+			text-align: inherit;
+			color: inherit;
+			display: initial;
+			height: 100%;
+			padding: 0px;
+			border-radius: 0px;
+			-webkit-box-shadow: none;
+			box-shadow: none;
+		}
+
+		.element-preview .title{
+			background: rgb(250,250,250);
+			color: rgb(5,5,5);
+			z-index: 2;
+			top: 5px;
+			left: 5px;
+			right: 5px;
+			position: absolute;
+			text-align: center;
+			padding: 8px;
+		}
+
+		.element-preview .parameter{
+			background: rgb(250,250,250);
+			color: rgb(5,5,5);
+			z-index: 2;
+			top: 49px;
+			left: 5px;
+			right: 5px;
+			position: absolute;
+			text-align: center;
+			padding: 8px;
+		}
+
+		.element-preview .add-btn{
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			z-index: 2;
+			top: 50%;
+			left: 50%;
+			margin: -30px 0 0 -30px;
+			font-size: 45px;
+			padding-left: 10px;
+		}
+
+		.element-preview .upload{
+			position: absolute;
+			bottom: 5px;
+			left: 5px;
+			right: 5px;
+		}
+
+		.element-preview .background{
+			background: rgba(5,5,5,0.5);
+			color: rgba(250,250,250,0.95);
+		}
+
+		.element-preview .background:hover{
+			background: rgba(255,255,255,0.95);
+			color: rgba(0,0,0,0.75);
+		}
+
+		.element-preview .review-name{
+			position: absolute;
+			top: 5px;
+			left: 52px;
+			right: 5px;
+			padding: 10px 13px;
+			overflow: hidden;
+		}
+
+		.element-preview .maximize{
+			position: absolute;
+			bottom: 5px;
+			right: 5px;
+			padding: 10px 13px;
+		}
+	</style>
+</template>
+
+
+<template name="review_layout" xmlns="http://www.w3.org/1999/html">
+	<title>Mooqita</title>
+
+	<div class="wrapper">
+		<header>
+			{{>menu}}
+		</header>
+
+		<main>
+			{{>sAlert}}
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<div style="padding-top: 24px">
+							{{> UI.contentBlock}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<div class="footer-push"> </div>
+	</div>
+
+	<footer>
+		{{>footer}}
+	</footer>
+</template>

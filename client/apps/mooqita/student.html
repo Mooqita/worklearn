@@ -1,0 +1,100 @@
+<template name="student_view">
+
+</template>
+
+
+<template name="student">
+	{{>review_style}}
+	{{#review_layout}}
+		<p>open credits: {{num_credits}}</p>
+		<p>open credits summary</p>
+		<p>credentials</p>
+		<p>new messages</p>
+
+		<h1>Solutions</h1>
+
+		<div class="row">
+			{{#each solutions}}
+				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+					<div style="margin-top: 100%;"></div>
+					<div class="element-preview background">
+						<div class="title">
+							{{>basic_input method="set_field" collection_name="Responses"
+									item_id=_id field="title" placeholder="Title"}}
+						</div>
+
+						<div class="parameter">
+							<p>New messages: </p>
+							<p>Received reviews: </p>
+
+							{{>basic_input method="set_field" collection_name="Responses"
+									item_id=_id field="num_reviews" type="number" placeholder="Number of reviews"}}
+						</div>
+
+						<div class="upload">
+							<label>Upload additional material</label>
+							{{>dropfile method="set_field" collection_name="Responses"
+									item_id=_id field="material"}}
+						</div>
+					</div>
+				</div>
+			{{/each}}
+
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="add_solution">
+				<div style="margin-top: 100%;"></div>
+				<div class="element-preview background">
+					<div class="add-btn background">
+						<span class="glyphicon glyphicon-plus"></span>
+					</div>
+
+					<div class="title">link or upload a new project</div>
+				</div>
+			</div>
+		</div>
+
+		<h1>Reviews</h1>
+
+		<div class="row">
+			{{#each reviews}}
+				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+					<div style="margin-top: 100%;"></div>
+					<div class="element-preview background">
+						<div class="title" id="connect">solution</div>
+					</div>
+				</div>
+			{{/each}}
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="add_review">
+				<div style="margin-top: 100%;"></div>
+				<div class="element-preview background">
+					<div class="add-btn background">
+						<span class="glyphicon glyphicon-plus"></span>
+					</div>
+
+					<div class="title">find me something to review</div>
+				</div>
+			</div>
+		</div>
+	{{/review_layout}}
+</template>
+
+<template name="solution">
+	<div class="btn btn-theme">request feedback</div>
+	Students: link code revisions
+	request review
+</template>
+
+<template name="solution_preview">
+	<div class="btn btn-theme">request feedback</div>
+	Students: link code revisions
+	request review
+</template>
+
+<template name="review">
+
+</template>
+
+<template name="review_preview">
+
+</template>
+
+

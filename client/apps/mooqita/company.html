@@ -1,0 +1,318 @@
+<!------------------------------------------------
+|
+|	Challenge entry point
+|
+-------------------------------------------------->
+<template name="company_view">
+	{{#review_layout}}
+		<div class="row">
+			<div class="col-md-4">
+				<h1>Company Logo</h1>
+				{{#if company_logo}}
+					<img class="img-responsive" src="{{company_logo}}">
+				{{/if}}
+				{{>dropfile method="set_field" collection_name="Responses"
+					item_id=_id field="company_logo" max_size=500000}}
+			</div>
+
+			<div class="col-md-8">
+				<h1>Company Name</h1>
+				{{>basic_input method="set_field" collection_name="Responses"
+					item_id=_id field="company_name" placeholder="Name of your company"}}
+
+				<h1>Company Description</h1>
+				{{>text_input method="set_field" collection_name="Responses"
+					item_id=_id field="company_description" placeholder="Let our students know a little more about your company."}}
+			</div>
+		</div>
+
+		<h1>Your Challenges</h1>
+		<hr>
+		<div class="input-group" style="padding-bottom: 15px">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
+			</span>
+
+			<input type="text" class="form-control" placeholder="Search your challenges ...">
+		</div>
+
+		{{#unless challenges}}
+			<div class="well">
+				<p>No challenges yet.</p>
+			</div>
+		{{/unless}}
+
+		{{#each challenges}}
+			{{>challenge_preview}}
+		{{/each}}
+	{{/review_layout}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge list
+|
+-------------------------------------------------->
+<template name="challenge_preview">
+	<div class="input-group">
+		<div class="input-group-btn">
+			<a class="btn btn-default" href="{{challenge_url}}">
+				<span class="glyphicon glyphicon-edit"></span>
+			</a>
+		</div>
+		{{>basic_input method="set_field" collection_name="Responses"
+				item_id=_id field="title" placeholder="Title"}}
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Editor
+|
+-------------------------------------------------->
+<template name="challenge">
+	{{#review_layout}}
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<label for="challenge_url"
+				 title="Link to the challenge">
+					Shareable Link
+				</label>
+				<div class="input-group">
+					<div class="input-group-btn" id="icon_download" title="select the entire url">
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-download"></span>
+						</button>
+					</div>
+					<div class="form-control" style="background: #f5f5f5;" id="challenge_url">
+						{{challenge_url}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm-8">
+				<label for="title"
+							 title="Title of your task"
+								>Title</label>
+				{{>basic_input method="set_field" collection_name="Responses"
+						item_id=_id field="title" placeholder="Title"}}
+			</div>
+
+			<div class="form-group col-sm-4">
+				<label for="num_reviews"
+							 title="Number of peer reviews."
+							>Reviews</label>
+				{{>basic_input method="set_field" collection_name="Responses"
+						item_id=_id field="num_reviews" placeholder="Number of reviews" type="number"}}
+			</div>
+
+			<div class="form-group col-sm-12">
+				{{>text_input method="set_field" collection_name="Responses"
+						item_id=_id field="content" placeholder="Content"}}
+
+				{{>select_input label='Visibility' method='set_field'
+					collection_name='Responses'	field='visible_to' item_id=_id
+					options=_response_visibility}}
+
+				<label>Upload additional material</label>
+				{{>dropfile method="set_field" collection_name="Responses"
+					item_id=_id field="material"}}
+			</div>
+		</div>
+	{{/review_layout}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge solutions
+|
+-------------------------------------------------->
+<template name="challenge_solutions">
+	{{#each peers}}
+		<div class="call-header">
+			<span class="call-addon">
+				{{{average_grade}}}
+			</span>
+
+			<span class="call-title">
+				{{author_name}}
+			</span>
+
+			<span class="call-button">
+				<button class="btn btn-red" data-toggle="collapse"
+								data-target="#review_{{owner_id}}_collapse"
+								type="button">Show more</button>
+			</span>
+		</div>
+
+		<div class="collapse" id="review_{{owner_id}}_collapse">
+			<div class="callout_no_border">
+				<div class="media">
+					<div class="media-left">
+						<img class="media-object img-circle" src="{{author_avatar}}" height="64px">
+					</div>
+
+					<div class="media-body">
+						<h1 class="media-heading">
+							<a href="{{resume_url author_id}}"><em>{{author_name}}</em></a>'s solution
+						</h1>
+						<hr style="margin-top: 5px; margin-bottom: 15px">
+						{{{content}}}
+
+						<h1>Reviews</h1>
+						<hr style="margin-top: 5px; margin-bottom: 15px">
+						{{#each reviews .}}
+							<div class="media">
+								<div class="media-left">
+									<img class="media-object img-circle" src="{{peer_avatar}}" height="64px">
+								</div>
+
+								<div class="media-body">
+									<h2 class="media-heading">
+										<div class="row">
+											<div class="col-xs-6">
+												<a href="{{resume_url peer_id}}"><em>{{peer_name}}</em></a>
+											</div>
+
+											<div class="col-xs-6" style="text-align: right">
+												Grade <em>{{grade}}</em> out of <em>5</em>
+											</div>
+										</div>
+									</h2>
+
+									<p>
+										{{content}}
+									</p>
+								</div>
+							</div>
+						{{else}}
+							<div class="well">
+								No reviews yet.
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{else}}
+		<p>
+			No solutions to your task yet.
+		</p>
+	{{/each}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Feedback
+|
+-------------------------------------------------->
+<template name="challenge_feedback">
+	<div class="row">
+		<div class="form-group col-md-7">
+			<label for="feedback"
+						 title="Your rating for this challenge overall">
+				Feedback
+			</label>
+
+			<textarea class="form-control" id="feedback"
+								rows="8" style="height: 183px">{{challenge_feedback}}</textarea>
+
+			<div class="btn-toolbar">
+				<span class="btn-group">
+					{{#if save_state}}
+						<div class="btn btn-red" id="save">Save</div>
+					{{else}}
+						<div class="btn btn-success" id="save">Save</div>
+					{{/if}}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="rating"
+								 title="Your rating for this challenge"
+									>Overall Rating</label>
+					<select class="form-control" id="rating" type="select">
+						<option value="null" disabled {{selected_default challenge_rating}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_rating '5'}}>great</option>
+						<option value="4" {{selected challenge_rating '4'}}>good</option>
+						<option value="3" {{selected challenge_rating '3'}}>mediocre</option>
+						<option value="2" {{selected challenge_rating '2'}}>needs improvement</option>
+						<option value="1" {{selected challenge_rating '1'}}>need lots of improvement</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="ease"
+								 title="Your rating for this challenge overall"
+									>Ease of Challenge</label>
+					<select class="form-control" id="ease" type="select">
+						<option value="null" disabled {{selected_default challenge_ease}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_ease '5'}}>too hard</option>
+						<option value="4" {{selected challenge_ease '4'}}>hard</option>
+						<option value="3" {{selected challenge_ease '3'}}>balanced</option>
+						<option value="2" {{selected challenge_ease '2'}}>easy</option>
+						<option value="1" {{selected challenge_ease '1'}}>too easy</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="timing"
+								 title="How much time did you need to solve the challenge."
+									>Time required</label>
+					<select class="form-control" id="timing" type="select">
+						<option value="null" {{selected_default challenge_timing}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_timing '5'}}>much more time required</option>
+						<option value="4" {{selected challenge_timing '4'}}>more time required</option>
+						<option value="3" {{selected challenge_timing '3'}}>balanced</option>
+						<option value="2" {{selected challenge_timing '2'}}>less time required</option>
+						<option value="1" {{selected challenge_timing '1'}}>much less time required</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge delete modal
+|
+-------------------------------------------------->
+<template name="delete_challenge">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Delete challenge</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to delete your challenge?<br>
+						This operation cannot be undone!
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-red" id="delete" data-dismiss="modal">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

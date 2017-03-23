@@ -1,13 +1,13 @@
 <!------------------------------------------------
 |
-|
+| Login templates
 |
 -------------------------------------------------->
-<template name="login">
+<template name="login_user">
 	{{>loginButtons}}
 </template>
 
-<template name="worker_login">
+<template name="login_worker">
 	{{#if currentUser}}
 		{{>response_creator}}
 	{{else}}
@@ -15,7 +15,7 @@
 	{{/if}}
 </template>
 
-<template name="auto_login">
+<template name="login_auto">
 	{{#if currentUser}}
 		{{>response_creator}}
 	{{/if}}

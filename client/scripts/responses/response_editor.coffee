@@ -3,7 +3,7 @@
 ########################################
 
 ########################################
-get_index = () ->
+_get_index = () ->
 	index = FlowRouter.getParam("index")
 	if not index
 		index = Session.get "current_page"
@@ -12,7 +12,7 @@ get_index = () ->
 
 
 ########################################
-get_template_id = () ->
+_get_template_id = () ->
 	id = FlowRouter.getParam("template_id")
 	if not id
 		id = Session.get "current_template"
@@ -162,35 +162,25 @@ Template.response_item.events
 
 ########################################
 Template.response_editor.onCreated ->
-	this.loaded_template = new ReactiveVar(0)
 	this.loaded_response = new ReactiveVar(0)
 
 	self = this
 	self.autorun () ->
 		rn = self.data._id
-		tn = self.data.template_id
 
 		self.subscribe "response_by_id", rn,
 			onReady: () ->
 				self.loaded_response.set(true)
 
-		self.subscribe "template_by_id", tn,
-			onReady: () ->
-				self.loaded_template.set(true)
-
 ########################################
 Template.response_editor.helpers
 	template_id: ->
+		console.log this
 		return this.template_id
-
-	template: ->
-		template = get_template this.template_id
-		return template
 
 	data_loaded: () ->
 		inst = Template.instance()
-
-		done = inst.loaded_template.get() && inst.loaded_response.get()
+		done = inst.loaded_response.get()
 		return done
 
 	response: ->
@@ -201,48 +191,65 @@ Template.response_editor.helpers
 ########################################
 
 ########################################
+get_response = (self) ->
+	response_id = FlowRouter.getParam("response_id")
+	filter = null
+
+	if self.response
+		filter =
+			_id: self.response._id
+	else if response_id
+		filter =
+			_id: response_id
+	else
+		index = FlowRouter.getParam("index")
+		template_id = FlowRouter.getParam("template_id")
+		filter =
+			template_id: template_id
+			owner_id: Meteor.userId()
+			index: index
+
+	response = Responses.findOne(filter)
+	return response
+
+########################################
 Template.response_creator.onCreated ->
 	self = this
 	self.loaded = new ReactiveVar(false)
+
+	handler =
+		onStop:(err) ->
+			if err
+				sAlert.error err
+			self.loaded.set(true)
+
+		onReady:() ->
+			self.loaded.set true
+
 	self.autorun () ->
-		if not self.response
+		response_id = FlowRouter.getParam("response_id")
+
+		if self.response
+			self.subscribe "response", self.response._id, handler
+		else if response_id
+			self.subscribe "response_by_id", response_id, handler
+		else
 			index = FlowRouter.getParam("index")
 			template_id = FlowRouter.getParam("template_id")
-			self.subscribe "response", template_id, index,
-				onReady: () ->
-					self.loaded.set(true)
-			return
-
-		self.subscribe "response", self.response._id,
-			onReady: () ->
-				self.loaded.set(true)
-
+			self.subscribe "response", template_id, index, handler
 
 ########################################
 Template.response_creator.helpers
 	template_id: ->
-		return FlowRouter.getParam("template_id")
-
-	template: ->
-		template_id = FlowRouter.getParam("template_id")
-		template = get_ template_id
-		return template
+		response = get_response(this)
+		return response.template_id
 
 	loaded: ->
 		res = Template.instance().loaded.get()
 		return res
 
 	response: ->
-		template_id = FlowRouter.getParam("template_id")
-		index = get_index()
-
-		filter =
-			template_id: template_id
-			owner_id: Meteor.userId()
-			index: index
-
-		response = Responses.findOne(filter)
-		return response
+		return get_response(this)
 
 ########################################
 # add_response
@@ -250,7 +257,7 @@ Template.response_creator.helpers
 
 ########################################
 Template.add_response.onCreated ->
-	index = get_index()
+	index = _get_index()
 	template_id = FlowRouter.getParam("template_id")
 	Meteor.call "add_response", template_id, index,
 		(err, res) ->
@@ -260,7 +267,7 @@ Template.add_response.onCreated ->
 				sAlert. success "Response added"
 
 #########################################################
-# Edit post toggle
+# Edit tool toggle
 #########################################################
 
 #########################################################
@@ -274,3 +281,39 @@ Template._edit_toggle.events
 
 		console.log this._id
 		Session.set("editing_response", this._id)
+
+
+#########################################################
+# Edit tools
+#########################################################
+
+#########################################################
+Template._edit_tools.helpers
+	is_visible: (val) ->
+		if val in this.visible_to
+			return "selected"
+
+	is_template: (val) ->
+		if val == this.template
+			return "selected"
+
+	is_group: (val) ->
+		if val == this.group
+			return "selected"
+
+	templates: () ->
+		return find_template_names()
+
+	parents: () ->
+		filter = {}
+		mod =
+			fields:
+				_id: 1
+				title: 1
+
+		list = Responses.find(filter, mod).fetch()
+		groups = [{value:"", label:"Select a parent"}]
+		groups.push ({value:x._id, label:x.title} for x in list)...
+
+		return groups
+

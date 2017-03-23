@@ -1,18 +1,9 @@
 ########################################
-Template.worker_login.onCreated ->
-	self = this
-	self.autorun () ->
-		index = FlowRouter.getParam("index")
-		template_id = FlowRouter.getParam("template_id")
-		self.subscribe "template_by_id", template_id
-
-
-########################################
 # auto login
 ########################################
 
 ########################################
-Template.auto_login.onCreated ->
+Template.login_auto.onCreated ->
 	if Meteor.userId()
 		return
 
