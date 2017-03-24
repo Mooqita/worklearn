@@ -46,7 +46,15 @@ Template.admin.onCreated ->
 #########################################################
 Template.admin.helpers
 	"permissions": ->
-		return Permissions.find()
+		filter = {}
+
+		mod =
+			sort:
+				collection:1
+				role:1
+				field:1
+
+		return Permissions.find(filter, mod)
 
 #########################################################
 Template.admin.events

@@ -9,6 +9,7 @@ Template.landing.onCreated ->
 	self.autorun () ->
 		self.subscribe 'responses_with_data', 'frontpage'
 
+#########################################################
 Template.landing.onRendered ->
 	try
 		Fingerprint2 = require('fingerprintjs2')
@@ -23,6 +24,7 @@ Template.landing.onRendered ->
 	catch error
 		console.log error
 
+#########################################################
 Template.landing.helpers
 	groups: () ->
 		filter=

@@ -89,16 +89,16 @@ Meteor.publish "response_by_id", (response_id) ->
 
 
 #######################################################
-Meteor.publish "response_by_parent", (parent_id) ->
+Meteor.publish "responses_by_parent", (parent_id) ->
 	check parent_id, String
 
 	restrict =
-		_id: parent_id
+		parent_id: parent_id
 
 	filter = filter_visible_to_user this.userId, restrict
 
 	crs = Responses.find filter
-	console.log("Responses by _id: " + crs.count() + " submitted!")
+	console.log("Responses by parent_id: " + crs.count() + " submitted!")
 	return crs
 
 

@@ -1,11 +1,34 @@
 ########################################
 #
+# student view
+#
+########################################
+
+########################################
+Template.student_view.onCreated ->
+	Session.set "student_template", "student_summary"
+
+########################################
+Template.student_view.helpers
+	selected_view: () ->
+		return Session.get "student_template"
+
+########################################
+Template.student_menu.events
+	"click #student_summary": ()->
+		Session.set "student_template", "student_summary"
+
+	"click #student_find_challenges": ()->
+		Session.set "student_template", "student_find_challenges"
+
+########################################
+#
 # student_view
 #
 ########################################
 
 ########################################
-Template.student_view.helpers
+Template.student_summary.helpers
 	solutions: () ->
 		filter =
 			parent_id: this._id
@@ -21,7 +44,7 @@ Template.student_view.helpers
 		return Responses.find(filter)
 
 ########################################
-Template.student_view.events
+Template.student_summary.events
 	"click #add_solution": () ->
 		filter =
 			parent_id: this._id

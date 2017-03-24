@@ -1,4 +1,77 @@
+<!------------------------------------------------
+|
+|	Student view
+|
+-------------------------------------------------->
 <template name="student_view">
+	{{>review_style}}
+	{{#review_layout menu="student_menu" menu_data=.}}
+		{{>Template.dynamic template=selected_view}}
+	{{/review_layout}}
+</template>
+
+<template name="student_menu">
+	<div class="container-fluid navigation-background background-theme">
+		<div class="row">
+			<span>
+				<a class="navigation-button" id="student_summary">
+					Summary
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button" id="student_find_challenges">
+					Find Challenges
+				</a>
+			</span>
+		</div>
+	</div>
+</template>
+
+<!------------------------------------------------
+|
+|	Student views
+|
+-------------------------------------------------->
+<template name="student_summary">
+	<div class="row">
+		<div class="col-md-3">
+			<h1>Avatar</h1>
+			{{#if avatar}}
+				<img class="img-circle img-responsive" src="{{avatar}}">
+			{{/if}}
+			{{>dropfile method="set_field" collection_name="Responses"
+				item_id=_id field="avatar" max_size=250000}}
+		</div>
+
+		<div class="col-md-9">
+			<h1>Name</h1>
+			<div class="row">
+				<div class="col-md-4">
+					{{>basic_input method="set_field" collection_name="Responses"
+						item_id=_id field="given_name" placeholder="Given name"}}
+				</div>
+
+				<div class="col-md-4">
+					{{>basic_input method="set_field" collection_name="Responses"
+						item_id=_id field="middle_name" placeholder="Middle name"}}
+				</div>
+
+				<div class="col-md-4">
+					{{>basic_input method="set_field" collection_name="Responses"
+						item_id=_id field="family_name" placeholder="Family name"}}
+				</div>
+			</div>
+
+			<h1>Resume</h1>
+			{{>text_input method="set_field" collection_name="Responses"
+				item_id=_id field="resume" placeholder="Tell us a little more about you."}}
+		</div>
+	</div>
+</template>
+
+
+<template name="student_find_challenges">
 
 </template>
 

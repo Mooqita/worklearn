@@ -1,52 +1,86 @@
 <!------------------------------------------------
 |
-|	Challenge entry point
+|	Company view
 |
 -------------------------------------------------->
 <template name="company_view">
-	{{#review_layout}}
-		<div class="row">
-			<div class="col-md-4">
-				<h1>Company Logo</h1>
-				{{#if company_logo}}
-					<img class="img-responsive" src="{{company_logo}}">
-				{{/if}}
-				{{>dropfile method="set_field" collection_name="Responses"
-					item_id=_id field="company_logo" max_size=500000}}
-			</div>
-
-			<div class="col-md-8">
-				<h1>Company Name</h1>
-				{{>basic_input method="set_field" collection_name="Responses"
-					item_id=_id field="company_name" placeholder="Name of your company"}}
-
-				<h1>Company Description</h1>
-				{{>text_input method="set_field" collection_name="Responses"
-					item_id=_id field="company_description" placeholder="Let our students know a little more about your company."}}
-			</div>
-		</div>
-
-		<h1>Your Challenges</h1>
-		<hr>
-		<div class="input-group" style="padding-bottom: 15px">
-			<span class="input-group-btn">
-				<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
-			</span>
-
-			<input type="text" class="form-control" placeholder="Search your challenges ...">
-		</div>
-
-		{{#unless challenges}}
-			<div class="well">
-				<p>No challenges yet.</p>
-			</div>
-		{{/unless}}
-
-		{{#each challenges}}
-			{{>challenge_preview}}
-		{{/each}}
+	{{>review_style}}
+	{{#review_layout menu="company_menu" menu_data=.}}
+		{{>Template.dynamic template=selected_view}}
 	{{/review_layout}}
 </template>
+
+
+<template name="company_menu">
+	<div class="container-fluid navigation-background background-theme">
+		<div class="row">
+			<span>
+				<a class="navigation-button" id="company_summary">
+					Summary
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button" id="company_challenges">
+					Challenges
+				</a>
+			</span>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Company views
+|
+-------------------------------------------------->
+<template name="company_summary">
+	<div class="row">
+		<div class="col-md-4">
+			<h1>Company Logo</h1>
+			{{#if company_logo}}
+				<img class="img-responsive" src="{{company_logo}}">
+			{{/if}}
+			{{>dropfile method="set_field" collection_name="Responses"
+				item_id=_id field="company_logo" max_size=500000}}
+		</div>
+
+		<div class="col-md-8">
+			<h1>Company Name</h1>
+			{{>basic_input method="set_field" collection_name="Responses"
+				item_id=_id field="company_name" placeholder="Name of your company"}}
+
+			<h1>Company Description</h1>
+			{{>text_input method="set_field" collection_name="Responses"
+				item_id=_id field="company_description" placeholder="Let our students know a little more about your company."}}
+		</div>
+	</div>
+</template>
+
+
+<template name="company_challenges">
+	<h1>Your Challenges</h1>
+	<hr>
+	<div class="input-group" style="padding-bottom: 15px">
+		<span class="input-group-btn">
+			<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
+		</span>
+
+		<input type="text" class="form-control" placeholder="Search your challenges ...">
+	</div>
+
+	{{#unless challenges}}
+		<div class="well">
+			<p>No challenges yet.</p>
+		</div>
+	{{/unless}}
+
+	{{#each challenges}}
+		{{>challenge_preview}}
+	{{/each}}
+</template>
+
 
 
 <!------------------------------------------------
@@ -94,7 +128,7 @@
 		</div>
 
 		<div class="row">
-			<div class="form-group col-sm-8">
+			<div class="form-group col-sm-6">
 				<label for="title"
 							 title="Title of your task"
 								>Title</label>
@@ -102,21 +136,32 @@
 						item_id=_id field="title" placeholder="Title"}}
 			</div>
 
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label for="num_reviews"
-							 title="Number of peer reviews."
-							>Reviews</label>
+							 title="Number of peer reviews.">
+					Reviews
+				</label>
+
 				{{>basic_input method="set_field" collection_name="Responses"
 						item_id=_id field="num_reviews" placeholder="Number of reviews" type="number"}}
 			</div>
 
-			<div class="form-group col-sm-12">
-				{{>text_input method="set_field" collection_name="Responses"
-						item_id=_id field="content" placeholder="Content"}}
+			<div class="form-group col-sm-3">
+				<label for="visible_to"
+							 title="Who can see your challenge">
+					Visible
+				</label>
 
 				{{>select_input label='Visibility' method='set_field'
 					collection_name='Responses'	field='visible_to' item_id=_id
 					options=_response_visibility}}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-sm-12">
+				{{>text_input method="set_field" collection_name="Responses"
+						item_id=_id field="content" placeholder="Content"}}
 
 				<label>Upload additional material</label>
 				{{>dropfile method="set_field" collection_name="Responses"

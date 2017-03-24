@@ -111,7 +111,9 @@
 		{{#if response}}
 			{{>dynamic_template_loader template_id=template_id data=response}}
 		{{else}}
-			{{>add_response}}
+			{{#if create}}
+				{{>add_response}}
+			{{/if}}
 		{{/if}}
 	{{else}}
 		<h1>

@@ -59,8 +59,6 @@ Template.response_dashboard.events
 	"click #export_responses": () ->
 		Meteor.call "backup_responses",
 			(err, res) ->
-				sAlert.error("done export")
-				console.log [err,res]
 				if err
 					sAlert.error(err)
 				else
@@ -89,7 +87,7 @@ Template.response_item.onCreated ->
 ########################################
 Template.response_item.helpers
 	response_url: () ->
-		return "/response_dashboard/"+this._id
+		return get_response_url this._id, true
 
 	has_children: (parent) ->
 		filter =
@@ -175,7 +173,6 @@ Template.response_editor.onCreated ->
 ########################################
 Template.response_editor.helpers
 	template_id: ->
-		console.log this
 		return this.template_id
 
 	data_loaded: () ->
@@ -248,6 +245,12 @@ Template.response_creator.helpers
 		res = Template.instance().loaded.get()
 		return res
 
+	create: ->
+		index = FlowRouter.getParam("index")
+		if index
+			return true
+		return false
+
 	response: ->
 		return get_response(this)
 
@@ -279,7 +282,6 @@ Template._edit_toggle.events
 			Session.set("editing_response", "")
 			return
 
-		console.log this._id
 		Session.set("editing_response", this._id)
 
 
