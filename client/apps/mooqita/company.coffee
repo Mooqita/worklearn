@@ -32,14 +32,13 @@ Template.company_challenges.onCreated ->
 	self = this
 	self.autorun () ->
 		console.log self
-		self.subscribe "responses_by_parent", self.data._id
+		self.subscribe "responses_by_group", "challenge"
 
 ########################################
 Template.company_challenges.helpers
 	challenges: () ->
 		filter =
-			parent_id: this._id
-			template_id: "challenge"
+			group_name: "challenge"
 
 		return Responses.find(filter)
 

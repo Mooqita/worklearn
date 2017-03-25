@@ -15,4 +15,5 @@
 
 #######################################################
 @Admin = new Mongo.Collection("admin")
+@Tasks = new Mongo.Collection("tasks")
 

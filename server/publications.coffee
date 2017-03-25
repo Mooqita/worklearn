@@ -64,6 +64,31 @@ Meteor.publish "responses", () ->
 	return crs
 
 #######################################################
+Meteor.publish "responses_by_group", (group_name) ->
+	restrict =
+		group_name: group_name
+
+	filter = filter_visible_to_user this.userId, restrict
+
+	mod =
+		fields:
+			_id : 1
+			name: 1
+			index: 1
+			title: 1
+			deleted: 1
+			owner_id: 1
+			parent_id: 1
+			visible_to: 1
+			group_name: 1
+			view_order: 1
+			template_id: 1
+
+	crs = Responses.find filter, mod
+	console.log("Responses without data: " + crs.count() + " submitted!")
+	return crs
+
+#######################################################
 Meteor.publish "responses_with_data", (group_name) ->
 	restrict =
 		group_name: group_name
@@ -182,4 +207,45 @@ Meteor.publish "permissions", () ->
 	crs = Permissions.find()
 	console.log("Permissions: " + crs.count() + " submitted!")
 	return crs
+
+#######################################################
+Meteor.publish 'find_upwork_work', (q, paging, budget) ->
+	if not this.userId
+		throw Meteor.Error(403, "Not authorized.")
+
+	self = this
+	secret = Secrets.findOne()
+	config =
+		consumerKey: secret.upwork.oauth.consumerKey
+		consumerSecret: secret.upwork.oauth.consumerSecret
+
+	UpworkApi = require('upwork-api')
+	Search = require('upwork-api/lib/routers/jobs/search.js').Search
+
+	api = new UpworkApi(config)
+	jobs = new Search(api)
+	params =
+		q: q
+		paging: paging
+		budget: budget
+		job_type: 'fixed'
+	accessToken = secret.upwork.oauth.accessToken
+	accessTokenSecret = secret.upwork.oauth.accessSecret
+
+	api.setAccessToken accessToken, accessTokenSecret, () ->
+
+	remote = (error, data) ->
+		if error
+			console.log(error)
+		else
+			for d in data.jobs
+				if Tasks.findOne(d.id)
+					continue
+				d.snippet = d.snippet.split('\n').join('<br>')
+				self.added('tasks', d.id, d)
+
+	bound = Meteor.bindEnvironment(remote)
+	jobs.find params, bound
+
+	self.ready()
 

@@ -6,6 +6,21 @@
 
 ################################################################
 Meteor.methods
+	add_response_with_data: (response) ->
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		if !Roles.userIsInRole(user._id, 'db_admin')
+			throw new Meteor.Error('Not permitted.')
+
+		response.visible_to = "owner"
+		response.owner_id = Meteor.userId()
+
+		Responses.insert response
+
+
 	add_response: (template_id="", index=1, parent_id="") ->
 		check template_id, String
 		check parent_id, String
