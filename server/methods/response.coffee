@@ -21,7 +21,8 @@ Meteor.methods
 		Responses.insert response
 
 
-	add_response: (template_id="", index=1, parent_id="") ->
+	add_response: (template_id="", index=1, parent_id="", group_name="", single_parent=false) ->
+		check group_name, String
 		check template_id, String
 		check parent_id, String
 		check index, Match.OneOf String, Number
@@ -31,7 +32,15 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
+		if single_parent
+			filter =
+				parent_id: parent_id
+
+			if Responses.findOne filter
+				throw new Meteor.Error('Response for this parent already exists.')
+
 		hit =
+			group_name: group_name
 			parent_id: parent_id
 			template_id: template_id
 			owner_id: Meteor.userId()

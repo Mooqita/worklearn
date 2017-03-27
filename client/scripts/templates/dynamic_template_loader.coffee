@@ -16,8 +16,7 @@ Template.dynamic_template_loader.onCreated ->
 		if template
 			return
 
-		console.log template_id
-		self.subscribe "template_by_id", template_id
+		self.subscribe "template_by_id", template_id, false
 
 ########################################
 Template.dynamic_template_loader.helpers

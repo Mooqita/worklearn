@@ -59,12 +59,6 @@ Template.company_challenges.events
 ########################################
 
 ########################################
-Template.challenge_preview.helpers
-	challenge_url:()->
-		return get_response_url this._id, true
-
-
-########################################
 #
 # challenge
 #

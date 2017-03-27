@@ -7,7 +7,7 @@ Template.landing.onCreated ->
 	self = this
 
 	self.autorun () ->
-		self.subscribe 'responses_with_data', 'frontpage'
+		self.subscribe 'responses_by_group', 'frontpage', false
 
 #########################################################
 Template.landing.onRendered ->

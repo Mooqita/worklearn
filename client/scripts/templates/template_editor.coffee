@@ -44,7 +44,7 @@ Template.template_editor.onCreated ->
 	self = this
 	self.autorun () ->
 		tn = self.data._id
-		self.subscribe "template_by_id", tn,
+		self.subscribe "template_by_id", tn, false,
 			onReady: ()->
 				self.loaded.set(true)
 

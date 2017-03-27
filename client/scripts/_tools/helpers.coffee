@@ -1,3 +1,8 @@
+########################################
+Template.registerHelper "_response_url", (self) ->
+		return get_response_url self._id, true
+
+
 #######################################################
 Template.registerHelper "_response_visibility", () ->
 	opts = [

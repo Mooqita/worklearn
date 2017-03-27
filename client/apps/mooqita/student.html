@@ -6,34 +6,46 @@
 <template name="student_view">
 	{{>review_style}}
 	{{#review_layout menu="student_menu" menu_data=.}}
-		{{>Template.dynamic template=selected_view}}
+		{{>Template.dynamic template=selected_view data=data}}
 	{{/review_layout}}
 </template>
 
+
+<!------------------------------------------------
+|
+|	Student menu
+|
+-------------------------------------------------->
 <template name="student_menu">
 	<div class="container-fluid navigation-background background-theme">
 		<div class="row">
 			<span>
-				<a class="navigation-button" id="student_summary">
-					Summary
+				<a class="navigation-button student_navigate" id="student_profile">
+					Profile
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button" id="student_find_challenges">
+				<a class="navigation-button student_navigate" id="student_find_challenges">
 					Find Challenges
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button" id="student_find_challenges">
+				<a class="navigation-button student_navigate" id="student_solutions">
 					Solutions <span class="badge background-contrast">0{{new_solution_messages}}</span>
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button" id="student_find_challenges">
+				<a class="navigation-button student_navigate" id="student_reviews">
 					Reviews <span class="badge background-contrast">0{{new_review_messages}}</span>
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button student_navigate" id="student_credentials">
+					Credentials <span class="badge background-contrast">0{{new_credential_messages}}</span>
 				</a>
 			</span>
 		</div>
@@ -42,10 +54,10 @@
 
 <!------------------------------------------------
 |
-|	Student views
+|	Student summary
 |
 -------------------------------------------------->
-<template name="student_summary">
+<template name="student_profile">
 	<div class="row">
 		<div class="col-md-3">
 			<h1>Avatar</h1>
@@ -83,103 +95,133 @@
 </template>
 
 
+<!------------------------------------------------
+|
+|	Student find challenges
+|
+-------------------------------------------------->
 <template name="student_find_challenges">
+	<h1>Find Challenges</h1>
 
+	<hr>
+
+	<div class="input-group" style="padding-bottom: 15px">
+		<span class="input-group-btn">
+			<button class="btn btn-red" id="find_challenge" type="button">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</span>
+
+		<input type="text" class="form-control" placeholder="Search your challenges ...">
+	</div>
+
+	{{#unless challenges}}
+		<div class="well">
+			<p>No challenges yet.</p>
+		</div>
+	{{/unless}}
+
+	{{#each challenges}}
+		{{>student_challenge_preview}}
+	{{/each}}
 </template>
 
 
-<template name="student">
-	{{>review_style}}
-	{{#review_layout}}
-		<p>open credits: {{num_credits}}</p>
-		<p>open credits summary</p>
-		<p>credentials</p>
-		<p>new messages</p>
-
-		<h1>Solutions</h1>
-
-		<div class="row">
-			{{#each solutions}}
-				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-					<div style="margin-top: 100%;"></div>
-					<div class="element-preview background">
-						<div class="title">
-							{{>basic_input method="set_field" collection_name="Responses"
-									item_id=_id field="title" placeholder="Title"}}
-						</div>
-
-						<div class="parameter">
-							<p>New messages: </p>
-							<p>Received reviews: </p>
-
-							{{>basic_input method="set_field" collection_name="Responses"
-									item_id=_id field="num_reviews" type="number" placeholder="Number of reviews"}}
-						</div>
-
-						<div class="upload">
-							<label>Upload additional material</label>
-							{{>dropfile method="set_field" collection_name="Responses"
-									item_id=_id field="material"}}
-						</div>
-					</div>
-				</div>
-			{{/each}}
-
-			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="add_solution">
-				<div style="margin-top: 100%;"></div>
-				<div class="element-preview background">
-					<div class="add-btn background">
-						<span class="glyphicon glyphicon-plus"></span>
-					</div>
-
-					<div class="title">link or upload a new project</div>
-				</div>
+<template name="student_challenge_preview">
+	<div class="input-group">
+		<div class="input-group-btn">
+			<div class="btn btn-default" id="student_solution">
+				<span class="glyphicon glyphicon-fullscreen"></span>
 			</div>
 		</div>
+		<div class="form-control">
+			{{title}}
+		</div>
+	</div>
+</template>
 
-		<h1>Reviews</h1>
+<!------------------------------------------------
+|
+|	Student solutions
+|
+-------------------------------------------------->
+<template name="student_solutions">
+	<h1>Solutions</h1>
 
-		<div class="row">
-			{{#each reviews}}
-				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-					<div style="margin-top: 100%;"></div>
-					<div class="element-preview background">
-						<div class="title" id="connect">solution</div>
-					</div>
-				</div>
-			{{/each}}
-			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="add_review">
-				<div style="margin-top: 100%;"></div>
-				<div class="element-preview background">
-					<div class="add-btn background">
-						<span class="glyphicon glyphicon-plus"></span>
-					</div>
+	<hr>
 
-					<div class="title">find me something to review</div>
-				</div>
+	{{#each solutions}}
+		{{>student_solution_preview}}
+	{{/each}}
+
+	<br>
+
+	<p>open credits: {{num_credits}}</p>
+	<p>open credits summary</p>
+	<p>credentials</p>
+	<p>new messages</p>
+</template>
+
+
+<template name="student_solution_preview">
+	<div class="input-group">
+		<div class="input-group-btn">
+			<div class="btn btn-default" id="student_solution">
+				<span class="glyphicon glyphicon-fullscreen"></span>
 			</div>
 		</div>
-	{{/review_layout}}
+		<div class="form-control">
+			{{challenge.title}}
+		</div>
+	</div>
 </template>
 
-<template name="solution">
-	<div class="btn btn-theme">request feedback</div>
-	Students: link code revisions
-	request review
+
+<template name="student_solution">
+	<h1>Challenge</h1>
+	<p><b>{{challenge.title}}</b></p>
+	<p>{{{challenge.content}}}</p>
+
+	<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+
+	{{#if solution}}
+		<h1>Solution</h1>
+		<div class="btn btn-theme">Request feedback</div>
+		<div class="btn btn-theme">Link code base</div>
+	{{/if}}
 </template>
 
-<template name="solution_preview">
-	<div class="btn btn-theme">request feedback</div>
-	Students: link code revisions
-	request review
-</template>
+<!------------------------------------------------
+|
+|	Student reviews
+|
+-------------------------------------------------->
+<template name="student_reviews">
+	<h1>Reviews</h1>
 
-<template name="review">
-
+	<div class="row">
+		{{#each reviews}}
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+				<div style="margin-top: 100%;"></div>
+				<div class="element-preview background">
+					<div class="title" id="connect">solution</div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
 </template>
 
 <template name="review_preview">
 
 </template>
 
+
+<!------------------------------------------------
+|
+|	Student credentials
+|
+-------------------------------------------------->
+<template name="student_credentials">
+	<h1>Credentials</h1>
+</template>
 

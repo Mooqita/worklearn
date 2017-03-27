@@ -41,28 +41,11 @@ Template.work_to_learn.events
 	"click #add_task":() ->
 		this.group_name = "challenge"
 		this.template_id = "challenge"
+		this.content = this.snippet
+		this.parent_id = Template.instance().data._id
+		this.name = "upwork challenge: " + this.title
+
+		console.log this
 
 		Meteor.call "add_response_with_data", this
 
-
-#########################################################
-#
-# Tasks
-#
-#########################################################
-
-#########################################################
-Template.tasks.onCreated ->
-	self = this
-
-	self.autorun () ->
-		self.subscribe "responses_with_data", "challenge"
-
-#########################################################
-Template.tasks.helpers
-	tasks: () ->
-		filter =
-			group_name: "challenge"
-		res = Responses.find filter
-		console.log res
-		return res

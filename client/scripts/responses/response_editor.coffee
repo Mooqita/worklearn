@@ -30,7 +30,7 @@ _get_template_id = () ->
 Template.response_dashboard.onCreated ->
 	self = this
 	self.autorun () ->
-		self.subscribe "responses"
+		self.subscribe "responses", true
 
 ########################################
 Template.response_dashboard.helpers
@@ -124,8 +124,13 @@ Template.response_item.helpers
 
 ########################################
 Template.response_item.events
-	"click #expand": () ->
+	"click #expand": (event) ->
+		id = this._id
 		ins = Template.instance()
+
+		if ins.data._id != id
+			return
+
 		s = not ins.expanded.get()
 		ins.expanded.set(s)
 
@@ -166,7 +171,7 @@ Template.response_editor.onCreated ->
 	self.autorun () ->
 		rn = self.data._id
 
-		self.subscribe "response_by_id", rn,
+		self.subscribe "response_by_id", rn, false,
 			onReady: () ->
 				self.loaded_response.set(true)
 
@@ -227,13 +232,13 @@ Template.response_creator.onCreated ->
 		response_id = FlowRouter.getParam("response_id")
 
 		if self.response
-			self.subscribe "response", self.response._id, handler
+			self.subscribe "response_by_id", self.response._id, false, handler
 		else if response_id
-			self.subscribe "response_by_id", response_id, handler
+			self.subscribe "response_by_id", response_id, false, handler
 		else
 			index = FlowRouter.getParam("index")
 			template_id = FlowRouter.getParam("template_id")
-			self.subscribe "response", template_id, index, handler
+			self.subscribe "response_by_template", template_id, index, false, handler
 
 ########################################
 Template.response_creator.helpers
