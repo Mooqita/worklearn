@@ -3,17 +3,12 @@ Template.work_to_learn.onCreated ->
 	self = this
 
 	self.autorun () ->
-		on_stop = (err) ->
-			if err
-				sAlert.error(err)
-				console.log(err)
-
-		on_ready = (res) ->
-			#sAlert.success("Success!")
-
 		handler =
-			onStop: on_stop
-			onReady: on_ready
+			onStop: (err) ->
+				if err
+					sAlert.error(err)
+			onReady: (res) ->
+				#sAlert.success("Success!")
 
 		data = Template.currentData()
 		page = if data.page then data.page else 1
@@ -39,13 +34,11 @@ Template.work_to_learn.helpers
 #########################################################
 Template.work_to_learn.events
 	"click #add_task":() ->
-		this.group_name = "challenge"
+		this.type_identifier = "challenge"
 		this.template_id = "challenge"
 		this.content = this.snippet
 		this.parent_id = Template.instance().data._id
 		this.name = "upwork challenge: " + this.title
-
-		console.log this
 
 		Meteor.call "add_response_with_data", this
 

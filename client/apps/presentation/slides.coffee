@@ -139,7 +139,18 @@ Template.slide_deck.events
 			parent_id: this._id
 
 		index = Responses.find(filter).count()
-		Meteor.call "add_response", "slide_content", index, this._id
+
+		type="slide"
+		group=""
+		template_id="slide_content"
+		parent_id = this._id
+		single=false
+
+		Meteor.call "add_response", type, group, template_id, index, parent_id, single,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+
 
 
 ##############################################

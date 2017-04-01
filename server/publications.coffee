@@ -10,16 +10,13 @@
 #######################################################
 
 #######################################################
-_template_header =
-	fields:
-		_id : 1
-		name: 1
-		owner_id: 1
-
-#######################################################
 Meteor.publish "templates", (header_only=true) ->
-	filter = filter_visible_to_user this.userId
-	mod = if header_only then _template_header else {}
+	check header_only, Boolean
+
+	user_id = this.userId
+
+	filter = visible_items user_id
+	mod = visible_fields "Templates", null, user_id, header_only
 	crs = Templates.find(filter, mod)
 
 	console.log("Templates: " + crs.count() + " submitted!")
@@ -28,12 +25,13 @@ Meteor.publish "templates", (header_only=true) ->
 #######################################################
 Meteor.publish "template_by_id", (template_id, header_only=true) ->
 	check template_id, String
+	check header_only, Boolean
 
 	restrict =
 		_id : template_id
 
-	filter = filter_visible_to_user this.userId, restrict
-	mod = if header_only then _template_header else {}
+	filter = unsafe_filter_visible_to_user this.userId, restrict
+	mod = unsafe_visible_fields "Templates", template_id, this.userId, header_only
 	crs = Templates.find(filter, mod)
 
 	console.log("Template loaded: " + crs.count() + " submitted!")
@@ -45,99 +43,59 @@ Meteor.publish "template_by_id", (template_id, header_only=true) ->
 #######################################################
 
 #######################################################
-_response_header =
-	fields:
-		_id : 1
-		name: 1
-		index: 1
-		title: 1
-		deleted: 1
-		owner_id: 1
-		parent_id: 1
-		visible_to: 1
-		group_name: 1
-		view_order: 1
-		template_id: 1
+_accepts =
+	type_identifier: String
+	template_id: String
+	group_name: String
+	parent_id: String
+	owner_id: String
+	index: Match.OneOf String, Number
+	text: String
+	_id: String
 
 #######################################################
-Meteor.publish "responses", (header_only=true) ->
-	filter = filter_visible_to_user this.userId
-	mod = if header_only then _response_header else {}
+_filter = (user_id, param) ->
+	restrict = {}
 
-	crs = Responses.find filter, mod
-	console.log "Responses " + if header_only then "" else " with data" +
-					": " + crs.count() + " submitted!"
+	for p, t of _accepts
+		if param[p]
+			check param[p], t
+			if p == "text"
+				restrict["$text"] =
+					$search: param[p]
+			else
+				restrict[p] = param[p]
 
-	return crs
-
-#######################################################
-Meteor.publish "responses_by_group", (group_name, header_only=false) ->
-	restrict =
-		group_name: group_name
-
-	filter = filter_visible_to_user this.userId, restrict
-	mod = if header_only then _response_header else {}
-	crs = Responses.find filter, mod
-
-	console.log "Responses by group: " + group_name + " " +
-					if header_only then "" else "with data" +
-					": " + crs.count() + " submitted!"
-	return crs
-
-#######################################################
-Meteor.publish "response_by_id", (response_id, header_only=false) ->
-	check response_id, String
-
-	restrict =
-		_id: response_id
-
-	filter = filter_visible_to_user this.userId, restrict
-	mod = if header_only then _response_header else {}
-	crs = Responses.find filter, mod
-
-	console.log "Responses by id: " + response_id + " " +
-					if header_only then "" else "with data" +
-					": " + crs.count() + " submitted!"
-	return crs
+	return restrict
 
 
 #######################################################
-Meteor.publish "responses_by_parent", (parent_id, header_only=false) ->
-	check parent_id, String
+_log_responses = (crs, filter, fields, mine, header_only, origin) ->
 
-	restrict =
-		parent_id: parent_id
+	f = JSON.stringify(filter, null, 2);
+	m = JSON.stringify(fields, null, 2);
 
-	filter = filter_visible_to_user this.userId, restrict
-	mod = if header_only then _response_header else {}
-	crs = Responses.find filter, mod
+	data = if header_only then "without data" else "with data"
 
-	console.log "Responses by parent_id: " + parent_id + " " +
-					if header_only then "" else "with data" +
-					": " + crs.count() + " submitted!"
-	return crs
-
+	console.log "Submitted " + crs.count() + " responses " + data + " to " + origin
+#	console.log f
+#	console.log "With fields"
+#	console.log m
 
 #######################################################
-Meteor.publish "response_by_template", (template_id, index, header_only=false) ->
-	check template_id, String
-	check index, String
+Meteor.publish "responses", (param, mine, header_only, origin) ->
+	check mine, Boolean
+	check header_only, Boolean
 
-	restrict =
-		template_id: template_id
-		owner_id: this.userId
-		index: index
+	user_id = this.userId
 
-	filter = filter_visible_to_user this.userId, restrict
-	mod = if header_only then _response_header else {}
-	crs = Responses.find filter, mod
+	restrict = _filter user_id, param
+	filter = visible_items user_id, mine, restrict
+	fields = visible_fields "Responses", user_id, mine, header_only
+	crs = Responses.find filter, fields
 
-	console.log "Responses by template_id: " + template_id + " " +
-					if header_only then "" else "with data" +
-					": " + crs.count() + " submitted!"
+	_log_responses crs, filter, fields, mine, header_only, origin
 	return crs
-
-
 
 #######################################################
 # summaries
@@ -181,7 +139,14 @@ Meteor.publish "sum_of_field", (template_id, field, value) ->
 
 #######################################################
 Meteor.publish "files", (collection_name, item_id, field) ->
-	field_visible(collection_name, item_id, field, this.userId)
+	check collection_name, String
+	check item_id, String
+	check field, String
+
+	fields = visible_fields(collection_name, item_id, this.userId)
+
+	if field not in fields
+		throw new Meteor.Error "Not enough rights"
 
 	colllection = get_collection collection_name
 	data =
@@ -204,6 +169,10 @@ Meteor.publish "permissions", () ->
 
 #######################################################
 Meteor.publish 'find_upwork_work', (q, paging, budget) ->
+	check q, String
+	check paging, String
+	check budget, String
+
 	if not this.userId
 		throw Meteor.Error(403, "Not authorized.")
 

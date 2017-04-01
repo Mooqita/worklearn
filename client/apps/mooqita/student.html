@@ -60,7 +60,7 @@
 <template name="student_profile">
 	<div class="row">
 		<div class="col-md-3">
-			<h1>Avatar</h1>
+			<h2>Avatar</h2>
 			{{#if avatar}}
 				<img class="img-circle img-responsive" src="{{avatar}}">
 			{{/if}}
@@ -69,7 +69,7 @@
 		</div>
 
 		<div class="col-md-9">
-			<h1>Name</h1>
+			<h2>Name</h2>
 			<div class="row">
 				<div class="col-md-4">
 					{{>basic_input method="set_field" collection_name="Responses"
@@ -87,7 +87,7 @@
 				</div>
 			</div>
 
-			<h1>Resume</h1>
+			<h2>Resume</h2>
 			{{>text_input method="set_field" collection_name="Responses"
 				item_id=_id field="resume" placeholder="Tell us a little more about you."}}
 		</div>
@@ -103,27 +103,26 @@
 <template name="student_find_challenges">
 	<h1>Find Challenges</h1>
 
-	<hr>
+	<div class="embedded-form">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="find_challenge" type="button">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
 
-	<div class="input-group" style="padding-bottom: 15px">
-		<span class="input-group-btn">
-			<button class="btn btn-red" id="find_challenge" type="button">
-				<span class="glyphicon glyphicon-search"></span>
-			</button>
-		</span>
-
-		<input type="text" class="form-control" placeholder="Search your challenges ...">
+			{{>basic_input method="set_field" collection_name="Responses"
+				item_id=_id field="query" placeholder="search for ..."}}
+		</div>
 	</div>
 
-	{{#unless challenges}}
-		<div class="well">
+	<div class="well">
+		{{#each challenges}}
+			{{>student_challenge_preview}}
+		{{else}}
 			<p>No challenges yet.</p>
-		</div>
-	{{/unless}}
-
-	{{#each challenges}}
-		{{>student_challenge_preview}}
-	{{/each}}
+		{{/each}}
+	</div>
 </template>
 
 
@@ -134,9 +133,18 @@
 				<span class="glyphicon glyphicon-fullscreen"></span>
 			</div>
 		</div>
+
 		<div class="form-control">
 			{{title}}
 		</div>
+
+		{{#if has_solution}}
+			<div class="input-group-btn">
+				<div class="btn btn-success" id="delete_response">
+					<span class="glyphicon glyphicon-check"></span>
+				</div>
+			</div>
+		{{/if}}
 	</div>
 </template>
 
@@ -148,18 +156,20 @@
 <template name="student_solutions">
 	<h1>Solutions</h1>
 
-	<hr>
+	<div class="embedded-form">
+		<p>open credits: {{num_credits}}</p>
+		<p>open credits summary</p>
+		<p>credentials</p>
+		<p>new messages</p>
+	</div>
 
-	{{#each solutions}}
-		{{>student_solution_preview}}
-	{{/each}}
-
-	<br>
-
-	<p>open credits: {{num_credits}}</p>
-	<p>open credits summary</p>
-	<p>credentials</p>
-	<p>new messages</p>
+	<div class="well">
+		{{#each solutions}}
+			{{>student_solution_preview}}
+		{{else}}
+			<p>You have not submitted any solutions yet.</p>
+		{{/each}}
+	</div>
 </template>
 
 
@@ -179,15 +189,28 @@
 
 <template name="student_solution">
 	<h1>Challenge</h1>
-	<p><b>{{challenge.title}}</b></p>
-	<p>{{{challenge.content}}}</p>
+	<div class="well">
+		<b>{{challenge.title}}</b>
+		<p>{{{challenge.content}}}</p>
 
-	<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+		{{#unless solution}}
+			<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+		{{/unless}}
+	</div>
 
 	{{#if solution}}
 		<h1>Solution</h1>
-		<div class="btn btn-theme">Request feedback</div>
-		<div class="btn btn-theme">Link code base</div>
+		<div class="well">
+			{{>text_input method="set_field" collection_name="Responses"
+				item_id=solution._id field="content" placeholder="Describe your solution"}}
+
+			<label>Material or link to your project</label>
+			{{>dropfile method="set_field" collection_name="Responses"
+				item_id=solution._id field="avatar" max_size=250000}}
+
+			<div class="btn btn-theme">Request feedback</div>
+			<div class="btn btn-theme">Link code base</div>
+		</div>
 	{{/if}}
 </template>
 
@@ -199,20 +222,37 @@
 <template name="student_reviews">
 	<h1>Reviews</h1>
 
-	<div class="row">
-		{{#each reviews}}
-			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-				<div style="margin-top: 100%;"></div>
-				<div class="element-preview background">
-					<div class="title" id="connect">solution</div>
-				</div>
+	<div class="embedded-form">
+		{{#if searching}}
+			<div class="btn btn-theme" disabled="true" id="find_review">
+				Please wait
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 			</div>
+		{{else}}
+			<div class="btn btn-theme" id="find_review">Find me something to review</div>
+		{{/if}}
+	</div>
+
+	<div class="well">
+		{{#each reviews}}
+			{{>student_review_preview}}
+		{{else}}
+			<p>You have not submitted any reviews yet.</p>
 		{{/each}}
 	</div>
 </template>
 
-<template name="review_preview">
-
+<template name="student_review_preview">
+	<div class="input-group">
+		<div class="input-group-btn">
+			<div class="btn btn-default" id="student_solution">
+				<span class="glyphicon glyphicon-fullscreen"></span>
+			</div>
+		</div>
+		<div class="form-control">
+			{{challenge._id}}
+		</div>
+	</div>
 </template>
 
 
@@ -223,5 +263,7 @@
 -------------------------------------------------->
 <template name="student_credentials">
 	<h1>Credentials</h1>
+	<div class="embedded-form"></div>
+	<div class="well"></div>
 </template>
 

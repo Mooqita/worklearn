@@ -30,7 +30,7 @@ _get_template_id = () ->
 Template.response_dashboard.onCreated ->
 	self = this
 	self.autorun () ->
-		self.subscribe "responses", true
+		self.subscribe "responses", {}, true, true, "response_dashboard"
 
 ########################################
 Template.response_dashboard.helpers
@@ -66,7 +66,7 @@ Template.response_dashboard.events
 					saveAs blob, "responses.zip"
 
 	"click #add_response": () ->
-		Meteor.call "add_response", "", 1, "",
+		Meteor.call "add_response", {},
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -149,7 +149,10 @@ Template.response_item.events
 					sAlert.success("Updated: " + field)
 
 	"click #add_response_with_parent": () ->
-		Meteor.call "add_response", "", 1, this._id,
+		param:
+			parent_id: this._id
+
+		Meteor.call "add_response", param,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -165,13 +168,14 @@ Template.response_item.events
 
 ########################################
 Template.response_editor.onCreated ->
-	this.loaded_response = new ReactiveVar(0)
+	this.loaded_response = new ReactiveVar(false)
 
 	self = this
 	self.autorun () ->
-		rn = self.data._id
+		filter =
+			_id: self.data._id
 
-		self.subscribe "response_by_id", rn, false,
+		self.subscribe "responses", filter, true, true, "response_editor",
 			onReady: () ->
 				self.loaded_response.set(true)
 
@@ -217,28 +221,35 @@ get_response = (self) ->
 ########################################
 Template.response_creator.onCreated ->
 	self = this
-	self.loaded = new ReactiveVar(false)
+	self.loaded = new ReactiveVar(0)
 
 	handler =
 		onStop:(err) ->
 			if err
 				sAlert.error err
-			self.loaded.set(true)
+			self.loaded.set 1
 
 		onReady:() ->
-			self.loaded.set true
+			response = get_response(self)
+			self.loaded.set response._id
 
 	self.autorun () ->
 		response_id = FlowRouter.getParam("response_id")
 
 		if self.response
-			self.subscribe "response_by_id", self.response._id, false, handler
+			filter =
+				_id: self.response._id
 		else if response_id
-			self.subscribe "response_by_id", response_id, false, handler
+			filter =
+				_id: response_id
 		else
 			index = FlowRouter.getParam("index")
 			template_id = FlowRouter.getParam("template_id")
-			self.subscribe "response_by_template", template_id, index, false, handler
+			filter =
+				index: index
+				template_id: template_id
+
+		self.subscribe "responses", filter, true, false, "response_creator", handler
 
 ########################################
 Template.response_creator.helpers
@@ -248,7 +259,11 @@ Template.response_creator.helpers
 
 	loaded: ->
 		res = Template.instance().loaded.get()
-		return res
+		response = get_response(this)
+		if not response
+			return false
+
+		return response.loaded
 
 	create: ->
 		index = FlowRouter.getParam("index")
@@ -267,7 +282,12 @@ Template.response_creator.helpers
 Template.add_response.onCreated ->
 	index = _get_index()
 	template_id = FlowRouter.getParam("template_id")
-	Meteor.call "add_response", template_id, index,
+	type_identifier = FlowRouter.getParam("template_id")
+	param =
+		template_id: template_id
+		index: index
+
+	Meteor.call "add_response", type_identifier, param,
 		(err, res) ->
 			if err
 				sAlert.error err

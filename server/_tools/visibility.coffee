@@ -1,43 +1,69 @@
 #######################################################
-@field_visible = (collection, id, field, user_id) ->
-	check(id, String)
-	check(field, String)
-	check(collection, String)
+_collection_headers =
+	Templates:
+		fields:
+			_id : 1
+			name: 1
+			owner_id: 1
+	Responses:
+		fields:
+			_id : 1
+			name: 1
+			index: 1
+			title: 1
+			deleted: 1
+			owner_id: 1
+			parent_id: 1
+			visible_to: 1
+			type_identifier: 1
+			view_order: 1
+			template_id: 1
+
+#######################################################
+@visible_fields = (collection, user_id, owner=false, header_only=false) ->
+	if header_only
+		return _collection_headers[collection]
+
+	fields = Permissions.find {}, {fields:{field:1}}
 
 	roles = ['all']
-	if user_id
-		check(user_id, String)
-		user = Meteor.users.findOne(user_id)
+	if owner
+		roles.push 'owner'
 
-		if __is_owner_publish collection, id, user_id
-			roles.push 'owner'
+	if user_id
+		user = Meteor.users.findOne(user_id)
 
 	if user
 		roles.push user.roles ...
 		roles.push 'anonymous'
 
-	filter =
-		role:
-			$in: roles
-		field: field
-		collection: collection
+	res = {}
 
-	permissions = Permissions.find(filter)
+	for field in fields
+		filter =
+			role:
+				$in: roles
+			field: field["field"]
+			collection: collection
 
-	if permissions.count() == 0
-		console.log('No read permission found for: ' + roles)
-		return false
+		permissions = Permissions.find(filter)
 
-	for permission in permissions.fetch()
-		if __action_permitted permission, 'read'
-			return true
+		if permissions.count() == 0
+			continue
 
-	throw false
+		for permission in permissions.fetch()
+			if __action_permitted permission, 'read'
+				res[field] = 1
+
+		mod =
+			fields: res
+
+	return mod
 
 
 #######################################################
-@filter_visible_to_user = (user_id, restrict={}) ->
-	filters = []
+@visible_items = (user_id, owner=false, restrict={}) ->
+	filter = []
 	roles = ["all"]
 
 	if user_id
@@ -46,30 +72,20 @@
 		user = Meteor.users.findOne user_id
 		roles.push user.roles ...
 
-		# adding a filter for all posts we authored
-		f2 =
-			#post_group: group_name
-			owner_id: user._id
-
-		for k,v of restrict
-			f2[k] = v
-
-		filters.push f2
+	if owner
+		roles.push 'owner'
 
 	# adding a filter for all elements our current role allows us to see
-	f1 =
-		deleted:
-			$ne:
-				true
+	filter =
 		visible_to:
 			$in: roles
 
 	for k,v of restrict
-		f1[k] = v
+		filter[k] = v
 
-	filters.push f1
-
-	filter =
-		$or: filters
+	if not owner
+		filter["deleted"] =
+			$ne:
+				true
 
 	return filter
