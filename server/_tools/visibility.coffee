@@ -88,4 +88,7 @@ _collection_headers =
 			$ne:
 				true
 
+	if owner
+		filter["owner_id"] = user_id
+
 	return filter

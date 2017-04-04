@@ -6,20 +6,6 @@
 
 ################################################################
 Meteor.methods
-	add_response_with_data: (response) ->
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		if !Roles.userIsInRole(user._id, 'db_admin')
-			throw new Meteor.Error('Not permitted.')
-
-		response.visible_to = "owner"
-		response.owner_id = Meteor.userId()
-
-		Responses.insert response
-
 	add_response: (type_identifier, parameters) ->
 		check type_identifier, String
 
@@ -77,47 +63,16 @@ Meteor.methods
 				throw new Meteor.Error('Response for this parent already exists.')
 
 		hit =
-			type_identifier: type_identifier
-			template_id: template_id
 			group_name: group_name
 			parent_id: parent_id
-			owner_id: Meteor.userId()
 			title: title
+			template_id: template_id
+			type_identifier: type_identifier
 			index: index
+			single_parent: single_parent
 			name: name
-			loaded: true
-			visible_to: "owner"
-			view_order: 1
 
-		id = Responses.insert hit
-		return id
-
-	add_connection: (collector_id, target_id) ->
-		check collector_id, String
-		check target_id, String
-
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		filter =
-			_id:
-				$in:[collector_id, target_id]
-
-		l = Responses.find(filter).count()
-		if l != 2
-			throw new Meteor.Error('Illegal parameters')
-
-		filter =
-			_id: collector_id
-
-		mod =
-			$push:
-				connections: target_id
-
-		Responses.update(filter, mod)
-
+		id = insert_document Responses, hit
 		return id
 
 	#######################################################

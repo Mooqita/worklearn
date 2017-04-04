@@ -37,7 +37,7 @@ Meteor.methods
 			if err
 				msg["error"] = err
 
-			Logging.insert msg
+			insert_document Logging, msg
 
 		request(url, call)
 		return true

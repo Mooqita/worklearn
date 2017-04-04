@@ -125,14 +125,14 @@
 
 .dropbox__file + label em
 {
-	color: $theme-dark;
+	color: $contrast-on-theme;
 }
 
 .dropbox__file + label:hover em,
 .dropbox__file:focus + label em,
 .dropbox__file.has-focus + label em
 {
-	color: $contrast-on-theme;
+	color: $contrast-on-theme-dark;
 }
 
 

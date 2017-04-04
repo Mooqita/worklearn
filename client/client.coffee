@@ -17,6 +17,7 @@
 
 #TODO Companies: See profiles and credits
 #TODO Companies: See details/code links is privileged access
+#TODO All elements should be links not internal switches using: ?view=profile
 
 #Learning materials!!!!! I think we need to offer online classes that allow humans to code/write/design for the first time! Give credits to students for creating content?
 

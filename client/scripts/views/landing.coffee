@@ -7,9 +7,7 @@ Template.landing.onCreated ->
 	self = this
 
 	self.autorun () ->
-		filter =
-			group_name: "frontpage"
-
+		filter =group_name: "frontpage"
 		self.subscribe "responses", filter, false, false, "landing"
 
 #########################################################
@@ -39,3 +37,4 @@ Template.landing.helpers
 				view_order: 1
 
 		return Responses.find(filter, mod)
+

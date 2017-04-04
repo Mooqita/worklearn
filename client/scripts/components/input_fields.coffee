@@ -56,6 +56,8 @@ Template.select_input.helpers
 	is_selected: (val) ->
 		field = get_field_value Template.instance().data
 
+		console.log field
+
 		if !(field instanceof Array)
 			field = [field]
 

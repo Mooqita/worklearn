@@ -1,4 +1,22 @@
 ########################################
+Template.registerHelper "_is_public", () ->
+	data = Template.currentData()
+	field_value = get_field_value data, "visible_to", data._id, "Responses"
+	if not field_value
+		return false
+	return field_value == "anonymous"
+
+
+########################################
+Template.registerHelper "_is_saved", () ->
+	data = Template.currentData()
+	field_value = get_field_value data, "content", data._id, "Responses"
+	if not field_value
+		return false
+	return true
+
+
+########################################
 Template.registerHelper "_response_url", (_id) ->
 	return get_response_url _id, true
 
@@ -11,6 +29,18 @@ Template.registerHelper "_response_visibility", () ->
 		{value:"anonymous", label:"Registered Users"}
 		{value:"owner", label:"Only me"}]
 	return opts
+
+#######################################################
+Template.registerHelper "_rating_options", () ->
+	opts = [
+		{value:"", label:"Select your rating"}
+		{value:"1", label:"(1) Needs Improvement"}
+		{value:"2", label:"(2) Could be better"}
+		{value:"3", label:"(3) Mediocre"}
+		{value:"4", label:"(4) Good"}
+		{value:"5", label:"(5) Great"}]
+	return opts
+
 
 #######################################################
 Template.registerHelper "_is_fullscreen", () ->

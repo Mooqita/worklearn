@@ -218,7 +218,7 @@ Template.student_solution_preview.helpers
 ########################################
 Template.student_solution_preview.events
 	"click #student_solution": () ->
-		Session.set "current_data", Responses.findOne this.parent_id
+		Session.set "current_data", Responses.findOne this._id
 		Session.set "student_template", "student_solution"
 
 
@@ -236,23 +236,41 @@ Template.student_solution.onCreated ->
 		self.subscribe "responses", filter, true, false, "student_solution"
 
 		filter =
-			parent_id: self.data._id
+			_id: self.data.parent_id
+		self.subscribe "responses", filter, false, false, "student_solution"
+
+		filter =
+			solution_id: self.data._id
+			type_identifier: "feedback"
 		self.subscribe "responses", filter, true, false, "student_solution"
 
 
 ########################################
 Template.student_solution.helpers
 	challenge: () ->
-		return Responses.findOne this._id
+		return Responses.findOne this.parent_id
 
 	solution: () ->
-		filter =
-			parent_id: this._id
-		return Responses.findOne filter
+		return Responses.findOne this._id
 
+	feedback: () ->
+		filter =
+			solution_id: this._id
+			type_identifier: "feedback"
+		return Responses.find filter
+
+	publish_disabled: () ->
+		data = Template.currentData()
+		field_value = get_field_value data, "content", data._id, "Responses"
+		if not field_value
+			return "disabled"
+		return ""
 
 ########################################
 Template.student_solution.events
+	"click #publish":()->
+		Modal.show('publish_solution', this)
+
 	"click #take_challenge":()->
 		filter =
 			type_identifier: "solution"
@@ -275,6 +293,19 @@ Template.student_solution.events
 					sAlert.success "Challenge accepted!"
 
 
+##############################################
+# publish modal
+##############################################
+Template.publish_solution.events
+	'click #publish': ->
+		Meteor.call "set_field", "Responses", this._id, "visible_to", "anonymous",
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Solution published!"
+
+
 ########################################
 #
 # student review
@@ -294,7 +325,7 @@ Template.student_reviews.onCreated ->
 		filter =
 			type_identifier: "review"
 
-		self.subscribe "responses", filter, true, true, "student_reviews"
+		self.subscribe "responses", filter, true, false, "student_reviews"
 
 
 ########################################
@@ -332,17 +363,152 @@ Template.student_review_preview.onCreated ->
 	self = this
 	self.autorun () ->
 		filter =
-			_id: self.data._id
-		self.subscribe "responses", filter, false, false, "student_review_preview"
-
-		filter =
-			parent_id: self.data._id
-		self.subscribe "responses", filter, false, false, "student_review_preview"
+			_id: self.data.challenge_id
+		self.subscribe "responses", filter, false, true, "student_review_preview"
 
 
 ########################################
 Template.student_review_preview.helpers
 	challenge: () ->
+		return Responses.findOne this.challenge_id
+
+
+########################################
+Template.student_review_preview.events
+	"click #student_review": () ->
+		Session.set "current_data", Responses.findOne this._id
+		Session.set "student_template", "student_review"
+
+
+########################################
+# review editor
+########################################
+
+########################################
+Template.student_review.onCreated ->
+	self = this
+
+	self.autorun () ->
+		filter =
+			_id: self.data._id
+		self.subscribe "responses", filter, true, false, "student_solution"
+
+		filter =
+			_id: self.data.parent_id
+		self.subscribe "responses", filter, true, false, "student_solution"
+
+		filter =
+			_id: self.data.challenge_id
+		self.subscribe "responses", filter, true, false, "student_solution"
+
+
+########################################
+Template.student_review.helpers
+	challenge: () ->
+		return Responses.findOne this.challenge_id
+
+	solution: () ->
+		filter =
+			_id: this.parent_id
+		return Responses.findOne filter
+
+	rating: () ->
+		data = Template.currentData()
+		rating = get_field_value data, "rating", data._id, "Responses"
+		return rating
+
+	publish_disabled: () ->
+		data = Template.currentData()
+
+		content = get_field_value data, "content", data._id, "Responses"
+		if not content
+			return "disabled"
+
+		rating = get_field_value data, "rating", data._id, "Responses"
+		if not rating
+			return "disabled"
+
+		return ""
+
+
+########################################
+Template.student_review.events
+	"click #publish":()->
+		Modal.show('publish_review', this)
+
+##############################################
+# publish modal
+##############################################
+Template.publish_review.events
+	'click #publish': ->
+		Meteor.call "set_field", "Responses", this._id, "visible_to", "anonymous",
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Review published!"
+
+
+##############################################
+#
+#student_review_feedback
+#
+##############################################
+
+########################################
+# feedback editor
+########################################
+
+########################################
+Template.student_review_feedback.onCreated ->
+	self = this
+
+	self.autorun () ->
+		filter =
+			_id: self.data._id
+		self.subscribe "responses", filter, true, false, "student_review_feedback"
+
+		filter =
+			_id: self.data.parent_id
+		self.subscribe "responses", filter, true, false, "student_review_feedback"
+
+		filter =
+			_id: self.data.challenge_id
+		self.subscribe "responses", filter, true, false, "student_review_feedback"
+
+
+Template.student_review_feedback.helpers
+	review: () ->
 		return Responses.findOne this.parent_id
 
+	solution: () ->
+		return Responses.findOne this.solution_id
 
+	challenge: () ->
+		return Responses.findOne this.challenge_id
+
+	public_rating:() ->
+		data = Template.currentData()
+
+		val = get_field_value data, "visible_to", data._id, "Responses"
+		if val != "anonymous"
+			return false
+
+		val = get_field_value data, "rating", data._id, "Responses"
+		if val
+			return true
+
+		return false
+
+	publish_disabled: () ->
+		data = Template.currentData()
+
+		field_value = get_field_value data, "content", data._id, "Responses"
+		if not field_value
+			return "disabled"
+
+		val = get_field_value data, "rating", data._id, "Responses"
+		if not val
+			return "disabled"
+
+		return ""

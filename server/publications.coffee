@@ -45,6 +45,8 @@ Meteor.publish "template_by_id", (template_id, header_only=true) ->
 #######################################################
 _accepts =
 	type_identifier: String
+	challenge_id: String
+	solution_id: String
 	template_id: String
 	group_name: String
 	parent_id: String
@@ -78,18 +80,19 @@ _log_responses = (crs, filter, fields, mine, header_only, origin) ->
 	data = if header_only then "without data" else "with data"
 
 	console.log "Submitted " + crs.count() + " responses " + data + " to " + origin
-#	console.log f
+	console.log f
 #	console.log "With fields"
 #	console.log m
 
 #######################################################
-Meteor.publish "responses", (param, mine, header_only, origin) ->
+Meteor.publish "responses", (filter, mine, header_only, origin) ->
 	check mine, Boolean
 	check header_only, Boolean
+	check origin, String
 
 	user_id = this.userId
 
-	restrict = _filter user_id, param
+	restrict = _filter user_id, filter
 	filter = visible_items user_id, mine, restrict
 	fields = visible_fields "Responses", user_id, mine, header_only
 	crs = Responses.find filter, fields
