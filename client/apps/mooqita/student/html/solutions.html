@@ -1,0 +1,165 @@
+<!------------------------------------------------
+|
+|	Student solutions
+|
+-------------------------------------------------->
+<template name="student_solutions">
+	<h1>Solutions</h1>
+
+	<hr>
+
+	<!--div class="embedded-form">
+		<p>open credits: {{num_credits}}</p>
+		<p>open credits summary</p>
+		<p>credentials</p>
+		<p>new messages</p>
+	</div-->
+
+	{{#each solutions}}
+		{{>student_solution_preview}}
+	{{else}}
+		<p>You have not submitted any solutions yet.</p>
+	{{/each}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Student solution preview
+|
+-------------------------------------------------->
+<template name="student_solution_preview">
+	<h3>
+		<a id="student_solution">
+			<b><em>{{challenge.title}}</em></b>
+		</a>
+	</h3>
+
+	<p style="padding-left: 35px">
+		{{{content}}}
+		{{#if has_more}}
+			<a id="select">
+				{{#if selected}}
+					<em><b>less</b></em>
+				{{else}}
+					<em><b>...more</b></em>
+				{{/if}}
+			</a>
+		{{/if}}
+	</p>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Student solution editor
+|
+-------------------------------------------------->
+<template name="student_solution">
+	{{#unless Template.subscriptionsReady}}
+		<h1>
+			Please wait while we are loading your profile
+			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+		</h1>
+	{{else}}
+		<h1>{{challenge.title}}</h1>
+		<p>{{{challenge.content}}}</p>
+
+		<h1>Your Solution</h1>
+		{{#unless solution}}
+			You have not yet submitted a solution to this challenge.
+			<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+		{{else}}
+			{{#unless _is_public}}
+				<label>Solution description</label>
+				{{>text_input method="set_field" collection_name="Responses"
+					item_id=solution._id field="content" placeholder="Describe your solution"}}
+
+				<br>
+
+				<label>Additional Material or a link to your project files</label>
+				{{>dropfile method="set_field" collection_name="Responses"
+					item_id=solution._id field="material" max_size=250000}}
+
+			{{else}}
+
+				<label>Solution description</label>
+				{{solution.content}}
+
+				<br>
+
+				<label>Additional Material or a link to your project files</label>
+				{{>file_download collection_name="Responses"
+					item_id=solution._id field="material"}}
+			{{/unless}}
+
+			{{#unless _is_public}}
+				<div class="alert alert-info">
+					Please publish your solution.
+					{{#unless _is_saved}}
+						You need to save it first.
+					{{/unless}}
+				</div>
+			{{/unless}}
+
+			{{#unless _is_public}}
+				<div class="row">
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" id="save">Save</div>
+						</span>
+					</div>
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" {{publish_disabled}}
+									 id="publish">Make public</div>
+						</span>
+					</div>
+				</div>
+			{{/unless}}
+		{{/unless}}
+
+		{{#unless solution}}
+			<h1>Reviews you received</h1>
+			{{#each feedback}}
+				{{>student_review_feedback}}
+			{{/each}}
+		{{/unless}}
+	{{/unless}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Publish Modal
+|
+-------------------------------------------------->
+<template name="publish_solution">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Publish solution</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to publish your solution?<br>
+						If you publish your solution it will be send to <br>
+						your colleagues for review. <br>
+					</p>
+
+					<p>
+						<em>This can not be undone!</em>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-red" data-dismiss="modal">Not yet</button>
+					<button type="button" class="btn btn-red" id="publish" data-dismiss="modal">Publish</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

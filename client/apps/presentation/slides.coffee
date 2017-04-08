@@ -44,8 +44,6 @@ set_slide = (diff) ->
 		s_id = Session.get "current_slide_index"
 		Session.set "current_slide_index", s_id + diff
 
-	console.log Session.get "current_slide_index"
-
 ##############################################
 set_next_slide = () ->
 	return set_slide(1)
@@ -140,13 +138,13 @@ Template.slide_deck.events
 
 		index = Responses.find(filter).count()
 
-		type="slide"
-		group=""
-		template_id="slide_content"
-		parent_id = this._id
-		single=false
+		param =
+			parent_id: this._id
+			template_id: "slide_content"
+			single_parent: false
+			type_identifier: "slide"
 
-		Meteor.call "add_response", type, group, template_id, index, parent_id, single,
+		Meteor.call "add_response", param,
 			(err, res) ->
 				if err
 					sAlert.error(err)

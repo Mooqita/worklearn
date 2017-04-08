@@ -1,0 +1,177 @@
+<template name="response_dashboard">
+	{{#unless response}}
+		<h1>Your responses</h1>
+
+		<hr>
+
+		<div class="input-group" style="padding-bottom: 15px">
+			<span class="input-group-btn">
+				<button class="btn btn-theme" id="add_response" type="button">Add response now</button>
+			</span>
+
+			<input type="text" class="form-control" placeholder="Search your responses ...">
+
+			<span class="input-group-btn">
+				<div class="btn btn-theme" id="export_responses">
+					<span class="glyphicon glyphicon-download"></span>
+				</div>
+			</span>
+		</div>
+
+		{{#unless responses}}
+			<div class="well">
+				<p>No challenges yet.</p>
+			</div>
+		{{/unless}}
+
+		{{#each responses}}
+			{{>response_item}}
+		{{/each}}
+	{{else}}
+		{{>response_editor response}}
+	{{/unless}}
+</template>
+
+
+<template name="response_item">
+	<div class="input-group">
+		<div class="input-group-btn">
+			{{#if has_children .}}
+				{{#if expanded}}
+					<div class="btn btn-default" id="expand">
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
+					</div>
+				{{else}}
+					<div class="btn btn-default" id="expand">
+						<span class="glyphicon glyphicon-triangle-right"></span>
+					</div>
+				{{/if}}
+			{{/if}}
+
+			<div class="btn btn-default">
+				{{>_edit_toggle class="btn btn-theme" _id=_id}}
+			</div>
+
+			<a class="btn btn-default" href="{{response_url}} ">
+				<span class="glyphicon glyphicon-fullscreen"></span>
+			</a>
+		</div>
+
+		{{#if _is_editing_response _id}}
+			{{>_edit_tools}}
+		{{else}}
+			{{>basic_input label='Name' method='set_field' collection_name='Responses'
+				field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
+
+			<div class="input-group-btn">
+				{{#if deleted}}
+					<div class="btn btn-success" id="delete_response">
+						<span class="glyphicon glyphicon-repeat"></span>
+					</div>
+				{{else}}
+					<div class="btn btn-danger" id="delete_response">
+						<span class="glyphicon glyphicon-remove"></span>
+					</div>
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
+
+	{{#if expanded}}
+		<div style="padding-left: 15px">
+			{{#each children .}}
+				{{>response_item}}
+			{{/each}}
+			<div class="input-group">
+				<div class="input-group-btn">
+					<div class="btn btn-success" id="add_response_with_parent">
+						<span class="glyphicon glyphicon-plus"></span>
+					</div>
+				</div>
+
+				<input placeholder="name for new response" class="form-control"
+							 type="text" id="{{new_response_name_id}}"/>
+			</div>
+		</div>
+	{{/if}}
+</template>
+
+
+<template name="response_editor">
+	{{#if data_loaded}}
+		{{>dynamic_template_loader template_id=template_id data=response}}
+	{{else}}
+		<h1>Loading data <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+	{{/if}}
+</template>
+
+
+<template name="response_creator">
+	{{#if loaded}}
+		{{#if response}}
+			{{>dynamic_template_loader template_id=template_id data=response}}
+		{{else}}
+			{{#if create}}
+				{{>add_response}}
+			{{/if}}
+		{{/if}}
+	{{else}}
+		<div style="">
+			<h1 style="	position: absolute;
+									top: 40%;
+									left: 50%;
+									transform: translate(-50%, -50%);">
+				Searching for existing response
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</h1>
+		</div>
+	{{/if}}
+</template>
+
+
+<template name="add_response">
+	<h1>
+		Please wait we prepare the task
+		<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+	</h1>
+</template>
+
+
+<template name="_edit_toggle">
+	<div class="edit-toggle tool-background" id="edit">
+		<span class="glyphicon glyphicon-edit"></span>
+	</div>
+</template>
+
+
+<template name="_edit_tools">
+	{{> UI.contentBlock}}
+
+	<div class="form-control">
+		{{type_identifier}}
+	</div>
+
+	{{>basic_input label='Name' method='set_field' collection_name='Responses'
+			field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
+
+	{{>basic_input label='Group' method='set_field' collection_name='Responses'
+		field='type_identifier' item_id=_id placeholder="An identifier for the type of the response" type="text" }}
+
+	{{>basic_input label='Index' method='set_field' collection_name='Responses'
+		field='index' item_id=_id placeholder="Index of element" type="number" }}
+
+	{{>basic_input label='Index' method='set_field' collection_name='Responses'
+		field='view_order' item_id=_id placeholder="View order of element lower comes first" type="number" }}
+
+	{{>select_input label='Template' method='set_field'
+			collection_name='Responses' field='template_id' item_id=_id
+			options=templates}}
+
+	{{>select_input label='Parent' method='set_field' collection_name='Responses'
+		field='parent_id' item_id=_id options=parents}}
+
+	{{>select_input label='Visibility' method='set_field'
+		collection_name='Responses'	field='visible_to' item_id=_id
+		options=_response_visibility}}
+
+</template>

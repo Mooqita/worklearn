@@ -1,0 +1,53 @@
+<!------------------------------------------------
+|
+|	Student profile
+|
+-------------------------------------------------->
+<template name="student_profile">
+	{{#unless Template.subscriptionsReady}}
+		<h1>
+			Please wait while we are loading your profile
+			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+		</h1>
+	{{else}}
+		<h1>Profile</h1>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-md-3">
+				<h2>Avatar</h2>
+				{{#if profile.avatar}}
+					<img class="img-circle img-responsive" src="{{profile.avatar}}">
+				{{/if}}
+				{{>dropfile method="set_field" collection_name="Responses"
+					item_id=profile._id field="avatar" max_size=250000}}
+			</div>
+
+			<div class="col-md-9">
+				<h2>Name</h2>
+				<div class="row">
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Responses"
+							item_id=profile._id field="given_name" placeholder="Given name"}}
+					</div>
+
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Responses"
+							item_id=profile._id field="middle_name" placeholder="Middle name"}}
+					</div>
+
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Responses"
+							item_id=profile._id field="family_name" placeholder="Family name"}}
+					</div>
+				</div>
+
+				<h2>Resume</h2>
+				{{>text_input method="set_field" collection_name="Responses"
+					item_id=profile._id field="resume" placeholder="Tell us a little more about you."}}
+			</div>
+		</div>
+	{{/unless}}
+</template>
+

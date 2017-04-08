@@ -1,0 +1,89 @@
+<!------------------------------------------------
+|
+|	Feedback editor
+|
+-------------------------------------------------->
+<template name="student_review_feedback">
+	<h2>
+		{{#if _is_public}}
+			Rating <em>{{rating}}</em> of <em>5</em>
+		{{else}}
+			Please provide feedback to see the rating
+		{{/if}}
+	</h2>
+	<p>
+		{{review.content}}
+	</p>
+
+	<div class="row">
+		{{#unless _is_public}}
+			<div class="form-group col-sm-9">
+				<div class="form-group">
+					<label for="content"
+							 title="Your feedback on the review">
+						Your Feedback
+					</label>
+
+					{{>text_input method="set_field" collection_name="Responses"
+						item_id=_id field="content" placeholder="Please give some feedback to the review"}}
+				</div>
+			</div>
+		{{else}}
+			<div class="form-group col-sm-12">
+				<label for="content"
+						 title="Your feedback on the review">
+					Your Feedback
+				</label>
+
+				<div class="form-control">
+					{{content}}
+				</div>
+			</div>
+		{{/unless}}
+
+		{{#unless _is_public}}
+			<div class="form-group col-sm-3">
+				<label for="quality"
+							 title="Your rating of the review"
+								>Helpfulness</label>
+				{{>select_input method="set_field" collection_name="Responses"
+						item_id=_id field="rating" options=_rating_options }}
+			</div>
+		{{else}}
+			<div class="form-group col-sm-12">
+				<label for="quality">
+					You rated the helpfulness of this review with <em>{{rating}}</em> of <em>5</em>
+				</label>
+			</div>
+		{{/unless}}
+	</div>
+
+	{{#unless rating}}
+		<div class="alert alert-danger">
+			Please rate the helpfulness of this review.
+		</div>
+	{{/unless}}
+
+	{{#unless _is_public}}
+		<div class="alert alert-info">
+			Please publish your feedback when you are done.
+		</div>
+	{{/unless}}
+
+	{{#unless _is_public}}
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<span class="btn-group btn-group-justified">
+					<div class="btn btn-red" id="save">Save</div>
+				</span>
+			</div>
+
+			<div class="form-group col-sm-6">
+				<span class="btn-group btn-group-justified">
+					<div class="btn btn-red" {{publish_disabled}}
+							 id="publish">Make public</div>
+				</span>
+			</div>
+		</div>
+	{{/unless}}
+</template>

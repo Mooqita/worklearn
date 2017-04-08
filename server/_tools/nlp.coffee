@@ -8,13 +8,13 @@ _collect_fields = (response, fields) ->
 	return corpus
 
 
-@collect_keywords = (user) ->
+@collect_keywords = (user_id) ->
 	keywords = {}
 	corpus = ""
 
 	fl_sol =
 		type_identifier: "solution"
-		owner_id: user._id
+		owner_id: user_id
 
 	fields =
 		content: 1

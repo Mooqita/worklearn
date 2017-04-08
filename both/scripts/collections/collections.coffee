@@ -14,6 +14,10 @@
 @Files = new Mongo.Collection("files")
 
 #######################################################
+@Resumes = new Mongo.Collection("resumes")
+@Peers = new Mongo.Collection("peers")
+
+#######################################################
 @Admin = new Mongo.Collection("admin")
 @Tasks = new Mongo.Collection("tasks")
 

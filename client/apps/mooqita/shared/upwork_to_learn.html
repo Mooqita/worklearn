@@ -1,0 +1,102 @@
+<!------------------------------------------------
+|
+|	Convert UpWork tasks to learning Material
+|
+-------------------------------------------------->
+<template name="work_to_learn">
+	<div class="wrapper">
+		<header>
+			{{>menu}}
+		</header>
+
+		<main>
+			{{>sAlert}}
+
+			<div class="container-fluid background-theme" style="margin-bottom: 20px">
+				<div class="row" style="padding-top: 10px; padding-bottom: 10px;">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<form>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="input-group" style="margin: 10px">
+										{{>basic_input method="set_field" collection_name="Responses"
+											item_id=_id field="query" placeholder="search for ..."}}
+
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-search"></span>
+										</span>
+									</div>
+								</div>
+
+								<div class="col-sm-6">
+									<div class="row" style="margin-top: 10px; margin-bottom: 15px; margin-right: -5px;">
+										<div class="col-xs-2 text-right">
+											<label style="margin-top: 5px;">Prize:</label>
+										</div>
+
+										<div class="col-xs-5">
+											<div class="input-group">
+												<span class="input-group-addon">
+													$
+												</span>
+
+												{{>basic_input method="set_field" collection_name="Responses"
+													item_id=_id field="min_price" placeholder="min" type="number"}}
+											</div>
+										</div>
+
+										<div class="col-xs-5">
+											<div class="input-group">
+												<span class="input-group-addon">
+													$
+												</span>
+
+												{{>basic_input method="set_field" collection_name="Responses"
+													item_id=_id field="max_price" placeholder="max" type="number"}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						{{#each upwork_tasks}}
+							{{#unless error}}
+								{{>upwork_task}}
+							{{else}}
+								{{{data}}}
+							{{/unless}}
+						{{else}}
+							<div class="well">
+								No tasks found
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+</template>
+
+<template name="upwork_task">
+	<div class="well">
+		<h4><strong>{{title}}</strong></h4>
+		<div style="text-align: right">
+			<strong>Payment</strong>:${{budget}} {{job_type}}
+		</div>
+		<br>
+		<p>{{{snippet}}}</p>
+		<hr>
+		<div class="btn btn-theme" id="add_task">Add to database</div>
+		<div style="text-align: right">
+			<strong><a href="{{url}}" target="_blank">Link to original Announcement</a></strong>
+		</div>
+	</div>
+</template>
+

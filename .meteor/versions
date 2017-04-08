@@ -85,6 +85,7 @@ ordered-dict@1.0.9
 peppelg:bootstrap-3-modal@1.0.4
 perak:codemirror@1.3.1
 pntbr:js-yaml-client@0.0.1
+practicalmeteor:faker@3.0.1_1
 promise@0.8.8
 raix:ui-dropped-event@0.0.7
 random@1.0.10

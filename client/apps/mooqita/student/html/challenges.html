@@ -1,0 +1,57 @@
+<!------------------------------------------------
+|
+|	Student find challenges
+|
+-------------------------------------------------->
+<template name="student_find_challenges">
+	<h1>Find Challenges</h1>
+
+	<hr>
+
+	<div class="embedded-form">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="find_challenge" type="button">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+
+			{{>basic_input method="set_field" collection_name="Responses"
+				item_id=_id field="query" placeholder="search for ..."}}
+		</div>
+	</div>
+
+	{{#each challenges}}
+		{{>student_challenge_preview}}
+	{{else}}
+		<p>No challenges yet.</p>
+	{{/each}}
+</template>
+
+
+<template name="student_challenge_preview">
+	<h3>
+		{{#if has_solution}}
+			<em><span class="glyphicon glyphicon-check"></span></em>
+		{{/if}}
+
+		<a id="student_solution">
+			<b><em>{{title}}</em></b>
+		</a>
+	</h3>
+
+	<p style="padding-left: 35px">
+		{{{content}}}
+		{{#if has_more}}
+			<a id="select">
+				{{#if selected}}
+					<em><b>less</b></em>
+				{{else}}
+					<em><b>... more</b></em>
+				{{/if}}
+			</a>
+		{{/if}}
+	</p>
+
+</template>
+

@@ -1,6 +1,6 @@
 import JSZip from 'jszip'
 
-_formatData =
+_format_data =
 	xml: (data) ->
 		return json2xml { 'content': data }, { header: true }
 
@@ -12,12 +12,15 @@ _formatData =
 		return Papa.unparse(data)
 
 
-@exportData = (collection) ->
+@export_data = (collection) ->
 	data = collection.find({owner_id: Meteor.userId()}).fetch()
-	formattedData = _formatData["json"]( data )
+	formattedData = _format_data["json"]( data )
 
 	zip = new JSZip()
 	zip.file collection._name+".json", formattedData
 	promise = zip.generateAsync {type : "base64"}
 
 	return promise.await()
+
+@import_data = (data) ->
+	return "nope"

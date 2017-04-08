@@ -1,0 +1,54 @@
+<!------------------------------------------------
+|
+|	Student view
+|
+-------------------------------------------------->
+<template name="student_view">
+	{{>review_style}}
+	{{#review_layout menu="student_menu" menu_data=.}}
+		{{>Template.dynamic template=selected_view data=data}}
+	{{/review_layout}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Student menu
+|
+-------------------------------------------------->
+<template name="student_menu">
+	<div class="container-fluid navigation-background background-theme">
+		<div class="row">
+			<span>
+				<a class="navigation-button student_navigate" id="student_profile">
+					Profile
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button student_navigate" id="student_find_challenges">
+					Find Challenges
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button student_navigate" id="student_solutions">
+					Solutions <span class="badge background-contrast">0{{new_solution_messages}}</span>
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button student_navigate" id="student_reviews">
+					Reviews <span class="badge background-contrast">0{{new_review_messages}}</span>
+				</a>
+			</span>
+
+			<span>
+				<a class="navigation-button student_navigate" id="student_credentials">
+					Resume <span class="badge background-contrast">0{{new_credential_messages}}</span>
+				</a>
+			</span>
+		</div>
+	</div>
+</template>
+

@@ -18,6 +18,7 @@
 #TODO Companies: See profiles and credits
 #TODO Companies: See details/code links is privileged access
 #TODO All elements should be links not internal switches using: ?view=profile
+#TODO Change color based on Text and or based on typing style
 
 #Learning materials!!!!! I think we need to offer online classes that allow humans to code/write/design for the first time! Give credits to students for creating content?
 
