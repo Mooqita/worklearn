@@ -4,20 +4,26 @@
 |
 -------------------------------------------------->
 <template name="student_reviews">
-	<h1>Reviews</h1>
+	<div class="item">
+		<h1>Reviews</h1>
 
-	<div class="embedded-form">
+		<p>
+			Here you can write reviews for other users.
+			Each review you write gives you credits.
+			Credits can be used to request reviews for your work.
+		</p>
+
 		{{#if searching}}
-			<div class="btn btn-theme" disabled="true" id="find_review">
-				Please wait
+			<div class="h1">
+				Finding review please wait
 				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 			</div>
 		{{else}}
-			<div class="btn btn-theme" id="find_review">Find me something to review</div>
+			<div class="btn-group btn-group-justified">
+				<div class="btn btn-theme" id="find_review">Find review</div>
+			</div>
 		{{/if}}
-	</div>
 
-	<div class="well">
 		{{#each reviews}}
 			{{>student_review_preview}}
 		{{else}}
@@ -28,16 +34,26 @@
 
 
 <template name="student_review_preview">
-	<div class="input-group">
-		<div class="input-group-btn">
-			<div class="btn btn-default" id="student_review">
-				<span class="glyphicon glyphicon-fullscreen"></span>
-			</div>
-		</div>
-		<div class="form-control">
-			{{challenge.title}}
-		</div>
-	</div>
+	<hr>
+
+	<h3>
+		<a id="student_review">
+			<b><em>{{challenge.title}}</em></b>
+		</a>
+	</h3>
+
+	<p>
+		{{content}}
+		{{#if has_more}}
+			<a id="select">
+				{{#if selected}}
+					<em><b>less</b></em>
+				{{else}}
+					<em><b>...more</b></em>
+				{{/if}}
+			</a>
+		{{/if}}
+	</p>
 </template>
 
 
@@ -45,13 +61,15 @@
 	<h1>Challenge</h1>
 	<div class="well">
 		<b>{{challenge.title}}</b>
-		<p>{{{challenge.content}}}</p>
+			<!--This formatting is required for user
+			generated text to look as intended-->
+		<p class="user-data">{{challenge.content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}</p>
 	</div>
 
 	<h1>Solution</h1>
 	<div class="well">
 		<label>Solution Description</label>
-		{{{solution.content}}}
+		{{solution.content}}
 		<br>
 		<label>Additional Material</label>
 		{{>file_download collection_name="Responses"

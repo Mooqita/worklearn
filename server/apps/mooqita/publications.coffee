@@ -6,7 +6,7 @@
 #######################################################
 
 #######################################################
-Meteor.publish "peers_by_challenge", (challenge_id, page=0, size=10) ->
+Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	check challenge_id, String
 	check page, Number
 	check size, Number
@@ -80,7 +80,7 @@ Meteor.publish "peers_by_challenge", (challenge_id, page=0, size=10) ->
 		entry['reviews'] = reviews
 		entry["average_rating"] = if avg then avg else reviews[0].rating
 
-		self.added('peers', entry._id, entry)
+		self.added('challenge_summary', entry._id, entry)
 
 	Responses.find(filter, options).forEach(add_info)
 	self.ready()
@@ -91,7 +91,7 @@ Meteor.publish "peers_by_challenge", (challenge_id, page=0, size=10) ->
 #######################################################
 
 #######################################################
-Meteor.publish "resume_by_user", (user_id) ->
+Meteor.publish "user_credentials", (user_id) ->
 	check user_id, String
 	if !user_id
 		user_id = this.userId
@@ -101,57 +101,76 @@ Meteor.publish "resume_by_user", (user_id) ->
 
 	self = this
 	prepare_resume = (user) ->
-		profile = Responses.findOne user._id
-		resume = {}
-		resume.name = profile.given_name
-		resume.owner_id = user._id
-		resume.avatar = profile.avatar
-		resume.self_description = profile.resume
+		filter =
+			owner_id: user._id
+			type_identifier: "profile"
 
-		sub_filter =
+		user_profile = Responses.findOne filter
+
+		resume = {}
+		resume.name = user_profile.given_name
+		resume.avatar = user_profile.avatar
+		resume.owner_id = user_profile._id
+		resume.self_description = user_profile.resume
+
+		solution_filter =
+			type_identifier: "solution"
 			visible_to: "anonymous"
 			owner_id: user._id
 			#in_portfolio: true
 
-		subs = []
-		solutions = Responses.find sub_filter
-		solutions.forEach (s) ->
-			sub = {}
-			sub.reviews = []
-			sub.solution = if !s.confidential then s.content else null
+		solution_list = []
+		solution_cursor = Responses.find solution_filter
+
+		solution_cursor.forEach (s) ->
+			solution = {}
+			solution.reviews = []
+			solution.solution = if !s.confidential then s.content else null
 
 			challenge = Responses.findOne(s.challenge_id)
 			if challenge
-				sub.challenge = if !challenge.confidential then challenge.content else null
-				sub.challenge_title = challenge.title
+				solution.challenge = if !challenge.confidential then challenge.content else null
+				solution.challenge_title = challenge.title
 
-				challenge_owner = Meteor.users.findOne(challenge.owner_id)
-				sub.challenge_owner_id = challenge.owner_id
-				sub.challenge_owner_avatar = challenge_owner.profile.avatar
+				filter =
+					owner_id: challenge.owner_id
+					type_identifier: "profile"
+				challenge_owner_profile = Responses.findOne filter
+
+				solution.challenge_owner_id = challenge.owner_id
+				solution.challenge_owner_avatar = challenge_owner_profile.avatar
 
 			t = 0
 			n = 0
-			rev_filter =
-				solution_id:s._id
-			reviews = Responses.find(rev_filter)
-			reviews.forEach (r) ->
-				rev = {}
-				u = Meteor.users.findOne(r.owner_id)
-				rev.review = r.content
-				rev.grade = r.grade
-				rev.name = u.profile.given_name
-				rev.avatar = u.profile.avatar
-				rev.owner_id = r.owner_id
 
-				sub.reviews.push(rev)
-				t += r.grade
+			review_filter =
+				type_identifier: "review"
+				solution_id: s._id
+			review_cursor = Responses.find(review_filter)
+
+			review_cursor.forEach (r) ->
+				review = {}
+
+				filter =
+					owner_id: r.owner_id
+					type_identifier: "profile"
+				profile = Responses.findOne filter
+
+				review.review = r.content
+				review.rating = r.rating
+				review.name = profile.given_name
+				review.avatar = profile.avatar
+				review.owner_id = r.owner_id
+
+				solution.reviews.push(review)
+				t += r.rating
 				n += 1
 
-			sub.average = Math.round(t/n, 1)
-			subs.push(sub)
+			solution.average = Math.round(t/n, 1)
+			solution_list.push(solution)
 
-		resume.solutions = subs
-		self.added('resumes', user._id, resume)
+		resume.solutions = solution_list
+		self.added('user_credentials', user._id, resume)
 
 	Meteor.users.find(filter).forEach(prepare_resume)
 	self.ready()

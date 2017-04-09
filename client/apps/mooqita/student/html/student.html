@@ -4,10 +4,11 @@
 |
 -------------------------------------------------->
 <template name="student_view">
-	{{>review_style}}
-	{{#review_layout menu="student_menu" menu_data=.}}
+	{{>mooqita_style}}
+
+	{{#mooqita_layout menu="student_menu" menu_data=.}}
 		{{>Template.dynamic template=selected_view data=data}}
-	{{/review_layout}}
+	{{/mooqita_layout}}
 </template>
 
 

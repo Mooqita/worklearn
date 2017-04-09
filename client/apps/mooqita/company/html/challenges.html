@@ -1,68 +1,9 @@
 <!------------------------------------------------
 |
-|	Company view
+|	Challenge
 |
 -------------------------------------------------->
-<template name="company_view">
-	{{>review_style}}
-	{{#review_layout menu="company_menu" menu_data=.}}
-		{{>Template.dynamic template=selected_view}}
-	{{/review_layout}}
-</template>
-
-
-<template name="company_menu">
-	<div class="container-fluid navigation-background background-theme">
-		<div class="row">
-			<span>
-				<a class="navigation-button" id="company_summary">
-					Company Profile
-				</a>
-			</span>
-
-			<span>
-				<a class="navigation-button" id="company_challenges">
-					Challenges <span class="badge background-contrast">0{{new_challenge_messages}}</span>
-				</a>
-			</span>
-		</div>
-	</div>
-</template>
-
-
-<!------------------------------------------------
-|
-|	Company views
-|
--------------------------------------------------->
-<template name="company_summary">
-	<div class="row">
-		<div class="col-md-4">
-			<h2>Company Logo</h2>
-			{{#if company_logo}}
-				<img class="img-responsive" src="{{company_logo}}">
-			{{/if}}
-
-			{{>dropfile method="set_field" collection_name="Responses"
-				item_id=_id field="company_logo" max_size=500000}}
-		</div>
-
-		<div class="col-md-8">
-			<h2>Company Name</h2>
-			{{>basic_input method="set_field" collection_name="Responses"
-				item_id=_id field="company_name" placeholder="Name of your company"}}
-
-			<h2>Company Description</h2>
-			{{>text_input method="set_field" collection_name="Responses"
-				item_id=_id field="company_description" placeholder="Let our students know a little more about your company."}}
-		</div>
-	</div>
-</template>
-
-
 <template name="company_challenges">
-	<h1>Your Challenges</h1>
-
 	<div class="embedded-form">
 		<div class="input-group">
 			<span class="input-group-addon">
@@ -78,13 +19,11 @@
 		</div>
 	</div>
 
-	<div class="well">
-		{{#each challenges}}
-			{{>challenge_preview}}
-		{{else}}
-			<p>No challenges yet.</p>
-		{{/each}}
-	</div>
+	{{#each challenges}}
+		{{>challenge_preview}}
+	{{else}}
+		<p>No challenges yet.</p>
+	{{/each}}
 </template>
 
 
@@ -94,16 +33,24 @@
 |
 -------------------------------------------------->
 <template name="challenge_preview">
-	<div class="input-group">
-		<div class="input-group-btn">
-			<a class="btn btn-default" href="{{_response_url _id}}">
-				<span class="glyphicon glyphicon-edit"></span>
-			</a>
-		</div>
+	<h3>
+		<a id="company_challenge">
+			<b><em>{{title}}</em></b>
+		</a>
+	</h3>
 
-		{{>basic_input method="set_field" collection_name="Responses"
-				item_id=_id field="title" placeholder="Title"}}
-	</div>
+	<p style="padding-left: 35px">
+		{{content}}
+		{{#if has_more}}
+			<a id="select">
+				{{#if selected}}
+					<em><b>less</b></em>
+				{{else}}
+					<em><b>... more</b></em>
+				{{/if}}
+			</a>
+		{{/if}}
+	</p>
 </template>
 
 
@@ -112,68 +59,62 @@
 |	Challenge Editor
 |
 -------------------------------------------------->
-<template name="challenge">
-	{{>review_style}}
+<template name="company_challenge">
+	<h1 class="editable">
+		{{>basic_input method="set_field" collection_name="Responses"
+		item_id=_id field="title" placeholder="Title of your challenge"}}
+	</h1>
 
-	{{#review_layout}}
-		<h1 class="editable">
-			{{>basic_input method="set_field" collection_name="Responses"
-			item_id=_id field="title" placeholder="Title of your challenge"}}
-		</h1>
+	<hr>
 
-		<hr>
+	<div class="row">
+		<div class="form-group col-sm-9">
+			<label for="challenge_url"
+			 title="Link to the challenge">
+				Shareable link:
+			</label>
 
-		<div class="row">
-			<div class="form-group col-sm-9">
-				<label for="challenge_url"
-				 title="Link to the challenge">
-					Shareable link:
-				</label>
-
-				<div class="input-group">
-					<div class="input-group-btn" id="icon_download" title="select the entire url">
-						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-download"></span>
-						</button>
-					</div>
-					<div class="form-control" style="background: #f5f5f5;" id="challenge_url">
-						{{_response_url _id}}
-					</div>
+			<div class="input-group">
+				<div class="input-group-btn" id="icon_download" title="select the entire url">
+					<button type="button" class="btn btn-default">
+						<span class="glyphicon glyphicon-download"></span>
+					</button>
+				</div>
+				<div class="form-control" style="background: #f5f5f5;" id="challenge_url">
+					{{_response_url _id}}
 				</div>
 			</div>
-
-			<div class="form-group col-sm-3">
-				<label for="visible_to"
-							 title="Who can see your challenge">
-					Visible to:
-				</label>
-
-				{{>select_input label='Visibility' method='set_field'
-					collection_name='Responses'	field='visible_to' item_id=_id
-					options=_response_visibility}}
-			</div>
 		</div>
 
-		<div class="row">
-			<div class="form-group col-sm-12">
-				<label for="content"
-							 title="What should they do">
-					Content:
-				</label>
-				{{>wysiwyg_input method="set_field" collection_name="Responses"
-						item_id=_id field="content" placeholder="Content"}}
+		<div class="form-group col-sm-3">
+			<label for="visible_to"
+						 title="Who can see your challenge">
+				Visible to:
+			</label>
 
-				<label>Upload additional material:</label>
-				{{>dropfile method="set_field" collection_name="Responses"
-					item_id=_id field="material"}}
-			</div>
+			{{>select_input label='Visibility' method='set_field'
+				collection_name='Responses'	field='visible_to' item_id=_id
+				options=_response_visibility}}
 		</div>
+	</div>
 
-		<h1>Solutions</h1>
-		<hr>
-		{{>challenge_solutions}}
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<label for="content"
+						 title="What should they do">
+				Content:
+			</label>
+			{{>wysiwyg_input method="set_field" collection_name="Responses"
+					item_id=_id field="content" placeholder="Content"}}
 
-	{{/review_layout}}
+			<label>Upload additional material:</label>
+			{{>dropfile method="set_field" collection_name="Responses"
+				item_id=_id field="material"}}
+		</div>
+	</div>
+
+	{{>challenge_solutions}}
+
 </template>
 
 
@@ -183,7 +124,11 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	{{#each peers}}
+	<h1>Solutions</h1>
+
+	<hr>
+
+	{{#each challenge_summary}}
 		{{>challenge_solution}}
 	{{else}}
 		<p>
@@ -203,17 +148,18 @@
 			<h2 class="media-heading">
 				<a href="{{resume_url author_id}}"><em>{{author_name}}</em></a>
 				average rating <em>{{average_rating}}</em> out of <em>5</em>
+
+				{{#if _is_owner .}}
+					<em class="pull-right">Author</em>
+				{{/if}}
 			</h2>
 
 			<hr style="margin-top: 5px; margin-bottom: 15px">
 
-			{{{content}}}
+			<p class="user-data">
+				{{content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}
+			</p>
 
-			{{#unless selected}}
-				<a id="select">
-					<em>...<b>more</b></em>
-				</a>
-			{{/unless}}
 
 			{{#if selected}}
 				<h2>Reviews</h2>
@@ -232,7 +178,7 @@
 									</div>
 
 									<div class="col-xs-6" style="text-align: right">
-										Grade <em>{{rating}}</em> out of <em>5</em>
+										Rating <em>{{rating}}</em> out of <em>5</em>
 									</div>
 								</div>
 							</h2>

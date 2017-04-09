@@ -1,44 +1,12 @@
 ########################################
 #
-# company view
-#
-########################################
-
-########################################
-Template.company_view.onCreated ->
-	Session.set "company_template", "company_summary"
-
-########################################
-Template.company_view.helpers
-	selected_view: () ->
-		return Session.get "company_template"
-
-########################################
-Template.company_menu.events
-	"click #company_summary": ()->
-		Session.set "company_template", "company_summary"
-
-	"click #company_challenges": ()->
-		Session.set "company_template", "company_challenges"
-
-########################################
-#
 # company challenges view
 #
 ########################################
 
 ########################################
 Template.company_challenges.onCreated ->
-	self = this
-	self.autorun () ->
-		data = Template.currentData()
-
-		filter =
-			type_identifier: "challenge"
-			owner_id: Meteor.userId()
-			text: data.query
-
-		self.subscribe "responses", filter, true, true, "company_challenges"
+	Session.set "selected_challenge", 0
 
 ########################################
 Template.company_challenges.helpers
@@ -77,18 +45,54 @@ Template.company_challenges.events
 #########################################
 
 ########################################
+Template.challenge_preview.helpers
+	has_more: () ->
+		if this.content
+			return this.content.length>250
+
+		return false
+
+	selected: ->
+		return this._id==Session.get "selected_challenge"
+
+	title: () ->
+		if this.title
+			return this.title
+
+		return "This challenge does not yet have a title."
+
+	content: () ->
+		if this._id==Session.get "selected_challenge"
+			return this.content
+
+		if this.content
+			return this.content.substring(0, 250)
+
+		return "No description available, yet."
+
+########################################
+Template.challenge_preview.events
+	"click #company_challenge": () ->
+		Session.set "company_data", this
+		Session.set "company_template", "company_challenge"
+
+########################################
 #
 # challenge
 #
 ########################################
 
 ########################################
-Template.challenge.events
+Template.company_challenge.onCreated ->
+
+########################################
+Template.company_challenge.events
 	"click #icon_download": (e, n)->
 		if document.selection
 			range = document.body.createTextRange()
 			range.moveToElementText(document.getElementById("challenge_url"))
 			range.select()
+
 		else if window.getSelection
 			range = document.createRange()
 			range.selectNodeContents(document.getElementById("challenge_url"))
@@ -111,12 +115,12 @@ Template.challenge_solutions.onCreated ->
 	Session.set "selected_review", 0
 
 	self.autorun () ->
-		self.subscribe 'peers_by_challenge', self.data._id
+		self.subscribe 'challenge_summary', self.data._id
 
 ########################################
 Template.challenge_solutions.helpers
-	peers: () ->
-		return Peers.find()
+	challenge_summary: () ->
+		return Challenge_Summary.find()
 
 ########################################
 #
@@ -130,7 +134,7 @@ Template.challenge_solution.helpers
 		if this._id==Session.get "selected_review"
 			return this.content
 
-		return this.content.substring(1, 250)
+		return this.content.substring(0, 250)
 
 	resume_url: (author_id) ->
 		return author_id

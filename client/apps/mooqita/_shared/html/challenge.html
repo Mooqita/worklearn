@@ -1,0 +1,18 @@
+<template name="challenge">
+	{{>mooqita_style}}
+
+	{{#mooqita_layout menu="student_menu" menu_data=profile}}
+		{{#if solution}}
+			{{#with solution}}
+				{{>student_solution}}
+			{{/with}}
+		{{else}}
+			{{#if _is_owner _id}}
+				{{>company_challenge}}
+			{{else}}
+				<h1>{{title}}</h1>
+				<p>{{content}}</p>
+			{{/if}}
+		{{/if}}
+	{{/mooqita_layout}}
+</template>

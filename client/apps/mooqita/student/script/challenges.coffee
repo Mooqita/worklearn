@@ -38,14 +38,6 @@ Template.student_find_challenges.events
 
 ########################################
 Template.student_challenge_preview.onCreated ->
-	self = this
-	self.autorun () ->
-		filter =
-			parent_id: self.data._id
-			owner_id: Meteor.userId()
-
-		self.subscribe "responses", filter, true, true, "student_challenge_preview: my solutions"
-
 
 ########################################
 Template.student_challenge_preview.helpers

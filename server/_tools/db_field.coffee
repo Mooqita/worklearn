@@ -130,8 +130,10 @@ _collection_headers =
 
 #######################################################
 @visible_fields = (collection, user_id, owner=false, header_only=false) ->
+	fields = _collection_headers[collection]
+
 	if header_only
-		return _collection_headers[collection]
+		return fields
 
 	roles = ['all']
 	if owner
@@ -145,12 +147,18 @@ _collection_headers =
 		roles.push 'anonymous'
 
 	res = {}
-	fields = Permissions.find({}, {fields:{field:1}}).fetch()
-	for field in fields
+	common_fields = fields["fields"]
+	edit_fields = Permissions.find({}, {fields:{field:1}}).fetch()
+	all_fields = new Set(Object.keys(common_fields))
+
+	for field in edit_fields
+		all_fields.add field["field"]
+
+	for field in all_fields
 		filter =
 			role:
 				$in: roles
-			field: field["field"]
+			field: field
 			collection: collection
 
 		permissions = Permissions.find(filter)

@@ -11,13 +11,13 @@
 @Templates = new Mongo.Collection("templates")
 @Responses = new Mongo.Collection("responses")
 @Summaries = new Mongo.Collection("summaries")
-@Files = new Mongo.Collection("files")
 
 #######################################################
-@Resumes = new Mongo.Collection("resumes")
-@Peers = new Mongo.Collection("peers")
+@User_Credentials = new Mongo.Collection("user_credentials")
+@Challenge_Summary = new Mongo.Collection("challenge_summary")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")
 @Tasks = new Mongo.Collection("tasks")
+@Files = new Mongo.Collection("files")
 

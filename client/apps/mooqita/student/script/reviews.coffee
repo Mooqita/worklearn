@@ -10,15 +10,7 @@
 
 ########################################
 Template.student_reviews.onCreated ->
-	self = this
-	self.searching = new ReactiveVar(false)
-
-	self.autorun () ->
-		filter =
-			type_identifier: "review"
-
-		self.subscribe "responses", filter, true, false, "student_reviews"
-
+	this.searching = new ReactiveVar(false)
 
 ########################################
 Template.student_reviews.helpers
@@ -57,8 +49,7 @@ Template.student_review_preview.onCreated ->
 		filter =
 			_id: self.data.challenge_id
 
-		console.log self.data
-		self.subscribe "responses", filter, false, true, "student_review_preview"
+		self.subscribe "responses", filter, false, true, "student_review_preview: challenge"
 
 
 ########################################
@@ -84,16 +75,12 @@ Template.student_review.onCreated ->
 
 	self.autorun () ->
 		filter =
-			_id: self.data._id
-		self.subscribe "responses", filter, true, false, "student_solution"
-
-		filter =
 			_id: self.data.parent_id
-		self.subscribe "responses", filter, true, false, "student_solution"
+		self.subscribe "responses", filter, false, false, "student_solution"
 
 		filter =
 			_id: self.data.challenge_id
-		self.subscribe "responses", filter, true, false, "student_solution"
+		self.subscribe "responses", filter, false, false, "student_solution"
 
 
 ########################################

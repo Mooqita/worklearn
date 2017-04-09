@@ -30,8 +30,8 @@ Meteor.publish "template_by_id", (template_id, header_only=true) ->
 	restrict =
 		_id : template_id
 
-	filter = unsafe_filter_visible_to_user this.userId, restrict
-	mod = unsafe_visible_fields "Templates", template_id, this.userId, header_only
+	filter = visible_items this.userId, restrict
+	mod = visible_fields "Templates", template_id, this.userId, header_only
 	crs = Templates.find(filter, mod)
 
 	console.log("Template loaded: " + crs.count() + " submitted!")

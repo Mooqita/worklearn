@@ -144,7 +144,7 @@
 
 
 ###############################################
-@find_solution_to_review = (user_id) ->
+@find_solution_to_review = (user_id, challenge_id=null) ->
 	#solution must have unsatisfied review requests
 	#solution owner must have enough credit to receive/request reviews
 	#solution must be in the realm of the student
@@ -197,7 +197,7 @@ Meteor.methods
 		if not challenge
 			throw new Meteor.Error('Not permitted.')
 
-		return _add_solution challenge, Meteor.userId()
+		return gen_solution challenge, Meteor.userId()
 
 
 	find_review: (profile_id) ->
@@ -212,8 +212,10 @@ Meteor.methods
 		if user._id != profile.owner_id
 			throw new Meteor.Error('Not permitted.')
 
-		res = generate_review_opaque user._id
-		return res
+		chl_sol = find_solution_to_review user._id
+		rev_fed = gen_review chl_sol.challenge, chl_sol.solution, user._id
+
+		return rev_fed.review_id
 
 	find_review_for_challenge: (profile_id, challenge_id) ->
 		check profile_id, String
@@ -229,8 +231,10 @@ Meteor.methods
 		if user._id != profile.owner_id
 			throw new Meteor.Error('Not permitted.')
 
-		res = generate_review_opaque user._id, challenge_id
-		return res
+		chl_sol = find_solution_to_review user._id, challenge_id
+		rev_fed = gen_review chl_sol.challenge, chl_sol.solution, user._id
+
+		return rev_fed.review_id
 
 	add_upwork_challenge: (response) ->
 		user = Meteor.user()
@@ -246,14 +250,3 @@ Meteor.methods
 
 		Responses.insert response
 
-	generate_data: () ->
-		console.log "data generation:"
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		if !Roles.userIsInRole(user._id, 'db_admin')
-			throw new Meteor.Error('Not permitted.')
-
-		initialize_database()

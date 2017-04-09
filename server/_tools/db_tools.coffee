@@ -13,7 +13,7 @@ _accepts =
 
 #######################################################
 @make_filter_save = (user_id, param) ->
-	check user_id, String
+	check user_id, Match.OneOf String, undefined, null
 
 	restrict = {}
 

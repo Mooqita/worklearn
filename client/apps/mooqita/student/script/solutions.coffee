@@ -10,15 +10,7 @@
 
 ########################################
 Template.student_solutions.onCreated ->
-	self = this
 	Session.set "selected_solution", 0
-
-	self.autorun () ->
-		filter =
-			type_identifier: "solution"
-			owner_id: Meteor.userId()
-
-		self.subscribe "responses", filter, true, true, "student_solutions"
 
 
 ########################################
@@ -38,13 +30,11 @@ Template.student_solutions.helpers
 Template.student_solution_preview.onCreated ->
 	self = this
 	self.autorun () ->
-		if Responses.findOne self.data.parent_id
-			return
+		if not Responses.findOne this.parent_id
+			filter =
+				_id: self.data.parent_id
 
-		filter =
-			_id: self.data.parent_id
-
-		self.subscribe "responses", filter, false, true, "student_solution_preview: challenge"
+			self.subscribe "responses", filter, false, true, "student_solution_preview: load challenge"
 
 
 ########################################
@@ -92,10 +82,6 @@ Template.student_solution.onCreated ->
 
 	self.autorun () ->
 		filter =
-			_id: self.data._id
-		self.subscribe "responses", filter, true, false, "student_solution: solution data"
-
-		filter =
 			_id: self.data.parent_id
 		self.subscribe "responses", filter, false, false, "student_solution: challenge"
 
@@ -103,11 +89,6 @@ Template.student_solution.onCreated ->
 			type_identifier: "review"
 			solution_id: self.data._id
 		self.subscribe "responses", filter, false, false, "student_solution: review"
-
-		filter =
-			type_identifier: "feedback"
-			solution_id: self.data._id
-		self.subscribe "responses", filter, true, false, "student_solution: feedback"
 
 
 ########################################

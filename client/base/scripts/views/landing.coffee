@@ -7,7 +7,8 @@ Template.landing.onCreated ->
 	self = this
 
 	self.autorun () ->
-		filter =group_name: "frontpage"
+		filter =
+			group_name: "frontpage"
 		self.subscribe "responses", filter, false, false, "landing"
 
 #########################################################

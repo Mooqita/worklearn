@@ -48,13 +48,13 @@ FlowRouter.route('/response_dashboard',
 
 ##########################################################
 FlowRouter.route('/response_dashboard/:response_id',
-	name: 'response.id',
+	name: 'response_dashboard.id',
 	action: (params) ->
 		BlazeLayout.render("empty_layout", {content: 'response_dashboard'}))
 
 ##########################################################
 FlowRouter.route('/response/:response_id',
-	name: 'template.index',
+	name: 'response.id',
 	action: (params) ->
 		BlazeLayout.render("empty_layout", {content: 'login_worker'}))
 

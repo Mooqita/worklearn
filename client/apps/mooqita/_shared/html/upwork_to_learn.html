@@ -70,7 +70,7 @@
 							{{#unless error}}
 								{{>upwork_task}}
 							{{else}}
-								{{{data}}}
+								{{data}}
 							{{/unless}}
 						{{else}}
 							<div class="well">
@@ -91,7 +91,7 @@
 			<strong>Payment</strong>:${{budget}} {{job_type}}
 		</div>
 		<br>
-		<p>{{{snippet}}}</p>
+		<p>{{snippet}}</p>
 		<hr>
 		<div class="btn btn-theme" id="add_task">Add to database</div>
 		<div style="text-align: right">
