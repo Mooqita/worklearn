@@ -5,4 +5,3 @@
 
 #######################################################
 Meteor.subscribe "templates"
-Meteor.subscribe "responses_with_data", Session.get "response_list"

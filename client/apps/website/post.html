@@ -50,7 +50,7 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>dropfile method='set_field' collection_name='Posts' field='avatar'
+			{{>upload method='set_field' collection_name='Posts' field='avatar'
 			item_id=_id box_id='avatar'}}
 		{{/if}}
 
@@ -143,7 +143,7 @@
 		<div class="team-member">
 			<img src="{{avatar}}" class="img-responsive img-circle" alt="">
 			{{#if _is_editing_response _id}}
-				{{>dropfile method='set_field' collection_name='Responses' field='avatar'
+				{{>upload method='set_field' collection_name='Responses' field='avatar'
 					item_id=_id box_id='avatar'}}
 			{{/if}}
 
@@ -266,7 +266,7 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>dropfile method='set_field' field='figure' item_id=_id box_id='figure'}}
+			{{>upload method='set_field' field='figure' item_id=_id box_id='figure'}}
 		{{/if}}
 
 		{{#if figure}}
@@ -344,7 +344,7 @@
 				{{/if}}
 
 				{{#if _is_editing_response _id}}
-					{{>dropfile method='set_field' field='figure' item_id=_id box_id='figure'}}
+					{{>upload method='set_field' field='figure' item_id=_id box_id='figure'}}
 				{{/if}}
 			</div>
 
@@ -423,7 +423,7 @@
 			{{/if}}
 
 			{{#if _is_editing_response _id}}
-				{{>dropfile method='set_field' field='paper' item_id=_id box_id='paper'}}
+				{{>upload method='set_field' field='paper' item_id=_id box_id='paper'}}
 			{{/if}}
 		</div>
 

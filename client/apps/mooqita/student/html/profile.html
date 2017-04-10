@@ -11,7 +11,7 @@
 				<img class="img-circle img-responsive" src="{{profile.avatar}}">
 			{{/if}}
 
-			{{>dropfile method="set_field" collection_name="Responses"
+			{{>upload method="set_field" collection_name="Responses"
 				item_id=profile._id field="avatar" max_size=250000}}
 		</div>
 

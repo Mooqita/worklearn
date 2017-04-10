@@ -1,0 +1,13 @@
+<template name="download">
+	<div class="btn download-btn" id="download">
+		{{label}}
+	</div>
+</template>
+
+<template name="image_field">
+	{{#if data}}
+		<img src="{{data}}">
+	{{else}}
+		<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+	{{/if}}
+</template>

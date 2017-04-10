@@ -280,7 +280,7 @@
 										{{#if _is_editing_response _id}}
 											<div class="tool-set">
 												{{#_edit_tools}}
-													{{>dropfile method='set_field' collection_name='Responses'
+													{{>upload method='set_field' collection_name='Responses'
 														field='background' item_id=_id box_id='background'}}
 
 													{{>basic_input method='set_field' collection_name='Responses'
@@ -344,7 +344,7 @@
 			{{#if _is_editing_response _id}}
 				<div class="tool-set">
 					{{#_edit_tools}}
-						{{>dropfile method='set_field' collection_name='Responses'
+						{{>upload method='set_field' collection_name='Responses'
 							field='background' item_id=_id box_id='background'}}
 
 						{{>basic_input method='set_field' collection_name='Responses'

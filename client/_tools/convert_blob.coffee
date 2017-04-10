@@ -1,4 +1,18 @@
-@convertBase64ToBlob = (base64String) ->
+@unpack_item = (item) ->
+	regex = /data:([a-zA-Z0-9\/]*);([a-zA-Z0-9\/]*),/g
+	res = regex.exec(item.data)
+
+	encoding = res[2]
+	type = res[1]
+
+	f = res[0].length
+	t = item.data.length
+	data = item.data.substring(f, t)
+
+	return data
+
+
+@base64_to_blob = (base64String) ->
   decodedString       = _decodeBase64 base64String
   decodedStringLength = _getLength decodedString
   byteArray           = _buildByteArray decodedString, decodedStringLength

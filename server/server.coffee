@@ -30,6 +30,27 @@
 Meteor.startup () ->
 	try
 		initialize_database()
+		index =
+			owner_id: 1
+			type_identifier: 1
+		Responses._ensureIndex index
+
+		index =
+			parent_id: 1
+			type_identifier: 1
+		Responses._ensureIndex index
+
+		index =
+			text_index: "text"
+			type_identifier: 1
+		Responses._ensureIndex index
+
+		index =
+			item_id: 1
+			field: 1
+			collection_name: 1
+
+		DBFiles._ensureIndex index
 	catch e
 		console.log e
 

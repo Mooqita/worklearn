@@ -3,7 +3,7 @@
 ##############################################
 
 ##############################################
-@dropped_files = {}
+_files = {}
 
 ##############################################
 get_box_id = () ->
@@ -16,17 +16,17 @@ get_box_id = () ->
 ##############################################
 get_files = () ->
 	box_id = get_box_id()
-	res = dropped_files[box_id]
+	res = _files[box_id]
 	return res
 
 ##############################################
 add_files = (n, box_id = null) ->
 	if not box_id
 		box_id = get_box_id()
-	d = dropped_files[box_id]
+	d = _files[box_id]
 	Array::push.apply d, n
-	dropped_files[box_id] = d
-	Session.set('dropped_files', Math.random())
+	_files[box_id] = d
+	Session.set('_files', Math.random())
 
 ##############################################
 get_form = (box_id = null) ->
@@ -36,24 +36,24 @@ get_form = (box_id = null) ->
 	return frm
 
 ##############################################
-Template.dropfile.onCreated ->
-	files = Session.get('dropped_files')
+Template.upload.onCreated ->
+	files = Session.get('_files')
 
 	if not files
-		Session.set('dropped_files', Math.random())
+		Session.set('_files', Math.random())
 
-	if this.data.name in dropped_files
-		sAlert.log('dropfile name: "' + this.data.name + '" already in use.')
+	if this.data.name in _files
+		sAlert.log('download name: "' + this.data.name + '" already in use.')
 		return
 
 	box_id = Math.floor(Math.random()*10000000)
 	this.box_id = new ReactiveVar(box_id)
-	dropped_files[box_id] = []
+	_files[box_id] = []
 
 ##############################################
-Template.dropfile.helpers
+Template.upload.helpers
 	files: ->
-		if Session.get('dropped_files') != 0
+		if Session.get('_files') != 0
 			return get_files()
 
 	box_id: ->
@@ -73,7 +73,7 @@ Template.dropfile.helpers
 
 
 ##############################################
-Template.dropfile.events
+Template.upload.events
 	'dropped .dropbox': (event) ->
 		n = event.originalEvent.dataTransfer.files
 		if n.length == 0
@@ -87,11 +87,13 @@ Template.dropfile.events
 			if not this.multiple
 				get_form().trigger('submit')
 
+
 	'change #file': (event)->
 		n = event.target.files
 		add_files n
 		if not this.multiple
 			get_form().trigger('submit')
+
 
 	'submit form': (event) ->
 		event.preventDefault()
@@ -101,16 +103,19 @@ Template.dropfile.events
 			return false
 
 		if !Meteor.userId()
-			throw new Meteor.Error("not-authorized")
+			sAlert.error "Please login to upload files."
+			return
 
 		files = get_files()
 		box_id = get_box_id()
 
 		if !files
-			throw new Meteor.Error("No files selected to upload.")
+			sAlert.error "No files selected to upload."
+			return
 
 		if files.length == 0
-			throw new Meteor.Error("No files selected to upload.")
+			sAlert.error ("No files selected to upload.")
+			return
 
 		frm.addClass('is-uploading').removeClass('is-error')
 
@@ -140,10 +145,10 @@ Template.dropfile.events
 					frm.addClass('is-error')
 					return
 
-				Meteor.call method, col, item, field, data, type,
-					(err,rsp)->
+				Meteor.call "upload_file", col, item, field, data, type,
+					(err, rsp)->
 						frm.removeClass('is-uploading')
-						dropped_files[box_id] = []
+						_files[box_id] = []
 						sAlert.success('Upload done!')
 
 						if err
@@ -162,20 +167,20 @@ Template.dropfile.events
 					cumulative_size = cumulative_size + data.length
 					if cumulative_size > max_size
 						frm.removeClass('is-uploading')
-						dropped_files[box_id] = []
+						_files[box_id] = []
 						sAlert.error('File upload failed cumulative size larger than: ' + max_size)
 						frm.addClass('is-error')
 						return
 
-					Meteor.call method, col, item, field, data, type,
-						(err,rsp)->
+					Meteor.call "upload_file", col, item, field, data, type,
+						(err, rsp)->
 							filesUp += 1
 							if err
 								sAlert.error('File upload failed: ' + err)
 								frm.addClass('is-error')
 							if filesUp==filesToRead
 								frm.removeClass('is-uploading')
-								dropped_files[box_id] = []
+								_files[box_id] = []
 								sAlert.success('Upload done!')
 
 				fileReader.readAsBinaryString(file)

@@ -62,7 +62,7 @@ Template.response_dashboard.events
 				if err
 					sAlert.error(err)
 				else
-					blob = convertBase64ToBlob res
+					blob = base64_to_blob res
 					saveAs blob, "responses.zip"
 
 	"click #add_response": () ->

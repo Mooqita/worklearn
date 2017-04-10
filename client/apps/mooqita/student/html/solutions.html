@@ -76,14 +76,14 @@
 				<br>
 
 				<label>Additional Material or a link to your project files</label>
-				{{>dropfile method="set_field" collection_name="Responses"
+				{{>upload method="set_field" collection_name="Responses"
 					item_id=solution._id field="material" max_size=250000}}
 
 			{{else}}
 				{{solution.content}}
 
 				<h2>Additional Material or a link to your project files</h2>
-				{{>file_download collection_name="Responses"
+				{{>download collection_name="Responses"
 					item_id=solution._id field="material"}}
 			{{/unless}}
 
