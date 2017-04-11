@@ -14,16 +14,8 @@ Template.student_review_feedback.onCreated ->
 
 	self.autorun () ->
 		filter =
-			_id: self.data._id
-		self.subscribe "responses", filter, true, false, "student_review_feedback"
-
-		filter =
 			_id: self.data.parent_id
-		self.subscribe "responses", filter, true, false, "student_review_feedback"
-
-		filter =
-			_id: self.data.challenge_id
-		self.subscribe "responses", filter, true, false, "student_review_feedback"
+		self.subscribe "responses", filter, false, false, "student_review_feedback"
 
 
 ########################################

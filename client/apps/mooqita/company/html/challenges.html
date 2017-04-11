@@ -160,13 +160,19 @@
 
 			<hr style="margin-top: 5px; margin-bottom: 15px">
 
-			<p class="user-data">
-				{{content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}
-			</p>
+			{{>more content=content}}
 
+			<h2>
+				<a id="show_reviews"><em>
+					{{#unless reviews_visible}}
+						<span class="glyphicon glyphicon-expand"></span>
+					{{else}}
+						<span class="glyphicon glyphicon-collapse-down"></span>
+					{{/unless}}
+				</em></a> Reviews
+			</h2>
 
-			{{#if selected}}
-				<h2>Reviews</h2>
+			{{#if reviews_visible}}
 				<hr style="margin-top: 5px; margin-bottom: 15px">
 				{{#each reviews .}}
 					<div class="media">
@@ -191,14 +197,6 @@
 								{{content}}
 							</p>
 						</div>
-					</div>
-
-					<div class="text-right">
-						<a id="select">
-							<b>
-								<em>...less</em>
-							</b>
-						</a>
 					</div>
 				{{else}}
 					<div class="well">

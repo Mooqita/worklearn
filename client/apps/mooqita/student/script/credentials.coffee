@@ -32,41 +32,18 @@ Template.student_credentials.helpers
 ##############################################
 Template.credential_solution.onCreated () ->
 	this.reviews_visible = new ReactiveVar(false)
-	this.content_visible = new ReactiveVar(false)
 
 ##############################################
 Template.credential_solution.helpers
-	has_more: () ->
-		return this.challenge.length>250
-
-	content_visible: ->
-		return Template.instance().content_visible.get()
-
-	content: () ->
-		vis = Template.instance().content_visible.get()
-
-		if vis
-			return this.challenge
-
-		return this.challenge.substring(0, 250)
-
 	reviews_visible: () ->
 		return Template.instance().reviews_visible.get()
 
 
 ##############################################
 Template.credential_solution.events
-	"click #select": ->
-		rv = Template.instance().content_visible
-		rv.set !rv.get()
-
 	"click #show_reviews": () ->
 		rv = Template.instance().reviews_visible
 		rv.set !rv.get()
-
-	"click #student_solution": () ->
-		Session.set "current_data", this
-		Session.set "student_template", "student_solution"
 
 
 ##############################################

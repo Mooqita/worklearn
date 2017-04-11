@@ -186,9 +186,9 @@ _generate_reviews = (challenge_id, user_indices) ->
 		rev_fed = gen_review chl_sol.challenge, chl_sol.solution, user._id
 
 		r_content = "Review by " + profile.given_name + ": " + faker.lorem.paragraphs(2)
-		rating = Math.round(Math.random()*4, 0) + 1
+		r_rating = Math.round(Math.random()*4, 0) + 1
 		modify_field_unprotected "Responses", rev_fed.review_id, "content", r_content
-		modify_field_unprotected "Responses", rev_fed.review_id, "rating", rating
+		modify_field_unprotected "Responses", rev_fed.review_id, "rating", r_rating
 
 		review = Responses.findOne rev_fed.review_id
 		finish_review review, user._id
@@ -207,8 +207,10 @@ _generate_reviews = (challenge_id, user_indices) ->
 		profile = Responses.findOne filter
 
 		f_content = "Feedback by " + profile.given_name + ": " + faker.lorem.paragraphs(1)
-		modify_field_unprotected "Responses", rev_fed.feedback_id, "content", f_content
+		f_rating = Math.round(Math.random()*4, 0) + 1
 		modify_field_unprotected "Responses", rev_fed.feedback_id, "visible_to", "anonymous"
+		modify_field_unprotected "Responses", rev_fed.feedback_id, "content", f_content
+		modify_field_unprotected "Responses", rev_fed.feedback_id, "rating", f_rating
 
 		console.log 'feedback added: ' + rev_fed.feedback_id
 

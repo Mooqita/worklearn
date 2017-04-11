@@ -129,29 +129,22 @@ Template.challenge_solutions.helpers
 ########################################
 
 ########################################
+Template.challenge_solution.onCreated ->
+	this.reviews_visible = new ReactiveVar(false)
+
+########################################
 Template.challenge_solution.helpers
-	content: () ->
-		if this._id==Session.get "selected_review"
-			return this.content
-
-		return this.content.substring(0, 250)
-
 	resume_url: (author_id) ->
 		return author_id
 
 	reviews: (id) ->
 		return this.reviews
 
-	selected: ->
-		return this._id==Session.get "selected_review"
+	reviews_visible: ->
+		return Template.instance().reviews_visible.get()
 
 ########################################
 Template.challenge_solution.events
-	"click #select": ->
-		f = Session.get "selected_review"
-		m = this._id
-
-		if f==m
-			Session.set "selected_review", 0
-		else
-			Session.set "selected_review", this._id
+	"click #show_reviews": ->
+		f = Template.instance().reviews_visible.get()
+		Template.instance().reviews_visible.set !f

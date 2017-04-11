@@ -49,7 +49,8 @@ Template.student_review_preview.onCreated ->
 		filter =
 			_id: self.data.challenge_id
 
-		self.subscribe "responses", filter, false, true, "student_review_preview: challenge"
+		if not Responses.findOne filter
+			self.subscribe "responses", filter, false, true, "student_review_preview: challenge"
 
 
 ########################################

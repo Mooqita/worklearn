@@ -49,7 +49,7 @@ Template.student_solution_preview.helpers
 ########################################
 Template.student_solution_preview.events
 	"click #student_solution": () ->
-		Session.set "current_data", Responses.findOne this.challenge_id
+		Session.set "current_data", Responses.findOne this.parent_id
 		Session.set "student_template", "student_solution"
 
 
@@ -73,9 +73,9 @@ Template.student_solution.onCreated ->
 		self.solution_id.set solution._id
 
 		filter =
-			type_identifier: "review"
+			type_identifier: "feedback"
 			solution_id: solution._id
-		self.subscribe "responses", filter, false, false, "student_solution: review"
+		self.subscribe "responses", filter, false, false, "student_solution: feedback"
 
 
 ########################################
@@ -88,7 +88,12 @@ Template.student_solution.helpers
 
 	feedback: () ->
 		filter =
-			solution_id: this._id
+			type_identifier: "solution"
+			parent_id: this._id
+		solution = Responses.findOne filter
+
+		filter =
+			solution_id: solution._id
 			type_identifier: "feedback"
 		return Responses.find filter
 
