@@ -1,7 +1,12 @@
 <template name="download">
-	<div class="btn download-btn" id="download">
-		{{label}}
-	</div>
+	{{#if has_download}}
+		<a class="download-btn" id="download">
+			<em><span class="glyphicon glyphicon-download"></span></em>
+			{{name}}
+		</a>
+	{{else}}
+		<div>There is nothing to download</div>
+	{{/if}}
 </template>
 
 <template name="image_field">

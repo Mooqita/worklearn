@@ -58,37 +58,28 @@
 
 
 <template name="student_review">
-	<h1>Challenge</h1>
-	<div class="well">
-		<b>{{challenge.title}}</b>
-			<!--This formatting is required for user
-			generated text to look as intended-->
-		<p class="user-data">{{challenge.content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}</p>
-	</div>
+	<div class="item">
+		<h1>{{challenge.title}}</h1>
+		{{>more content=challenge.content}}
 
-	<h1>Solution</h1>
-	<div class="well">
-		<label>Solution Description</label>
+		<h1>Solution</h1>
 		{{solution.content}}
-		<br>
-		<label>Additional Material</label>
+
+		<h2>Additional Material</h2>
 		{{>download collection_name="Responses"
 			item_id=solution._id field="material"}}
 	</div>
 
-	<h1>Your Review</h1>
-	<div class="well">
-		<div class="form-group">
-			<label>Your Review</label>
-			{{#unless _is_public}}
-				{{>text_input method="set_field" collection_name="Responses"
-					item_id=_id field="content" placeholder="Please provide your feedback here"}}
-			{{else}}
-				<div class="form-control">
-					{{content}}
-				</div>
-			{{/unless}}
-		</div>
+	<div class="item">
+		<h1>Your Review</h1>
+		{{#unless _is_public}}
+			{{>text_input method="set_field" collection_name="Responses"
+				item_id=_id field="content" placeholder="Please provide your feedback here"}}
+		{{else}}
+			<p>
+				{{content}}
+			</p>
+		{{/unless}}
 
 		<div class="form-group">
 			<label for="quality"
@@ -124,12 +115,12 @@
 			<div class="row">
 				<div class="form-group col-sm-6">
 					<span class="btn-group btn-group-justified">
-						<div class="btn btn-red" id="save">Save</div>
+						<div class="btn btn-theme" id="save">Save</div>
 					</span>
 				</div>
 				<div class="form-group col-sm-6">
 					<span class="btn-group btn-group-justified">
-						<div class="btn btn-red" {{publish_disabled}}
+						<div class="btn btn-theme" {{publish_disabled}}
 								 id="publish">Make public</div>
 					</span>
 				</div>

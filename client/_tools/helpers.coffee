@@ -3,19 +3,22 @@ Template.registerHelper "_is_owner", (obj) ->
 	if typeof obj == "string"
 		obj = Responses.findOne obj
 
-	console.log obj.owner_id
-	console.log Meteor.userId()
-
 	owner = obj.owner_id == Meteor.userId()
 	return owner
 
 
 ########################################
-Template.registerHelper "_is_public", () ->
-	data = Template.currentData()
+Template.registerHelper "_is_public", (obj=null) ->
+	if typeof obj == "string"
+		data = Responses.findOne obj
+	else
+		data = Template.currentData()
+
 	field_value = get_field_value data, "visible_to", data._id, "Responses"
+
 	if not field_value
 		return false
+
 	return field_value == "anonymous"
 
 

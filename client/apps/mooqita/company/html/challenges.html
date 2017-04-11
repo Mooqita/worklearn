@@ -110,6 +110,10 @@
 			<label>Upload additional material:</label>
 			{{>upload method="set_field" collection_name="Responses"
 				item_id=_id field="material"}}
+
+			{{#if material}}
+				Download {{>download collection_name="Responses" item_id=response._id field="material"}}
+			{{/if}}
 		</div>
 	</div>
 

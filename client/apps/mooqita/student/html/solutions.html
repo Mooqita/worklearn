@@ -39,10 +39,7 @@
 			<b><em>{{challenge.title}}</em></b>
 		</a>
 	</h3>
-
-	<!--This formatting is required for user
-			generated text to look as intended-->
-	<p class="user-data">{{content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}</p>
+	{{>more content=challenge.content}}
 </template>
 
 
@@ -58,67 +55,79 @@
 			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 		</h1>
 	{{else}}
-		<h1>{{challenge.title}}</h1>
-		<!--This formatting is required for user
-		generated text to look as intended-->
-		<p class="user-data">{{challenge.content}}</p>
+		<div class="item">
+			<h1>{{title}}</h1>
+			{{>more content=content}}
+		</div>
 
-		<h1>Your Solution</h1>
-		{{#unless solution}}
-			You have not yet submitted a solution to this challenge.
-			<div class="btn btn-theme" id="take_challenge">Take challenge</div>
-		{{else}}
-			{{#unless _is_public}}
-				<label>Solution description</label>
-				{{>text_input method="set_field" collection_name="Responses"
-					item_id=solution._id field="content" placeholder="Describe your solution"}}
+		<div class="item">
+			<h1>Your Solution</h1>
+			{{#unless solution}}
+				<p>
+					You have not yet submitted a solution to this challenge.
+				</p>
 
-				<br>
-
-				<label>Additional Material or a link to your project files</label>
-				{{>upload method="set_field" collection_name="Responses"
-					item_id=solution._id field="material" max_size=250000}}
-
+				<div class="text-right">
+					<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+				</div>
 			{{else}}
-				{{solution.content}}
+				{{#unless solution_is_public}}
+					<label>Solution description</label>
+					{{>text_input method="set_field" collection_name="Responses"
+						item_id=solution._id field="content" placeholder="Describe your solution"}}
 
-				<h2>Additional Material or a link to your project files</h2>
-				{{>download collection_name="Responses"
-					item_id=solution._id field="material"}}
-			{{/unless}}
+					<br>
 
-			{{#unless _is_public}}
-				<div class="alert alert-info">
-					Please publish your solution.
-					{{#unless _is_saved}}
-						You need to save it first.
-					{{/unless}}
-				</div>
-			{{/unless}}
+					<label>Additional Material or a link to your project files</label>
+					{{>upload method="set_field" collection_name="Responses"
+						item_id=solution._id field="material" max_size=250000}}
 
-			{{#unless _is_public}}
-				<div class="row">
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" id="save">Save</div>
-						</span>
+				{{else}}
+					{{solution.content}}
+
+					<h2>Additional Material or a link to your project files</h2>
+					{{>download collection_name="Responses"
+						item_id=solution._id field="material"}}
+				{{/unless}}
+
+				{{#unless solution_is_public}}
+					<div class="alert alert-info">
+						Please publish your solution.
+						{{#unless _is_saved}}
+							You need to save it first.
+						{{/unless}}
 					</div>
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" {{publish_disabled}}
-									 id="publish">Make public</div>
-						</span>
-					</div>
-				</div>
-			{{/unless}}
-		{{/unless}}
+				{{/unless}}
 
-		{{#unless solution}}
-			<h1>Reviews you received</h1>
-			{{#each feedback}}
-				{{>student_review_feedback}}
-			{{/each}}
-		{{/unless}}
+				{{#unless solution_is_public}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Make public</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+			{{/unless}}
+
+			{{#if solution_is_public}}
+				<hr>
+				<h1>Reviews you received</h1>
+				{{#each feedback}}
+					{{>student_review_feedback}}
+				{{else}}
+					<p>
+						No reviews yet.
+					</p>
+				{{/each}}
+			{{/if}}
+		</div>
 	{{/unless}}
 </template>
 

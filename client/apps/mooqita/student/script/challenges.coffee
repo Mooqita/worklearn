@@ -48,34 +48,10 @@ Template.student_challenge_preview.helpers
 
 		return Responses.find(filter).count()>0
 
-	has_more: () ->
-		return this.content.length>250
-
-	selected: ->
-		return this._id==Session.get "selected_challenge"
-
-	content: () ->
-		if this._id==Session.get "selected_challenge"
-			return this.content
-
-		return this.content.substring(0, 250)
-
 
 ########################################
 Template.student_challenge_preview.events
-	"click #select": ->
-		f = Session.get "selected_challenge"
-		m = this._id
-
-		if f==m
-			Session.set "selected_challenge", 0
-		else
-			Session.set "selected_challenge", this._id
-
 	"click #student_solution": () ->
-		filter =
-			type_identifier: "solution"
-			parent_id: this._id
-		Session.set "current_data", Responses.findOne filter
+		Session.set "current_data", this
 		Session.set "student_template", "student_solution"
 

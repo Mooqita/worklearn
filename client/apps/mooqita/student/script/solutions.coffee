@@ -29,12 +29,15 @@ Template.student_solutions.helpers
 ########################################
 Template.student_solution_preview.onCreated ->
 	self = this
+	self.challenge_expanded = new ReactiveVar(false)
+
 	self.autorun () ->
 		if not Responses.findOne this.parent_id
 			filter =
 				_id: self.data.parent_id
 
-			self.subscribe "responses", filter, false, true, "student_solution_preview: load challenge"
+			self.subscribe "responses", filter, false, true,
+					"student_solution_preview: load challenge"
 
 
 ########################################
@@ -42,33 +45,11 @@ Template.student_solution_preview.helpers
 	challenge: () ->
 		return Responses.findOne this.parent_id
 
-	has_more: () ->
-		return this.content.length>250
-
-	selected: ->
-		return this._id==Session.get "selected_challenge"
-
-	content: () ->
-		if this._id==Session.get "selected_challenge"
-			return this.content
-
-		return this.content.substring(0, 250)
-
 
 ########################################
 Template.student_solution_preview.events
-	"click #select": ->
-		f = Session.get "selected_solution"
-		m = this._id
-
-		if f==m
-			Session.set "selected_solution", 0
-		else
-			Session.set "selected_solution", this._id
-
-
 	"click #student_solution": () ->
-		Session.set "current_data", this
+		Session.set "current_data", Responses.findOne this.challenge_id
 		Session.set "student_template", "student_solution"
 
 
@@ -79,25 +60,31 @@ Template.student_solution_preview.events
 ########################################
 Template.student_solution.onCreated ->
 	self = this
+	self.challenge_expanded = new ReactiveVar(false)
+	self.solution_published = new ReactiveVar(false)
+	self.solution_id = new ReactiveVar("")
 
 	self.autorun () ->
 		filter =
-			_id: self.data.parent_id
-		self.subscribe "responses", filter, false, false, "student_solution: challenge"
+			type_identifier: "solution"
+			parent_id: self.data._id
+		solution = Responses.findOne filter
+
+		self.solution_id.set solution._id
 
 		filter =
 			type_identifier: "review"
-			solution_id: self.data._id
+			solution_id: solution._id
 		self.subscribe "responses", filter, false, false, "student_solution: review"
 
 
 ########################################
 Template.student_solution.helpers
-	challenge: () ->
-		return Responses.findOne this.parent_id
-
 	solution: () ->
-		return Responses.findOne this._id
+		filter =
+			type_identifier: "solution"
+			parent_id: this._id
+		return Responses.findOne filter
 
 	feedback: () ->
 		filter =
@@ -112,10 +99,22 @@ Template.student_solution.helpers
 			return "disabled"
 		return ""
 
+	solution_is_public: () ->
+		filter =
+			type_identifier: "solution"
+			parent_id: this._id
+		solution = Responses.findOne filter
+
+		if solution.visible_to == "anonymous"
+			return true
+
+		return Template.instance().solution_published.get()
+
 ########################################
 Template.student_solution.events
 	"click #publish":()->
-		Modal.show('publish_solution', this)
+		data = Template.instance()
+		Modal.show('publish_solution', data)
 
 	"click #take_challenge":()->
 		filter =
@@ -145,11 +144,13 @@ Template.student_solution.events
 ##############################################
 Template.publish_solution.events
 	'click #publish': ->
-		Meteor.call "set_field", "Responses", this._id, "visible_to", "anonymous",
+		self = this
+		Meteor.call "set_field", "Responses", self.solution_id.get(), "visible_to", "anonymous",
 			(err, res) ->
 				if err
 					sAlert.error(err)
 				if res
 					sAlert.success "Solution published!"
+					self.solution_published.set true
 
 

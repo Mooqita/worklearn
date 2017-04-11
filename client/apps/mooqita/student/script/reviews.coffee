@@ -72,6 +72,7 @@ Template.student_review_preview.events
 ########################################
 Template.student_review.onCreated ->
 	self = this
+	self.challenge_expanded = new ReactiveVar(false)
 
 	self.autorun () ->
 		filter =
@@ -111,11 +112,27 @@ Template.student_review.helpers
 
 		return ""
 
+	challenge_content: () ->
+		content = Responses.findOne(this.challenge_id).content
+		if Template.instance().challenge_expanded.get()
+			return content
+
+		return content.substring(0, 250)
+
+	challenge_expanded: () ->
+		return Template.instance().challenge_expanded.get()
+
 
 ########################################
 Template.student_review.events
 	"click #publish":()->
 		Modal.show('publish_review', this)
+
+	"click #challenge_expand": (event) ->
+		ins = Template.instance()
+		s = not ins.challenge_expanded.get()
+		ins.challenge_expanded.set s
+
 
 ##############################################
 # publish modal

@@ -1,0 +1,9 @@
+<template name="more">
+	<!--This formatting is required for user
+		generated text to look as intended-->
+	<p class="user-data">{{content}}{{#unless expanded}}<a id="expand"><em>...<b>more</b></em></a>{{/unless}}</p>
+
+	{{#if expanded}}
+		<a id="expand"><em><b>less</b></em></a>
+	{{/if}}
+</template>

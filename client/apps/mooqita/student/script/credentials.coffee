@@ -65,10 +65,7 @@ Template.credential_solution.events
 		rv.set !rv.get()
 
 	"click #student_solution": () ->
-		filter =
-			type_identifier: "solution"
-			parent_id: this._id
-		Session.set "current_data", Responses.findOne filter
+		Session.set "current_data", this
 		Session.set "student_template", "student_solution"
 
 

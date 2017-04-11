@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="student_find_challenges">
 	<div class="item">
-		<h1>Reviews</h1>
+		<h1>Find Challenges</h1>
 
 		<p>
 			Here you can find challenges.
@@ -44,8 +44,6 @@
 		</a>
 	</h3>
 
-	<!--This formatting is required for user
-			generated text to look as intended-->
-	<p class="user-data">{{content}}{{#unless selected}}<a id="select"><em>...<b>more</b></em></a>{{/unless}}</p>
+	{{>more content=content}}
 </template>
 
