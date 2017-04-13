@@ -17,7 +17,7 @@
 @Challenge_Summary = new Mongo.Collection("challenge_summary")
 
 #######################################################
-@Admin = new Mongo.Collection("admin")
-@Tasks = new Mongo.Collection("tasks")
+@UpworkTasks = new Mongo.Collection("upwork_tasks")
 @Files = new Mongo.Collection("files")
+@Admin = new Mongo.Collection("admin")
 

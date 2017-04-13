@@ -1,34 +1,4 @@
-<template name="base_layout" xmlns="http://www.w3.org/1999/html">
-	<title>WorkLearn</title>
-
-	<div class="wrapper">
-		<header>
-			{{>menu}}
-		</header>
-
-		<main>
-			{{>sAlert}}
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<div style="padding-top: 24px">
-							{{>Template.dynamic template=content}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</main>
-
-		<div class="footer-push"> </div>
-	</div>
-
-	<footer>
-		{{>footer}}
-	</footer>
-</template>
-
-
-<template name="full_width_layout" xmlns="http://www.w3.org/1999/html">
+<template name="main_layout" xmlns="http://www.w3.org/1999/html">
 	<title>WorkLearn</title>
 
 	<div class="wrapper">
@@ -49,13 +19,8 @@
 	</footer>
 </template>
 
-
 <template name="empty_layout" xmlns="http://www.w3.org/1999/html">
 	{{>sAlert}}
 	{{>Template.dynamic template=content}}
 </template>
 
-
-<template name="footer">
-
-</template>

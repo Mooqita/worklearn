@@ -8,7 +8,7 @@
 		<div class="col-md-3">
 			<h2>Avatar</h2>
 			{{#if profile.avatar}}
-				<img class="img-circle img-responsive" src="{{profile.avatar}}">
+				{{>image_field collection_name="Responses" item_id=_id field="avatar"}}
 			{{/if}}
 
 			{{>upload method="set_field" collection_name="Responses"

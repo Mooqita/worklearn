@@ -31,10 +31,12 @@
 
 	check value, Match.OneOf String, Number, Boolean
 
-	if typeof value == "string"
-		value.length
+	res = modify_field_unprotected collection_name, id, field, value
 
-	return modify_field_unprotected collection_name, id, field, value
+	if typeof value == "string"
+		predaid_add_text collection_name, id, field
+
+	return res
 
 
 #######################################################

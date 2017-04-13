@@ -28,7 +28,7 @@ Template.work_to_learn.events
 #########################################################
 Template.work_to_learn.helpers
 	upwork_tasks: () ->
-		tasks = Tasks.find().fetch()
+		tasks = UpworkTasks.find().fetch()
 		return tasks
 
 #########################################################

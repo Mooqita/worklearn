@@ -8,7 +8,7 @@
 		<div class="col-md-4">
 			<h2>Company Logo</h2>
 			{{#if company_logo}}
-				<img class="img-responsive" src="{{company_logo}}">
+				{{>image_field collection_name="Responses" item_id=_id field="company_logo"}}
 			{{/if}}
 
 			{{>upload method="set_field" collection_name="Responses"

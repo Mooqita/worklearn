@@ -4,7 +4,11 @@
 |
 -------------------------------------------------->
 <template name="login_user">
-	{{>loginButtons}}
+	{{#if currentUser}}
+		{{>response_creator}}
+	{{else}}
+		{{>sign_user}}
+	{{/if}}
 </template>
 
 <template name="login_worker">
@@ -19,6 +23,25 @@
 	{{#if currentUser}}
 		{{>response_creator}}
 	{{/if}}
+</template>
+
+<template name="sign_user">
+	<div class="container-fluid background-theme" style="height: 25px">
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+				<h1>Please login to continue</h1>
+
+				<hr>
+
+				<div class="well" style="color: black; text-align: center">
+					{{>atForm}}
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="sign_worker">

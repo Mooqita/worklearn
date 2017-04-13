@@ -218,14 +218,14 @@ Meteor.publish 'find_upwork_work', (q, paging, budget) ->
 	remote = (error, data) ->
 		if error
 			error.error = true
-			self.added('tasks', Random.id(), error)
+			self.added('upwork_tasks', Random.id(), error)
 			console.log(error)
 		else
 			for d in data.jobs
-				if Tasks.findOne(d.id)
+				if UpworkTasks.findOne(d.id)
 					continue
 				d.snippet = d.snippet.split('\n').join('<br>')
-				self.added('tasks', d.id, d)
+				self.added('upwork_tasks', d.id, d)
 
 	bound = Meteor.bindEnvironment(remote)
 	jobs.find params, bound

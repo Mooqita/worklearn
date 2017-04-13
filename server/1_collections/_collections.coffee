@@ -9,3 +9,6 @@
 @Logging = new Mongo.Collection("logging")
 @DBFiles = new Mongo.Collection("dbfiles")
 
+#######################################################
+@PredaidTasks = new Mongo.Collection("predaid_tasks")
+

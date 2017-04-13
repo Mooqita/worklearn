@@ -111,7 +111,7 @@ _generate_challenges = (user_indices, callback) ->
 			callback challenge_ids, user_indices
 		else
 			for d in data.jobs
-				if Tasks.findOne d.id
+				if UpworkTasks.findOne d.id
 					continue
 
 				content = d.snippet

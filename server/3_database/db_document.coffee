@@ -16,6 +16,8 @@
 		document["visible_to"] = "owner"
 	if not document.view_order
 		document["view_order"] = 1
+	if not document.removal_id
+		document["removal_id"] = Random.id()
 	if not document.template_id
 		document["template_id"] = "response"
 	if not document.type_identifier

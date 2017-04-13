@@ -54,6 +54,12 @@ Template.image_field.onCreated ->
 	item_id = this.data.item_id
 	collection_name = this.data.collection_name
 
+	value = get_field_value self.data
+
+	if value.search("http:") != -1
+		self.image_src.set value
+		return
+
 	Meteor.call "download_file", collection_name, item_id, field,
 		(err, res) ->
 			if err
