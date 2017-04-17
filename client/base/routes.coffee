@@ -5,38 +5,31 @@
 ##########################################################
 
 ##########################################################
-# index
-##########################################################
-
-##########################################################
-FlowRouter.route('/',
-	name: 'index',
-	action: (params) ->
-		BlazeLayout.render("main_layout", {content: 'landing'}))
-
-##########################################################
-# responses
-##########################################################
-
-##########################################################
-FlowRouter.route('/response_dashboard',
-	name: 'response',
-	action: (params) ->
-		BlazeLayout.render("main_layout", {content: 'response_dashboard'}))
-
-##########################################################
-FlowRouter.route('/r/:response_id',
-	name: 'response.id',
-	action: (params) ->
-		BlazeLayout.render("main_layout", {content: 'login_user'}))
-
-##########################################################
-# admin stuff
-##########################################################
-
-##########################################################
-FlowRouter.route('/admin',
+FlowRouter.route '/admin',
 	name: 'admin',
 	action: (params) ->
-		BlazeLayout.render("main_layout", {content: 'admin'}))
+		data =
+			content: "admin"
+			login: "login"
+			menu: "menu"
+		BlazeLayout.render "admin", data
+
+##########################################################
+FlowRouter.route "/response_dashboard",
+	name: "response",
+	action: (params) ->
+		data =
+			content: "response_dashboard"
+			login: "login_user"
+			menu: "menu"
+			#layout: "layout"
+		BlazeLayout.render "body_template", data
+
+##########################################################
+FlowRouter.route "/response/:response_id",
+	name: "response.id",
+	action: (params) ->
+		data =
+			login: "login_user"
+		BlazeLayout.render "body_template", data
 

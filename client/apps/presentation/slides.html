@@ -83,6 +83,10 @@
 			display: initial;
 			height: 100%;
 			padding: 0px;
+			box-shadow: none;
+			-moz-box-shadow: none;
+			-o-box-shadow: none;
+			-webkit-box-shadow: none;
 		}
 
 		.fullscreen .slide-window{
@@ -128,8 +132,13 @@
 			bottom: 5px;
 		}
 
-		.add-slide-container{
-			background: rgba(0,0,0,0.5);
+		.slide-preview .slide-name{
+			position: absolute;
+			top: 5px;
+			left: 52px;
+			right: 5px;
+			padding: 8px;
+			overflow: hidden;
 		}
 
 		.slide-preview .add-slide-btn{
@@ -150,8 +159,41 @@
 		}
 
 		.slide-preview .tool-background:hover{
-			background: rgba(255,255,255,0.95);
+			background: rgba(255,255,255,0.75);
 			color: rgba(0,0,0,0.75);
+		}
+
+		.slide-preview .tool-background .edit-field{
+			background: none;
+			font: inherit;
+			border: inherit;
+			text-align: inherit;
+			color: inherit;
+			display: initial;
+			height: 100%;
+			padding: 0px;
+			box-shadow: none;
+			-moz-box-shadow: none;
+			-o-box-shadow: none;
+			-webkit-box-shadow: none;
+		}
+
+		.slide-preview .dropbox{
+			background-color: rgba(0,0,0,0.3);
+			color: rgba(250,250,250,0.95)
+		}
+
+		.slide-preview .dropbox:hover{
+			background-color: rgba(0,0,0,0.75);
+			color: rgba(250,250,250,0.75)
+		}
+
+		.slide-preview .dropbox label{
+			font-weight: 400;
+		}
+
+		.slide-preview .dropbox.has-advanced-upload {
+			outline-color: rgba(250,250,250, 0.75);
 		}
 
 		.slide-preview .tool-set{
@@ -168,20 +210,15 @@
 			z-index: 2;
 		}
 
-		.slide-preview .slide-name{
-			position: absolute;
-			top: 5px;
-			left: 52px;
-			right: 5px;
-			padding: 10px 13px;
-			overflow: hidden;
-		}
-
 		.slide-preview .maximize{
 			position: absolute;
 			bottom: 5px;
 			right: 5px;
 			padding: 10px 13px;
+		}
+
+		.add-slide-container{
+			background: rgba(0,0,0,0.5);
 		}
 
 		/*Slide side bar*/
@@ -259,6 +296,10 @@
 			font-size: 1.5em;
 			font-weight: 300;
 		}
+
+		.content.editor{
+			font-size: 1em;
+		}
 	</style>
 
 	{{#unless current_slide}}
@@ -272,7 +313,7 @@
 					<div class="col-xs-offset-1 col-xs-10">
 						<div class="row">
 							{{#each children .}}
-								<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+								<div class="col-lg-4 col-md-6 col-xs-12">
 									<div style="margin-top: 100%;"></div>
 									<div class="slide-preview">
 										{{>dynamic_template_loader template_id=template_id data=.}}
@@ -285,9 +326,6 @@
 
 													{{>basic_input method='set_field' collection_name='Responses'
 														field='background_color' placeholder='HTML Color' item_id=_id}}
-
-													{{>basic_input method='set_field' collection_name='Responses'
-														field='title' placeholder='Title' item_id=_id}}
 												{{/_edit_tools}}
 											</div>
 										{{/if}}
@@ -296,7 +334,24 @@
 
 										{{#unless _is_editing_response _id}}
 											<div class="slide-name tool-background">
-												{{name}} {{index}}
+												<div class="row" style="padding-bottom: 13px">
+													<div class="col-xs-9">
+														{{>basic_input method='set_field' collection_name='Responses'
+															field='name' placeholder='Name' item_id=_id}}
+													</div>
+													<div class="col-xs-3">
+														{{>basic_input method='set_field' collection_name='Responses'
+															field='index' placeholder='index' item_id=_id type="number"}}
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+														{{>upload mini=true method='set_field'
+																collection_name='Responses' field='background'
+																item_id=_id box_id='background'}}
+													</div>
+												</div>
 											</div>
 										{{else}}
 
@@ -381,7 +436,7 @@
 <template name="slide_base">
 	<div class="background-image"
 			 style=" {{#if background}}
-				background-image: url({{background}});
+				background-image: url({{download_field_value "Responses" _id "background" background}});
 				background-size: cover;
 				background-color: {{background_color}};
 				background-blend-mode: multiply;
@@ -418,7 +473,7 @@
 	{{#slide_base}}
 		{{#if current}}
 			{{#if _is_editing_response _id}}
-				<div class="content">
+				<div class="content editor">
 					{{>code_input method='set_field' collection_name='Responses'
 						field='content' placeholder='Content' item_id=_id}}
 				</div>

@@ -3,16 +3,16 @@
 #########################################################
 
 #########################################################
-Template.landing.onCreated ->
+Template.mooqita_landing.onCreated ->
 	self = this
 
 	self.autorun () ->
 		filter =
 			group_name: "frontpage"
-		self.subscribe "responses", filter, false, false, "landing"
+		self.subscribe "responses", filter, false, false, "mooqita_landing"
 
 #########################################################
-Template.landing.onRendered ->
+Template.mooqita_landing.onRendered ->
 	try
 		Fingerprint2 = require("fingerprintjs2")
 
@@ -26,7 +26,7 @@ Template.landing.onRendered ->
 		console.log error
 
 #########################################################
-Template.landing.helpers
+Template.mooqita_landing.helpers
 	groups: () ->
 		filter=
 			group_name: "frontpage"

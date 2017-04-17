@@ -1,0 +1,37 @@
+<template name="body_template" xmlns="http://www.w3.org/1999/html">
+	<div class="wrapper">
+		<header>
+			{{>Template.dynamic template=menu}}
+		</header>
+
+		<main>
+			{{>sAlert}}
+			{{#if layout}}
+				{{#Template.dynamic template=layout}}
+					{{>render_content}}
+				{{/Template.dynamic}}
+			{{else}}
+				{{>render_content}}
+			{{/if}}
+		</main>
+
+		<div class="footer-push"> </div>
+	</div>
+
+	<footer>
+		{{>Template.dynamic template=footer}}
+	</footer>
+</template>
+
+
+<template name="render_content">
+	{{#if login}}
+		{{#unless currentUser}}
+			{{>sign_user}}
+		{{else}}
+			{{>dynamic_response_loader}}
+		{{/unless}}
+	{{else}}
+		{{>dynamic_response_loader}}
+	{{/if}}
+</template>

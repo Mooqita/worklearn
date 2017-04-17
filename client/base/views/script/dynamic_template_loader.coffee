@@ -16,6 +16,9 @@ Template.dynamic_template_loader.onCreated ->
 		if template
 			return
 
+		if not template_id
+			sAlert.error "No Template id provided for template loader"
+
 		self.subscribe "template_by_id", template_id, false
 
 ########################################

@@ -1,0 +1,26 @@
+<template name="main_layout" xmlns="http://www.w3.org/1999/html">
+	<title>WorkLearn</title>
+
+	<div class="wrapper">
+		<header>
+			{{>Template.dynamic template=menu}}
+		</header>
+
+		<main>
+			{{>sAlert}}
+			{{>Template.dynamic template=content}}
+		</main>
+
+		<div class="footer-push"> </div>
+	</div>
+
+	<footer>
+		{{>Template.dynamic template=footer}}
+	</footer>
+</template>
+
+<template name="empty_layout" xmlns="http://www.w3.org/1999/html">
+	{{>sAlert}}
+	{{>Template.dynamic template=content}}
+</template>
+

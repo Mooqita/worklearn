@@ -10,7 +10,13 @@
 #######################################################
 
 #######################################################
-Meteor.publish "templates", (header_only=true) ->
+Meteor.publish "templates", (header_only=true, origin="") ->
+	if not origin
+		console.log "Origin missing"
+	check origin, String
+
+	if not origin
+		console.log "header only missing"
 	check header_only, Boolean
 
 	user_id = this.userId
@@ -23,7 +29,9 @@ Meteor.publish "templates", (header_only=true) ->
 	return crs
 
 #######################################################
-Meteor.publish "template_by_id", (template_id, header_only=true) ->
+Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
+	if not template_id
+		console.log "template_id missing"
 	check template_id, String
 	check header_only, Boolean
 
@@ -47,8 +55,6 @@ Meteor.publish "responses", (filter, mine, header_only, origin) ->
 	check mine, Boolean
 	check header_only, Boolean
 	check origin, String
-
-#	console.log origin
 
 	user_id = this.userId
 

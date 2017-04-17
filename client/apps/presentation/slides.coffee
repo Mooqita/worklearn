@@ -139,6 +139,7 @@ Template.slide_deck.events
 		index = Responses.find(filter).count()
 
 		param =
+			index: index + 1
 			parent_id: this._id
 			template_id: "slide_content"
 			single_parent: false

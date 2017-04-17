@@ -36,6 +36,10 @@ get_form = (box_id = null) ->
 	return frm
 
 ##############################################
+# Upload
+##############################################
+
+##############################################
 Template.upload.onCreated ->
 	files = Session.get('_files')
 
@@ -133,7 +137,6 @@ Template.upload.events
 			col = this.collection_name
 			item = this.item_id
 			field = this.field
-			method = this.method
 
 			if typeof file == "string"
 				type = "string"
@@ -198,3 +201,4 @@ Template.upload.events
 
 	'click .restart': (event) ->
 		get_form().removeClass('is-uploading').removeClass('is-error')
+

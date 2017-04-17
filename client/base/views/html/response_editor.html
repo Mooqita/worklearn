@@ -106,37 +106,6 @@
 </template>
 
 
-<template name="response_creator">
-	{{#if loaded}}
-		{{#if response}}
-			{{>dynamic_template_loader template_id=template_id data=response}}
-		{{else}}
-			{{#if create}}
-				{{>add_response}}
-			{{/if}}
-		{{/if}}
-	{{else}}
-		<div style="">
-			<h1 style="	position: absolute;
-									top: 40%;
-									left: 50%;
-									transform: translate(-50%, -50%);">
-				Searching for existing response
-				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-			</h1>
-		</div>
-	{{/if}}
-</template>
-
-
-<template name="add_response">
-	<h1>
-		Please wait we prepare the task
-		<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-	</h1>
-</template>
-
-
 <template name="_edit_toggle">
 	<div class="edit-toggle tool-background" id="edit">
 		<span class="glyphicon glyphicon-edit"></span>
@@ -148,14 +117,17 @@
 	{{> UI.contentBlock}}
 
 	<div class="form-control">
-		{{type_identifier}}
+		Type: {{type_identifier}}
 	</div>
 
 	{{>basic_input label='Name' method='set_field' collection_name='Responses'
 			field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
 
+	{{>basic_input label='Title' method='set_field' collection_name='Responses'
+			field='title' item_id=_id placeholder="A title that is used in many places can be the same" type="text"}}
+
 	{{>basic_input label='Group' method='set_field' collection_name='Responses'
-		field='type_identifier' item_id=_id placeholder="An identifier for the type of the response" type="text" }}
+		field='group_name' item_id=_id placeholder="An identifier to group" type="text" }}
 
 	{{>basic_input label='Index' method='set_field' collection_name='Responses'
 		field='index' item_id=_id placeholder="Index of element" type="number" }}

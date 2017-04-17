@@ -192,109 +192,8 @@ Template.response_editor.helpers
 	response: ->
 		return this
 
-########################################
-#
-########################################
-
-########################################
-get_response = (self) ->
-	response_id = FlowRouter.getParam("response_id")
-	filter = null
-
-	if self.response
-		filter =
-			_id: self.response._id
-	else if response_id
-		filter =
-			_id: response_id
-	else
-		index = FlowRouter.getParam("index")
-		template_id = FlowRouter.getParam("template_id")
-		filter =
-			template_id: template_id
-			owner_id: Meteor.userId()
-			index: index
-
-	response = Responses.findOne(filter)
-	return response
-
-########################################
-Template.response_creator.onCreated ->
-	self = this
-	self.loaded = new ReactiveVar(0)
-
-	handler =
-		onStop:(err) ->
-			if err
-				sAlert.error err
-			self.loaded.set 1
-
-		onReady:() ->
-			response = get_response(self)
-			self.loaded.set response._id
-
-	self.autorun () ->
-		response_id = FlowRouter.getParam("response_id")
-
-		if self.response
-			filter =
-				_id: self.response._id
-		else if response_id
-			filter =
-				_id: response_id
-		else
-			index = FlowRouter.getParam("index")
-			template_id = FlowRouter.getParam("template_id")
-			filter =
-				index: index
-				template_id: template_id
-
-		self.subscribe "responses", filter, true, false, "response_creator", handler
-
-########################################
-Template.response_creator.helpers
-	template_id: ->
-		response = get_response(this)
-		return response.template_id
-
-	loaded: ->
-		res = Template.instance().loaded.get()
-		response = get_response(this)
-		if not response
-			return false
-
-		return response.loaded
-
-	create: ->
-		index = FlowRouter.getParam("index")
-		if index
-			return true
-		return false
-
-	response: ->
-		return get_response(this)
-
-########################################
-# add_response
-########################################
-
-########################################
-Template.add_response.onCreated ->
-	index = _get_index()
-	template_id = FlowRouter.getParam("template_id")
-	param =
-		template_id: template_id
-		index: index
-
-	Meteor.call "add_response", param,
-		(err, res) ->
-			if err
-				sAlert.error err
-			else
-				sAlert. success "Response added"
-
 #########################################################
-# Edit tool toggle
+# Edit tools
 #########################################################
 
 #########################################################
@@ -308,10 +207,6 @@ Template._edit_toggle.events
 
 		Session.set("editing_response", this._id)
 
-
-#########################################################
-# Edit tools
-#########################################################
 
 #########################################################
 Template._edit_tools.helpers

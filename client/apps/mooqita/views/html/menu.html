@@ -2,12 +2,14 @@
 	<meta name="viewport" content="user-scalable=no, width=device-width, maximum-scale=1, initial-scale=1, minimum-scale=1">
 </head>
 
-<template name="menu">
+<template name="mooqita_menu">
 	<div class="container-fluid">
 		<div class="navbar" role="navigation">
 			<div class="navbar-header">
 				<a class="navbar-brand logo" href="/">
-					#
+					<!--em><span class="glyphicon glyphicon-education" style="font-size: 2.5em" aria-hidden="true"></span></em-->
+					<!--span><img src="/images/moocita.png" style="height: 50px;"></span-->
+					<em>W</em>ork <em>L</em>earn
 				</a>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -27,6 +29,10 @@
 						<p class="navbar-text">
 							Hallo <em>{{currentUser.profile.given_name}}</em>
 						</p>
+					</ul>
+				{{else}}
+					<ul class="nav navbar-nav navbar-right">
+						{{>share}}
 					</ul>
 				{{/if}}
 			</div>

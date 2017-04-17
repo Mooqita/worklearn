@@ -1,4 +1,34 @@
 ########################################
+Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
+	key = collection_name + item_id + field
+	value = get_field_value null, field, item_id, collection_name
+
+	if value
+		if value.length>200
+			return value
+
+	value = Session.get key
+
+	download = () ->
+		Meteor.call "download_file", collection_name, item_id, field,
+		(err, res) ->
+			if err
+				sAlert.error(err)
+			else
+				Session.set key, res.data
+
+	if not value
+		Session.set key, "___empty___"
+		download()
+
+	if value != "___empty___"
+		return value
+
+
+	return ""
+
+
+########################################
 Template.registerHelper "_is_owner", (obj) ->
 	if typeof obj == "string"
 		obj = Responses.findOne obj

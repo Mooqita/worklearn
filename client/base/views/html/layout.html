@@ -1,26 +1,9 @@
-<template name="main_layout" xmlns="http://www.w3.org/1999/html">
-	<title>WorkLearn</title>
-
-	<div class="wrapper">
-		<header>
-			{{>menu}}
-		</header>
-
-		<main>
-			{{>sAlert}}
-			{{>Template.dynamic template=content}}
-		</main>
-
-		<div class="footer-push"> </div>
+<template name="layout">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10">
+				{{> UI.contentBlock}}
+			</div>
+		</div>
 	</div>
-
-	<footer>
-		{{>footer}}
-	</footer>
 </template>
-
-<template name="empty_layout" xmlns="http://www.w3.org/1999/html">
-	{{>sAlert}}
-	{{>Template.dynamic template=content}}
-</template>
-

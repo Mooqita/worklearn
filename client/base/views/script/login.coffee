@@ -1,9 +1,25 @@
+'''
 ########################################
-# auto login
-########################################
+Template.sign_worker.events
+	"submit #id_form": (event) ->
+		event.preventDefault()
+		target = event.target
+		id = target.worker_id.value
 
-########################################
-Template.login_auto.onCreated ->
+		Meteor.call "sign_in_worker", id,
+			(err, rsp)->
+				if err
+					sAlert.error "We could not log you in! " + err
+				else
+					Meteor.loginWithToken rsp.token,
+						(err, rsp)->
+							if err
+								sAlert.error "We could not log you in! " + err
+							else
+								target.worker_id.value = ""
+								sAlert.success("You are logged in.")
+
+
 	if Meteor.userId()
 		return
 
@@ -24,28 +40,4 @@ Template.login_auto.onCreated ->
 								sAlert.error "We could not log you in! " + err
 							else
 								sAlert.success("You are logged in.")
-
-
-########################################
-# sign_worker
-########################################
-
-########################################
-Template.sign_worker.events
-	"submit #id_form": (event) ->
-		event.preventDefault()
-		target = event.target
-		id = target.worker_id.value
-
-		Meteor.call "sign_in_worker", id,
-			(err, rsp)->
-				if err
-					sAlert.error "We could not log you in! " + err
-				else
-					Meteor.loginWithToken rsp.token,
-						(err, rsp)->
-							if err
-								sAlert.error "We could not log you in! " + err
-							else
-								target.worker_id.value = ""
-								sAlert.success("You are logged in.")
+'''
