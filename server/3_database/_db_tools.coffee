@@ -16,8 +16,8 @@ _accepts =
 	data = if header_only then "without data" else "with data"
 	console.log "Submitted " + crs.count() + " responses " + data + " to " + origin
 
-#	f = JSON.stringify(filter, null, 2);
-#	console.log f
+	f = JSON.stringify(filter, null, 2);
+	console.log f
 
 #	console.log "With fields"
 

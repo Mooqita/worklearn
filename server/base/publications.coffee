@@ -33,7 +33,14 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 	if not template_id
 		console.log "template_id missing"
 	check template_id, String
+
+	if not header_only
+		console.log "header only missing"
 	check header_only, Boolean
+
+	if not origin
+		console.log "Origin missing"
+	check origin, String
 
 	restrict =
 		_id : template_id
@@ -52,8 +59,16 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 
 #######################################################
 Meteor.publish "responses", (filter, mine, header_only, origin) ->
+	if not mine
+		console.log "mine missing"
 	check mine, Boolean
+
+	if not header_only
+		console.log "header only missing"
 	check header_only, Boolean
+
+	if not origin
+		console.log "Origin missing"
 	check origin, String
 
 	user_id = this.userId
