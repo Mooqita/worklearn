@@ -31,15 +31,15 @@ Meteor.publish "templates", (header_only=true, origin="") ->
 #######################################################
 Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 	if not template_id
-		console.log "template_id missing"
+		console.log "template: template_id missing"
 	check template_id, String
 
 	if not header_only
-		console.log "header only missing"
+		console.log "template: header only missing"
 	check header_only, Boolean
 
 	if not origin
-		console.log "Origin missing"
+		console.log "template: origin missing"
 	check origin, String
 
 	restrict =
@@ -60,15 +60,15 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 #######################################################
 Meteor.publish "responses", (filter, mine, header_only, origin) ->
 	if not mine
-		console.log "mine missing"
+		console.log "responses: mine missing"
 	check mine, Boolean
 
 	if not header_only
-		console.log "header only missing"
+		console.log "responses: header only missing"
 	check header_only, Boolean
 
 	if not origin
-		console.log "Origin missing"
+		console.log "responses: origin missing"
 	check origin, String
 
 	user_id = this.userId
