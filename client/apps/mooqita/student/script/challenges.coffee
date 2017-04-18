@@ -52,6 +52,9 @@ Template.student_challenge_preview.helpers
 ########################################
 Template.student_challenge_preview.events
 	"click #student_solution": () ->
-		Session.set "current_data", this
-		Session.set "student_template", "student_solution"
+		param =
+			item_id: this._id
+			template: "student_solution"
+		FlowRouter.setQueryParams param
+
 

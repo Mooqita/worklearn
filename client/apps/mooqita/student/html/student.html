@@ -4,10 +4,8 @@
 |
 -------------------------------------------------->
 <template name="student_view">
-	{{>mooqita_style}}
-
-	{{#mooqita_layout menu="student_menu" menu_data=.}}
-		{{>Template.dynamic template=selected_view data=data}}
+	{{#mooqita_layout menu="student_menu"}}
+		{{>Template.dynamic template=selected_view data=current_data}}
 	{{/mooqita_layout}}
 </template>
 
@@ -21,31 +19,31 @@
 	<div class="container-fluid navigation-background background-theme">
 		<div class="row">
 			<span>
-				<a class="navigation-button student_navigate" id="student_profile">
+				<a class="navigation-button control-navigate" id="student_profile">
 					Profile
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button student_navigate" id="student_find_challenges">
+				<a class="navigation-button control-navigate" id="student_find_challenges">
 					Find Challenges
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button student_navigate" id="student_solutions">
+				<a class="navigation-button control-navigate" id="student_solutions">
 					Solutions <span class="badge background-contrast">0{{new_solution_messages}}</span>
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button student_navigate" id="student_reviews">
+				<a class="navigation-button control-navigate" id="student_reviews">
 					Reviews <span class="badge background-contrast">0{{new_review_messages}}</span>
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button student_navigate" id="student_credentials">
+				<a class="navigation-button control-navigate" id="student_credentials">
 					Resume <span class="badge background-contrast">0{{new_credential_messages}}</span>
 				</a>
 			</span>

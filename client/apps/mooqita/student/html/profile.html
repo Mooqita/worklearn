@@ -8,11 +8,14 @@
 		<div class="col-md-3">
 			<h2>Avatar</h2>
 			{{#if profile.avatar}}
-				{{>image_field collection_name="Responses" item_id=_id field="avatar"}}
+				<div class="text-center">
+					<img class="img-responsive img-circle"
+							 src="{{download_field_value "Responses" profile._id "avatar" profile.avatar}}">
+				</div>
 			{{/if}}
 
 			{{>upload method="set_field" collection_name="Responses"
-				item_id=profile._id field="avatar" max_size=250000}}
+				item_id=profile._id field="avatar" max_size=2000000}}
 		</div>
 
 		<div class="col-md-9">

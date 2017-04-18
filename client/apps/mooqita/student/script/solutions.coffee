@@ -49,8 +49,10 @@ Template.student_solution_preview.helpers
 ########################################
 Template.student_solution_preview.events
 	"click #student_solution": () ->
-		Session.set "current_data", Responses.findOne this.parent_id
-		Session.set "student_template", "student_solution"
+		param =
+			item_id: this.parent_id
+			template: "student_solution"
+		FlowRouter.setQueryParams param
 
 
 ########################################

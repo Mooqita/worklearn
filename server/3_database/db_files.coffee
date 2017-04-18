@@ -13,8 +13,9 @@ _add_db_file = (collection_name, item_id, field, value, type)->
 		extension: extension
 		collection_name: collection_name
 
-	res = save_document DBFiles, file
-	return res
+	d_id = save_document DBFiles, file
+
+	return d_id
 
 #######################################################
 _modify_db_file = (collection_name, item_id, field, value, type)->
@@ -25,12 +26,17 @@ _modify_db_file = (collection_name, item_id, field, value, type)->
 		collection_name: collection_name
 
 	mod =
-		$set:
-			data: value
-			file_type: type
+		fields:
+			_id:1
 
-	res = DBFiles.update filter, mod
-	return res
+	dead = DBFiles.findOne(filter, mod)
+
+	n_id = _add_db_file collection_name, item_id, field, value, type
+
+	if dead
+		DBFiles.remove dead._id
+
+	return n_id
 
 #######################################################
 @upload_file = (collection_name, item_id, field, value, type) ->
@@ -43,10 +49,10 @@ _modify_db_file = (collection_name, item_id, field, value, type)->
 
 	if not document[field]
 		d_id = _add_db_file collection_name, item_id, field, value, type
-		modify_field_unprotected(collection_name, item_id, field, d_id)
 	else
 		d_id = _modify_db_file collection_name, item_id, field, value, type
 
+	modify_field_unprotected(collection_name, item_id, field, d_id)
 	return d_id
 
 #######################################################
@@ -65,5 +71,9 @@ _modify_db_file = (collection_name, item_id, field, value, type)->
 			encoding: 1
 			extension: 1
 
-	res = DBFiles.findOne filter, mod
-	return res
+	crs = DBFiles.findOne filter, mod
+	found = if crs then "Found " else "Not found "
+	console.log found + collection_name + " " + item_id + " " + field + " server side download"
+
+	crs = if crs then crs else {error:"not found"}
+	return crs

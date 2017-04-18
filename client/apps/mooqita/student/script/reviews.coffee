@@ -62,8 +62,10 @@ Template.student_review_preview.helpers
 ########################################
 Template.student_review_preview.events
 	"click #student_review": () ->
-		Session.set "current_data", Responses.findOne this._id
-		Session.set "student_template", "student_review"
+		param =
+			item_id: this._id
+			template: "student_review"
+		FlowRouter.setQueryParams param
 
 
 ########################################

@@ -1,26 +1,15 @@
-<template name="main_layout" xmlns="http://www.w3.org/1999/html">
-	<title>WorkLearn</title>
+<template name="mooqita_layout" xmlns="http://www.w3.org/1999/html">
+	{{#if menu}}
+		{{>Template.dynamic template=menu}}
+	{{/if}}
 
-	<div class="wrapper">
-		<header>
-			{{>Template.dynamic template=menu}}
-		</header>
-
-		<main>
-			{{>sAlert}}
-			{{>Template.dynamic template=content}}
-		</main>
-
-		<div class="footer-push"> </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="student-layout">
+					{{> UI.contentBlock}}
+				</div>
+			</div>
+		</div>
 	</div>
-
-	<footer>
-		{{>Template.dynamic template=footer}}
-	</footer>
 </template>
-
-<template name="empty_layout" xmlns="http://www.w3.org/1999/html">
-	{{>sAlert}}
-	{{>Template.dynamic template=content}}
-</template>
-

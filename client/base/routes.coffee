@@ -22,7 +22,7 @@ FlowRouter.route "/response_dashboard",
 			content: "response_dashboard"
 			login: "login_user"
 			menu: "menu"
-			#layout: "layout"
+			layout: "layout"
 		BlazeLayout.render "body_template", data
 
 ##########################################################

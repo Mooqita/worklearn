@@ -62,7 +62,6 @@ Template.dynamic_response_loader.onCreated ->
 				index: index
 				template_id: template_id
 		else
-			console.log "no response specified using template"
 			self.loaded.set _local_template
 			return
 
@@ -83,8 +82,6 @@ Template.dynamic_response_loader.helpers
 		return false
 
 	response: ->
-		console.log this
-
 		loaded = Template.instance().loaded.get()
 
 		if loaded == _local_template

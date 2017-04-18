@@ -8,7 +8,9 @@
 			{{>sAlert}}
 			{{#if layout}}
 				{{#Template.dynamic template=layout}}
-					{{>render_content}}
+					{{#with ini_context}}
+						{{>render_content}}
+					{{/with}}
 				{{/Template.dynamic}}
 			{{else}}
 				{{>render_content}}
@@ -29,7 +31,7 @@
 		{{#unless currentUser}}
 			{{>sign_user}}
 		{{else}}
-			{{>dynamic_response_loader}}
+			{{>dynamic_response_loader content=selected_view}}
 		{{/unless}}
 	{{else}}
 		{{>dynamic_response_loader}}

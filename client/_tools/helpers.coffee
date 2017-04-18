@@ -1,10 +1,26 @@
 ########################################
+Template.registerHelper "_debug", (obj) ->
+	console.log obj
+
+########################################
+Template.registerHelper "current_data", () ->
+	data = 	Session.get "current_data"
+	self = Template.instance().data
+	res = if data then data else self
+	return res
+
+########################################
+Template.registerHelper "selected_view", () ->
+	selected = Session.get "current_template"
+	return selected
+
+########################################
 Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
 	key = collection_name + item_id + field
 	value = get_field_value null, field, item_id, collection_name
 
 	if value
-		if value.length>200
+		if value.length>32
 			return value
 
 	value = Session.get key

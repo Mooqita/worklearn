@@ -4,8 +4,6 @@
 |
 -------------------------------------------------->
 <template name="company_view">
-	{{>mooqita_style}}
-
 	{{#mooqita_layout menu="company_menu" menu_data=.}}
 		{{>Template.dynamic template=selected_view data=data}}
 	{{/mooqita_layout}}
@@ -21,13 +19,13 @@
 	<div class="container-fluid navigation-background background-theme">
 		<div class="row">
 			<span>
-				<a class="navigation-button company_navigate" id="company_profile">
+				<a class="navigation-button control-navigate" id="company_profile">
 					Company Profile
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button company_navigate" id="company_challenges">
+				<a class="navigation-button control-navigate" id="company_challenges">
 					Challenges <span class="badge background-contrast">0{{new_challenge_messages}}</span>
 				</a>
 			</span>
