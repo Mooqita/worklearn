@@ -1,4 +1,13 @@
 ########################################
+Template.registerHelper "_profile", () ->
+	user_id = Meteor.userId()
+	filter =
+		owner_id: user_id
+		type_identifier: "profile"
+	profile = Responses.findOne filter
+	return profile
+
+########################################
 Template.registerHelper "_debug", (obj) ->
 	console.log obj
 

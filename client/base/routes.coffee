@@ -1,6 +1,6 @@
 ##########################################################
 #
-#	Moocita routes
+#	Mooqita routes
 #
 ##########################################################
 
@@ -12,7 +12,8 @@ FlowRouter.route '/admin',
 			content: "admin"
 			login: "login"
 			menu: "menu"
-		BlazeLayout.render "admin", data
+			layout: "layout"
+		BlazeLayout.render "body_template", data
 
 ##########################################################
 FlowRouter.route "/response_dashboard",
@@ -31,5 +32,27 @@ FlowRouter.route "/response/:response_id",
 	action: (params) ->
 		data =
 			login: "login_user"
+		BlazeLayout.render "body_template", data
+
+##########################################################
+FlowRouter.route "/template_dashboard",
+	name: "template",
+	action: (params) ->
+		data =
+			content: "template_dashboard"
+			login: "login_user"
+			menu: "menu"
+			layout: "layout"
+		BlazeLayout.render "body_template", data
+
+##########################################################
+FlowRouter.route "/template/:template_id",
+	name: "template.id",
+	action: (params) ->
+		data =
+			content: "template_dashboard"
+			login: "login_user"
+			menu: "menu"
+			layout: "layout"
 		BlazeLayout.render "body_template", data
 

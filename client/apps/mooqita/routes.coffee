@@ -31,17 +31,21 @@ FlowRouter.route "/research",
 ##########################################################
 
 ##########################################################
-FlowRouter.route "/s",
+FlowRouter.route "/student",
 	name: "index",
 	action: (params) ->
-		BlazeLayout.render("mooqita_student", )
+		data =
+			content: "student_view"
+			login: "login"
+			menu: "mooqita_menu"
+		BlazeLayout.render "body_template", data
 
 ##########################################################
-# Student
+# Company
 ##########################################################
 
 ##########################################################
-FlowRouter.route "/c",
+FlowRouter.route "/company",
 	name: "index",
 	action: (params) ->
 		BlazeLayout.render("mooqita_company")

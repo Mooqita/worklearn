@@ -93,6 +93,9 @@ Template.dynamic_response_loader.helpers
 		loaded = Template.instance().loaded.get()
 
 		if loaded == _local_template
+			if not this.content instanceof Function
+				return "ER_404"
+
 			t_id = this.content()
 			if t_id == "dynamic_response_loader"
 				return "CYCLE_LOOP"
