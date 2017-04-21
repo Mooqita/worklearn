@@ -4,26 +4,32 @@
 |
 -------------------------------------------------->
 <template name="company_challenges">
-	<div class="embedded-form">
-		<div class="input-group">
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-search"></span>
-			</span>
+	{{#mooqita_wide_spacing}}
+		<div class="item">
+			<h1>Challenges</h1>
 
-			{{>basic_input method="set_field" collection_name="Responses"
-				item_id=_id field="query" placeholder="search for ..."}}
+			<p>Here you find all challenges that your company hosts</p>
 
-			<span class="input-group-btn">
-				<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
-			</span>
+			<!--div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-search"></span>
+				</span>
+
+				{{>basic_input method="set_field" collection_name="Responses"
+					item_id=_id field="query" placeholder="search for ..."}}
+
+				<span class="input-group-btn">
+					<button class="btn btn-red" id="add_challenge" type="button">Add challenge</button>
+				</span>
+			</div-->
+
+			{{#each challenges}}
+				{{>challenge_preview}}
+			{{else}}
+				<p>No challenges yet.</p>
+			{{/each}}
 		</div>
-	</div>
-
-	{{#each challenges}}
-		{{>challenge_preview}}
-	{{else}}
-		<p>No challenges yet.</p>
-	{{/each}}
+	{{/mooqita_wide_spacing}}
 </template>
 
 
@@ -33,24 +39,15 @@
 |
 -------------------------------------------------->
 <template name="challenge_preview">
+	<hr>
+
 	<h3>
 		<a id="company_challenge">
 			<b><em>{{title}}</em></b>
 		</a>
 	</h3>
 
-	<p style="padding-left: 35px">
-		{{content}}
-		{{#if has_more}}
-			<a id="select">
-				{{#if selected}}
-					<em><b>less</b></em>
-				{{else}}
-					<em><b>... more</b></em>
-				{{/if}}
-			</a>
-		{{/if}}
-	</p>
+	{{>more content=content}}
 </template>
 
 
@@ -128,17 +125,19 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	<h1>Solutions</h1>
+	<div class="item">
+		<h1>Solutions</h1>
 
-	<hr>
+		<hr>
 
-	{{#each challenge_summary}}
-		{{>challenge_solution}}
-	{{else}}
-		<p>
-			There are no solutions to your task yet.
-		</p>
-	{{/each}}
+		{{#each challenge_summary}}
+			{{>challenge_solution}}
+		{{else}}
+			<p>
+				There are no solutions to your task yet.
+			</p>
+		{{/each}}
+	</div>
 </template>
 
 

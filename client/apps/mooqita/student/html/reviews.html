@@ -4,32 +4,34 @@
 |
 -------------------------------------------------->
 <template name="student_reviews">
-	<div class="item">
-		<h1>Reviews</h1>
+	{{#mooqita_wide_spacing}}
+		<div class="item">
+			<h1>Reviews</h1>
 
-		<p>
-			Here you can write reviews for other users.
-			Each review you write gives you credits.
-			Credits can be used to request reviews for your work.
-		</p>
+			<p>
+				Here you can write reviews for other users.
+				Each review you write gives you credits.
+				Credits can be used to request reviews for your work.
+			</p>
 
-		{{#if searching}}
-			<div class="h1">
-				Finding review please wait
-				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-			</div>
-		{{else}}
-			<div class="btn-group btn-group-justified">
-				<div class="btn btn-theme" id="find_review">Find review</div>
-			</div>
-		{{/if}}
+			{{#if searching}}
+				<div class="h1">
+					Finding review please wait
+					<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+				</div>
+			{{else}}
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="find_review">Find review</div>
+				</div>
+			{{/if}}
 
-		{{#each reviews}}
-			{{>student_review_preview}}
-		{{else}}
-			<p>You have not submitted any reviews yet.</p>
-		{{/each}}
-	</div>
+			{{#each reviews}}
+				{{>student_review_preview}}
+			{{else}}
+				<p>You have not submitted any reviews yet.</p>
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 

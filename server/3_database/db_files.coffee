@@ -55,10 +55,15 @@ _modify_db_file = (collection_name, item_id, field, value, type)->
 	modify_field_unprotected(collection_name, item_id, field, d_id)
 	return d_id
 
+
 #######################################################
 @download_file = (collection_name, item_id, field) ->
 	deny_action_save('read', collection_name, item_id, field)
+	return download_file_unprotected collection_name, item_id, field
 
+
+#######################################################
+@download_file_unprotected = (collection_name, item_id, field) ->
 	filter =
 		item_id: item_id
 		field: field

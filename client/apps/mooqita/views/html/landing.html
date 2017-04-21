@@ -40,15 +40,31 @@
 		</div>
 	</div>
 
-	<section class="container-fluid background-grey padding-top">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				{{#each groups}}
-					{{>_post}}
-				{{/each}}
-			</div>
-		</div>
+	<section class="container-fluid padding-top">
+		{{#mooqita_wide_spacing}}
+			{{>post_group group_name="frontpage"}}
+		{{/mooqita_wide_spacing}}
 	</section>
 </template>
+
+
+<template name="mooqita_research">
+	<section class="container-fluid padding-top">
+		{{#mooqita_wide_spacing}}
+			{{>post_group group_name="research"}}
+		{{/mooqita_wide_spacing}}
+	</section>
+</template>
+
+
+<template name="mooqita_team">
+	<section class="container-fluid padding-top">
+		{{#mooqita_wide_spacing}}
+			{{>post_group group_name="team"}}
+		{{/mooqita_wide_spacing}}
+	</section>
+</template>
+
+
 
 

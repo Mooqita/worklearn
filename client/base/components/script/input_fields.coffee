@@ -40,6 +40,9 @@ Template.check_input.events
 		collection = this.collection_name
 		item_id = this.item_id
 
+		if item_id == -1
+			return
+
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err

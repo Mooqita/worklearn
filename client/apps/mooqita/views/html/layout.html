@@ -1,15 +1,27 @@
 <template name="mooqita_layout" xmlns="http://www.w3.org/1999/html">
-	{{#if menu}}
-		{{>Template.dynamic template=menu}}
-	{{/if}}
+	<div class="mooqita-layout">
+		{{#if currentUser}}
+			{{#if _profile.has_occupation}}
+				{{> UI.contentBlock}}
+			{{else}}
+				{{>first_timer}}
+			{{/if}}
+		{{else}}
+			{{> UI.contentBlock}}
+		{{/if}}
+	</div>
+</template>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="student-layout">
-					{{> UI.contentBlock}}
-				</div>
-			</div>
+
+<template name="mooqita_view">
+	{{>Template.dynamic template=selected_view data=current_data}}
+</template>
+
+
+<template name="mooqita_wide_spacing">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			{{> UI.contentBlock}}
 		</div>
 	</div>
 </template>

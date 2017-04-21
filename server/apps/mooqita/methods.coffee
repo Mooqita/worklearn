@@ -7,7 +7,7 @@
 		provided: 0
 		requested: 0
 
-	save_document Responses, profile
+	return save_document Responses, profile
 
 
 ###############################################

@@ -4,30 +4,32 @@
 |
 -------------------------------------------------->
 <template name="student_find_challenges">
-	<div class="item">
-		<h1>Find Challenges</h1>
+	{{#mooqita_wide_spacing}}
+		<div class="item">
+			<h1>Find Challenges</h1>
 
-		<p>
-			Here you can find challenges.
-		</p>
+			<p>
+				Here you can find challenges available right now.
+			</p>
 
-		<div class="input-group">
-			<span class="input-group-btn">
-				<button class="btn btn-theme" id="find_challenge" type="button">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</span>
+			<!--div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-theme" id="find_challenge" type="button">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
 
-			{{>basic_input method="set_field" collection_name="Responses"
-				item_id=_id field="query" placeholder="search for ..."}}
+				{{>basic_input method="set_field" collection_name="Responses"
+					item_id=_id field="query" placeholder="search for ..."}}
+			</div-->
+
+			{{#each challenges}}
+				{{>student_challenge_preview}}
+			{{else}}
+				<p>No challenges yet.</p>
+			{{/each}}
 		</div>
-
-		{{#each challenges}}
-			{{>student_challenge_preview}}
-		{{else}}
-			<p>No challenges yet.</p>
-		{{/each}}
-	</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 

@@ -3,12 +3,11 @@ Template.body_template.onCreated ->
 	self = this
 
 	self.autorun () ->
-		console.log "param changed"
 		item_id = FlowRouter.getQueryParam("item_id")
 		template = FlowRouter.getQueryParam("template")
 
 		if not template
-			template = "student_profile"
+			template = "landing_page"
 
 		Session.set "current_data", Responses.findOne item_id
 		Session.set "current_template", template

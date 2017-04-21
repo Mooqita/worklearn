@@ -14,6 +14,7 @@ Meteor.methods
 
 		id = save_document Responses, parameters
 
+		console.log "Response added: " + JSON.stringify(parameters, null, 2);
 		return id
 
 	#######################################################

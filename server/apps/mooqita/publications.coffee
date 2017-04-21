@@ -47,11 +47,16 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 			type_identifier: "profile"
 
 		author = Meteor.users.findOne(entry.owner_id)
-		profile = 	profile = Responses.findOne(filter)
+		profile = Responses.findOne(filter)
+		avatar = profile.avatar
+
+		if avatar.length <= 32
+			avatar = download_file_unprotected "Responses", profile._id, "avatar"
+			avatar = avatar.data
 
 		entry['author_id'] = author._id
 		entry['author_name'] = profile.given_name + ' ' + profile.family_name
-		entry['author_avatar'] = profile.avatar
+		entry['author_avatar'] = avatar
 
 		filter =
 			parent_id: entry._id
@@ -72,9 +77,15 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 			peer = Meteor.users.findOne(o.owner_id)
 			profile = profile = Responses.findOne(filter)
+			avatar = profile.avatar
+
+			if avatar.length <= 32
+				avatar = download_file_unprotected "Responses", profile._id, "avatar"
+				avatar = avatar.data
+
 			o['peer_id'] = peer._id
 			o['peer_name'] = profile.given_name + ' ' + profile.family_name
-			o['peer_avatar'] = profile.avatar
+			o['peer_avatar'] = avatar
 
 		avg = (r.rating for r in reviews).reduce (t, s) -> t + s
 		entry['reviews'] = reviews
@@ -113,6 +124,10 @@ Meteor.publish "user_credentials", (user_id) ->
 		resume.owner_id = user_profile._id
 		resume.self_description = user_profile.resume
 
+		if resume.avatar.length <= 32
+			avatar = download_file_unprotected "Responses", user_profile._id, "avatar"
+			resume.avatar = avatar.data
+
 		solution_filter =
 			type_identifier: "solution"
 			visible_to: "anonymous"
@@ -139,6 +154,12 @@ Meteor.publish "user_credentials", (user_id) ->
 
 				solution.challenge_owner_id = challenge.owner_id
 				solution.challenge_owner_avatar = challenge_owner_profile.avatar
+
+			if solution.challenge_owner_avatar.length <= 32
+				avatar = download_file_unprotected "Responses",
+						challenge_owner_profile._id, "avatar"
+				solution.challenge_owner_avatar = avatar.data
+
 
 			t = 0
 			n = 0

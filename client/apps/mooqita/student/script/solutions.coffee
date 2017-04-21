@@ -125,6 +125,7 @@ Template.student_solution.events
 
 	"click #take_challenge":()->
 		filter =
+			parent_id: this._id
 			type_identifier: "solution"
 
 		index = Responses.find(filter).count()

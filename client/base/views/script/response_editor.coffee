@@ -222,9 +222,6 @@ Template._edit_tools.helpers
 		if val == this.group
 			return "selected"
 
-	templates: () ->
-		return find_template_names()
-
 	parents: () ->
 		filter = {}
 		mod =

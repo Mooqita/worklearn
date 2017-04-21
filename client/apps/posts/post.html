@@ -3,6 +3,34 @@
 |  Post entry Template
 |
 ------------------------------------------->
+<template name="post_group">
+	{{#if isInRole 'editor'}}
+		<div class="post-maker item">
+			<div class="row">
+				<div class="col-md-6 vcenter">
+					<em>Select template and add new element</em>
+				</div><!-- Important for vcenter
+			--><div class="col-md-6 vcenter">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<div class="btn btn-theme" id="add_post">
+								<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+							</div>
+						</div>
+
+						{{>select_input field='template_select' options=templates item_id=-1}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+
+	{{#each groups}}
+		{{>_post}}
+	{{/each}}
+</template>
+
+
 <template name="_post">
 	{{#dynamic_template_loader template_id=template_id data=.}}
 		{{#each children .}}

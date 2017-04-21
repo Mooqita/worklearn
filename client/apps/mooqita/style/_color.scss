@@ -6,7 +6,64 @@ $background: #fff;
 
 $theme: #8d0162;
 $theme-dark: #490133;
-$theme-light: #c06197;
+$theme-light: #d774ad;
 $text-on-theme: #fff;
 $contrast-on-theme: #8cc9ac;
 $contrast-on-theme-dark: #5c856f;
+
+////////////////////////////////////////////////
+// background colors
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.background-white{
+	color: $text;
+	background: #fff;
+	border-color: #fff;
+}
+
+.background-grey{
+	color: $text;
+	background: #eee;
+	border-color: #eee;
+}
+
+.background-theme-light {
+	color: $text;
+	background: $theme-light;
+	border-color: $theme-light;
+}
+
+.background-theme {
+	color: $text-on-theme;
+	background: $theme;
+	border-color: $theme;
+}
+
+.background-contrast {
+	color: $text-on-theme;
+	background: $contrast-on-theme;
+	border-color: $contrast-on-theme;
+}
+
+///////////////////////////////////////////////
+// Input placeholder colors
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $text-on-theme;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: $text-on-theme;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: $text-on-theme;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: $text-on-theme;
+}
+

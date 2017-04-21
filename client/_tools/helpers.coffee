@@ -1,11 +1,6 @@
 ########################################
 Template.registerHelper "_profile", () ->
-	user_id = Meteor.userId()
-	filter =
-		owner_id: user_id
-		type_identifier: "profile"
-	profile = Responses.findOne filter
-	return profile
+	return get_profile()
 
 ########################################
 Template.registerHelper "_debug", (obj) ->
@@ -48,7 +43,6 @@ Template.registerHelper "download_field_value", (collection_name, item_id, field
 
 	if value != "___empty___"
 		return value
-
 
 	return ""
 
@@ -132,8 +126,8 @@ Template.registerHelper "_is_editing_template", (item_id) ->
 Template.registerHelper "_can_edit_response", (item_id) ->
 	item = Responses.findOne(item_id)
 	owns = item.owner_id == Meteor.userId()
-
-	return owns
+	editor = Roles.userIsInRole Meteor.userId(), "editor"
+	return owns or editor
 
 #######################################################
 Template.registerHelper "_is_editing_response", (item_id) ->

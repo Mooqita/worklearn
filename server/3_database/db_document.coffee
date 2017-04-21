@@ -6,6 +6,8 @@
 
 #######################################################
 @save_document = (collection, document)->
+	#TODO:add checks!!!! use _accepts
+
 	document["created"] = new Date()
 	document["modified"] = new Date()
 	document["loaded"] = true
@@ -28,6 +30,8 @@
 		document["parent_id"] = ""
 	if not document.single_parent
 		document["single_parent"] = false
+	if not document.group_name
+		document["group_name"] = ""
 
 	id = collection.insert document
 

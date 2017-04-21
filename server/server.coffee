@@ -13,14 +13,23 @@
 
 	admin = Accounts.createUser(user)
 	Roles.setUserRoles(admin, ['admin', 'db_admin', 'editor'])
+	a_id = gen_profile admin._id
 
-	console.log user.email
+	console.log "admin:" + user.email + " " +a_id
 	return admin
 
 #####################################################
 @initialize_database = () ->
-	if not Accounts.findUserByEmail('admin@worklearn.com')
+	admin = Accounts.findUserByEmail('admin@worklearn.com')
+	if not admin
 		add_admin()
+	else
+		filter =
+			owner_id: admin._id
+			type_identifier: "profile"
+		profile = Responses.findOne filter
+		if not profile
+			gen_profile admin._id
 
 	return true
 

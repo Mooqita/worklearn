@@ -151,7 +151,6 @@ Template.slide_deck.events
 					sAlert.error(err)
 
 
-
 ##############################################
 #
 # Voting summary slides

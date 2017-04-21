@@ -1,4 +1,15 @@
 ##############################################
+@get_profile = () ->
+	user_id = Meteor.userId()
+	filter =
+		owner_id: user_id
+		type_identifier: "profile"
+	profile = Responses.findOne filter
+
+	return profile
+
+
+##############################################
 @get_response_url = (id, absolute) ->
 	type = "response"
 	if id

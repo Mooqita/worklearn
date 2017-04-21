@@ -1,0 +1,85 @@
+////////////////////////////////////////////////
+@import "{}/client/apps/mooqita/style/_color.scss";
+@import "{}/client/apps/mooqita/style/_fonts.scss";
+
+///////////////////////////////////////////////
+// Nav bar elements
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.menu-container{
+	border-bottom: 1px solid $theme;
+}
+
+.navbar {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+}
+
+.navbar a{
+	font-size: 1.5em;
+	font-weight: 300;
+	color: $theme;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus{
+	color: $theme-light;
+	background: none;
+}
+
+.navbar .active .btn{
+	color: $text-on-theme;
+	background: $theme;
+	padding: 15px;
+}
+
+.navbar .active .btn:hover{
+	padding: 16px 14px 14px 16px;
+}
+
+.navbar-toggle {
+	border: 2px solid $theme;
+}
+
+.navbar-toggle:hover{
+	padding: 9px 9px 9px 11px;
+
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
+          box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
+}
+
+.navbar-toggle .icon-bar{
+	background: $theme;
+}
+
+////////////////////////////////////////////////
+// Menu navigation
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.navigation-background{
+	padding: 15px;
+	padding-left: 35px;
+}
+
+.navigation-button{
+	color: #eee;
+	padding: 15px;
+	margin: 5px;
+	font-size: 20px;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.navigation-button:hover{
+	color: #5c856f;
+	padding: 15px;
+	margin: 5px;
+	font-size: 20px;
+	font-style: normal;
+	text-decoration: none;
+	cursor: pointer;
+}
+

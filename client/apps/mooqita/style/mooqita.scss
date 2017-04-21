@@ -6,36 +6,28 @@
 @import "{}/client/apps/mooqita/style/_color.scss";
 @import "{}/client/apps/mooqita/style/_fonts.scss";
 
-h1.editable{
-	padding: 0px;
+////////////////////////////////////////////////
+//
+// Mooqita
+//
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+// basics
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.mooqita-layout{
 }
 
-h1.editable .edit-field{
-	box-shadow: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	background: none;
-	font: inherit;
-	border: inherit;
-	text-align: inherit;
-	color: inherit;
-	display: initial;
-	height: 100%;
-	padding: 0px;
+.mooqita-layout h1{
 }
 
-.student-layout{
-	padding-top: 25px;
-}
-
-.student-layout h1{
-}
-
-.student-layout p{
+.mooqita-layout p{
 	margin-bottom: 25px;
 }
 
-.student-layout p.user-data{
+.mooqita-layout p.user-data{
 	white-space: pre-wrap;       /* Since CSS 2.1 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
@@ -43,87 +35,135 @@ h1.editable .edit-field{
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.student-layout .embedded-form{
+.mooqita-layout .embedded-form{
 	padding: 20px 20px 30px 20px;
 	border: 2px solid #ddd;
 	margin-bottom: 15px;
 }
 
-.student-layout .form-control{
+.mooqita-layout .form-control{
 	border: 2px solid #ddd;
 }
 
-.student-layout .well{
+.mooqita-layout .well{
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
 }
 
-.student-layout .item {
+////////////////////////////////////////////////
+// itemized an item encompasses other elements
+// with a border
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.mooqita-layout .item {
 	border: 2px solid #ddd;
 	padding: 25px;
 	margin: 0px;
 	margin-bottom: 60px;
 }
 
-.student-layout .item h1{
+.mooqita-layout .item h1{
 	margin: 0px;
 	padding: 0px 0px 20px 0px;
 }
 
-.student-layout .item h3{
+.mooqita-layout .item h3{
 	padding: 0px;
 	margin: 30px 0px 20px 0px;
 }
 
-.student-layout .item .row-header{
+.mooqita-layout .item .row-header{
 	padding: 0px;
 	font-weight: 600;
 	margin: 0px 0px 20px 0px;
 }
 
-.student-layout .item hr {
+.mooqita-layout .item hr {
 	margin-bottom: 30px;
 }
 
-.student-layout .item .rating_line{
+.mooqita-layout .item .rating_line{
 	padding: 0px 0px 20px 0px;
 	text-align: right;
 }
 
-.student-layout .item .wide_link{
+.mooqita-layout .item .wide_link{
 	padding-top: 15px;
 	text-align: center;
 }
 
-.item .media-body{
+.mooqita-layout .item .edit-toggle{
+	color: $theme;
+}
+
+.mooqita-layout .item .edit-toggle:hover{
+	color: $theme;
+}
+
+.mooqita-layout .item .media-body{
 	padding-left: 20px;
 }
 
-.item .media-body h2{
+.mooqita-layout .item .media-body h2{
 	margin: 0px;
 	padding: 0px 0px 0px 0px;
 }
 
-.navigation-background{
-	padding: 15px;
-	padding-left: 35px;
+.mooqita-layout .select-occupation{
+	font-size: 1.5em;
+	text-align: center;
 }
 
-.navigation-button{
-	color: #eee;
-	padding: 15px;
-	margin: 5px;
-	font-size: 20px;
-	font-style: normal;
-	text-decoration: none;
+.mooqita-layout .select-occupation .item:hover{
+	border-color: $theme;
+	//background: $theme-light;
 }
 
-.navigation-button:hover{
-	color: #5c856f;
-	padding: 15px;
-	margin: 5px;
-	font-size: 20px;
-	font-style: normal;
-	text-decoration: none;
-	cursor: pointer;
+.mooqita-layout .select-occupation .glyphicon{
+	font-size: 2em;
+	color: $theme;
 }
+
+.mooqita-layout .select-occupation label{
+	font-size: 1.5em;
+	font-weight: 300;
+	text-align: center;
+}
+
+////////////////////////////////////////////////
+// landing page hero
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.padding-top{
+	padding-top: 50px;
+}
+
+////////////////////////////////////////////////
+.hero {
+	background-repeat: repeat, no-repeat;
+	background-size: auto auto, cover;
+	background-position: 0 0, top center;
+	overflow: hidden;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 100px;
+	position: relative;
+	height: auto;
+	min-height: 350px;
+}
+
+.hero h1 {
+	color: #fff;
+	max-width: 650px;
+	font-size: 50px;
+	font-weight: 300;
+	text-align: center;
+}
+
+.hero-background{
+//	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
+	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
+}
+

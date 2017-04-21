@@ -4,19 +4,21 @@
 |
 -------------------------------------------------->
 <template name="student_solutions">
-	<div class="item">
-		<h1>Solutions</h1>
+	{{#mooqita_wide_spacing}}
+		<div class="item">
+			<h1>Solutions</h1>
 
-		<p>
-			This page lists all solutions you wrote.
-		</p>
+			<p>
+				This page lists all solutions you wrote.
+			</p>
 
-		{{#each solutions}}
-			{{>student_solution_preview}}
-		{{else}}
-			<p>You have not submitted any solutions yet.</p>
-		{{/each}}
-	</div>
+			{{#each solutions}}
+				{{>student_solution_preview}}
+			{{else}}
+				<p>You have not submitted any solutions yet.</p>
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 	<!--div class="embedded-form">
