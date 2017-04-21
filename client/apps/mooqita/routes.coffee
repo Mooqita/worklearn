@@ -43,22 +43,7 @@ FlowRouter.route "/research",
 ##########################################################
 
 ##########################################################
-FlowRouter.route "/std",
-	name: "index",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			login: "mooqita_login"
-			layout: "mooqita_layout"
-			content: "mooqita_view"
-		BlazeLayout.render "body_template", data
-
-##########################################################
-# Company
-##########################################################
-
-##########################################################
-FlowRouter.route "/rec",
+FlowRouter.route "/user",
 	name: "index",
 	action: (params) ->
 		data =

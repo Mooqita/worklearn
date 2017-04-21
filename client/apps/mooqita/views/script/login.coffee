@@ -15,6 +15,8 @@ _add_profile = (occupation) ->
 		Meteor.call "set_field", "Responses", profile._id, "has_occupation", true
 		return
 
+	index = Responses.find(filter).count()
+
 	param =
 		name: "profile: " + index
 		index: index
