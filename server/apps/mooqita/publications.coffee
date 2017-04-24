@@ -6,6 +6,17 @@
 #######################################################
 
 #######################################################
+_get_avatar = (profile) ->
+	avatar = ""
+
+	if profile.avatar
+		if profile.avatar.length <= 32
+			file = download_file_unprotected "Responses", profile._id, "avatar"
+			avatar = file.data
+		else
+			avatar = profile.avatar
+
+#######################################################
 Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	check challenge_id, String
 	check page, Number
@@ -46,17 +57,12 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 			owner_id: entry.owner_id
 			type_identifier: "profile"
 
-		author = Meteor.users.findOne(entry.owner_id)
-		profile = Responses.findOne(filter)
-		avatar = profile.avatar
-
-		if avatar.length <= 32
-			avatar = download_file_unprotected "Responses", profile._id, "avatar"
-			avatar = avatar.data
+		author = Meteor.users.findOne entry.owner_id
+		profile = Responses.findOne filter
 
 		entry['author_id'] = author._id
 		entry['author_name'] = profile.given_name + ' ' + profile.family_name
-		entry['author_avatar'] = avatar
+		entry['author_avatar'] = _get_avatar profile
 
 		filter =
 			parent_id: entry._id
@@ -77,15 +83,10 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 			peer = Meteor.users.findOne(o.owner_id)
 			profile = profile = Responses.findOne(filter)
-			avatar = profile.avatar
-
-			if avatar.length <= 32
-				avatar = download_file_unprotected "Responses", profile._id, "avatar"
-				avatar = avatar.data
 
 			o['peer_id'] = peer._id
 			o['peer_name'] = profile.given_name + ' ' + profile.family_name
-			o['peer_avatar'] = avatar
+			o['peer_avatar'] = _get_avatar profile
 
 		avg = (r.rating for r in reviews).reduce (t, s) -> t + s
 		entry['reviews'] = reviews
@@ -112,21 +113,19 @@ Meteor.publish "user_credentials", (user_id) ->
 
 	self = this
 	prepare_resume = (user) ->
+		resume = {}
+
 		filter =
 			owner_id: user._id
 			type_identifier: "profile"
 
 		user_profile = Responses.findOne filter
 
-		resume = {}
-		resume.name = user_profile.given_name
-		resume.avatar = user_profile.avatar
-		resume.owner_id = user_profile._id
-		resume.self_description = user_profile.resume
-
-		if resume.avatar.length <= 32
-			avatar = download_file_unprotected "Responses", user_profile._id, "avatar"
-			resume.avatar = avatar.data
+		if user_profile
+			resume.name = user_profile.given_name
+			resume.owner_id = user_profile._id
+			resume.self_description = user_profile.resume
+			resume.avatar = _get_avatar user_profile
 
 		solution_filter =
 			type_identifier: "solution"
@@ -153,13 +152,7 @@ Meteor.publish "user_credentials", (user_id) ->
 				challenge_owner_profile = Responses.findOne filter
 
 				solution.challenge_owner_id = challenge.owner_id
-				solution.challenge_owner_avatar = challenge_owner_profile.avatar
-
-			if solution.challenge_owner_avatar.length <= 32
-				avatar = download_file_unprotected "Responses",
-						challenge_owner_profile._id, "avatar"
-				solution.challenge_owner_avatar = avatar.data
-
+				solution.challenge_owner_avatar = _get_avatar challenge_owner_profile
 
 			t = 0
 			n = 0
@@ -180,8 +173,8 @@ Meteor.publish "user_credentials", (user_id) ->
 				review.review = r.content
 				review.rating = r.rating
 				review.name = profile.given_name
-				review.avatar = profile.avatar
 				review.owner_id = r.owner_id
+				review.avatar = _get_avatar profile
 
 				solution.reviews.push(review)
 				t += r.rating

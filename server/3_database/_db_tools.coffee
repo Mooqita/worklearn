@@ -12,7 +12,7 @@ _accepts =
 	_id: non_empty_string
 
 #######################################################
-@log_publication = (crs, filter, fields, mine, header_only, origin) ->
+@log_publication = (crs, filter, fields, header_only, origin) ->
 	data = if header_only then "without data" else "with data"
 	console.log "Submitted " + crs.count() + " responses " + data + " to " + origin
 
@@ -69,7 +69,11 @@ _accepts =
 
 	for field_name, value of _accepts
 		if field_name of param
-			check param[field_name], value
+			if not param[field_name]
+				console.log "Parameter " + field_name + " is empty."
+				return {}
+			else
+				check param[field_name], value
 			if field_name == "text"
 				restrict["$text"] =
 					$search: param[field_name]

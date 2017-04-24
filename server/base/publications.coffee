@@ -58,14 +58,12 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 #######################################################
 
 #######################################################
-Meteor.publish "responses", (filter, mine, header_only, origin) ->
+Meteor.publish "responses", (filter, header_only, origin) ->
+	#console.log "Origin " + origin
+
 	if origin is undefined
 		console.log "responses: origin missing"
 	check origin, String
-
-	if mine is undefined
-		console.log "responses: mine missing: " + origin
-	check mine, Boolean
 
 	if header_only is undefined
 		console.log "responses: header only missing: " + origin
@@ -74,11 +72,11 @@ Meteor.publish "responses", (filter, mine, header_only, origin) ->
 	user_id = this.userId
 
 	restrict = make_filter_save user_id, filter
-	filter = visible_items user_id, mine, restrict
-	fields = visible_fields "Responses", user_id, mine, header_only
+	filter = visible_items user_id, restrict
+	fields = visible_fields "Responses", user_id, filter, header_only
 	crs = Responses.find filter, fields
 
-	log_publication crs, filter, fields, mine, header_only, origin
+	log_publication crs, filter, fields, header_only, origin
 	return crs
 
 #######################################################

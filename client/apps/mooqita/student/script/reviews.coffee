@@ -12,6 +12,14 @@
 Template.student_reviews.onCreated ->
 	this.searching = new ReactiveVar(false)
 
+	self = this
+	self.autorun () ->
+		filter =
+			owner_id: Meteor.userId()
+			type_identifier: "review"
+
+		self.subscribe "responses", filter, false, "student_solutions"
+
 ########################################
 Template.student_reviews.helpers
 	reviews: () ->
@@ -50,7 +58,7 @@ Template.student_review_preview.onCreated ->
 			_id: self.data.challenge_id
 
 		if not Responses.findOne filter
-			self.subscribe "responses", filter, false, true, "student_review_preview: challenge"
+			self.subscribe "responses", filter, true, "student_review_preview: challenge"
 
 
 ########################################
@@ -80,11 +88,11 @@ Template.student_review.onCreated ->
 	self.autorun () ->
 		filter =
 			_id: self.data.parent_id
-		self.subscribe "responses", filter, false, false, "student_solution"
+		self.subscribe "responses", filter, false, "student_solution"
 
 		filter =
 			_id: self.data.challenge_id
-		self.subscribe "responses", filter, false, false, "student_solution"
+		self.subscribe "responses", filter, false, "student_solution"
 
 
 ########################################

@@ -16,7 +16,7 @@ Template.student_find_challenges.onCreated ->
 			type_identifier: "challenge"
 			text: data.query
 			
-		self.subscribe "responses", filter, false, true, "student_find_challenges"
+		self.subscribe "responses", filter, true, "student_find_challenges"
 
 
 ########################################

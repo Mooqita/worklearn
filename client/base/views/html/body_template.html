@@ -29,7 +29,7 @@
 <template name="render_content">
 	{{#if login}}
 		{{#unless currentUser}}
-			{{>sign_user}}
+			{{>Template.dynamic template=login}}
 		{{else}}
 			{{>dynamic_response_loader}}
 		{{/unless}}

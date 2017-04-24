@@ -40,4 +40,7 @@ Meteor.methods
 			save_document Logging, msg
 
 		request(url, call)
+		user = if Meteor.userId() then "user: " + Meteor.userId() else "unknown user"
+
+		console.log "Client request from: " + user
 		return true

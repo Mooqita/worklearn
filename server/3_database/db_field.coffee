@@ -62,11 +62,16 @@ _collection_headers =
 			content: 1
 
 #######################################################
-@visible_fields = (collection, user_id, owner=false, header_only=false) ->
+@visible_fields = (collection, user_id, filter, header_only=false) ->
 	fields = _collection_headers[collection]
+	owner = false
 
 	if header_only
 		return fields
+
+	if filter.owner_id
+		if filter.owner_id == user_id
+			owner = true
 
 	roles = ['all']
 	if owner
@@ -87,7 +92,7 @@ _collection_headers =
 	for field in edit_fields
 		all_fields.add field["field"]
 
-	for field in all_fields
+	for field of all_fields
 		filter =
 			role:
 				$in: roles

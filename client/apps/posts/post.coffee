@@ -9,15 +9,17 @@
 #########################################################
 Template.post_group.onCreated ->
 	self = this
+	console.log "post_group_created"
 
 	self.autorun () ->
+		console.log "post_group"
+
 		filter =
 			group_name: self.data.group_name
-		self.subscribe "responses", filter, false, false, "post_group"
+		self.subscribe "responses", filter, false, "post_group"
 
 #########################################################
 Template.post_group.helpers
-########################################
 	templates: () ->
 		return [{value:"", label:"Select template"}
 		{value:"empty", label:"Empty"}

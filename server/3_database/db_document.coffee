@@ -38,9 +38,13 @@
 	return id
 
 #######################################################
-@visible_items = (user_id, owner=false, restrict={}) ->
+@visible_items = (user_id, restrict={}) ->
 	filter = []
 	roles = ["all"]
+
+	if restrict.owner_id
+		if restrict.owner_id == user_id
+			owner = true
 
 	if user_id
 		# find all user roles

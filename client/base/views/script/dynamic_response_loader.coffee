@@ -65,7 +65,7 @@ Template.dynamic_response_loader.onCreated ->
 			self.loaded.set _local_template
 			return
 
-		self.subscribe "responses", filter, true, false, "dynamic_response_loader", handler
+		self.subscribe "responses", filter, false, "dynamic_response_loader", handler
 
 ########################################
 Template.dynamic_response_loader.helpers

@@ -30,7 +30,9 @@ _get_template_id = () ->
 Template.response_dashboard.onCreated ->
 	self = this
 	self.autorun () ->
-		self.subscribe "responses", {}, true, true, "response_dashboard"
+		filter =
+			owner_id: Meteor.userId()
+		self.subscribe "responses", filter, true, "response_dashboard"
 
 ########################################
 Template.response_dashboard.helpers
@@ -175,7 +177,7 @@ Template.response_editor.onCreated ->
 		filter =
 			_id: self.data._id
 
-		self.subscribe "responses", filter, true, true, "response_editor",
+		self.subscribe "responses", filter, true, "response_editor",
 			onReady: () ->
 				self.loaded_response.set(true)
 

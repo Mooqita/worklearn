@@ -47,6 +47,3 @@ family =
 	errStr: 'Please enter your family name'
 
 AccountsTemplates.addFields([given, family])
-
-
-

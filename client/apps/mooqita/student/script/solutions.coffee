@@ -12,6 +12,15 @@
 Template.student_solutions.onCreated ->
 	Session.set "selected_solution", 0
 
+	self = this
+	self.autorun () ->
+		filter =
+			owner_id: Meteor.userId()
+			type_identifier: "solution"
+
+		self.subscribe "responses", filter, false, "student_solutions"
+
+
 
 ########################################
 Template.student_solutions.helpers
@@ -36,7 +45,7 @@ Template.student_solution_preview.onCreated ->
 			filter =
 				_id: self.data.parent_id
 
-			self.subscribe "responses", filter, false, true,
+			self.subscribe "responses", filter, true,
 					"student_solution_preview: load challenge"
 
 
@@ -62,6 +71,8 @@ Template.student_solution_preview.events
 ########################################
 Template.student_solution.onCreated ->
 	self = this
+	console.log this
+
 	self.challenge_expanded = new ReactiveVar(false)
 	self.solution_published = new ReactiveVar(false)
 	self.solution_id = new ReactiveVar("")
@@ -72,12 +83,15 @@ Template.student_solution.onCreated ->
 			parent_id: self.data._id
 		solution = Responses.findOne filter
 
-		self.solution_id.set solution._id
+		if solution
+			self.solution_id.set solution._id
 
-		filter =
-			type_identifier: "feedback"
-			solution_id: solution._id
-		self.subscribe "responses", filter, false, false, "student_solution: feedback"
+			filter =
+				type_identifier: "feedback"
+				solution_id: solution._id
+			self.subscribe "responses", filter, false, "student_solution: feedback"
+		else
+			self.solution_id.set ""
 
 
 ########################################
