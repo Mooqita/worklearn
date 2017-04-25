@@ -12,9 +12,9 @@ _accepts =
 	_id: non_empty_string
 
 #######################################################
-@log_publication = (crs, filter, fields, header_only, origin) ->
-	data = if header_only then "without data" else "with data"
-	console.log "Submitted " + crs.count() + " responses " + data + " to " + origin
+@log_publication = (crs, filter, fields, origin) ->
+	data = if "owner_id" in filter then " for owner " else " "
+	console.log "Submitted " + crs.count() + " responses" + data + "to " + origin
 
 #	f = JSON.stringify(filter, null, 2);
 #	console.log f

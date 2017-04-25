@@ -8,15 +8,15 @@
 		<div class="row">
 			<div class="col-md-3">
 				<h2>Avatar</h2>
-				{{#if profile.avatar}}
+				{{#if _profile.avatar}}
 					<div class="text-center">
 						<img class="img-responsive img-circle"
-								 src="{{download_field_value "Responses" profile._id "avatar" profile.avatar}}">
+								 src="{{download_field_value "Responses" _profile._id "avatar" _profile.avatar}}">
 					</div>
 				{{/if}}
 
 				{{>upload method="set_field" collection_name="Responses"
-					item_id=profile._id field="avatar" max_size=2000000}}
+					item_id=_profile._id field="avatar" max_size=2000000}}
 			</div>
 
 			<div class="col-md-9">
@@ -24,23 +24,23 @@
 				<div class="row">
 					<div class="col-md-4">
 						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=profile._id field="given_name" placeholder="Given name"}}
+							item_id=_profile._id field="given_name" placeholder="Given name"}}
 					</div>
 
 					<div class="col-md-4">
 						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=profile._id field="middle_name" placeholder="Middle name"}}
+							item_id=_profile._id field="middle_name" placeholder="Middle name"}}
 					</div>
 
 					<div class="col-md-4">
 						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=profile._id field="family_name" placeholder="Family name"}}
+							item_id=_profile._id field="family_name" placeholder="Family name"}}
 					</div>
 				</div>
 
 				<h2>Resume</h2>
 				{{>text_input method="set_field" collection_name="Responses"
-					item_id=profile._id field="resume" placeholder="Tell us a little more about you."}}
+					item_id=_profile._id field="resume" placeholder="Tell us a little more about you."}}
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}

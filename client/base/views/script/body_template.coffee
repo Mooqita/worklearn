@@ -16,16 +16,17 @@ Template.body_template.onCreated ->
 	catch error
 		console.log error
 
-	filter =
-		owner_id: Meteor.userId()
-		type_identifier: "profile"
+	self = this
+	self.autorun ->
+		filter =
+			owner_id: Meteor.userId()
+			type_identifier: "profile"
 
-	console.log filter
+		Meteor.subscribe "responses", filter, "login_user"
 
-	Meteor.subscribe "responses", filter, false, "my profile"
 
 ################################################
-Template.body_template.helpers
+Template.render_content.helpers
 	ini_context: () ->
 		ins = Template.instance()
 		return ins.data

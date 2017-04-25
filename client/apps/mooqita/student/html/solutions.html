@@ -51,86 +51,88 @@
 |
 -------------------------------------------------->
 <template name="student_solution">
-	{{#unless Template.subscriptionsReady}}
-		<h1>
-			Please wait we are loading some stuff
-			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		</h1>
-	{{else}}
-		<div class="item">
-			<h1>{{title}}</h1>
-			{{>more content=content}}
-		</div>
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			<h1>
+				Please wait we are loading some stuff
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</h1>
+		{{else}}
+			<div class="item padding-top">
+				<h1>{{title}}</h1>
+				{{>more content=content}}
 
-		<div class="item">
-			<h1>Your Solution</h1>
-			{{#unless solution}}
-				<p>
-					You have not yet submitted a solution to this challenge.
-				</p>
-
-				<div class="text-right">
-					<div class="btn btn-theme" id="take_challenge">Take challenge</div>
-				</div>
-			{{else}}
-				{{#unless solution_is_public}}
-					<label>Solution description</label>
-					{{>text_input method="set_field" collection_name="Responses"
-						item_id=solution._id field="content" placeholder="Describe your solution"}}
-
-					<br>
-
-					<label>Additional Material or a link to your project files</label>
-					{{>upload method="set_field" collection_name="Responses"
-						item_id=solution._id field="material" max_size=250000}}
-
-				{{else}}
-					{{solution.content}}
-
-					<h2>Additional Material or a link to your project files</h2>
-					{{>download collection_name="Responses"
-						item_id=solution._id field="material"}}
-				{{/unless}}
-
-				{{#unless solution_is_public}}
-					<div class="alert alert-info">
-						Please publish your solution.
-						{{#unless _is_saved}}
-							You need to save it first.
-						{{/unless}}
-					</div>
-				{{/unless}}
-
-				{{#unless solution_is_public}}
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" id="save">Save</div>
-							</span>
-						</div>
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" {{publish_disabled}}
-										 id="publish">Make public</div>
-							</span>
-						</div>
-					</div>
-				{{/unless}}
-			{{/unless}}
-
-			{{#if solution_is_public}}
 				<hr>
-				<h1>Reviews you received</h1>
-				{{#each feedback}}
-					{{>student_review_feedback}}
-				{{else}}
+
+				<h1>Your Solution</h1>
+				{{#unless solution}}
 					<p>
-						No reviews yet.
+						You have not yet submitted a solution to this challenge.
 					</p>
-				{{/each}}
-			{{/if}}
-		</div>
-	{{/unless}}
+
+					<div class="text-right">
+						<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+					</div>
+				{{else}}
+					{{#unless solution_is_public}}
+						<label>Solution description</label>
+						{{>text_input method="set_field" collection_name="Responses"
+							item_id=solution._id field="content" placeholder="Describe your solution"}}
+
+						<br>
+
+						<label>Additional Material or a link to your project files</label>
+						{{>upload method="set_field" collection_name="Responses"
+							item_id=solution._id field="material" max_size=250000}}
+
+					{{else}}
+						{{solution.content}}
+
+						<h2>Additional Material or a link to your project files</h2>
+						{{>download collection_name="Responses"
+							item_id=solution._id field="material"}}
+					{{/unless}}
+
+					{{#unless solution_is_public}}
+						<div class="alert alert-info">
+							Please publish your solution.
+							{{#unless _is_saved}}
+								You need to save it first.
+							{{/unless}}
+						</div>
+					{{/unless}}
+
+					{{#unless solution_is_public}}
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" id="save">Save</div>
+								</span>
+							</div>
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" {{publish_disabled}}
+											 id="publish">Make public</div>
+								</span>
+							</div>
+						</div>
+					{{/unless}}
+				{{/unless}}
+
+				{{#if solution_is_public}}
+					<hr>
+					<h1>Reviews you received</h1>
+					{{#each feedback}}
+						{{>student_review_feedback}}
+					{{else}}
+						<p>
+							No reviews yet.
+						</p>
+					{{/each}}
+				{{/if}}
+			</div>
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
 </template>
 
 

@@ -44,91 +44,89 @@
 		</a>
 	</h3>
 
-	<p>
-		{{content}}
-		{{#if has_more}}
-			<a id="select">
-				{{#if selected}}
-					<em><b>less</b></em>
-				{{else}}
-					<em><b>...more</b></em>
-				{{/if}}
-			</a>
-		{{/if}}
-	</p>
+	{{>more content=challenge.content}}
 </template>
 
 
 <template name="student_review">
-	<div class="item">
-		<h1>{{challenge.title}}</h1>
-		{{>more content=challenge.content}}
-
-		<h1>Solution</h1>
-		{{solution.content}}
-
-		<h2>Additional Material</h2>
-		{{>download collection_name="Responses"
-			item_id=solution._id field="material"}}
-	</div>
-
-	<div class="item">
-		<h1>Your Review</h1>
-		{{#unless _is_public}}
-			{{>text_input method="set_field" collection_name="Responses"
-				item_id=_id field="content" placeholder="Please provide your feedback here"}}
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			<h1>
+				Please wait we are loading some stuff
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</h1>
 		{{else}}
-			<p>
-				{{content}}
-			</p>
-		{{/unless}}
+			<div class="item padding-top">
+				<h1>{{challenge.title}}</h1>
+				{{>more content=challenge.content}}
 
-		<div class="form-group">
-			<label for="quality"
-						 title="Your grading of the solution"
-							>Rating</label>
-			{{#unless _is_public}}
-				{{>select_input method="set_field" collection_name="Responses"
-						item_id=_id field="rating" options=_rating_options }}
-			{{else}}
-				<div class="form-control">
-					<em>{{rating}}</em>
-				</div>
-			{{/unless}}
-		</div>
+				<h1>Solution</h1>
+				{{>more content=solution.content}}
 
-		{{#unless rating}}
-			<div class="alert alert-danger">
-				Please select a grade for this submission.
+				<h2>Additional Material</h2>
+				{{>download collection_name="Responses"
+					item_id=solution._id field="material"}}
 			</div>
-		{{/unless}}
 
-		{{#unless _is_public}}
-			<div class="alert alert-info">
-				You need to publish your review.
-				{{#unless _is_saved}}
-					To publish it you need to save
-					your review.
+			<div class="item">
+				<h1>Your Review</h1>
+				{{#unless _is_public review._id}}
+					{{>text_input method="set_field" collection_name="Responses"
+						item_id=review._id field="content" placeholder="Please provide your feedback here"}}
+				{{else}}
+					<p>
+						{{review.content}}
+					</p>
+				{{/unless}}
+
+				<div class="form-group">
+					<label for="quality"
+								 title="Your grading of the solution"
+									>Rating</label>
+					{{#unless _is_public review._id}}
+						{{>select_input method="set_field" collection_name="Responses"
+								item_id=review._id field="rating" options=_rating_options }}
+					{{else}}
+						<div class="form-control">
+							<em>{{rating}}</em>
+						</div>
+					{{/unless}}
+				</div>
+
+				{{#unless rating}}
+					<div class="alert alert-danger">
+						Please select a grade for this submission.
+					</div>
+				{{/unless}}
+
+				{{#unless _is_public review._id}}
+					<div class="alert alert-info">
+						You need to publish your review.
+						{{#unless _is_saved review._id}}
+							To publish it you need to save
+							your review.
+						{{/unless}}
+					</div>
+				{{/unless}}
+
+				{{#unless _is_public review._id}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Make public</div>
+							</span>
+						</div>
+					</div>
 				{{/unless}}
 			</div>
 		{{/unless}}
-
-		{{#unless _is_public}}
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<span class="btn-group btn-group-justified">
-						<div class="btn btn-theme" id="save">Save</div>
-					</span>
-				</div>
-				<div class="form-group col-sm-6">
-					<span class="btn-group btn-group-justified">
-						<div class="btn btn-theme" {{publish_disabled}}
-								 id="publish">Make public</div>
-					</span>
-				</div>
-			</div>
-		{{/unless}}
-	</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 

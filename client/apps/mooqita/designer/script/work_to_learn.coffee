@@ -8,7 +8,7 @@ Template.work_to_learn.onCreated ->
 				if err
 					sAlert.error(err)
 			onReady: (res) ->
-				#sAlert.success("Success!")
+				sAlert.success("Success!")
 
 		data = Template.currentData()
 		page = if data.page then data.page else 1

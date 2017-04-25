@@ -10,26 +10,23 @@
 #######################################################
 
 #######################################################
-Meteor.publish "templates", (header_only=true, origin="") ->
+Meteor.publish "templates", (origin="") ->
 	if origin is undefined
 		console.log "Origin missing"
 	check origin, String
 
-	if header_only is undefined
-		console.log "header only missing"
-	check header_only, Boolean
 
 	user_id = this.userId
 
 	filter = visible_items user_id
-	mod = visible_fields "Templates", null, user_id, header_only
+	mod = visible_fields "Templates", null, user_id
 	crs = Templates.find(filter, mod)
 
 	console.log("Templates: " + crs.count() + " submitted!")
 	return crs
 
 #######################################################
-Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
+Meteor.publish "template_by_id", (template_id, origin="") ->
 	if origin is undefined
 		console.log "template: origin missing"
 	check origin, String
@@ -38,15 +35,11 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 		console.log "template: template_id missing: " + origin
 	check template_id, String
 
-	if header_only is undefined
-		console.log "template: header only missing: " + origin
-	check header_only, Boolean
-
 	restrict =
 		_id : template_id
 
 	filter = visible_items this.userId, restrict
-	mod = visible_fields "Templates", template_id, this.userId, header_only
+	mod = visible_fields "Templates", template_id, this.userId
 	crs = Templates.find(filter, mod)
 
 	console.log("Template loaded: " + crs.count() + " submitted!")
@@ -58,25 +51,21 @@ Meteor.publish "template_by_id", (template_id, header_only=true, origin="") ->
 #######################################################
 
 #######################################################
-Meteor.publish "responses", (filter, header_only, origin) ->
+Meteor.publish "responses", (filter, origin) ->
 	#console.log "Origin " + origin
 
 	if origin is undefined
 		console.log "responses: origin missing"
 	check origin, String
 
-	if header_only is undefined
-		console.log "responses: header only missing: " + origin
-	check header_only, Boolean
-
 	user_id = this.userId
 
 	restrict = make_filter_save user_id, filter
 	filter = visible_items user_id, restrict
-	fields = visible_fields "Responses", user_id, filter, header_only
+	fields = visible_fields "Responses", user_id, filter
 	crs = Responses.find filter, fields
 
-	log_publication crs, filter, fields, header_only, origin
+	log_publication crs, filter, fields, origin
 	return crs
 
 #######################################################

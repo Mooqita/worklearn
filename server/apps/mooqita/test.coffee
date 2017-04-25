@@ -98,14 +98,11 @@ _generate_challenges = (user_indices, callback) ->
 			content = "Random challenge by " + profile.given_name + ": " + faker.lorem.paragraphs(2)
 			title = "Random challenge by " + profile.given_name + ": " + faker.lorem.sentence()
 
-			modify_field_unprotected "Responses", challenge_id,
-					"visible_to", "anonymous"
-			modify_field_unprotected "Responses", challenge_id,
-					"content", content
-			modify_field_unprotected "Responses", challenge_id,
-					"title", title
-			modify_field_unprotected "Responses", challenge_id,
-					"name", title
+			modify_field_unprotected "Responses", challenge_id,	"content", content
+			modify_field_unprotected "Responses", challenge_id,	"title", title
+			modify_field_unprotected "Responses", challenge_id,	"name", title
+
+			finish_challenge challenge_id
 
 			challenge_ids.push challenge_id
 			callback challenge_ids, user_indices
@@ -124,10 +121,11 @@ _generate_challenges = (user_indices, callback) ->
 								profile.given_name + ": " + title
 
 				challenge_id = gen_challenge user._id
-				modify_field_unprotected "Responses", challenge_id, "visible_to", "anonymous"
 				modify_field_unprotected "Responses", challenge_id, "content", content
 				modify_field_unprotected "Responses", challenge_id, "title", title
 				modify_field_unprotected "Responses", challenge_id, "name", name
+
+				finish_challenge challenge_id
 				challenge_ids.push challenge_id
 
 			callback challenge_ids, user_indices

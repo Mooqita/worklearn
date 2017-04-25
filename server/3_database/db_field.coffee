@@ -62,16 +62,16 @@ _collection_headers =
 			content: 1
 
 #######################################################
-@visible_fields = (collection, user_id, filter, header_only=false) ->
-	fields = _collection_headers[collection]
+@visible_fields = (collection, user_id, filter) ->
+	public_fields = _collection_headers[collection]
 	owner = false
-
-	if header_only
-		return fields
 
 	if filter.owner_id
 		if filter.owner_id == user_id
 			owner = true
+
+	if not owner
+		return public_fields
 
 	roles = ['all']
 	if owner
@@ -85,7 +85,7 @@ _collection_headers =
 		roles.push 'anonymous'
 
 	res = {}
-	common_fields = fields["fields"]
+	common_fields = public_fields["fields"]
 	edit_fields = Permissions.find({}, {fields:{field:1}}).fetch()
 	all_fields = new Set(Object.keys(common_fields))
 

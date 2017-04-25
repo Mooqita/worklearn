@@ -31,7 +31,10 @@ FlowRouter.route "/response/:response_id",
 	name: "response.id",
 	action: (params) ->
 		data =
+			menu: "menu"
 			login: "login_user"
+			layout: "layout"
+			content: "response_dashboard"
 		BlazeLayout.render "body_template", data
 
 ##########################################################

@@ -9,14 +9,10 @@
 #########################################################
 Template.post_group.onCreated ->
 	self = this
-	console.log "post_group_created"
-
 	self.autorun () ->
-		console.log "post_group"
-
 		filter =
 			group_name: self.data.group_name
-		self.subscribe "responses", filter, false, "post_group"
+		self.subscribe "responses", filter, "post_group"
 
 #########################################################
 Template.post_group.helpers
@@ -45,7 +41,6 @@ Template.post_group.helpers
 #########################################################
 Template.post_group.events
 	'click #add_post': ()->
-		console.log "add"
 		e = $('#template_select')[0]
 		val = e.options[e.selectedIndex].value
 		val = if not val then "post" else val

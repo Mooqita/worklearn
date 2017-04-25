@@ -7,11 +7,20 @@
 ########################################
 Template.company_challenges.onCreated ->
 	Session.set "selected_challenge", 0
+	self = this
+
+	self.autorun ->
+		filter =
+			owner_id: Meteor.userId()
+			type_identifier: "challenge"
+		Meteor.subscribe "responses", filter, "company_challenge"
+
 
 ########################################
 Template.company_challenges.helpers
 	challenges: () ->
 		filter =
+			owner_id: Meteor.userId()
 			type_identifier: "challenge"
 
 		return Responses.find(filter)
@@ -19,20 +28,7 @@ Template.company_challenges.helpers
 ########################################
 Template.company_challenges.events
 	"click #add_challenge": () ->
-		filter =
-			parent_id: this._id
-			template_id: "challenge"
-
-		index = Responses.find(filter).count()
-
-		param =
-			name: "user generated challenge: " + index
-			index: index
-			parent_id: this._id
-			template_id: "challenge"
-			type_identifier: "challenge"
-
-		Meteor.call "add_response", param,
+		Meteor.call "add_challenge",
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -46,15 +42,6 @@ Template.company_challenges.events
 
 ########################################
 Template.challenge_preview.helpers
-	has_more: () ->
-		if this.content
-			return this.content.length>250
-
-		return false
-
-	selected: ->
-		return this._id==Session.get "selected_challenge"
-
 	title: () ->
 		if this.title
 			return this.title
@@ -62,19 +49,19 @@ Template.challenge_preview.helpers
 		return "This challenge does not yet have a title."
 
 	content: () ->
-		if this._id==Session.get "selected_challenge"
-			return this.content
-
 		if this.content
-			return this.content.substring(0, 250)
+			return this.content
 
 		return "No description available, yet."
 
 ########################################
 Template.challenge_preview.events
 	"click #company_challenge": () ->
-		Session.set "company_data", this
-		Session.set "company_template", "company_challenge"
+		param =
+			item_id: this._id
+			template: "company_challenge"
+		FlowRouter.setQueryParams param
+
 
 ########################################
 #
@@ -84,6 +71,29 @@ Template.challenge_preview.events
 
 ########################################
 Template.company_challenge.onCreated ->
+	self = this
+	self.autorun ->
+		filter =
+			owner_id: Meteor.userId()
+			_id: FlowRouter.getQueryParam("item_id")
+		self.subscribe "responses", filter, "company_challenge: challenge"
+
+
+########################################
+Template.company_challenge.helpers
+	publish_disabled: () ->
+		data = Template.currentData()
+		content = get_field_value data, "content", data._id, "Responses"
+
+		if not content
+			return "disabled"
+
+		published = get_field_value data, "published", data._id, "Responses"
+		if published
+			return "disabled"
+
+		return ""
+
 
 ########################################
 Template.company_challenge.events
@@ -102,6 +112,15 @@ Template.company_challenge.events
 
 		return true
 
+	"click #publish": ()->
+		Meteor.call "finish_challenge", this._id,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Challenge published!"
+
+
 ########################################
 #
 # challenge solutions
@@ -110,12 +129,12 @@ Template.company_challenge.events
 
 ########################################
 Template.challenge_solutions.onCreated ->
+	Session.set "selected_review", 0
 	self = this
 
-	Session.set "selected_review", 0
-
 	self.autorun () ->
-		self.subscribe 'challenge_summary', self.data._id
+		id = FlowRouter.getQueryParam("item_id")
+		self.subscribe 'challenge_summary', id
 
 ########################################
 Template.challenge_solutions.helpers

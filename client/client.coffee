@@ -6,6 +6,8 @@
 #Accounts.ui.config()
 
 #worklearn
+#TODO: remove visible_to from elements that do not need it.
+#TODO: ensure user names are set and random avatar is assigned.
 #TODO: move hash generation to server.
 #TODO: template editor is not loading template code properly.
 #TODO: make unique fields

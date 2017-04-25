@@ -17,7 +17,12 @@ _get_avatar = (profile) ->
 			avatar = profile.avatar
 
 #######################################################
+Meteor.publish "solutions", (solution_id) ->
+	return Responses.find {_id:solution_id}
+
+#######################################################
 Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
+	console.log "challenge_summary"
 	check challenge_id, String
 	check page, Number
 	check size, Number
@@ -40,7 +45,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	filter =
 		parent_id: challenge_id
 		type_identifier: "solution"
-		visible_to: "anonymous"
+		published: true
 
 	options =
 		fields:
@@ -75,6 +80,8 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 				owner_id: 1
 
 		reviews = Responses.find(filter, options).fetch()
+		avg = 0
+		nt = 0
 
 		for o in reviews
 			filter =
@@ -87,10 +94,12 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 			o['peer_id'] = peer._id
 			o['peer_name'] = profile.given_name + ' ' + profile.family_name
 			o['peer_avatar'] = _get_avatar profile
+			avg += r.rating
+			nt += 1
 
-		avg = (r.rating for r in reviews).reduce (t, s) -> t + s
+		avg = if nt then avg / nt else "no reviews yet"
 		entry['reviews'] = reviews
-		entry["average_rating"] = if avg then avg else reviews[0].rating
+		entry["average_rating"] = avg
 
 		self.added('challenge_summary', entry._id, entry)
 
@@ -192,6 +201,7 @@ Meteor.publish "user_credentials", (user_id) ->
 
 #######################################################
 Meteor.publish 'find_upwork_work', (q, paging, budget) ->
+	console.log "find_upwork_work"
 	if not q
 		q = ""
 

@@ -178,12 +178,16 @@ Template.upload.events
 					Meteor.call "upload_file", col, item, field, data, type,
 						(err, rsp)->
 							filesUp += 1
+
 							if err
 								sAlert.error('File upload failed: ' + err)
 								frm.addClass('is-error')
+
 							if filesUp==filesToRead
 								frm.removeClass('is-uploading')
 								_files[box_id] = []
+
+							if not err
 								sAlert.success('Upload done!')
 
 				fileReader.readAsBinaryString(file)

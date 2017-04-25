@@ -1,3 +1,7 @@
+########################################
+Template.login_user.onCreated ->
+
+
 '''
 ########################################
 Template.sign_worker.events

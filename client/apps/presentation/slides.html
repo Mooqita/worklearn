@@ -316,7 +316,7 @@
 								<div class="col-lg-4 col-md-6 col-xs-12">
 									<div style="margin-top: 100%;"></div>
 									<div class="slide-preview">
-										{{>dynamic_template_loader template_id=template_id data=.}}
+										{{>Template.dynamic template=template_id data=.}}
 
 										{{#if _is_editing_response _id}}
 											<div class="tool-set">
@@ -383,7 +383,7 @@
 				{{#each children .}}
 					<div class="slide-window">
 
-						{{>dynamic_template_loader template_id=template_id data=.}}
+						{{>Template.dynamic template_id=template_id data=.}}
 
 						<div class="maximize tool-background" id="slide">
 							<span class="glyphicon glyphicon-fullscreen"></span>
@@ -426,7 +426,7 @@
 			</div>
 
 			<div class="slide-window">
-				{{>dynamic_template_loader template_id=template_id data=.}}
+				{{>Template.dynamic template_id=template_id data=.}}
 			</div>
 		{{/full_screen}}
 	{{/with}}

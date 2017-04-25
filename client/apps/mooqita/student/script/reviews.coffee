@@ -18,7 +18,7 @@ Template.student_reviews.onCreated ->
 			owner_id: Meteor.userId()
 			type_identifier: "review"
 
-		self.subscribe "responses", filter, false, "student_solutions"
+		self.subscribe "responses", filter, "student_reviews"
 
 ########################################
 Template.student_reviews.helpers
@@ -56,9 +56,7 @@ Template.student_review_preview.onCreated ->
 	self.autorun () ->
 		filter =
 			_id: self.data.challenge_id
-
-		if not Responses.findOne filter
-			self.subscribe "responses", filter, true, "student_review_preview: challenge"
+		self.subscribe "responses", filter, "student_review_preview: challenge"
 
 
 ########################################
@@ -71,7 +69,9 @@ Template.student_review_preview.helpers
 Template.student_review_preview.events
 	"click #student_review": () ->
 		param =
-			item_id: this._id
+			review_id: this._id
+			solution_id: this.solution_id
+			challenge_id: this.challenge_id
 			template: "student_review"
 		FlowRouter.setQueryParams param
 
@@ -87,57 +87,55 @@ Template.student_review.onCreated ->
 
 	self.autorun () ->
 		filter =
-			_id: self.data.parent_id
-		self.subscribe "responses", filter, false, "student_solution"
+			owner_id: Meteor.userId()
+			_id: FlowRouter.getQueryParam("review_id")
+		self.subscribe "responses", filter, "student_solution: review"
+
+		filter = FlowRouter.getQueryParam("solution_id")
+		self.subscribe "solutions", filter, "student_solution: solution"
 
 		filter =
-			_id: self.data.challenge_id
-		self.subscribe "responses", filter, false, "student_solution"
+			_id: FlowRouter.getQueryParam("challenge_id")
+		self.subscribe "responses", filter, "student_solution: challenge"
 
 
 ########################################
 Template.student_review.helpers
 	challenge: () ->
-		return Responses.findOne this.challenge_id
+		return Responses.findOne FlowRouter.getQueryParam("challenge_id")
 
 	solution: () ->
-		filter =
-			_id: this.parent_id
-		return Responses.findOne filter
+		id = FlowRouter.getQueryParam("solution_id")
+		return Responses.findOne id
+
+	review: () ->
+		id = FlowRouter.getQueryParam("review_id")
+		return Responses.findOne id
 
 	rating: () ->
-		data = Template.currentData()
-		rating = get_field_value data, "rating", data._id, "Responses"
+		id = FlowRouter.getQueryParam("review_id")
+		rating = get_field_value null, "rating", id, "Responses"
 		return rating
 
 	publish_disabled: () ->
-		data = Template.currentData()
-
-		content = get_field_value data, "content", data._id, "Responses"
+		id = FlowRouter.getQueryParam("review_id")
+		content = get_field_value null, "content", id, "Responses"
 		if not content
 			return "disabled"
 
-		rating = get_field_value data, "rating", data._id, "Responses"
+		rating = get_field_value null, "rating", id, "Responses"
 		if not rating
 			return "disabled"
 
 		return ""
 
-	challenge_content: () ->
-		content = Responses.findOne(this.challenge_id).content
-		if Template.instance().challenge_expanded.get()
-			return content
-
-		return content.substring(0, 250)
-
-	challenge_expanded: () ->
-		return Template.instance().challenge_expanded.get()
-
 
 ########################################
 Template.student_review.events
 	"click #publish":()->
-		Modal.show('publish_review', this)
+		data =
+			response_id: FlowRouter.getQueryParam("review_id")
+		Modal.show 'publish_review', data
 
 	"click #challenge_expand": (event) ->
 		ins = Template.instance()
@@ -152,7 +150,8 @@ Template.student_review.events
 ##############################################
 Template.publish_review.events
 	'click #publish': ->
-		Meteor.call "set_field", "Responses", this._id, "visible_to", "anonymous",
+		console.log this
+		Meteor.call "finish_review", this.response_id,
 			(err, res) ->
 				if err
 					sAlert.error(err)

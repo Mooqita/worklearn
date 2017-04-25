@@ -8,15 +8,11 @@ Template.registerHelper "_debug", (obj) ->
 
 ########################################
 Template.registerHelper "current_data", () ->
-	data = 	Session.get "current_data"
-	self = Template.instance().data
-	res = if data then data else self
-	return res
+	return get_current_data()
 
 ########################################
 Template.registerHelper "selected_view", () ->
-	selected = Session.get "current_template"
-	return selected
+	return get_selected_view()
 
 ########################################
 Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
@@ -63,20 +59,26 @@ Template.registerHelper "_is_public", (obj=null) ->
 	else
 		data = Template.currentData()
 
-	field_value = get_field_value data, "visible_to", data._id, "Responses"
+	field_value = get_field_value data, "published", data._id, "Responses"
 
 	if not field_value
 		return false
 
-	return field_value == "anonymous"
+	return field_value
 
 
 ########################################
-Template.registerHelper "_is_saved", () ->
-	data = Template.currentData()
+Template.registerHelper "_is_saved", (obj=null) ->
+	if typeof obj == "string"
+		data = Responses.findOne obj
+	else
+		data = Template.currentData()
+
 	field_value = get_field_value data, "content", data._id, "Responses"
+
 	if not field_value
 		return false
+
 	return true
 
 

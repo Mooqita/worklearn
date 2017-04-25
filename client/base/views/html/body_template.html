@@ -6,12 +6,13 @@
 
 		<main>
 			{{>sAlert}}
-			{{#if layout}}
-				{{#Template.dynamic template=layout}}
-					{{#with ini_context}}
-						{{>render_content}}
-					{{/with}}
-				{{/Template.dynamic}}
+
+			{{#if login}}
+				{{#unless _profile}}
+					{{>Template.dynamic template=login}}
+				{{else}}
+					{{>render_content}}
+				{{/unless}}
 			{{else}}
 				{{>render_content}}
 			{{/if}}
@@ -27,13 +28,20 @@
 
 
 <template name="render_content">
-	{{#if login}}
-		{{#unless currentUser}}
-			{{>Template.dynamic template=login}}
-		{{else}}
-			{{>dynamic_response_loader}}
-		{{/unless}}
+	{{#if layout}}
+		{{#Template.dynamic template=layout}}
+			{{#with ini_context}}
+				{{>Template.dynamic template=content}}
+			{{/with}}
+		{{/Template.dynamic}}
 	{{else}}
-		{{>dynamic_response_loader}}
+		{{#with ini_context}}
+			{{>Template.dynamic template=content}}
+		{{/with}}
 	{{/if}}
+</template>
+
+
+<template name="response">
+	{{>Template.dynamic template=content}}
 </template>

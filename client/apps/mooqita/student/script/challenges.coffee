@@ -10,13 +10,17 @@ Template.student_find_challenges.onCreated ->
 	Session.set "selected_challenge", 0
 	
 	self.autorun () ->
-		data = Template.currentData()
+		#data = Template.currentData()
 
 		filter =
 			type_identifier: "challenge"
-			text: data.query
-			
-		self.subscribe "responses", filter, true, "student_find_challenges"
+			#text: data.query
+		self.subscribe "responses", filter, "student_find_challenges: challenges"
+
+		filter =
+			owner_id: Meteor.userId()
+			type_identifier: "solution"
+		self.subscribe "responses", filter, "student_find_challenges: solutions"
 
 
 ########################################
@@ -29,15 +33,8 @@ Template.student_find_challenges.helpers
 
 
 ########################################
-Template.student_find_challenges.events
-
-
-########################################
 # Challenge preview
 ########################################
-
-########################################
-Template.student_challenge_preview.onCreated ->
 
 ########################################
 Template.student_challenge_preview.helpers

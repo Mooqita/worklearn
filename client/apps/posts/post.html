@@ -32,11 +32,11 @@
 
 
 <template name="_post">
-	{{#dynamic_template_loader template_id=template_id data=.}}
+	{{#Template.dynamic template=template_id data=.}}
 		{{#each children .}}
 			{{>_post}}
 		{{/each}}
-	{{/dynamic_template_loader}}
+	{{/Template.dynamic}}
 </template>
 
 
