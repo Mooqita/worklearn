@@ -14,11 +14,7 @@ Template.student_reviews.onCreated ->
 
 	self = this
 	self.autorun () ->
-		filter =
-			owner_id: Meteor.userId()
-			type_identifier: "review"
-
-		self.subscribe "responses", filter, "student_reviews"
+		self.subscribe "my_reviews"
 
 ########################################
 Template.student_reviews.helpers
@@ -54,9 +50,8 @@ Template.student_reviews.events
 Template.student_review_preview.onCreated ->
 	self = this
 	self.autorun () ->
-		filter =
-			_id: self.data.challenge_id
-		self.subscribe "responses", filter, "student_review_preview: challenge"
+		id = self.data.challenge_id
+		self.subscribe "challenge_by_id", id
 
 
 ########################################
@@ -86,23 +81,18 @@ Template.student_review.onCreated ->
 	self.challenge_expanded = new ReactiveVar(false)
 
 	self.autorun () ->
-		filter =
-			owner_id: Meteor.userId()
-			_id: FlowRouter.getQueryParam("review_id")
-		self.subscribe "responses", filter, "student_solution: review"
+		if not FlowRouter.getQueryParam("solution_id")
+			return
 
-		filter = FlowRouter.getQueryParam("solution_id")
-		self.subscribe "solutions", filter, "student_solution: solution"
-
-		filter =
-			_id: FlowRouter.getQueryParam("challenge_id")
-		self.subscribe "responses", filter, "student_solution: challenge"
-
+		self.subscribe "solution_by_id", FlowRouter.getQueryParam("solution_id")
+		self.subscribe "my_review_by_id", FlowRouter.getQueryParam("review_id")
+		self.subscribe "challenge_by_id", FlowRouter.getQueryParam("challenge_id")
 
 ########################################
 Template.student_review.helpers
 	challenge: () ->
-		return Responses.findOne FlowRouter.getQueryParam("challenge_id")
+		id = FlowRouter.getQueryParam("challenge_id")
+		return Responses.findOne id
 
 	solution: () ->
 		id = FlowRouter.getQueryParam("solution_id")
@@ -112,18 +102,13 @@ Template.student_review.helpers
 		id = FlowRouter.getQueryParam("review_id")
 		return Responses.findOne id
 
-	rating: () ->
-		id = FlowRouter.getQueryParam("review_id")
-		rating = get_field_value null, "rating", id, "Responses"
-		return rating
-
 	publish_disabled: () ->
-		id = FlowRouter.getQueryParam("review_id")
-		content = get_field_value null, "content", id, "Responses"
-		if not content
+		data = Template.currentData()
+
+		if not data.content
 			return "disabled"
 
-		rating = get_field_value null, "rating", id, "Responses"
+		rating = data.rating
 		if not rating
 			return "disabled"
 
@@ -133,14 +118,12 @@ Template.student_review.helpers
 ########################################
 Template.student_review.events
 	"click #publish":()->
+		if event.target.attributes.disabled
+			return
+
 		data =
 			response_id: FlowRouter.getQueryParam("review_id")
 		Modal.show 'publish_review', data
-
-	"click #challenge_expand": (event) ->
-		ins = Template.instance()
-		s = not ins.challenge_expanded.get()
-		ins.challenge_expanded.set s
 
 
 ##############################################

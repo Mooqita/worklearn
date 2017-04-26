@@ -1,10 +1,4 @@
 ##############################################
-@get_current_data = () ->
-	item_id = FlowRouter.getQueryParam("item_id")
-	return Responses.findOne item_id
-
-
-##############################################
 @get_selected_view = () ->
 	selected = FlowRouter.getQueryParam("template")
 

@@ -10,68 +10,111 @@
 			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 		</h1>
 	{{else}}
+		{{#with feedback}}
+			<h2>
+				{{#if _is_public}}
+					Rating <em>{{rating}}</em> of <em>5</em>
+				{{else}}
+					Please provide feedback to see the rating
+				{{/if}}
+			</h2>
+		{{/with}}
 
-		<h2>
-			{{#if _is_public}}
-				Rating <em>{{rating}}</em> of <em>5</em>
+		{{>more content=content}}
+
+		{{#with feedback}}
+			<h3>Your Feedback</h3>
+
+			{{#unless _is_public}}
+				<div class="alert alert-info">
+					Here is a list of things to do:
+					<ul>
+						{{#unless _is_saved}}
+							<li>
+								Write a short feedback what you like about the
+								review and how you think it could improve.
+							</li>
+						{{/unless}}
+						{{#unless rating}}
+							<li>Please also rate the review.</li>
+						{{/unless}}
+						{{#unless publishable}}
+							<li>Save it!</li>
+						{{/unless}}
+						<li>Publish it!</li>
+					</ul>
+				</div>
+			{{/unless}}
+
+			{{#unless _is_public}}
+				{{>text_input method="set_field" collection_name="Responses"
+					item_id=_id field="content" placeholder="Please give feedback."}}
 			{{else}}
-				Please provide feedback to see the rating
-			{{/if}}
-		</h2>
+				{{>more content=content}}
+			{{/unless}}
 
-		<p>
-			{{review.content}}
-		</p>
-
-		<h3>Your Feedback</h3>
-		{{#unless _is_public}}
-			{{>text_input method="set_field" collection_name="Responses"
-				item_id=_id field="content" placeholder="Please give some feedback to the review"}}
-		{{else}}
-			<p>{{content}}</p>
-		{{/unless}}
-
-		{{#unless _is_public}}
-			<div class="form-group col-sm-3">
-				<label for="quality"
-							 title="Your rating of the review"
-								>Helpfulness</label>
-				{{>select_input method="set_field" collection_name="Responses"
-						item_id=_id field="rating" options=_rating_options }}
-			</div>
-		{{else}}
-			<p>
-				You rated the helpfulness of this review with <em>{{rating}}</em> of <em>5</em>
-			</p>
-		{{/unless}}
-
-		{{#unless rating}}
-			<div class="alert alert-danger">
-				Please rate the helpfulness of this review.
-			</div>
-		{{/unless}}
-
-		{{#unless _is_public}}
-			<div class="alert alert-info">
-				Please publish your feedback when you are done.
-			</div>
-		{{/unless}}
-
-		{{#unless _is_public}}
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<span class="btn-group btn-group-justified">
-						<div class="btn btn-red" id="save">Save</div>
-					</span>
+			{{#unless _is_public}}
+				<div class="form-group">
+					<label for="quality"
+								 title="Your rating of the review"
+									>Helpfulness</label>
+					{{>select_input method="set_field" collection_name="Responses"
+							item_id=_id field="rating" options=_rating_options }}
 				</div>
+			{{else}}
+				<p>
+					You rated the helpfulness of this review with <em>{{rating}}</em> of <em>5</em>
+				</p>
+			{{/unless}}
 
-				<div class="form-group col-sm-6">
-					<span class="btn-group btn-group-justified">
-						<div class="btn btn-red" {{publish_disabled}}
-								 id="publish">Make public</div>
-					</span>
+			{{#unless _is_public}}
+				<div class="row">
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" id="save">Save</div>
+						</span>
+					</div>
+
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" {{publish_disabled}}
+									 id="publish_feedback">Make public</div>
+						</span>
+					</div>
 				</div>
-			</div>
-		{{/unless}}
+			{{/unless}}
+		{{/with}}
 	{{/unless}}
 </template>
+
+<template name="publish_feedback">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Publish feedback</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to publish your feedback?<br>
+						If you publish your review it will be send to <br>
+						the author of the review. <br>
+					</p>
+
+					<p>
+						<em>This can not be undone!</em>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-red" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-red" id="publish" data-dismiss="modal">Publish</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

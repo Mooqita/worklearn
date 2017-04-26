@@ -13,31 +13,38 @@ Template.student_review_feedback.onCreated ->
 	self = this
 
 	self.autorun () ->
-		filter =
-			_id: self.data.parent_id
-		self.subscribe "responses", filter, "student_review_feedback"
+		self.subscribe "my_feedback_by_review_id", self.data._id
 
 
 ########################################
 Template.student_review_feedback.helpers
-	review: () ->
-		return Responses.findOne this.parent_id
+	feedback: () ->
+		filter =
+			parent_id: this._id
+			type_identifier: "feedback"
+		return Responses.findOne filter
 
-	solution: () ->
-		return Responses.findOne this.solution_id
+	publishable: () ->
+		data = Template.currentData()
 
-	challenge: () ->
-		return Responses.findOne this.challenge_id
+		if not data.content
+			return false
+
+		if data.rating
+			return true
+
+		return false
 
 	public_rating:() ->
 		data = Template.currentData()
 
-		val = get_field_value data, "visible_to", data._id, "Responses"
-		if val != "anonymous"
+		if not data.published
 			return false
 
-		val = get_field_value data, "rating", data._id, "Responses"
-		if val
+		if not data.rating
+			return false
+
+		if data.content
 			return true
 
 		return false
@@ -54,4 +61,28 @@ Template.student_review_feedback.helpers
 			return "disabled"
 
 		return ""
+
+########################################
+Template.student_review_feedback.events
+	"click #publish_feedback":()->
+		if event.target.attributes.disabled
+			return
+
+		data =
+			feedback_id: this._id
+		Modal.show 'publish_feedback', data
+
+##############################################
+# publish modal
+##############################################
+
+##############################################
+Template.publish_feedback.events
+	'click #publish': ->
+		Meteor.call "finish_review", this.feedback_id,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Review published!"
 

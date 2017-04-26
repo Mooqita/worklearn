@@ -10,17 +10,7 @@ Template.student_find_challenges.onCreated ->
 	Session.set "selected_challenge", 0
 	
 	self.autorun () ->
-		#data = Template.currentData()
-
-		filter =
-			type_identifier: "challenge"
-			#text: data.query
-		self.subscribe "responses", filter, "student_find_challenges: challenges"
-
-		filter =
-			owner_id: Meteor.userId()
-			type_identifier: "solution"
-		self.subscribe "responses", filter, "student_find_challenges: solutions"
+		self.subscribe "challenges"
 
 
 ########################################
@@ -37,11 +27,20 @@ Template.student_find_challenges.helpers
 ########################################
 
 ########################################
+Template.student_challenge_preview.onCreated ->
+	self = this
+	Session.set "selected_challenge", 0
+
+	self.autorun () ->
+		self.subscribe "my_solutions_by_challenge_id", self.data._id
+
+########################################
 Template.student_challenge_preview.helpers
 	has_solution:() ->
 		filter =
+			owner_id: Meteor.userId()
 			type_identifier: "solution"
-			parent_id: this._id
+			challenge_id: this._id
 
 		return Responses.find(filter).count()>0
 
@@ -50,7 +49,7 @@ Template.student_challenge_preview.helpers
 Template.student_challenge_preview.events
 	"click #student_solution": () ->
 		param =
-			item_id: this._id
+			challenge_id: this._id
 			template: "student_solution"
 		FlowRouter.setQueryParams param
 

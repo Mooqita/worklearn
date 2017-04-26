@@ -134,6 +134,11 @@ footer{
 	color: $text-on-theme;
 	border-color: $theme;
 	background-color: $theme;
+	font-size: 16px;
+}
+
+.btn-theme:hover {
+	color: $text-on-theme;
 }
 
 .btn-contrast {

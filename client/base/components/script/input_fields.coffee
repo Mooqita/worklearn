@@ -57,6 +57,7 @@ Template.check_input.events
 #########################################################
 Template.select_input.helpers
 	is_selected: (val) ->
+		console.log val
 		field = get_field_value Template.instance().data
 
 		if !(field instanceof Array)

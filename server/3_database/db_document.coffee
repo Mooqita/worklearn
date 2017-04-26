@@ -42,7 +42,7 @@
 	filter = []
 	roles = ["all"]
 
-	if restrict.owner_id
+	if restrict.owner_id and user_id
 		if restrict.owner_id == user_id
 			owner = true
 

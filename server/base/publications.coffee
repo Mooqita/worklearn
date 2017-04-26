@@ -112,6 +112,7 @@ Meteor.publish "sum_of_field", (template_id, field, value) ->
 Meteor.publish "files", (collection_name, item_id, field) ->
 	if not item_id
 		return []
+
 	check collection_name, String
 	check item_id, String
 	check field, String

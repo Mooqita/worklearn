@@ -10,10 +10,7 @@ Template.company_challenges.onCreated ->
 	self = this
 
 	self.autorun ->
-		filter =
-			owner_id: Meteor.userId()
-			type_identifier: "challenge"
-		Meteor.subscribe "responses", filter, "company_challenge"
+		Meteor.subscribe "my_challenges"
 
 
 ########################################
@@ -58,7 +55,7 @@ Template.challenge_preview.helpers
 Template.challenge_preview.events
 	"click #company_challenge": () ->
 		param =
-			item_id: this._id
+			challenge_id: this._id
 			template: "company_challenge"
 		FlowRouter.setQueryParams param
 
@@ -73,14 +70,18 @@ Template.challenge_preview.events
 Template.company_challenge.onCreated ->
 	self = this
 	self.autorun ->
-		filter =
-			owner_id: Meteor.userId()
-			_id: FlowRouter.getQueryParam("item_id")
-		self.subscribe "responses", filter, "company_challenge: challenge"
+		id = FlowRouter.getQueryParam("challenge_id")
+		if not id
+			return
+		self.subscribe "my_challenge_by_id", id
 
 
 ########################################
 Template.company_challenge.helpers
+	challenge: () ->
+		id = FlowRouter.getQueryParam("challenge_id")
+		return Responses.findOne id
+
 	publish_disabled: () ->
 		data = Template.currentData()
 		content = get_field_value data, "content", data._id, "Responses"
@@ -113,6 +114,9 @@ Template.company_challenge.events
 		return true
 
 	"click #publish": ()->
+		if event.target.attributes.disabled
+			return
+
 		Meteor.call "finish_challenge", this._id,
 			(err, res) ->
 				if err
@@ -133,7 +137,7 @@ Template.challenge_solutions.onCreated ->
 	self = this
 
 	self.autorun () ->
-		id = FlowRouter.getQueryParam("item_id")
+		id = FlowRouter.getQueryParam("challenge_id")
 		self.subscribe 'challenge_summary', id
 
 ########################################

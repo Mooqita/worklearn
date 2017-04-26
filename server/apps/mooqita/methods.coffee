@@ -2,8 +2,10 @@
 Meteor.methods
 	add_profile: (param) ->
 		check param.occupation, String
-
 		user_id = Meteor.userId()
+
+		if not user_id
+			throw new Meteor.Error('Not permitted.')
 
 		filter =
 			owner_id: user_id
@@ -21,50 +23,23 @@ Meteor.methods
 		user_id = Meteor.userId()
 		return gen_challenge user_id
 
+
 	finish_challenge: (challenge_id) ->
 		check challenge_id, String
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		challenge = Responses.findOne challenge_id
-		if not challenge
-			throw new Meteor.Error('Not permitted.')
-
-		if challenge.owner_id != user._id
-			throw new Meteor.Error('Not permitted.')
-
-		return finish_challenge(challenge_id)
+		challenge = secure_item_action challenge_id, "challenge", true
+		return finish_challenge challenge
 
 
 	add_solution: (challenge_id) ->
 		check challenge_id, String
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		challenge = Responses.findOne challenge_id
-		if not challenge
-			throw new Meteor.Error('Not permitted.')
-
+		challenge = secure_item_action challenge_id, "challenge", false
 		return gen_solution challenge, Meteor.userId()
 
 
 	request_review: (solution_id) ->
 		check solution_id, String
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		solution = Responses.findOne solution_id
-
-		if not solution.owner_id == user._id
-			throw new Meteor.Error('Not permitted.')
-
-		return request_review solution, user._id
+		solution = secure_item_action solution_id, "solution", true
+		return request_review solution, Meteor.userId()
 
 
 	find_review: () ->

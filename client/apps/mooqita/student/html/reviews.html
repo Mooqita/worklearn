@@ -57,25 +57,40 @@
 			</h1>
 		{{else}}
 			<div class="item padding-top">
-				<h1>{{challenge.title}}</h1>
-				{{>more content=challenge.content}}
+				{{#with challenge}}
+					<h1>{{title}}</h1>
 
-				<h1>Solution</h1>
-				{{>more content=solution.content}}
+					{{>more content=content}}
 
-				<h2>Additional Material</h2>
-				{{>download collection_name="Responses"
-					item_id=solution._id field="material"}}
+					{{#if material}}
+						<h3 style="padding-bottom: 15px">
+							{{>download collection_name="Responses"
+								item_id=_id field="material"}}
+						</h3>
+					{{/if}}
+				{{/with}}
+
+				{{#with solution}}
+					<h1>Solution</h1>
+					{{>more content=content}}
+
+					{{#if material}}
+						<h3 style="padding-bottom: 15px">
+							{{>download collection_name="Responses"
+								item_id=_id field="material"}}
+						</h3>
+					{{/if}}
+				{{/with}}
 			</div>
 
-			<div class="item">
+			{{#with review}}
 				<h1>Your Review</h1>
-				{{#unless _is_public review._id}}
+				{{#unless _is_public}}
 					{{>text_input method="set_field" collection_name="Responses"
-						item_id=review._id field="content" placeholder="Please provide your feedback here"}}
+						item_id=_id field="content" placeholder="Please provide your feedback here"}}
 				{{else}}
 					<p>
-						{{review.content}}
+						{{content}}
 					</p>
 				{{/unless}}
 
@@ -83,9 +98,9 @@
 					<label for="quality"
 								 title="Your grading of the solution"
 									>Rating</label>
-					{{#unless _is_public review._id}}
+					{{#unless _is_public}}
 						{{>select_input method="set_field" collection_name="Responses"
-								item_id=review._id field="rating" options=_rating_options }}
+								item_id=_id field="rating" options=_rating_options }}
 					{{else}}
 						<div class="form-control">
 							<em>{{rating}}</em>
@@ -95,21 +110,21 @@
 
 				{{#unless rating}}
 					<div class="alert alert-danger">
-						Please select a grade for this submission.
+						Please select a rating for this submission.
 					</div>
 				{{/unless}}
 
-				{{#unless _is_public review._id}}
+				{{#unless _is_public}}
 					<div class="alert alert-info">
 						You need to publish your review.
-						{{#unless _is_saved review._id}}
+						{{#unless _is_saved}}
 							To publish it you need to save
 							your review.
 						{{/unless}}
 					</div>
 				{{/unless}}
 
-				{{#unless _is_public review._id}}
+				{{#unless _is_public}}
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
@@ -124,7 +139,7 @@
 						</div>
 					</div>
 				{{/unless}}
-			</div>
+			{{/with}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>

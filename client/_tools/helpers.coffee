@@ -7,11 +7,7 @@ Template.registerHelper "_debug", (obj) ->
 	console.log obj
 
 ########################################
-Template.registerHelper "current_data", () ->
-	return get_current_data()
-
-########################################
-Template.registerHelper "selected_view", () ->
+Template.registerHelper "_selected_view", () ->
 	return get_selected_view()
 
 ########################################

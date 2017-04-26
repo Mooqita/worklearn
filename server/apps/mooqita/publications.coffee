@@ -6,6 +6,53 @@
 #######################################################
 
 #######################################################
+# item header
+#######################################################
+
+#######################################################
+_challenge_fields =
+	fields:
+		title: 1
+		content: 1
+		material: 1
+		owner_id: 1
+		published: 1
+		type_identifier: 1
+
+#######################################################
+_solution_fields =
+	fields:
+		content: 1
+		owner_id: 1
+		published: 1
+		parent_id: 1
+		challenge_id: 1
+		type_identifier: 1
+
+#######################################################
+_review_fields =
+	fields:
+		rating: 1
+		content: 1
+		published: 1
+		parent_id: 1
+		solution_id: 1
+		challenge_id: 1
+		type_identifier: 1
+
+#######################################################
+_feedback_fields =
+	fields:
+		rating: 1
+		content: 1
+		parent_id: 1
+		published: 1
+		solution_id: 1
+		challenge_id: 1
+		type_identifier: 1
+
+
+#######################################################
 _get_avatar = (profile) ->
 	avatar = ""
 
@@ -16,13 +63,57 @@ _get_avatar = (profile) ->
 		else
 			avatar = profile.avatar
 
+
 #######################################################
-Meteor.publish "solutions", (solution_id) ->
-	return Responses.find {_id:solution_id}
+# challenges
+#######################################################
+
+#######################################################
+Meteor.publish "challenges", () ->
+	restrict =
+		type_identifier: "challenge"
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _challenge_fields
+
+
+#######################################################
+Meteor.publish "my_challenges", () ->
+	restrict =
+		owner_id: this.userId
+		type_identifier: "challenge"
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _challenge_fields
+
+
+#######################################################
+Meteor.publish "challenge_by_id", (challenge_id) ->
+	check challenge_id, String
+
+	restrict =
+		_id:challenge_id
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _challenge_fields
+
+
+#######################################################
+Meteor.publish "my_challenge_by_id", (challenge_id) ->
+	restrict =
+		_id:challenge_id
+		owner_id: this.userId
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _challenge_fields
+
 
 #######################################################
 Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
-	console.log "challenge_summary"
 	check challenge_id, String
 	check page, Number
 	check size, Number
@@ -108,12 +199,123 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 
 #######################################################
+# solutions
+#######################################################
+
+#######################################################
+Meteor.publish "my_solutions", () ->
+	restrict =
+		owner_id: this.userId
+		type_identifier: "solution"
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _solution_fields
+
+
+#######################################################
+Meteor.publish "solution_by_id", (solution_id) ->
+	check solution_id, String
+
+	if !this.userId
+		throw new Meteor.Error("Not permitted.")
+
+	#TODO: only user that are eligible should see this.
+
+	filter =
+		_id: solution_id
+		published: true
+
+	return Responses.find filter, _solution_fields
+
+
+#######################################################
+Meteor.publish "my_solution_by_id", (solution_id) ->
+	check solution_id, String
+
+	restrict =
+		_id: solution_id
+		owner_id: this.userId
+
+	filter = visible_items this.userId, restrict
+	return Responses.find filter, _solution_fields
+
+
+#######################################################
+Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
+	check challenge_id, String
+
+	restrict =
+		owner_id: this.userId
+		challenge_id: challenge_id
+		type_identifier: "solution"
+
+	filter = visible_items this.userId, restrict
+	return Responses.find filter, _solution_fields
+
+#######################################################
+# reviews
+#######################################################
+
+#######################################################
+Meteor.publish "my_reviews", () ->
+	restrict =
+		owner_id: this.userId
+		type_identifier: "review"
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _review_fields
+
+#######################################################
+Meteor.publish "my_review_by_id", (review_id) ->
+	check review_id, String
+
+	restrict =
+		_id: review_id
+		owner_id: this.userId
+		type_identifier: "review"
+
+	filter = visible_items this.userId, restrict
+
+	return Responses.find filter, _review_fields
+
+#######################################################
+Meteor.publish "reviews_by_solution_id", (solution_id) ->
+	check solution_id, String
+
+	filter =
+		solution_id: solution_id
+		type_identifier: "review"
+		published: true
+
+	return Responses.find filter, _review_fields
+
+
+#######################################################
+# feedback
+#######################################################
+
+#######################################################
+Meteor.publish "my_feedback_by_review_id", (review_id) ->
+	check review_id, String
+
+	filter =
+		type_identifier: "feedback"
+		parent_id: review_id
+		owner_id: this.userId
+
+	return Responses.find filter, _feedback_fields
+
+
+#######################################################
 # Resumes
 #######################################################
 
 #######################################################
 Meteor.publish "user_credentials", (user_id) ->
 	check user_id, String
+
 	if !user_id
 		user_id = this.userId
 
@@ -138,7 +340,7 @@ Meteor.publish "user_credentials", (user_id) ->
 
 		solution_filter =
 			type_identifier: "solution"
-			visible_to: "anonymous"
+			published: true
 			owner_id: user._id
 			#in_portfolio: true
 

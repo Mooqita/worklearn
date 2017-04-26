@@ -27,13 +27,16 @@
 		type_identifier: "challenge"
 		template_id: "challenge"
 		owner_id: user_id
+		unmatched: 0
+		requested: 0
 
 	return save_document Responses, challenge
 
 
 ###############################################
-@finish_challenge = (challenge_id) ->
-	modify_field_unprotected "Responses", challenge_id, "published", true
+@finish_challenge = (challenge) ->
+	modify_field_unprotected "Responses", challenge._id, "published", true
+	modify_field_unprotected "Responses", challenge._id, "visible_to", "anonymous"
 
 
 ###############################################
@@ -193,12 +196,12 @@
 	solution = Responses.findOne filter
 
 	if not solution
-		throw  new Meteor.Error 'solution not found'
+		throw  new Meteor.Error "solution not found"
 
 	challenge = Responses.findOne solution.challenge_id
 
 	if not solution
-		throw  new Meteor.Error 'challenge not found'
+		throw  new Meteor.Error "challenge not found"
 
 	res =
 		solution: solution
@@ -207,3 +210,21 @@
 	return res
 
 
+@secure_item_action = (item_id, type, owner = true) ->
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error("Not permitted.")
+
+	item = Responses.findOne item_id
+	if not item
+		throw new Meteor.Error("Not permitted.")
+
+	if item.type_identifier != type
+		throw new Meteor.Error("Not a " + type + ": " + item.type_identifier)
+
+	if owner
+		if item.owner_id != user._id
+			throw new Meteor.Error("Not permitted.")
+
+	return item

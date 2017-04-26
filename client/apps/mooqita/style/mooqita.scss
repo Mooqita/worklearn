@@ -43,8 +43,12 @@
 
 .mooqita-layout .form-control{
 	border: 2px solid #ddd;
-	min-height: 38px;
+	min-height: 40.5px;
 	font-size: 16px;
+}
+
+.mooqita-layout label.item-label{
+	margin-top: 25px;
 }
 
 .mooqita-layout .well{
