@@ -52,14 +52,15 @@ _collection_headers =
 			name: 1
 			index: 1
 			title: 1
+			content: 1
 			deleted: 1
 			owner_id: 1
 			parent_id: 1
 			visible_to: 1
-			type_identifier: 1
 			view_order: 1
+			group_name: 1
 			template_id: 1
-			content: 1
+			type_identifier: 1
 
 #######################################################
 @visible_fields = (collection, user_id, filter) ->

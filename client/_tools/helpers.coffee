@@ -3,8 +3,8 @@ Template.registerHelper "_profile", () ->
 	return get_profile()
 
 ########################################
-Template.registerHelper "_debug", (obj) ->
-	console.log obj
+Template.registerHelper "_debug", (obj, message="") ->
+	console.log {data:obj, message:message}
 
 ########################################
 Template.registerHelper "_selected_view", () ->
@@ -76,11 +76,6 @@ Template.registerHelper "_is_saved", (obj=null) ->
 		return false
 
 	return true
-
-
-########################################
-Template.registerHelper "_response_url", (_id) ->
-	return get_response_url _id, true
 
 
 #######################################################

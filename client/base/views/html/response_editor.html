@@ -132,12 +132,12 @@
 	{{>basic_input label='Index' method='set_field' collection_name='Responses'
 		field='index' item_id=_id placeholder="Index of element" type="number" }}
 
-	{{>basic_input label='Index' method='set_field' collection_name='Responses'
+	{{>basic_input label='View Order' method='set_field' collection_name='Responses'
 		field='view_order' item_id=_id placeholder="View order of element lower comes first" type="number" }}
 
 	{{>select_input label='Template' method='set_field'
 			collection_name='Responses' field='template_id' item_id=_id
-			options=_templates}}
+			options=templates}}
 
 	{{>select_input label='Parent' method='set_field' collection_name='Responses'
 		field='parent_id' item_id=_id options=parents}}

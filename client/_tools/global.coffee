@@ -19,19 +19,6 @@
 	return profile
 
 
-##############################################
-@get_response_url = (id, absolute) ->
-	type = "response"
-	if id
-		type = type + '/' + id
-
-	if absolute
-		type = Meteor.absoluteUrl(type)
-	else
-		type = "/" + type
-
-	return type
-
 #######################################################
 @find_response_names = () ->
 	tmpls = [{value:"", label:"Select response"}]

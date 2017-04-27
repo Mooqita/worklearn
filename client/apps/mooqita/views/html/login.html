@@ -1,7 +1,16 @@
 <template name="mooqita_login">
-	{{>login_user}}
-</template>
+	<div class="container-fluid">
+		{{#mooqita_wide_spacing}}
+			<div style="text-align: center; max-width: 450px;">
+				<h1>Please login to continue</h1>
 
+				<div class="well" style="color: black;">
+					{{> atForm}}
+				</div>
+			</div>
+		{{/mooqita_wide_spacing}}
+	</div>
+</template>
 
 <template name="first_timer">
 	<div class="container-fluid">

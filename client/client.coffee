@@ -24,28 +24,32 @@
 
 #Learning materials!!!!! I think we need to offer online classes that allow humans to code/write/design for the first time! Give credits to students for creating content?
 
-given =
-	_id: "given_name"
-	type: "text"
-	displayName: "Given name"
-	required: true
-	func: (name) ->
-		if (Meteor.isServer)
-			if name != ""
-        return false # No error!
-			return true # Validation error!
-	errStr: 'Please enter your given name'
+AccountsTemplates.configure
+	confirmPassword: true,
+	enablePasswordChange: true,
+	forbidClientAccountCreation: false,
+	overrideLoginErrors: true,
+	sendVerificationEmail: true,
+	lowercaseUsername: false,
+	focusFirstInput: true,
 
-family =
-	_id: "family_name"
-	type: "text"
-	displayName: "Family name"
-	required: true
-	func: (name) ->
-		if (Meteor.isServer)
-			if name != ""
-        return false # No error!
-			return true # Validation error!
-	errStr: 'Please enter your family name'
+	#Appearance
+	showAddRemoveServices: true,
+	showForgotPasswordLink: true,
+	showLabels: true,
+	showPlaceholders: true,
+	showResendVerificationEmailLink: true,
 
-AccountsTemplates.addFields([given, family])
+	# Client-side Validation
+	continuousValidation: false,
+	negativeFeedback: false,
+	negativeValidation: true,
+	positiveValidation: true,
+	positiveFeedback: true,
+	showValidating: true,
+
+	# Privacy Policy and Terms of Use
+	privacyUrl: 'privacy',
+	termsUrl: 'terms-of-use',
+
+AccountsTemplates.configureRoute('signIn');

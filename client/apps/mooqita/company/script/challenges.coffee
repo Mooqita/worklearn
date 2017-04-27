@@ -95,6 +95,10 @@ Template.company_challenge.helpers
 
 		return ""
 
+	share_url: ->
+		url = "user?template=student_solution&challenge_id=" + this._id
+		url = Meteor.absoluteUrl(url)
+		return url
 
 ########################################
 Template.company_challenge.events
@@ -165,6 +169,7 @@ Template.challenge_solution.helpers
 
 	reviews_visible: ->
 		return Template.instance().reviews_visible.get()
+
 
 ########################################
 Template.challenge_solution.events

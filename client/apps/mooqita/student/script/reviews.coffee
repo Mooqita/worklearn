@@ -133,7 +133,6 @@ Template.student_review.events
 ##############################################
 Template.publish_review.events
 	'click #publish': ->
-		console.log this
 		Meteor.call "finish_review", this.response_id,
 			(err, res) ->
 				if err

@@ -224,6 +224,17 @@ Template._edit_tools.helpers
 		if val == this.group
 			return "selected"
 
+	templates: () ->
+		return [{value:"", label:"Select template"}
+		{value:"empty", label:"Empty"}
+		{value:"post", label:"Post"}
+		{value:"headline", label:"Headline"}
+		{value:"publication", label:"Publication"}
+		{value:"team", label:"Team"}
+		{value:"member", label:"Member"}
+		{value:"partner", label:"Partner"}
+		{value:"partner_list", label:"Partner List"}]
+
 	parents: () ->
 		filter = {}
 		mod =

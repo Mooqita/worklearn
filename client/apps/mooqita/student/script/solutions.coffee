@@ -94,6 +94,19 @@ Template.student_solution.helpers
 			return "disabled"
 		return ""
 
+########################################
+Template.student_solution.events
+	"click #take_challenge":()->
+		console.log FlowRouter.getQueryParam("challenge_id")
+		id = FlowRouter.getQueryParam("challenge_id")
+		Meteor.call "add_solution", id,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Challenge accepted!"
+
+
 ##############################################
 # solution reviews
 ##############################################
@@ -131,16 +144,6 @@ Template.student_solution_reviews.events
 			publishing: Template.instance().publishing
 
 		Modal.show('publish_solution', data)
-
-	"click #take_challenge":()->
-		id = FlowRouter.getQueryParam("challenge_id")
-		Meteor.call "add_solution", id,
-			(err, res) ->
-				if err
-					sAlert.error(err)
-				if res
-					sAlert.success "Challenge accepted!"
-
 
 ##############################################
 # publish modal

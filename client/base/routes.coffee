@@ -58,4 +58,3 @@ FlowRouter.route "/template/:template_id",
 			layout: "layout"
 			content: "template_dashboard"
 		BlazeLayout.render "body_template", data
-

@@ -29,6 +29,8 @@ Template.post_group.helpers
 
 	groups: () ->
 		filter =
+			parent_id: ""
+			type_identifier: "post"
 			group_name: this.group_name
 
 		mod =
@@ -57,6 +59,7 @@ Template.post_group.events
 			single_parent: false
 			type_identifier: "post"
 			group_name: this.group_name
+			visible_to: "editor"
 
 		Meteor.call 'add_response', param,
 			(err, res) ->
