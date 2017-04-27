@@ -52,8 +52,11 @@ _collection_headers =
 			name: 1
 			index: 1
 			title: 1
+			avatar: 1
 			content: 1
 			deleted: 1
+			material: 1
+			abstract: 1
 			owner_id: 1
 			parent_id: 1
 			visible_to: 1

@@ -40,7 +40,7 @@
 
 <template name="_post">
 	{{#Template.dynamic template=template_id data=.}}
-		{{#each children .}}
+		{{#each children}}
 			{{>_post}}
 		{{/each}}
 	{{/Template.dynamic}}
@@ -60,7 +60,7 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>basic_input method='set_field' collection_name='Posts' field='title'
+			{{>basic_input method='set_field' collection_name='Responses' field='title'
 					placeholder='Title' item_id=_id}}
 		{{/if}}
 
@@ -85,11 +85,11 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>upload method='set_field' collection_name='Posts' field='avatar'
+			{{>upload method='set_field' collection_name='Responses' field='avatar'
 			item_id=_id box_id='avatar'}}
 		{{/if}}
 
-		<img src="{{avatar}}" class="img-responsive"
+		<img src="{{download_field_value 'Responses' _id 'avatar'}}" class="img-responsive"
 				 alt="{{alternative}}">
 
 		{{#if _is_editing_response _id}}
@@ -176,7 +176,9 @@
 		{{/if}}
 
 		<div class="team-member">
-			<img src="{{avatar}}" class="img-responsive img-circle" alt="">
+			<img src="{{download_field_value 'Responses' _id 'avatar'}}"
+					 class="img-responsive img-circle" alt="">
+
 			{{#if _is_editing_response _id}}
 				{{>upload method='set_field' collection_name='Responses' field='avatar'
 					item_id=_id box_id='avatar'}}

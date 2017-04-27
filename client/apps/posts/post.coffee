@@ -73,9 +73,10 @@ Template.post_group.events
 
 #########################################################
 Template._post.helpers
-	children: (parent) ->
+	children: ->
+
 		filter =
-			parent_id: parent._id
+			parent_id: this.data._id
 
 		mod =
 			sort:
