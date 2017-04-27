@@ -53,6 +53,7 @@ _collection_headers =
 			index: 1
 			title: 1
 			avatar: 1
+			resume: 1
 			content: 1
 			deleted: 1
 			material: 1
