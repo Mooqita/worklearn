@@ -53,13 +53,17 @@ _collection_headers =
 			index: 1
 			title: 1
 			avatar: 1
+			figure: 1
 			resume: 1
+			authors: 1
 			content: 1
 			deleted: 1
 			material: 1
 			abstract: 1
+			pub_year: 1
 			owner_id: 1
 			parent_id: 1
+			conference: 1
 			visible_to: 1
 			view_order: 1
 			group_name: 1
