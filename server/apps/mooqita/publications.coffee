@@ -23,6 +23,7 @@ _challenge_fields =
 _solution_fields =
 	fields:
 		content: 1
+		material: 1
 		owner_id: 1
 		published: 1
 		parent_id: 1

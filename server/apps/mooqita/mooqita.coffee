@@ -101,7 +101,10 @@
 		feedback_id: f_id
 
 	in_progress = solution.in_progress
+	unmatched = solution.unmatched
+
 	modify_field_unprotected "Responses", solution._id, "in_progress", in_progress + 1
+	modify_field_unprotected "Responses", solution._id, "unmatched", unmatched - 1
 
 	return data
 
@@ -148,14 +151,22 @@
 
 	solution = Responses.findOne review.solution_id
 	completed = solution.completed
-	unmatched = solution.unmatched
 	in_progress = solution.in_progress
 
 	modify_field_unprotected "Responses", solution._id, "completed", completed + 1
 	modify_field_unprotected "Responses", solution._id, "in_progress", in_progress - 1
-	modify_field_unprotected "Responses", solution._id, "unmatched", unmatched - 1
 	modify_field_unprotected "Responses", profile._id, "provided", profile.provided + 1
 	modify_field_unprotected "Responses", review._id, "published", true
+
+	filter =
+		owner_id: solution.owner_id
+		type_identifier: "profile"
+	s_profile = Responses.findOne filter
+	s_mod =
+		$push:
+			messages: "new message"
+
+	Responses.update s_profile._id, s_mod
 
 	if credits + 1 <= 0
 		return
@@ -196,12 +207,12 @@
 	solution = Responses.findOne filter
 
 	if not solution
-		throw  new Meteor.Error "solution not found"
+				throw new Meteor.Error "no-solution","solution not found"
 
 	challenge = Responses.findOne solution.challenge_id
 
 	if not solution
-		throw  new Meteor.Error "challenge not found"
+		throw new Meteor.Error "no-challenge","challenge not found"
 
 	res =
 		solution: solution

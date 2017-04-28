@@ -8,7 +8,7 @@
 		<div class="row">
 			<span>
 				<a class="navigation-button control-navigate" id="student_profile">
-					Profile
+					Profile <span class="badge background-contrast">{{new_messages}}</span>
 				</a>
 			</span>
 
@@ -20,20 +20,25 @@
 
 			<span>
 				<a class="navigation-button control-navigate" id="student_solutions">
-					Solutions <span class="badge background-contrast">0{{new_solution_messages}}</span>
+					Solutions
 				</a>
 			</span>
 
 			<span>
 				<a class="navigation-button control-navigate" id="student_reviews">
-					Reviews <span class="badge background-contrast">0{{new_review_messages}}</span>
+					Reviews
 				</a>
 			</span>
 
 			<span>
 				<a class="navigation-button control-navigate" id="student_credentials">
-					Resume <span class="badge background-contrast">0{{new_credential_messages}}</span>
+					Resume
 				</a>
+			</span>
+
+
+			<span class="credit-score control-navigate pull-right">
+				Your credits: <span class="badge background-contrast">{{credits}}</span>
 			</span>
 		</div>
 	</div>

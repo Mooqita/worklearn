@@ -11,6 +11,7 @@
 ########################################
 Template.student_reviews.onCreated ->
 	this.searching = new ReactiveVar(false)
+	Session.set "find_review_error", false
 
 	self = this
 	self.autorun () ->
@@ -24,20 +25,32 @@ Template.student_reviews.helpers
 
 		return Responses.find(filter)
 
+	error_message: () ->
+		Session.get "find_review_error"
+
 	searching: () ->
 		Template.instance().searching.get()
+
+########################################
+_handle_error = (err) ->
+	if err.error == "no-solution"
+		Session.set "find_review_error", true
+
+	sAlert.error err
+	console.log err
 
 ########################################
 Template.student_reviews.events
 	"click #find_review": () ->
 		inst = Template.instance()
 		inst.searching.set true
+		Session.set "find_review_error", false
 
-		Meteor.call "find_review", this._id,
+		Meteor.call "provide_review",
 			(err, res) ->
 				inst.searching.set false
 				if err
-					sAlert.error err
+					_handle_error err
 				if res
 					sAlert.success "Review received!"
 

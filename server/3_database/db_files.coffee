@@ -58,7 +58,15 @@ _modify_db_file = (collection_name, item_id, field, value, type)->
 
 #######################################################
 @download_file = (collection_name, item_id, field) ->
-	deny_action_save('read', collection_name, item_id, field)
+	check collection_name, String
+
+	collection = get_collection collection_name
+	item = collection.findOne item_id
+
+	#TODO: implement a more fine grained access control
+	if not item.published
+		deny_action_save('read', collection_name, item_id, field)
+
 	return download_file_unprotected collection_name, item_id, field
 
 

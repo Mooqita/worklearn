@@ -22,34 +22,8 @@
 #TODO All elements should be links not internal switches using: ?view=profile
 #TODO Change color based on Text and or based on typing style
 
+#TODO integrate sorting of solution-review requests by submission time of review.
+#TODO make sure people see how much a review request costs
+
 #Learning materials!!!!! I think we need to offer online classes that allow humans to code/write/design for the first time! Give credits to students for creating content?
 
-AccountsTemplates.configure
-	confirmPassword: true,
-	enablePasswordChange: true,
-	forbidClientAccountCreation: false,
-	overrideLoginErrors: true,
-	sendVerificationEmail: true,
-	lowercaseUsername: false,
-	focusFirstInput: true,
-
-	#Appearance
-	showAddRemoveServices: true,
-	showForgotPasswordLink: true,
-	showLabels: true,
-	showPlaceholders: true,
-	showResendVerificationEmailLink: true,
-
-	# Client-side Validation
-	continuousValidation: false,
-	negativeFeedback: false,
-	negativeValidation: true,
-	positiveValidation: true,
-	positiveFeedback: true,
-	showValidating: true,
-
-	# Privacy Policy and Terms of Use
-	privacyUrl: 'privacy',
-	termsUrl: 'terms-of-use',
-
-AccountsTemplates.configureRoute('signIn');

@@ -59,31 +59,37 @@
 				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 			</h1>
 		{{else}}
-			<div>
+			{{#unless challenge}}
+				<div class="padding-top">
+					{{>ER_404}}
+				</div>
+			{{else}}
 				{{#with challenge}}
 					<h1>{{title}}</h1>
 
 					{{>more content=content}}
 
-					{{#if material}}
-						<h2>Additional Material</h2>
-						{{>download collection_name="Responses"
-							item_id=_id field="material"}}
+					{{#if has_solutions}}
+						{{#if material}}
+							<h2>Additional Material</h2>
+							{{>download collection_name="Responses"
+								item_id=_id field="material"}}
+						{{/if}}
 					{{/if}}
 				{{/with}}
-			</div>
 
-			{{#each solutions}}
-				{{>student_solution_reviews}}
-			{{else}}
-				<p>
-					You have not yet submitted a solution to this challenge.
-				</p>
+				{{#each solutions}}
+					{{>student_solution_reviews}}
+				{{else}}
+					<p>
+						You have not yet submitted a solution to this challenge.
+					</p>
 
-				<div class="text-right">
-					<div class="btn btn-theme" id="take_challenge">Take challenge</div>
-				</div>
-			{{/each}}
+					<div class="text-right">
+						<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+					</div>
+				{{/each}}
+			{{/unless}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>
@@ -99,8 +105,7 @@
 
 		<h1>Your Solution</h1>
 
-		{{#unless _is_public}}
-			<div class="alert alert-info">
+			<div class="alert background-theme">
 				Here is a list of things you have to do before your solution is ready:
 				<ul>
 					{{#unless _is_saved}}
@@ -108,13 +113,21 @@
 						<li>Add additional material if necessary.</li>
 						<li>Save your work!</li>
 					{{/unless}}
-					<li>Publish your solution (Button below the upload field).</li>
-					<li>Request a review (happens automatically when you publish your solution).</li>
-					<li>Write a review for another persons work.</li>
+
+					{{#unless _is_public}}
+						<li>Publish your solution (Button below the upload field).</li>
+						<li>Request a review (happens automatically when you publish your solution).</li>
+					{{/unless}}
+
+					<li>
+						Write a review for another persons work.
+						<a href="{{review_link}}">
+							<b>Click here to write one right now</b>
+						</a>
+					</li>
 					<li>Read the reviews you received and give feedback.</li>
 				</ul>
 			</div>
-		{{/unless}}
 
 		{{#unless _is_public}}
 			<label>Solution description</label>
@@ -132,7 +145,7 @@
 			{{/if}}
 
 			{{>upload method="set_field" collection_name="Responses"
-				item_id=_id field="material" max_size=250000}}
+				item_id=_id field="material" max_size=2000000}}
 
 		{{else}}
 			{{>more content=content}}
@@ -155,7 +168,7 @@
 				<div class="form-group col-sm-6">
 					<span class="btn-group btn-group-justified">
 						<a class="btn btn-theme" {{publish_disabled}}
-								 id="publish">Make public</a>
+								 id="publish_solution">Make public</a>
 					</span>
 				</div>
 			</div>
@@ -203,8 +216,10 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-theme" data-dismiss="modal">Not yet</button>
-					<button type="button" class="btn btn-theme" id="publish" data-dismiss="modal">Publish</button>
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme" id="publish" data-dismiss="modal">Publish</a>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -5,44 +5,175 @@
 -------------------------------------------------->
 <template name="student_profile">
 	{{#mooqita_wide_spacing}}
-		<div class="row">
-			<div class="col-md-3">
-				<h2>Avatar</h2>
-				{{#if _profile.avatar}}
-					<div class="text-center">
-						<img class="img-responsive img-circle"
-								 src="{{download_field_value "Responses" _profile._id "avatar" _profile.avatar}}">
-					</div>
-				{{/if}}
+		{{#with _profile}}
+			{{#unless profile_done}}
+				<div class="alert background-theme" style="margin-top: 25px">
+					Here is a list of things you should do to complete your profile.
+					<ul>
+						{{#unless _profile.given_name}}
+							<li>Fill in your given name</li>
+						{{/unless}}
+						{{#unless _profile.family_name}}
+							<li>And your family name</li>
+						{{/unless}}
+						{{#unless _profile.avatar}}
+							<li>Upload a picture of you or choose an avatar.</li>
+						{{/unless}}
+						{{#unless _profile.resume}}
+							<li>Provide a resume of you.</li>
+						{{/unless}}
+						{{#unless _profile.job_interested}}
+							<li>Let us know if you are interested in job offerings from our partners.</li>
+						{{/unless}}
+					</ul>
+				</div>
+			{{/unless}}
 
-				{{>upload method="set_field" collection_name="Responses"
-					item_id=_profile._id field="avatar" max_size=2000000}}
+			<div class="row editable" style="margin-top: 25px">
+				<div class="col-sm-4 col-ms-4 col-xs-12">
+					<h2 class="header">Picture</h2>
+
+					{{#if _profile.avatar}}
+						<div class="avatar avatar-border">
+							<div class="avatar-container img-circle">
+								<img class="img-responsive img-avatar"
+										 src="{{download_field_value "Responses" _profile._id
+																								 "avatar" _profile.avatar}}">
+							</div>
+						</div>
+					{{/if}}
+
+					{{>upload method="set_field" collection_name="Responses"
+						item_id=_profile._id field="avatar" max_size=500000}}
+				</div>
+
+				<div class="col-sm-8 col-ms-8 col-xs-12">
+					<div class="row editable">
+						<div class="col-md-12">
+							<h2 class="header">Name</h2>
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Responses"
+								item_id=_profile._id field="given_name" placeholder="Given name"}}
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Responses"
+								item_id=_profile._id field="middle_name" placeholder="Middle name"}}
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Responses"
+								item_id=_profile._id field="family_name" placeholder="Family name"}}
+						</div>
+					</div>
+
+					<div class="row editable">
+						<div class="col-md-12">
+							<h2 class="header">Are you looking for a job?</h2>
+						</div>
+
+						<div class="col-md-12">
+							<p>
+								If you are looking for a job please let us know.
+								We put you in our pool of candidates. When we find
+								a suitable company we will connect you. With their
+								recruiting team.
+							</p>
+
+							<p>
+								<em>
+									<b>
+										We only try to match you when you choose yes
+										in this field.
+									</b>
+								</em>
+							</p>
+						</div>
+
+						<div class="col-md-12">
+							{{>select_input method="set_field" collection_name="Responses"
+									item_id=_profile._id field="job_interested"
+									options=job_interested_options}}
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="col-md-9">
-				<h2>Name</h2>
-				<div class="row">
+			{{#if job_interested}}
+				<div class="row editable">
+					<div class="col-md-12">
+						<h2 class="header">
+							What kind a job are you looking for?
+						</h2>
+					</div>
+
 					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="given_name" placeholder="Given name"}}
+						{{>select_input method="set_field" collection_name="Responses"
+							item_id=_profile._id field="job_type" options=job_type_options}}
+					</div>
+
+					<div class="col-md-4">
+						{{>select_input method="set_field" collection_name="Responses"
+							item_id=_profile._id field="job_locale" options=job_locale_options}}
 					</div>
 
 					<div class="col-md-4">
 						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="middle_name" placeholder="Middle name"}}
-					</div>
-
-					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="family_name" placeholder="Family name"}}
+								item_id=_profile._id field="hours_per_week"
+								placeholder="Hours per week" type="number"}}
 					</div>
 				</div>
 
-				<h2>Resume</h2>
+				<div class="row editable" style="margin-top:10px">
+					<div class="col-md-12">
+						<h2 class="header">Where are you living?</h2>
+					</div>
+
+					<div class="col-md-8">
+						{{>country_state method="set_field" collection_name="Responses"
+							item_id=_profile._id c_field="country" s_field="state"}}
+					</div>
+
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Responses"
+							item_id=_profile._id field="city" placeholder="city name"}}
+					</div>
+				</div>
+			{{/if}}
+
+			<div class="editable">
+				<h2 class="header">Resume</h2>
 				{{>text_input method="set_field" collection_name="Responses"
-					item_id=_profile._id field="resume" placeholder="Tell us a little more about you."}}
+						item_id=_profile._id field="resume"
+						placeholder="Tell us a little more about you."}}
 			</div>
-		</div>
+
+			{{#each messages}}
+				{{>user_message}}
+			{{/each}}
+		{{/with}}
 	{{/mooqita_wide_spacing}}
 </template>
 
+
+<template name="user_message">
+	message
+</template>
+
+
+
+
+	<!--div class="col-md-12">
+		<h2>Credits <span class="badge background-contrast">1</span></h2>
+		<p>
+			Credits is the currency in Mooqita.
+			Every time you write a review you get credits.
+			You can spend these credits requesting reviews.
+			Every review that you write will also influence
+			your resume and your score card.
+		</p>
+
+
+	</div-->

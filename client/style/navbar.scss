@@ -54,6 +54,7 @@
 	background: $theme;
 }
 
+
 ////////////////////////////////////////////////
 // Menu navigation
 ////////////////////////////////////////////////
@@ -64,20 +65,27 @@
 	padding-left: 35px;
 }
 
+.navigation-background .credit-score{
+	font-size: 20px;
+	margin-right: 25px
+}
+
+.navigation-background .control-navigate{
+	font-size: 20px;
+}
+
 .navigation-button{
 	color: #eee;
 	padding: 15px;
 	margin: 5px;
-	font-size: 20px;
 	font-style: normal;
 	text-decoration: none;
 }
 
 .navigation-button:hover{
-	color: #5c856f;
+	color: $contrast-on-theme;
 	padding: 15px;
 	margin: 5px;
-	font-size: 20px;
 	font-style: normal;
 	text-decoration: none;
 	cursor: pointer;

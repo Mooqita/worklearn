@@ -42,7 +42,7 @@ Meteor.methods
 		return request_review solution, Meteor.userId()
 
 
-	find_review: () ->
+	provide_review: () ->
 		user = Meteor.user()
 
 		if not user

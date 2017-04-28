@@ -47,6 +47,31 @@
 	font-size: 16px;
 }
 
+.mooqita-layout .editable h2 {
+	padding: 0px;
+	margin: 0px;
+}
+
+.mooqita-layout .editable h2.header {
+	padding: 0px;
+	margin: 40px 0px 20px 0px;
+}
+
+.mooqita-layout .editable .form-control{
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	background: none;
+	font: inherit;
+//	border: inherit;
+	text-align: inherit;
+	color: inherit;
+	display: initial;
+	height: 100%;
+//	padding: 0px;
+	margin-bottom: -2px;
+}
+
 .mooqita-layout label.item-label{
 	margin-top: 25px;
 }
@@ -54,6 +79,50 @@
 .mooqita-layout .well{
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
+}
+
+.mooqita-line{
+	margin-top: 40px;
+	margin-bottom: 40px;
+	border-top-color: $theme;
+	border-top-width: 3px;
+	width: 25%;
+}
+
+////////////////////////////////////////////////
+// Handling avatar and image squaring
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.avatar{
+	padding: 10px;
+}
+
+.avatar.avatar-border{
+	border: 2px solid #ddd;
+	border-bottom: none;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.avatar-container{
+	height:0;
+	width:100%;
+	padding-bottom:100%;
+	position: relative;
+	overflow: hidden;
+}
+
+.avatar-container img.img-avatar{
+	object-fit: cover;
+	position: absolute;
+	margin: auto;
+	min-height: 100%;
+	min-width: 100%;
+	left: -100%;
+	right: -100%;
+	top: -100%;
+	bottom: -100%;
 }
 
 ////////////////////////////////////////////////

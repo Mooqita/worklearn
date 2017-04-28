@@ -67,7 +67,7 @@
 			{{#with challenge}}
 				<div>
 					{{#unless _is_public}}
-						<div class="alert alert-info" style="margin-top:25px;">
+						<div class="alert background-theme" style="margin-top:25px;">
 							A summary of things you need to do before students can see your task:
 							<ul>
 								{{#unless _is_saved}}
@@ -129,14 +129,13 @@
 							<label class="item-label">Upload Additional material:</label>
 							{{>upload method="set_field" collection_name="Responses"
 								item_id=_id field="material"}}
-						{{else}}
-							{{#if material}}
-								<label class="item-label">Download Additional material:</label>
-							{{/if}}
 						{{/unless}}
 
 						{{#if material}}
-							Download {{>download collection_name="Responses" item_id=response._id field="material"}}
+							<label class="item-label">Download Additional material:</label>
+							<div>
+								{{>download collection_name="Responses" item_id=_id field="material"}}
+							</div>
 						{{/if}}
 					</div>
 				</div>
@@ -356,8 +355,10 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-red" id="delete" data-dismiss="modal">Delete</button>
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
+					</div>
 				</div>
 			</div>
 		</div>

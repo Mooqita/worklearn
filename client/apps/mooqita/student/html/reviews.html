@@ -25,10 +25,17 @@
 				</div>
 			{{/if}}
 
+			{{#if error_message}}
+				<div class="alert background-theme" style="margin-top: 15px">
+					We were not able to find a review for you yet.
+					Please come back later and try again.
+				</div>
+			{{/if}}
+
 			{{#each reviews}}
 				{{>student_review_preview}}
 			{{else}}
-				<p>You have not submitted any reviews yet.</p>
+				<h2>You have not submitted any reviews yet.</h2>
 			{{/each}}
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -63,6 +70,7 @@
 					{{>more content=content}}
 
 					{{#if material}}
+						<label>Additional Material for Challenge</label>
 						<h3 style="padding-bottom: 15px">
 							{{>download collection_name="Responses"
 								item_id=_id field="material"}}
@@ -72,9 +80,11 @@
 
 				{{#with solution}}
 					<h1>Solution</h1>
+
 					{{>more content=content}}
 
 					{{#if material}}
+						<label>Additional Material for Solution</label>
 						<h3 style="padding-bottom: 15px">
 							{{>download collection_name="Responses"
 								item_id=_id field="material"}}
@@ -85,6 +95,24 @@
 
 			{{#with review}}
 				<h1>Your Review</h1>
+					{{#unless _is_public}}
+						<div class="alert background-theme">
+							Here is a list of things you have to do before your review is done:
+							<ul>
+								{{#unless _is_saved}}
+									<li>Write your review. Well that seems obvious.</li>
+									<li>And save it!</li>
+								{{/unless}}
+
+								{{#unless rating}}
+									<li>Select a rating for the solution.</li>
+								{{/unless}}
+
+									<li>Publish your review.</li>
+							</ul>
+						</div>
+					{{/unless}}
+
 				{{#unless _is_public}}
 					{{>text_input method="set_field" collection_name="Responses"
 						item_id=_id field="content" placeholder="Please provide your feedback here"}}
@@ -95,34 +123,16 @@
 				{{/unless}}
 
 				<div class="form-group">
-					<label for="quality"
-								 title="Your grading of the solution"
-									>Rating</label>
 					{{#unless _is_public}}
+						<label for="quality" class="item-label"
+									 title="Your grading of the solution"
+										>Rating</label>
 						{{>select_input method="set_field" collection_name="Responses"
 								item_id=_id field="rating" options=_rating_options }}
 					{{else}}
-						<div class="form-control">
-							<em>{{rating}}</em>
-						</div>
+						<h3><b>Your rating: <em>{{rating}}</em> out of <em>5</em></b></h3>
 					{{/unless}}
 				</div>
-
-				{{#unless rating}}
-					<div class="alert alert-danger">
-						Please select a rating for this submission.
-					</div>
-				{{/unless}}
-
-				{{#unless _is_public}}
-					<div class="alert alert-info">
-						You need to publish your review.
-						{{#unless _is_saved}}
-							To publish it you need to save
-							your review.
-						{{/unless}}
-					</div>
-				{{/unless}}
 
 				{{#unless _is_public}}
 					<div class="row">
@@ -166,8 +176,10 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-red" data-dismiss="modal">Not yet</button>
-					<button type="button" class="btn btn-red" id="publish" data-dismiss="modal">Publish</button>
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme" id="publish" data-dismiss="modal">Publish</a>
+					</div>
 				</div>
 			</div>
 		</div>

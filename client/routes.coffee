@@ -41,7 +41,7 @@ FlowRouter.route "/research",
 
 ##########################################################
 FlowRouter.route "/work-learn",
-	name: "index",
+	name: "worklearn",
 	action: (params) ->
 		data =
 			menu: "mooqita_menu"
@@ -51,7 +51,7 @@ FlowRouter.route "/work-learn",
 
 ##########################################################
 FlowRouter.route "/privacy",
-	name: "index",
+	name: "privacy",
 	action: (params) ->
 		data =
 			menu: "mooqita_menu"
@@ -61,7 +61,7 @@ FlowRouter.route "/privacy",
 
 ##########################################################
 FlowRouter.route "/terms-of-use",
-	name: "index",
+	name: "terms-of-use",
 	action: (params) ->
 		data =
 			menu: "mooqita_menu"
@@ -70,14 +70,53 @@ FlowRouter.route "/terms-of-use",
 		BlazeLayout.render "body_template", data
 
 ##########################################################
-FlowRouter.route "/sign-in",
-	name: "index",
+# login and accounts
+##########################################################
+
+##########################################################
+FlowRouter.route "/login",
+	name: "user.signin",
 	action: (params) ->
+		console.log "hae"
 		data =
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_login"
 		BlazeLayout.render "body_template", data
+
+##########################################################
+AccountsTemplates.configure
+	confirmPassword: true,
+	enablePasswordChange: true,
+	forbidClientAccountCreation: false,
+	overrideLoginErrors: true,
+	sendVerificationEmail: true,
+	lowercaseUsername: false,
+	focusFirstInput: true,
+
+	#Appearance
+	showAddRemoveServices: true,
+	showForgotPasswordLink: true,
+	showLabels: true,
+	showPlaceholders: true,
+	showResendVerificationEmailLink: true,
+
+	# Client-side Validation
+	continuousValidation: false,
+	negativeFeedback: false,
+	negativeValidation: true,
+	positiveValidation: true,
+	positiveFeedback: true,
+	showValidating: true,
+
+	# Privacy Policy and Terms of Use
+	privacyUrl: 'privacy',
+	termsUrl: 'terms-of-use',
+
+##########################################################
+AccountsTemplates.configureRoute 'signIn',
+	path: '/login'
+
 
 ##########################################################
 # Student

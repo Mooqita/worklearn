@@ -5,7 +5,10 @@
 				Resource not found: 404
 			</h1>
 			<hr>
-			The resource you requested: {{resource}} is not available on this server.
+			The resource you requested
+			{{#if resource}}-{{resource}}-{{/if}}
+			is not available on this server.
 		</div>
 	</div>
 </template>
+

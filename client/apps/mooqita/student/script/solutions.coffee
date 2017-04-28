@@ -63,8 +63,6 @@ Template.student_solution_preview.events
 ########################################
 Template.student_solution.onCreated ->
 	self = this
-	self.publishing = new ReactiveVar(false)
-
 	self.autorun () ->
 		if not FlowRouter.getQueryParam("challenge_id")
 			return
@@ -84,20 +82,22 @@ Template.student_solution.helpers
 			type_identifier: "solution"
 			challenge_id: FlowRouter.getQueryParam("challenge_id")
 			owner_id: Meteor.userId()
+
 		res = Responses.find filter
 		return res
 
-	publish_disabled: () ->
-		if Template.instance().publishing.get()
-			return "disabled"
-		if not this.content
-			return "disabled"
-		return ""
+	has_solutions: () ->
+		filter =
+			type_identifier: "solution"
+			challenge_id: FlowRouter.getQueryParam("challenge_id")
+			owner_id: Meteor.userId()
+
+		res = Responses.find filter
+		return res.count()>0
 
 ########################################
 Template.student_solution.events
 	"click #take_challenge":()->
-		console.log FlowRouter.getQueryParam("challenge_id")
 		id = FlowRouter.getQueryParam("challenge_id")
 		Meteor.call "add_solution", id,
 			(err, res) ->
@@ -114,6 +114,8 @@ Template.student_solution.events
 ##############################################
 Template.student_solution_reviews.onCreated ->
 	self = this
+	self.publishing = new ReactiveVar(false)
+
 	self.autorun () ->
 		self.subscribe "reviews_by_solution_id", self.data._id
 
@@ -127,22 +129,28 @@ Template.student_solution_reviews.helpers
 		res = Responses.find filter
 		return res
 
+	review_link: () ->
+		return "/user?template=student_reviews&challenge_id="+this.challenge_id
+
+	publish_disabled: () ->
+		if Template.instance().publishing.get()
+			return "disabled"
+		if not this.content
+			return "disabled"
+		return ""
+
+
 ########################################
 Template.student_solution_reviews.events
-	"click #publish":(event)->
+	"click #publish_solution":(event)->
 		if event.target.attributes.disabled
 			return
 
-		filter =
-			type_identifier: "solution"
-			challenge_id: FlowRouter.getQueryParam("challenge_id")
-			owner_id: Meteor.userId()
-		res = Responses.findOne filter
-
 		data =
-			id: res._id
+			id: this._id
 			publishing: Template.instance().publishing
 
+		console.log data
 		Modal.show('publish_solution', data)
 
 ##############################################
