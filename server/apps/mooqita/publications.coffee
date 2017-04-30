@@ -123,16 +123,11 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		throw Meteor.Error('Size values larger than 10 are not allowed.')
 
 	self = this
-	filter =
-		owner_id: this.userId
-		type_identifier: "profile"
-
 	user = Meteor.users.findOne(this.userId)
-	profile = Responses.findOne(filter)
 	challenge = Responses.findOne(challenge_id)
 
 	if challenge.owner_id != user._id
-		return []
+		throw Meteor.Error('Not permitted.')
 
 	filter =
 		parent_id: challenge_id
@@ -142,28 +137,28 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	options =
 		fields:
 			content: 1
-			reviews: 1
 			owner_id: 1
 			challenge_id: 1
 			reviews_required: 1
 		skip: page * size
 		limit: size
 
-	add_info = (entry) ->
+	add_info = (solution) ->
+		entry = {}
+
 		filter =
-			owner_id: entry.owner_id
+			owner_id: solution.owner_id
 			type_identifier: "profile"
 
-		author = Meteor.users.findOne entry.owner_id
 		profile = Responses.findOne filter
-
-		entry['author_id'] = author._id
-		entry['author_name'] = profile.given_name + ' ' + profile.family_name
-		entry['author_avatar'] = _get_avatar profile
+		if profile
+			entry['author_name'] = profile.given_name + ' ' + profile.family_name
+			entry['author_avatar'] = _get_avatar profile
 
 		filter =
-			parent_id: entry._id
-			visible_to: "anonymous"
+			parent_id: solution._id
+			published: true
+			type_identifier: "review"
 
 		options =
 			fields:
@@ -171,21 +166,26 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 				content: 1
 				owner_id: 1
 
-		reviews = Responses.find(filter, options).fetch()
+		review_cursor = Responses.find(filter, options)
+		reviews = []
 		avg = 0
 		nt = 0
 
-		for o in reviews
+		review_cursor.forEach (review) ->
+			r = {}
+			r.content = review.content
+			r.rating = review.rating
+
 			filter =
-				owner_id: o.owner_id
+				owner_id: review.owner_id
 				type_identifier: "profile"
 
-			peer = Meteor.users.findOne(o.owner_id)
 			profile = profile = Responses.findOne(filter)
+			if profile
+				r['peer_name'] = profile.given_name + ' ' + profile.family_name
+				r['peer_avatar'] = _get_avatar profile
 
-			o['peer_id'] = peer._id
-			o['peer_name'] = profile.given_name + ' ' + profile.family_name
-			o['peer_avatar'] = _get_avatar profile
+			reviews.push r
 			avg += r.rating
 			nt += 1
 
@@ -193,7 +193,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		entry['reviews'] = reviews
 		entry["average_rating"] = avg
 
-		self.added('challenge_summary', entry._id, entry)
+		self.added('challenge_summary', solution._id, entry)
 
 	Responses.find(filter, options).forEach(add_info)
 	self.ready()
@@ -331,13 +331,13 @@ Meteor.publish "user_credentials", (user_id) ->
 			owner_id: user._id
 			type_identifier: "profile"
 
-		user_profile = Responses.findOne filter
+		profile = Responses.findOne filter
 
-		if user_profile
-			resume.name = user_profile.given_name
-			resume.owner_id = user_profile._id
-			resume.self_description = user_profile.resume
-			resume.avatar = _get_avatar user_profile
+		if profile
+			resume.name = profile.given_name
+			resume.owner_id = profile._id
+			resume.self_description = profile.resume
+			resume.avatar = _get_avatar profile
 
 		solution_filter =
 			type_identifier: "solution"
@@ -361,13 +361,13 @@ Meteor.publish "user_credentials", (user_id) ->
 				filter =
 					owner_id: challenge.owner_id
 					type_identifier: "profile"
-				challenge_owner_profile = Responses.findOne filter
+				profile = Responses.findOne filter
 
-				solution.challenge_owner_id = challenge.owner_id
-				solution.challenge_owner_avatar = _get_avatar challenge_owner_profile
+				if profile
+					solution.challenge_owner_avatar = _get_avatar profile
 
-			t = 0
-			n = 0
+			abs_rating = 0
+			num_ratings = 0
 
 			review_filter =
 				type_identifier: "review"
@@ -378,21 +378,32 @@ Meteor.publish "user_credentials", (user_id) ->
 				review = {}
 
 				filter =
+					parent_id: r._id
+					type_identifier: "feedback"
+				feedback = Responses.findOne filter
+
+				filter =
 					owner_id: r.owner_id
 					type_identifier: "profile"
 				profile = Responses.findOne filter
 
+				if feedback.published
+					review.rating = r.rating
+					abs_rating += r.rating
+					num_ratings += 1
+
 				review.review = r.content
-				review.rating = r.rating
-				review.name = profile.given_name
-				review.owner_id = r.owner_id
-				review.avatar = _get_avatar profile
+
+				if profile
+					review.name = profile.given_name + " " + profile.family_name
+					review.avatar = _get_avatar profile
 
 				solution.reviews.push(review)
-				t += r.rating
-				n += 1
 
-			solution.average = Math.round(t/n, 1)
+			if abs_rating
+				avg = Math.round(abs_rating / num_ratings,1)
+				solution.average = avg
+
 			solution_list.push(solution)
 
 		resume.solutions = solution_list

@@ -1,8 +1,16 @@
 Template.student_profile.helpers
+	email: () ->
+		user = Meteor.user()
+
+		if not user.emails
+			return "no email registered"
+
+		return user.emails[0].address
+
 	job_interested_options:() ->
 		return [{value:"", label:"Are you looking for a job?"}
-			{value:"yes", label:"Yeah sounds interesting"}
-			{value:"no", label:"No thanks I am fine"}]
+			{value:"yes", label:"Yes, sounds interesting"}
+			{value:"no", label:"No, maybe later"}]
 
 
 	job_type_options: () ->

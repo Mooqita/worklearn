@@ -36,9 +36,18 @@ Meteor.methods
 		return gen_solution challenge, Meteor.userId()
 
 
+	finish_solution: (solution_id) ->
+		check solution_id, String
+		solution = secure_item_action solution_id, "solution", true
+		return finish_solution solution, Meteor.userId()
+
+
 	request_review: (solution_id) ->
 		check solution_id, String
 		solution = secure_item_action solution_id, "solution", true
+		if not solution.published
+			throw new Meteor.Error "Solution not published"
+
 		return request_review solution, Meteor.userId()
 
 
@@ -59,7 +68,7 @@ Meteor.methods
 		return rev_fed.review_id
 
 
-	find_review_for_challenge: (challenge_id) ->
+	provide_review_for_challenge: (challenge_id) ->
 		check challenge_id, String
 
 		user = Meteor.user()
@@ -81,7 +90,15 @@ Meteor.methods
 		review = Responses.findOne review_id
 		return finish_review review, Meteor.userId()
 
+	finish_feedback: (feedback_id) ->
+		feedback = Responses.findOne feedback_id
+		return ""#finish_review review, Meteor.userId()
 
+	###########################################################
+	# admin stuff
+	###########################################################
+
+	###########################################################
 	add_upwork_challenge: (response) ->
 		user = Meteor.user()
 
@@ -96,3 +113,30 @@ Meteor.methods
 
 		Responses.insert response
 
+	###########################################################
+	send_test_message: (type) ->
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		if !Roles.userIsInRole(user._id, 'db_admin')
+			throw new Meteor.Error('Not permitted.')
+
+		switch type
+			when "got_review"
+				filter =
+					owner_id: Meteor.userId()
+					type_identifier: "solution"
+				solution = Responses.findOne filter
+				challenge = Responses.findOne solution.challenge_id
+				rev_id = gen_review challenge, solution, Meteor.userId()
+
+				modify_field_unprotected "Responses", rev_id.review_id, "rating", 3
+				review = Responses.findOne rev_id.review_id
+
+				finish_review review, Meteor.userId()
+
+				console.log "Message : " + type + " send."
+
+			else console.log "Message type: " + type + " unknown."

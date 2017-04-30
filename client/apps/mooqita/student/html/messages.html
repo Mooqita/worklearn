@@ -1,0 +1,9 @@
+<template name="student_messages">
+	{{#mooqita_wide_spacing}}
+		{{#each messages}}
+			<h3><b>{{title}}</b> </h3>
+			{{>more content=content}}
+			<a href="{{url}}">link</a>
+		{{/each}}
+	{{/mooqita_wide_spacing}}
+</template>

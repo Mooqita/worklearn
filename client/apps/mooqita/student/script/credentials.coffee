@@ -35,6 +35,11 @@ Template.credential_solution.onCreated () ->
 
 ##############################################
 Template.credential_solution.helpers
+	average_rating: () ->
+		if this.average
+			return this.average
+		return "-/-"
+
 	reviews_visible: () ->
 		return Template.instance().reviews_visible.get()
 
@@ -49,6 +54,13 @@ Template.credential_solution.events
 ##############################################
 # credential review
 ##############################################
+
+##############################################
+Template.credential_review.helpers
+	average_rating: () ->
+		if this.average
+			return this.average
+		return "-/-"
 
 ##############################################
 Template.credential_review.helpers

@@ -105,31 +105,6 @@ Meteor.publish "sum_of_field", (template_id, field, value) ->
 
 
 #######################################################
-# special
-#######################################################
-
-#######################################################
-Meteor.publish "files", (collection_name, item_id, field) ->
-	if not item_id
-		return []
-
-	check collection_name, String
-	check item_id, String
-	check field, String
-
-	fields = visible_fields(collection_name, item_id, this.userId)
-
-	if field not in fields
-		throw new Meteor.Error "Not enough rights"
-
-	colllection = get_collection collection_name
-	data =
-		data: colllection.findOne(item_id)[field]
-
-	this.added("files", Random.id(), data)
-	console.log("File: "+collection_name+"."+field+" submitted!")
-
-#######################################################
 Meteor.publish "permissions", () ->
 	if !this.userId
 		throw new Meteor.Error("Not permitted.")

@@ -1,13 +1,26 @@
+Template.student_menu.onCreated ->
+	self = this
+
+	self.autorun ->
+		filter =
+			type_identifier: "message"
+			owner_id: Meteor.userId()
+
+		Meteor.subscribe "responses", filter, "find messages"
+
+
 Template.student_menu.helpers
 	credits: () ->
 		profile = get_profile()
 		r = profile.requested
 		p = profile.provided
 
-		console.log profile
-
 		return p-r
 
-	new_messages: () ->
-		profile = get_profile()
-		return profile.new_messages
+	num_new_messages: () ->
+		filter =
+			type_identifier: "message"
+			owner_id: Meteor.userId()
+
+		return Responses.find(filter).count()
+

@@ -40,6 +40,14 @@ $contrast-on-theme-dark: #5c856f;
 	border-color: $theme;
 }
 
+.background-theme a{
+	color: $contrast-on-theme;
+}
+
+.background-theme a:hover{
+	color: $contrast-on-theme-dark;
+}
+
 .background-contrast {
 	color: $text-on-theme;
 	background: $contrast-on-theme;
@@ -51,19 +59,23 @@ $contrast-on-theme-dark: #5c856f;
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
   color: $text-on-theme;
 }
 
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {
+	/* Firefox 19+ */
   color: $text-on-theme;
 }
 
-:-ms-input-placeholder { /* IE 10+ */
+:-ms-input-placeholder {
+	/* IE 10+ */
   color: $text-on-theme;
 }
 
-:-moz-placeholder { /* Firefox 18- */
+:-moz-placeholder {
+	/* Firefox 18- */
   color: $text-on-theme;
 }
 

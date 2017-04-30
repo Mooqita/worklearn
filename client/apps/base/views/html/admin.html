@@ -8,6 +8,8 @@
 
 		{{>hashes}}
 
+		{{>messages}}
+
 		{{#if isInRole 'db_admin'}}
 			<h2> Database Permission </h2>
 			<div class="well">
@@ -148,4 +150,22 @@
 	{{else}}
 		{{>ER_404}}
 	{{/if}}
+</template>
+
+<template name="messages">
+	<h2>Test message system</h2>
+
+	<div class="well">
+		<select class="form-control edit-field" id="message_type">
+			<option value="got_review">Send got review message</option>
+		</select>
+
+		<br>
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" id="send_message">
+				Send test message
+			</a>
+		</div>
+	</div>
 </template>

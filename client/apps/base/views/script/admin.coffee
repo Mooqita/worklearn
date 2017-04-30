@@ -188,3 +188,15 @@ Template.admin_upwork_oauth.helpers
 	upwork_oauth_finished: () ->
 		return not get_oauth_requesting()
 
+
+Template.messages.events
+	"click #send_message": (event, template) ->
+		target = template.find "#message_type"
+		value = target.options[target.selectedIndex].value;
+
+		Meteor.call "send_test_message", value,
+			(err, rsp)->
+				if err
+					sAlert.error(err)
+				else
+					sAlert.info("message send")

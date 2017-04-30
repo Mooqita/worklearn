@@ -79,10 +79,10 @@ Template.student_review_feedback.events
 ##############################################
 Template.publish_feedback.events
 	'click #publish': ->
-		Meteor.call "finish_review", this.feedback_id,
+		Meteor.call "finish_feedback", this.feedback_id,
 			(err, res) ->
 				if err
 					sAlert.error(err)
 				if res
-					sAlert.success "Review published!"
+					sAlert.success "Feedback published!"
 

@@ -163,7 +163,7 @@ Template.publish_solution.events
 		self = this
 		self.publishing.set true
 
-		Meteor.call "request_review", self.id,
+		Meteor.call "finish_solution", self.id,
 			(err, res) ->
 				self.publishing.set false
 

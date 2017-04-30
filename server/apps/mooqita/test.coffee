@@ -234,8 +234,8 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-#		if !Roles.userIsInRole(user._id, 'db_admin')
-#			throw new Meteor.Error('Not permitted.')
+		if !Roles.userIsInRole(user._id, 'db_admin')
+			throw new Meteor.Error('Not permitted.')
 
 		console.log "data generation"
 

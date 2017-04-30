@@ -196,13 +196,20 @@
 
 .mooqita-layout .select-occupation .item:hover{
 	border-color: $theme;
-	//background: $theme-light;
 }
 
 .mooqita-layout .select-occupation .glyphicon{
 	font-size: 2em;
 	color: $theme;
 }
+
+.mooqita-layout .select-occupation.select-disabled .item,
+.mooqita-layout .select-occupation.select-disabled .item:hover,
+.mooqita-layout .select-occupation.select-disabled .glyphicon{
+	border-color: #ddd;
+	color: #ddd;
+}
+
 
 .mooqita-layout .select-occupation label{
 	font-size: 1.5em;

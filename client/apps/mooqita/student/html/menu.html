@@ -8,7 +8,7 @@
 		<div class="row">
 			<span>
 				<a class="navigation-button control-navigate" id="student_profile">
-					Profile <span class="badge background-contrast">{{new_messages}}</span>
+					Profile
 				</a>
 			</span>
 
@@ -37,9 +37,14 @@
 			</span>
 
 
-			<span class="credit-score control-navigate pull-right">
-				Your credits: <span class="badge background-contrast">{{credits}}</span>
-			</span>
+			{{#if num_new_messages}}
+				<span class="pull-right">
+					<a class="navigation-button control-navigate" id="student_messages">
+						Messages
+						<span class="badge background-contrast">{{num_new_messages}}</span>
+					</a>
+				</span>
+			{{/if}}
 		</div>
 	</div>
 </template>
