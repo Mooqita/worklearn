@@ -73,8 +73,13 @@
 						<div class="col-md-12">
 							<h2 class="header">Registered E-Mail</h2>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-8">
 							<em><b>{{email}}</b></em>
+						</div>
+						<div class="col-md-4">
+							{{>select_input method="set_field" collection_name="Responses"
+									item_id=_profile._id field="mail_notifications"
+									options=mail_notifications_options}}
 						</div>
 					</div>
 

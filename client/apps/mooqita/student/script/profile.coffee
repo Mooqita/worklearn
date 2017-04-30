@@ -7,6 +7,12 @@ Template.student_profile.helpers
 
 		return user.emails[0].address
 
+	mail_notifications_options:() ->
+		return [{value:"", label:"Notifications ?"}
+			{value:"yes", label:"Yes, sounds good"}
+			{value:"no", label:"No, my mail is already full"}]
+
+
 	job_interested_options:() ->
 		return [{value:"", label:"Are you looking for a job?"}
 			{value:"yes", label:"Yes, sounds interesting"}

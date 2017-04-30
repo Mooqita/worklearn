@@ -39,15 +39,16 @@
 
 	profile = Responses.findOne p_filter
 
-	cycle = profile.notification_cycle
-	last = profile.last_notification
-	now = new Date()
-	dif = now - last
+	#cycle = profile.notification_cycle
+	#last = profile.last_notification
+	#now = new Date()
+	#dif = now - last
 
 	#if cycle > dif
 	#	return
 
-	send_mail user_id, title, message
+	if profile.mail_notifications == "yes"
+		send_mail user_id, title, message
 
 	return m_id
 
@@ -67,22 +68,24 @@
 		type_identifier: "profile"
 	solution_profile = Responses.findOne filter
 
-	url = "/user?template=student_solution&challenge_id=" + challenge._id
-	body = "Hi " + solution_profile.given_name + ",\n\n"
-	body += "You received a new review to one of your solutions. \n"
-	body += "Challenge title: " + challenge.title + "\n"
-	body += "To check it out, go to your profile: " +
-					Meteor.absoluteUrl() +
-					"user?template=student_profile"
+	subject = "Mooqita: You got a new review"
+	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
 
-	subject = "New review for - " + challenge.title
+	body = "Hi " + solution_profile.given_name + ",\n\n"
+	body += "You received a new review. \n"
+	body += "To check it out, follow this link: " + url + "\n\n"
+	body += "Kind regards, \n"
+	body += " Your Mooqita Team \n\n"
+
+	body += "You can disable mail notifications in your profile: " +
+					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
 	gen_message solution.owner_id, subject, body, url
 
 	return true
 
 ###############################################
-@send_review_message = (feedback) ->
+@send_feedback_message = (feedback) ->
 	challenge = Responses.findOne feedback.challenge_id
 	review = Responses.findOne feedback.parent_id
 
@@ -91,16 +94,18 @@
 		type_identifier: "profile"
 	review_profile = Responses.findOne filter
 
-	url = "/user?template=student_solution&challenge_id=" + challenge._id
+	subject = "Mooqita: New feedback for your reviews"
+	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
+
 	body = "Hi " + review_profile.given_name + ",\n\n"
 	body += "You received feedback to one of your reviews. \n"
-	body += "Challenge title: " + challenge.title + "\n"
-	body += "To check it out, go to your profile: " +
-					Meteor.absoluteUrl() +
-					"user?template=student_profile"
+	body += "To check it out, follow this link: " + url + "\n\n"
+	body += "Kind regards, \n"
+	body += " Your Mooqita Team \n\n"
 
-	subject = "New review for - " + challenge.title
+	body += "You can disable mail notifications in your profile: "+
+					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
-	gen_message solution.owner_id, subject, body, url
+	gen_message review.owner_id, subject, body, url
 
 	return true

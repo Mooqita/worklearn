@@ -46,6 +46,9 @@
 
 ###############################################
 @finish_solution = (solution, user_id) ->
+	if solution.published
+		throw new Meteor.Error "Review: " + review._id + " is already published"
+
 	modify_field_unprotected "Responses", solution._id, "published", true
 	return request_review solution, user_id
 
@@ -160,8 +163,10 @@
 	if feedback.published
 		throw new Meteor.Error "Feedback: " + feedback._id + " is already published."
 
-	send_feedback_message feedback, user_id
+	modify_field_unprotected "Responses", feedback._id, "published", true
+	feedback = Responses.findOne feedback._id
 
+	send_feedback_message feedback, user_id
 	return feedback._id
 
 

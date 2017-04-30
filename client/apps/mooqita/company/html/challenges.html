@@ -70,9 +70,13 @@
 						<div class="alert background-theme" style="margin-top:25px;">
 							A summary of things you need to do before students can see your task:
 							<ul>
-								{{#unless _is_saved}}
+								{{#unless title}}
 									<li>Give your task a title (required)</li>
+								{{/unless}}
+								{{#unless content}}
 									<li>Provide a description of the task(required)</li>
+								{{/unless}}
+								{{#unless _is_saved}}
 									<li>Save it!</li>
 								{{/unless}}
 								<li>Add additional materials (optional)</li>

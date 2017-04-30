@@ -92,7 +92,7 @@ Meteor.methods
 
 	finish_feedback: (feedback_id) ->
 		feedback = Responses.findOne feedback_id
-		return ""#finish_review review, Meteor.userId()
+		return finish_feedback feedback, Meteor.userId()
 
 	###########################################################
 	# admin stuff
