@@ -29,137 +29,142 @@
 				</div>
 			{{/unless}}
 
-			<div class="row editable" style="margin-top: 25px">
-				<div class="col-sm-4 col-ms-4 col-xs-12">
-					<h2 class="header">Picture</h2>
+				<div class="row editable padding-top">
+					<div class="col-sm-4 col-ms-4 col-xs-12">
+						<h2 class="header">Picture</h2>
 
-					{{#if _profile.avatar}}
-						<div class="avatar avatar-border">
-							<div class="avatar-container img-circle">
-								<img class="img-responsive img-avatar"
-										 src="{{download_field_value "Responses" _profile._id
-																								 "avatar" _profile.avatar}}">
+						{{#if _profile.avatar}}
+							<div class="avatar avatar-border">
+								<div class="avatar-container img-circle">
+									<img class="img-responsive img-avatar"
+											 src="{{download_field_value "Profiles" _profile._id
+																									 "avatar" _profile.avatar}}">
+								</div>
+							</div>
+						{{/if}}
+
+						{{>upload method="set_field" collection_name="Profiles"
+							item_id=_profile._id field="avatar" max_size=500000}}
+					</div>
+
+					<div class="col-sm-8 col-ms-8 col-xs-12">
+						<div class="row editable">
+							<div class="col-md-12">
+								<h2>Name</h2>
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="given_name" placeholder="Given name"}}
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="middle_name" placeholder="Middle name"}}
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="family_name" placeholder="Family name"}}
 							</div>
 						</div>
-					{{/if}}
 
-					{{>upload method="set_field" collection_name="Responses"
-						item_id=_profile._id field="avatar" max_size=500000}}
-				</div>
+						<div class="row editable">
+							<div class="col-md-8">
+								<h2 class="header">Registered E-Mail</h2>
 
-				<div class="col-sm-8 col-ms-8 col-xs-12">
-					<div class="row editable">
-						<div class="col-md-12">
-							<h2 class="header">Name</h2>
+								<div style="padding-top: 15px">
+									<em><b>{{email}}</b></em>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<h2 class="header">Notifications</h2>
+								{{>select_input method="set_field" collection_name="Profiles"
+										item_id=_profile._id field="mail_notifications"
+										options=mail_notifications_options}}
+							</div>
 						</div>
 
-						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Responses"
-								item_id=_profile._id field="given_name" placeholder="Given name"}}
-						</div>
+						<div class="row editable">
+							<div class="col-md-12">
+								<h2 class="header">Are you looking for a job?</h2>
+							</div>
 
-						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Responses"
-								item_id=_profile._id field="middle_name" placeholder="Middle name"}}
-						</div>
+							<div class="col-md-12">
+								<p>
+									If you are looking for a job please let us know.
+									We put you in our pool of candidates. When we find
+									a suitable company we will connect you. With their
+									recruiting team.
+								</p>
 
-						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Responses"
-								item_id=_profile._id field="family_name" placeholder="Family name"}}
-						</div>
-					</div>
+								<p>
+									<em>
+										<b>
+											We only try to match you when you choose yes
+											in this field.
+										</b>
+									</em>
+								</p>
+							</div>
 
-					<div class="row editable">
-						<div class="col-md-12">
-							<h2 class="header">Registered E-Mail</h2>
-						</div>
-						<div class="col-md-8">
-							<em><b>{{email}}</b></em>
-						</div>
-						<div class="col-md-4">
-							{{>select_input method="set_field" collection_name="Responses"
-									item_id=_profile._id field="mail_notifications"
-									options=mail_notifications_options}}
-						</div>
-					</div>
-
-					<div class="row editable">
-						<div class="col-md-12">
-							<h2 class="header">Are you looking for a job?</h2>
-						</div>
-
-						<div class="col-md-12">
-							<p>
-								If you are looking for a job please let us know.
-								We put you in our pool of candidates. When we find
-								a suitable company we will connect you. With their
-								recruiting team.
-							</p>
-
-							<p>
-								<em>
-									<b>
-										We only try to match you when you choose yes
-										in this field.
-									</b>
-								</em>
-							</p>
-						</div>
-
-						<div class="col-md-12">
-							{{>select_input method="set_field" collection_name="Responses"
-									item_id=_profile._id field="job_interested"
-									options=job_interested_options}}
+							<div class="col-md-12">
+								{{>select_input method="set_field" collection_name="Profiles"
+										item_id=_profile._id field="job_interested"
+										options=job_interested_options}}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
 			{{#if job_interested}}
-				<div class="row editable">
-					<div class="col-md-12">
-						<h2 class="header">
-							What kind a job are you looking for?
-						</h2>
+				<div class="item padding-top">
+					<div class="row editable">
+						<div class="col-md-12">
+							<h2 class="header">
+								What kind a job are you looking for?
+							</h2>
+						</div>
+
+						<div class="col-md-4">
+							{{>select_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="job_type" options=job_type_options}}
+						</div>
+
+						<div class="col-md-4">
+							{{>select_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="job_locale" options=job_locale_options}}
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="hours_per_week"
+									placeholder="Hours per week" type="number"}}
+						</div>
 					</div>
 
-					<div class="col-md-4">
-						{{>select_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="job_type" options=job_type_options}}
-					</div>
+					<div class="row editable" style="margin-top:10px">
+						<div class="col-md-12">
+							<h2 class="header">Where are you living?</h2>
+						</div>
 
-					<div class="col-md-4">
-						{{>select_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="job_locale" options=job_locale_options}}
-					</div>
+						<div class="col-md-8">
+							{{>country_state method="set_field" collection_name="Profiles"
+								item_id=_profile._id c_field="country" s_field="state"}}
+						</div>
 
-					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Responses"
-								item_id=_profile._id field="hours_per_week"
-								placeholder="Hours per week" type="number"}}
-					</div>
-				</div>
-
-				<div class="row editable" style="margin-top:10px">
-					<div class="col-md-12">
-						<h2 class="header">Where are you living?</h2>
-					</div>
-
-					<div class="col-md-8">
-						{{>country_state method="set_field" collection_name="Responses"
-							item_id=_profile._id c_field="country" s_field="state"}}
-					</div>
-
-					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Responses"
-							item_id=_profile._id field="city" placeholder="city name"}}
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="city" placeholder="city name"}}
+						</div>
 					</div>
 				</div>
 			{{/if}}
 
 			<div class="editable">
 				<h2 class="header">Resume</h2>
-				{{>text_input method="set_field" collection_name="Responses"
+				{{>text_input method="set_field" collection_name="Profiles"
 						item_id=_profile._id field="resume"
 						placeholder="Tell us a little more about you."}}
 			</div>

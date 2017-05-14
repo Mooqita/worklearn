@@ -3,10 +3,9 @@ Template.student_menu.onCreated ->
 
 	self.autorun ->
 		filter =
-			type_identifier: "message"
 			owner_id: Meteor.userId()
 
-		Meteor.subscribe "responses", filter, "find messages"
+		Meteor.subscribe "responses", "Messages", filter, "find messages"
 
 
 Template.student_menu.helpers
@@ -19,8 +18,8 @@ Template.student_menu.helpers
 
 	num_new_messages: () ->
 		filter =
-			type_identifier: "message"
 			owner_id: Meteor.userId()
+			seen: false
 
-		return Responses.find(filter).count()
+		return Messages.find(filter).count()
 

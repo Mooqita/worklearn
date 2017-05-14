@@ -6,20 +6,22 @@
 
 ################################################################
 Meteor.methods
-	add_response: (parameters) ->
+	add_response: (collection_name, parameters) ->
+		collection = get_collection_save collection_name
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		id = save_document Responses, parameters
+		#TODO: this is unsave
+		id = store_document collection, parameters
 
 		console.log "Response added: " + JSON.stringify(parameters, null, 2);
 		return id
 
 	#######################################################
-	summarise_field: (template_id, field) ->
-		check template_id, String
+	summarise_field: (collection_name, field) ->
+		collection = get_collection_save collection_name
 		check field, String
 
 		match =
@@ -32,9 +34,10 @@ Meteor.methods
 				result:
 					$sum: 1
 
-		res = Responses.aggregate match, group
+		res = collection.aggregate match, group
 		return res
 
-	backup_responses: () ->
-		data = export_data(Responses)
+	backup_responses: (collection_name) ->
+		collection = get_collection_save collection_name
+		data = export_data(collection)
 		return data

@@ -9,8 +9,8 @@ Template.student_profile.helpers
 
 	mail_notifications_options:() ->
 		return [{value:"", label:"Notifications ?"}
-			{value:"yes", label:"Yes, sounds good"}
-			{value:"no", label:"No, my mail is already full"}]
+			{value:"yes", label:"Yes, please"}
+			{value:"no", label:"No, thanks"}]
 
 
 	job_interested_options:() ->

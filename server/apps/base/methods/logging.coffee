@@ -37,10 +37,10 @@ Meteor.methods
 			if err
 				msg["error"] = err
 
-			save_document Logging, msg
+			store_document Logging, msg
 
 		request(url, call)
 		user = if Meteor.userId() then "user: " + Meteor.userId() else "unknown user"
 
-		console.log "Client request from: " + user
+		console.log "Logging " + user
 		return true

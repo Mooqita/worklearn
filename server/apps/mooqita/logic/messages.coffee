@@ -1,25 +1,4 @@
 ###############################################
-@send_mail = (user_id, subject, text) ->
-	filter =
-		owner_id: user_id
-		type_identifier: "profile"
-
-	profile = Responses.findOne filter
-	user = Meteor.users.findOne user_id
-
-	if not user.emails
-		throw new Meteor.Error "send_mail could not find an email address for user: " + user_id
-
-	to = user.emails[0].address
-	cc = "public.markus.krause@gmail.com"
-	from = "noreply@mooqita.org"
-
-	Meteor.defer () ->
-		console.log "sending mail"
-		Email.send {to, from, cc, subject, text}
-
-
-###############################################
 @gen_message = (user_id, title, message, url) ->
 	#save message
 	msg =
@@ -30,43 +9,24 @@
 		seen: false
 		url: url
 
-	m_id = save_document Responses, msg
-
-	# handle notifications
-	p_filter =
-		owner_id: user_id
-		type_identifier: "profile"
-
-	profile = Responses.findOne p_filter
-
-	#cycle = profile.notification_cycle
-	#last = profile.last_notification
-	#now = new Date()
-	#dif = now - last
-
-	#if cycle > dif
-	#	return
-
-	if profile.mail_notifications == "yes"
-		send_mail user_id, title, message
+	m_id = store_document Messages, msg
 
 	return m_id
 
 
 ###############################################
 @finish_message = (message_id) ->
-	return modify_field_unprotected "Responses", message_id, "seen", true
+	return modify_field_unprotected Messages, message_id, "seen", true
 
 
 ###############################################
 @send_review_message = (review) ->
-	challenge = Responses.findOne review.challenge_id
-	solution = Responses.findOne review.solution_id
+	challenge = Challenges.findOne review.challenge_id
+	solution = Solutions.findOne review.solution_id
 
 	filter =
 		owner_id: solution.owner_id
-		type_identifier: "profile"
-	solution_profile = Responses.findOne filter
+	solution_profile = Profiles.findOne filter
 
 	subject = "Mooqita: You got a new review"
 	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
@@ -80,19 +40,55 @@
 	body += "You can disable mail notifications in your profile: " +
 					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
-	gen_message solution.owner_id, subject, body, url
+	send_message_mail solution.owner_id, subject, body
+
+	title = "New Review"
+	text = "You received a new review on one of your solutions."
+	gen_message solution.owner_id, title, text, url
+
+	return true
+
+
+@send_review_timeout_message = (review) ->
+	challenge = Challenges.findOne review.challenge_id
+	solution = Solutions.findOne review.solution_id
+
+	filter =
+		owner_id: review.owner_id
+	review_profile = Profiles.findOne filter
+
+	subject = "Mooqita: A review timed out"
+	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
+
+	body = "Hi " + review_profile.given_name + ",\n\n"
+	body += "One of the reviews you were working on timed out. \n"
+	body += "To ensure that everyone gets reviews in time.\n"
+	body += "Reviews time out after 24 hours. After this time\n"
+	body += "they are again available for other reviewers.\n\n"
+	body += "Kind regards, \n"
+	body += " Your Mooqita Team \n\n"
+
+	body += "You can disable mail notifications in your profile: " +
+					Meteor.absoluteUrl() + "user?template=student_profile\n"
+
+	send_message_mail solution.owner_id, subject, body
+
+	title = "Review timeout"
+	text = "One of the reviews you were working on timed out. To ensure that everyone gets reviews in time. Reviews time out after 24 hours. After this time they are again available for other reviewers."
+
+	gen_message solution.owner_id, title, text, url
 
 	return true
 
 ###############################################
 @send_feedback_message = (feedback) ->
-	challenge = Responses.findOne feedback.challenge_id
-	review = Responses.findOne feedback.parent_id
+	challenge = Challenges.findOne feedback.challenge_id
+	solution = Solutions.findOne feedback.solution_id
+	review = Reviews.findOne feedback.review_id
 
 	filter =
 		owner_id: review.owner_id
-		type_identifier: "profile"
-	review_profile = Responses.findOne filter
+	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: New feedback for your reviews"
 	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
@@ -107,5 +103,9 @@
 					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
 	gen_message review.owner_id, subject, body, url
+
+	title = "New Feedback"
+	text = "You received new feedback on one of your reviews."
+	gen_message solution.owner_id, title, text, url
 
 	return true

@@ -1,8 +1,10 @@
 <template name="body_template" xmlns="http://www.w3.org/1999/html">
 	<div class="wrapper">
-		<header>
-			{{>Template.dynamic template=menu}}
-		</header>
+		{{#if menu}}
+			<header>
+				{{>Template.dynamic template=menu}}
+			</header>
+		{{/if}}
 
 		<main>
 			{{>sAlert}}
@@ -18,12 +20,16 @@
 			{{/if}}
 		</main>
 
-		<div class="footer-push"> </div>
+		{{#if footer}}
+			<div class="footer-push"> </div>
+		{{/if}}
 	</div>
 
-	<footer>
-		{{>Template.dynamic template=footer}}
-	</footer>
+	{{#if footer}}
+		<footer>
+			{{>Template.dynamic template=footer}}
+		</footer>
+	{{/if}}
 </template>
 
 

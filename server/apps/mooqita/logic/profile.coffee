@@ -20,7 +20,10 @@
 	if user.profile
 		profile.given_name = user.profile.given_name
 		profile.family_name = user.profile.family_name
+		profile.name = "Profile for " + user.profile.given_name
+	else
+		profile.name = "Profile for unknown"
 
-	return save_document Responses, profile
+	return store_document Profiles, profile
 
 

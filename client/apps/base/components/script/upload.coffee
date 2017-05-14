@@ -138,59 +138,46 @@ Template.upload.events
 			item = this.item_id
 			field = this.field
 
-			if typeof file == "string"
-				type = "string"
-				data = file.toString()
+			fileReader = new FileReader()
+			type = file.type
+
+			if not typeof file == "object"
+				sAlert.error 'File upload failed not a vaild file'
+				continue
+
+			fileReader.onload = (ev) ->
+				filesRead += 1
+				raw = ev.srcElement.result
+				base = btoa(raw)
+				data = "data:" + type + ";base64," + base
 
 				cumulative_size = cumulative_size + data.length
 				if cumulative_size > max_size
+					frm.removeClass('is-uploading')
+					_files[box_id] = []
 					sAlert.error('File upload failed cumulative size larger than: ' + max_size)
 					frm.addClass('is-error')
 					return
 
 				Meteor.call "upload_file", col, item, field, data, type,
 					(err, rsp)->
-						frm.removeClass('is-uploading')
-						_files[box_id] = []
-						sAlert.success('Upload done!')
+						filesUp += 1
 
 						if err
 							sAlert.error('File upload failed: ' + err)
 							frm.addClass('is-error')
-			else
-				fileReader = new FileReader()
-				type = file.type
 
-				fileReader.onload = (ev) ->
-					filesRead += 1
-					raw = ev.srcElement.result
-					base = btoa(raw)
-					data = "data:"+type+";base64,"+base
+						if filesUp==filesToRead
+							frm.removeClass('is-uploading')
+							_files[box_id] = []
 
-					cumulative_size = cumulative_size + data.length
-					if cumulative_size > max_size
-						frm.removeClass('is-uploading')
-						_files[box_id] = []
-						sAlert.error('File upload failed cumulative size larger than: ' + max_size)
-						frm.addClass('is-error')
-						return
+						if not err
+							sAlert.success('Upload done!')
 
-					Meteor.call "upload_file", col, item, field, data, type,
-						(err, rsp)->
-							filesUp += 1
-
-							if err
-								sAlert.error('File upload failed: ' + err)
-								frm.addClass('is-error')
-
-							if filesUp==filesToRead
-								frm.removeClass('is-uploading')
-								_files[box_id] = []
-
-							if not err
-								sAlert.success('Upload done!')
-
+			try
 				fileReader.readAsBinaryString(file)
+			catch error
+				sAlert.error 'File upload failed: ' + error
 
 		event.target.files = null
 

@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="student_challenge_feedback">
 	<h2>
-		{{#if _is_public}}
+		{{#if _is_public "Feedback"}}
 			Rating <em>{{rating}}</em> of <em>5</em>
 		{{else}}
 			Please provide feedback to see the rating
@@ -16,7 +16,7 @@
 	</p>
 
 	<div class="row">
-		{{#unless _is_public}}
+		{{#unless _is_public "Feedback"}}
 			<div class="form-group col-sm-9">
 				<div class="form-group">
 					<label for="content"
@@ -24,7 +24,7 @@
 						Your Feedback
 					</label>
 
-					{{>text_input method="set_field" collection_name="Responses"
+					{{>text_input method="set_field" collection_name="Feedback"
 						item_id=_id field="content" placeholder="Please give some feedback to the review"}}
 				</div>
 			</div>
@@ -41,12 +41,12 @@
 			</div>
 		{{/unless}}
 
-		{{#unless _is_public}}
+		{{#unless _is_public "Feedback"}}
 			<div class="form-group col-sm-3">
 				<label for="quality"
 							 title="Your rating of the review"
 								>Helpfulness</label>
-				{{>select_input method="set_field" collection_name="Responses"
+				{{>select_input method="set_field" collection_name="Feedback"
 						item_id=_id field="rating" options=_rating_options }}
 			</div>
 		{{else}}
@@ -64,13 +64,13 @@
 		</div>
 	{{/unless}}
 
-	{{#unless _is_public}}
+	{{#unless _is_public "Feedback"}}
 		<div class="alert background-theme">
 			Please publish your feedback when you are done.
 		</div>
 	{{/unless}}
 
-	{{#unless _is_public}}
+	{{#unless _is_public "Feedback"}}
 		<div class="row">
 			<div class="form-group col-sm-6">
 				<span class="btn-group btn-group-justified">

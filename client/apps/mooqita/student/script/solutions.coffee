@@ -19,10 +19,7 @@ Template.student_solutions.onCreated ->
 ########################################
 Template.student_solutions.helpers
 	solutions: () ->
-		filter =
-			type_identifier: "solution"
-
-		return Responses.find(filter)
+		return Solutions.find()
 
 
 ########################################
@@ -44,7 +41,7 @@ Template.student_solution_preview.onCreated ->
 ########################################
 Template.student_solution_preview.helpers
 	challenge: () ->
-		return Responses.findOne this.challenge_id
+		return Challenges.findOne this.challenge_id
 
 
 ########################################
@@ -74,25 +71,23 @@ Template.student_solution.onCreated ->
 Template.student_solution.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		res = Responses.findOne id
+		res = Challenges.findOne id
 		return res
 
 	solutions: () ->
 		filter =
-			type_identifier: "solution"
 			challenge_id: FlowRouter.getQueryParam("challenge_id")
 			owner_id: Meteor.userId()
 
-		res = Responses.find filter
+		res = Solutions.find filter
 		return res
 
 	has_solutions: () ->
 		filter =
-			type_identifier: "solution"
 			challenge_id: FlowRouter.getQueryParam("challenge_id")
 			owner_id: Meteor.userId()
 
-		res = Responses.find filter
+		res = Solutions.find filter
 		return res.count()>0
 
 ########################################
@@ -122,11 +117,18 @@ Template.student_solution_reviews.onCreated ->
 
 ##############################################
 Template.student_solution_reviews.helpers
+	missing_reviews: () ->
+		challenge = Challenges.findOne this.challenge_id
+		reviews_required = challenge.num_reviews
+		reviews_provided = this.completed
+
+		res = "" + (reviews_required - reviews_provided)
+		return res
+
 	reviews: () ->
 		filter =
 			solution_id: this._id
-			type_identifier: "review"
-		res = Responses.find filter
+		res = Reviews.find filter
 		return res
 
 	review_link: () ->
@@ -150,8 +152,19 @@ Template.student_solution_reviews.events
 			id: this._id
 			publishing: Template.instance().publishing
 
-		console.log data
-		Modal.show('publish_solution', data)
+		Modal.show 'publish_solution', data
+
+	"click #request_review":(event)->
+		if event.target.attributes.disabled
+			return
+
+		Meteor.call 'request_review', this._id,
+			(err, rsp) ->
+				if err
+					sAlert.error err
+				if res
+					sAlert.success "Review requested!"
+
 
 ##############################################
 # publish modal

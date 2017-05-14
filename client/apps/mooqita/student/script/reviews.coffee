@@ -20,10 +20,7 @@ Template.student_reviews.onCreated ->
 ########################################
 Template.student_reviews.helpers
 	reviews: () ->
-		filter =
-			type_identifier: "review"
-
-		return Responses.find(filter)
+		return Reviews.find()
 
 	error_message: () ->
 		Session.get "find_review_error"
@@ -70,7 +67,7 @@ Template.student_review_preview.onCreated ->
 ########################################
 Template.student_review_preview.helpers
 	challenge: () ->
-		return Responses.findOne this.challenge_id
+		return Challenges.findOne this.challenge_id
 
 
 ########################################
@@ -105,15 +102,15 @@ Template.student_review.onCreated ->
 Template.student_review.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		return Responses.findOne id
+		return Challenges.findOne id
 
 	solution: () ->
 		id = FlowRouter.getQueryParam("solution_id")
-		return Responses.findOne id
+		return Solutions.findOne id
 
 	review: () ->
 		id = FlowRouter.getQueryParam("review_id")
-		return Responses.findOne id
+		return Reviews.findOne id
 
 	publish_disabled: () ->
 		data = Template.currentData()

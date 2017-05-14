@@ -21,7 +21,11 @@
 				{{#each solutions}}
 					{{>student_solution_preview}}
 				{{else}}
-					<p>You have not submitted any solutions yet.</p>
+					<hr>
+
+					<h2>
+						<em>You have not submitted any solutions yet.</em>
+					</h2>
 				{{/each}}
 			</div>
 		{{/unless}}
@@ -37,11 +41,11 @@
 <template name="student_solution_preview">
 	<hr>
 
-	<h3>
+	<h2>
 		<a id="student_solution">
-			<b><em>{{challenge.title}}</em></b>
+			{{challenge.title}}
 		</a>
-	</h3>
+	</h2>
 	{{>more content=challenge.content}}
 </template>
 
@@ -53,44 +57,45 @@
 -------------------------------------------------->
 <template name="student_solution">
 	{{#mooqita_wide_spacing}}
-		{{#unless Template.subscriptionsReady}}
-			<h1>
-				Please wait we are loading some stuff
-				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-			</h1>
-		{{else}}
-			{{#unless challenge}}
-				<div class="padding-top">
-					{{>ER_404}}
-				</div>
+		<div class="item padding-top">
+			{{#unless Template.subscriptionsReady}}
+				<h1>
+					Please wait we are loading some stuff
+					<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+				</h1>
 			{{else}}
-				{{#with challenge}}
-					<h1>{{title}}</h1>
-
-					{{>more content=content}}
-
-					{{#if has_solutions}}
-						{{#if material}}
-							<h2>Additional Material</h2>
-							{{>download collection_name="Responses"
-								item_id=_id field="material"}}
-						{{/if}}
-					{{/if}}
-				{{/with}}
-
-				{{#each solutions}}
-					{{>student_solution_reviews}}
-				{{else}}
-					<p>
-						You have not yet submitted a solution to this challenge.
-					</p>
-
-					<div class="text-right">
-						<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+				{{#unless challenge}}
+					<div class="padding-top">
+						{{>ER_404}}
 					</div>
-				{{/each}}
+				{{else}}
+					{{#with challenge}}
+						<h1>{{title}}</h1>
+
+						{{>more content=content}}
+
+						{{#if material}}
+							<h2>
+								{{>download collection_name="Challenges"
+								item_id=_id field="material"}}
+							</h2>
+						{{/if}}
+					{{/with}}
+
+					{{#each solutions}}
+						{{>student_solution_reviews}}
+					{{else}}
+						<p>
+							You have not yet submitted a solution to this challenge.
+						</p>
+
+						<div class="text-right">
+							<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+						</div>
+					{{/each}}
+				{{/unless}}
 			{{/unless}}
-		{{/unless}}
+		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -102,63 +107,67 @@
 			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 		</h1>
 	{{else}}
-
 		<h1>Your Solution</h1>
 
-			<div class="alert background-theme">
-				Here is a list of things you have to do before your solution is ready:
-				<ul>
-					{{#unless _is_saved}}
-						<li>Provide an explanation of your solution.</li>
-						<li>Add additional material if necessary.</li>
-						<li>Save your work!</li>
-					{{/unless}}
+		<div class="alert background-theme">
+			Here is a list of things you have to do before your solution is ready:
+			<ul>
+				{{#unless content}}
+					<li>Provide an explanation of your solution under solution description.</li>
+				{{/unless}}
 
-					{{#unless _is_public}}
-						<li>Publish your solution (Button below the upload field).</li>
-						<li>Request a review (happens automatically when you publish your solution).</li>
-					{{/unless}}
+				{{#unless material}}
+					<li>Add additional material if necessary.</li>
+				{{/unless}}
 
-					<li>
-						Write a review for another persons work.
-						<a href="{{review_link}}">
-							<b>Click here to write one right now</b>
-						</a>
-					</li>
-					<li>Read the reviews you received and give feedback.</li>
-				</ul>
-			</div>
+				{{#unless _is_saved "Solutions"}}
+					<li>Save your work!</li>
+				{{/unless}}
 
-		{{#unless _is_public}}
-			<label>Solution description</label>
-			{{>text_input method="set_field" collection_name="Responses"
+				{{#unless _is_public "Solutions"}}
+					<li>Publish your solution (Button below the upload field).</li>
+					<li>Request a review (happens automatically when you publish your solution).</li>
+				{{/unless}}
+
+				<li>
+					Write {{missing_reviews}} reviews for your peers.
+					<a href="{{review_link}}">
+						<b>Click here to write one.</b>
+					</a>
+				</li>
+				<li>Read the reviews you received and give feedback.</li>
+			</ul>
+		</div>
+
+		{{#unless _is_public "Solutions"}}
+			<h2>Solution description</h2>
+			{{>text_input method="set_field" collection_name="Solutions"
 				item_id=_id field="content" placeholder="Describe your solution"}}
 
-			<br>
-
-			<label>Additional Material or a link to your project files</label>
+			<h2>Additional Material</h2>
 			{{#if material}}
-				<h3 style="padding-bottom: 15px">
-					{{>download collection_name="Responses"
+				<h2>
+					{{>download collection_name="Solutions"
 						item_id=_id field="material"}}
-				</h3>
+				</h2>
 			{{/if}}
 
-			{{>upload method="set_field" collection_name="Responses"
-				item_id=_id field="material" max_size=2000000}}
-
+			<h2>
+				{{>upload method="set_field" collection_name="Solutions"
+					item_id=_id field="material" max_size=2000000}}
+			</h2>
 		{{else}}
 			{{>more content=content}}
 
 			{{#if material}}
-				<h3 style="padding-bottom: 15px">
-					{{>download collection_name="Responses"
+				<h2>
+					{{>download collection_name="Solutions"
 						item_id=_id field="material"}}
-				</h3>
+				</h2>
 			{{/if}}
 		{{/unless}}
 
-		{{#unless _is_public}}
+		{{#unless _is_public "Solutions"}}
 			<div class="row padding-top">
 				<div class="form-group col-sm-6">
 					<span class="btn-group btn-group-justified">
@@ -172,18 +181,23 @@
 					</span>
 				</div>
 			</div>
+		{{else}}
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<span class="btn-group btn-group-justified">
+						<a class="btn btn-theme" {{request_disabled}}
+								 id="request_review">Request another review</a>
+					</span>
+				</div>
+			</div>
 		{{/unless}}
 
-		<hr>
-
-		{{#if _is_public}}
+		{{#if _is_public "Solutions"}}
 			<h1>Reviews you received</h1>
 			{{#each reviews}}
 				{{>student_review_feedback}}
 			{{else}}
-				<p>
-					No reviews yet.
-				</p>
+				<p>No reviews yet.</p>
 			{{/each}}
 		{{/if}}
 	{{/unless}}
@@ -207,7 +221,7 @@
 					<p>
 						Are you sure you want to publish your solution?<br>
 						If you publish your solution it will be send to <br>
-						your colleagues for review. <br>
+						your colleagues for review.<br>
 					</p>
 
 					<p>

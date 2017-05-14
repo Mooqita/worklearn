@@ -25,7 +25,9 @@
 				{{#each challenges}}
 					{{>challenge_preview}}
 				{{else}}
-					<p>No challenges yet.</p>
+					<hr>
+
+					<h2><em>No challenges yet.</em></h2>
 				{{/each}}
 			</div>
 		{{/unless}}
@@ -41,11 +43,7 @@
 <template name="challenge_preview">
 	<hr>
 
-	<h3>
-		<a id="company_challenge">
-			<b><em>{{title}}</em></b>
-		</a>
-	</h3>
+	<h2><a id="company_challenge">{{title}}</a></h2>
 
 	{{>more content=content}}
 </template>
@@ -65,56 +63,64 @@
 			</h1>
 		{{else}}
 			{{#with challenge}}
-				<div>
-					{{#unless _is_public}}
-						<div class="alert background-theme" style="margin-top:25px;">
+				{{#unless _is_public "Challenges"}}
+					<div class=" padding-top">
+						<div class="alert background-theme">
 							A summary of things you need to do before students can see your task:
 							<ul>
 								{{#unless title}}
 									<li>Give your task a title (required)</li>
 								{{/unless}}
+
 								{{#unless content}}
 									<li>Provide a description of the task(required)</li>
 								{{/unless}}
-								{{#unless _is_saved}}
+
+								{{#unless num_reviews}}
+									<li>Define how many reviews students have to write to finish the task</li>
+								{{/unless}}
+
+								{{#unless material}}
+									<li>Add additional materials (optional)</li>
+								{{/unless}}
+
+								{{#unless _is_saved "Challenges"}}
 									<li>Save it!</li>
 								{{/unless}}
-								<li>Add additional materials (optional)</li>
+
 								<li>Publish your solution you find the button below.</li>
 							</ul>
 						</div>
-					{{/unless}}
+					</div>
+				{{/unless}}
 
+				<div class="item padding-top">
 					<h1 class="editable">
-						{{#if _is_public}}
+						{{#if _is_public "Challenges"}}
 							<em><b>LIVE</b></em>
 						{{/if}}
 
-						{{#unless _is_public}}
-							{{>basic_input method="set_field" collection_name="Responses"
+						{{#unless _is_public "Challenges"}}
+							{{>basic_input method="set_field" collection_name="Challenges"
 							item_id=_id field="title" placeholder="Title of your challenge"}}
 						{{else}}
 							{{title}}
 						{{/unless}}
 					</h1>
 
+					<hr>
+
 					<div class="form-group">
-						<label for="content"
-									 title="What should they do">
-							Content:
-						</label>
-						{{#unless _is_public}}
-							{{>text_input method="set_field" collection_name="Responses"
+						<h2>Content:</h2>
+						{{#unless _is_public "Challenges"}}
+							{{>text_input method="set_field" collection_name="Challenges"
 									item_id=_id field="content" placeholder="Content"}}
 						{{else}}
 							{{>more content=content}}
 						{{/unless}}
 
-						{{#if _is_public}}
-							<label class="item-label" for="challenge_url"
-							 title="Link to the challenge">
-								Shareable link:
-							</label>
+						{{#if _is_public "Challenges"}}
+							<h2>Shareable link:</h2>
 
 							<div class="input-group">
 								<div class="input-group-btn" id="icon_download" title="select the entire url">
@@ -127,24 +133,30 @@
 									{{share_url}}
 								</div>
 							</div>
+						{{else}}
+							<h2>Number of reviews required</h2>
+							{{>basic_input  method="set_field" collection_name="Challenges" type="number"
+									item_id=_id field="num_reviews" placeholder="Number of reviews required."}}
 						{{/if}}
 
-						{{#unless _is_public}}
-							<label class="item-label">Upload Additional material:</label>
-							{{>upload method="set_field" collection_name="Responses"
-								item_id=_id field="material"}}
+						{{#unless _is_public "Challenges"}}
+							<h2>Upload Additional material:</h2>
+							<h2>
+								{{>upload method="set_field" collection_name="Challenges"
+									item_id=_id field="material"}}
+							</h2>
 						{{/unless}}
 
 						{{#if material}}
-							<label class="item-label">Download Additional material:</label>
-							<div>
-								{{>download collection_name="Responses" item_id=_id field="material"}}
-							</div>
+							<h2>Download Additional material:</h2>
+							<h2>
+								{{>download collection_name="Challenges" item_id=_id field="material"}}
+							</h2>
 						{{/if}}
 					</div>
 				</div>
 
-				{{#unless _is_public}}
+				{{#unless _is_public "Challenges"}}
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
@@ -160,7 +172,7 @@
 					</div>
 				{{/unless}}
 
-				{{#if _is_public}}
+				{{#if _is_public "Challenges"}}
 					{{>challenge_solutions .}}
 				{{/if}}
 			{{/with}}
@@ -198,31 +210,37 @@
 		</div>
 
 		<div class="media-body">
-			<h2 class="media-heading">
-				<a href="{{resume_url author_id}}"><em>{{author_name}}</em></a>
+			<h2>
+				<a href="{{resume_url author_id}}">{{author_name}}</a>
 				average rating <em>{{average_rating}}</em> out of <em>5</em>
 
-				{{#if _is_owner .}}
+				{{#if _is_owner  "Challenges" .}}
 					<em class="pull-right">Author</em>
 				{{/if}}
 			</h2>
 
-			<hr style="margin-top: 5px; margin-bottom: 15px">
-
 			{{>more content=content}}
+			{{#if material}}
+				<h2>Additional Material</h2>
+				<h2>
+					{{>download collection_name="Solutions"
+						item_id=_id field="material"}}
+				</h2>
+			{{/if}}
+
 
 			<h2>
-				<a id="show_reviews"><em>
+				<a id="show_reviews">
 					{{#unless reviews_visible}}
 						<span class="glyphicon glyphicon-expand"></span>
 					{{else}}
 						<span class="glyphicon glyphicon-collapse-down"></span>
 					{{/unless}}
-				</em></a> Reviews
+				</a>
+				Reviews
 			</h2>
 
 			{{#if reviews_visible}}
-				<hr style="margin-top: 5px; margin-bottom: 15px">
 				{{#each reviews .}}
 					<div class="media">
 						<div class="media-left">
@@ -230,21 +248,23 @@
 						</div>
 
 						<div class="media-body">
-							<h2 class="media-heading">
-								<div class="row">
-									<div class="col-xs-6">
-										<a href="{{resume_url peer_id}}"><em>{{peer_name}}</em></a>
-									</div>
-
-									<div class="col-xs-6" style="text-align: right">
-										Rating <em>{{rating}}</em> out of <em>5</em>
-									</div>
+							<div class="row">
+								<div class="col-xs-6">
+									<h2>
+										<a href="{{resume_url peer_id}}">
+											{{peer_name}}
+										</a>
+									</h2>
 								</div>
-							</h2>
 
-							<p>
-								{{content}}
-							</p>
+								<div class="col-xs-6">
+									<h2>
+										Rating <em>{{rating}}</em> out of <em>5</em>
+									</h2>
+								</div>
+							</div>
+
+							{{>more content=content}}
 						</div>
 					</div>
 				{{else}}

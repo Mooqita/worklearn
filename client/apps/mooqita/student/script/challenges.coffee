@@ -16,10 +16,7 @@ Template.student_find_challenges.onCreated ->
 ########################################
 Template.student_find_challenges.helpers
 	challenges: () ->
-		filter =
-			type_identifier: "challenge"
-
-		return Responses.find(filter)
+		return Challenges.find()
 
 
 ########################################
@@ -39,10 +36,9 @@ Template.student_challenge_preview.helpers
 	has_solution:() ->
 		filter =
 			owner_id: Meteor.userId()
-			type_identifier: "solution"
 			challenge_id: this._id
 
-		return Responses.find(filter).count()>0
+		return Solutions.find(filter).count()>0
 
 
 ########################################

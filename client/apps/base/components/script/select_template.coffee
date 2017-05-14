@@ -4,4 +4,4 @@ Template.select_template.helpers
 
 Template.select_response.helpers
 	responses: () ->
-		return find_response_names()
+		return find_response_names(this.collection_name)

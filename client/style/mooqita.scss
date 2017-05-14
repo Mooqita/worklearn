@@ -20,9 +20,6 @@
 .mooqita-layout{
 }
 
-.mooqita-layout h1{
-}
-
 .mooqita-layout p{
 	margin-bottom: 25px;
 }
@@ -35,27 +32,12 @@
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.mooqita-layout .embedded-form{
-	padding: 20px 20px 30px 20px;
-	border: 2px solid #ddd;
-	margin-bottom: 15px;
-}
-
 .mooqita-layout .form-control{
 	border: 2px solid #ddd;
 	min-height: 40.5px;
 	font-size: 16px;
 }
 
-.mooqita-layout .editable h2 {
-	padding: 0px;
-	margin: 0px;
-}
-
-.mooqita-layout .editable h2.header {
-	padding: 0px;
-	margin: 40px 0px 20px 0px;
-}
 
 .mooqita-layout .editable .form-control{
 	box-shadow: none;
@@ -70,15 +52,6 @@
 	height: 100%;
 //	padding: 0px;
 	margin-bottom: -2px;
-}
-
-.mooqita-layout label.item-label{
-	margin-top: 25px;
-}
-
-.mooqita-layout .well{
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
 }
 
 .mooqita-line{
@@ -134,8 +107,7 @@
 .mooqita-layout .item {
 	border: 2px solid #ddd;
 	padding: 25px;
-	margin: 0px;
-	margin-bottom: 60px;
+	margin: 0 0 60px 0;
 }
 
 .mooqita-layout .item.padding-top{
@@ -143,19 +115,44 @@
 }
 
 .mooqita-layout .item h1{
-	margin: 0px;
-	padding: 0px 0px 20px 0px;
+	margin: 0;
+	padding: 0 0 20px 0;
 }
 
-.mooqita-layout .item h3{
-	padding: 0px;
-	margin: 30px 0px 20px 0px;
+.mooqita-layout .item h1{
+	margin: 45px 0 0 0;
+	padding: 0 0 15px 0;
 }
 
-.mooqita-layout .item .row-header{
-	padding: 0px;
-	font-weight: 600;
-	margin: 0px 0px 20px 0px;
+.mooqita-layout .item h1:first-child{
+	margin: 0;
+}
+
+.mooqita-layout .item h2{
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 25px;
+}
+
+a.mooqita,
+.mooqita-layout .item h2 a{
+	color: $theme;
+}
+
+a.mooqita:hover,
+.mooqita-layout .item h2 a:hover{
+	color: $contrast-on-theme;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.mooqita-layout .item .media-body{
+	padding-left: 20px;
+}
+
+.mooqita-layout .item .media-body h2{
+	margin: 0;
+	padding: 0 0 10px 0;
 }
 
 .mooqita-layout .item hr {
@@ -180,15 +177,6 @@
 	color: $theme;
 }
 
-.mooqita-layout .item .media-body{
-	padding-left: 20px;
-}
-
-.mooqita-layout .item .media-body h2{
-	margin: 0px;
-	padding: 0px 0px 0px 0px;
-}
-
 .mooqita-layout .select-occupation{
 	font-size: 1.5em;
 	text-align: center;
@@ -209,7 +197,6 @@
 	border-color: #ddd;
 	color: #ddd;
 }
-
 
 .mooqita-layout .select-occupation label{
 	font-size: 1.5em;

@@ -12,9 +12,10 @@ _accepts =
 	_id: non_empty_string
 
 #######################################################
-@log_publication = (crs, filter, fields, origin) ->
+@log_publication = (collection_name, crs, filter, fields, origin) ->
 	data = if "owner_id" in filter then " for owner " else " "
-	console.log "Submitted " + crs.count() + " responses" + data + "to " + origin
+	console.log "Submitted " + crs.count() + " " +
+					collection_name + data + "to " + origin
 
 #	f = JSON.stringify(filter, null, 2);
 #	console.log f
@@ -25,10 +26,12 @@ _accepts =
 #	console.log m
 
 #######################################################
-@get_collection = (collection_name) ->
-	collection = this[collection_name]
-	if not collection instanceof Meteor.Collection
-		return undefined
+@get_collection_save = (collection_name) ->
+	check collection_name, String
+	collection = get_collection collection_name
+
+	if not collection
+		throw new Meteor.Error "Collection not found: " + collection_name
 
 	return collection
 
@@ -42,10 +45,9 @@ _accepts =
 
 
 #######################################################
-@is_owner = (collection_name, id, user_id) ->
-	collection = get_collection collection_name
+@is_owner = (collection, id, user_id) ->
 	if not collection
-		throw new Meteor.Error('Collection not found:'+collection_name)
+		throw new Meteor.Error('Collection not found:' + collection)
 
 	item = collection.findOne(id)
 
@@ -84,20 +86,19 @@ _accepts =
 
 
 #######################################################
-@deny_action_save = (action, collection_name, id, field) ->
-	if not collection_name
-		console.log "collection_name is: " + collection_name
+@deny_action_save = (action, collection, item_id, field) ->
+	if not collection
+		throw new Meteor.Error "Collection undefined."
 
 	if not field
-		console.log "filed is: " + field
+		throw new Meteor.Error "Field undefined."
 
-	if not id
-		console.log "id is: " + id
+	if not item_id
+		throw new Meteor.Error "Item_id undefined."
 
-	check id, String
-	check field, String
+	check item_id, String
 	check action, String
-	check collection_name, String
+	check field, String
 
 	roles = ['all']
 	user = Meteor.user()
@@ -106,24 +107,24 @@ _accepts =
 		roles.push user.roles ...
 		roles.push 'anonymous'
 
-		if is_owner collection_name, id, user._id
+		if is_owner collection, item_id, user._id
 			roles.push 'owner'
 
 	filter =
 		role:
 			$in: roles
 		field: field
-		collection: collection_name
+		collection_name: collection._name
 
 	permissions = Permissions.find(filter)
 
 	if permissions.count() == 0
-		throw new Meteor.Error('Not permitted.')
+		throw new Meteor.Error('Edit not permitted: ' + field)
 
 	for permission in permissions.fetch()
 		if action_permitted permission, action
 			return false
 
-	throw new Meteor.Error('Not permitted.')
+	throw new Meteor.Error('Edit not permitted: ' + field)
 
 

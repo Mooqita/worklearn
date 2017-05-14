@@ -21,8 +21,7 @@ Template.student_review_feedback.helpers
 	feedback: () ->
 		filter =
 			parent_id: this._id
-			type_identifier: "feedback"
-		return Responses.findOne filter
+		return Feedback.findOne filter
 
 	publishable: () ->
 		data = Template.currentData()
@@ -52,11 +51,11 @@ Template.student_review_feedback.helpers
 	publish_disabled: () ->
 		data = Template.currentData()
 
-		field_value = get_field_value data, "content", data._id, "Responses"
+		field_value = get_field_value data, "content", data._id, "Feedback"
 		if not field_value
 			return "disabled"
 
-		val = get_field_value data, "rating", data._id, "Responses"
+		val = get_field_value data, "rating", data._id, "Feedback"
 		if not val
 			return "disabled"
 

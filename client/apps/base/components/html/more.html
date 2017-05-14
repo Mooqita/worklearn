@@ -1,5 +1,5 @@
 <template name="more">
 	<!--This formatting is required for user
 		generated text to look as intended-->
-	<p class="user-data">{{content}}{{#if has_more}}{{#unless expanded}}<a id="expand"><em>...<b>more</b></em></a>{{else}}<br><a id="expand"><em><b>less</b></em></a>{{/unless}}{{/if}}</p>
+	<p class="user-data">{{content}}{{#if has_more}}{{#unless expanded}}<a class="mooqita" id="expand">...<b>more</b></a>{{else}}<a class="mooqita" id="expand"><b>less</b></a>{{/unless}}{{/if}}</p>
 </template>

@@ -9,15 +9,22 @@
 #######################################################
 @Permissions = new Mongo.Collection("permissions")
 @Templates = new Mongo.Collection("templates")
-@Responses = new Mongo.Collection("responses")
 @Summaries = new Mongo.Collection("summaries")
+
+#######################################################
+@Challenges = new Mongo.Collection("challenges")
+@Solutions = new Mongo.Collection("solutions")
+@Reviews = new Mongo.Collection("reviews")
+@Feedback = new Mongo.Collection("feedback")
+@Profiles = new Mongo.Collection("profiles")
+@Messages = new Mongo.Collection("messages")
+@Posts = new Mongo.Collection("posts")
+@Slides = new Mongo.Collection("slides")
 
 #######################################################
 @User_Credentials = new Mongo.Collection("user_credentials")
 @Challenge_Summary = new Mongo.Collection("challenge_summary")
 
 #######################################################
-@UpworkTasks = new Mongo.Collection("upwork_tasks")
-@Files = new Mongo.Collection("files")
 @Admin = new Mongo.Collection("admin")
 

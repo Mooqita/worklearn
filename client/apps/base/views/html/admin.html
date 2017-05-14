@@ -1,13 +1,7 @@
 <template name="admin">
 	{{#if isInRole 'admin'}}
-		<h2>Configure Upwork</h2>
-
-		<div class="well">
-			<a class="btn btn-theme" href="/admin/upwork/oauth">Upwork Oauth</a>
-		</div>
-
+		<h1>Admin Dashboard</h1>
 		{{>hashes}}
-
 		{{>messages}}
 
 		{{#if isInRole 'db_admin'}}
@@ -32,7 +26,7 @@
 
   					<div class="form-group col-md-3">
 							{{>basic_input method="set_field" collection_name="Permissions"
-							field="collection" item_id=_id}}
+							field="collection_name" item_id=_id}}
 						</div>
 
   					<div class="form-group col-md-3">
@@ -130,34 +124,13 @@
 </template>
 
 
-<template name="admin_upwork_oauth">
-	{{#if isInRole 'admin'}}
-		<a class="btn btn-theme" href="/admin/upwork/oauth" id="upwork_oauth_refresh">Restart UpWork OAuth</a> <br>
-
-		{{#if upwork_oauth_url}}
-			<a class="btn btn-theme" href="{{upwork_oauth_url}}">Register on UpWork</a> <br>
-		{{/if}}
-
-		{{#if upwork_oauth_token}}
-			<a class="btn btn-theme" href="/admin/upwork/oauth" id="upwork_oauth_finish">Finish OAuth</a> <br>
-		{{/if}}
-
-		{{#unless upwork_oauth_finished}}
-			Please wait getting oauth token. <br>
-		{{else}}
-			UpWork connected successfully.
-		{{/unless}}
-	{{else}}
-		{{>ER_404}}
-	{{/if}}
-</template>
-
 <template name="messages">
 	<h2>Test message system</h2>
 
 	<div class="well">
 		<select class="form-control edit-field" id="message_type">
 			<option value="got_review">Send got review message</option>
+			<option value="send_mail">Send email to user</option>
 		</select>
 
 		<br>

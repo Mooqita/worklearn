@@ -51,8 +51,8 @@ Meteor.publish "template_by_id", (template_id, origin="") ->
 #######################################################
 
 #######################################################
-Meteor.publish "responses", (filter, origin) ->
-	#console.log "Origin " + origin
+Meteor.publish "responses", (collection_name, filter, origin) ->
+	collection = get_collection_save collection_name
 
 	if origin is undefined
 		console.log "responses: origin missing"
@@ -62,10 +62,10 @@ Meteor.publish "responses", (filter, origin) ->
 
 	restrict = make_filter_save user_id, filter
 	filter = visible_items user_id, restrict
-	fields = visible_fields "Responses", user_id, filter
-	crs = Responses.find filter, fields
+	fields = visible_fields collection, user_id, filter
+	crs = collection.find filter, fields
 
-	log_publication crs, filter, fields, origin
+	log_publication collection_name, crs, filter, fields, origin
 	return crs
 
 #######################################################
@@ -73,8 +73,9 @@ Meteor.publish "responses", (filter, origin) ->
 #######################################################
 
 #######################################################
-Meteor.publish "sum_of_field", (template_id, field, value) ->
-	check template_id, String
+Meteor.publish "sum_of_field", (collection_name, field, value) ->
+	collection = get_collection_save collection_name
+
 	check field, String
 	check value, String
 
@@ -95,7 +96,7 @@ Meteor.publish "sum_of_field", (template_id, field, value) ->
 			count--
 			self.changed "summaries", value, {label:value, count: count}
 
-	handle = Responses.find(filter).observe handlers
+	handle = collection.find(filter).observe handlers
 
 	initializing = false;
 	self.added("summaries", value, {label:value, count: count});

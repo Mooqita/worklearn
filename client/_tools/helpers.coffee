@@ -40,22 +40,24 @@ Template.registerHelper "download_field_value", (collection_name, item_id, field
 
 
 ########################################
-Template.registerHelper "_is_owner", (obj) ->
+Template.registerHelper "_is_owner", (collection_name, obj) ->
 	if typeof obj == "string"
-		obj = Responses.findOne obj
+		collection = get_collection collection_name
+		obj = collection.findOne obj
 
 	owner = obj.owner_id == Meteor.userId()
 	return owner
 
 
 ########################################
-Template.registerHelper "_is_public", (obj=null) ->
+Template.registerHelper "_is_public", (collection_name, obj=null) ->
 	if typeof obj == "string"
-		data = Responses.findOne obj
+		collection = get_collection collection_name
+		data = collection.findOne obj
 	else
 		data = Template.currentData()
 
-	field_value = get_field_value data, "published", data._id, "Responses"
+	field_value = get_field_value data, "published", data._id, collection_name
 
 	if not field_value
 		return false
@@ -64,13 +66,14 @@ Template.registerHelper "_is_public", (obj=null) ->
 
 
 ########################################
-Template.registerHelper "_is_saved", (obj=null) ->
+Template.registerHelper "_is_saved", (collection_name, obj=null) ->
 	if typeof obj == "string"
-		data = Responses.findOne obj
+		collection = get_collection collection_name
+		data = collection.findOne obj
 	else
 		data = Template.currentData()
 
-	field_value = get_field_value data, "content", data._id, "Responses"
+	field_value = get_field_value data, "content", data._id, collection_name
 
 	if not field_value
 		return false
@@ -116,8 +119,9 @@ Template.registerHelper "_is_editing_template", (item_id) ->
 	return is_ed
 
 #######################################################
-Template.registerHelper "_can_edit_response", (item_id) ->
-	item = Responses.findOne(item_id)
+Template.registerHelper "_can_edit_response", (collection_name, item_id) ->
+	collection = get_collection collection_name
+	item = collection.findOne(item_id)
 	owns = item.owner_id == Meteor.userId()
 	editor = Roles.userIsInRole Meteor.userId(), "editor"
 	return owns or editor

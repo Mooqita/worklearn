@@ -145,9 +145,9 @@ FlowRouter.route '/admin',
 	action: (params) ->
 		data =
 			menu: "menu"
-			login: "login"
 			layout: "layout"
 			content: "admin"
+		console.log "what"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -166,9 +166,9 @@ FlowRouter.route "/response/:response_id",
 	name: "response.id",
 	action: (params) ->
 		data =
-			menu: "menu"
-			login: "login_user"
-			layout: "layout"
+			#menu: "menu"
+			#login: "login_user"
+			#layout: "layout"
 			content: "response_dashboard"
 		BlazeLayout.render "body_template", data
 

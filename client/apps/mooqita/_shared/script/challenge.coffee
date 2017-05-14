@@ -1,7 +1,4 @@
 Template.challenge.helpers
 	profile: () ->
-		filter =
-			type_identifier: "profile"
-
-		res = Responses.findOne filter
+		res = Profiles.findOne()
 		return res

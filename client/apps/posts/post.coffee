@@ -12,7 +12,7 @@ Template.post_group.onCreated ->
 	self.autorun () ->
 		filter =
 			group_name: self.data.group_name
-		self.subscribe "responses", filter, "post_group"
+		self.subscribe "responses", "Posts", filter, "post_group"
 
 #########################################################
 Template.post_group.helpers
@@ -30,7 +30,6 @@ Template.post_group.helpers
 	groups: () ->
 		filter =
 			parent_id: ""
-			type_identifier: "post"
 			group_name: this.group_name
 
 		mod =
@@ -38,7 +37,7 @@ Template.post_group.helpers
 				index: 1
 				view_order: 1
 
-		return Responses.find(filter, mod)
+		return Posts.find(filter, mod)
 
 #########################################################
 Template.post_group.events
@@ -50,7 +49,7 @@ Template.post_group.events
 		filter =
 			parent_id: this._id
 
-		index = Responses.find(filter).count()
+		index = Posts.find(filter).count()
 
 		param =
 			index: index + 1
@@ -61,7 +60,7 @@ Template.post_group.events
 			group_name: this.group_name
 			visible_to: "editor"
 
-		Meteor.call 'add_response', param,
+		Meteor.call 'add_response', "Posts", param,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -82,7 +81,7 @@ Template._post.helpers
 			sort:
 				index:1
 
-		list = Responses.find(filter, mod)
+		list = Posts.find(filter, mod)
 		return list
 
 

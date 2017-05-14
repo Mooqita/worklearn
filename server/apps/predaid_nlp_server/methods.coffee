@@ -15,18 +15,19 @@ class @PredaidTask
 #
 #
 #
-# collection_name: Name of the collection the text to
-#									 analyse can be found.
-# item_id: 				 _id of the object that contains
-# 								 the text.
-# field: 					 the field name of the collection
+# collection: Collection the text to
+#							analyse can be found.
+# item_id: 		_id of the object that contains
+# 						the text.
+# field: 			the field name of the collection
 #####################################################
 
 #####################################################
-@predaid_add_text = (collection_name, item_id, field) ->
-	deny_action_save('read', collection_name, item_id, field)
+@predaid_add_text = (collection, item_id, field) ->
+	if not collection
+		throw new Meteor.Error "Collection undefined."
 
-	collection = get_collection collection_name
+	deny_action_save('read', collection, item_id, field)
 
 	item = collection.findOne item_id
 	if not item
@@ -36,15 +37,15 @@ class @PredaidTask
 	removal_id = item.removal_id
 
 	meta_data =
+		collection_name: collection._name
 		owner_id: user_id
-		collection_name: collection_name
 		item_id: item_id
 		field: field
 
 	ds = new PredaidTask(removal_id, meta_data, "parse", user_id)
-	set_id = PredaidTasks.insert(ds)
+	#set_id = PredaidTasks.insert(ds)
 	removal_id = ds.removal_id
 
-	return set_id
+	return "undefined"#set_id
 
 

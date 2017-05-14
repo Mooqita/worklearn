@@ -6,30 +6,36 @@
 
 ################################################################
 Meteor.methods
-	add_db_permission: (role, collection, field) ->
+	add_db_permission: (role, collection_name, field) ->
 		user = Meteor.user()
 		if !user
-			throw new Meteor.Error('Not logged in.')
+			throw new Meteor.Error('Not permitted.')
 
 		if !Roles.userIsInRole(user._id, 'db_admin')
 			throw new Meteor.Error('Not permitted.')
 
-		check(role, String)
-		check(field, String)
-		check(collection, String)
+		check role, String
+		check field, String
+		check collection_name, String
 
-		secret = Secrets.findOne()
+# TODO: is this necessary?
+#		secret = Secrets.findOne()
 
-		if not collection in secret.collections
+#		if not collection_name in secret.collections
+#			throw new Meteor.Error 'Collection not present: ' + collection
+
+		collection = get_collection_save collection_name
+		if not collection
 			throw new Meteor.Error 'Collection not present: ' + collection
 
-		if not get_collection(collection)
-			throw new Meteor.Error 'Collection not present: ' + collection
+#		role = Roles.findOne {name:role}
+#		if not role
+#			throw new Meteor.Error 'Role not present: ' + role
 
 		filter =
 			role: role
 			field: field
-			collection: collection
+			collection_name: collection._name
 
 		mod =
 			$set:
@@ -42,11 +48,11 @@ Meteor.methods
 	remove_permission: (id) ->
 		user = Meteor.user()
 		if !user
-			throw new Meteor.Error('Not logged in.')
+			throw new Meteor.Error 'Not permitted.'
 
-		if !Roles.userIsInRole(user._id, 'db_admin')
-			throw new Meteor.Error('Not permitted.')
+		if !Roles.userIsInRole user._id, 'db_admin'
+			throw new Meteor.Error 'Not permitted.'
 
-		check(id, String)
+		check id, String
 
 		Permissions.remove(id)

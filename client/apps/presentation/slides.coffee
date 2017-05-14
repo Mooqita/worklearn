@@ -10,7 +10,7 @@ target = undefined
 ##############################################
 get_slide = (diff) ->
 	r_id = Session.get "current_slide_id"
-	cur = Responses.findOne r_id
+	cur = Slides.findOne r_id
 	if not cur
 		return
 
@@ -22,7 +22,7 @@ get_slide = (diff) ->
 		index: s_id + diff
 		parent_id: cur.parent_id
 
-	res = Responses.findOne filter
+	res = Slides.findOne filter
 	return res
 
 ##############################################
@@ -80,7 +80,7 @@ Template.full_screen.events
 		target = $("#full_screen")[0]
 
 		id = Session.get "current_slide_id"
-		slide = Responses.findOne id
+		slide = Slides.findOne id
 		Session.set "current_slide_index", slide.index
 
 		if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen"))
@@ -111,12 +111,12 @@ Template.slide_deck.helpers
 			sort:
 				index:1
 
-		list = Responses.find(filter, mod)
+		list = Slides.find(filter, mod)
 		return list
 
 	current_slide: () ->
 		id = Session.get "current_slide_id"
-		slide = Responses.findOne(id)
+		slide = Slides.findOne(id)
 
 		if slide
 			slide['current'] = true
@@ -136,7 +136,7 @@ Template.slide_deck.events
 		filter =
 			parent_id: this._id
 
-		index = Responses.find(filter).count()
+		index = Slides.find(filter).count()
 
 		param =
 			index: index + 1
@@ -145,7 +145,7 @@ Template.slide_deck.events
 			single_parent: false
 			type_identifier: "slide"
 
-		Meteor.call "add_response", param,
+		Meteor.call "add_response", "Slides", param,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -172,7 +172,7 @@ Template.voting_summary.events
 	"click #url": ()->
 		filter=
 			name: this._id
-		res = Responses.findOne(filter)
+		res = Slides.findOne(filter)
 		Session.set "current_slide_id", res._id
 
 ##############################################

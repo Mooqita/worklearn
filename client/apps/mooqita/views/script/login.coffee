@@ -12,6 +12,7 @@ _add_profile = (occupation) ->
 			if err
 				sAlert.error(err)
 
+
 ##########################################################
 Template.first_timer.onCreated ->
 

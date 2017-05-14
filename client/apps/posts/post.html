@@ -4,7 +4,7 @@
 |
 ------------------------------------------->
 <template name="post_group">
-	{{#if isInRole 'editor'}}
+	{{#if isInRole "editor"}}
 		<div class="post-maker item">
 			<div class="row">
 				<div class="col-md-6 vcenter">
@@ -18,7 +18,7 @@
 							</div>
 						</div>
 
-						{{>select_input field='template_select' options=templates item_id=-1}}
+						{{>select_input field="template_select" options=templates item_id=-1}}
 					</div>
 				</div>
 			</div>
@@ -60,8 +60,8 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>basic_input method='set_field' collection_name='Responses' field='title'
-					placeholder='Title' item_id=_id}}
+			{{>basic_input method="set_field" collection_name="Posts" field="title"
+					placeholder="Title" item_id=_id}}
 		{{/if}}
 
 		<div class="row">
@@ -85,11 +85,11 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>upload method='set_field' collection_name='Responses' field='avatar'
-			item_id=_id box_id='avatar'}}
+			{{>upload method="set_field" collection_name="Posts" field="avatar"
+			item_id=_id box_id="avatar"}}
 		{{/if}}
 
-		<img src="{{download_field_value 'Responses' _id 'avatar'}}" class="img-responsive"
+		<img src="{{download_field_value "Posts" _id "avatar"}}" class="img-responsive"
 				 alt="{{alternative}}">
 
 		{{#if _is_editing_response _id}}
@@ -110,7 +110,7 @@
 
 	{{#if _is_editing_response _id}}
 		{{#_edit_tools}}
-			{{>code_input method='set_field' collection_name='Responses' field='abstract' item_id=_id}}
+			{{>code_input method="set_field" collection_name="Posts" field="abstract" item_id=_id}}
 		{{/_edit_tools}}
 	{{else}}
 		{{#if abstract}}
@@ -145,8 +145,8 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>basic_input method='set_field' collection_name='Responses' field='title'
-				placeholder='Title' item_id=_id}}
+			{{>basic_input method="set_field" collection_name="Posts" field="title"
+				placeholder="Title" item_id=_id}}
 		{{/if}}
 
 		<div class="row">
@@ -176,18 +176,18 @@
 		{{/if}}
 
 		<div class="team-member">
-			<img src="{{download_field_value 'Responses' _id 'avatar'}}"
+			<img src="{{download_field_value "Posts" _id "avatar"}}"
 					 class="img-responsive img-circle" alt="">
 
 			{{#if _is_editing_response _id}}
-				{{>upload method='set_field' collection_name='Responses' field='avatar'
-					item_id=_id box_id='avatar'}}
+				{{>upload method="set_field" collection_name="Posts" field="avatar"
+					item_id=_id box_id="avatar"}}
 			{{/if}}
 
 			<h4>
 				{{#if _is_editing_response _id}}
-					{{>basic_input method='set_field' collection_name='Responses' field='name'
-						placeholder='Name' item_id=_id}}
+					{{>basic_input method="set_field" collection_name="Posts" field="name"
+						placeholder="Name" item_id=_id}}
 				{{else}}
 					{{name}}
 				{{/if}}
@@ -195,8 +195,8 @@
 
 			<p class="text-muted">
 				{{#if _is_editing_response _id}}
-					{{>basic_input method='set_field' collection_name='Responses' field='title'
-						placeholder='Title' item_id=_id}}
+					{{>basic_input method="set_field" collection_name="Posts" field="title"
+						placeholder="Title" item_id=_id}}
 				{{else}}
 					{{title}}
 				{{/if}}
@@ -204,8 +204,8 @@
 
 			<p style="font-size: 14px">
 				{{#if _is_editing_response _id}}
-					{{>text_input method='set_field' collection_name='Responses' field='resume'
-						placeholder='Resume' item_id=_id}}
+					{{>text_input method="set_field" collection_name="Posts" field="resume"
+						placeholder="Resume" item_id=_id}}
 				{{else}}
 					{{resume}}
 				{{/if}}
@@ -232,8 +232,8 @@
 
 		<h1 class="logo">
 			{{#if _is_editing_response _id}}
-				{{>basic_input method='set_field' collection_name='Responses'
-						field='title' item_id=_id placholder="Title" type="text" }}
+				{{>basic_input method="set_field" collection_name="Posts"
+						field="title" item_id=_id placholder="Title" type="text" }}
 			{{else}}
 				{{#if title}}
 					{{{letter}}}
@@ -244,7 +244,7 @@
 		</h1>
 
 		{{#if _is_editing_response _id}}
-			{{>code_input method='set_field' collection_name='Responses' field='abstract' item_id=_id}}
+			{{>code_input method="set_field" collection_name="Posts" field="abstract" item_id=_id}}
 		{{else}}
 			{{#if abstract}}
 				{{{abstract}}}
@@ -286,8 +286,8 @@
 			{{#if _is_editing_response _id}}
 				<div class="post-banner background-theme">
 					<h2>
-						{{>basic_input method='set_field' collection_name='Responses' field='title'
-							placeholder='Title' item_id=_id}}
+						{{>basic_input method="set_field" collection_name="Posts" field="title"
+							placeholder="Title" item_id=_id}}
 					</h2>
 				</div>
 			{{else}}
@@ -303,21 +303,21 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>upload method='set_field' field='figure' item_id=_id box_id='figure'}}
+			{{>upload method="set_field" field="figure" item_id=_id box_id="figure"}}
 		{{/if}}
 
 		{{#if figure}}
 			<h2>
-				{{>basic_input method='set_field' collection_name='Responses'
-						field='title' item_id=_id placholder="Title" type="text" }}
+				{{>basic_input method="set_field" collection_name="Posts"
+						field="title" item_id=_id placholder="Title" type="text" }}
 			</h2>
 		{{/if}}
 
 		<div class="row">
 			<div class="col-md-12">
 				{{#if _is_editing_response _id}}
-					{{>code_input method='set_field' collection_name='Responses'
-					field='abstract' item_id=_id}}
+					{{>code_input method="set_field" collection_name="Posts"
+					field="abstract" item_id=_id}}
 				{{else}}
 					{{#if abstract}}
 						{{{abstract}}}
@@ -349,8 +349,8 @@
 		{{#if _is_editing_response _id}}
 			<div class="post-banner background-theme">
 				<h2>
-					{{>basic_input method='set_field' collection_name='Responses'
-					field='title' item_id=_id placholder="Title" type="text" }}
+					{{>basic_input method="set_field" collection_name="Posts"
+					field="title" item_id=_id placholder="Title" type="text" }}
 				</h2>
 			</div>
 		{{else}}
@@ -381,7 +381,7 @@
 				{{/if}}
 
 				{{#if _is_editing_response _id}}
-					{{>upload method='set_field' field='figure' item_id=_id box_id='figure'}}
+					{{>upload method="set_field" field="figure" item_id=_id box_id="figure"}}
 				{{/if}}
 			</div>
 
@@ -390,8 +390,8 @@
 					<em>
 						<i>
 							{{#if _is_editing_response _id}}
-								{{>basic_input method='set_field' collection_name='Responses'
-													field='authors' item_id=_id placholder="Authors"
+								{{>basic_input method="set_field" collection_name="Posts"
+													field="authors" item_id=_id placholder="Authors"
 								type="text" }}
 							{{else}}
 								{{#if authors}}
@@ -408,16 +408,16 @@
 					<div class="row">
 						<div class="col-md-3">
 							<h4>
-								{{>basic_input method='set_field' collection_name='Responses'
-									field='pub_year' item_id=_id placholder="Publication year"
+								{{>basic_input method="set_field" collection_name="Posts"
+									field="pub_year" item_id=_id placholder="Publication year"
 								type="text" }}
 							</h4>
 						</div>
 
 						<div class="col-md-9">
 							<h4>
-								{{>basic_input method='set_field' collection_name='Responses'
-									field='conference' item_id=_id placholder="Publication venue"
+								{{>basic_input method="set_field" collection_name="Posts"
+									field="conference" item_id=_id placholder="Publication venue"
 								type="text" }}
 							</h4>
 						</div>
@@ -430,8 +430,8 @@
 				{{/if}}
 
 				{{#if _is_editing_response _id}}
-					{{>code_input method='set_field' collection_name='Responses'
-					field='abstract' item_id=_id}}
+					{{>code_input method="set_field" collection_name="Posts"
+					field="abstract" item_id=_id}}
 				{{else}}
 					{{#if abstract}}
 						{{{abstract}}}
@@ -460,7 +460,7 @@
 			{{/if}}
 
 			{{#if _is_editing_response _id}}
-				{{>upload method='set_field' field='paper' item_id=_id box_id='paper'}}
+				{{>upload method="set_field" field="paper" item_id=_id box_id="paper"}}
 			{{/if}}
 		</div>
 

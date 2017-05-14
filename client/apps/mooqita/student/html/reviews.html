@@ -35,7 +35,11 @@
 			{{#each reviews}}
 				{{>student_review_preview}}
 			{{else}}
-				<h2>You have not submitted any reviews yet.</h2>
+				<hr>
+
+				<h2>
+					<em>You have not submitted any reviews yet.</em>
+				</h2>
 			{{/each}}
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -45,11 +49,11 @@
 <template name="student_review_preview">
 	<hr>
 
-	<h3>
+	<h2>
 		<a id="student_review">
-			<b><em>{{challenge.title}}</em></b>
+			{{challenge.title}}
 		</a>
-	</h3>
+	</h2>
 
 	{{>more content=challenge.content}}
 </template>
@@ -70,11 +74,10 @@
 					{{>more content=content}}
 
 					{{#if material}}
-						<label>Additional Material for Challenge</label>
-						<h3 style="padding-bottom: 15px">
-							{{>download collection_name="Responses"
+						<h2>
+							{{>download collection_name="Challenges"
 								item_id=_id field="material"}}
-						</h3>
+						</h2>
 					{{/if}}
 				{{/with}}
 
@@ -84,72 +87,69 @@
 					{{>more content=content}}
 
 					{{#if material}}
-						<label>Additional Material for Solution</label>
-						<h3 style="padding-bottom: 15px">
-							{{>download collection_name="Responses"
+						<h2>
+							{{>download collection_name="Solutions"
 								item_id=_id field="material"}}
-						</h3>
+						</h2>
 					{{/if}}
 				{{/with}}
-			</div>
 
-			{{#with review}}
-				<h1>Your Review</h1>
-					{{#unless _is_public}}
-						<div class="alert background-theme">
-							Here is a list of things you have to do before your review is done:
-							<ul>
-								{{#unless _is_saved}}
-									<li>Write your review. Well that seems obvious.</li>
-									<li>And save it!</li>
-								{{/unless}}
+				{{#with review}}
+					<h1>Your Review</h1>
+						{{#unless _is_public "Reviews"}}
+							<div class="alert background-theme">
+								Here is a list of things you have to do before your review is done:
+								<ul>
+									{{#unless _is_saved "Reviews"}}
+										<li>Write your review. Well that seems obvious.</li>
+										<li>And save it!</li>
+									{{/unless}}
 
-								{{#unless rating}}
-									<li>Select a rating for the solution.</li>
-								{{/unless}}
+									{{#unless rating}}
+										<li>Select a rating for the solution.</li>
+									{{/unless}}
 
-									<li>Publish your review.</li>
-							</ul>
-						</div>
-					{{/unless}}
+										<li>Publish your review.</li>
+								</ul>
+							</div>
+						{{/unless}}
 
-				{{#unless _is_public}}
-					{{>text_input method="set_field" collection_name="Responses"
-						item_id=_id field="content" placeholder="Please provide your feedback here"}}
-				{{else}}
-					<p>
-						{{content}}
-					</p>
-				{{/unless}}
-
-				<div class="form-group">
-					{{#unless _is_public}}
-						<label for="quality" class="item-label"
-									 title="Your grading of the solution"
-										>Rating</label>
-						{{>select_input method="set_field" collection_name="Responses"
-								item_id=_id field="rating" options=_rating_options }}
+					{{#unless _is_public "Reviews"}}
+						{{>text_input method="set_field" collection_name="Reviews"
+							item_id=_id field="content" placeholder="Please provide your feedback here"}}
 					{{else}}
-						<h3><b>Your rating: <em>{{rating}}</em> out of <em>5</em></b></h3>
+						<p>
+							{{content}}
+						</p>
 					{{/unless}}
-				</div>
 
-				{{#unless _is_public}}
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" id="save">Save</div>
-							</span>
-						</div>
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" {{publish_disabled}}
-										 id="publish">Make public</div>
-							</span>
-						</div>
+					<div class="form-group">
+						{{#unless _is_public "Reviews"}}
+							<h2>Rating</h2>
+							{{>select_input method="set_field" collection_name="Reviews"
+									item_id=_id field="rating" options=_rating_options }}
+						{{else}}
+							<h2>Your rated the solution with <em>{{rating}}</em> out of <em>5</em></h2>
+						{{/unless}}
 					</div>
-				{{/unless}}
-			{{/with}}
+
+					{{#unless _is_public "Reviews"}}
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" id="save">Save</div>
+								</span>
+							</div>
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" {{publish_disabled}}
+											 id="publish">Make public</div>
+								</span>
+							</div>
+						</div>
+					{{/unless}}
+				{{/with}}
+			</div>
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>

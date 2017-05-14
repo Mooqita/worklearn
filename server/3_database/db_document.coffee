@@ -5,9 +5,7 @@
 #######################################################
 
 #######################################################
-@save_document = (collection, document)->
-	#TODO:add checks!!!! use _accepts
-
+@store_document = (collection, document)->
 	document["created"] = new Date()
 	document["modified"] = new Date()
 	document["loaded"] = true

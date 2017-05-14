@@ -58,13 +58,13 @@ Template.credential_solution.events
 ##############################################
 Template.credential_review.helpers
 	average_rating: () ->
-		if this.average
-			return this.average
+		if this.rating
+			return this.rating
 		return "-/-"
 
 ##############################################
 Template.credential_review.helpers
 	resume_url: () ->
-		return get_response_url(this.owner_id)
+		return ""#get_response_url(this.owner_id)
 
 

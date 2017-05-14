@@ -13,7 +13,6 @@ _collect_fields = (response, fields) ->
 	corpus = ""
 
 	fl_sol =
-		type_identifier: "solution"
 		owner_id: user_id
 
 	fields =
@@ -28,11 +27,11 @@ _collect_fields = (response, fields) ->
 			title: 1
 			name: 1
 
-	solutions = Responses.find(fl_sol, mod).fetch()
+	solutions = Solutions.find(fl_sol, mod).fetch()
 
 	for solution in solutions
 		p_id = solution.parent_id
-		challenge = Responses.findOne p_id, mod
+		challenge = Challenges.findOne p_id, mod
 		corpus += _collect_fields solution, fields
 		corpus += _collect_fields challenge, fields
 

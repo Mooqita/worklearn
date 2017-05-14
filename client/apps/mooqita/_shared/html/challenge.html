@@ -4,7 +4,7 @@
 			{{>student_solution}}
 		{{/with}}
 	{{else}}
-		{{#if _is_owner _id}}
+		{{#if _is_owner "Challenges" _id}}
 			{{>company_challenge}}
 		{{else}}
 			<h1>{{title}}</h1>

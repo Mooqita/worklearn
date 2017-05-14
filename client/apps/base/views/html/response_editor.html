@@ -9,7 +9,16 @@
 				<button class="btn btn-theme" id="add_response" type="button">Add response now</button>
 			</span>
 
-			<input type="text" class="form-control" placeholder="Search your responses ...">
+			<select class="form-control edit-field" id="collection_name">
+				<option value="responses">Select collection</option>
+				<option value="Challenges">Challenges</option>
+				<option value="Solutions">Solutions</option>
+				<option value="Reviews">Reviews</option>
+				<option value="Feedback">Feedback</option>
+				<option value="Profile">Profile</option>
+				<option value="Slides">Slides</option>
+				<option value="Posts">Posts</option>
+			</select>
 
 			<span class="input-group-btn">
 				<div class="btn btn-theme" id="export_responses">
@@ -20,7 +29,7 @@
 
 		{{#unless responses}}
 			<div class="well">
-				<p>No challenges yet.</p>
+				<p>No {{collection_name}} yet.</p>
 			</div>
 		{{/unless}}
 
@@ -98,7 +107,7 @@
 
 
 <template name="response_editor">
-	{{#if data_loaded}}
+	{{#if Template.subscriptionsReady}}
 		{{>Template.dynamic template=template_id data=response}}
 	{{else}}
 		<h1>Loading data <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>

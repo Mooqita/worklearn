@@ -18,9 +18,8 @@ Template.company_challenges.helpers
 	challenges: () ->
 		filter =
 			owner_id: Meteor.userId()
-			type_identifier: "challenge"
 
-		return Responses.find(filter)
+		return Challenges.find(filter)
 
 ########################################
 Template.company_challenges.events
@@ -80,16 +79,20 @@ Template.company_challenge.onCreated ->
 Template.company_challenge.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		return Responses.findOne id
+		return Challenges.findOne id
 
 	publish_disabled: () ->
 		data = Template.currentData()
-		content = get_field_value data, "content", data._id, "Responses"
 
+		content = get_field_value data, "content", data._id, "Challenges"
 		if not content
 			return "disabled"
 
-		published = get_field_value data, "published", data._id, "Responses"
+		title = get_field_value data, "title", data._id, "Challenges"
+		if not title
+			return "disabled"
+
+		published = get_field_value data, "published", data._id, "Challenges"
 		if published
 			return "disabled"
 

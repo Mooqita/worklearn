@@ -12,11 +12,11 @@
 				</a>
 			</span>
 
-			<span>
+			<!--span>
 				<a class="navigation-button control-navigate" id="student_find_challenges">
 					Find Challenges
 				</a>
-			</span>
+			</span-->
 
 			<span>
 				<a class="navigation-button control-navigate" id="student_solutions">
@@ -37,14 +37,14 @@
 			</span>
 
 
-			{{#if num_new_messages}}
 				<span class="pull-right">
 					<a class="navigation-button control-navigate" id="student_messages">
 						Messages
-						<span class="badge background-contrast">{{num_new_messages}}</span>
+						{{#if num_new_messages}}
+							<span class="badge background-contrast">{{num_new_messages}}</span>
+						{{/if}}
 					</a>
 				</span>
-			{{/if}}
 		</div>
 	</div>
 </template>

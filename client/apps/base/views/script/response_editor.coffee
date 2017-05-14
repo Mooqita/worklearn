@@ -19,7 +19,6 @@ _get_template_id = () ->
 
 	return id
 
-
 #######################################
 #
 # response dashboard
@@ -32,16 +31,28 @@ Template.response_dashboard.onCreated ->
 	self.autorun () ->
 		filter =
 			owner_id: Meteor.userId()
-		self.subscribe "responses", filter, "response_dashboard"
+		name = Session.get "collection_name"
+		self.subscribe "responses", name, filter, "response_dashboard"
 
 ########################################
 Template.response_dashboard.helpers
+	collection_name: () ->
+		return Session.get "collection_name"
+
 	response: () ->
+		collection = get_collection Session.get "collection_name"
+		if not collection
+			return undefined
+
 		id = FlowRouter.getParam("response_id")
-		res = Responses.findOne(id)
+		res = collection.findOne(id)
 		return res
 
 	responses: () ->
+		collection = get_collection Session.get "collection_name"
+		if not collection
+			return undefined
+
 		filter =
 			parent_id: ""
 
@@ -51,13 +62,23 @@ Template.response_dashboard.helpers
 				index: 1
 				view_order: 1
 
-		res = Responses.find(filter, mod)
+		res = collection.find(filter, mod)
+		if res.count() == 0
+			return undefined
+
 		return res
 
 ########################################
 import { saveAs } from 'file-saver'
 
 Template.response_dashboard.events
+########################################
+	"change #collection_name": (event) ->
+		target = event.target
+		value = target.options[target.selectedIndex].value;
+		value = event.target.value
+		Session.set "collection_name", value
+
 	"click #export_responses": () ->
 		Meteor.call "backup_responses",
 			(err, res) ->
@@ -68,7 +89,9 @@ Template.response_dashboard.events
 					saveAs blob, "responses.zip"
 
 	"click #add_response": () ->
-		Meteor.call "add_response", {},
+		name = Session.get "collection_name"
+
+		Meteor.call "add_response", name, {},
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -89,13 +112,17 @@ Template.response_item.onCreated ->
 ########################################
 Template.response_item.helpers
 	response_url: () ->
-		return get_response_url this._id, true
+		return "/response/"+this._id
 
 	has_children: (parent) ->
 		filter =
 			parent_id: parent._id
 
-		res = Responses.find(filter).count()
+		collection = get_collection Session.get "collection_name"
+		if not collection
+			return false
+
+		res = collection.find(filter).count()
 		return res
 
 	expanded: () ->
@@ -109,7 +136,11 @@ Template.response_item.helpers
 			sort:
 				index:1
 
-		list = Responses.find(filter, mod)
+		collection = get_collection Session.get "collection_name"
+		if not collection
+			return []
+
+		list = collection.find(filter, mod)
 		return list
 
 	name_or_title: () ->
@@ -151,10 +182,10 @@ Template.response_item.events
 					sAlert.success("Updated: " + field)
 
 	"click #add_response_with_parent": () ->
+		name = Session.get "collection_name"
 		param:
 			parent_id: this._id
-
-		Meteor.call "add_response", param,
+		Meteor.call "add_response", name, param,
 			(err, res) ->
 				if err
 					sAlert.error(err)
@@ -177,7 +208,8 @@ Template.response_editor.onCreated ->
 		filter =
 			_id: self.data._id
 
-		self.subscribe "responses", filter, "response_editor",
+		name = Session.get "collection_name"
+		self.subscribe "responses", name, filter, "response_editor",
 			onReady: () ->
 				self.loaded_response.set(true)
 
@@ -233,7 +265,11 @@ Template._edit_tools.helpers
 		{value:"team", label:"Team"}
 		{value:"member", label:"Member"}
 		{value:"partner", label:"Partner"}
-		{value:"partner_list", label:"Partner List"}]
+		{value:"partner_list", label:"Partner List"}
+		{value:"slide_deck", label:"Slide Deck"}
+		{value:"slide_base", label:"Slide Base"}
+		{value:"slide_content", label:"Slide Content"}
+		{value:"slide_title", label:"Slide Title"}]
 
 	parents: () ->
 		filter = {}
@@ -242,7 +278,11 @@ Template._edit_tools.helpers
 				_id: 1
 				title: 1
 
-		list = Responses.find(filter, mod).fetch()
+		collection = get_collection Session.get "collection_name"
+		if not collection
+			return []
+
+		list = collection.find(filter, mod).fetch()
 		groups = [{value:"", label:"Select a parent"}]
 		groups.push ({value:x._id, label:x.title} for x in list)...
 

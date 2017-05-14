@@ -20,9 +20,8 @@ Template.body_template.onCreated ->
 	self.autorun ->
 		filter =
 			owner_id: Meteor.userId()
-			type_identifier: "profile"
 
-		Meteor.subscribe "responses", filter, "login_user"
+		Meteor.subscribe "responses", "Profiles", filter, "body_template.onCreated"
 
 
 ################################################
