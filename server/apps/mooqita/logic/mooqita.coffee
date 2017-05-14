@@ -9,7 +9,7 @@ _num_requested_reviews  = (solution) ->
 		requester_id: requester_id
 
 	if solution
-		filter.solution_id = solution._id
+		filter.challenge_id = solution.challenge_id
 
 	res = ReviewRequests.find filter
 	return  res.count()
@@ -23,11 +23,10 @@ _num_provided_reviews = (solution) ->
 
 	filter =
 		provider_id: requester_id
-		review_id:
-			$ne: ""
+		review_done: true
 
 	if solution
-		filter.solution_id = solution._id
+		filter.challenge_id = solution.challenge_id
 
 	res = ReviewRequests.find filter
 	return  res.count()
@@ -36,8 +35,6 @@ _num_provided_reviews = (solution) ->
 ###############################################
 @gen_challenge = (user_id) ->
 	challenge =
-		type_identifier: "challenge"
-		template_id: "challenge"
 		owner_id: user_id
 
 	return store_document Challenges, challenge
@@ -62,7 +59,6 @@ _num_provided_reviews = (solution) ->
 		group_name: ""
 		template_id: "solution"
 		challenge_id: challenge._id
-		type_identifier: "solution"
 		published: false
 
 	store_document Solutions, solution

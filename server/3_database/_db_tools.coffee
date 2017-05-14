@@ -1,6 +1,5 @@
 #######################################################
 _accepts =
-	type_identifier: String
 	challenge_id: non_empty_string
 	solution_id: non_empty_string
 	template_id: non_empty_string

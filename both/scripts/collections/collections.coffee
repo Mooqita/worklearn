@@ -22,6 +22,7 @@
 @Slides = new Mongo.Collection("slides")
 
 #######################################################
+@User_Credits = new Mongo.Collection("user_credits")
 @User_Credentials = new Mongo.Collection("user_credentials")
 @Challenge_Summary = new Mongo.Collection("challenge_summary")
 

@@ -18,7 +18,6 @@ _challenge_fields =
 		owner_id: 1
 		published: 1
 		num_reviews: 1
-		type_identifier: 1
 
 #######################################################
 _solution_fields =
@@ -30,7 +29,6 @@ _solution_fields =
 		published: 1
 		parent_id: 1
 		challenge_id: 1
-		type_identifier: 1
 
 #######################################################
 _review_fields =
@@ -41,7 +39,6 @@ _review_fields =
 		parent_id: 1
 		solution_id: 1
 		challenge_id: 1
-		type_identifier: 1
 
 #######################################################
 _feedback_fields =
@@ -52,7 +49,6 @@ _feedback_fields =
 		published: 1
 		solution_id: 1
 		challenge_id: 1
-		type_identifier: 1
 
 
 #######################################################
@@ -124,19 +120,6 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	if challenge.owner_id != user._id
 		throw Meteor.Error("Not permitted.")
 
-	filter =
-		parent_id: challenge_id
-		published: true
-
-	options =
-		fields:
-			content: 1
-			owner_id: 1
-			challenge_id: 1
-			reviews_required: 1
-		skip: page * size
-		limit: size
-
 	add_info = (solution) ->
 		entry = {}
 		entry.content = solution.content
@@ -187,6 +170,19 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		entry["average_rating"] = avg
 
 		self.added("challenge_summary", solution._id, entry)
+
+	filter =
+		parent_id: challenge_id
+		published: true
+
+	options =
+		fields:
+			content: 1
+			owner_id: 1
+			challenge_id: 1
+			reviews_required: 1
+		skip: page * size
+		limit: size
 
 	Solutions.find(filter, options).forEach(add_info)
 	self.ready()
@@ -353,7 +349,6 @@ Meteor.publish "user_credentials", (user_id) ->
 			num_ratings = 0
 
 			review_filter =
-				type_identifier: "review"
 				solution_id: s._id
 			review_cursor = Reviews.find(review_filter)
 
@@ -390,3 +385,60 @@ Meteor.publish "user_credentials", (user_id) ->
 
 	Meteor.users.find(filter).forEach(prepare_resume)
 	self.ready()
+
+#######################################################
+# credits
+#######################################################
+
+#######################################################
+Meteor.publish "credits", () ->
+	user_id = this.userId
+	self = this
+	filter =
+		$or:[
+			{requester_id: user_id}
+			{provider_id: user_id}]
+
+	gen_credit = (id) ->
+		obj = ReviewRequests.findOne id
+		review_value = 0
+		feedback_value = 0
+		review_time = -1
+		feedback_time = -1
+
+		if obj.requester_id == user_id
+			review_value -= 1
+			feedback_value += if obj.feedback_done then 1 else 0
+			if obj.feedback_finished
+				feedback_time = obj.feedback_finished-obj.review_finished
+		if obj.provider_id == user_id
+			feedback_value -= 1
+			review_value += if obj.review_done then 1 else 0
+			if obj.review_finished
+				review_time = obj.review_finished-obj.under_review_since
+
+		credit =
+			_id: id
+			review_time: review_time
+			review_value: review_value
+			feedback_time: feedback_time
+			feedback_value: feedback_value
+			solution_id: obj.solution_id
+			challenge_id: obj.challenge_id
+		return credit
+
+	handler = ReviewRequests.find(filter).observeChanges
+		added: (id, fields) ->
+			credit = gen_credit id
+			self.added("user_credits", id, credit)
+
+		changed: (id, fields) ->
+			credit = gen_credit id
+			self.changed("user_credits", id, credit)
+
+		removed: (id) ->
+      self.removed("user_credits", id)
+
+	self.ready()
+	self.onStop ->
+    handler.stop()

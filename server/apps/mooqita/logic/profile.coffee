@@ -7,7 +7,6 @@
 		mail_notifications: "yes"
 		notification_cycle: "day"
 		last_notification: new Date()
-		type_identifier: "profile"
 		has_occupation: true
 		template_id: "profile"
 		occupation: occupation

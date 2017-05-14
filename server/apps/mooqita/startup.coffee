@@ -23,7 +23,6 @@ Meteor.startup () ->
 
 	index =
 		text_index: "text"
-		type_identifier: 1
 	Challenges._ensureIndex index
 	Solutions._ensureIndex index
 	Reviews._ensureIndex index

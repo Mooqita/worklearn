@@ -2,7 +2,6 @@
 @gen_message = (user_id, title, message, url) ->
 	#save message
 	msg =
-		type_identifier: "message"
 		owner_id: user_id
 		content: message
 		title: title
@@ -91,7 +90,10 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: New feedback for your reviews"
-	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
+	url = Meteor.absoluteUrl() + "user?template=student_reviews" +
+		"&review_id=" + review._id +
+		"&solution_id=" + solution._id +
+		"&challenge_id=" + challenge._id
 
 	body = "Hi " + review_profile.given_name + ",\n\n"
 	body += "You received feedback to one of your reviews. \n"

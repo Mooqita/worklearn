@@ -20,8 +20,6 @@
 		document["removal_id"] = Random.id()
 	if not document.template_id
 		document["template_id"] = "response"
-	if not document.type_identifier
-		document["type_identifier"] = "undefined"
 	if not document.index
 		document["index"] = -1
 	if not document.parent_id

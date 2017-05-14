@@ -56,7 +56,6 @@ Template.post_group.events
 			parent_id: this._id
 			template_id: val
 			single_parent: false
-			type_identifier: "post"
 			group_name: this.group_name
 			visible_to: "editor"
 

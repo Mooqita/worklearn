@@ -162,7 +162,7 @@ Template.student_solution_reviews.events
 			(err, rsp) ->
 				if err
 					sAlert.error err
-				if res
+				if rsp
 					sAlert.success "Review requested!"
 
 

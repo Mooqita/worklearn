@@ -6,15 +6,26 @@ Template.student_menu.onCreated ->
 			owner_id: Meteor.userId()
 
 		Meteor.subscribe "responses", "Messages", filter, "find messages"
+		Meteor.subscribe "credits"
 
 
 Template.student_menu.helpers
 	credits: () ->
-		profile = get_profile()
-		r = profile.requested
-		p = profile.provided
+		return User_Credits.find()
 
-		return p-r
+	review_time: () ->
+		if this.review_time>0
+			sec = 1000
+			min = sec*60
+			hrs = min*60
+			this.review_time / hrs
+
+	feedback_time: () ->
+		if this.feedback_time>0
+			sec = 1000
+			min = sec*60
+			hrs = min*60
+			this.feedback_time / hrs
 
 	num_new_messages: () ->
 		filter =

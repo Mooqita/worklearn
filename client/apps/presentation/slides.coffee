@@ -143,7 +143,6 @@ Template.slide_deck.events
 			parent_id: this._id
 			template_id: "slide_content"
 			single_parent: false
-			type_identifier: "slide"
 
 		Meteor.call "add_response", "Slides", param,
 			(err, res) ->
