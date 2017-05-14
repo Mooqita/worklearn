@@ -19,8 +19,35 @@ Template.student_reviews.onCreated ->
 
 ########################################
 Template.student_reviews.helpers
-	reviews: () ->
-		return Reviews.find()
+	reviewed_challenges: () ->
+		filter = {}
+		mod =
+			fields:
+				challenge_id: 1
+		res = []
+		unique = {}
+		reviews = Reviews.find(filter, mod).fetch()
+		for rev in reviews
+			if rev.challenge_id of unique
+				continue
+
+			res.push
+				challenge_id: rev.challenge_id
+			unique[rev.challenge_id] = rev.challenge_id
+
+		return res
+
+	reviews: (challenge_id) ->
+		filter =
+			challenge_id: challenge_id
+		reviews = Reviews.find(filter).fetch()
+
+		first = true
+		for rev in reviews
+			rev.first = first
+			first = false
+
+		return reviews
 
 	error_message: () ->
 		Session.get "find_review_error"
@@ -43,7 +70,7 @@ Template.student_reviews.events
 		inst.searching.set true
 		Session.set "find_review_error", false
 
-		Meteor.call "provide_review",
+		Meteor.call "add_review",
 			(err, res) ->
 				inst.searching.set false
 				if err

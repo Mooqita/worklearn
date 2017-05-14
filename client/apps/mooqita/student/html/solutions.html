@@ -42,6 +42,10 @@
 	<hr>
 
 	<h2>
+		{{#unless is_feedback_missing}}
+			<span class="badge background-contrast">finished</span>
+		{{/unless}}
+
 		<a id="student_solution">
 			{{challenge.title}}
 		</a>
@@ -107,37 +111,49 @@
 			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 		</h1>
 	{{else}}
-		<h1>Your Solution</h1>
+		<h1>
+			{{#unless is_feedback_missing}}
+				<span class="badge background-theme">finished</span>
+			{{/unless}}
+			Your Solution
+		</h1>
 
-		<div class="alert background-theme">
-			Here is a list of things you have to do before your solution is ready:
-			<ul>
-				{{#unless content}}
-					<li>Provide an explanation of your solution under solution description.</li>
-				{{/unless}}
+		{{#if is_feedback_missing}}
+			<div class="alert background-theme">
+				Here is a list of things you have to do before your solution is ready:
+				<ul>
+					{{#unless _is_public "Solutions"}}
+						{{#unless content}}
+							<li>Provide an explanation of your solution under solution description.</li>
+						{{/unless}}
 
-				{{#unless material}}
-					<li>Add additional material if necessary.</li>
-				{{/unless}}
+						{{#unless material}}
+							<li>Add additional material if necessary.</li>
+						{{/unless}}
 
-				{{#unless _is_saved "Solutions"}}
-					<li>Save your work!</li>
-				{{/unless}}
+						{{#unless _is_saved "Solutions"}}
+							<li>Save your work!</li>
+						{{/unless}}
 
-				{{#unless _is_public "Solutions"}}
-					<li>Publish your solution (Button below the upload field).</li>
-					<li>Request a review (happens automatically when you publish your solution).</li>
-				{{/unless}}
+						<li>Publish your solution (Button below the upload field).</li>
+					{{/unless}}
 
-				<li>
-					Write {{missing_reviews}} reviews for your peers.
-					<a href="{{review_link}}">
-						<b>Click here to write one.</b>
-					</a>
-				</li>
-				<li>Read the reviews you received and give feedback.</li>
-			</ul>
-		</div>
+					{{#if is_review_missing}}
+						<li>
+							Write <b class="color-contrast">{{missing_reviews}} more reviews</b> for your peers.
+							<a href="{{review_link}}">
+								<b >Click here to write one.</b>
+							</a>
+						</li>
+					{{/if}}
+
+					<li>
+						Read the reviews you received and give feedback.
+						Give feedback to <b class="color-contrast"> {{missing_feedback}} more reviews.</b>
+					</li>
+				</ul>
+			</div>
+		{{/if}}
 
 		{{#unless _is_public "Solutions"}}
 			<h2>Solution description</h2>
@@ -181,21 +197,12 @@
 					</span>
 				</div>
 			</div>
-		{{else}}
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<span class="btn-group btn-group-justified">
-						<a class="btn btn-theme" {{request_disabled}}
-								 id="request_review">Request another review</a>
-					</span>
-				</div>
-			</div>
 		{{/unless}}
 
 		{{#if _is_public "Solutions"}}
 			<h1>Reviews you received</h1>
 			{{#each reviews}}
-				{{>student_review_feedback}}
+				{{>student_feedback_solution}}
 			{{else}}
 				<p>No reviews yet.</p>
 			{{/each}}

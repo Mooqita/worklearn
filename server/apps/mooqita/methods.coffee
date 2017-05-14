@@ -42,44 +42,20 @@ Meteor.methods
 		return finish_solution solution, Meteor.userId()
 
 
-	request_review: (solution_id) ->
-		check solution_id, String
-		solution = secure_item_action Solutions, solution_id, true
-		if not solution.published
-			throw new Meteor.Error "Solution not published"
-
-		return request_review solution, Meteor.userId()
-
-
-	provide_review: () ->
+	add_review: () ->
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		request = find_solution_to_review user._id
-		review_id = gen_review request, user._id
-
-		return review_id
-
-
-	provide_review_for_challenge: (challenge_id) ->
-		check challenge_id, String
-
-		user = Meteor.user()
-
-		if not user
-			throw new Meteor.Error('Not permitted.')
-
-		chl_sol = find_solution_to_review user._id, challenge_id
-		rev_fed = gen_review chl_sol.challenge, chl_sol.solution, user._id
-
-		return rev_fed.review_id
+		return gen_review user._id
 
 
 	finish_review: (review_id) ->
 		review = secure_item_action Reviews, review_id, true
-		return finish_review review, Meteor.userId()
+		r_id = finish_review review, Meteor.userId()
+
+		return r_id
 
 
 	finish_feedback: (feedback_id) ->

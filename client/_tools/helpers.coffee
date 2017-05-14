@@ -50,7 +50,9 @@ Template.registerHelper "_is_owner", (collection_name, obj) ->
 
 
 ########################################
-Template.registerHelper "_is_public", (collection_name, obj=null) ->
+Template.registerHelper "_is_public", (collection_name, obj) ->
+	console.log obj
+
 	if typeof obj == "string"
 		collection = get_collection collection_name
 		data = collection.findOne obj

@@ -9,6 +9,7 @@
 # Do before start
 #######################################################
 #TODO: Make warning when the profile is not complete.
+#TODO: Make a notification that a review solution is complete!
 
 #######################################################
 # Do later

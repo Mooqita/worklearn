@@ -70,12 +70,12 @@
 	body += "You can disable mail notifications in your profile: " +
 					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
-	send_message_mail solution.owner_id, subject, body
+	send_message_mail review.owner_id, subject, body
 
 	title = "Review timeout"
 	text = "One of the reviews you were working on timed out. To ensure that everyone gets reviews in time. Reviews time out after 24 hours. After this time they are again available for other reviewers."
 
-	gen_message solution.owner_id, title, text, url
+	gen_message review.owner_id, title, text, url
 
 	return true
 
@@ -90,7 +90,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: New feedback for your reviews"
-	url = Meteor.absoluteUrl() + "user?template=student_reviews" +
+	url = Meteor.absoluteUrl() + "user?template=student_review" +
 		"&review_id=" + review._id +
 		"&solution_id=" + solution._id +
 		"&challenge_id=" + challenge._id
@@ -104,10 +104,10 @@
 	body += "You can disable mail notifications in your profile: "+
 					Meteor.absoluteUrl() + "user?template=student_profile\n"
 
-	gen_message review.owner_id, subject, body, url
+	send_message_mail review.owner_id, subject, body, url
 
 	title = "New Feedback"
 	text = "You received new feedback on one of your reviews."
-	gen_message solution.owner_id, title, text, url
+	gen_message review.owner_id, title, text, url
 
 	return true

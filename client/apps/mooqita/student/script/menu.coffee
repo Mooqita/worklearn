@@ -15,17 +15,11 @@ Template.student_menu.helpers
 
 	review_time: () ->
 		if this.review_time>0
-			sec = 1000
-			min = sec*60
-			hrs = min*60
-			this.review_time / hrs
+			return how_much_time this.review_time
 
 	feedback_time: () ->
 		if this.feedback_time>0
-			sec = 1000
-			min = sec*60
-			hrs = min*60
-			this.feedback_time / hrs
+			return how_much_time this.feedback_time
 
 	num_new_messages: () ->
 		filter =

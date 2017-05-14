@@ -36,6 +36,7 @@ _num_provided_reviews = (solution) ->
 @gen_challenge = (user_id) ->
 	challenge =
 		owner_id: user_id
+		num_reviews: 2
 
 	return store_document Challenges, challenge
 
@@ -67,10 +68,15 @@ _num_provided_reviews = (solution) ->
 ###############################################
 @finish_solution = (solution, user_id) ->
 	if solution.published
-		throw new Meteor.Error "Review: " + review._id + " is already published"
+		throw new Meteor.Error "Solution: " + solution._id + " is already published"
 
 	modify_field_unprotected Solutions, solution._id, "published", true
-	return request_review solution, user_id
+	solution = Solutions.findOne solution._id
+
+	#TODO: inform people on the waiting list for reviews.
+
+	request_review solution, user_id
+	return solution._id
 
 
 ###############################################
@@ -81,9 +87,6 @@ _num_provided_reviews = (solution) ->
 
 	if credits < 0
 		throw new Meteor.Error "User needs more credits to request reviews."
-
-	#TODO: enable is paid selections.
-	#TODO: inform people on the waiting list for reviews.
 
 	#WordPOS = require("wordpos")
 	#wordpos = new WordPOS()
@@ -145,7 +148,9 @@ _num_provided_reviews = (solution) ->
 
 
 ###############################################
-@gen_review = (review_request, user_id) ->
+@gen_review = (user_id) ->
+	review_request = find_solution_to_review user_id
+
 	if review_request.review_id
 		review Reviews.findOne review_request.review_id
 		send_review_timeout_message review
@@ -215,7 +220,25 @@ _num_provided_reviews = (solution) ->
 	modify_field_unprotected Reviews, review._id, "published", true
 	modify_field_unprotected ReviewRequests, rr._id, "review_done", true
 	modify_field_unprotected ReviewRequests, rr._id, "review_finished", new Date()
+
 	send_review_message review
+
+	# Find the solution the review provider submitted.
+	# The solution has to be submitted to the same challenge
+	# as the solution in the review.
+	filter =
+		requester_id: review.owner_id
+		challenge_id: review.challenge_id
+
+	request = ReviewRequests.findOne filter
+	solution = Solutions.findOne request.solution_id
+	challenge = Challenges.findOne review.challenge_id
+
+	provided = _num_provided_reviews solution
+	required = 	challenge.num_reviews
+
+	if required > provided
+		request_review solution, review.owner_id
 
 	return review._id
 
@@ -235,9 +258,10 @@ _num_provided_reviews = (solution) ->
 	modify_field_unprotected Feedback, feedback._id, "published", true
 	modify_field_unprotected ReviewRequests, rr._id, "feedback_done", true
 	modify_field_unprotected ReviewRequests, rr._id, "feedback_finished", new Date()
-	feedback = Feedback.findOne feedback._id
 
+	feedback = Feedback.findOne feedback._id
 	send_feedback_message feedback
+
 	return feedback._id
 
 

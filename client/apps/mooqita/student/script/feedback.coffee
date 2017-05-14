@@ -1,5 +1,29 @@
 ##############################################
 #
+#student_feedback_review
+#
+##############################################
+
+##############################################
+Template.student_feedback_review.onCreated ->
+	self = this
+
+	console.log self
+
+	self.autorun () ->
+		self.subscribe "feedback_by_review_id", self.data._id
+
+
+##############################################
+Template.student_feedback_review.helpers
+	feedback: () ->
+		filter =
+			parent_id: this._id
+		return Feedback.findOne filter
+
+
+##############################################
+#
 #student_review_feedback
 #
 ##############################################
@@ -9,7 +33,7 @@
 ########################################
 
 ########################################
-Template.student_review_feedback.onCreated ->
+Template.student_feedback_solution.onCreated ->
 	self = this
 
 	self.autorun () ->
@@ -17,7 +41,7 @@ Template.student_review_feedback.onCreated ->
 
 
 ########################################
-Template.student_review_feedback.helpers
+Template.student_feedback_solution.helpers
 	feedback: () ->
 		filter =
 			parent_id: this._id
@@ -62,7 +86,7 @@ Template.student_review_feedback.helpers
 		return ""
 
 ########################################
-Template.student_review_feedback.events
+Template.student_feedback_solution.events
 	"click #publish_feedback":()->
 		if event.target.attributes.disabled
 			return

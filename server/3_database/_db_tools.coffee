@@ -13,8 +13,9 @@ _accepts =
 #######################################################
 @log_publication = (collection_name, crs, filter, fields, origin) ->
 	data = if "owner_id" in filter then " for owner " else " "
+
 	console.log "Submitted " + crs.count() + " " +
-					collection_name + data + "to " + origin
+		collection_name + data + "to " + origin
 
 #	f = JSON.stringify(filter, null, 2);
 #	console.log f

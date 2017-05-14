@@ -31,15 +31,31 @@ Template.student_solution_preview.onCreated ->
 	self = this
 
 	self.autorun () ->
-		id = self.data.challenge_id
-		if not id
+		challenge_id = self.data.challenge_id
+		if not challenge_id
 			return
 
-		self.subscribe "challenge_by_id", id
+		self.subscribe "challenge_by_id", challenge_id
 
 
 ########################################
 Template.student_solution_preview.helpers
+	is_feedback_missing: () ->
+		challenge = Challenges.findOne this.challenge_id
+		reviews_required = challenge.num_reviews
+
+		filter =
+			challenge_id: this.challenge_id
+			feedback_value:
+				$gt: 0
+
+		credits = User_Credits.find filter
+		feedback_provided = credits.count()
+
+		res = reviews_required > feedback_provided
+		return res
+
+
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
@@ -117,12 +133,64 @@ Template.student_solution_reviews.onCreated ->
 
 ##############################################
 Template.student_solution_reviews.helpers
+	is_review_missing: () ->
+		challenge = Challenges.findOne this.challenge_id
+		reviews_required = challenge.num_reviews
+
+		filter =
+			challenge_id: this.challenge_id
+			review_value:
+				$gt: 0
+
+		credits = User_Credits.find filter
+		reviews_provided = credits.count()
+
+		res = reviews_required > reviews_provided
+		return res
+
+	is_feedback_missing: () ->
+		challenge = Challenges.findOne this.challenge_id
+		reviews_required = challenge.num_reviews
+
+		filter =
+			challenge_id: this.challenge_id
+			feedback_value:
+				$gt: 0
+
+		credits = User_Credits.find filter
+		feedback_provided = credits.count()
+
+		res = reviews_required > feedback_provided
+		return res
+
 	missing_reviews: () ->
 		challenge = Challenges.findOne this.challenge_id
 		reviews_required = challenge.num_reviews
-		reviews_provided = this.completed
+
+		filter =
+			challenge_id: this.challenge_id
+			review_value:
+				$gt: 0
+
+		credits = User_Credits.find filter
+		reviews_provided = credits.count()
 
 		res = "" + (reviews_required - reviews_provided)
+		return res
+
+	missing_feedback: () ->
+		challenge = Challenges.findOne this.challenge_id
+		reviews_required = challenge.num_reviews
+
+		filter =
+			challenge_id: this.challenge_id
+			feedback_value:
+				$gt: 0
+
+		credits = User_Credits.find filter
+		feedback_provided = credits.count()
+
+		res = "" + (reviews_required - feedback_provided)
 		return res
 
 	reviews: () ->

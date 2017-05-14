@@ -32,8 +32,10 @@
 				</div>
 			{{/if}}
 
-			{{#each reviews}}
-				{{>student_review_preview}}
+			{{#each reviewed_challenges}}
+				{{#each reviews challenge_id}}
+					{{>student_review_preview}}
+				{{/each}}
 			{{else}}
 				<hr>
 
@@ -47,15 +49,24 @@
 
 
 <template name="student_review_preview">
-	<hr>
+	{{#if first}}
+		<hr>
 
-	<h2>
-		<a id="student_review">
-			{{challenge.title}}
-		</a>
-	</h2>
+		<h2>{{challenge.title}}</h2>
+		{{>more content=challenge.content}}
+	{{/if}}
 
-	{{>more content=challenge.content}}
+	<div class="indent_l1">
+		<h2>
+			<a id="student_review">
+				{{#if _is_public "Reviews"}}
+					<span class="badge background-contrast">public</span>
+				{{/if}}
+				Open review
+			</a>
+		</h2>
+		{{>more content=content}}
+	</div>
 </template>
 
 
@@ -147,6 +158,8 @@
 								</span>
 							</div>
 						</div>
+					{{else}}
+						{{>student_feedback_review}}
 					{{/unless}}
 				{{/with}}
 			</div>

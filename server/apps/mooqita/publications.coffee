@@ -79,6 +79,7 @@ Meteor.publish "my_challenges", () ->
 		owner_id: this.userId
 
 	filter = visible_items this.userId, restrict
+
 	return Challenges.find filter, _challenge_fields
 
 
@@ -87,10 +88,14 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 	check challenge_id, String
 
 	restrict =
-		_id:challenge_id
+		_id: challenge_id
+		published: true
 
 	filter = visible_items this.userId, restrict
-	return Challenges.find filter, _challenge_fields
+	crs = Challenges.find filter, _challenge_fields
+
+	log_publication "Challenges", crs, filter, _challenge_fields, "challenge_by_id"
+	return crs
 
 
 #######################################################
@@ -162,7 +167,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 				r["peer_avatar"] = _get_avatar profile
 
 			reviews.push r
-			avg += r.rating
+			avg += parseInt(r.rating)
 			nt += 1
 
 		avg = if nt then avg / nt else "no reviews yet"
@@ -288,6 +293,18 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 
 	return Feedback.find filter, _feedback_fields
 
+#######################################################
+Meteor.publish "feedback_by_review_id", (review_id) ->
+	check review_id, String
+
+	filter =
+		review_id: review_id
+		provider_id: this.userId
+
+	request = ReviewRequests.findOne filter
+
+	return Feedback.find request.feedback_id, _feedback_fields
+
 
 #######################################################
 # Resumes
@@ -313,9 +330,9 @@ Meteor.publish "user_credentials", (user_id) ->
 		profile = Profiles.findOne filter
 
 		if profile
-			resume.name = profile.given_name + " " +
-										profile.middle_name + " " +
-										profile.family_name
+			resume.name = (profile.given_name ? "") + " "
+			resume.name += (profile.middle_name ? "") + " "
+			resume.name += profile.family_name ? ""
 			resume.owner_id = profile._id
 			resume.self_description = profile.resume
 			resume.avatar = _get_avatar profile
@@ -365,17 +382,19 @@ Meteor.publish "user_credentials", (user_id) ->
 
 				if feedback.published
 					review.rating = r.rating
-					abs_rating += r.rating
+					abs_rating += parseInt(r.rating)
 					num_ratings += 1
 					if profile
-						review.name = profile.given_name + " " + profile.family_name
+						review.name = (profile.given_name ? "") + " "
+						review.name += (profile.middle_name ? "") + " "
+						review.name += profile.family_name ? ""
 						review.avatar = _get_avatar profile
 
 				review.review = r.content
 				solution.reviews.push(review)
 
 			if abs_rating
-				avg = Math.round(abs_rating / num_ratings,1)
+				avg = Math.round(abs_rating / num_ratings, 1)
 				solution.average = avg
 
 			solution_list.push(solution)
