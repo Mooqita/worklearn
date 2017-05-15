@@ -11,6 +11,9 @@ Template.download.helpers
 		return get_field_value this
 
 	name: () ->
+		if this.name
+			return name
+
 		field = this.field
 		item_id = this.item_id
 		file_name = this.file_name

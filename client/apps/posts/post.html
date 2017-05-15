@@ -86,8 +86,8 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>upload method="set_field" collection_name="Posts" field="avatar"
-			item_id=_id box_id="avatar"}}
+			{{>upload method="set_field" collection_name="Posts"
+					field="avatar" item_id=_id box_id="avatar"}}
 		{{/if}}
 
 		<img src="{{download_field_value "Posts" _id "avatar"}}" class="img-responsive"
@@ -110,7 +110,7 @@
 	{{/if}}
 
 	{{#if _is_editing_response _id}}
-		{{#_edit_tools  collection_name="Posts"}}
+		{{#_edit_tools  collection_name="Posts" _id=_id}}
 			{{>code_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 		{{/_edit_tools}}
@@ -160,7 +160,7 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
 </template>
@@ -182,8 +182,8 @@
 					 class="img-responsive img-circle" alt="">
 
 			{{#if _is_editing_response _id}}
-				{{>upload method="set_field" collection_name="Posts" field="avatar"
-					item_id=_id box_id="avatar"}}
+				{{>upload method="set_field" collection_name="Posts"
+						field="avatar" item_id=_id box_id="avatar"}}
 			{{/if}}
 
 			<h4>
@@ -214,7 +214,7 @@
 			</p>
 
 			{{#if _is_editing_response _id}}
-				{{>_edit_tools}}
+				{{>_edit_tools collection_name="Posts" _id=_id}}
 			{{/if}}
 		</div>
 	</div>
@@ -257,7 +257,7 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools collection_name="Posts"}}
+			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
 </template>
@@ -275,7 +275,9 @@
 
 		{{#if figure}}
 			<div class="post-banner">
-				<img class="img-responsive" src="{{figure}}" alt="{{label}}">
+				<img class="img-responsive"
+						 src="{{download_field_value "Posts" _id "figure" figure}}"
+						 alt="{{label}}">
 			</div>
 
 			{{#if _is_editing_response _id}}
@@ -333,7 +335,7 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools  collection_name="Posts"}}
+			{{>_edit_tools  collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
 </template>
@@ -372,7 +374,9 @@
 			<div class="col-md-4">
 				{{#if figure}}
 					<a href="{{paper_url}}">
-						<img class="img-responsive figure-padding" src="{{figure}}" alt="{{label}}">
+						<img class="img-responsive figure-padding"
+								 src="{{download_field_value "Posts" _id "figure" figure}}"
+								 alt="{{label}}">
 					</a>
 
 					{{#if _is_editing_response _id}}
@@ -385,7 +389,8 @@
 				{{/if}}
 
 				{{#if _is_editing_response _id}}
-					{{>upload method="set_field" field="figure" item_id=_id box_id="figure"}}
+					{{>upload method="set_field" collection_name="Posts"
+							field="figure" item_id=_id box_id="figure"}}
 				{{/if}}
 			</div>
 
@@ -422,7 +427,7 @@
 							<h4>
 								{{>basic_input method="set_field" collection_name="Posts"
 									field="conference" item_id=_id placholder="Publication venue"
-								type="text" }}
+									type="text" }}
 							</h4>
 						</div>
 					</div>
@@ -447,11 +452,10 @@
 		</div>
 
 		<div class="post-banner background-theme">
-			{{#if paper_url}}
-				<div class="btn-group btn-group-justified">
-					<a class="btn btn-translucent" id="download_paper" href="{{paper_url}}" target="_blank">
-						<h3>Download Paper</h3>
-					</a>
+			{{#if paper}}
+				<div class="btn-group btn-group-justified" style="font-size: 20px; padding: 15px">
+					{{>download collection_name="Posts" name="Download"
+								field="paper" item_id=_id}}
 				</div>
 
 				{{#if _is_editing_response _id}}
@@ -464,12 +468,13 @@
 			{{/if}}
 
 			{{#if _is_editing_response _id}}
-				{{>upload method="set_field" field="paper" item_id=_id box_id="paper"}}
+				{{>upload method="set_field"  collection_name="Posts"
+						field="paper" item_id=_id box_id="paper"}}
 			{{/if}}
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools  collection_name="Posts"}}
+			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
 </template>

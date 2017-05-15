@@ -71,8 +71,9 @@ Template.response_dashboard.helpers
 ########################################
 import { saveAs } from 'file-saver'
 
-Template.response_dashboard.events
+
 ########################################
+Template.response_dashboard.events
 	"change #collection_name": (event) ->
 		target = event.target
 		value = target.options[target.selectedIndex].value;
@@ -278,7 +279,7 @@ Template._edit_tools.helpers
 				_id: 1
 				title: 1
 
-		collection = get_collection Session.get "collection_name"
+		collection = get_collection this.collection_name
 		if not collection
 			return []
 

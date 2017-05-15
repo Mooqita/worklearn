@@ -129,7 +129,8 @@
 			field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
 
 	{{>basic_input label='Title' method='set_field' collection_name=collection_name
-			field='title' item_id=_id placeholder="A title that is used in many places can be the same" type="text"}}
+			field='title' item_id=_id placeholder="A title that is used in many places"
+			type="text"}}
 
 	{{>basic_input label='Group' method='set_field' collection_name=collection_name
 		field='group_name' item_id=_id placeholder="An identifier to group" type="text" }}
@@ -138,7 +139,8 @@
 		field='index' item_id=_id placeholder="Index of element" type="number" }}
 
 	{{>basic_input label='View Order' method='set_field' collection_name=collection_name
-		field='view_order' item_id=_id placeholder="View order of element lower comes first" type="number" }}
+		field='view_order' item_id=_id placeholder="View order of element lower comes first"
+		type="number" }}
 
 	{{>select_input label='Template' method='set_field'
 			collection_name=collection_name field='template_id' item_id=_id
