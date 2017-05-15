@@ -136,19 +136,11 @@
 			{{>_edit_toggle}}
 		{{/if}}
 
-		<div class="text-center padding-bottom">
-			<h1 class="logo">
-				<em>O</em>ur <em>T</em>eam
-			</h1>
-
-			<p>
-				Meet the people who make this all possible.
-			</p>
-		</div>
-
 		{{#if _is_editing_response _id}}
-			{{>basic_input method="set_field" collection_name="Posts" field="title"
+			{{>code_input method="set_field" collection_name="Posts" field="abstract"
 				placeholder="Title" item_id=_id}}
+		{{else}}
+			{{{abstract}}}
 		{{/if}}
 
 		<div class="row">
