@@ -18,7 +18,8 @@
 							</div>
 						</div>
 
-						{{>select_input field="template_select" options=templates item_id=-1}}
+						{{>select_input field="template_select" options=templates
+								item_id=-1  collection_name="Posts"}}
 					</div>
 				</div>
 			</div>
@@ -49,7 +50,7 @@
 
 <template name="partner_list">
 	<div class="post background-white">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -73,14 +74,14 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
 </template>
 
 <template name="partner">
 	<div class="col-xs-10 col-ms-6 col-sm-6 col-md-4">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -93,7 +94,7 @@
 				 alt="{{alternative}}">
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
 </template>
@@ -104,13 +105,14 @@
 |
 ------------------------------------------->
 <template name="empty">
-	{{#if _can_edit_response _id}}
+	{{#if _can_edit_response "Posts" _id}}
 		{{>_edit_toggle}}
 	{{/if}}
 
 	{{#if _is_editing_response _id}}
-		{{#_edit_tools}}
-			{{>code_input method="set_field" collection_name="Posts" field="abstract" item_id=_id}}
+		{{#_edit_tools  collection_name="Posts"}}
+			{{>code_input method="set_field" collection_name="Posts"
+					field="abstract" item_id=_id}}
 		{{/_edit_tools}}
 	{{else}}
 		{{#if abstract}}
@@ -130,7 +132,7 @@
 ------------------------------------------->
 <template name="team">
 	<div>
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -171,7 +173,7 @@
 ------------------------------------------->
 <template name="member">
 	<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -226,7 +228,7 @@
 ------------------------------------------->
 <template name="headline">
 	<div class="post background-white">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -244,7 +246,8 @@
 		</h1>
 
 		{{#if _is_editing_response _id}}
-			{{>code_input method="set_field" collection_name="Posts" field="abstract" item_id=_id}}
+			{{>code_input method="set_field" collection_name="Posts"
+					field="abstract" item_id=_id}}
 		{{else}}
 			{{#if abstract}}
 				{{{abstract}}}
@@ -254,7 +257,7 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools collection_name="Posts"}}
 		{{/if}}
 	</div>
 </template>
@@ -266,7 +269,7 @@
 ------------------------------------------->
 <template name="post">
 	<div class="post background-white">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -286,8 +289,8 @@
 			{{#if _is_editing_response _id}}
 				<div class="post-banner background-theme">
 					<h2>
-						{{>basic_input method="set_field" collection_name="Posts" field="title"
-							placeholder="Title" item_id=_id}}
+						{{>basic_input method="set_field" collection_name="Posts"
+								field="title"	placeholder="Title" item_id=_id}}
 					</h2>
 				</div>
 			{{else}}
@@ -303,7 +306,8 @@
 		{{/if}}
 
 		{{#if _is_editing_response _id}}
-			{{>upload method="set_field" field="figure" item_id=_id box_id="figure"}}
+			{{>upload method="set_field" field="figure"
+					item_id=_id box_id="figure" collection_name="Posts"}}
 		{{/if}}
 
 		{{#if figure}}
@@ -317,7 +321,7 @@
 			<div class="col-md-12">
 				{{#if _is_editing_response _id}}
 					{{>code_input method="set_field" collection_name="Posts"
-					field="abstract" item_id=_id}}
+							field="abstract" item_id=_id}}
 				{{else}}
 					{{#if abstract}}
 						{{{abstract}}}
@@ -329,7 +333,7 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
 </template>
@@ -342,7 +346,7 @@
 ------------------------------------------->
 <template name="publication">
 	<div class="post background-white">
-		{{#if _can_edit_response _id}}
+		{{#if _can_edit_response "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -465,7 +469,7 @@
 		</div>
 
 		{{#if _is_editing_response _id}}
-			{{>_edit_tools}}
+			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
 </template>

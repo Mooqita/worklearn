@@ -184,5 +184,5 @@ Template.voting_summary.events
 Template.udk.events
 	"click .option": () ->
 		item_id = this._id
-		Meteor.call "set_field", "Responses", item_id, "vote", event.target.id
+		Meteor.call "set_field", "Slides", item_id, "vote", event.target.id
 
