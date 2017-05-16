@@ -1,6 +1,6 @@
 ########################################
 Template.more.onCreated ->
-	this.expanded = new ReactiveVar(false)
+	this.expanded = new ReactiveVar(this.data.expanded)
 
 ########################################
 Template.more.helpers

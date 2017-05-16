@@ -76,7 +76,11 @@
 					{{#with challenge}}
 						<h1>{{title}}</h1>
 
-						{{>more content=content}}
+						{{#if has_solutions}}
+							{{>more content=content}}
+						{{else}}
+							{{>more content=content expanded=true}}
+						{{/if}}
 
 						{{#if material}}
 							<h2>

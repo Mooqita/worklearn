@@ -63,7 +63,7 @@ _modify_db_file = (collection, item_id, field, value, type)->
 	item = collection.findOne item_id
 
 	#TODO: implement a more fine grained access control
-	if not item.published
+	if not item.published and item.visible_to != "all"
 		deny_action_save('read', collection, item_id, field)
 
 	return download_file_unprotected collection, item_id, field

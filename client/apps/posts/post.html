@@ -169,9 +169,17 @@
 			{{>_edit_toggle}}
 		{{/if}}
 
+
 		<div class="team-member">
-			<img src="{{download_field_value "Posts" _id "avatar"}}"
-					 class="img-responsive img-circle" alt="">
+			<div class="avatar-box">
+				<div class="avatar">
+					<div class="avatar-container img-circle">
+						<img class="img-responsive img-avatar"
+								 src="{{download_field_value "Posts" _id "avatar"}}"
+								 alt="">
+					</div>
+				</div>
+			</div>
 
 			{{#if _is_editing_response _id}}
 				{{>upload method="set_field" collection_name="Posts"
