@@ -115,15 +115,10 @@
 			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
 		</h1>
 	{{else}}
-		<h1>
-			{{#unless is_feedback_missing}}
-				<span class="badge background-theme">finished</span>
-			{{/unless}}
-			Your Solution
-		</h1>
-
 		{{#if is_feedback_missing}}
-			<div class="alert background-theme">
+			<div class="alert alert-warning">
+				<h2>Todo List: Solution</h2>
+				<hr>
 				Here is a list of things you have to do before your solution is ready:
 				<ul>
 					{{#unless _is_public "Solutions"}}
@@ -144,7 +139,7 @@
 
 					{{#if is_review_missing}}
 						<li>
-							Write <b class="color-contrast">{{missing_reviews}} more reviews</b> for your peers.
+							Write <b>{{missing_reviews}} more reviews</b> for your peers.
 							<a href="{{review_link}}">
 								<b >Click here to write one.</b>
 							</a>
@@ -153,11 +148,18 @@
 
 					<li>
 						Read the reviews you received and give feedback.
-						Give feedback to <b class="color-contrast"> {{missing_feedback}} more reviews.</b>
+						Give feedback to <b> {{missing_feedback}} more reviews.</b>
 					</li>
 				</ul>
 			</div>
 		{{/if}}
+
+		<h1>
+			{{#unless is_feedback_missing}}
+				<span class="badge background-theme">finished</span>
+			{{/unless}}
+			Your Solution
+		</h1>
 
 		{{#unless _is_public "Solutions"}}
 			<h2>Solution description</h2>

@@ -37,10 +37,11 @@ Meteor.methods
 			if err
 				msg["error"] = err
 
-			store_document Logging, msg
+			#store_document Logging, msg
+			log = JSON.stringify msg, null, 2
+			console.log "[begin user log] " + log + "[end user log]"
 
 		request(url, call)
-		user = if Meteor.userId() then "user: " + Meteor.userId() else "unknown user"
+		#user = if Meteor.userId() then "user: " + Meteor.userId() else "unknown user"
 
-		console.log "Logging " + user
 		return true

@@ -45,10 +45,10 @@
 
 		{{#with feedback}}
 			<div class="indent_l1">
-				<h2>Your Feedback</h2>
-
 				{{#unless _is_public "Feedback"}}
-					<div class="alert background-theme">
+					<div class="alert alert-warning">
+						<h2>Todo List: Feedback</h2>
+						<hr>
 						Here is a list of things to do:
 						<ul>
 							{{#unless _is_saved "Feedback"}}
@@ -70,6 +70,7 @@
 					</div>
 				{{/unless}}
 
+				<h2>Your Feedback</h2>
 				{{#unless _is_public "Feedback"}}
 					{{>text_input method="set_field" collection_name="Feedback"
 						item_id=_id field="content" placeholder="Please give feedback."}}

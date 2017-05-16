@@ -69,44 +69,60 @@ _get_avatar = (profile) ->
 
 #######################################################
 Meteor.publish "challenges", () ->
-	filter = visible_items this.userId
-	return Challenges.find filter, _challenge_fields
+	user_id = this.userId
+	filter = visible_items user_id
+	crs = Challenges.find filter, _challenge_fields
+
+	log_publication "Challenges", crs, filter,
+			_challenge_fields, "challenges", user_id
+	return crs
 
 
 #######################################################
 Meteor.publish "my_challenges", () ->
+	user_id = this.userId
 	restrict =
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
+	filter = visible_items user_id, restrict
+	crs = Challenges.find filter, _challenge_fields
 
-	return Challenges.find filter, _challenge_fields
+	log_publication "Challenges", crs, filter,
+			_challenge_fields, "my_challenge", user_id
+	return crs
 
 
 #######################################################
 Meteor.publish "challenge_by_id", (challenge_id) ->
 	check challenge_id, String
+	user_id = this.userId
 
 	restrict =
 		_id: challenge_id
 		published: true
 
-	filter = visible_items this.userId, restrict
+	filter = visible_items user_id, restrict
 	crs = Challenges.find filter, _challenge_fields
 
-	log_publication "Challenges", crs, filter, _challenge_fields, "challenge_by_id"
+	log_publication "Challenges", crs, filter,
+			_challenge_fields, "challenge_by_id", user_id
 	return crs
 
 
 #######################################################
 Meteor.publish "my_challenge_by_id", (challenge_id) ->
+	user_id = this.userId
+
 	restrict =
 		_id:challenge_id
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
+	filter = visible_items user_id, restrict
+	crs = Challenges.find filter, _challenge_fields
 
-	return Challenges.find filter, _challenge_fields
+	log_publication "Challenges", crs, filter,
+			_challenge_fields, "my_challenge_by_id", user_id
+	return crs
 
 
 #######################################################
@@ -119,10 +135,10 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		throw Meteor.Error("Size values larger than 10 are not allowed.")
 
 	self = this
-	user = Meteor.users.findOne(this.userId)
-	challenge = Challenges.findOne(challenge_id)
+	user_id = this.userId
+	challenge = Challenges.findOne challenge_id
 
-	if challenge.owner_id != user._id
+	if challenge.owner_id != user_id
 		throw Meteor.Error("Not permitted.")
 
 	add_info = (solution) ->
@@ -135,7 +151,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 		profile = Profiles.findOne filter
 		if profile
-			entry["author_name"] = profile.given_name + " " + profile.family_name
+			entry["author_name"] = get_profile_name profile
 			entry["author_avatar"] = _get_avatar profile
 
 		filter =
@@ -163,7 +179,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 			profile = profile = Profiles.findOne(filter)
 			if profile
-				r["peer_name"] = profile.given_name + " " + profile.family_name
+				r["peer_name"] = get_profile_name profile
 				r["peer_avatar"] = _get_avatar profile
 
 			reviews.push r
@@ -189,7 +205,12 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		skip: page * size
 		limit: size
 
-	Solutions.find(filter, options).forEach(add_info)
+	crs = Solutions.find(filter, options)
+	crs.forEach(add_info)
+
+	log_publication "Challenges", crs, filter,
+			_challenge_fields, "challenge_summary", user_id
+
 	self.ready()
 
 
@@ -199,18 +220,23 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 #######################################################
 Meteor.publish "my_solutions", () ->
+	user_id = this.userId
 	restrict =
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
-	return Solutions.find filter, _solution_fields
+	filter = visible_items user_id, restrict
+	crs = Solutions.find filter, _solution_fields
 
+	log_publication "Solutions", crs, filter,
+			_challenge_fields, "my_solutions", user_id
+	return crs
 
 #######################################################
 Meteor.publish "solution_by_id", (solution_id) ->
 	check solution_id, String
+	user_id = this.userId
 
-	if !this.userId
+	if !user_id
 		throw new Meteor.Error("Not permitted.")
 
 	#TODO: only user that are eligible should see this.
@@ -219,31 +245,46 @@ Meteor.publish "solution_by_id", (solution_id) ->
 		_id: solution_id
 		published: true
 
-	return Solutions.find filter, _solution_fields
+	crs = Solutions.find filter, _solution_fields
+
+	log_publication "Solutions", crs, filter,
+			_challenge_fields, "solution_by_id", user_id
+	return crs
 
 
 #######################################################
 Meteor.publish "my_solution_by_id", (solution_id) ->
 	check solution_id, String
+	user_id = this.userId
 
 	restrict =
 		_id: solution_id
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
-	return Solutions.find filter, _solution_fields
+	filter = visible_items user_id, restrict
+	crs = Solutions.find filter, _solution_fields
+
+	log_publication "Solutions", crs, filter,
+			_challenge_fields, "my_solution_by_id", user_id
+	return crs
 
 
 #######################################################
 Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 	check challenge_id, String
+	user_id = this.userId
 
 	restrict =
-		owner_id: this.userId
+		owner_id: user_id
 		challenge_id: challenge_id
 
-	filter = visible_items this.userId, restrict
-	return Solutions.find filter, _solution_fields
+	filter = visible_items user_id, restrict
+	crs = Solutions.find filter, _solution_fields
+
+	log_publication "Solutions", crs, filter,
+			_challenge_fields, "my_solutions_by_challenge_id", user_id
+	return crs
+
 
 #######################################################
 # reviews
@@ -251,32 +292,49 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 
 #######################################################
 Meteor.publish "my_reviews", () ->
+	user_id = this.userId
 	restrict =
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
-	return Reviews.find filter, _review_fields
+	filter = visible_items user_id, restrict
+	crs = Reviews.find filter, _review_fields
+
+	log_publication "Reviews", crs, filter,
+			_challenge_fields, "my_reviews", user_id
+	return crs
+
 
 #######################################################
 Meteor.publish "my_review_by_id", (review_id) ->
 	check review_id, String
+	user_id = this.userId
 
 	restrict =
 		_id: review_id
-		owner_id: this.userId
+		owner_id: user_id
 
-	filter = visible_items this.userId, restrict
-	return Reviews.find filter, _review_fields
+	filter = visible_items user_id, restrict
+	crs = Reviews.find filter, _review_fields
+
+	log_publication "Reviews", crs, filter,
+			_challenge_fields, "my_review_by_id", user_id
+	return crs
+
 
 #######################################################
 Meteor.publish "reviews_by_solution_id", (solution_id) ->
 	check solution_id, String
+	user_id = this.userId
 
 	filter =
 		solution_id: solution_id
 		published: true
 
-	return Reviews.find filter, _review_fields
+	crs = Reviews.find filter, _review_fields
+
+	log_publication "Reviews", crs, filter,
+			_challenge_fields, "reviews_by_solution_id", user_id
+	return crs
 
 
 #######################################################
@@ -286,24 +344,33 @@ Meteor.publish "reviews_by_solution_id", (solution_id) ->
 #######################################################
 Meteor.publish "my_feedback_by_review_id", (review_id) ->
 	check review_id, String
+	user_id = this.userId
 
 	filter =
 		parent_id: review_id
-		owner_id: this.userId
+		owner_id: user_id
+	crs = Feedback.find filter, _feedback_fields
 
-	return Feedback.find filter, _feedback_fields
+	log_publication "Feedback", crs, filter,
+			_challenge_fields, "my_feedback_by_review_id", user_id
+	return crs
+
 
 #######################################################
 Meteor.publish "feedback_by_review_id", (review_id) ->
 	check review_id, String
+	user_id = this.userId
 
 	filter =
 		review_id: review_id
-		provider_id: this.userId
+		provider_id: user_id
 
 	request = ReviewRequests.findOne filter
+	crs = Feedback.find request.feedback_id, _feedback_fields
 
-	return Feedback.find request.feedback_id, _feedback_fields
+	log_publication "Feedback", crs, filter,
+			_challenge_fields, "feedback_by_review_id", user_id
+	return crs
 
 
 #######################################################
@@ -330,9 +397,7 @@ Meteor.publish "user_credentials", (user_id) ->
 		profile = Profiles.findOne filter
 
 		if profile
-			resume.name = (profile.given_name ? "") + " "
-			resume.name += (profile.middle_name ? "") + " "
-			resume.name += profile.family_name ? ""
+			resume.name = get_profile_name profile
 			resume.owner_id = profile._id
 			resume.self_description = profile.resume
 			resume.avatar = _get_avatar profile
@@ -385,9 +450,7 @@ Meteor.publish "user_credentials", (user_id) ->
 					abs_rating += parseInt(r.rating)
 					num_ratings += 1
 					if profile
-						review.name = (profile.given_name ? "") + " "
-						review.name += (profile.middle_name ? "") + " "
-						review.name += profile.family_name ? ""
+						review.name = get_profile_name profile
 						review.avatar = _get_avatar profile
 
 				review.review = r.content
@@ -402,7 +465,11 @@ Meteor.publish "user_credentials", (user_id) ->
 		resume.solutions = solution_list
 		self.added("user_credentials", user._id, resume)
 
-	Meteor.users.find(filter).forEach(prepare_resume)
+	crs = Meteor.users.find(filter)
+	crs.forEach(prepare_resume)
+
+	log_publication "User_Credentials", crs, filter,
+			_challenge_fields, "credits", user_id
 	self.ready()
 
 #######################################################

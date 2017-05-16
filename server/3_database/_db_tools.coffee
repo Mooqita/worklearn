@@ -11,11 +11,21 @@ _accepts =
 	_id: non_empty_string
 
 #######################################################
-@log_publication = (collection_name, crs, filter, fields, origin) ->
-	data = if "owner_id" in filter then " for owner " else " "
+@log_publication = (collection_name, crs, filter, fields, origin, user_id) ->
+	data = " "
 
-	console.log "Submitted " + crs.count() + " " +
-		collection_name + data + "to " + origin
+	if user_id
+		p_f =
+			owner_id: user_id
+		profile = Profiles.findOne p_f
+		name = get_profile_name profile
+		name += ": " + user_id
+
+	if filter
+		data = if "owner_id" in filter then " for owner " else " "
+
+	console.log "[Publication] Submitted " + crs.count() + " " +
+		collection_name + data + "to " + origin + " by: " + name
 
 #	f = JSON.stringify(filter, null, 2);
 #	console.log f

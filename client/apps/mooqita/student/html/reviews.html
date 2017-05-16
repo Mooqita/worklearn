@@ -106,25 +106,26 @@
 				{{/with}}
 
 				{{#with review}}
+					{{#unless _is_public "Reviews"}}
+						<h2>Todo List: Review</h2>
+						<hr>
+						<div class="alert alert-warning">
+							Here is a list of things you have to do before your review is done:
+							<ul>
+								{{#unless _is_saved "Reviews"}}
+									<li>Write your review. Well that seems obvious.</li>
+									<li>And save it!</li>
+								{{/unless}}
+
+								{{#unless rating}}
+									<li>Select a rating for the solution.</li>
+								{{/unless}}
+
+									<li>Publish your review.</li>
+							</ul>
+						</div>
+					{{/unless}}
 					<h1>Your Review</h1>
-						{{#unless _is_public "Reviews"}}
-							<div class="alert background-theme">
-								Here is a list of things you have to do before your review is done:
-								<ul>
-									{{#unless _is_saved "Reviews"}}
-										<li>Write your review. Well that seems obvious.</li>
-										<li>And save it!</li>
-									{{/unless}}
-
-									{{#unless rating}}
-										<li>Select a rating for the solution.</li>
-									{{/unless}}
-
-										<li>Publish your review.</li>
-								</ul>
-							</div>
-						{{/unless}}
-
 					{{#unless _is_public "Reviews"}}
 						{{>text_input method="set_field" collection_name="Reviews"
 							item_id=_id field="content" placeholder="Please provide your feedback here"}}

@@ -1,4 +1,12 @@
 ###############################################
+@get_profile_name = (profile) ->
+	name = (profile.given_name ? "") + " "
+	name += (profile.middle_name ? "") + " "
+	name += profile.family_name ? ""
+
+	return name
+
+###############################################
 @gen_profile = (user_id, occupation) ->
 	if not occupation
 		occupation = "student"

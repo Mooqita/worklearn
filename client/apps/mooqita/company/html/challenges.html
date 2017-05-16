@@ -65,7 +65,9 @@
 			{{#with challenge}}
 				{{#unless _is_public "Challenges"}}
 					<div class=" padding-top">
-						<div class="alert background-theme">
+						<div class="alert alert-warning">
+							<h2>Todo List: Challenge</h2>
+							<hr>
 							A summary of things you need to do before students can see your task:
 							<ul>
 								{{#unless title}}
@@ -100,24 +102,30 @@
 							<em><b>LIVE</b></em>
 						{{/if}}
 
-						{{#unless _is_public "Challenges"}}
+						{{>basic_input method="set_field" collection_name="Challenges"
+						item_id=_id field="title" placeholder="Title of your challenge"}}
+
+						<!--{{#unless _is_public "Challenges"}}
 							{{>basic_input method="set_field" collection_name="Challenges"
 							item_id=_id field="title" placeholder="Title of your challenge"}}
 						{{else}}
 							{{title}}
-						{{/unless}}
+						{{/unless}}-->
 					</h1>
 
 					<hr>
 
 					<div class="form-group">
 						<h2>Content:</h2>
-						{{#unless _is_public "Challenges"}}
+						{{>text_input method="set_field" collection_name="Challenges"
+								item_id=_id field="content" placeholder="Content"}}
+
+						<!--{{#unless _is_public "Challenges"}}
 							{{>text_input method="set_field" collection_name="Challenges"
 									item_id=_id field="content" placeholder="Content"}}
 						{{else}}
 							{{>more content=content}}
-						{{/unless}}
+						{{/unless}}-->
 
 						{{#if _is_public "Challenges"}}
 							<h2>Shareable link:</h2>
@@ -139,13 +147,13 @@
 									item_id=_id field="num_reviews" placeholder="Number of reviews required."}}
 						{{/if}}
 
-						{{#unless _is_public "Challenges"}}
+						<!--{{#unless _is_public "Challenges"}}-->
 							<h2>Upload Additional material:</h2>
 							<h2>
 								{{>upload method="set_field" collection_name="Challenges"
 									item_id=_id field="material"}}
 							</h2>
-						{{/unless}}
+						<!--{{/unless}}-->
 
 						{{#if material}}
 							<h2>Download Additional material:</h2>

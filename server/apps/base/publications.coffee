@@ -65,7 +65,7 @@ Meteor.publish "responses", (collection_name, filter, origin) ->
 	fields = visible_fields collection, user_id, filter
 	crs = collection.find filter, fields
 
-	log_publication collection_name, crs, filter, fields, origin
+	log_publication collection_name, crs, filter, fields, origin, user_id
 	return crs
 
 #######################################################

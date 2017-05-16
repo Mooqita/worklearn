@@ -5,11 +5,11 @@ _format_data =
 		return json2xml { 'content': data }, { header: true }
 
 	json: (data) ->
-		res = JSON.stringify( data, null, 2 )
+		res = JSON.stringify data, null, 2
 		return res
 
   csv: (data) ->
-		return Papa.unparse(data)
+		return Papa.unparse data
 
 
 @export_data = (collection) ->
