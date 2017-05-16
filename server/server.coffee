@@ -12,7 +12,7 @@
 		password: secret.mkpswd,
 
 	admin = Accounts.createUser(user)
-	Roles.setUserRoles admin, ['admin', 'db_admin', 'editor']
+	Roles.setUserRoles admin, ['admin', 'db_admin', 'editor', 'challenge_designer']
 	a_id = gen_profile admin
 
 	console.log "admin:" + user.email + " " +a_id

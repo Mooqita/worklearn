@@ -85,8 +85,9 @@ _num_provided_reviews = (solution) ->
 	provided = _num_provided_reviews solution
 	credits = provided - requested
 
-	if credits < 0
-		throw new Meteor.Error "User needs more credits to request reviews."
+	if not Roles.userIsInRole(user_id, "challenge_designer")
+		if credits < 0
+			throw new Meteor.Error "User needs more credits to request reviews."
 
 	#WordPOS = require("wordpos")
 	#wordpos = new WordPOS()
@@ -237,8 +238,11 @@ _num_provided_reviews = (solution) ->
 	provided = _num_provided_reviews solution
 	required = 	challenge.num_reviews
 
-	if required > provided
-		request_review solution, review.owner_id
+	if solution.published
+		if Roles.userIsInRole solution.owner_id, "challenge_designer"
+			request_review solution, review.owner_id
+		else if required > provided
+			request_review solution, review.owner_id
 
 	return review._id
 
