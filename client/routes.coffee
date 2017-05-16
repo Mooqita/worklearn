@@ -40,6 +40,16 @@ FlowRouter.route "/research",
 		BlazeLayout.render "body_template", data
 
 ##########################################################
+FlowRouter.route "/help",
+	name: "index",
+	action: (params) ->
+		data =
+			menu: "mooqita_menu"
+			layout: "mooqita_layout"
+			content: "mooqita_help"
+		BlazeLayout.render "body_template", data
+
+##########################################################
 FlowRouter.route "/work-learn",
 	name: "worklearn",
 	action: (params) ->
