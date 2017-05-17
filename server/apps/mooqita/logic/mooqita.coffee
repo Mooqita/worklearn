@@ -153,7 +153,7 @@ _num_provided_reviews = (solution) ->
 	review_request = find_solution_to_review user_id
 
 	if review_request.review_id
-		review Reviews.findOne review_request.review_id
+		review = Reviews.findOne review_request.review_id
 		send_review_timeout_message review
 		Reviews.remove review_request.review_id
 

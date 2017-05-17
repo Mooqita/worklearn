@@ -6,6 +6,19 @@
 _files = {}
 
 ##############################################
+_get_file_size_text = (byte) ->
+	kb = Math.round(byte / 1024)
+	if kb < 500
+		return kb + " Kbyte"
+
+	mb = Math.round(kb / 1024)
+	if mb < 1
+		return Math.round(kb / 1024, 2)
+
+	return mb + " Mbyte"
+
+
+##############################################
 get_box_id = () ->
 	box_id = Template.instance().box_id.get()
 	if not box_id
@@ -131,7 +144,7 @@ Template.upload.events
 		max_size = this.max_size
 
 		if not max
-			max = 4000000
+			max = 4*1024*1024
 
 		for file in files
 			col = this.collection_name
@@ -142,7 +155,7 @@ Template.upload.events
 			type = file.type
 
 			if not typeof file == "object"
-				sAlert.error 'File upload failed not a vaild file'
+				sAlert.error 'File upload failed not a valid file.'
 				continue
 
 			fileReader.onload = (ev) ->
@@ -155,8 +168,14 @@ Template.upload.events
 				if cumulative_size > max_size
 					frm.removeClass('is-uploading')
 					_files[box_id] = []
-					sAlert.error('File upload failed cumulative size larger than: ' + max_size)
-					frm.addClass('is-error')
+					fs_t = _get_file_size_text cumulative_size
+					ms_t = _get_file_size_text max_size
+					tx = "File upload failed. Cumulative file size is: "
+					tx += fs_t + "."
+					tx += "Maximum allowed is "
+					tx += ms_t + "."
+					sAlert.error("tx")
+					frm.addClass("is-error")
 					return
 
 				Meteor.call "upload_file", col, item, field, data, type,
