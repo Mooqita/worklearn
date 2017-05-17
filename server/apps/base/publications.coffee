@@ -12,7 +12,7 @@
 #######################################################
 Meteor.publish "templates", (origin="") ->
 	if origin is undefined
-		console.log "[warning] Origin missing"
+		log_event "origin missing", event_pub, event_warn
 	check origin, String
 
 
@@ -22,17 +22,19 @@ Meteor.publish "templates", (origin="") ->
 	mod = visible_fields "Templates", null, user_id
 	crs = Templates.find(filter, mod)
 
-	console.log("[publish] Templates: " + crs.count() + " submitted!")
+	log_publication "Templates", crs, filter, mod, origin, user_id
 	return crs
 
 #######################################################
 Meteor.publish "template_by_id", (template_id, origin="") ->
 	if origin is undefined
-		console.log "[warning] template: origin missing"
+		log_event "origin missing", event_pub, event_warn,
 	check origin, String
 
 	if not template_id
-		console.log "[error] template: template_id missing: " + origin
+		log_event "template_id missing: " + origin
+		log_event msg, event_pub, event_err
+		return []
 	check template_id, String
 
 	restrict =
@@ -42,7 +44,7 @@ Meteor.publish "template_by_id", (template_id, origin="") ->
 	mod = visible_fields "Templates", template_id, this.userId
 	crs = Templates.find(filter, mod)
 
-	console.log("[publish] Template loaded: " + crs.count() + " submitted!")
+	log_publication "Templates", crs, filter, mod, origin, user_id
 	return crs
 
 
@@ -55,7 +57,7 @@ Meteor.publish "responses", (collection_name, filter, origin) ->
 	collection = get_collection_save collection_name
 
 	if origin is undefined
-		console.log "[warning] responses: origin missing"
+		log_event "Origin missing for function responses", event_pub, event_warn
 	check origin, String
 
 	user_id = this.userId
@@ -114,6 +116,6 @@ Meteor.publish "permissions", () ->
 		throw new Meteor.Error "Not permitted."
 
 	crs = Permissions.find()
-	console.log "[publish] Permissions: " + crs.count() + " submitted!"
+	log_publication "Permissions", crs, {}, fields, "permissions", user_id
 	return crs
 

@@ -29,10 +29,11 @@
 	from = "noreply@mooqita.org"
 
 	Meteor.defer () ->
-		console.log "[info] sending mail"
+		log_event "Sending mail", event_mail, event_info #TODO: stack trace
 		try
 			Email.send {to, from, cc, subject, text}
 		catch error
-			console.log "[error] " + error
+			log_event error, event_mail, event_err #TODO: stack trace
+
 
 

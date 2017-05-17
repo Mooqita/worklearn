@@ -15,7 +15,8 @@
 	Roles.setUserRoles admin, ['admin', 'db_admin', 'editor', 'challenge_designer']
 	a_id = gen_profile admin
 
-	console.log "[init] admin:" + user.email + " " +a_id
+	msg = "admin added " + user.email + " " +a_id
+	loig_event msg, event_testing, event_info
 	return admin
 
 #####################################################
@@ -44,5 +45,6 @@ Meteor.startup () ->
 			collection_name: 1
 		DBFiles._ensureIndex index
 	catch e
-		console.log "[error]" + e
+		msg = String(e)
+		log_event msg, event_testing, event_err
 

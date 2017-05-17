@@ -18,12 +18,12 @@
 
 	n = collection.update(id, mod)
 
-	msg = '[edit] Changed ' + field + ' of ' +
-			collection._name + ':' + id + ' to ' +
-			value.toString().substr(0, 50)
+	msg = "[collection_name] " + collection._name
+	msg += " [field] " + field + ' of ' +
+	msg += " [item] " + id
+	msg += " [value] " + value.toString().substr(0, 50)
 
-	console.log(msg)
-
+	log_event msg, event_edit, event_info
 	return n
 
 

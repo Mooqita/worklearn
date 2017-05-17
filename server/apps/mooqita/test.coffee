@@ -20,7 +20,8 @@ _reset_user = (user_id) ->
 		owner_id: user_id
 
 	Profiles.remove filter
-	console.log "[edit] User reset: " + user_id
+	msg = "user reset: " + user_id
+	log_event msg, event_testing, event_info
 
 
 #####################################################
@@ -48,7 +49,8 @@ _generate_users = (n, callback) ->
 		modify_field_unprotected Profiles, profile_id, "family_name", faker.name.lastName()
 		modify_field_unprotected Profiles, profile_id, "resume", resume
 
-		console.log "[info]" + user.email
+		msg = "adding profile: " + user.email
+		log_event msg, event_testing, event_info
 		user_ids.push user._id
 
 	if callback
@@ -86,7 +88,8 @@ _generate_solutions = (challenge_id, user_indices) ->
 
 		user = Accounts.findUserByEmail u_index+'@uni.edu'
 		if not user
-			console.log '[error] user not found: ' + u_index + '@uni.edu'
+			msg = 'user not found: ' + u_index + '@uni.edu'
+			log_event msg, event_testing, event_err #TODO: stack trace
 			return
 
 		filter =
@@ -100,7 +103,8 @@ _generate_solutions = (challenge_id, user_indices) ->
 		modify_field_unprotected Solutions, solution_id, "content", s_content
 		finish_solution solution, user._id
 
-		console.log '[edit] solution added: ' + solution_id
+		msg = 'solution added: ' + solution_id
+		log_event msg, event_testing, event_info
 
 
 #####################################################
@@ -109,7 +113,8 @@ _generate_reviews = (challenge_id, user_indices) ->
 		user = Accounts.findUserByEmail u_index+'@uni.edu'
 
 		if not user
-			console.log '[error] user not found: '+u_index+'@uni.edu'
+			msg = 'user not found: '+u_index+'@uni.edu'
+			log_event msg, event_testing, event_err #TODO: add stack trace
 			return
 
 		#####################################################
@@ -130,7 +135,8 @@ _generate_reviews = (challenge_id, user_indices) ->
 		review = Reviews.findOne review_id
 		finish_review review, user._id
 
-		console.log '[edit] review added: ' + review_id
+		msg = 'review added: ' + review_id
+		log_event msg, event_testing, event_info
 
 		#####################################################
 		# preparing the feedback to the review
@@ -150,7 +156,8 @@ _generate_reviews = (challenge_id, user_indices) ->
 		modify_field_unprotected Feedback, feedback._id, "content", f_content
 		modify_field_unprotected Feedback, feedback._id, "rating", f_rating
 
-		console.log '[edit] feedback added: ' + feedback._id
+		msg = 'feedback added: ' + feedback._id
+		log_event msg, event_testing, event_info
 
 	return true
 
@@ -177,7 +184,7 @@ Meteor.methods
 		if !Roles.userIsInRole(user._id, 'db_admin')
 			throw new Meteor.Error('Not permitted.')
 
-		console.log "[test] data generation"
+		log_event "starting data generation", event_testing, event_info
 
 		_generate_users(10)
 		_generate_challenges([1..10], _simulate_users)

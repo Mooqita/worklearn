@@ -11,31 +11,6 @@ _accepts =
 	_id: non_empty_string
 
 #######################################################
-@log_publication = (collection_name, crs, filter, fields, origin, user_id) ->
-	data = " "
-
-	if user_id
-		p_f =
-			owner_id: user_id
-		profile = Profiles.findOne p_f
-		name = get_profile_name profile
-		name += ": " + user_id
-
-	if filter
-		data = if "owner_id" in filter then " for owner " else " "
-
-	console.log "[publication] Submitted " + crs.count() + " " +
-		collection_name + data + "to " + origin + " by: " + name
-
-#	f = JSON.stringify(filter, null, 2);
-#	console.log f
-
-#	console.log "With fields"
-
-#	m = JSON.stringify(fields, null, 2);
-#	console.log m
-
-#######################################################
 @get_collection_save = (collection_name) ->
 	check collection_name, String
 	collection = get_collection collection_name
@@ -82,7 +57,8 @@ _accepts =
 	for field_name, value of _accepts
 		if field_name of param
 			if not param[field_name]
-				console.log "[warning] Parameter " + field_name + " is empty."
+				msg = "parameter " + field_name + " is empty."
+				log_event msg, event_db, event_warn
 				return {}
 			else
 				check param[field_name], value

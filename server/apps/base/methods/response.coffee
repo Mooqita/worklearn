@@ -13,10 +13,11 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		#TODO: this is unsave
 		id = store_document collection, parameters
 
-		console.log "[edit] Response added: " + JSON.stringify parameters, null, 2
+		msg = "Response added: " + JSON.stringify parameters, null, 2
+		log_event msg, event_create, event_info
+
 		return id
 
 	#######################################################

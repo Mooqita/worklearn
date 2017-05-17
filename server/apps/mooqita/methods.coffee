@@ -93,7 +93,9 @@ Meteor.methods
 
 				finish_review review, Meteor.userId()
 
-				console.log "[info] Message : " + type + " send."
+				msg = "message : " + type + " send."
+				log_event msg, event_create, event_info
 
-			else console.log "[error] Message type: " + type + " unknown."
-
+			else
+				msg = "message type: " + type + " unknown."
+				log_event msg, event_create, event_err

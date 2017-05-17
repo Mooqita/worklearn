@@ -6,6 +6,12 @@
 
 #######################################################
 @store_document = (collection, document)->
+	#TODO: add safety measures here.
+
+	return store_document_unprotected collection, document
+
+#######################################################
+@store_document_unprotected = (collection, document)->
 	document["created"] = new Date()
 	document["modified"] = new Date()
 	document["loaded"] = true
