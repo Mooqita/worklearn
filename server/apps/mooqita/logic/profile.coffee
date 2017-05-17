@@ -31,6 +31,7 @@
 	else
 		profile.name = "Profile for unknown"
 
+	console.log "[important] user profile created: " + get_profile_name profile
 	return store_document Profiles, profile
 
 
