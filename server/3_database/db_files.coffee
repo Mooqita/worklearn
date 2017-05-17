@@ -85,7 +85,7 @@ _modify_db_file = (collection, item_id, field, value, type)->
 
 	crs = DBFiles.findOne filter, mod
 	found = if crs then "Found " else "Not found "
-	console.log found + collection._name + " " + item_id + " " + field + " server side download"
+	console.log "[download] " + found + collection._name + " " + item_id + " " + field + " server side download"
 
 	crs = if crs then crs else {error:"not found"}
 	return crs

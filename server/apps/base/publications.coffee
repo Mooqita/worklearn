@@ -12,7 +12,7 @@
 #######################################################
 Meteor.publish "templates", (origin="") ->
 	if origin is undefined
-		console.log "Origin missing"
+		console.log "[warning] Origin missing"
 	check origin, String
 
 
@@ -22,17 +22,17 @@ Meteor.publish "templates", (origin="") ->
 	mod = visible_fields "Templates", null, user_id
 	crs = Templates.find(filter, mod)
 
-	console.log("Templates: " + crs.count() + " submitted!")
+	console.log("[publish] Templates: " + crs.count() + " submitted!")
 	return crs
 
 #######################################################
 Meteor.publish "template_by_id", (template_id, origin="") ->
 	if origin is undefined
-		console.log "template: origin missing"
+		console.log "[warning] template: origin missing"
 	check origin, String
 
 	if not template_id
-		console.log "template: template_id missing: " + origin
+		console.log "[error] template: template_id missing: " + origin
 	check template_id, String
 
 	restrict =
@@ -42,7 +42,7 @@ Meteor.publish "template_by_id", (template_id, origin="") ->
 	mod = visible_fields "Templates", template_id, this.userId
 	crs = Templates.find(filter, mod)
 
-	console.log("Template loaded: " + crs.count() + " submitted!")
+	console.log("[publish] Template loaded: " + crs.count() + " submitted!")
 	return crs
 
 
@@ -55,7 +55,7 @@ Meteor.publish "responses", (collection_name, filter, origin) ->
 	collection = get_collection_save collection_name
 
 	if origin is undefined
-		console.log "responses: origin missing"
+		console.log "[warning] responses: origin missing"
 	check origin, String
 
 	user_id = this.userId
@@ -108,12 +108,12 @@ Meteor.publish "sum_of_field", (collection_name, field, value) ->
 #######################################################
 Meteor.publish "permissions", () ->
 	if !this.userId
-		throw new Meteor.Error("Not permitted.")
+		throw new Meteor.Error "Not permitted."
 
-	if !Roles.userIsInRole(this.userId, "admin")
-		throw new Meteor.Error("Not permitted.")
+	if !Roles.userIsInRole this.userId, "admin"
+		throw new Meteor.Error "Not permitted."
 
 	crs = Permissions.find()
-	console.log("Permissions: " + crs.count() + " submitted!")
+	console.log "[publish] Permissions: " + crs.count() + " submitted!"
 	return crs
 

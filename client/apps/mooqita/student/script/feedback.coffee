@@ -7,9 +7,6 @@
 ##############################################
 Template.student_feedback_review.onCreated ->
 	self = this
-
-	console.log self
-
 	self.autorun () ->
 		self.subscribe "feedback_by_review_id", self.data._id
 

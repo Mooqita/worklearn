@@ -24,7 +24,7 @@ _accepts =
 	if filter
 		data = if "owner_id" in filter then " for owner " else " "
 
-	console.log "[Publication] Submitted " + crs.count() + " " +
+	console.log "[publication] Submitted " + crs.count() + " " +
 		collection_name + data + "to " + origin + " by: " + name
 
 #	f = JSON.stringify(filter, null, 2);
@@ -82,7 +82,7 @@ _accepts =
 	for field_name, value of _accepts
 		if field_name of param
 			if not param[field_name]
-				console.log "Parameter " + field_name + " is empty."
+				console.log "[warning] Parameter " + field_name + " is empty."
 				return {}
 			else
 				check param[field_name], value

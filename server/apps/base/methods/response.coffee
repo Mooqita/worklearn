@@ -16,7 +16,7 @@ Meteor.methods
 		#TODO: this is unsave
 		id = store_document collection, parameters
 
-		console.log "Response added: " + JSON.stringify parameters, null, 2
+		console.log "[edit] Response added: " + JSON.stringify parameters, null, 2
 		return id
 
 	#######################################################

@@ -20,7 +20,7 @@ _reset_user = (user_id) ->
 		owner_id: user_id
 
 	Profiles.remove filter
-	console.log "User reset: " + user_id
+	console.log "[edit] User reset: " + user_id
 
 
 #####################################################
@@ -48,7 +48,7 @@ _generate_users = (n, callback) ->
 		modify_field_unprotected Profiles, profile_id, "family_name", faker.name.lastName()
 		modify_field_unprotected Profiles, profile_id, "resume", resume
 
-		console.log user.email
+		console.log "[info]" + user.email
 		user_ids.push user._id
 
 	if callback
@@ -86,7 +86,7 @@ _generate_solutions = (challenge_id, user_indices) ->
 
 		user = Accounts.findUserByEmail u_index+'@uni.edu'
 		if not user
-			console.log 'user not found: ' + u_index + '@uni.edu'
+			console.log '[error] user not found: ' + u_index + '@uni.edu'
 			return
 
 		filter =
@@ -100,7 +100,7 @@ _generate_solutions = (challenge_id, user_indices) ->
 		modify_field_unprotected Solutions, solution_id, "content", s_content
 		finish_solution solution, user._id
 
-		console.log 'solution added: ' + solution_id
+		console.log '[edit] solution added: ' + solution_id
 
 
 #####################################################
@@ -109,7 +109,7 @@ _generate_reviews = (challenge_id, user_indices) ->
 		user = Accounts.findUserByEmail u_index+'@uni.edu'
 
 		if not user
-			console.log 'user not found: '+u_index+'@uni.edu'
+			console.log '[error] user not found: '+u_index+'@uni.edu'
 			return
 
 		#####################################################
@@ -130,7 +130,7 @@ _generate_reviews = (challenge_id, user_indices) ->
 		review = Reviews.findOne review_id
 		finish_review review, user._id
 
-		console.log 'review added: ' + review_id
+		console.log '[edit] review added: ' + review_id
 
 		#####################################################
 		# preparing the feedback to the review
@@ -150,7 +150,7 @@ _generate_reviews = (challenge_id, user_indices) ->
 		modify_field_unprotected Feedback, feedback._id, "content", f_content
 		modify_field_unprotected Feedback, feedback._id, "rating", f_rating
 
-		console.log 'feedback added: ' + feedback._id
+		console.log '[edit] feedback added: ' + feedback._id
 
 	return true
 
@@ -177,7 +177,7 @@ Meteor.methods
 		if !Roles.userIsInRole(user._id, 'db_admin')
 			throw new Meteor.Error('Not permitted.')
 
-		console.log "data generation"
+		console.log "[test] data generation"
 
 		_generate_users(10)
 		_generate_challenges([1..10], _simulate_users)

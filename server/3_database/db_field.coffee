@@ -18,7 +18,7 @@
 
 	n = collection.update(id, mod)
 
-	msg = 'Changed ' + field + ' of ' +
+	msg = '[edit] Changed ' + field + ' of ' +
 			collection._name + ':' + id + ' to ' +
 			value.toString().substr(0, 50)
 

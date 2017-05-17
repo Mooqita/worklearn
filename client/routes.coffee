@@ -87,7 +87,6 @@ FlowRouter.route "/terms-of-use",
 FlowRouter.route "/login",
 	name: "user.signin",
 	action: (params) ->
-		console.log "hae"
 		data =
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
@@ -157,7 +156,6 @@ FlowRouter.route '/admin',
 			menu: "menu"
 			layout: "layout"
 			content: "admin"
-		console.log "what"
 		BlazeLayout.render "body_template", data
 
 ##########################################################

@@ -93,7 +93,7 @@ Meteor.methods
 
 				finish_review review, Meteor.userId()
 
-				console.log "Message : " + type + " send."
+				console.log "[info] Message : " + type + " send."
 
-			else console.log "Message type: " + type + " unknown."
+			else console.log "[error] Message type: " + type + " unknown."
 
