@@ -50,6 +50,26 @@ FlowRouter.route "/help",
 		BlazeLayout.render "body_template", data
 
 ##########################################################
+FlowRouter.route "/bugs",
+	name: "index",
+	action: (params) ->
+		data =
+			menu: "mooqita_menu"
+			layout: "mooqita_layout"
+			content: "mooqita_bugs"
+		BlazeLayout.render "body_template", data
+
+##########################################################
+FlowRouter.route "/about",
+	name: "index",
+	action: (params) ->
+		data =
+			menu: "mooqita_menu"
+			layout: "mooqita_layout"
+			content: "mooqita_about"
+		BlazeLayout.render "body_template", data
+
+##########################################################
 FlowRouter.route "/work-learn",
 	name: "worklearn",
 	action: (params) ->
@@ -58,6 +78,10 @@ FlowRouter.route "/work-learn",
 			layout: "mooqita_layout"
 			content: "mooqita_work_learn"
 		BlazeLayout.render "body_template", data
+
+##########################################################
+# Terms
+##########################################################
 
 ##########################################################
 FlowRouter.route "/privacy",
