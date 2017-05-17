@@ -24,7 +24,7 @@
 @log_event = (message, type=event_general, severity=event_info, stack="") ->
 	msg = "[" + type ? "" + "]"
 	msg += "[" + severity ? "" + "]"
-	msg += " " + message ? if stack "\n" else ""
+	msg += " " + message ? if stack then "\n" else ""
 	msg += stack ? ""
 
 	console.log msg
