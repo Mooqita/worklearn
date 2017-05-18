@@ -16,13 +16,6 @@ Template.body_template.onCreated ->
 	catch error
 		console.log error
 
-	self = this
-	self.autorun ->
-		filter =
-			owner_id: Meteor.userId()
-
-		Meteor.subscribe "responses", "Profiles", filter, "body_template.onCreated"
-
 
 ################################################
 Template.render_content.helpers

@@ -110,7 +110,7 @@
 	{{#if Template.subscriptionsReady}}
 		{{>Template.dynamic template=template_id data=response}}
 	{{else}}
-		<h1>Loading data <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+		{{>wait}}
 	{{/if}}
 </template>
 

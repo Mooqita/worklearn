@@ -22,8 +22,8 @@
 
 ###############################################################
 @log_event = (message, type=event_general, severity=event_info, stack="") ->
-	msg = "[" + type ? "" + "]"
-	msg += "[" + severity ? "" + "]"
+	msg = "[" + (type ? "") + "]"
+	msg += "[" + (severity ? "") + "]"
 	msg += " " + message ? if stack then "\n" else ""
 	msg += stack ? ""
 

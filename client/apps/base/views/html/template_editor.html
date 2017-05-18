@@ -57,7 +57,7 @@
 		{{#if template_loaded}}
 			{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
 		{{else}}
-			<h1>Loading template <em><span class="glyphicon glyphicon-refresh spin"></span></em></h1>
+			{{>wait}}
 		{{/if}}
 	{{else}}
 		{{>ER_404}}

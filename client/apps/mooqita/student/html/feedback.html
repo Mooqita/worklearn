@@ -5,10 +5,7 @@
 -------------------------------------------------->
 <template name="student_feedback_review">
 	{{#unless Template.subscriptionsReady}}
-		<h1>
-			Please wait we are loading some stuff
-			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		</h1>
+		{{>wait}}
 	{{else}}
 		{{#with feedback}}
 			<h1>Feedback on Your Review</h1>
@@ -28,10 +25,7 @@
 -------------------------------------------------->
 <template name="student_feedback_solution">
 	{{#unless Template.subscriptionsReady}}
-		<h1>
-			Please wait we are loading some stuff
-			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		</h1>
+		{{>wait}}
 	{{else}}
 		<h2>
 			{{#if _is_public "Feedback" feedback._id}}
