@@ -160,6 +160,7 @@ Template.upload.events
 
 			fileReader.onload = (ev) ->
 				filesRead += 1
+				#data = ev.srcElement.result
 				raw = ev.srcElement.result
 				base = btoa(raw)
 				data = "data:" + type + ";base64," + base

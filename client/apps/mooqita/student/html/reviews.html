@@ -56,11 +56,15 @@
 	<div class="indent_l1">
 		<h2>
 			<a id="student_review">
-				{{#if _is_public "Reviews"}}
-					<span class="badge background-contrast">public</span>
-				{{/if}}
+				{{#unless _is_public "Reviews"}}
+					<span class="badge background-contrast">new</span>
+				{{/unless}}
 				Open review
 			</a>
+
+			{{#if _is_public "Reviews"}}
+				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+			{{/if}}
 		</h2>
 		{{>more content=content}}
 	</div>

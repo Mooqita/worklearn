@@ -12,12 +12,13 @@
 				{{#if _profile.company_logo}}
 					<div class="text-center">
 						<img class="img-responsive"
-								 src="{{download_field_value "Profiles" _profile._id "company_logo" _profile.company_logo}}">
+								 src="{{download_field_value "Profiles" _profile._id
+																						 "company_logo" _profile.company_logo}}">
 					</div>
 				{{/if}}
 
 				{{>upload method="set_field" collection_name="Profiles"
-					item_id=_profile._id field="company_logo" max_size=1000000}}
+					item_id=_profile._id field="company_logo"}}
 			</div>
 
 			<div class="col-md-8">

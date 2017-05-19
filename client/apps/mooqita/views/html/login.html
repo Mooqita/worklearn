@@ -16,65 +16,69 @@
 <template name="first_timer">
 	<div class="container-fluid">
 		{{#mooqita_wide_spacing}}
-			<div class="row">
-				<div class="col-md-12">
-					<div class="text-center">
-						<h1>Welcome to Mooqita</h1>
-						<p>Before we can get started we need some information about you.</p>
-						<h1> Are you: </h1>
+			{{#unless _profile}}
+				{{>wait}}
+			{{else}}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="text-center">
+							<h1>Welcome to Mooqita</h1>
+							<p>Before we can get started we need some information about you.</p>
+							<h1> Are you: </h1>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="select-occupation">
-						<div class="item" id="student">
-							<div class="row">
-								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
-									<div class="glyphicon glyphicon-blackboard"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="select-occupation {{select_disabled}}">
+							<div class="item" id="student">
+								<div class="row">
+									<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+										<div class="glyphicon glyphicon-blackboard"></div>
+									</div>
+
+									<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+										<label>Student</label>
+									</div>
 								</div>
+							</div>
+						</div>
+					</div>
 
-								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Student</label>
+					<div class="col-md-4">
+						<div class="select-occupation select-disabled">
+							<div class="item">
+								<div class="row">
+									<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+										<div class="glyphicon glyphicon-education"></div>
+									</div>
+
+									<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+										<label>Teacher</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="select-occupation {{select_disabled}}">
+							<div class="item" id="company">
+								<div class="row">
+									<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+										<div class="glyphicon glyphicon-briefcase"></div>
+									</div>
+
+									<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+										<label>Company</label>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-4">
-					<div class="select-occupation select-disabled">
-						<div class="item">
-							<div class="row">
-								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
-									<div class="glyphicon glyphicon-education"></div>
-								</div>
-
-								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Teacher</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="select-occupation">
-						<div class="item" id="company">
-							<div class="row">
-								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
-									<div class="glyphicon glyphicon-briefcase"></div>
-								</div>
-
-								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Company</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{{/unless}}
 		{{/mooqita_wide_spacing}}
 	</div>
 </template>

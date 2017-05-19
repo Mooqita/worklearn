@@ -16,7 +16,12 @@ Template.student_feedback_review.helpers
 	feedback: () ->
 		filter =
 			parent_id: this._id
-		return Feedback.findOne filter
+		feedback = Feedback.findOne filter
+		if feedback
+			if feedback.published
+				return feedback
+
+		return null
 
 
 ##############################################

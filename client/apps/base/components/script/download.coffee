@@ -39,9 +39,8 @@ Template.download.events
 				if err
 					sAlert.error(err)
 				else
-					data = unpack_item res
-					blob = base64_to_blob data
+					pack = unpack_item res
+					blob = base64_to_blob pack.data
 					if not file_name
-						file_name = collection_name + "_" + field +
-										"_" + item_id + "." + res.extension
+						file_name = collection_name + "_" + field + "." + pack.extension
 					saveAs blob, file_name

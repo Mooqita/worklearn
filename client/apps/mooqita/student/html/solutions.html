@@ -39,13 +39,17 @@
 	<hr>
 
 	<h2>
-		{{#unless is_feedback_missing}}
-			<span class="badge background-contrast">finished</span>
-		{{/unless}}
+		{{#if is_feedback_missing}}
+			<span class="badge background-contrast">new</span>
+		{{/if}}
 
 		<a id="student_solution">
 			{{challenge.title}}
 		</a>
+
+		{{#unless is_feedback_missing}}
+			<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+		{{/unless}}
 	</h2>
 	{{>more content=challenge.content}}
 </template>
@@ -146,10 +150,10 @@
 		{{/if}}
 
 		<h1>
-			{{#unless is_feedback_missing}}
-				<span class="badge background-theme">finished</span>
-			{{/unless}}
 			Your Solution
+			{{#unless is_feedback_missing}}
+				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+			{{/unless}}
 		</h1>
 
 		{{#unless _is_public "Solutions"}}

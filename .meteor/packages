@@ -67,3 +67,4 @@ practicalmeteor:faker
 email@1.2.1
 dburles:mongo-collection-instances
 markdown
+http
