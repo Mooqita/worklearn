@@ -56,9 +56,8 @@ _get_avatar = (profile) ->
 	avatar = ""
 
 	if profile.avatar
-		if profile.avatar.length <= 32
-			file = download_file_unprotected Profiles, profile._id, "avatar"
-			avatar = file.data
+		if typeof profile.avatar == "number"
+			avatar = download_dropbox_file Profiles, profile._id, "avatar"
 		else
 			avatar = profile.avatar
 

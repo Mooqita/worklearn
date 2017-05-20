@@ -24,7 +24,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 
 
 #######################################################
-_download_dropbox_file = (collection, item_id, field)->
+@download_dropbox_file = (collection, item_id, field)->
 	url = "https://content.dropboxapi.com/2/files/download"
 	path =
 		path:"/"+collection._name+"/"+item_id+"/"+field+".data"
@@ -37,7 +37,7 @@ _download_dropbox_file = (collection, item_id, field)->
 
 	res = HTTP.call "POST", url, opts
 	if res.statusCode == 200
-		msg = "Successfull download: " + path
+		msg = "Successfull download: " + path.path
 		log_event msg
 
 	return res.content
@@ -71,7 +71,7 @@ _download_dropbox_file = (collection, item_id, field)->
 	if not item.published and item.visible_to != "all"
 		deny_action_save 'read', collection, item_id, field
 
-	data = _download_dropbox_file collection, item_id, field
+	data = download_dropbox_file collection, item_id, field
 	return data
 
 
