@@ -17,32 +17,26 @@ Template.registerHelper "_selected_view", () ->
 ########################################
 Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
 	key = collection_name + item_id + field
-	rng = get_field_value null, field, item_id, collection_name
-
-	if rng
-		if rng.length>32
-			return rng
-
-	value = Session.get key
+	download_object = Session.get key
 
 	_download = () ->
 		Meteor.call "download_file", collection_name, item_id, field,
-		(err, res) ->
-			if err
-				sAlert.error(err)
-			else
-				Session.set key, res
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				else
+					d_o =
+						rng: get_field_value collection_name, item_id, field
+						data: res
+					Session.set key, d_o
 
-	if not value
-		Session.set key, "___empty___"
-		_download()
-
-	if rng and observe
-		if rng != observe
+	if download_object
+		if download_object.rng != observe
 			_download()
-
-	if value != "___empty___"
-		return value
+		if download_object.data
+			return download_object.data
+	else
+		_download()
 
 	return ""
 

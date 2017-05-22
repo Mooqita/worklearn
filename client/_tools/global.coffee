@@ -15,6 +15,7 @@
 ##############################################
 @get_selected_view = () ->
 	selected = FlowRouter.getQueryParam("template")
+	console.log selected
 
 	if not selected
 		selected = "landing_page"

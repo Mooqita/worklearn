@@ -1,5 +1,7 @@
 ###############################################
 @get_profile_name = (profile) ->
+	if !profile
+		return "unknown"
 	name = (profile.given_name ? "") + " "
 	name += (profile.middle_name ? "") + " "
 	name += profile.family_name ? ""
@@ -10,6 +12,11 @@
 @gen_profile = (user_id, occupation) ->
 	if not occupation
 		occupation = "student"
+
+	profile = Profiles.findOne user_id
+
+	if profile
+		return profile._id
 
 	profile =
 		mail_notifications: "yes"

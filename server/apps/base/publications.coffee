@@ -109,13 +109,14 @@ Meteor.publish "sum_of_field", (collection_name, field, value) ->
 
 #######################################################
 Meteor.publish "permissions", () ->
-	if !this.userId
+	user_id = this.userId
+	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	if !Roles.userIsInRole this.userId, "admin"
+	if !Roles.userIsInRole user_id, "admin"
 		throw new Meteor.Error "Not permitted."
 
 	crs = Permissions.find()
-	log_publication "Permissions", crs, {}, fields, "permissions", user_id
+	log_publication "Permissions", crs, {}, {}, "permissions", user_id
 	return crs
 

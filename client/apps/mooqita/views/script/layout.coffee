@@ -7,10 +7,14 @@ Template.mooqita_layout.onCreated ->
 		filter =
 			owner_id: Meteor.userId()
 
+		console.log "begin"
 		Meteor.subscribe "responses", "Profiles", filter, "body_template.onCreated",
-			(err, exp) ->
-				console.log err
-				console.log exp
+			(err, res) ->
+				console.log "end: "+err
+
+				if err
+					sAlert.error err
+					console.log err
 				self.is_ready.set true
 
 Template.mooqita_layout.helpers
