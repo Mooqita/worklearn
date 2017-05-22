@@ -16,6 +16,13 @@ Template.registerHelper "_selected_view", () ->
 
 ########################################
 Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
+	value = get_field_value null, field, item_id, collection_name
+	console.log value
+
+	if value
+		if value.length > 32
+			return value
+
 	key = collection_name + item_id + field
 	download_object = Session.get key
 
@@ -26,7 +33,7 @@ Template.registerHelper "download_field_value", (collection_name, item_id, field
 					sAlert.error(err)
 				else
 					d_o =
-						rng: get_field_value collection_name, item_id, field
+						rng: get_field_value null, field, item_id, collection_name
 						data: res
 					Session.set key, d_o
 
