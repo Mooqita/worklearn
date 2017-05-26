@@ -1,4 +1,13 @@
 ########################################
+Template.registerHelper 'formatDate', (date) ->
+	day = date.getDate()
+	month = date.getMonth() + 1
+	year = date.getFullYear()
+	str = day + "." + month + "." + year
+	return str
+
+
+########################################
 Template.registerHelper "_profile", () ->
 	return get_profile()
 

@@ -40,12 +40,58 @@
 
 <!------------------------------------------------
 |
-|	Convert UpWork tasks to learning Material
+|	list all solutions for a challenge
 |
 -------------------------------------------------->
 <template name="tutor_solutions">
-	{{#each solutions}}
-		{{>more content=content}}
-	{{/each}}
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#with challenge}}
+					<h1>{{title}}</h1>
+					{{>more content=content}}
+				{{/with}}
+
+				<hr>
+
+				{{#each solutions}}
+					<h2>
+						<a href="{{solution_url}}">
+							Student is waiting for {{wait}} since {{formatDate date}}
+						</a>
+					</h2>
+					{{>more content=content}}
+				{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	add reviews for a specific solution
+|
+-------------------------------------------------->
+<template name="tutor_solution">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#with challenge}}
+					<h1>{{title}}</h1>
+					{{>more content=content}}
+				{{/with}}
+
+				{{#with solution}}
+					<h1>Solution</h1>
+					{{>more content=content}}
+				{{/with}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 

@@ -318,7 +318,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				{{#if _is_editing_response _id}}
-					{{>code_input method="set_field" collection_name="Posts"
+					{{>wysiwyg_input method="set_field" collection_name="Posts"
 							field="abstract" item_id=_id}}
 				{{else}}
 					{{#if abstract}}

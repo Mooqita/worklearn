@@ -54,21 +54,3 @@
 	return item[field]
 
 
-#######################################################
-@how_much_time = (mls) ->
-	sec = 1000
-	min = sec*60
-	hrs = min*60
-	day = hrs*24
-	days = mls / day
-	if days < 0.75
-		return "less than a day"
-
-	if days < 3
-		return "with in a few days"
-
-	if days < 7
-		return "within a week"
-
-	return "more than a week"
-

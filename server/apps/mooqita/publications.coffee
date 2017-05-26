@@ -308,11 +308,25 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 
 #######################################################
 Meteor.publish "solutions_for_tutors", (challenge_id) ->
+	self = this
 	user_id = this.userId
 	profile = Profiles.findOne {owner_id:user_id}
 
 	if not profile.tutor
 		throw new Meteor.Error("Not permitted.")
+
+	gen_tut = (id) ->
+		rr = ReviewRequests.findOne id
+		solution = Solutions.findOne rr.solution_id
+		date = rr.under_review_since
+		now = new Date()
+		difference = now - date
+		item =
+			content: solution.content
+			date: date
+			wait: how_much_time difference
+
+		return item
 
 	filter =
 		challenge_id: challenge_id
@@ -320,20 +334,20 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 			$ne: user_id
 
 	mod =
-		fields:
-			bad: -1
+		sort:
+			under_review_since: 1
 
 	handler = ReviewRequests.find(filter, mod).observeChanges
 		added: (id, fields) ->
-			credit = gen_credit id
-			self.added("user_credits", id, credit)
+			credit = gen_tut id
+			self.added("tutor_solutions", id, credit)
 
 		changed: (id, fields) ->
 			credit = gen_credit id
-			self.changed("user_credits", id, credit)
+			self.changed("tutor_solutions", id, credit)
 
 		removed: (id) ->
-      self.removed("user_credits", id)
+      self.removed("tutor_solutions", id)
 
 	self.ready()
 	self.onStop ->
