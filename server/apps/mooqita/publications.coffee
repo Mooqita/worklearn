@@ -67,10 +67,31 @@ _get_avatar = (profile) ->
 #######################################################
 
 #######################################################
-Meteor.publish "challenges", () ->
+Meteor.publish "challenges", (query="", page=0, size=10) ->
+	check query, String
+	check page, Number
+	check size, Number
+
 	user_id = this.userId
 	filter = visible_items user_id
-	crs = Challenges.find filter, _challenge_fields
+	fields = _challenge_fields.fields
+
+	if query
+		filter["$text"] =
+			$search: query
+		fields.score = {$meta: "textScore"}
+
+	mod =
+		fields: fields
+		limit: size
+		skip: size*page
+
+	if query
+		mod.sort =
+			score:
+				$meta: "textScore"
+
+	crs = Challenges.find filter, mod
 
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "challenges", user_id
@@ -283,6 +304,40 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 	log_publication "Solutions", crs, filter,
 			_challenge_fields, "my_solutions_by_challenge_id", user_id
 	return crs
+
+
+#######################################################
+Meteor.publish "solutions_for_tutors", (challenge_id) ->
+	user_id = this.userId
+	profile = Profiles.findOne {owner_id:user_id}
+
+	if not profile.tutor
+		throw new Meteor.Error("Not permitted.")
+
+	filter =
+		challenge_id: challenge_id
+		owner_id:
+			$ne: user_id
+
+	mod =
+		fields:
+			bad: -1
+
+	handler = ReviewRequests.find(filter, mod).observeChanges
+		added: (id, fields) ->
+			credit = gen_credit id
+			self.added("user_credits", id, credit)
+
+		changed: (id, fields) ->
+			credit = gen_credit id
+			self.changed("user_credits", id, credit)
+
+		removed: (id) ->
+      self.removed("user_credits", id)
+
+	self.ready()
+	self.onStop ->
+    handler.stop()
 
 
 #######################################################

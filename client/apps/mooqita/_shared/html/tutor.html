@@ -1,3 +1,51 @@
 <template name="tutor">
-	<h1>Tutor Interface</h1>
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<h1>Tutor Interface</h1>
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input placeholder="Search query" id="query"
+								 class="form-control edit-field"/>
+						<span class="input-group-btn">
+
+							<button class="btn btn-theme" type="button" id="search">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+						<div class="btn btn-theme" id="prev">previous</div>
+						<div class="btn">Page: {{page}}</div>
+						<div class="btn btn-theme" id="next">next</div>
+					</div>
+				</div>
+			</div>
+
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				<hr>
+				{{#each challenges}}
+					<h2><a href="{{challenge_url}}">{{title}}</a></h2>
+					{{>more content=content}}
+				{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
+
+<!------------------------------------------------
+|
+|	Convert UpWork tasks to learning Material
+|
+-------------------------------------------------->
+<template name="tutor_solutions">
+	{{#each solutions}}
+		{{>more content=content}}
+	{{/each}}
+</template>
+

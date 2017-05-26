@@ -48,7 +48,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 	deny_action_save('modify', collection, item_id, field)
 	check value, String
 
-	if value.length > 4*1024*1024
+	if value.length > 10*1024*1024
 		msg = "File size exceeded by " + Meteor.userId()
 		log_event msg, event_db, event_crit #TODO:stack trace.
 		throw new Meteor.Error "File size exceeded."

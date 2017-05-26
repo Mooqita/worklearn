@@ -1,5 +1,7 @@
 ###############################################
 @send_message_mail = (user_id, subject, body) ->
+	msg = "@send_message_mail trying to send mail message"
+	log_event msg, event_mail, event_info
 	# handle notifications
 	p_filter =
 		owner_id: user_id
