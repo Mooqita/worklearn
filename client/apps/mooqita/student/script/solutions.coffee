@@ -169,6 +169,15 @@ Template.student_solution_reviews.onCreated ->
 
 ##############################################
 Template.student_solution_reviews.helpers
+	has_filled_profile: () ->
+		filter =
+			owner_id: Meteor.userId()
+		profile = Profiles.findOne filter
+
+		if profile.job_interested
+			return true
+		return false
+
 	is_finished: () ->
 		r = _reviews_missing this.challenge_id
 		f = _feedback_missing this.challenge_id

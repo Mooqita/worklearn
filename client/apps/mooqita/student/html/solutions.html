@@ -110,6 +110,21 @@
 	{{#unless Template.subscriptionsReady}}
 		{{>wait}}
 	{{else}}
+		{{#unless has_filled_profile}}
+			<div class="alert alert-warning">
+				<h2>Todo Profile</h2>
+				<hr>
+				<p>
+					Please do not forget to go to your
+					<a href="user?template=student_profile">profile</a>
+					and let us know if you want to take part in the
+					final paid challenge or you are interested in job
+					offerings.
+				</p>
+			</div>
+
+		{{/unless}}
+
 		{{#unless is_finished}}
 			<div class="alert alert-warning">
 				<h2>Todo List to finish your solution</h2>
