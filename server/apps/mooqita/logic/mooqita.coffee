@@ -132,7 +132,14 @@ _num_provided_reviews = (solution) ->
 #		$text:
 #			$search: text_index.join().toLowerCase()
 
-	rr = ReviewRequests.findOne filter
+	mod =
+		sort:
+			under_review_since: 1
+
+	if challenge_id
+		filter.challenge_id = challenge_id
+
+	rr = ReviewRequests.findOne filter, mod
 
 	if not rr
 		throw new Meteor.Error "no-solution","There are no solutions to review at the moment."
@@ -149,8 +156,16 @@ _num_provided_reviews = (solution) ->
 
 
 ###############################################
-@gen_review = (user_id) ->
-	review_request = find_solution_to_review user_id
+@gen_review = (challenge_id, solution_id, user_id) ->
+	if solution_id
+		filter =
+			solution_id: solution_id
+			review_done: false
+		review_request = ReviewRequests.findOne filter
+	else if challenge_id
+		review_request = find_solution_to_review user_id, challenge_id
+	else
+		review_request = find_solution_to_review user_id
 
 	if review_request.review_id
 		review = Reviews.findOne review_request.review_id
@@ -203,7 +218,12 @@ _num_provided_reviews = (solution) ->
 	modify_field_unprotected ReviewRequests,
 		review_request._id, "feedback_id", f_id
 
-	return r_id
+	res =
+		review_id: r_id
+		solution_id: solution._id
+		challenge_id: challenge._id
+
+	return res
 
 
 ###############################################
@@ -232,6 +252,19 @@ _num_provided_reviews = (solution) ->
 		challenge_id: review.challenge_id
 
 	request = ReviewRequests.findOne filter
+	if not request
+		p_f =
+			owner_id: review.owner_id
+		profile = Profiles.findOne p_f
+
+		if not profile
+			return review._id
+
+		if profile.tutor
+			return review._id
+
+		throw new Meteor.Error "A non tutor provided a review without a solution."
+
 	solution = Solutions.findOne request.solution_id
 	challenge = Challenges.findOne review.challenge_id
 

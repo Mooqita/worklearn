@@ -322,6 +322,7 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 		now = new Date()
 		difference = now - date
 		item =
+			solution_id: rr.solution_id
 			content: solution.content
 			date: date
 			wait: how_much_time difference
@@ -332,6 +333,7 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 		challenge_id: challenge_id
 		owner_id:
 			$ne: user_id
+		review_done: false
 
 	mod =
 		sort:

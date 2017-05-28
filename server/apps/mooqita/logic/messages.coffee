@@ -30,7 +30,9 @@
 	subject = "Mooqita: You got a new review"
 	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
 
-	body = "Hi " + solution_profile.given_name + ",\n\n"
+	name = if solution_profile then solution_profile.given_name ? "user" else "user"
+
+	body = "Hi " + name + ",\n\n"
 	body += "You received a new review. \n"
 	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
@@ -59,7 +61,9 @@
 	subject = "Mooqita: A review timed out"
 	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
 
-	body = "Hi " + review_profile.given_name + ",\n\n"
+	name = if review_profile then review_profile.given_name ? "user" else "user"
+
+	body = "Hi " + name + ",\n\n"
 	body += "One of the reviews you were working on timed out. \n"
 	body += "To ensure that everyone gets reviews in time.\n"
 	body += "Reviews time out after 24 hours. After this time\n"
@@ -95,7 +99,9 @@
 		"&solution_id=" + solution._id +
 		"&challenge_id=" + challenge._id
 
-	body = "Hi " + review_profile.given_name + ",\n\n"
+	name = if review_profile then review_profile.given_name ? "user" else "user"
+
+	body = "Hi " + name + ",\n\n"
 	body += "You received feedback to one of your reviews. \n"
 	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"

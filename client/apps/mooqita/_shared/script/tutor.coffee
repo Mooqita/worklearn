@@ -97,12 +97,16 @@ Template.tutor_solutions.helpers
 		return Challenges.findOne challenge_id
 
 	solutions: () ->
-		return Tutor_Solutions.find()
+		mod =
+			sort:
+				under_review_since: 1
+
+		return Tutor_Solutions.find {}, mod
 
 	solution_url: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
 		queryParams =
-			solution_id: this._id
+			solution_id: this.solution_id
 			challenge_id: challenge_id
 			template: "tutor_solution"
 		url = FlowRouter.path "user", null, queryParams
@@ -116,8 +120,8 @@ Template.tutor_solutions.helpers
 ########################################
 Template.tutor_solution.onCreated ->
 	self = this
-	self.count = new ReactiveVar 10
-	self.page = new ReactiveVar 0
+	self.loading_review = new ReactiveVar false
+	self.review_url = new ReactiveVar ""
 
 	self.autorun () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
@@ -127,11 +131,41 @@ Template.tutor_solution.onCreated ->
 
 ########################################
 Template.tutor_solution.helpers
+	loading: () ->
+		return Template.instance().loading_review.get()
+
+	review_url: () ->
+		return Template.instance().review_url.get()
+
 	challenge: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
+		console.log challenge_id
 		return Challenges.findOne challenge_id
 
-	solutions: () ->
+	solution: () ->
 		solution_id = FlowRouter.getQueryParam "solution_id"
 		return Solutions.findOne solution_id
+
+########################################
+Template.tutor_solution.events
+	"click #review":()->
+		ins = Template.instance()
+		ins.loading_review.set true
+
+		solution_id = FlowRouter.getQueryParam "solution_id"
+		Meteor.call "add_tutor_review", solution_id,
+			(err, res)->
+				ins.loading_review.set false
+				if err
+					sAlert.error(err)
+				else
+					solution_id = FlowRouter.getQueryParam "solution_id"
+					challenge_id = FlowRouter.getQueryParam "challenge_id"
+					queryParams =
+						review_id: res
+						solution_id: solution_id
+						challenge_id: challenge_id
+						template: "student_review"
+					url = FlowRouter.path "user", null, queryParams
+					ins.review_url.set url
 

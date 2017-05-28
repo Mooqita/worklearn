@@ -44,7 +44,7 @@ Template.admin.events
 				if err
 					sAlert.error(err)
 				else
-					sAlert.info('Permission add requested: '+ res)
+					sAlert.info('Permission added: '+ res)
 
 #########################################################
 # hashes

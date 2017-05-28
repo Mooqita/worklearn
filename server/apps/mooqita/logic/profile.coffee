@@ -40,6 +40,7 @@
 
 	msg = "User profile created: " + get_profile_name profile + " " + user_id
 	log_event msg, event_db, event_imp
+
 	return store_document Profiles, profile
 
 

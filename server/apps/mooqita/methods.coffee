@@ -33,34 +33,87 @@ Meteor.methods
 	add_solution: (challenge_id) ->
 		check challenge_id, String
 		challenge = secure_item_action Challenges, challenge_id, false
-		return gen_solution challenge, Meteor.userId()
-
+		solution_id = gen_solution challenge, Meteor.userId()
+		res =
+			solution_id: solution_id
+			challenge_id: challenge_id
+		return res
 
 	finish_solution: (solution_id) ->
 		check solution_id, String
 		solution = secure_item_action Solutions, solution_id, true
-		return finish_solution solution, Meteor.userId()
+		solution_id = finish_solution solution, Meteor.userId()
+		res =
+			solution_id: solution_id
+			challenge_id: solution.challenge_id
+		return res
 
 
 	add_review: () ->
-		user = Meteor.user()
+		user_id = Meteor.userId()
 
-		if not user
+		if not user_id
 			throw new Meteor.Error('Not permitted.')
 
-		return gen_review user._id
+		res = gen_review null, null, user_id
+		return res
+
+
+	add_review_for_challenge: (challenge_id) ->
+		check challenge_id, String
+		user_id = Meteor.userId()
+
+		if not user_id
+			throw new Meteor.Error('Not permitted.')
+
+		res = gen_review challenge_id, null, user_id
+		return res
+
+	add_tutor_review: (solution_id) ->
+		check solution_id, String
+		user_id = Meteor.userId()
+
+		if not user_id
+			throw new Meteor.Error('Not permitted.')
+
+		filter =
+			owner_id: user_id
+
+		mod =
+			fields:
+				tutor: 1
+
+		profile = Profiles.findOne filter, mod
+		if not profile.tutor
+			throw new Meteor.Error('Not permitted.')
+
+		res = gen_review null, solution_id, user_id
+		return res
 
 
 	finish_review: (review_id) ->
 		review = secure_item_action Reviews, review_id, true
-		r_id = finish_review review, Meteor.userId()
+		review_id = finish_review review, Meteor.userId()
 
-		return r_id
+		res =
+			review_id: review._id
+			solution_id: review.solution_id
+			challenge_id: review.challenge_id
+
+		return res
 
 
 	finish_feedback: (feedback_id) ->
 		feedback = secure_item_action Feedback, feedback_id, true
-		return finish_feedback feedback, Meteor.userId()
+		feedback_id = finish_feedback feedback, Meteor.userId()
+
+		res =
+			review_id: feedback.review_id
+			feedback_id: feedback_id
+			solution_id: feedback.solution_id
+			challenge_id: feedback.challenge_id
+
+		return res
 
 	###########################################################
 	# admin stuff
@@ -79,23 +132,6 @@ Meteor.methods
 		switch type
 			when "send_mail"
 				send_mail Meteor.userId(), "subject", "message"
-
-			when "got_review"
-				filter =
-					owner_id: Meteor.userId()
-
-				solution = Solutions.findOne filter
-				challenge = Challenges.findOne solution.challenge_id
-				rev_id = gen_review challenge, solution, Meteor.userId()
-
-				modify_field_unprotected Reviews, rev_id.review_id, "rating", 3
-				review = Reviews.findOne rev_id.review_id
-
-				finish_review review, Meteor.userId()
-
-				msg = "message : " + type + " send."
-				log_event msg, event_create, event_info
-
 			else
 				msg = "message type: " + type + " unknown."
 				log_event msg, event_create, event_err

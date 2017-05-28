@@ -5,6 +5,46 @@
 ########################################
 
 ########################################
+# functions
+########################################
+
+##############################################
+_reviews_missing = (challenge_id, solution_id) ->
+	challenge = Challenges.findOne challenge_id
+	reviews_required = challenge.num_reviews
+
+	filter =
+		#solution_id: solution_id
+		challenge_id: challenge_id
+		review_value:
+			$gt: 0
+
+	credits = User_Credits.find filter
+	reviews_provided = credits.count()
+
+	res = reviews_required - reviews_provided
+	return res
+
+##############################################
+_feedback_missing = (challenge_id, solution_id) ->
+	challenge = Challenges.findOne challenge_id
+	reviews_required = challenge.num_reviews
+
+	filter =
+		#solution_id:
+		#	$ne:solution_id
+		challenge_id: challenge_id
+		feedback_value:
+			$gt: 0
+
+	credits = User_Credits.find filter
+	feedback_provided = credits.count()
+
+	res = reviews_required - feedback_provided
+	return res
+
+
+########################################
 # list
 ########################################
 
@@ -40,21 +80,14 @@ Template.student_solution_preview.onCreated ->
 
 ########################################
 Template.student_solution_preview.helpers
-	is_feedback_missing: () ->
-		challenge = Challenges.findOne this.challenge_id
-		reviews_required = challenge.num_reviews
+	is_finished: () ->
+		r = _reviews_missing(this.challenge_id, this.solution_id)
+		f = _feedback_missing(this.challenge_id, this.solution_id)
 
-		filter =
-			challenge_id: this.challenge_id
-			feedback_value:
-				$gt: 0
+		if not r and not f
+			return true
 
-		credits = User_Credits.find filter
-		feedback_provided = credits.count()
-
-		res = reviews_required > feedback_provided
-		return res
-
+		return false
 
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
@@ -106,6 +139,7 @@ Template.student_solution.helpers
 		res = Solutions.find filter
 		return res.count()>0
 
+
 ########################################
 Template.student_solution.events
 	"click #take_challenge":()->
@@ -125,7 +159,9 @@ Template.student_solution.events
 ##############################################
 Template.student_solution_reviews.onCreated ->
 	self = this
-	self.publishing = new ReactiveVar(false)
+	self.publishing = new ReactiveVar false
+	self.review_error = new ReactiveVar false
+	self.searching = new ReactiveVar false
 
 	self.autorun () ->
 		self.subscribe "reviews_by_solution_id", self.data._id
@@ -133,49 +169,28 @@ Template.student_solution_reviews.onCreated ->
 
 ##############################################
 Template.student_solution_reviews.helpers
+	is_finished: () ->
+		r = _reviews_missing this.challenge_id
+		f = _feedback_missing this.challenge_id
+
+		if r==0 and f==0
+			return true
+
+		return false
+
 	is_review_missing: () ->
-		challenge = Challenges.findOne this.challenge_id
-		reviews_required = challenge.num_reviews
-
-		filter =
-			challenge_id: this.challenge_id
-			review_value:
-				$gt: 0
-
-		credits = User_Credits.find filter
-		reviews_provided = credits.count()
-
-		res = reviews_required > reviews_provided
+		res = _reviews_missing this.challenge_id
+		console.log res+" reviews"
 		return res
 
 	is_feedback_missing: () ->
-		challenge = Challenges.findOne this.challenge_id
-		reviews_required = challenge.num_reviews
-
-		filter =
-			challenge_id: this.challenge_id
-			feedback_value:
-				$gt: 0
-
-		credits = User_Credits.find filter
-		feedback_provided = credits.count()
-
-		res = reviews_required > feedback_provided
+		res = _feedback_missing this.challenge_id
+		console.log res+" feedback"
 		return res
 
 	missing_reviews: () ->
-		challenge = Challenges.findOne this.challenge_id
-		reviews_required = challenge.num_reviews
-
-		filter =
-			challenge_id: this.challenge_id
-			review_value:
-				$gt: 0
-
-		credits = User_Credits.find filter
-		reviews_provided = credits.count()
-
-		res = "" + (reviews_required - reviews_provided)
+		n = _reviews_missing this.challenge_id
+		res = "" + n
 		return res
 
 	missing_feedback: () ->
@@ -199,8 +214,11 @@ Template.student_solution_reviews.helpers
 		res = Reviews.find filter
 		return res
 
-	review_link: () ->
-		return "/user?template=student_reviews&challenge_id="+this.challenge_id
+	review_error: () ->
+		return Template.instance().review_error.get()
+
+	searching: () ->
+		return Template.instance().searching.get()
 
 	publish_disabled: () ->
 		if Template.instance().publishing.get()
@@ -221,6 +239,34 @@ Template.student_solution_reviews.events
 			publishing: Template.instance().publishing
 
 		Modal.show 'publish_solution', data
+
+	"click #add_review": (event)->
+		if event.target.attributes.disabled
+			return
+
+		event.preventDefault()
+
+		ins = Template.instance()
+		ins.review_error.set false
+		ins.searching.set true
+
+		challenge_id = this.challenge_id
+
+		Meteor.call 'add_review_for_challenge', challenge_id,
+			(err, rsp) ->
+				ins.searching.set false
+
+				if err
+					ins.review_error.set true
+					sAlert.error err
+				if rsp
+					ins.review_error.set false
+					param =
+						review_id: rsp.review_id
+						solution_id: rsp.solution_id
+						challenge_id: rsp.challenge_id
+						template: "student_review"
+					FlowRouter.setQueryParams param
 
 	"click #request_review":(event)->
 		if event.target.attributes.disabled

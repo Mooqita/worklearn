@@ -8,6 +8,10 @@
 
 	profile = Profiles.findOne p_filter
 
+	if not profile
+		send_mail user_id, subject, body
+		return
+
 	#cycle = profile.notification_cycle
 	#last = profile.last_notification
 	#now = new Date()
@@ -28,7 +32,7 @@
 
 	to = user.emails[0].address
 	cc = "public.markus.krause@gmail.com"
-	from = "noreply@mooqita.org"
+	from = "no-reply@mooqita.org"
 
 	Meteor.defer () ->
 		log_event "Sending mail", event_mail, event_info #TODO: stack trace

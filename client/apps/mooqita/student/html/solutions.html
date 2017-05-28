@@ -39,17 +39,17 @@
 	<hr>
 
 	<h2>
-		{{#if is_feedback_missing}}
+		{{#unless is_finished}}
 			<span class="badge background-contrast">new</span>
-		{{/if}}
+		{{/unless}}
 
 		<a id="student_solution">
 			{{challenge.title}}
 		</a>
 
-		{{#unless is_feedback_missing}}
+		{{#if is_finished}}
 			<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
-		{{/unless}}
+		{{/if}}
 	</h2>
 	{{>more content=challenge.content}}
 </template>
@@ -110,9 +110,9 @@
 	{{#unless Template.subscriptionsReady}}
 		{{>wait}}
 	{{else}}
-		{{#if is_feedback_missing}}
+		{{#unless is_finished}}
 			<div class="alert alert-warning">
-				<h2>Todo List: Solution</h2>
+				<h2>Todo List to finish your solution</h2>
 				<hr>
 				Here is a list of things you have to do before your solution is ready:
 				<ul>
@@ -132,28 +132,56 @@
 						<li>Publish your solution (Button below the upload field).</li>
 					{{/unless}}
 
-					{{#if is_review_missing}}
+					{{#if is_feedback_missing}}
 						<li>
-							Write <b>{{missing_reviews}} more reviews</b> for your peers.
-							<a href="{{review_link}}">
-								<b >Click here to write one.</b>
-							</a>
+							Read the reviews you received and give feedback.
+							Give feedback to <b> {{missing_feedback}} more reviews.</b>
 						</li>
 					{{/if}}
 
-					<li>
-						Read the reviews you received and give feedback.
-						Give feedback to <b> {{missing_feedback}} more reviews.</b>
-					</li>
+					{{#if is_review_missing}}
+						<li>
+							<p>
+								Write <b>{{missing_reviews}} more reviews</b> for your peers.
+								Please keep in mind that <b>you have 24 hours</b> to finish a review
+								after you clicked the button. Please start the review only if you
+								have time to finish it. It is a courtesy to your peers to not make
+								them hold there breath so long.
+							</p>
+							{{#unless _is_public "Solutions"}}
+								<b>Publish your solution to start writing reviews.</b>
+							{{else}}
+								{{#unless searching}}
+									<div class="text-right" style="padding-top:15px">
+										<div id="add_review" class="btn btn-theme">Start a review</div>
+									</div>
+								{{else}}
+									<div class="text-right" style="padding-top:15px">
+										<span class="btn btn-theme" disabled="true">
+											Please wait searching for solutions to review
+											<span class="glyphicon glyphicon-refresh spin"></span>
+										</span>
+									</div>
+								{{/unless}}
+							{{/unless}}
+						</li>
+					{{/if}}
 				</ul>
+			</div>
+		{{/unless}}
+
+		{{#if review_error}}
+			<div class="alert background-theme" style="margin-top: 15px">
+				We were not able to find a review for you yet.
+				Please come back later and try again.
 			</div>
 		{{/if}}
 
 		<h1>
 			Your Solution
-			{{#unless is_feedback_missing}}
+			{{#if is_finished}}
 				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
-			{{/unless}}
+			{{/if}}
 		</h1>
 
 		{{#unless _is_public "Solutions"}}

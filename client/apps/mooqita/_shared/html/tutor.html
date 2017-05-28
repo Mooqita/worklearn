@@ -91,6 +91,18 @@
 					{{>more content=content}}
 				{{/with}}
 			{{/unless}}
+
+			{{#unless loading}}
+				{{#unless review_url}}
+					<div class="text-right">
+						<span class="btn btn-theme" id="review">Write review</span>
+					</div>
+				{{else}}
+					<h2>Review prepared <a href="{{review_url}}">click here</a> to finish!</h2>
+				{{/unless}}
+			{{else}}
+				{{>wait}}
+			{{/unless}}
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>
