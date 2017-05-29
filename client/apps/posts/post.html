@@ -37,6 +37,7 @@
 
 
 <template name="_post">
+	<div id="{{_id}}"></div>
 	{{#Template.dynamic template=template_id data=.}}
 		{{#each children}}
 			{{>_post}}
