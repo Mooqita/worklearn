@@ -17,6 +17,7 @@ FlowRouter.route "/",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_landing"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -27,6 +28,7 @@ FlowRouter.route "/team",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_team"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -37,6 +39,7 @@ FlowRouter.route "/research",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_research"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -47,6 +50,7 @@ FlowRouter.route "/help",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_help"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -57,6 +61,7 @@ FlowRouter.route "/bugs",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_bugs"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -67,6 +72,7 @@ FlowRouter.route "/about",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_about"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -77,6 +83,7 @@ FlowRouter.route "/work-learn",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_work_learn"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -91,6 +98,7 @@ FlowRouter.route "/privacy",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_privacy"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -101,6 +109,7 @@ FlowRouter.route "/terms-of-use",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_terms"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -115,6 +124,7 @@ FlowRouter.route "/login",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_login"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################
@@ -164,6 +174,7 @@ FlowRouter.route "/user",
 			menu: "mooqita_menu"
 			layout: "mooqita_layout"
 			content: "mooqita_view"
+			footer: "mooqita_footer"
 		BlazeLayout.render "body_template", data
 
 ##########################################################

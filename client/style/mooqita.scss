@@ -209,6 +209,31 @@ a.mooqita:hover,
 }
 
 ////////////////////////////////////////////////
+// footer
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.mooqita-footer{
+}
+
+.mooqita-footer h1, .h1{
+	font-size: 22px;
+	font-weight: 400;
+	color: $theme-light;
+}
+
+.mooqita-footer a, .a{
+	font-size: 18px;
+	font-weight: 400;
+	color: $theme-light;
+}
+
+.mooqita-footer hr, .hr{
+	border-top: 2px solid $theme;
+	width: 25%;
+}
+
+////////////////////////////////////////////////
 // landing page hero
 ////////////////////////////////////////////////
 
