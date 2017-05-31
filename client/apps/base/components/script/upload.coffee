@@ -175,7 +175,7 @@ Template.upload.events
 					tx += fs_t + "."
 					tx += "Maximum allowed is "
 					tx += ms_t + "."
-					sAlert.error("tx")
+					sAlert.error(tx)
 					frm.addClass("is-error")
 					return
 
