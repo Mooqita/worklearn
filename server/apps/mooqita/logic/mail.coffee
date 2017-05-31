@@ -31,13 +31,14 @@
 		throw new Meteor.Error "send_mail could not find an email address for user: " + user_id
 
 	to = user.emails[0].address
-	cc = "public.markus.krause@gmail.com"
 	from = "no-reply@mooqita.org"
 
 	Meteor.defer () ->
 		log_event "Sending mail", event_mail, event_info #TODO: stack trace
 		try
-			Email.send {to, from, cc, subject, text}
+			Email.send {to, from, subject, text}
+			log_event "Mail send", event_mail, event_info #TODO: stack trace
+
 		catch error
 			log_event error, event_mail, event_err #TODO: stack trace
 
