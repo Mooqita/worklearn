@@ -28,18 +28,18 @@
 	solution_profile = Profiles.findOne filter
 
 	subject = "Mooqita: You got a new review"
-	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
+	url = "user?template=student_solution&challenge_id=" + challenge._id
 
 	name = if solution_profile then solution_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received a new review. \n"
-	body += "To check it out, follow this link: " + url + "\n\n"
+	body += "To check it out, follow this link: " +  "www.mooqita.org/" + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					Meteor.absoluteUrl() + "user?template=student_profile\n"
+					"www.mooqita.org/" + "user?template=student_profile\n"
 
 	send_message_mail solution.owner_id, subject, body
 
@@ -59,7 +59,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: A review timed out"
-	url = Meteor.absoluteUrl() + "user?template=student_solution&challenge_id=" + challenge._id
+	url = "user?template=student_solution&challenge_id=" + challenge._id
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
 
@@ -72,7 +72,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					Meteor.absoluteUrl() + "user?template=student_profile\n"
+					"www.mooqita.org/" + "user?template=student_profile\n"
 
 	send_message_mail review.owner_id, subject, body
 
@@ -94,7 +94,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: New feedback for your reviews"
-	url = Meteor.absoluteUrl() + "user?template=student_review" +
+	url = "user?template=student_review" +
 		"&review_id=" + review._id +
 		"&solution_id=" + solution._id +
 		"&challenge_id=" + challenge._id
@@ -108,7 +108,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: "+
-					Meteor.absoluteUrl() + "user?template=student_profile\n"
+					"www.mooqita.org/" + "user?template=student_profile\n"
 
 	send_message_mail review.owner_id, subject, body, url
 
