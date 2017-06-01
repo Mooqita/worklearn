@@ -15,11 +15,8 @@
 ##############################################
 @get_selected_view = () ->
 	selected = FlowRouter.getQueryParam("template")
-	console.log selected
-
 	if not selected
 		selected = "landing_page"
-
 	return selected
 
 
@@ -36,10 +33,12 @@
 #######################################################
 @get_field_value = (self, field, item_id, collection_name) ->
 	#TODO: replace collection_name with collection object if possible to enhance consistency
-
 	collection_name = collection_name || self.collection_name
 	item_id = item_id || self.item_id
 	field = field || self.field
+
+	if item_id == -1
+		return undefined
 
 	collection = global[collection_name]
 	if not collection

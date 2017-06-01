@@ -54,6 +54,8 @@ get_form = (box_id = null) ->
 
 ##############################################
 Template.upload.onCreated ->
+	this.uploaded = new ReactiveVar("")
+
 	files = Session.get('_files')
 
 	if not files
@@ -69,6 +71,9 @@ Template.upload.onCreated ->
 
 ##############################################
 Template.upload.helpers
+	uploaded: ->
+		return Template.instance().uploaded.get()
+
 	files: ->
 		if Session.get('_files') != 0
 			return get_files()
@@ -113,6 +118,7 @@ Template.upload.events
 
 
 	'submit form': (event) ->
+		self = Template.instance()
 		event.preventDefault()
 		frm = get_form()
 
@@ -189,6 +195,7 @@ Template.upload.events
 
 						if filesUp==filesToRead
 							frm.removeClass('is-uploading')
+							self.uploaded.set _files[box_id][0].name
 							_files[box_id] = []
 
 						if not err
@@ -210,6 +217,7 @@ Template.upload.events
 	'dragexit .dropbox': (event) ->
 		sAlert.info('exit')
 
-	'click .restart': (event) ->
+	'click #restart': (event) ->
+		console.log "restart"
 		get_form().removeClass('is-uploading').removeClass('is-error')
 

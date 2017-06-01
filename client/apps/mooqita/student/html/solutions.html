@@ -83,7 +83,7 @@
 						{{#if material}}
 							<h2>
 								{{>download collection_name="Challenges"
-								item_id=_id field="material"}}
+								item_id=_id field="material" label="Download additional material"}}
 							</h2>
 						{{/if}}
 					{{/with}}
@@ -196,7 +196,11 @@
 		<h1>
 			Your Solution
 			{{#if is_finished}}
-				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+				<em>
+					<span class="pull-right">
+						<span class="glyphicon glyphicon-check"></span>
+					</span>
+				</em>
 			{{/if}}
 		</h1>
 
@@ -209,14 +213,12 @@
 			{{#if material}}
 				<h2>
 					{{>download collection_name="Solutions"
-						item_id=_id field="material"}}
+						item_id=_id field="material" label="Download additional material"}}
 				</h2>
 			{{/if}}
 
-			<h2>
-				{{>upload method="set_field" collection_name="Solutions"
-					item_id=_id field="material" max_size=2000000}}
-			</h2>
+			{{>upload method="set_field" collection_name="Solutions"
+				item_id=_id field="material"}}
 		{{else}}
 			{{>more content=content}}
 

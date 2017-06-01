@@ -189,12 +189,10 @@ Template.student_solution_reviews.helpers
 
 	is_review_missing: () ->
 		res = _reviews_missing this.challenge_id
-		console.log res+" reviews"
 		return res
 
 	is_feedback_missing: () ->
 		res = _feedback_missing this.challenge_id
-		console.log res+" feedback"
 		return res
 
 	missing_reviews: () ->

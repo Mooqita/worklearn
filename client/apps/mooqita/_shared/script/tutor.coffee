@@ -139,7 +139,6 @@ Template.tutor_solution.helpers
 
 	challenge: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
-		console.log challenge_id
 		return Challenges.findOne challenge_id
 
 	solution: () ->

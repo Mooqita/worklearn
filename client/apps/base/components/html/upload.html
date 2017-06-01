@@ -25,6 +25,12 @@
 				{{/unless}}
 			</div>
 
+			{{#if uploaded}}
+				<p style="padding-bottom: 15px">
+					File: {{uploaded.name}} uploaded.
+				</p>
+			{{/if}}
+
 			<div class="dropbox__uploading">
 				Uploading
 				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
@@ -34,7 +40,7 @@
 
 			<div class="dropbox__error">
 				Error!
-				<a id="restart" class="box__restart" role="button">Try again!</a>
+				<a id="restart" class="dropbox__restart" role="button">Try again!</a>
 			</div>
 		</form>
   </div>

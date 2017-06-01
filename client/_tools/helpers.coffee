@@ -26,7 +26,6 @@ Template.registerHelper "_selected_view", () ->
 ########################################
 Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
 	value = get_field_value null, field, item_id, collection_name
-	console.log value
 
 	if value
 		if value.length > 32
@@ -104,7 +103,7 @@ Template.registerHelper "_response_visibility", () ->
 		{value:"", label:"Who can read your post"}
 		{value:"all", label:"Everyone"}
 		{value:"anonymous", label:"Registered Users"}
-		{value:"owner", label:"Only me"}]
+		{value:"editor", label:"Editors"}]
 	return opts
 
 #######################################################
