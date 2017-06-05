@@ -5,6 +5,24 @@
 ##############################################
 _files = {}
 
+_get_file_data_from_event = (event) ->
+	if event.srcElement
+		crm_data = event.srcElement.result
+		if crm_data
+			return crm_data
+
+	if event.target
+		moz_data = event.target.result
+		if moz_data
+			return moz_data
+
+	msg = "We encountered a problem with your browser uploading a file."
+	msg += "Please contact info@mooqita.org."
+	sAlert.error msg
+
+	throw new Meteor.Error msg
+
+
 ##############################################
 _get_file_size_text = (byte) ->
 	kb = Math.round(byte / 1024)
@@ -166,8 +184,7 @@ Template.upload.events
 
 			fileReader.onload = (ev) ->
 				filesRead += 1
-				#data = ev.srcElement.result
-				raw = ev.srcElement.result
+				raw = _get_file_data_from_event(ev)
 				base = btoa(raw)
 				data = "data:" + type + ";base64," + base
 

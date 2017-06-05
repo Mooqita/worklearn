@@ -40,7 +40,7 @@ Template.download.events
 					sAlert.error(err)
 				else
 					pack = unpack_item res
-					blob = base64_to_blob pack.data
+					blob = base64_to_blob pack.data, res.type
 					if not file_name
 						file_name = collection_name + "_" + field + "." + pack.extension
 					saveAs blob, file_name

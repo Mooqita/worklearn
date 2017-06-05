@@ -20,25 +20,7 @@
 
 	return res
 
-@base64_to_byte = (base64String) ->
-	decodedString       = _decodeBase64 base64String
-	decodedStringLength = _getLength decodedString
-	byteArray           = _buildByteArray decodedString, decodedStringLength
-	return byteArray
-
-@base64_to_blob = (base64String) ->
-	byteArray = base64_to_byte base64String
-
-	if byteArray
-		return _createBlob byteArray
-
-_decodeBase64 = (string) ->
-	return atob string
-
-_getLength = (value) ->
-  return value.length
-
-_buildByteArray = (string, stringLength) ->
+@buildByteArray = (string, stringLength) ->
 	buffer = new ArrayBuffer stringLength
 	array  = new Uint8Array buffer
 
@@ -47,5 +29,19 @@ _buildByteArray = (string, stringLength) ->
 
 	return array
 
-_createBlob = (byteArray) ->
-	return new Blob [byteArray], {type: 'application/zip'}
+@base64_to_byte = (base64String) ->
+	decoded		= atob base64String
+	length		= decoded.length
+	byteArray = buildByteArray decoded, length
+
+	return byteArray
+
+@base64_to_blob = (base64String, mime_type) ->
+	byteArray = base64_to_byte base64String
+
+	if not byteArray
+		return null
+
+	res = new Blob [byteArray], {type: mime_type}
+	return res
+
