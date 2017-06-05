@@ -112,7 +112,7 @@
 	body = "Hi " + name + ",\n\n"
 	body += "You received feedback to one of your reviews in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " + url + "\n\n"
+	body += "To check it out, follow this link: " + "www.mooqita.org/" + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
