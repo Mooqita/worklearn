@@ -165,6 +165,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		entry = {}
 		entry.content = solution.content
 		entry.material = solution.material
+		entry.published = solution.published
 
 		filter =
 			owner_id: solution.owner_id
@@ -214,12 +215,15 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 
 	filter =
 		parent_id: challenge_id
-		published: true
+
+	if not Roles.userIsInRole user_id, "admin"
+		filter.published = true
 
 	options =
 		fields:
 			content: 1
 			owner_id: 1
+			published: 1
 			challenge_id: 1
 			reviews_required: 1
 		skip: page * size
@@ -538,7 +542,7 @@ Meteor.publish "user_credentials", (user_id) ->
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)
 
-	log_publication "User_Credentials", crs, filter,
+	log_publication "UserCredentials", crs, filter,
 			_challenge_fields, "credits", user_id
 	self.ready()
 

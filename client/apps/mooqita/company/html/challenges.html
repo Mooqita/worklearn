@@ -205,6 +205,11 @@
 </template>
 
 
+<!------------------------------------------------
+|
+|	Challenge solution
+|
+-------------------------------------------------->
 <template name="challenge_solution">
 	<div class="media">
 		<div class="media-left">
@@ -217,7 +222,15 @@
 				average rating <em>{{average_rating}}</em> out of <em>5</em>
 
 				{{#if _is_owner  "Challenges" .}}
-					<em class="pull-right">Author</em>
+					<em class="pull-right"> <span class="badge background-theme"></span>Author</em>
+				{{/if}}
+
+				{{#if published}}
+					{{#if isInRole 'admin'}}
+						<span class="btn btn-contrast pull-right" id="reopen">reopen</span>
+					{{else}}
+						<span class="badge background-contrast pull-right">public</span>
+					{{/if}}
 				{{/if}}
 			</h2>
 
@@ -275,6 +288,36 @@
 					</div>
 				{{/each}}
 			{{/if}}
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|	Challenge reset solution
+-------------------------------------------------->
+<template name="reopen_solution">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Reopen Solution</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to reopen the solution?
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme"
+							 id="reopen" data-dismiss="modal">Reopen</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

@@ -101,7 +101,7 @@ Template.tutor_solutions.helpers
 			sort:
 				under_review_since: 1
 
-		return Tutor_Solutions.find {}, mod
+		return TutorSolutions.find {}, mod
 
 	solution_url: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"

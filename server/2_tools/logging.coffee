@@ -2,6 +2,7 @@
 # messages
 ###############################################################
 @event_create = "create"
+@event_logic = "logic"
 @event_edit = "edit"
 @event_delete = "delete"
 @event_pub = "publication"
@@ -30,29 +31,27 @@
 	console.log msg
 
 #######################################################
-@log_publication = (collection_name, crs, filter, fields, origin, user_id, requester_id) ->
-	data = " "
+@log_publication = (collection_name, crs, filter, fields, origin, requester_id, owner_id) ->
+	origin = origin || "unknown"
 
-	if user_id
+	if owner_id
 		p_f =
-			owner_id: user_id
+			owner_id: owner_id
 		profile = Profiles.findOne p_f
-		name = get_profile_name profile
-		name += ": " + user_id
+		name = get_profile_name profile, true
+		name += "(" + owner_id + ")"
 
 	if requester_id
+		p_f =
+			owner_id: requester_id
 		profile = Profiles.findOne p_f
-		requester = get_profile_name profile
-		requester += ": " + user_id
+		requester = get_profile_name profile, true
+		requester += "(" + requester_id + ")"
 
-	if filter
-		data = if "owner_id" in filter then " for owner " else " "
-
-	msg = "[count] " + crs.count()
-	msg += " [collection] " + collection_name
-	msg += if name then " [owner] " + name else ""
-	msg += if requester then " [requester] " + requester else ""
-	msg += " [origin] " + origin
+	msg = crs.count() + " " + collection_name
+	msg += if requester then " to: " + requester else ""
+	msg += if name then " from: " + name else ""
+	msg += " via: " + origin
 
 	log_event msg, event_pub, event_info
 

@@ -2,82 +2,85 @@
 Meteor.methods
 	add_profile: (param) ->
 		check param.occupation, String
-		user_id = Meteor.userId()
+		user = Meteor.user()
 
-		if not user_id
+		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		profile = Profiles.findOne user_id
+		profile = Profiles.findOne user._id
 
 		if profile
 			throw new Meteor.Error "Profile already created"
 
-		return gen_profile user_id, param.occupation
+		return gen_profile user, param.occupation
 
 
 	add_challenge: () ->
-		user_id = Meteor.userId()
+		user = Meteor.user()
 
-		if not user_id
+		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		return gen_challenge user_id
+		return gen_challenge user
 
 
 	finish_challenge: (challenge_id) ->
-		check challenge_id, String
+		user = Meteor.user()
 		challenge = secure_item_action Challenges, challenge_id, true
-		return finish_challenge challenge
+		return finish_challenge challenge, user
 
 
 	add_solution: (challenge_id) ->
-		check challenge_id, String
+		user = Meteor.user()
 		challenge = secure_item_action Challenges, challenge_id, false
-		solution_id = gen_solution challenge, Meteor.userId()
+		solution_id = gen_solution challenge, user
 		res =
 			solution_id: solution_id
 			challenge_id: challenge_id
 		return res
 
 	finish_solution: (solution_id) ->
-		check solution_id, String
+		user = Meteor.user()
 		solution = secure_item_action Solutions, solution_id, true
-		solution_id = finish_solution solution, Meteor.userId()
+		solution_id = finish_solution solution, user
 		res =
 			solution_id: solution_id
 			challenge_id: solution.challenge_id
 		return res
 
 
-	add_review: () ->
-		user_id = Meteor.userId()
+	reopen_solution: (solution_id) ->
+		user = Meteor.user()
+		solution = secure_item_action  Solutions, solution_id, false
 
-		if not user_id
+		if not Roles.userIsInRole user, "admin"
 			throw new Meteor.Error('Not permitted.')
 
-		res = gen_review null, null, user_id
+		res = reopen_solution solution, user
+		return res
+
+	add_review: () ->
+		user = Meteor.user()
+
+		if not user._id
+			throw new Meteor.Error('Not permitted.')
+
+		res = gen_review null, null, user
 		return res
 
 
 	add_review_for_challenge: (challenge_id) ->
-		check challenge_id, String
-		user_id = Meteor.userId()
-
-		if not user_id
-			throw new Meteor.Error('Not permitted.')
-
-		res = gen_review challenge_id, null, user_id
+		user = Meteor.user()
+		challenge = secure_item_action  Challenges, challenge_id, false
+		res = gen_review challenge, null, user
 		return res
 
 	add_tutor_review: (solution_id) ->
-		check solution_id, String
-		user_id = Meteor.userId()
-
-		if not user_id
-			throw new Meteor.Error('Not permitted.')
+		user = Meteor.user()
+		solution = secure_item_action  Solutions, solution_id, false
 
 		filter =
-			owner_id: user_id
+			owner_id: user._id
 
 		mod =
 			fields:
@@ -87,13 +90,14 @@ Meteor.methods
 		if not profile.tutor
 			throw new Meteor.Error('Not permitted.')
 
-		res = gen_review null, solution_id, user_id
+		res = gen_review null, solution, user
 		return res
 
 
 	finish_review: (review_id) ->
+		user = Meteor.user()
 		review = secure_item_action Reviews, review_id, true
-		review_id = finish_review review, Meteor.userId()
+		review_id = finish_review review, user
 
 		res =
 			review_id: review._id
@@ -104,8 +108,9 @@ Meteor.methods
 
 
 	finish_feedback: (feedback_id) ->
+		user = Meteor.user()
 		feedback = secure_item_action Feedback, feedback_id, true
-		feedback_id = finish_feedback feedback, Meteor.userId()
+		feedback_id = finish_feedback feedback, user
 
 		res =
 			review_id: feedback.review_id

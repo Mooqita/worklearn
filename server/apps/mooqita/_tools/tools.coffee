@@ -1,5 +1,7 @@
 ###############################################
 @secure_item_action = (collection, item_id, owner = true) ->
+	check item_id, String
+
 	user = Meteor.user()
 
 	if not user

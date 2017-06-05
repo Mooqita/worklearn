@@ -38,7 +38,7 @@ Meteor.methods
 				msg["error"] = err
 
 			#store_document Logging, msg
-			log = JSON.stringify msg, null, 2
+			log = JSON.stringify msg
 			log_event log, "login", event_info
 
 		request(url, call)

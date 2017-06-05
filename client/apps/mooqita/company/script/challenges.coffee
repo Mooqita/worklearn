@@ -150,7 +150,7 @@ Template.challenge_solutions.onCreated ->
 ########################################
 Template.challenge_solutions.helpers
 	challenge_summary: () ->
-		return Challenge_Summary.find()
+		return ChallengeSummary.find()
 
 ########################################
 #
@@ -179,3 +179,26 @@ Template.challenge_solution.events
 	"click #show_reviews": ->
 		f = Template.instance().reviews_visible.get()
 		Template.instance().reviews_visible.set !f
+
+	"click #reopen": ()->
+		data =
+			id: this._id
+
+		Modal.show 'reopen_solution', data
+
+##############################################
+# publish modal
+##############################################
+
+##############################################
+Template.reopen_solution.events
+	'click #reopen': ->
+		self = this
+
+		Meteor.call "reopen_solution", self.id,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Solution reopened!"
+

@@ -22,10 +22,10 @@
 @Slides = new Mongo.Collection("slides")
 
 #######################################################
-@User_Credits = new Mongo.Collection("user_credits")
-@User_Credentials = new Mongo.Collection("user_credentials")
-@Tutor_Solutions = new Mongo.Collection("tutor_solutions")
-@Challenge_Summary = new Mongo.Collection("challenge_summary")
+@UserCredits = new Mongo.Collection("user_credits")
+@UserCredentials = new Mongo.Collection("user_credentials")
+@TutorSolutions = new Mongo.Collection("tutor_solutions")
+@ChallengeSummary = new Mongo.Collection("challenge_summary")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")

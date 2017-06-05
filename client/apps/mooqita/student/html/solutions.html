@@ -38,20 +38,24 @@
 <template name="student_solution_preview">
 	<hr>
 
-	<h2>
-		{{#unless is_finished}}
-			<span class="badge background-contrast">new</span>
-		{{/unless}}
+	{{#unless Template.subscriptionsReady}}
+		{{>wait}}
+	{{else}}
+		<h2>
+			{{#unless is_finished}}
+				<span class="badge background-contrast">new</span>
+			{{/unless}}
 
-		<a id="student_solution">
-			{{challenge.title}}
-		</a>
+			<a id="student_solution">
+				{{challenge.title}}
+			</a>
 
-		{{#if is_finished}}
-			<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
-		{{/if}}
-	</h2>
-	{{>more content=challenge.content}}
+			{{#if is_finished}}
+				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+			{{/if}}
+		</h2>
+		{{>more content=challenge.content}}
+	{{/unless}}
 </template>
 
 
@@ -91,13 +95,25 @@
 					{{#each solutions}}
 						{{>student_solution_reviews}}
 					{{else}}
-						<p>
+						<div class="alert alert-warning">
 							You have not yet submitted a solution to this challenge.
-						</p>
 
-						<div class="text-right">
-							<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+							{{#unless credit}}
+								<p>
+									You still have open solutions. You can start a new
+									challenge after you finished all necessary reviews.
+									Please go back to
+									<a href="user?template=student_solutions">My Challenges</a>
+									to find your open challenges.
+								</p>
+							{{/unless}}
 						</div>
+
+						{{#if credit}}
+							<div class="text-right">
+								<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+							</div>
+						{{/if}}
 					{{/each}}
 				{{/unless}}
 			{{/unless}}

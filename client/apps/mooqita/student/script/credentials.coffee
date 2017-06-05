@@ -22,7 +22,7 @@ Template.student_credentials.onCreated () ->
 ##############################################
 Template.student_credentials.helpers
 	current_resume: () ->
-		res = User_Credentials.findOne()
+		res = UserCredentials.findOne()
 		return res
 
 ##############################################

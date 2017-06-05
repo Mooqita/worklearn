@@ -10,16 +10,27 @@
 
 ##############################################
 _reviews_missing = (challenge_id, solution_id) ->
-	challenge = Challenges.findOne challenge_id
-	reviews_required = challenge.num_reviews
+	if challenge_id
+		challenge = Challenges.findOne challenge_id
+		reviews_required = challenge.num_reviews
 
-	filter =
-		#solution_id: solution_id
-		challenge_id: challenge_id
-		review_value:
-			$gt: 0
+		filter =
+			#solution_id: solution_id
+			challenge_id: challenge_id
+			review_value:
+				$gt: 0
+	else
+		filter =
+			review_value:
+				$gt: 0
 
-	credits = User_Credits.find filter
+		f_required =
+			review_value:
+				$lt: 0
+		reviews_required = UserCredits.find(f_required).count()
+
+
+	credits = UserCredits.find filter
 	reviews_provided = credits.count()
 
 	res = reviews_required - reviews_provided
@@ -37,7 +48,7 @@ _feedback_missing = (challenge_id, solution_id) ->
 		feedback_value:
 			$gt: 0
 
-	credits = User_Credits.find filter
+	credits = UserCredits.find filter
 	feedback_provided = credits.count()
 
 	res = reviews_required - feedback_provided
@@ -118,6 +129,12 @@ Template.student_solution.onCreated ->
 
 ########################################
 Template.student_solution.helpers
+	credit: () ->
+		r = _reviews_missing(null, null)
+		if r < 0
+			r = -1
+		return r + 1
+
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
 		res = Challenges.findOne id
@@ -209,7 +226,7 @@ Template.student_solution_reviews.helpers
 			feedback_value:
 				$gt: 0
 
-		credits = User_Credits.find filter
+		credits = UserCredits.find filter
 		feedback_provided = credits.count()
 
 		res = "" + (reviews_required - feedback_provided)

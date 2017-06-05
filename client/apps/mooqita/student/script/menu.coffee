@@ -11,7 +11,7 @@ Template.student_menu.onCreated ->
 
 Template.student_menu.helpers
 	credits: () ->
-		return User_Credits.find()
+		return UserCredits.find()
 
 	review_time: () ->
 		if this.review_time>0

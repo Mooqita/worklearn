@@ -33,7 +33,8 @@
 	name = if solution_profile then solution_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
-	body += "You received a new review. \n"
+	body += "You received a new review in: \n"
+	body += challenge.title + "\n\n"
 	body += "To check it out, follow this link: " +  "www.mooqita.org/" + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
@@ -44,7 +45,9 @@
 	send_message_mail solution.owner_id, subject, body
 
 	title = "New Review"
-	text = "You received a new review on one of your solutions."
+	text = "You received a new review on one of your solutions in: "
+	text += challenge.title + " "
+
 	gen_message solution.owner_id, title, text, url
 
 	return true
@@ -64,7 +67,8 @@
 	name = if review_profile then review_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
-	body += "One of the reviews you were working on timed out. \n"
+	body += "One of the reviews you were working on timed out in: \n"
+	body += challenge.title + "\n\n"
 	body += "To ensure that everyone gets reviews in time.\n"
 	body += "Reviews time out after 24 hours. After this time\n"
 	body += "they are again available for other reviewers.\n\n"
@@ -77,7 +81,11 @@
 	send_message_mail review.owner_id, subject, body
 
 	title = "Review timeout"
-	text = "One of the reviews you were working on timed out. To ensure that everyone gets reviews in time. Reviews time out after 24 hours. After this time they are again available for other reviewers."
+	text = "One of the reviews you were working on timed out in: "
+	text += challenge.title + " "
+	text += "To ensure that everyone gets reviews in time. "
+	text += "Reviews time out after 24 hours. After this time "
+	text += "they are again available for other reviewers."
 
 	gen_message review.owner_id, title, text, url
 
@@ -102,7 +110,8 @@
 	name = if review_profile then review_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
-	body += "You received feedback to one of your reviews. \n"
+	body += "You received feedback to one of your reviews in: \n"
+	body += challenge.title + "\n\n"
 	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
@@ -113,7 +122,9 @@
 	send_message_mail review.owner_id, subject, body, url
 
 	title = "New Feedback"
-	text = "You received new feedback on one of your reviews."
+	text = "You received new feedback on one of your reviews in: "
+	text += challenge.title
+
 	gen_message review.owner_id, title, text, url
 
 	return true
