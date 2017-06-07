@@ -158,12 +158,10 @@ Template.tutor_solution.events
 				if err
 					sAlert.error(err)
 				else
-					solution_id = FlowRouter.getQueryParam "solution_id"
-					challenge_id = FlowRouter.getQueryParam "challenge_id"
 					queryParams =
-						review_id: res
-						solution_id: solution_id
-						challenge_id: challenge_id
+						review_id: res.review_id
+						solution_id: res.solution_id
+						challenge_id: res.challenge_id
 						template: "student_review"
 					url = FlowRouter.path "user", null, queryParams
 					ins.review_url.set url

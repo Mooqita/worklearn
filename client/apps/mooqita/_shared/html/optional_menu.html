@@ -1,5 +1,5 @@
 <template name="optional_menu">
-	{{#if _profile.tutor}}
+	{{#if isInRole 'tutor'}}
 		<span>
 			<a class="navigation-button control-navigate" id="tutor">
 				Tutor

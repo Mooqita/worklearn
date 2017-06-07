@@ -314,10 +314,11 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 Meteor.publish "solutions_for_tutors", (challenge_id) ->
 	self = this
 	user_id = this.userId
-	profile = Profiles.findOne {owner_id:user_id}
 
-	if not profile.tutor
+	if not Roles.userIsInRole user_id, "tutor"
+		console.log "dafuck"
 		throw new Meteor.Error("Not permitted.")
+
 
 	gen_tut = (id) ->
 		rr = ReviewRequests.findOne id
@@ -328,6 +329,7 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 		item =
 			solution_id: rr.solution_id
 			content: solution.content
+			material: solution.material
 			date: date
 			wait: how_much_time difference
 

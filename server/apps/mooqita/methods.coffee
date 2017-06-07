@@ -59,6 +59,7 @@ Meteor.methods
 		res = reopen_solution solution, user
 		return res
 
+
 	add_review: () ->
 		user = Meteor.user()
 
@@ -75,19 +76,12 @@ Meteor.methods
 		res = gen_review challenge, null, user
 		return res
 
+
 	add_tutor_review: (solution_id) ->
 		user = Meteor.user()
 		solution = secure_item_action  Solutions, solution_id, false
 
-		filter =
-			owner_id: user._id
-
-		mod =
-			fields:
-				tutor: 1
-
-		profile = Profiles.findOne filter, mod
-		if not profile.tutor
+		if not Roles.userIsInRole user, "tutor"
 			throw new Meteor.Error('Not permitted.')
 
 		res = gen_review null, solution, user

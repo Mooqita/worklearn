@@ -312,14 +312,7 @@ _num_provided_reviews = (solution) ->
 
 	request = ReviewRequests.findOne filter
 	if not request
-		p_f =
-			owner_id: review.owner_id
-		profile = Profiles.findOne p_f
-
-		if not profile
-			return review._id
-
-		if profile.tutor
+		if Roles.userIsInRole review.owner_id, "tutor"
 			return review._id
 
 		throw new Meteor.Error "A non tutor provided a review without a solution."

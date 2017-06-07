@@ -89,6 +89,14 @@
 				{{#with solution}}
 					<h1>Solution</h1>
 					{{>more content=content}}
+
+					{{#if material}}
+						<h2>
+							{{>download collection_name="Solutions"
+									item_id=_id field="material"
+									label="Download additional material"}}
+						</h2>
+					{{/if}}
 				{{/with}}
 			{{/unless}}
 
