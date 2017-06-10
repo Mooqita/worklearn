@@ -1,15 +1,15 @@
 ###############################################
-@send_message_mail = (user_id, subject, body) ->
+@send_message_mail = (user, subject, body) ->
 	msg = "@send_message_mail trying to send mail message"
 	log_event msg, event_mail, event_info
 	# handle notifications
 	p_filter =
-		owner_id: user_id
+		owner_id: user._id
 
 	profile = Profiles.findOne p_filter
 
 	if not profile
-		send_mail user_id, subject, body
+		send_mail user, subject, body
 		return
 
 	#cycle = profile.notification_cycle
@@ -21,14 +21,12 @@
 	#	return
 
 	if profile.mail_notifications == "yes"
-		send_mail user_id, subject, body
+		send_mail user, subject, body
 
 ###############################################
-@send_mail = (user_id, subject, text) ->
-	user = Meteor.users.findOne user_id
-
+@send_mail = (user, subject, text) ->
 	if not user.emails
-		throw new Meteor.Error "send_mail could not find an email address for user: " + user_id
+		throw new Meteor.Error "send_mail could not find an email address for user: " + user._id
 
 	to = user.emails[0].address
 	from = "no-reply@mooqita.org"

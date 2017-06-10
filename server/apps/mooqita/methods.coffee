@@ -119,18 +119,20 @@ Meteor.methods
 	###########################################################
 
 	###########################################################
-	send_test_message: (type) ->
+	send_message_to_challenge_students: (challenge_id, subject, message) ->
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, 'db_admin')
+		if !Roles.userIsInRole(user._id, 'admin')
 			throw new Meteor.Error('Not permitted.')
 
-		switch type
-			when "send_mail"
-				send_mail Meteor.userId(), "subject", "message"
-			else
-				msg = "message type: " + type + " unknown."
-				log_event msg, event_create, event_err
+		# we need to know who is registered for a course.
+		users = Meteor.users.find()
+		usrs = users.fetch()
+
+		for u in usrs
+			send_mail u, subject, message
+
+		return users.count()

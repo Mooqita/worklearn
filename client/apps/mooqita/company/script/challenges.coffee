@@ -68,6 +68,8 @@ Template.challenge_preview.events
 ########################################
 Template.company_challenge.onCreated ->
 	self = this
+	self.send_disabled = new ReactiveVar(false)
+
 	self.autorun ->
 		id = FlowRouter.getQueryParam("challenge_id")
 		if not id
@@ -80,6 +82,12 @@ Template.company_challenge.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
 		return Challenges.findOne id
+
+	send_disabled: () ->
+		console.log "FUCK YOU"
+		if Template.instance().send_disabled.get()
+			return "disabled"
+		return ""
 
 	publish_disabled: () ->
 		data = Template.currentData()
@@ -130,6 +138,25 @@ Template.company_challenge.events
 					sAlert.error(err)
 				if res
 					sAlert.success "Challenge published!"
+
+
+	"click #send": (event, template)->
+		if event.target.attributes.disabled
+			return
+
+		inst = Template.instance()
+		inst.send_disabled.set(true)
+
+		message = template.find("#message").value
+		subject = template.find("#subject").value
+
+		Meteor.call "send_message_to_challenge_students", this._id, subject, message,
+			(err, res) ->
+				inst.send_disabled.set(false)
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Message send."
 
 
 ########################################

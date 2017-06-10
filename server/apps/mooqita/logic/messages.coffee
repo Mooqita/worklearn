@@ -1,8 +1,8 @@
 ###############################################
-@gen_message = (user_id, title, message, url) ->
+@gen_message = (user, title, message, url) ->
 	#save message
 	msg =
-		owner_id: user_id
+		owner_id: user._id
 		content: message
 		title: title
 		seen: false
@@ -42,13 +42,14 @@
 	body += "You can disable mail notifications in your profile: " +
 					"www.mooqita.org/" + "user?template=student_profile\n"
 
-	send_message_mail solution.owner_id, subject, body
+	owner = Meteor.users.findOne solution.owner_id
+	send_message_mail owner, subject, body
 
 	title = "New Review"
 	text = "You received a new review on one of your solutions in: "
 	text += challenge.title + " "
 
-	gen_message solution.owner_id, title, text, url
+	gen_message owner, title, text, url
 
 	return true
 
@@ -78,7 +79,8 @@
 	body += "You can disable mail notifications in your profile: " +
 					"www.mooqita.org/" + "user?template=student_profile\n"
 
-	send_message_mail review.owner_id, subject, body
+	owner = Meteor.users.findOne solution.owner_id
+	send_message_mail owner, subject, body
 
 	title = "Review timeout"
 	text = "One of the reviews you were working on timed out in: "
@@ -87,7 +89,7 @@
 	text += "Reviews time out after 24 hours. After this time "
 	text += "they are again available for other reviewers."
 
-	gen_message review.owner_id, title, text, url
+	gen_message owner, title, text, url
 
 	return true
 
@@ -119,12 +121,13 @@
 	body += "You can disable mail notifications in your profile: "+
 					"www.mooqita.org/" + "user?template=student_profile\n"
 
-	send_message_mail review.owner_id, subject, body, url
+	owner = Meteor.users.findOne solution.owner_id
+	send_message_mail owner, subject, body, url
 
 	title = "New Feedback"
 	text = "You received new feedback on one of your reviews in: "
 	text += challenge.title
 
-	gen_message review.owner_id, title, text, url
+	gen_message owner, title, text, url
 
 	return true

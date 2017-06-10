@@ -156,6 +156,30 @@
 							</h2>
 						{{/if}}
 					</div>
+
+					{{#if isInRole 'admin'}}
+						<div class="form-group">
+							<h2>Message Students</h2>
+
+							<input placeholder="Subject"
+										 class="form-control edit-field"
+										 type="text" id="subject"/>
+
+							<textarea  class="form-control edit-field" placeholder="Your message"
+												 id="message" rows="8"></textarea>
+
+							<div class="text-right" style="padding-top: 15px;">
+								<div class="btn btn-theme" id="send" {{send_disabled}}>
+									{{#if send_disabled}}
+										Sending mail
+										<span class="glyphicon glyphicon-refresh spin"></span>
+									{{else}}
+										Send Message
+									{{/if}}
+								</div>
+							</div>
+						</div>
+					{{/if}}
 				</div>
 
 				{{#unless _is_public "Challenges"}}
@@ -165,6 +189,7 @@
 								<div class="btn btn-theme" id="save">Save</div>
 							</span>
 						</div>
+
 						<div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
 								<div class="btn btn-theme" {{publish_disabled}}
