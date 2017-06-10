@@ -3,7 +3,7 @@
 
 	console.log("hell")
 
-	regex = /data:([a-zA-Z0-9\/]*);([a-zA-Z0-9\/]*),/g
+	regex = /data:([-a-zA-Z0-9\/]*);([-a-zA-Z0-9\/]*),/g
 	res = regex.exec(item)
 
 	encoding = res[2]
