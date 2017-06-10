@@ -55,7 +55,7 @@ _num_provided_reviews = (solution) ->
 	msg = "Challenge (" + challenge._id + ") published by: " + get_user_mail user
 	log_event msg, event_logic, event_info
 
-	return res
+	return challenge
 
 
 ###############################################
