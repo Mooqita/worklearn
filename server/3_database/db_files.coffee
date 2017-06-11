@@ -1,6 +1,6 @@
 #######################################################
 _upload_dropbox_file = (collection, item_id, field, value, type)->
-	access_token: process.env.DROP_BOX_ACCESS_TOKEN
+	access_token = process.env.DROP_BOX_ACCESS_TOKEN
 	url = "https://content.dropboxapi.com/2/files/upload"
 	path = "/"+collection._name+"/"+item_id+"/"+field+".data"
 	arg =
@@ -28,7 +28,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 	url = "https://content.dropboxapi.com/2/files/download"
 	path =
 		path:"/"+collection._name+"/"+item_id+"/"+field+".data"
-	access_token: process.env.DROP_BOX_ACCESS_TOKEN
+	access_token = process.env.DROP_BOX_ACCESS_TOKEN
 
 	opts =
 		headers:

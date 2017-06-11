@@ -140,7 +140,7 @@
 	solution = Solutions.findOne request.solution_id
 	challenge = Challenges.findOne review.challenge_id
 
-	provided = _num_provided_reviews solution
+	provided = num_provided_reviews solution
 	required = 	challenge.num_reviews
 
 	r_owner = Meteor.users.findOne review.owner_id
