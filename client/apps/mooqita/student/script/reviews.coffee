@@ -154,7 +154,7 @@ Template.student_review.helpers
 
 ########################################
 Template.student_review.events
-	"click #publish":()->
+	"click #publish":(event)->
 		if event.target.attributes.disabled
 			return
 
