@@ -35,7 +35,7 @@ Meteor.publish "my_solutions", () ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication "Solutions", crs, filter,
-			_challenge_fields, "my_solutions", user_id
+			_solution_fields, "my_solutions", user_id
 	return crs
 
 #######################################################
@@ -55,7 +55,7 @@ Meteor.publish "solution_by_id", (solution_id) ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication "Solutions", crs, filter,
-			_challenge_fields, "solution_by_id", user_id
+			_solution_fields, "solution_by_id", user_id
 	return crs
 
 
@@ -72,7 +72,7 @@ Meteor.publish "my_solution_by_id", (solution_id) ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication "Solutions", crs, filter,
-			_challenge_fields, "my_solution_by_id", user_id
+			_solution_fields, "my_solution_by_id", user_id
 	return crs
 
 
@@ -89,7 +89,7 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication "Solutions", crs, filter,
-			_challenge_fields, "my_solutions_by_challenge_id", user_id
+			_solution_fields, "my_solutions_by_challenge_id", user_id
 	return crs
 
 

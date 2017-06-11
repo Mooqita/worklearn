@@ -34,7 +34,7 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 	crs = Feedback.find filter, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
-			_challenge_fields, "my_feedback_by_review_id", user_id
+			_feedback_fields, "my_feedback_by_review_id", user_id
 	return crs
 
 
@@ -51,5 +51,5 @@ Meteor.publish "feedback_by_review_id", (review_id) ->
 	crs = Feedback.find request.feedback_id, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
-			_challenge_fields, "feedback_by_review_id", user_id
+			_feedback_fields, "feedback_by_review_id", user_id
 	return crs

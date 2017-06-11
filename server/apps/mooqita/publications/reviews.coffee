@@ -33,7 +33,7 @@ Meteor.publish "my_reviews", () ->
 	crs = Reviews.find filter, _review_fields
 
 	log_publication "Reviews", crs, filter,
-			_challenge_fields, "my_reviews", user_id
+			_review_fields, "my_reviews", user_id
 	return crs
 
 
@@ -50,7 +50,7 @@ Meteor.publish "my_review_by_id", (review_id) ->
 	crs = Reviews.find filter, _review_fields
 
 	log_publication "Reviews", crs, filter,
-			_challenge_fields, "my_review_by_id", user_id
+			_review_fields, "my_review_by_id", user_id
 	return crs
 
 
@@ -66,6 +66,6 @@ Meteor.publish "reviews_by_solution_id", (solution_id) ->
 	crs = Reviews.find filter, _review_fields
 
 	log_publication "Reviews", crs, filter,
-			_challenge_fields, "reviews_by_solution_id", user_id
+			_review_fields, "reviews_by_solution_id", user_id
 	return crs
 
