@@ -1,8 +1,6 @@
 @unpack_item = (item) ->
 	mime = require('mime');
 
-	console.log("hell")
-
 	regex = /data:([-a-zA-Z0-9\/]*);([-a-zA-Z0-9\/]*),/g
 	res = regex.exec(item)
 
