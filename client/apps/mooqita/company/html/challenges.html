@@ -19,6 +19,8 @@
 					</button>
 				</div>
 
+				{{>paging subscription="my_challenges" page=0 count=20 parameter=query}}
+
 				{{#each challenges}}
 					{{>challenge_preview}}
 				{{else}}

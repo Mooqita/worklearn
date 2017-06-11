@@ -68,3 +68,5 @@ email@1.2.1
 dburles:mongo-collection-instances
 markdown@1.0.12
 http@1.2.12
+gwendall:impersonate
+reactive-dict

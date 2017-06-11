@@ -1,0 +1,23 @@
+<!------------------------------------------------
+|
+|	paging
+|
+| Example:
+| page: <int> current page starts at 0 default 0
+| count: <int> number of elements per page default 10 max 100
+| parameter: <ReactiveDict> for parameters passed to the subscription
+| subscription: <string> name of the meteor subscription to call. The
+|								subscription has to take the following form:
+|								function subscription(page, count, parameter)
+|
+| {{>paging subscription=<string> page=<int>
+|						count=<int> parameter=<ReactiveDict>}}
+|
+-------------------------------------------------->
+<template name="paging">
+	<div class="btn-group btn-group-justified" role="group" aria-label="...">
+		<div class="btn btn-theme" id="prev">previous</div>
+		<div class="btn">Page: {{page}}</div>
+		<div class="btn btn-theme" id="next">next</div>
+	</div>
+</template>

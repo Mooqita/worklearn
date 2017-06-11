@@ -4,32 +4,15 @@
 
 ########################################
 Template.tutor.onCreated ->
-	self = this
-	self.count = new ReactiveVar 10
-	self.page = new ReactiveVar 0
-	self.query = new ReactiveVar ""
-
-	self.autorun () ->
-		handler =
-			onStop: (err) ->
-				if err
-					sAlert.error(err)
-			onReady: (res) ->
-				#sAlert.success("Success!")
-
-		page = self.page.get()
-		query = self.query.get()
-		count = self.count.get()
-		count = if count > 10 then 10 else count
-
-		self.subscribe "challenges",
-			query, page, count, handler
-
+	this.query = new ReactiveDict()
 
 ########################################
 Template.tutor.helpers
 	page: () ->
 		return String(Template.instance().page.get())
+
+	query: () ->
+		return Template.instance().query
 
 	challenges: () ->
 		return Challenges.find()
@@ -47,19 +30,7 @@ Template.tutor.events
 		event.preventDefault()
 		q = event.target.value
 		ins = Template.instance()
-		ins.query.set q
-
-	"click #next":()->
-		ins = Template.instance()
-		p = ins.page.get()
-		ins.page.set p+1
-
-	"click #prev":()->
-		ins = Template.instance()
-		p = ins.page.get()
-		if p == 0
-			return
-		ins.page.set p-1
+		ins.query.set "query", q
 
 
 ########################################

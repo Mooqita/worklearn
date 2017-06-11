@@ -7,11 +7,6 @@
 ########################################
 Template.company_challenges.onCreated ->
 	Session.set "selected_challenge", 0
-	self = this
-
-	self.autorun ->
-		Meteor.subscribe "my_challenges"
-
 
 ########################################
 Template.company_challenges.helpers

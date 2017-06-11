@@ -11,7 +11,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 		mute: true
 
 	headers =
-		Authorization: "Bearer iOPA9EgbtMoAAAAAAAABRPiBDq5HLBx0Ev51nHspVbuVCJLkHSrR0SKzB064F3c7"
+		Authorization: access_token
 		"Content-Type": "application/octet-stream"
 		"Dropbox-API-Arg": JSON.stringify arg
 
@@ -32,7 +32,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 
 	opts =
 		headers:
-			Authorization: "Bearer iOPA9EgbtMoAAAAAAAABRPiBDq5HLBx0Ev51nHspVbuVCJLkHSrR0SKzB064F3c7"
+			Authorization: access_token
 			"Dropbox-API-Arg": JSON.stringify path
 
 	res = HTTP.call "POST", url, opts
