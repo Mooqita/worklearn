@@ -100,8 +100,7 @@ Meteor.publish "user_credentials", (user_id) ->
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)
 
-	log_publication "UserCredentials", crs, filter,
-			_challenge_fields, "credits", user_id
+	log_publication "UserCredentials", crs, filter, {}, "credits", user_id
 	self.ready()
 
 #######################################################
