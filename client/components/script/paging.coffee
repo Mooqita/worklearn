@@ -1,12 +1,14 @@
 ########################################
 Template.paging.onCreated ->
 	self = this
-	page = self.data.page || 0
-	size = self.data.count || 10
 	parameter = self.data.parameter || new ReactiveDict()
 
 	if not parameter instanceof ReactiveDict
 		throw new Meteor.Error "Parameter needs to be a ReactiveDict."
+
+	page = self.data.page || 0
+	size = self.data.count || 10
+	size = if size > 100 then 100 else size
 
 	self.page = new ReactiveVar page
 	self.size = new ReactiveVar size
@@ -24,10 +26,8 @@ Template.paging.onCreated ->
 		parameter = self.parameter.all()
 		parameter.page = self.page.get()
 		parameter.size = self.size.get()
-		count = if count > 100 then 100 else count
 
-		self.subscribe subscription,
-			parameter, page, count, handler
+		self.subscribe subscription, parameter, handler
 
 
 ########################################

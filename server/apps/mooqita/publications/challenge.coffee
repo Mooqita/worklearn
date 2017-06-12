@@ -25,31 +25,17 @@ _challenge_fields =
 #######################################################
 
 #######################################################
-Meteor.publish "challenges", (parameter={}, page=0, size=10) ->
-	check parameter, Match.OneOf({query:String},{})
-	check page, Number
-	check size, Number
+Meteor.publish "challenges", (parameter) ->
+	pattern =
+		query: Match.Optional(String)
+		page: Number
+		size: Number
+	check parameter, pattern
 
 	user_id = this.userId
 	filter = visible_items user_id
-	fields = _challenge_fields.fields
 
-	if parameter.query
-		filter["$text"] =
-			$search: parameter.query
-		fields.score = {$meta: "textScore"}
-
-	mod =
-		fields: fields
-		limit: size
-		skip: size*page
-
-	if parameter.query
-		mod.sort =
-			score:
-				$meta: "textScore"
-
-	crs = Challenges.find filter, mod
+	crs = paged_find Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "challenges", user_id
@@ -57,16 +43,28 @@ Meteor.publish "challenges", (parameter={}, page=0, size=10) ->
 
 
 #######################################################
-Meteor.publish "my_challenges", (parameter={}, page=0, size=10) ->
+Meteor.publish "my_challenges", (parameter) ->
+	pattern =
+		query: Match.Optional(String)
+		page: Number
+		size: Number
+	check parameter, pattern
+
 	user_id = this.userId
 	restrict =
 		owner_id: user_id
 
 	filter = visible_items user_id, restrict
-	crs = Challenges.find filter, _challenge_fields
+	size = parameter.size
+	page = parameter.page
+
+	if parameter.query
+		filter.query = parameter.query
+
+	crs = paged_find Challenges, filter, _challenge_fields, size, page
 
 	log_publication "Challenges", crs, filter,
-			_challenge_fields, "my_challenge", user_id
+			_challenge_fields, "my_challenges", user_id
 	return crs
 
 
@@ -109,8 +107,8 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 	check page, Number
 	check size, Number
 
-	if size>10
-		throw Meteor.Error("Size values larger than 10 are not allowed.")
+	if size>100
+		throw Meteor.Error("Size values larger than 100 are not allowed.")
 
 	self = this
 	user_id = this.userId

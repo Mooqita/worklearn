@@ -40,29 +40,18 @@ Template.tutor.events
 ########################################
 Template.tutor_solutions.onCreated ->
 	self = this
-	self.count = new ReactiveVar 10
-	self.page = new ReactiveVar 0
+	self.parameter = new ReactiveDict()
+	self.parameter.set "challenge_id", FlowRouter.getQueryParam "challenge_id"
 
 	self.autorun () ->
-		handler =
-			onStop: (err) ->
-				if err
-					sAlert.error(err)
-			onReady: (res) ->
-				sAlert.success("Success!")
-
-		page = self.page.get()
-		count = self.count.get()
-		count = if count > 10 then 10 else count
-		challenge_id = FlowRouter.getQueryParam "challenge_id"
-
-		self.subscribe "solutions_for_tutors",
-			challenge_id, page, count, handler
-
+		challenge_id = self.parameter.get "challenge_id"
 		self.subscribe "challenge_by_id", challenge_id
 
 ########################################
 Template.tutor_solutions.helpers
+	parameter: () ->
+		return Template.instance().parameter
+
 	challenge: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
 		return Challenges.findOne challenge_id

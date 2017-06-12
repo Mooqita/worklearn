@@ -20,10 +20,6 @@
 .mooqita-layout{
 }
 
-.mooqita-layout .indent_l1{
-	margin-left: 45px;
-}
-
 .mooqita-layout p{
 }
 
@@ -34,6 +30,14 @@
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	margin-bottom: 25px;
+}
+
+.mooqita-layout .indent_l1{
+	margin-left: 45px;
+}
+
+.mooqita-layout .padding-next{
+	padding-bottom: 25px;
 }
 
 .mooqita-layout .form-control{
@@ -111,7 +115,7 @@
 .mooqita-layout .item {
 	border: 2px solid #ddd;
 	padding: 25px;
-	margin: 0 0 60px 0;
+	margin: 0 0 25px 0;
 }
 
 .mooqita-layout .item.padding-top{

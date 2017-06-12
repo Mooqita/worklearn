@@ -10,6 +10,28 @@ _accepts =
 	text: String
 	_id: non_empty_string
 
+
+#######################################################
+@paged_find = (collection, filter, mod, parameter) ->
+	parameter.size = if parameter.size > 100 then 100 else parameter.size
+
+	if parameter.query
+		filter["$text"] =
+			$search: filter.query
+		fields.score = {$meta: "textScore"}
+
+	mod.limit = parameter.size
+	mod.skip = parameter.size*parameter.page
+
+	if parameter.query
+		mod.sort =
+			score:
+				$meta: "textScore"
+
+	crs = collection.find filter, mod
+	return crs
+
+
 #######################################################
 @get_collection_save = (collection_name) ->
 	check collection_name, String

@@ -94,14 +94,19 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 
 
 #######################################################
-Meteor.publish "solutions_for_tutors", (challenge_id) ->
+Meteor.publish "solutions_for_tutor", (parameter) ->
+	pattern =
+		query: Match.Optional(String)
+		challenge_id: String
+		page: Number
+		size: Number
+	check parameter, pattern
+
 	self = this
 	user_id = this.userId
 
 	if not Roles.userIsInRole user_id, "tutor"
-		console.log "dafuck"
 		throw new Meteor.Error("Not permitted.")
-
 
 	gen_tut = (id) ->
 		rr = ReviewRequests.findOne id
@@ -119,7 +124,7 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 		return item
 
 	filter =
-		challenge_id: challenge_id
+		challenge_id: parameter.challenge_id
 		owner_id:
 			$ne: user_id
 		review_done: false
@@ -128,17 +133,18 @@ Meteor.publish "solutions_for_tutors", (challenge_id) ->
 		sort:
 			under_review_since: 1
 
-	handler = ReviewRequests.find(filter, mod).observeChanges
+	crs = paged_find ReviewRequests, filter, mod, parameter
+	handler = crs.observeChanges
 		added: (id, fields) ->
 			credit = gen_tut id
-			self.added("tutor_solutions", id, credit)
+			self.added "tutor_solutions", id, credit
 
 		changed: (id, fields) ->
 			credit = gen_credit id
-			self.changed("tutor_solutions", id, credit)
+			self.changed "tutor_solutions", id, credit
 
 		removed: (id) ->
-      self.removed("tutor_solutions", id)
+      self.removed "tutor_solutions", id
 
 	self.ready()
 	self.onStop ->

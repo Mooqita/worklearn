@@ -16,9 +16,6 @@ Meteor.publish "user_credentials", (user_id) ->
 	if !user_id
 		user_id = this.userId
 
-	filter =
-		_id: user_id
-
 	self = this
 	prepare_resume = (user) ->
 		resume = {}
@@ -96,6 +93,9 @@ Meteor.publish "user_credentials", (user_id) ->
 
 		resume.solutions = solution_list
 		self.added("user_credentials", user._id, resume)
+
+	filter =
+		_id: user_id
 
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)

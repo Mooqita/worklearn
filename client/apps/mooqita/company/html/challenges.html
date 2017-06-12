@@ -5,31 +5,46 @@
 -------------------------------------------------->
 <template name="company_challenges">
 	{{#mooqita_wide_spacing}}
-		{{#unless Template.subscriptionsReady}}
-			{{>wait}}
-		{{else}}
-			<div class="item padding-top">
-				<h1>Challenges</h1>
+		<div class="item padding-top">
+			<div class="padding-next">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group">
+						<button class="btn btn-theme" id="add_challenge" type="button">
+							Create challenge
+						</button>
+					</div>
+				</div>
+			</div>
 
-				<p>Here you find all challenges that your company hosts</p>
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input placeholder="Search for challenges" id="query"
+								 class="form-control edit-field"/>
+						<span class="input-group-btn">
 
-				<div class="text-right">
-					<button class="btn btn-theme" id="add_challenge" type="button">
-						Or add a new challenge
-					</button>
+							<button class="btn btn-theme" type="button" id="search">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
 				</div>
 
-				{{>paging subscription="my_challenges" page=0 count=20 parameter=query}}
-
-				{{#each challenges}}
-					{{>challenge_preview}}
-				{{else}}
-					<hr>
-
-					<h2><em>No challenges yet.</em></h2>
-				{{/each}}
+				<div class="col-sm-6">
+					{{>paging subscription="my_challenges" page=0 count=10 parameter=query}}
+				</div>
 			</div>
-		{{/unless}}
+
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#each challenges}}
+						{{>challenge_preview}}
+					{{else}}
+						<h2><em>No challenges yet.</em></h2>
+					{{/each}}
+			{{/unless}}
+		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -40,8 +55,6 @@
 |
 -------------------------------------------------->
 <template name="challenge_preview">
-	<hr>
-
 	<h2><a id="company_challenge">{{title}}</a></h2>
 
 	{{>more content=content}}
@@ -60,10 +73,10 @@
 		{{else}}
 			{{#with challenge}}
 				{{#unless _is_public "Challenges"}}
-					<div class=" padding-top">
+					<div class="padding-top">
 						<div class="alert alert-warning">
 							<h2>Todo List: Challenge</h2>
-							<hr>
+
 							A summary of things you need to do before students can see your task:
 							<ul>
 								{{#unless title}}
@@ -92,7 +105,7 @@
 					</div>
 				{{/unless}}
 
-				<div class="item padding-top">
+				<div class="padding-next">
 					<h1 class="editable">
 						{{#if _is_public "Challenges"}}
 							<em><b>LIVE</b></em>
@@ -108,8 +121,6 @@
 							{{title}}
 						{{/unless}}-->
 					</h1>
-
-					<hr>
 
 					<div class="form-group">
 						<h2>Content:</h2>
@@ -219,7 +230,7 @@
 	<div class="item padding-top">
 		<h1>Solutions</h1>
 
-		<hr>
+
 
 		{{#each challenge_summary}}
 			{{>challenge_solution}}
