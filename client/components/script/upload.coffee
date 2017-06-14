@@ -80,7 +80,7 @@ Template.upload.onCreated ->
 		Session.set('_files', Math.random())
 
 	if this.data.name in _files
-		sAlert.log('download name: "' + this.data.name + '" already in use.')
+		sAlert.log('upload name: "' + this.data.name + '" already in use.')
 		return
 
 	box_id = Math.floor(Math.random()*10000000)
@@ -178,11 +178,16 @@ Template.upload.events
 			fileReader = new FileReader()
 			type = file.type
 
+			if type == ""
+				type = file.name.split(".")
+				type = type[type.length-1]
+
 			if not typeof file == "object"
 				sAlert.error 'File upload failed not a valid file.'
 				continue
 
 			fileReader.onload = (ev) ->
+				console.log "kadlk"
 				filesRead += 1
 				raw = _get_file_data_from_event(ev)
 				base = btoa(raw)

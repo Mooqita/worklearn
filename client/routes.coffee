@@ -160,6 +160,15 @@ AccountsTemplates.configure
 AccountsTemplates.configureRoute 'signIn',
 	path: '/login'
 
+##########################################################
+AccountsTemplates.addField
+  _id: 'terms'
+  type: 'checkbox'
+  template: "termsCheckbox"
+  errStr: "You must agree to the Terms and Conditions"
+  func: (value) ->
+    return !value
+  negativeValidation: false
 
 ##########################################################
 # Student

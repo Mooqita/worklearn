@@ -6,7 +6,7 @@
 
 	encoding = res[2]
 	type = res[1]
-	extension = mime.extension(type)
+	extension = mime.extension(type)||type
 
 	f = res[0].length
 	t = item.length

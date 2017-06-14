@@ -1,8 +1,21 @@
 #######################################################
+name_from_url = (url, name_only = false) ->
+	regex = /^(?:((?:https?|s?ftp):)\/\/)([^:\/\s]+)(?::(\d*))?(?:\/([^\s?#]+)?([?][^?#]*)?(#.*)?)?/
+	res = regex.exec url
+
+	return res[2]
+
+
+#######################################################
 _upload_dropbox_file = (collection, item_id, field, value, type)->
 	access_token = process.env.DROP_BOX_ACCESS_TOKEN
 	url = "https://content.dropboxapi.com/2/files/upload"
 	path = "/"+collection._name+"/"+item_id+"/"+field+".data"
+	origin = name_from_url process.env.ROOT_URL, true
+
+	if origin == "localhost"
+		path = "/_" + origin + path
+
 	arg =
 		path: path
 		mode:
@@ -25,10 +38,16 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 
 #######################################################
 @download_dropbox_file = (collection, item_id, field)->
-	url = "https://content.dropboxapi.com/2/files/download"
-	path =
-		path:"/"+collection._name+"/"+item_id+"/"+field+".data"
 	access_token = process.env.DROP_BOX_ACCESS_TOKEN
+	url = "https://content.dropboxapi.com/2/files/download"
+	path = "/"+collection._name+"/"+item_id+"/"+field+".data"
+	origin = name_from_url process.env.ROOT_URL, true
+
+	if origin == "localhost"
+		path = "/_" + origin + path
+
+	path =
+		path: path
 
 	opts =
 		headers:
