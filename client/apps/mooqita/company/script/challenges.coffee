@@ -123,7 +123,7 @@ Template.company_challenge.events
 
 		return true
 
-	"click #publish": ()->
+	"click #publish": (event)->
 		if event.target.attributes.disabled
 			return
 

@@ -89,7 +89,7 @@ Template.student_feedback_solution.helpers
 
 ########################################
 Template.student_feedback_solution.events
-	"click #publish_feedback":()->
+	"click #publish_feedback":(event)->
 		if event.target.attributes.disabled
 			return
 
