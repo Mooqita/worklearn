@@ -121,7 +121,7 @@
 	body += "You can disable mail notifications in your profile: "+
 					"www.mooqita.org/" + "user?template=student_profile\n"
 
-	owner = Meteor.users.findOne solution.owner_id
+	owner = Meteor.users.findOne review.owner_id
 	send_message_mail owner, subject, body, url
 
 	title = "New Feedback"
