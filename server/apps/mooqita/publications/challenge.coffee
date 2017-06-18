@@ -100,6 +100,43 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 
 
 #######################################################
+Meteor.publish "challenge_summary_complete", (parameter) ->
+	pattern =
+		challenge_id: String
+		query: Match.Optional(String)
+		page: Number
+		size: Number
+	check parameter, pattern
+
+	if parameter.size>20
+		throw Meteor.Error("Size values larger than 20 are not allowed.")
+
+	self = this
+	user_id = this.userId
+	challenge = Challenges.findOne parameter.challenge_id
+
+	if challenge.owner_id != user_id
+		throw Meteor.Error("Not permitted.")
+
+
+	handler = ReviewRequests.find(filter).observeChanges
+		added: (id, fields) ->
+			credit = gen_credit id
+			self.added("user_credits", id, credit)
+
+		changed: (id, fields) ->
+			credit = gen_credit id
+			self.changed("user_credits", id, credit)
+
+		removed: (id) ->
+      self.removed("user_credits", id)
+
+	self.ready()
+	self.onStop ->
+    handler.stop()
+
+
+#######################################################
 Meteor.publish "challenge_summary", (parameter) ->
 	pattern =
 		challenge_id: String
