@@ -230,7 +230,24 @@
 	<div class="item padding-top">
 		<h1>Solutions</h1>
 
+		<div class="row" style="margin-bottom: 25px">
+			<div class="col-sm-6">
+				<div class="input-group">
+					<input placeholder="Search for challenges" id="query"
+							 class="form-control edit-field"/>
+					<span class="input-group-btn">
 
+						<button class="btn btn-theme" type="button" id="search">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				{{>paging subscription="challenge_summary" page=0 count=10 parameter=parameter}}
+			</div>
+		</div>
 
 		{{#each challenge_summary}}
 			{{>challenge_solution}}

@@ -79,7 +79,6 @@ Template.company_challenge.helpers
 		return Challenges.findOne id
 
 	send_disabled: () ->
-		console.log "FUCK YOU"
 		if Template.instance().send_disabled.get()
 			return "disabled"
 		return ""
@@ -162,15 +161,14 @@ Template.company_challenge.events
 
 ########################################
 Template.challenge_solutions.onCreated ->
-	Session.set "selected_review", 0
-	self = this
-
-	self.autorun () ->
-		id = FlowRouter.getQueryParam("challenge_id")
-		self.subscribe 'challenge_summary', id
+	this.parameter = new ReactiveDict()
+	this.parameter.set "challenge_id", FlowRouter.getQueryParam("challenge_id")
 
 ########################################
 Template.challenge_solutions.helpers
+	parameter: () ->
+		return Template.instance().parameter
+
 	challenge_summary: () ->
 		return ChallengeSummary.find()
 

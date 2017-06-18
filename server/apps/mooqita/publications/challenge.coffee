@@ -55,13 +55,11 @@ Meteor.publish "my_challenges", (parameter) ->
 		owner_id: user_id
 
 	filter = visible_items user_id, restrict
-	size = parameter.size
-	page = parameter.page
 
 	if parameter.query
 		filter.query = parameter.query
 
-	crs = paged_find Challenges, filter, _challenge_fields, size, page
+	crs = paged_find Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "my_challenges", user_id
@@ -102,17 +100,20 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 
 
 #######################################################
-Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
-	check challenge_id, String
-	check page, Number
-	check size, Number
+Meteor.publish "challenge_summary", (parameter) ->
+	pattern =
+		challenge_id: String
+		query: Match.Optional(String)
+		page: Number
+		size: Number
+	check parameter, pattern
 
-	if size>100
-		throw Meteor.Error("Size values larger than 100 are not allowed.")
+	if parameter.size>20
+		throw Meteor.Error("Size values larger than 20 are not allowed.")
 
 	self = this
 	user_id = this.userId
-	challenge = Challenges.findOne challenge_id
+	challenge = Challenges.findOne parameter.challenge_id
 
 	if challenge.owner_id != user_id
 		throw Meteor.Error("Not permitted.")
@@ -170,7 +171,7 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 		self.added("challenge_summary", solution._id, entry)
 
 	filter =
-		parent_id: challenge_id
+		challenge_id: parameter.challenge_id
 
 	if not Roles.userIsInRole user_id, "admin"
 		filter.published = true
@@ -182,10 +183,8 @@ Meteor.publish "challenge_summary", (challenge_id, page=0, size=10) ->
 			published: 1
 			challenge_id: 1
 			reviews_required: 1
-		skip: page * size
-		limit: size
 
-	crs = Solutions.find(filter, options)
+	crs = paged_find Solutions, filter, options, parameter
 	crs.forEach(add_info)
 
 	log_publication "Challenges", crs, filter,

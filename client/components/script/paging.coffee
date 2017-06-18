@@ -3,7 +3,7 @@ Template.paging.onCreated ->
 	self = this
 	parameter = self.data.parameter || new ReactiveDict()
 
-	if not parameter instanceof ReactiveDict
+	if not (parameter instanceof ReactiveDict)
 		throw new Meteor.Error "Parameter needs to be a ReactiveDict."
 
 	page = self.data.page || 0
