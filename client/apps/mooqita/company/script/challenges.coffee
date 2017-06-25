@@ -6,10 +6,14 @@
 
 ########################################
 Template.company_challenges.onCreated ->
+	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
 ########################################
 Template.company_challenges.helpers
+	parameter: () ->
+		return Template.instance().parameter
+
 	challenges: () ->
 		filter =
 			owner_id: Meteor.userId()
@@ -18,6 +22,12 @@ Template.company_challenges.helpers
 
 ########################################
 Template.company_challenges.events
+	"change #query":(event)->
+		event.preventDefault()
+		q = event.target.value
+		ins = Template.instance()
+		ins.parameter.set "query", q
+
 	"click #add_challenge": () ->
 		Meteor.call "add_challenge",
 			(err, res) ->
@@ -176,6 +186,20 @@ Template.challenge_solutions.helpers
 		return Solutions.find filter
 
 ########################################
+Template.challenge_solutions.events
+	"change #public_only": () ->
+		event.preventDefault()
+		q = event.target.checked
+		ins = Template.instance()
+		ins.parameter.set "published", q
+
+	"change #query": (event) ->
+		event.preventDefault()
+		q = event.target.value
+		ins = Template.instance()
+		ins.parameter.set "query", q
+
+########################################
 #
 # challenge solutions
 #
@@ -206,19 +230,35 @@ Template.challenge_solution.helpers
 		if c == 0
 			return "No reviews yet"
 
-		return "Average rating <em>" + Math.round(r/c, 1) + "</em> out of <em>5</em>"
+		return "Average rating <em>" + (r/c).toFixed(1) + "</em> out of <em>5</em>"
 
 	profile_id: (owner_id) ->
 		filter =
 			owner_id: owner_id
 		profile = Profiles.findOne filter
 
+		if not profile
+			return undefined
+
 		return profile._id
+
+	profile_avatar: (owner_id) ->
+		filter =
+			owner_id: owner_id
+		profile = Profiles.findOne filter
+
+		if not profile
+			return undefined
+
+		return profile.avatar
 
 	profile_name: (owner_id) ->
 		filter =
 			owner_id: owner_id
 		profile = Profiles.findOne filter
+
+		if not profile
+			return undefined
 
 		if profile.given_name
 			return profile.given_name

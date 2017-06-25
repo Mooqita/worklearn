@@ -17,8 +17,12 @@ _accepts =
 
 	if parameter.query
 		filter["$text"] =
-			$search: filter.query
-		fields.score = {$meta: "textScore"}
+			$search: parameter.query
+
+		if not mod.fields
+			mod.fields = {}
+
+		mod.fields.score = {$meta: "textScore"}
 
 	mod.limit = parameter.size
 	mod.skip = parameter.size*parameter.page

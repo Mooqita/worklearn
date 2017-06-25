@@ -197,6 +197,7 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 Meteor.publish "challenge_summary", (parameter) ->
 	pattern =
 		challenge_id: String
+		published: Match.Optional(Boolean)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
@@ -205,7 +206,6 @@ Meteor.publish "challenge_summary", (parameter) ->
 	if parameter.size>20
 		throw Meteor.Error("Size values larger than 20 are not allowed.")
 
-	self = this
 	user_id = this.userId
 	challenge = Challenges.findOne parameter.challenge_id
 
@@ -214,6 +214,9 @@ Meteor.publish "challenge_summary", (parameter) ->
 
 	filter =
 		challenge_id: parameter.challenge_id
+
+	if parameter.published
+		filter.published = parameter.published
 
 	mod =
 		fields:

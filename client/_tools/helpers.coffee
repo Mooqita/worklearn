@@ -46,8 +46,9 @@ Template.registerHelper "download_field_value", (collection_name, item_id, field
 					Session.set key, d_o
 
 	if download_object
-		if download_object.rng != observe
-			_download()
+		if observe
+			if download_object.rng != observe
+				_download()
 		if download_object.data
 			return download_object.data
 	else

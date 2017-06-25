@@ -187,7 +187,6 @@ Template.upload.events
 				continue
 
 			fileReader.onload = (ev) ->
-				console.log "kadlk"
 				filesRead += 1
 				raw = _get_file_data_from_event(ev)
 				base = btoa(raw)
@@ -240,6 +239,5 @@ Template.upload.events
 		sAlert.info('exit')
 
 	'click #restart': (event) ->
-		console.log "restart"
 		get_form().removeClass('is-uploading').removeClass('is-error')
 
