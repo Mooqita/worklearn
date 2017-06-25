@@ -21,6 +21,104 @@ _challenge_fields =
 
 
 #######################################################
+# helper
+#######################################################
+
+#######################################################
+_get_solution_data = (solution_id) ->
+	solution = Solutions.findOne solution_id
+
+	entry = _get_profile_data solution.owner_id, {}
+	entry.content = solution.content
+	entry.material = solution.material
+	entry.published = solution.published
+
+	entry = _get_reviews_data solution_id, entry
+
+	return entry
+
+
+#######################################################
+_get_reviews_data = (solution_id, entry) ->
+	filter =
+		solution_id: solution_id
+		published: true
+
+	options =
+		fields:
+			rating: 1
+			content: 1
+			owner_id: 1
+
+	review_cursor = Reviews.find filter, options
+	reviews = []
+	avg = 0
+	nt = 0
+
+	review_cursor.forEach (review) ->
+		r = _get_profile_data review.owner_id, {}
+		r = _get_feedback_data review._id, r
+		r.content = review.content
+		r.rating = review.rating
+
+		reviews.push r
+		avg += parseInt(r.rating)
+		nt += 1
+
+	avg = if nt then avg / nt else "no reviews yet"
+	entry["reviews"] = reviews
+	entry["average_rating"] = avg
+
+	return entry
+
+
+#######################################################
+_get_feedback_data = (review_id, entry) ->
+	filter =
+		review_id: review_id
+		published: true
+
+	options =
+		fields:
+			rating: 1
+			content: 1
+			owner_id: 1
+
+	feedback_cursor = Feedback.find filter, options
+	feedback = []
+	avg = 0
+	nt = 0
+
+	feedback_cursor.forEach (fdb) ->
+		f = _get_profile_data fdb.owner_id, {}
+		f.content = fdb.content
+		f.rating = fdb.rating
+
+		feedback.push f
+		avg += parseInt(f.rating)
+		nt += 1
+
+	avg = if nt then avg / nt else "no reviews yet"
+	entry["feedback"] = feedback
+	entry["average_rating"] = avg
+
+	return entry
+
+
+#######################################################
+_get_profile_data = (user_id, entry) ->
+	filter =
+		owner_id: user_id
+
+	profile = Profiles.findOne filter
+	if profile
+		entry["name"] = get_profile_name profile
+		entry["avatar"] = get_avatar profile
+
+	return entry
+
+
+#######################################################
 # challenges
 #######################################################
 
@@ -100,43 +198,6 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 
 
 #######################################################
-Meteor.publish "challenge_summary_complete", (parameter) ->
-	pattern =
-		challenge_id: String
-		query: Match.Optional(String)
-		page: Number
-		size: Number
-	check parameter, pattern
-
-	if parameter.size>20
-		throw Meteor.Error("Size values larger than 20 are not allowed.")
-
-	self = this
-	user_id = this.userId
-	challenge = Challenges.findOne parameter.challenge_id
-
-	if challenge.owner_id != user_id
-		throw Meteor.Error("Not permitted.")
-
-
-	handler = ReviewRequests.find(filter).observeChanges
-		added: (id, fields) ->
-			credit = gen_credit id
-			self.added("user_credits", id, credit)
-
-		changed: (id, fields) ->
-			credit = gen_credit id
-			self.changed("user_credits", id, credit)
-
-		removed: (id) ->
-      self.removed("user_credits", id)
-
-	self.ready()
-	self.onStop ->
-    handler.stop()
-
-
-#######################################################
 Meteor.publish "challenge_summary", (parameter) ->
 	pattern =
 		challenge_id: String
@@ -155,77 +216,22 @@ Meteor.publish "challenge_summary", (parameter) ->
 	if challenge.owner_id != user_id
 		throw Meteor.Error("Not permitted.")
 
-	add_info = (solution) ->
-		entry = {}
-		entry.content = solution.content
-		entry.material = solution.material
-		entry.published = solution.published
-
-		filter =
-			owner_id: solution.owner_id
-
-		profile = Profiles.findOne filter
-		if profile
-			entry["author_name"] = get_profile_name profile
-			entry["author_avatar"] = get_avatar profile
-
-		filter =
-			parent_id: solution._id
-			published: true
-
-		options =
-			fields:
-				rating: 1
-				content: 1
-				owner_id: 1
-
-		review_cursor = Reviews.find(filter, options)
-		reviews = []
-		avg = 0
-		nt = 0
-
-		review_cursor.forEach (review) ->
-			r = {}
-			r.content = review.content
-			r.rating = review.rating
-
-			filter =
-				owner_id: review.owner_id
-
-			profile = profile = Profiles.findOne(filter)
-			if profile
-				r["peer_name"] = get_profile_name profile
-				r["peer_avatar"] = get_avatar profile
-
-			reviews.push r
-			avg += parseInt(r.rating)
-			nt += 1
-
-		avg = if nt then avg / nt else "no reviews yet"
-		entry["reviews"] = reviews
-		entry["average_rating"] = avg
-
-		self.added("challenge_summary", solution._id, entry)
-
 	filter =
 		challenge_id: parameter.challenge_id
 
-	if not Roles.userIsInRole user_id, "admin"
-		filter.published = true
+	handler = Solutions.find(filter).observeChanges
+		added: (id, fields) ->
+			data = _get_solution_data id
+			self.added("challenge_summary", id, data)
 
-	options =
-		fields:
-			content: 1
-			owner_id: 1
-			published: 1
-			challenge_id: 1
-			reviews_required: 1
+		changed: (id, fields) ->
+			data = _get_solution_data id
+			self.changed("challenge_summary", id, data)
 
-	crs = paged_find Solutions, filter, options, parameter
-	crs.forEach(add_info)
-
-	log_publication "Challenges", crs, filter,
-			_challenge_fields, "challenge_summary", user_id
+		removed: (id) ->
+      self.removed("challenge_summary", id)
 
 	self.ready()
+	self.onStop ->
+    handler.stop()
 

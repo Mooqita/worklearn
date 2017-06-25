@@ -268,12 +268,12 @@
 <template name="challenge_solution">
 	<div class="media">
 		<div class="media-left">
-			<img class="media-object img-circle" src="{{author_avatar}}" height="64px">
+			<img class="media-object img-circle" src="{{avatar}}" height="64px">
 		</div>
 
 		<div class="media-body">
 			<h2>
-				<a href="{{resume_url author_id}}">{{author_name}}</a>
+				<a href="{{resume_url author_id}}">{{name}}</a>
 				average rating <em>{{average_rating}}</em> out of <em>5</em>
 
 				{{#if _is_owner  "Challenges" .}}
@@ -314,7 +314,7 @@
 				{{#each reviews .}}
 					<div class="media">
 						<div class="media-left">
-							<img class="media-object img-circle" src="{{peer_avatar}}" height="64px">
+							<img class="media-object img-circle" src="{{avatar}}" height="64px">
 						</div>
 
 						<div class="media-body">
@@ -322,7 +322,7 @@
 								<div class="col-xs-6">
 									<h2>
 										<a href="{{resume_url peer_id}}">
-											{{peer_name}}
+											{{name}}
 										</a>
 									</h2>
 								</div>
@@ -335,6 +335,34 @@
 							</div>
 
 							{{>more content=content}}
+
+							<div class="media">
+								<div class="media-left">
+									<img class="media-object img-circle" src="{{avatar}}" height="64px">
+								</div>
+
+								<div class="media-body">
+									{{#each feedback}}
+										<div class="row">
+											<div class="col-xs-6">
+												<h2>
+													<a href="{{resume_url peer_id}}">
+														{{name}}
+													</a>
+												</h2>
+											</div>
+
+											<div class="col-xs-6">
+												<h2>
+													Rating <em>{{rating}}</em> out of <em>5</em>
+												</h2>
+											</div>
+
+											{{>more content=content}}
+										</div>
+									{{/each}}
+								</div>
+							</div>
 						</div>
 					</div>
 				{{else}}

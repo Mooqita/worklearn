@@ -14,18 +14,18 @@
 #######################################################
 @Challenges = new Mongo.Collection("challenges")
 @Solutions = new Mongo.Collection("solutions")
-@Reviews = new Mongo.Collection("reviews")
 @Feedback = new Mongo.Collection("feedback")
 @Profiles = new Mongo.Collection("profiles")
 @Messages = new Mongo.Collection("messages")
-@Posts = new Mongo.Collection("posts")
+@Reviews = new Mongo.Collection("reviews")
 @Slides = new Mongo.Collection("slides")
+@Posts = new Mongo.Collection("posts")
 
 #######################################################
-@UserCredits = new Mongo.Collection("user_credits")
+@ChallengeSummary = new Mongo.Collection("challenge_summary")
 @UserCredentials = new Mongo.Collection("user_credentials")
 @TutorSolutions = new Mongo.Collection("tutor_solutions")
-@ChallengeSummary = new Mongo.Collection("challenge_summary")
+@UserCredits = new Mongo.Collection("user_credits")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")
