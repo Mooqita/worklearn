@@ -85,10 +85,12 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 		throw new Meteor.Error "collection undefined"
 
 	item = collection.findOne item_id
+	if not item
+		throw new Meteor.Error "not permitted"
 
-	#TODO: implement a more fine grained access control
-	if not item.published and item.visible_to != "all"
-		deny_action_save 'read', collection, item_id, field
+	#TODO: implement fine grained access control
+	#if not item.published and item.visible_to != "all"
+	#	deny_action_save 'read', collection, item_id, field
 
 	data = download_dropbox_file collection, item_id, field
 	return data

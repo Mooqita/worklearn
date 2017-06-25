@@ -153,10 +153,6 @@ Meteor.publish "my_challenges", (parameter) ->
 		owner_id: user_id
 
 	filter = visible_items user_id, restrict
-
-	if parameter.query
-		filter.query = parameter.query
-
 	crs = paged_find Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
@@ -219,19 +215,84 @@ Meteor.publish "challenge_summary", (parameter) ->
 	filter =
 		challenge_id: parameter.challenge_id
 
-	handler = Solutions.find(filter).observeChanges
-		added: (id, fields) ->
-			data = _get_solution_data id
-			self.added("challenge_summary", id, data)
+	mod =
+		fields:
+			content: 1
+			material: 1
+			owner_id: 1
+			published: 1
+			challenge_id: 1
 
-		changed: (id, fields) ->
-			data = _get_solution_data id
-			self.changed("challenge_summary", id, data)
+	solution_ids = new Set()
+	profile_ids = new Set()
 
-		removed: (id) ->
-      self.removed("challenge_summary", id)
+	##############################################
+	# retrieving solutions
+	##############################################
 
-	self.ready()
-	self.onStop ->
-    handler.stop()
+	##############################################
+	solution_cursor = paged_find Solutions, filter, mod, parameter
+	solution_cursor.forEach (solution) ->
+		solution_ids.add solution._id
+		profile_ids.add solution.owner_id
+
+	##############################################
+	# retrieving reviews
+	##############################################
+
+	# resetting the filter
+	solution_ids = Array.from(solution_ids)
+	filter =
+		solution_id:
+			$in: solution_ids
+
+	mod =
+		fields:
+			rating: 1
+			content: 1
+			owner_id: 1
+			published: 1
+			challenge_id: 1
+			solution_id: 1
+			review_id: 1
+			owner_id: 1
+
+	##############################################
+	review_cursor = Reviews.find(filter, mod)
+	review_cursor.forEach (entry) ->
+		profile_ids.add entry.owner_id
+
+	##############################################
+	# retrieving feedback
+	##############################################
+
+	##############################################
+	feedback_cursor = Feedback.find(filter, mod)
+	feedback_cursor.forEach (entry) ->
+		profile_ids.add entry.owner_id
+
+	##############################################
+	# retrieving profiles
+	##############################################
+
+	# resetting the filter
+	profile_ids = Array.from(profile_ids)
+	filter =
+		owner_id:
+			$in: profile_ids
+
+	mod =
+		fields:
+			resume: 1
+			published: 1
+			given_name: 1
+			middle_name: 1
+			family_name: 1
+			owner_id: 1
+			avatar: 1
+
+	##############################################
+	profile_cursor = Profiles.find(filter, mod)
+
+	return [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
 

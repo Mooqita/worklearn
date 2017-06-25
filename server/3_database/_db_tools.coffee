@@ -127,12 +127,12 @@ _accepts =
 	permissions = Permissions.find(filter)
 
 	if permissions.count() == 0
-		throw new Meteor.Error('Edit not permitted: ' + field)
+		throw new Meteor.Error action + ' not permitted: ' + field
 
 	for permission in permissions.fetch()
 		if action_permitted permission, action
 			return false
 
-	throw new Meteor.Error('Edit not permitted: ' + field)
+	throw new Meteor.Error action + ' not permitted: ' + field
 
 

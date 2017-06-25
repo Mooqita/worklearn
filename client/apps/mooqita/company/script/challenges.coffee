@@ -169,8 +169,11 @@ Template.challenge_solutions.helpers
 	parameter: () ->
 		return Template.instance().parameter
 
-	challenge_summary: () ->
-		return ChallengeSummary.find()
+	challenge_solutions: () ->
+		filter =
+			challenge_id: FlowRouter.getQueryParam("challenge_id")
+
+		return Solutions.find filter
 
 ########################################
 #
@@ -187,8 +190,56 @@ Template.challenge_solution.helpers
 	resume_url: (author_id) ->
 		return author_id
 
-	reviews: (id) ->
-		return this.reviews
+	average_rating: () ->
+		filter =
+			solution_id: this._id
+		mod =
+			fields:
+				rating: 1
+		rev = Reviews.find filter, mod
+		r = 0.0
+		c = 0.0
+		rev.forEach (entry) ->
+			c += 1
+			r += parseInt(entry.rating)
+
+		if c == 0
+			return "No reviews yet"
+
+		return "Average rating <em>" + Math.round(r/c, 1) + "</em> out of <em>5</em>"
+
+	profile_id: (owner_id) ->
+		filter =
+			owner_id: owner_id
+		profile = Profiles.findOne filter
+
+		return profile._id
+
+	profile_name: (owner_id) ->
+		filter =
+			owner_id: owner_id
+		profile = Profiles.findOne filter
+
+		if profile.given_name
+			return profile.given_name
+
+		return "A Doe (Name unknown)"
+
+	reviews: () ->
+		filter =
+			solution_id: this._id
+
+		crs = Reviews.find filter
+		if crs.count()
+			return crs
+
+		return false
+
+
+	feedback: (review_id) ->
+		filter =
+			review_id: review_id
+		return Feedback.find filter
 
 	reviews_visible: ->
 		return Template.instance().reviews_visible.get()

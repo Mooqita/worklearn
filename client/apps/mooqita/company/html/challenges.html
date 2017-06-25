@@ -249,13 +249,17 @@
 			</div>
 		</div>
 
-		{{#each challenge_summary}}
-			{{>challenge_solution}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
 		{{else}}
-			<p>
-				There are no solutions to your task yet.
-			</p>
-		{{/each}}
+			{{#each challenge_solutions}}
+				{{>challenge_solution}}
+			{{else}}
+				<p>
+					There are no solutions to your task yet.
+				</p>
+			{{/each}}
+		{{/unless}}
 	</div>
 </template>
 
@@ -266,15 +270,17 @@
 |
 -------------------------------------------------->
 <template name="challenge_solution">
-	<div class="media">
-		<div class="media-left">
-			<img class="media-object img-circle" src="{{avatar}}" height="64px">
+	<div class="row">
+		<div class="col-sm-2 col-ms-3">
+			{{>avatar collection_name="Profiles"
+				 item_id=(profile_id owner_id)
+				 field="avatar"}}
 		</div>
 
-		<div class="media-body">
+		<div class="col-sm-10 col-ms-9">
 			<h2>
-				<a href="{{resume_url author_id}}">{{name}}</a>
-				average rating <em>{{average_rating}}</em> out of <em>5</em>
+				<a>{{profile_name owner_id}}</a>
+				{{{average_rating}}}
 
 				{{#if _is_owner  "Challenges" .}}
 					<em class="pull-right"> <span class="badge background-theme"></span>Author</em>
@@ -298,32 +304,37 @@
 				</h2>
 			{{/if}}
 
+			{{#if reviews}}
+				<h2>
+					<a id="show_reviews">
+						{{#unless reviews_visible}}
+							<span class="glyphicon glyphicon-expand"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-collapse-down"></span>
+						{{/unless}}
+					</a>
+					Reviews
+				</h2>
+			{{/if}}
+		</div>
+	</div>
 
-			<h2>
-				<a id="show_reviews">
-					{{#unless reviews_visible}}
-						<span class="glyphicon glyphicon-expand"></span>
-					{{else}}
-						<span class="glyphicon glyphicon-collapse-down"></span>
-					{{/unless}}
-				</a>
-				Reviews
-			</h2>
-
-			{{#if reviews_visible}}
-				{{#each reviews .}}
-					<div class="media">
-						<div class="media-left">
-							<img class="media-object img-circle" src="{{avatar}}" height="64px">
+	{{#if reviews_visible}}
+		<div class="row">
+			<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
+				{{#each reviews}}
+					<div class="row">
+						<div class="col-sm-2 col-ms-3">
+							 {{>avatar collection_name="Profiles"
+									 item_id=(profile_id owner_id)
+									 field="avatar"}}
 						</div>
 
-						<div class="media-body">
+						<div class="col-sm-10 col-ms-9">
 							<div class="row">
 								<div class="col-xs-6">
 									<h2>
-										<a href="{{resume_url peer_id}}">
-											{{name}}
-										</a>
+										<a>{{profile_name owner_id}}</a>
 									</h2>
 								</div>
 
@@ -332,23 +343,29 @@
 										Rating <em>{{rating}}</em> out of <em>5</em>
 									</h2>
 								</div>
-							</div>
 
-							{{>more content=content}}
-
-							<div class="media">
-								<div class="media-left">
-									<img class="media-object img-circle" src="{{avatar}}" height="64px">
+								<div class="col-xs-12">
+									{{>more content=content}}
 								</div>
+							</div>
+						</div>
+					</div>
 
-								<div class="media-body">
-									{{#each feedback}}
+					<div class="row">
+						<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
+							{{#each feedback _id}}
+								<div class="row">
+									<div class="col-sm-2 col-ms-3">
+										{{>avatar collection_name="Profiles"
+											 item_id=(profile_id owner_id)
+											 field="avatar"}}
+									</div>
+
+									<div class="col-sm-10 col-ms-9">
 										<div class="row">
 											<div class="col-xs-6">
 												<h2>
-													<a href="{{resume_url peer_id}}">
-														{{name}}
-													</a>
+													<a>{{profile_name owner_id}}</a>
 												</h2>
 											</div>
 
@@ -357,22 +374,20 @@
 													Rating <em>{{rating}}</em> out of <em>5</em>
 												</h2>
 											</div>
+										</div>
 
+										<div class="col-xs-12">
 											{{>more content=content}}
 										</div>
-									{{/each}}
+									</div>
 								</div>
-							</div>
+							{{/each}}
 						</div>
 					</div>
-				{{else}}
-					<div class="well">
-						No reviews yet.
-					</div>
 				{{/each}}
-			{{/if}}
+			</div>
 		</div>
-	</div>
+	{{/if}}
 </template>
 
 
