@@ -224,8 +224,9 @@ Template.challenge_solution.helpers
 		r = 0.0
 		c = 0.0
 		rev.forEach (entry) ->
-			c += 1
-			r += parseInt(entry.rating)
+			if entry.rating
+				c += 1
+				r += parseInt(entry.rating)
 
 		if c == 0
 			return "No reviews yet"
@@ -274,7 +275,6 @@ Template.challenge_solution.helpers
 			return crs
 
 		return false
-
 
 	feedback: (review_id) ->
 		filter =
