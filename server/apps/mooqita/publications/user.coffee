@@ -13,8 +13,15 @@
 Meteor.publish "user_credentials", (user_id) ->
 	check user_id, String
 
+	if user_id
+		if not Roles.userIsInRole this.userId, "admin"
+			throw new Meteor.Error("Not permitted.")
+
 	if !user_id
 		user_id = this.userId
+
+	if !user_id
+		throw new Meteor.Error("Not permitted.")
 
 	self = this
 	prepare_resume = (user) ->
@@ -154,8 +161,76 @@ Meteor.publish "credits", () ->
 			self.changed("user_credits", id, credit)
 
 		removed: (id) ->
-      self.removed("user_credits", id)
+			self.removed("user_credits", id)
 
 	self.ready()
 	self.onStop ->
-    handler.stop()
+		handler.stop()
+
+#######################################################
+# credits
+#######################################################
+
+#######################################################
+Meteor.publish "user_summary", (user_id) ->
+	check user_id, String
+
+	if user_id
+		if not Roles.userIsInRole this.userId, "challenge_designer"
+			throw new Meteor.Error("Not permitted.")
+
+	if !user_id
+		user_id = this.userId
+
+	if !user_id
+		throw new Meteor.Error("Not permitted.")
+
+	mod =
+		fields:
+			emails: 1
+
+	user = Meteor.users.findOne user_id, mod
+	match =
+		$match:
+			requester_id:
+				user_id
+
+	group =
+		$group:
+			_id: '$requester_id'
+			result:
+				$avg: '$rating'
+
+	mod =
+		fields:
+			content: 1
+			material: 1
+
+	filter =
+		owner_id: user_id
+
+	length = 0
+	upload = 0
+	solutions = Solutions.find filter, mod
+	solutions.forEach (entry) ->
+		length += entry.content.split(" ").length
+		upload += if entry.material then 1 else 0
+
+	user.average_solution_quality = Reviews.aggregate(match, group)[0].result
+	user.solution_length = length / solutions.count()
+	user.solution_upload = upload
+	user.solution_count = solutions.count()
+	user.solutions = solutions.fetch()
+
+	length = 0
+	reviews = Reviews.find filter, mod
+	reviews.forEach (entry) ->
+		length += entry.content.split(" ").length
+
+	user.average_review_quality = Feedback.aggregate(match, group)[0].result
+	user.review_length = length / reviews.count()
+	user.review_count = reviews.count()
+	user.reviews = reviews.fetch()
+
+	this.added "user_summaries", user_id, user
+	this.ready()

@@ -207,7 +207,11 @@ Template.challenge_solutions.events
 
 ########################################
 Template.challenge_solution.onCreated ->
-	this.reviews_visible = new ReactiveVar(false)
+	self = this
+	self.reviews_visible = new ReactiveVar(false)
+
+	self.autorun ->
+		self.subscribe "user_summary", self.data.owner_id
 
 ########################################
 Template.challenge_solution.helpers
@@ -232,39 +236,6 @@ Template.challenge_solution.helpers
 			return "No reviews yet"
 
 		return "Average rating <em>" + (r/c).toFixed(1) + "</em> out of <em>5</em>"
-
-	profile_id: (owner_id) ->
-		filter =
-			owner_id: owner_id
-		profile = Profiles.findOne filter
-
-		if not profile
-			return undefined
-
-		return profile._id
-
-	profile_avatar: (owner_id) ->
-		filter =
-			owner_id: owner_id
-		profile = Profiles.findOne filter
-
-		if not profile
-			return undefined
-
-		return profile.avatar
-
-	profile_name: (owner_id) ->
-		filter =
-			owner_id: owner_id
-		profile = Profiles.findOne filter
-
-		if not profile
-			return undefined
-
-		if profile.given_name
-			return profile.given_name
-
-		return "A Doe (Name unknown)"
 
 	reviews: () ->
 		filter =
@@ -296,6 +267,13 @@ Template.challenge_solution.events
 			id: this._id
 
 		Modal.show 'reopen_solution', data
+
+	"click #user_info": () ->
+		data = UserSummaries.findOne(this.owner_id)
+		data["user_id"] = this.owner_id
+		Modal.show 'show_student_info', data
+
+
 
 ##############################################
 # publish modal

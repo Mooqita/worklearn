@@ -290,7 +290,7 @@
 
 		<div class="col-sm-10 col-ms-9">
 			<h2>
-				<a>{{profile_name owner_id}}</a>
+				<a id="user_info">{{profile_name owner_id}}</a>
 				{{{average_rating}}}
 
 				{{#if _is_owner  "Challenges" .}}
@@ -388,7 +388,9 @@
 
 
 <!------------------------------------------------
+|
 |	Challenge reset solution
+|
 -------------------------------------------------->
 <template name="reopen_solution">
 	<div class="modal fade">
@@ -409,6 +411,68 @@
 						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
 						<a type="button" class="btn btn-theme"
 							 id="reopen" data-dismiss="modal">Reopen</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Student info modal
+|
+-------------------------------------------------->
+<template name="show_student_info">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title"></h1>
+				</div>
+
+				<div class="modal-body">
+					{{>student_info}}
+				</div>
+
+				<div class="modal-footer right">
+					<div class="btn-group">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">
+							<span class="glyphicon glyphicon-log-out"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge delete modal
+|
+-------------------------------------------------->
+<template name="delete_challenge">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Delete challenge</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to delete your challenge?<br>
+						This operation cannot be undone!
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
 					</div>
 				</div>
 			</div>
@@ -496,35 +560,4 @@
 	</div>
 </template>
 
-
-<!------------------------------------------------
-|
-|	Challenge delete modal
-|
--------------------------------------------------->
-<template name="delete_challenge">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title">Delete challenge</h1>
-				</div>
-
-				<div class="modal-body">
-					<p>
-						Are you sure you want to delete your challenge?<br>
-						This operation cannot be undone!
-					</p>
-				</div>
-
-				<div class="modal-footer">
-					<div class="btn-group btn-group-justified">
-						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
-						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
 

@@ -62,6 +62,7 @@
 		parent_id: solution._id
 		solution_id: solution._id
 		challenge_id: challenge._id
+		requester_id: solution.owner_id
 		view_order: 1
 		group_name: ""
 		visible_to: "owner"
@@ -74,6 +75,7 @@
 		review_id: review_id
 		solution_id: solution._id
 		challenge_id: challenge._id
+		requester_id: user._id
 		view_order: 1
 		group_name: ""
 		visible_to: "owner"

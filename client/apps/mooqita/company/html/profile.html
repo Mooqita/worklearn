@@ -9,11 +9,11 @@
 			<div class="col-md-4">
 				<h2>Company Logo</h2>
 
-				{{#if _profile.company_logo}}
+				{{#if profile.company_logo}}
 					<div class="text-center">
 						<img class="img-responsive"
-								 src="{{download_field_value "Profiles" _profile._id
-																						 "company_logo" _profile.company_logo}}">
+								 src="{{download_field_value "Profiles" profile._id
+																						 "company_logo" profile.company_logo}}">
 					</div>
 				{{/if}}
 

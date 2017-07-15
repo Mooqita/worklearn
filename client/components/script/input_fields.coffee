@@ -60,9 +60,9 @@ Template.select_input.helpers
 		field = get_field_value Template.instance().data
 
 		if !(field instanceof Array)
-			field = [field]
+			field = [str(field)]
 
-		if val in field
+		if str(val) in field
 			return "selected"
 
 #########################################################
@@ -76,10 +76,13 @@ Template.select_input.events
 		collection = this.collection_name
 		item_id = this.item_id
 
+		if not isNaN value
+			value = Number(value)
+
 		if this.session_var
 			Session.set this.session_var, value
 
-		Meteor.call method, collection, item_id, field, value, undefined,
+		Meteor.call method, collection, item_id, field, value,
 			(err, res) ->
 				if err
 					sAlert.error(err)

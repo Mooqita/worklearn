@@ -78,11 +78,10 @@
 	#solution must be visible to others
 	#solution is not owned by the reviewer
 
-#	corpus = collect_keywords user._id
-
-#	WordPOS = require("wordpos")
-#	wordpos = new WordPOS()
-#	text_index = wordpos.parse corpus
+	#corpus = collect_keywords user._id
+	#WordPOS = require("wordpos")
+	#wordpos = new WordPOS()
+	#text_index = wordpos.parse corpus
 
 	filter =
 		under_review_since:

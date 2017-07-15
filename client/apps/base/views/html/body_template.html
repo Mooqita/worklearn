@@ -11,7 +11,7 @@
 
 			{{#if Template.subscriptionsReady}}
 				{{#if login}}
-					{{#unless _profile}}
+					{{#unless profile}}
 						{{>Template.dynamic template=login}}
 					{{else}}
 						{{>render_content}}

@@ -20,22 +20,25 @@
 	return selected
 
 
-##############################################
-@get_profile = () ->
-	user_id = Meteor.userId()
-	filter =
-		owner_id: user_id
-	profile = Profiles.findOne filter
-
-	return profile
-
-
 #######################################################
 @get_field_value = (self, field, item_id, collection_name) ->
 	#TODO: replace collection_name with collection object if possible to enhance consistency
-	collection_name = collection_name || self.collection_name
-	item_id = item_id || self.item_id
-	field = field || self.field
+	if self
+		collection_name = collection_name || self.collection_name
+		item_id = item_id || self.item_id
+		field = field || self.field
+
+	if not collection_name
+		console.log "collection_name is undefined"
+		return undefined
+
+	if not item_id = item_id
+		console.log "item_id is undefined"
+		return undefined
+
+	if not field = field
+		console.log "field is undefined"
+		return undefined
 
 	if item_id == -1
 		return undefined
@@ -51,5 +54,4 @@
 		return undefined
 
 	return item[field]
-
 
