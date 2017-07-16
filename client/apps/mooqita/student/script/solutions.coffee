@@ -61,10 +61,10 @@ Template.student_solution_preview.onCreated ->
 ########################################
 Template.student_solution_preview.helpers
 	is_finished: () ->
-		r = _items_missing Reviews this.challenge_id
-		f = _items_missing Feedback this.challenge_id
+		r = _items_missing Reviews, this.challenge_id
+		f = _items_missing Feedback, this.challenge_id
 
-		if not r and not f
+		if r<=0 and f<=0
 			return true
 
 		return false
@@ -165,7 +165,7 @@ Template.student_solution_reviews.helpers
 		r = _items_missing Reviews, this.challenge_id
 		f = _items_missing Feedback, this.challenge_id
 
-		if r==0 and f==0
+		if r<=0 and f<=0
 			return true
 
 		return false

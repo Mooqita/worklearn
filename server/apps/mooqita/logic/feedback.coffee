@@ -6,13 +6,7 @@
 	if feedback.published
 		throw new Meteor.Error "Feedback: " + feedback._id + " is already published."
 
-	filter =
-		feedback_id: feedback._id
-	rr = ReviewRequests.findOne filter
-
 	modify_field_unprotected Feedback, feedback._id, "published", true
-	modify_field_unprotected ReviewRequests, rr._id, "feedback_done", true
-	modify_field_unprotected ReviewRequests, rr._id, "feedback_finished", new Date()
 
 	feedback = Feedback.findOne feedback._id
 	send_feedback_message feedback
