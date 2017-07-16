@@ -28,7 +28,6 @@
 #######################################################
 @UserCredentials = new Mongo.Collection("user_credentials")
 @UserSummaries = new Mongo.Collection("user_summaries")
-@UserCredits = new Mongo.Collection("user_credits")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")

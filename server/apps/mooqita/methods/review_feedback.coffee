@@ -1,30 +1,30 @@
 ###############################################
 Meteor.methods
-	add_review: () ->
+	find_review: () ->
 		user = Meteor.user()
 
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
-		res = gen_review null, null, user
+		res = find_review null, null, user
 		return res
 
 
-	add_review_for_challenge: (challenge_id) ->
+	find_review_for_challenge: (challenge_id) ->
 		user = Meteor.user()
 		challenge = secure_item_action  Challenges, challenge_id, false
-		res = gen_review challenge, null, user
+		res = find_review challenge, null, user
 		return res
 
 
-	add_tutor_review: (solution_id) ->
+	get_review_for_tutor: (solution_id) ->
 		user = Meteor.user()
 		solution = secure_item_action  Solutions, solution_id, false
 
 		if not Roles.userIsInRole user, "tutor"
 			throw new Meteor.Error('Not permitted.')
 
-		res = gen_review null, solution, user
+		res = find_review null, solution, user
 		return res
 
 

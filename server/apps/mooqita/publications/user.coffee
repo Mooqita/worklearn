@@ -111,67 +111,6 @@ Meteor.publish "user_credentials", (user_id) ->
 	self.ready()
 
 #######################################################
-# credits
-#######################################################
-
-#######################################################
-Meteor.publish "credits", () ->
-	user_id = this.userId
-	self = this
-	filter =
-		$or:[
-			{requester_id: user_id}
-			{provider_id: user_id}]
-
-	gen_credit = (id) ->
-		obj = ReviewRequests.findOne id
-		review_value = 0
-		feedback_value = 0
-		review_time = -1
-		feedback_time = -1
-
-		if obj.requester_id == user_id
-			review_value -= 1
-			feedback_value += if obj.feedback_done then 1 else 0
-			if obj.feedback_finished
-				feedback_time = obj.feedback_finished-obj.review_finished
-		if obj.provider_id == user_id
-			feedback_value -= 1
-			review_value += if obj.review_done then 1 else 0
-			if obj.review_finished
-				review_time = obj.review_finished-obj.under_review_since
-
-		credit =
-			_id: id
-			review_time: review_time
-			review_value: review_value
-			feedback_time: feedback_time
-			feedback_value: feedback_value
-			solution_id: obj.solution_id
-			challenge_id: obj.challenge_id
-		return credit
-
-	handler = ReviewRequests.find(filter).observeChanges
-		added: (id, fields) ->
-			credit = gen_credit id
-			self.added("user_credits", id, credit)
-
-		changed: (id, fields) ->
-			credit = gen_credit id
-			self.changed("user_credits", id, credit)
-
-		removed: (id) ->
-			self.removed("user_credits", id)
-
-	self.ready()
-	self.onStop ->
-		handler.stop()
-
-#######################################################
-# credits
-#######################################################
-
-#######################################################
 Meteor.publish "user_summary", (user_id) ->
 	check user_id, String
 
@@ -213,10 +152,12 @@ Meteor.publish "user_summary", (user_id) ->
 	upload = 0
 	solutions = Solutions.find filter, mod
 	solutions.forEach (entry) ->
-		length += entry.content.split(" ").length
+		if entry.content
+			length += entry.content.split(" ").length
 		upload += if entry.material then 1 else 0
 
-	user.average_solution_quality = Reviews.aggregate(match, group)[0].result
+	tmp = Reviews.aggregate(match, group)[0]
+	user.average_solution_quality = if tmp then tmp.result else undefined
 	user.solution_length = length / solutions.count()
 	user.solution_upload = upload
 	user.solution_count = solutions.count()
@@ -225,9 +166,11 @@ Meteor.publish "user_summary", (user_id) ->
 	length = 0
 	reviews = Reviews.find filter, mod
 	reviews.forEach (entry) ->
-		length += entry.content.split(" ").length
+		if entry.content
+			length += entry.content.split(" ").length
 
-	user.average_review_quality = Feedback.aggregate(match, group)[0].result
+	tmp = Feedback.aggregate(match, group)[0]
+	user.average_review_quality = if tmp then tmp.result else undefined
 	user.review_length = length / reviews.count()
 	user.review_count = reviews.count()
 	user.reviews = reviews.fetch()

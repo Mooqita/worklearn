@@ -14,6 +14,7 @@ _review_fields =
 	fields:
 		rating: 1
 		content: 1
+		owner_id: 1
 		published: 1
 		parent_id: 1
 		solution_id: 1
@@ -53,6 +54,21 @@ Meteor.publish "my_review_by_id", (review_id) ->
 			_review_fields, "my_review_by_id", user_id
 	return crs
 
+
+#######################################################
+Meteor.publish "my_reviews_by_challenge_id", (challenge_id) ->
+	check challenge_id, String
+	user_id = this.userId
+
+	filter =
+		challenge_id: challenge_id
+		owner_id: user_id
+
+	crs = Reviews.find filter, _review_fields
+
+	log_publication "Reviews", crs, filter,
+			_review_fields, "reviews_by_solution_id", user_id
+	return crs
 
 #######################################################
 Meteor.publish "reviews_by_solution_id", (solution_id) ->

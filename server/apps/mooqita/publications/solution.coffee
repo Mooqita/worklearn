@@ -109,9 +109,9 @@ Meteor.publish "solutions_for_tutor", (parameter) ->
 		throw new Meteor.Error("Not permitted.")
 
 	gen_tut = (id) ->
-		rr = ReviewRequests.findOne id
-		solution = Solutions.findOne rr.solution_id
-		date = rr.under_review_since
+		review = Reviews.findOne id
+		solution = Solutions.findOne review.solution_id
+		date = review.requested
 		now = new Date()
 		difference = now - date
 		item =

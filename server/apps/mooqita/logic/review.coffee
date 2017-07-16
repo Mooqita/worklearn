@@ -12,96 +12,129 @@
 	#wordpos = new WordPOS()
 	#text_index = wordpos.parse challenge.content
 
-	rr =
-		challenge_id: solution.challenge_id
-		solution_id: solution._id
-		review_id: ""
-		review_done: false
-		feedback_id: ""
-		feedback_done: false
-		provider_id: ""
-		requester_id: user._id
-		under_review_since: new Date((new Date())-1000*60*60*25)
-#		text_index: text_index.join().toLowerCase()
-
-	rr_id = ReviewRequests.insert rr
-	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
-	log_event msg, event_logic, event_info
-
-	return rr_id
-
-
-###############################################
-@gen_review = (challenge, solution, user) ->
-	if solution
-		filter =
-			solution_id: solution._id
-			review_done: false
-		review_request = ReviewRequests.findOne filter
-	else if challenge
-		review_request = find_solution_to_review user, challenge
-	else
-		review_request = find_solution_to_review user
-
-	if review_request.review_id
-		review = Reviews.findOne review_request.review_id
-		send_review_timeout_message review
-		Reviews.remove review_request.review_id
-
-	if review_request.feedback_id
-		Feedback.remove review_request.feedback_id
-
 	review_id = Random.id()
-	solution = Solutions.findOne review_request.solution_id
-	challenge = Challenges.findOne review_request.challenge_id
+	challenge = Challenges.findOne solution.challenge_id
 
 	review =
 		_id: review_id
-		index: 1
-		owner_id: user._id
+		owner_id: null
 		parent_id: solution._id
 		solution_id: solution._id
 		challenge_id: challenge._id
 		requester_id: solution.owner_id
-		view_order: 1
-		group_name: ""
 		visible_to: "owner"
 		template_id: "review"
+		requested: new Date()
+		assigned: false
+		published: false
 
 	feedback =
-		index: 1
 		owner_id: solution.owner_id
 		parent_id: review_id
 		review_id: review_id
 		solution_id: solution._id
 		challenge_id: challenge._id
-		requester_id: user._id
-		view_order: 1
-		group_name: ""
+		requester_id: review.owner_id
 		visible_to: "owner"
 		template_id: "feedback"
+		requested: new Date()
+		assigned: false
+		published: false
 
-	r_id = store_document Reviews, review
-	f_id = store_document Feedback, feedback
+	store_document Reviews, review
+	store_document Feedback, feedback
 
-	modify_field_unprotected ReviewRequests,
-		review_request._id, "under_review_since", new Date()
+	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
+	log_event msg, event_logic, event_info
 
-	modify_field_unprotected ReviewRequests,
-		review_request._id, "provider_id", user._id
+	return review_id
 
-	modify_field_unprotected ReviewRequests,
-		review_request._id, "review_id", r_id
 
-	modify_field_unprotected ReviewRequests,
-		review_request._id, "feedback_id", f_id
+###############################################
+_find_review = (user, challenge) ->
+	# find all solutions this user has already reviewed
+	filter =
+		owner_id: user._id
+
+	mod =
+		fields:
+			solution_id: 1
+
+	crs = Reviews.find(filter, mod).fetch()
+
+	handled = _.uniq(_.pluck(crs, 'solution_id'))
+
+	# find the keywords for the user to make sure they understand what they review
+	#corpus = collect_keywords user._id
+	#WordPOS = require("wordpos")
+	#wordpos = new WordPOS()
+	#text_index = wordpos.parse corpus
+
+	# Find reviews for the reviewer that satisfy these requirements:
+	# The requester of the review is not the reviewer (this user)
+	# Not yet published
+	# Either not assigned to a reviewer or not changed in the last 24 hours
+	# The solution is not yet reviewed by the reviewer (this user)
+	# The user has expertise for the solution
+	filter =
+		requester_id:
+			$ne: user._id
+		published: false
+		$or:[	{assigned: false}
+					{modified:
+						$lt: new Date((new Date())-1000*60*60*24)}]
+		solution_id:
+			$nin: handled
+#		$text:
+#			$search: text_index.join().toLowerCase()
+
+	# Sort so that the oldest review is selected first
+	mod =
+		sort:
+			modified: 1
+
+	# If a challenge is defined we restrict the search further
+	if challenge
+		filter.challenge_id = challenge._id
+
+	return Reviews.findOne filter, mod
+
+
+###############################################
+@find_review = (challenge, solution, user) ->
+	if solution
+		filter =
+			solution_id: solution._id
+			published: false
+		review = Reviews.findOne filter
+	else
+		review = _find_review user, challenge
+
+	if not review
+		throw new Meteor.Error "no-review", "There are no solutions to review at the moment."
+
+	if not challenge
+		challenge = Challenges.findOne review.challenge_id
+
+		if not challenge
+			throw new Meteor.Error "no-challenge", "challenge not found"
+
+	solution = Solutions.findOne review.solution_id
+	if not solution
+		throw new Meteor.Error "no-solution","solution not found"
+
+	if review.assigned
+		send_review_timeout_message review
+
+	modify_field_unprotected Reviews, review._id, "owner_id", user._id
+	modify_field_unprotected Reviews, review._id, "assigned", true
 
 	res =
-		review_id: r_id
+		review_id: review._id
 		solution_id: solution._id
 		challenge_id: challenge._id
 
-	msg = "Review (" + r_id + ") review generated by: " + get_user_mail user
+	msg = "Review (" + review._id + ") review found for: " + get_user_mail user
 	log_event msg, event_logic, event_info
 
 	return res
@@ -115,14 +148,7 @@
 	if review.published
 		throw new Meteor.Error "Review: " + review._id + " is already published"
 
-	filter =
-		review_id: review._id
-	rr = ReviewRequests.findOne filter
-
 	modify_field_unprotected Reviews, review._id, "published", true
-	modify_field_unprotected ReviewRequests, rr._id, "review_done", true
-	modify_field_unprotected ReviewRequests, rr._id, "review_finished", new Date()
-
 	send_review_message review
 
 	# Find the solution the review provider submitted.
@@ -132,7 +158,7 @@
 		requester_id: review.owner_id
 		challenge_id: review.challenge_id
 
-	request = ReviewRequests.findOne filter
+	request = Reviews.findOne filter
 	if not request
 		if Roles.userIsInRole review.owner_id, "tutor"
 			return review._id
@@ -148,9 +174,7 @@
 	r_owner = Meteor.users.findOne review.owner_id
 
 	if solution.published
-		if Roles.userIsInRole solution.owner_id, "challenge_designer"
-			request_review solution, r_owner
-		else if required > provided
+		if required > provided
 			request_review solution, r_owner
 
 	msg = "Review (" + review._id + ") review finished by: " + get_user_mail user
@@ -160,6 +184,23 @@
 
 
 ###############################################
-@reopen_review = (solution, user) ->
-	throw new Meteor.Error "Reopening reviews is not yet supported."
+@reopen_review = (review, user) ->
+	# we can reopen a review when:
+
+	# The feedback has no content yet
+	filter =
+		review_id: review._id
+		published: false
+
+	feedback = Feedback.find filter
+
+	if feedback.count()>0
+		throw new Meteor.Error "in-progress", "The review already has a feedback."
+
+	modify_field_unprotected Reviews, review._id, "published", false
+
+	msg = "Review (" + review.id + ") reopened by: " + get_user_mail user
+	log_event msg, event_logic, event_info
+
+	return review._id
 

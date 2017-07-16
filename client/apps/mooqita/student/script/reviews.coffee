@@ -13,10 +13,6 @@ Template.student_reviews.onCreated ->
 	this.searching = new ReactiveVar(false)
 	Session.set "find_review_error", false
 
-	self = this
-	self.autorun () ->
-		self.subscribe "my_reviews"
-
 ########################################
 Template.student_reviews.helpers
 	reviewed_challenges: () ->
@@ -70,7 +66,7 @@ Template.student_reviews.events
 		inst.searching.set true
 		Session.set "find_review_error", false
 
-		Meteor.call "add_review",
+		Meteor.call "find_review",
 			(err, res) ->
 				inst.searching.set false
 				if err
@@ -122,7 +118,6 @@ Template.student_review.onCreated ->
 			return
 
 		self.subscribe "solution_by_id", FlowRouter.getQueryParam("solution_id")
-		self.subscribe "my_review_by_id", FlowRouter.getQueryParam("review_id")
 		self.subscribe "challenge_by_id", FlowRouter.getQueryParam("challenge_id")
 
 ########################################
@@ -154,6 +149,13 @@ Template.student_review.helpers
 
 ########################################
 Template.student_review.events
+	"click #go_to_solution":(event)->
+		param =
+			solution_id: FlowRouter.getQueryParam("solution_id")
+			challenge_id: FlowRouter.getQueryParam("challenge_id")
+			template: "student_solution"
+		FlowRouter.setQueryParams param
+
 	"click #publish":(event)->
 		if event.target.attributes.disabled
 			return

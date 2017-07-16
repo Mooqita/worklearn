@@ -2,17 +2,12 @@ Template.student_menu.onCreated ->
 	self = this
 
 	self.autorun ->
-		filter =
-			owner_id: Meteor.userId()
-
-		Meteor.subscribe "responses", "Messages", filter, "find messages"
-		Meteor.subscribe "credits"
+		Meteor.subscribe "my_messages"
+		Meteor.subscribe "my_feedback"
+		Meteor.subscribe "my_reviews"
 
 
 Template.student_menu.helpers
-	credits: () ->
-		return UserCredits.find()
-
 	review_time: () ->
 		if this.review_time>0
 			return how_much_time this.review_time

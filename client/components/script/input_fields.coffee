@@ -60,9 +60,9 @@ Template.select_input.helpers
 		field = get_field_value Template.instance().data
 
 		if !(field instanceof Array)
-			field = [str(field)]
+			field = [String(field)]
 
-		if str(val) in field
+		if String(val) in field
 			return "selected"
 
 #########################################################

@@ -27,6 +27,12 @@ Meteor.startup () ->
 	Feedback._ensureIndex index
 
 	index =
+		challenge_id: 1
+	Solutions._ensureIndex index
+	Reviews._ensureIndex index
+	Feedback._ensureIndex index
+
+	index =
 		content: "text"
 		title: "text"
 	Challenges._ensureIndex index

@@ -28,7 +28,6 @@
 
 	return item
 
-
 ###############################################
 @num_requested_reviews  = (solution) ->
 	if solution
@@ -42,7 +41,7 @@
 	if solution
 		filter.challenge_id = solution.challenge_id
 
-	res = ReviewRequests.find filter
+	res = Reviews.find filter
 	return  res.count()
 
 ###############################################
@@ -53,13 +52,13 @@
 		requester_id = this.userId
 
 	filter =
-		provider_id: requester_id
-		review_done: true
+		owner_id: requester_id
+		published: true
 
 	if solution
 		filter.challenge_id = solution.challenge_id
 
-	res = ReviewRequests.find filter
+	res = Reviews.find filter
 	return  res.count()
 
 

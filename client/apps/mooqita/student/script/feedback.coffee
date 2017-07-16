@@ -6,10 +6,6 @@
 
 ##############################################
 Template.student_feedback_review.onCreated ->
-	self = this
-	self.autorun () ->
-		self.subscribe "feedback_by_review_id", self.data._id
-
 
 ##############################################
 Template.student_feedback_review.helpers
@@ -26,7 +22,7 @@ Template.student_feedback_review.helpers
 
 ##############################################
 #
-#student_review_feedback
+# student_review_feedback
 #
 ##############################################
 
@@ -36,11 +32,6 @@ Template.student_feedback_review.helpers
 
 ########################################
 Template.student_feedback_solution.onCreated ->
-	self = this
-
-	self.autorun () ->
-		self.subscribe "my_feedback_by_review_id", self.data._id
-
 
 ########################################
 Template.student_feedback_solution.helpers

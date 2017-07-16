@@ -184,9 +184,13 @@
 								<b>Publish your solution to start writing reviews.</b>
 							{{else}}
 								{{#unless searching}}
-									<div class="text-right" style="padding-top:15px">
-										<div id="add_review" class="btn btn-theme">Start a review</div>
-									</div>
+										<div class="text-right" style="padding-top:15px">
+											{{#unless solution_ready}}
+												<div id="republish" class="btn btn-theme">Republish</div>
+											{{/unless}}
+
+											<div id="find_review" class="btn btn-theme">Start a review</div>
+										</div>
 								{{else}}
 									<div class="text-right" style="padding-top:15px">
 										<span class="btn btn-theme" disabled="true">

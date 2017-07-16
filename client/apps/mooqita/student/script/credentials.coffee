@@ -14,10 +14,10 @@ Template.student_credentials.onCreated () ->
 	self = this
 
 	self.autorun () ->
-		s_id = FlowRouter.getParam('user_id')
+		s_id = FlowRouter.getParam("user_id")
 		if !s_id
 			s_id = Meteor.userId()
-		self.subscribe 'user_credentials', s_id
+		self.subscribe "user_credentials", s_id
 
 ##############################################
 Template.student_credentials.helpers

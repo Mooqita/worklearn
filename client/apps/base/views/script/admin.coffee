@@ -2,7 +2,7 @@
 Template.admin.onCreated ->
 	self = this
 	self.autorun () ->
-		self.subscribe 'permissions'
+		self.subscribe "permissions"
 
 #########################################################
 Template.admin.helpers
@@ -25,26 +25,26 @@ Template.admin.events
 				if err
 					sAlert.error(err)
 				else
-					sAlert.info('Permission removed')
+					sAlert.info("Permission removed")
 
 
-	'submit #db_permission': (event) ->
+	"submit #db_permission": (event) ->
 		event.preventDefault()
 
 		target = event.target
 
 		role = target.role.value
 		field = target.field.value
-		types = "string".split ','
-		actions = "add,modify".split ','
+		types = "string".split ","
+		actions = "add,modify".split ","
 		collection = target.collection.value
 
-		Meteor.call 'add_db_permission', role, collection, field, types, actions,
+		Meteor.call "add_db_permission", role, collection, field, types, actions,
 			(err, res) ->
 				if err
 					sAlert.error(err)
 				else
-					sAlert.info('Permission added: '+ res)
+					sAlert.info("Permission added: "+ res)
 
 #########################################################
 # hashes
@@ -56,13 +56,13 @@ calc_hashes = (tmpl) ->
 	salt = tmpl.salt.get()
 	template = tmpl.template.get()
 	host = location.hostname
-	port = if location.port then ':' + location.port else ''
+	port = if location.port then ":" + location.port else ""
 
 	res = []
 	for i in [1..num]
 		index = Math.floor Math.random()*1000000000
 		item =
-			url: host + port + "/hit/" + template + '/' + index
+			url: host + port + "/hit/" + template + "/" + index
 			hash: calculate_response_hash(index, salt, template)
 		res.push item
 
@@ -78,17 +78,17 @@ Template.hashes.onCreated ->
 
 #########################################################
 Template.hashes.events
-	'change #num': (event) ->
+	"change #num": (event) ->
 		val = event.target.value
 		Template.instance().num.set(val)
 		Template.instance().hashes.set(calc_hashes(Template.instance()))
 
-	'change #salt': (event) ->
+	"change #salt": (event) ->
 		val = event.target.value
 		Template.instance().salt.set(val)
 		Template.instance().hashes.set(calc_hashes(Template.instance()))
 
-	'change #template': (event) ->
+	"change #template": (event) ->
 		val = event.target.value
 		Template.instance().template.set(val)
 		Template.instance().hashes.set(calc_hashes(Template.instance()))
