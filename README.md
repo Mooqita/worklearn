@@ -1,2 +1,2 @@
-# worklearn
-The worklearn platform that powers mooqita
+# Worklearn
+The Worklearn platform that powers Mooqita's website and our app.
