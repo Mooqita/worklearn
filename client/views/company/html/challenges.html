@@ -72,7 +72,7 @@
 			{{>wait}}
 		{{else}}
 			{{#with challenge}}
-				{{#unless _is_public "Challenges"}}
+				{{#unless g_is_public "Challenges"}}
 					<div class="padding-top">
 						<div class="alert alert-warning">
 							<h2>Todo List: Challenge</h2>
@@ -95,7 +95,7 @@
 									<li>Add additional materials (optional)</li>
 								{{/unless}}
 
-								{{#unless _is_saved "Challenges"}}
+								{{#unless g_is_saved "Challenges"}}
 									<li>Save it!</li>
 								{{/unless}}
 
@@ -107,14 +107,14 @@
 
 				<div class="padding-next">
 					<h1 class="editable">
-						{{#if _is_public "Challenges"}}
+						{{#if g_is_public "Challenges"}}
 							<em><b>LIVE</b></em>
 						{{/if}}
 
 						{{>basic_input method="set_field" collection_name="Challenges"
 						item_id=_id field="title" placeholder="Title of your challenge"}}
 
-						<!--{{#unless _is_public "Challenges"}}
+						<!--{{#unless g_is_public "Challenges"}}
 							{{>basic_input method="set_field" collection_name="Challenges"
 							item_id=_id field="title" placeholder="Title of your challenge"}}
 						{{else}}
@@ -127,14 +127,14 @@
 						{{>text_input method="set_field" collection_name="Challenges"
 								item_id=_id field="content" placeholder="Content"}}
 
-						<!--{{#unless _is_public "Challenges"}}
+						<!--{{#unless g_is_public "Challenges"}}
 							{{>text_input method="set_field" collection_name="Challenges"
 									item_id=_id field="content" placeholder="Content"}}
 						{{else}}
 							{{>more content=content}}
 						{{/unless}}-->
 
-						{{#if _is_public "Challenges"}}
+						{{#if g_is_public "Challenges"}}
 							<h2>Shareable link:</h2>
 
 							<div class="input-group">
@@ -158,7 +158,7 @@
 									item_id=_id field="num_reviews" placeholder="Number of reviews required."}}
 						{{/if}}
 
-						<!--{{#unless _is_public "Challenges"}}-->
+						<!--{{#unless g_is_public "Challenges"}}-->
 							<h2>Upload Additional material:</h2>
 							<h2>
 								{{>upload method="set_field" collection_name="Challenges"
@@ -199,7 +199,7 @@
 					{{/if}}
 				</div>
 
-				{{#unless _is_public "Challenges"}}
+				{{#unless g_is_public "Challenges"}}
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
@@ -216,7 +216,7 @@
 					</div>
 				{{/unless}}
 
-				{{#if _is_public "Challenges"}}
+				{{#if g_is_public "Challenges"}}
 					{{>challenge_solutions .}}
 				{{/if}}
 			{{/with}}

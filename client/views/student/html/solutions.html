@@ -147,7 +147,7 @@
 				<hr>
 				Here is a list of things you have to do before your solution is ready:
 				<ul>
-					{{#unless _is_public "Solutions"}}
+					{{#unless g_is_public "Solutions"}}
 						{{#unless content}}
 							<li>Provide an explanation of your solution under solution description.</li>
 						{{/unless}}
@@ -156,7 +156,7 @@
 							<li>Add additional material if necessary.</li>
 						{{/unless}}
 
-						{{#unless _is_saved "Solutions"}}
+						{{#unless g_is_saved "Solutions"}}
 							<li>Save your work!</li>
 						{{/unless}}
 
@@ -180,7 +180,7 @@
 								them hold there breath so long. Visit our <a href="help/#9NARA6Bbzpgj63GeJ">
 								How to Write a Great Review</a> article if you want some tips.
 							</p>
-							{{#unless _is_public "Solutions"}}
+							{{#unless g_is_public "Solutions"}}
 								<b>Publish your solution to start writing reviews.</b>
 							{{else}}
 								{{#unless searching}}
@@ -224,7 +224,7 @@
 			{{/if}}
 		</h1>
 
-		{{#unless _is_public "Solutions"}}
+		{{#unless g_is_public "Solutions"}}
 			<h2>Solution description</h2>
 			{{>text_input method="set_field" collection_name="Solutions"
 				item_id=_id field="content" placeholder="Describe your solution"}}
@@ -250,7 +250,7 @@
 			{{/if}}
 		{{/unless}}
 
-		{{#unless _is_public "Solutions"}}
+		{{#unless g_is_public "Solutions"}}
 			<div class="row padding-top">
 				<div class="form-group col-sm-6">
 					<span class="btn-group btn-group-justified">
@@ -266,7 +266,7 @@
 			</div>
 		{{/unless}}
 
-		{{#if _is_public "Solutions"}}
+		{{#if g_is_public "Solutions"}}
 			<h1>Reviews you received</h1>
 			{{#each reviews}}
 				{{>student_feedback_solution}}

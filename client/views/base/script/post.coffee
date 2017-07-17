@@ -94,3 +94,61 @@ Template.headline.helpers
 
 		return res
 
+#########################################################
+# Edit tools
+#########################################################
+
+#########################################################
+Template._edit_toggle.events
+	'click #edit': () ->
+		ed = Session.get("editing_response")
+
+		if ed == this._id
+			Session.set("editing_response", "")
+			return
+
+		Session.set("editing_response", this._id)
+
+
+#########################################################
+Template._edit_tools.helpers
+	is_visible: (val) ->
+		if val in this.visible_to
+			return "selected"
+
+	is_template: (val) ->
+		if val == this.template
+			return "selected"
+
+	is_group: (val) ->
+		if val == this.group
+			return "selected"
+
+	templates: () ->
+		return [{value:"", label:"Select template"}
+		{value:"empty", label:"Empty"}
+		{value:"post", label:"Post"}
+		{value:"headline", label:"Headline"}
+		{value:"publication", label:"Publication"}
+		{value:"team", label:"Team"}
+		{value:"member", label:"Member"}
+		{value:"partner", label:"Partner"}
+		{value:"partner_list", label:"Partner List"}]
+
+	parents: () ->
+		filter = {}
+		mod =
+			fields:
+				_id: 1
+				title: 1
+
+		collection = get_collection this.collection_name
+		if not collection
+			return []
+
+		list = collection.find(filter, mod).fetch()
+		groups = [{value:"", label:"Select a parent"}]
+		groups.push ({value:x._id, label:x.title} for x in list)...
+
+		return groups
+

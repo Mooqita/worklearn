@@ -48,7 +48,7 @@
 
 <template name="partner_list">
 	<div class="post background-white">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -58,7 +58,7 @@
 			</h1>
 		</div>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>basic_input method="set_field" collection_name="Posts" field="title"
 					placeholder="Title" item_id=_id}}
 		{{/if}}
@@ -71,7 +71,7 @@
 			</div>
 		</div>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
@@ -79,11 +79,11 @@
 
 <template name="partner">
 	<div class="col-xs-10 col-ms-6 col-sm-6 col-md-4">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>upload method="set_field" collection_name="Posts"
 					field="avatar" item_id=_id box_id="avatar"}}
 		{{/if}}
@@ -93,7 +93,7 @@
 			item_id = _id
 			field = "avatar"}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools  collection_name="Posts"}}
 		{{/if}}
 	</div>
@@ -105,11 +105,11 @@
 |
 ------------------------------------------->
 <template name="empty">
-	{{#if _can_edit_response "Posts" _id}}
+	{{#if g_can_edit "Posts" _id}}
 		{{>_edit_toggle}}
 	{{/if}}
 
-	{{#if _is_editing_response _id}}
+	{{#if g_is_editing _id}}
 		{{#_edit_tools  collection_name="Posts" _id=_id}}
 			{{>code_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
@@ -132,11 +132,11 @@
 ------------------------------------------->
 <template name="team">
 	<div>
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>code_input method="set_field" collection_name="Posts" field="abstract"
 				placeholder="Title" item_id=_id}}
 		{{else}}
@@ -151,7 +151,7 @@
 			</div>
 		</div>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
@@ -165,7 +165,7 @@
 ------------------------------------------->
 <template name="member">
 	<div class="col-sm-6 col-ms-6">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -176,13 +176,13 @@
 				item_id = _id
 				field = "avatar"}}
 
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				{{>upload method="set_field" collection_name="Posts"
 						field="avatar" item_id=_id box_id="avatar"}}
 			{{/if}}
 
 			<h4>
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>basic_input method="set_field" collection_name="Posts" field="name"
 						placeholder="Name" item_id=_id}}
 				{{else}}
@@ -191,7 +191,7 @@
 			</h4>
 
 			<p class="text-muted">
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>basic_input method="set_field" collection_name="Posts" field="title"
 						placeholder="Title" item_id=_id}}
 				{{else}}
@@ -200,7 +200,7 @@
 			</p>
 
 			<p style="font-size: 14px">
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>text_input method="set_field" collection_name="Posts" field="resume"
 						placeholder="Resume" item_id=_id}}
 				{{else}}
@@ -208,7 +208,7 @@
 				{{/if}}
 			</p>
 
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				{{>_edit_tools collection_name="Posts" _id=_id}}
 			{{/if}}
 		</div>
@@ -223,12 +223,12 @@
 ------------------------------------------->
 <template name="headline">
 	<div class="post background-white">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
 		<h1 class="logo">
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				{{>basic_input method="set_field" collection_name="Posts"
 						field="title" item_id=_id placholder="Title" type="text" }}
 			{{else}}
@@ -240,7 +240,7 @@
 			{{/if}}
 		</h1>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>code_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 		{{else}}
@@ -251,7 +251,7 @@
 			{{/if}}
 		{{/if}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
@@ -264,7 +264,7 @@
 ------------------------------------------->
 <template name="post">
 	<div class="post background-white">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
@@ -275,7 +275,7 @@
 						 alt="{{label}}">
 			</div>
 
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				<div class="btn-group btn-group-justified">
 					<div class="btn btn-contrast" id="remove_figure">
 						Remove figure
@@ -283,7 +283,7 @@
 				</div>
 			{{/if}}
 		{{else}}
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				<div class="post-banner background-theme">
 					<h2>
 						{{>basic_input method="set_field" collection_name="Posts"
@@ -302,7 +302,7 @@
 			{{/if}}
 		{{/if}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>upload method="set_field" field="figure"
 					item_id=_id box_id="figure" collection_name="Posts"}}
 		{{/if}}
@@ -316,7 +316,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>wysiwyg_input method="set_field" collection_name="Posts"
 							field="abstract" item_id=_id}}
 				{{else}}
@@ -329,7 +329,7 @@
 			</div>
 		</div>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools  collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
@@ -343,11 +343,11 @@
 ------------------------------------------->
 <template name="publication">
 	<div class="post background-white">
-		{{#if _can_edit_response "Posts" _id}}
+		{{#if g_can_edit "Posts" _id}}
 			{{>_edit_toggle}}
 		{{/if}}
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			<div class="post-banner background-theme">
 				<h2>
 					{{>basic_input method="set_field" collection_name="Posts"
@@ -374,7 +374,7 @@
 								 alt="{{label}}">
 					</a>
 
-					{{#if _is_editing_response _id}}
+					{{#if g_is_editing _id}}
 						<div class="btn-group btn-group-justified">
 							<div class="btn btn-contrast" id="remove_figure">
 								Remove figure.
@@ -383,7 +383,7 @@
 					{{/if}}
 				{{/if}}
 
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>upload method="set_field" collection_name="Posts"
 							field="figure" item_id=_id box_id="figure"}}
 				{{/if}}
@@ -393,7 +393,7 @@
 				<h4 class="double-header">
 					<em>
 						<i>
-							{{#if _is_editing_response _id}}
+							{{#if g_is_editing _id}}
 								{{>basic_input method="set_field" collection_name="Posts"
 													field="authors" item_id=_id placholder="Authors"
 								type="text" }}
@@ -408,7 +408,7 @@
 					</em>
 				</h4>
 
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					<div class="row">
 						<div class="col-md-3">
 							<h4>
@@ -433,7 +433,7 @@
 					</h4>
 				{{/if}}
 
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					{{>code_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 				{{else}}
@@ -453,7 +453,7 @@
 								field="paper" item_id=_id label="Download paper"}}
 				</div>
 
-				{{#if _is_editing_response _id}}
+				{{#if g_is_editing _id}}
 					<div class="btn-group btn-group-justified">
 						<div class="btn btn-contrast" id="remove_paper">
 							Remove paper.
@@ -462,14 +462,55 @@
 				{{/if}}
 			{{/if}}
 
-			{{#if _is_editing_response _id}}
+			{{#if g_is_editing _id}}
 				{{>upload method="set_field"  collection_name="Posts"
 						field="paper" item_id=_id box_id="paper"}}
 			{{/if}}
 		</div>
 
-		{{#if _is_editing_response _id}}
+		{{#if g_is_editing _id}}
 			{{>_edit_tools collection_name="Posts" _id=_id}}
 		{{/if}}
 	</div>
+</template>
+
+
+<template name="_edit_toggle">
+	<div class="edit-toggle tool-background" id="edit">
+		<span class="glyphicon glyphicon-edit"></span>
+	</div>
+</template>
+
+
+<template name="_edit_tools">
+	{{> UI.contentBlock}}
+
+	{{>basic_input label='Name' method='set_field' collection_name=collection_name
+			field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
+
+	{{>basic_input label='Title' method='set_field' collection_name=collection_name
+			field='title' item_id=_id placeholder="A title that is used in many places"
+			type="text"}}
+
+	{{>basic_input label='Group' method='set_field' collection_name=collection_name
+		field='group_name' item_id=_id placeholder="An identifier to group" type="text" }}
+
+	{{>basic_input label='Index' method='set_field' collection_name=collection_name
+		field='index' item_id=_id placeholder="Index of element" type="number" }}
+
+	{{>basic_input label='View Order' method='set_field' collection_name=collection_name
+		field='view_order' item_id=_id placeholder="View order of element lower comes first"
+		type="number" }}
+
+	{{>select_input label='Template' method='set_field'
+			collection_name=collection_name field='template_id' item_id=_id
+			options=templates}}
+
+	{{>select_input label='Parent' method='set_field' collection_name=collection_name
+		field='parent_id' item_id=_id options=parents}}
+
+	{{>select_input label='Visibility' method='set_field'
+		collection_name=collection_name	field='visible_to' item_id=_id
+		options=_response_visibility}}
+
 </template>
