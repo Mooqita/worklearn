@@ -1,8 +1,11 @@
+<!------------------------------------------------
+|
+| Admin templates
+|
+-------------------------------------------------->
 <template name="admin">
 	{{#if isInRole 'admin'}}
 		<h1>Admin Dashboard</h1>
-		{{>hashes}}
-		{{>messages}}
 
 		{{#if isInRole 'db_admin'}}
 			<h2> Database Permission </h2>
@@ -89,56 +92,3 @@
 	{{/if}}
 </template>
 
-
-<template name="hashes">
-	<h2>Get Response Hash</h2>
-	<div class="well">
-		<form class="form-horizontal">
-			<div class="form-group">
-				<label for="num" class="col-sm-4 control-label">Number of hashes</label>
-				<div class="col-sm-8">
-					<input type="number" class="form-control" id="num" value="{{num}}">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="salt" class="col-sm-4 control-label">Salt</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="salt" value="{{salt}}">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="template" class="col-sm-4 control-label">Template Name</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="template" value="{{template}}">
-				</div>
-			</div>
-		</form>
-	</div>
-
-	<div class="well">
-		<h4><strong>url,response</strong></h4>
-		{{#each hashes}}
-			<a href="{{url}}">{{url}}</a><strong>,</strong>{{hash}}<br>
-		{{/each}}
-	</div>
-</template>
-
-
-<template name="messages">
-	<h2>Test message system</h2>
-
-	<div class="well">
-		<select class="form-control edit-field" id="message_type">
-			<option value="got_review">Send got review message</option>
-			<option value="send_mail">Send email to user</option>
-		</select>
-
-		<br>
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" id="send_message">
-				Send test message
-			</a>
-		</div>
-	</div>
-</template>

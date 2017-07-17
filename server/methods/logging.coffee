@@ -6,7 +6,7 @@
 
 ################################################################
 Meteor.methods
-	log_user: (fp) ->
+	log_user: () ->
 		headers = this.connection.httpHeaders
 		con_ip = String headers["x-forwarded-for"]
 
@@ -27,7 +27,6 @@ Meteor.methods
 
 			msg =
 				date: date
-				print: fp
 				user: user
 				con_ip: con_ip
 

@@ -3,26 +3,6 @@
 | Login templates
 |
 -------------------------------------------------->
-<template name="login_user">
-	{{#unless currentUser}}
-		{{>sign_user}}
-	{{/unless}}
-</template>
-
-<template name="sign_user">
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<h1>Please login to continue</h1>
-
-			<hr>
-
-			<div class="well" style="color: black; text-align: center">
-				{{>atForm}}
-			</div>
-		</div>
-	</div>
-</template>
-
 <template name="mooqita_login">
 	<div class="container-fluid">
 		{{#mooqita_wide_spacing}}

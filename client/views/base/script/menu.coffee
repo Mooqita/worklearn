@@ -12,6 +12,7 @@ Template.mooqita_menu.helpers
 			else return false
 
 
+########################################
 Template.mooqita_menu.events
 	'click .logout': (event) ->
 		Meteor.logout()

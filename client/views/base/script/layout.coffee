@@ -1,20 +1,15 @@
 ################################################
 #
+# Entry point for all templates
+#
 ################################################
 
 ################################################
 Template.body_template.onCreated ->
-	try
-		Fingerprint2 = require("fingerprintjs2")
-
-		new Fingerprint2().get (result, components) ->
-			Meteor.call "log_user", result,
-				(err, res) ->
-					if err
-						console.log ["error", err]
-
-	catch error
-		console.log error
+	Meteor.call "log_user",
+		(err, res) ->
+			if err
+				console.log ["error", err]
 
 
 ################################################
@@ -37,6 +32,8 @@ Template.mooqita_layout.onCreated ->
 					console.log err
 				self.is_ready.set true
 
+
+################################################
 Template.mooqita_layout.helpers
 	profile_ready: ->
 		return Template.instance().is_ready.get()
