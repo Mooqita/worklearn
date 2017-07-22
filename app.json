@@ -1,0 +1,36 @@
+{
+  "name": "worklearn",
+  "description": "this file describes how pull request for new branches for mooqita are reviewed on heroku",
+  "scripts": {
+  },
+  "env": {
+    "DROP_BOX_ACCESS_TOKEN": {
+      "required": true
+    },
+    "HTTP_FORWARDED_COUNT": {
+      "required": true
+    },
+    "MAIL_URL": {
+      "required": true
+    },
+    "MONGO_URL": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "ROOT_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/AdmitHub/meteor-buildpack-horse.git"
+    }
+  ]
+}
