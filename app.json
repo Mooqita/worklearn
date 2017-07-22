@@ -1,8 +1,27 @@
 {
   "name": "worklearn",
-  "description": "this file describes how pull request for new branches for mooqita are reviewed on heroku",
+  "description": "The worklearn platform helps mooqita to find jobs for students.",
+
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+
+  "addons": [
+    "papertrail"
+  ],
+
+	"buildpacks": [
+    {
+      "url": "https://github.com/AdmitHub/meteor-buildpack-horse.git"
+    }
+  ],
+
   "scripts": {
   },
+
   "env": {
     "DROP_BOX_ACCESS_TOKEN": {
       "required": true
@@ -22,15 +41,5 @@
     "ROOT_URL": {
       "required": true
     }
-  },
-  "formation": {
-  },
-  "addons": [
-    "papertrail"
-  ],
-  "buildpacks": [
-    {
-      "url": "https://github.com/AdmitHub/meteor-buildpack-horse.git"
-    }
-  ]
+  }
 }
