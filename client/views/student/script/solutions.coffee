@@ -218,30 +218,6 @@ Template.student_solution_reviews.helpers
 
 ########################################
 Template.student_solution_reviews.events
-	"click #republish": () ->
-		self = this
-		template = Template.instance()
-		template.publishing.set true
-
-		Meteor.call "finish_solution", self._id,
-			(err, res) ->
-				template.publishing.set false
-
-				if err
-					sAlert.error(err)
-				if res
-					sAlert.success "Solution published!"
-
-	"click #publish_solution":(event)->
-		if event.target.attributes.disabled
-			return
-
-		data =
-			id: this._id
-			publishing: Template.instance().publishing
-
-		Modal.show 'publish_solution', data
-
 	"click #find_review": (event)->
 		if event.target.attributes.disabled
 			return
@@ -281,6 +257,30 @@ Template.student_solution_reviews.events
 				if rsp
 					sAlert.success "Review requested!"
 
+
+	"click #publish_solution":(event)->
+		if event.target.attributes.disabled
+			return
+
+		data =
+			id: this._id
+			publishing: Template.instance().publishing
+
+		Modal.show 'publish_solution', data
+
+	"click #republish": () ->
+		self = this
+		template = Template.instance()
+		template.publishing.set true
+
+		Meteor.call "finish_solution", self._id,
+			(err, res) ->
+				template.publishing.set false
+
+				if err
+					sAlert.error(err)
+				if res
+					sAlert.success "Solution published!"
 
 ##############################################
 # publish modal

@@ -203,8 +203,8 @@ Meteor.publish "challenge_summary", (parameter) ->
 		size: Number
 	check parameter, pattern
 
-	if parameter.size>20
-		throw Meteor.Error("Size values larger than 20 are not allowed.")
+	if parameter.size>50
+		throw Meteor.Error("Size values larger than 50 are not allowed.")
 
 	user_id = this.userId
 	challenge = Challenges.findOne parameter.challenge_id

@@ -28,21 +28,8 @@
 		assigned: false
 		published: false
 
-	feedback =
-		owner_id: solution.owner_id
-		parent_id: review_id
-		review_id: review_id
-		solution_id: solution._id
-		challenge_id: challenge._id
-		requester_id: review.owner_id
-		visible_to: "owner"
-		template_id: "feedback"
-		requested: new Date()
-		assigned: false
-		published: false
-
 	store_document_unprotected Reviews, review
-	store_document_unprotected Feedback, feedback
+	gen_feedback review
 
 	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
 	log_event msg, event_logic, event_info

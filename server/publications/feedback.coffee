@@ -81,9 +81,10 @@ Meteor.publish "feedback_by_review_id", (review_id) ->
 	check review_id, String
 	user_id = this.userId
 
-	review = Reviews.findOne review_id
-	crs = Feedback.find review.feedback_id, _feedback_fields
+	filter =
+		review_id: review_id
+	crs = Feedback.find filter, _feedback_fields
 
-	log_publication "Feedback", crs, filter,
+	log_publication "Feedback", crs, _feedback_fields,
 			_feedback_fields, "feedback_by_review_id", user_id
 	return crs

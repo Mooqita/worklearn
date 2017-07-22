@@ -211,7 +211,9 @@ Template.challenge_solution.onCreated ->
 	self.reviews_visible = new ReactiveVar(false)
 
 	self.autorun ->
-		self.subscribe "user_summary", self.data.owner_id
+		self.subscribe "user_summary",
+			self.data.owner_id,
+			self.data.challenge_id
 
 ########################################
 Template.challenge_solution.helpers

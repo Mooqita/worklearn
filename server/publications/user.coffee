@@ -111,8 +111,9 @@ Meteor.publish "user_credentials", (user_id) ->
 	self.ready()
 
 #######################################################
-Meteor.publish "user_summary", (user_id) ->
+Meteor.publish "user_summary", (user_id, challenge_id) ->
 	check user_id, String
+	check challenge_id, String
 
 	if user_id
 		if not Roles.userIsInRole this.userId, "challenge_designer"
@@ -124,56 +125,84 @@ Meteor.publish "user_summary", (user_id) ->
 	if !user_id
 		throw new Meteor.Error("Not permitted.")
 
+	##########################################
+	# Initialize user summary through users
+	# database object
+	##########################################
+
 	mod =
 		fields:
 			emails: 1
 
 	user = Meteor.users.findOne user_id, mod
-	match =
-		$match:
-			requester_id:
-				user_id
 
-	group =
-		$group:
-			_id: '$requester_id'
-			result:
-				$avg: '$rating'
-
+	##########################################
+  # Same fields for solution review feedback
+	##########################################
 	mod =
 		fields:
+			rating: 1
 			content: 1
 			material: 1
 
+	##########################################
+	# Find Solutions
+	##########################################
+
+	##########################################
 	filter =
 		owner_id: user_id
+		challenge_id: challenge_id
 
-	length = 0
-	upload = 0
 	solutions = Solutions.find filter, mod
+
+	##########################################
+	# Find relevant Feedback and Reviews
+	##########################################
+	filter =
+		owner_id: user_id
+		challenge_id: challenge_id
+	rev_given = Reviews.find filter, mod
+	fed_given = Feedback.find filter, mod
+
+	filter =
+		requester_id: user_id
+		challenge_id: challenge_id
+	rev_received = Reviews.find filter, mod
+	fed_received = Feedback.find filter, mod
+
+	##########################################
+	#
+	# Calculate statistics
+	#
+	##########################################
+
+	##########################################
+	# Solutions
+	##########################################
+	material = 0
+	length = 0
+	count = solutions.count()
 	solutions.forEach (entry) ->
 		if entry.content
 			length += entry.content.split(" ").length
-		upload += if entry.material then 1 else 0
+		if entry.material
+			material += 1
 
-	tmp = Reviews.aggregate(match, group)[0]
-	user.average_solution_quality = if tmp then tmp.result else undefined
-	user.solution_length = length / solutions.count()
-	user.solution_upload = upload
-	user.solution_count = solutions.count()
-	user.solutions = solutions.fetch()
+	user.solutions_count = count
+	user.solutions_average_length = length / count
+	user.solutions_average_material = material / count
 
-	length = 0
-	reviews = Reviews.find filter, mod
-	reviews.forEach (entry) ->
-		if entry.content
-			length += entry.content.split(" ").length
+	##########################################
+	# Given Reviews
+	##########################################
+	user = calc_statistics user, rev_given, "reviews_given"
+	user = calc_statistics user, rev_received, "reviews_received"
+	user = calc_statistics user, fed_given, "feedback_given"
+	user = calc_statistics user, fed_received, "feedback_received"
 
-	tmp = Feedback.aggregate(match, group)[0]
-	user.average_review_quality = if tmp then tmp.result else undefined
-	user.review_length = length / reviews.count()
-	user.review_count = reviews.count()
-	user.reviews = reviews.fetch()
+	log_publication "UserSummaries", null, {},
+			{}, "user_summary", user_id
 
 	this.added "user_summaries", user_id, user
 	this.ready()

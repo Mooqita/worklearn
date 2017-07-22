@@ -18,22 +18,46 @@
 
 
 ###############################################
-@reopen_feedback = (feedback, user) ->
-	if not feedback.published
+@repair_feedback = (solution, review, user) ->
+	filter =
+		solution_id: solution._id
+		review_id: review._id
+	feedback = Feedback.findOne filter
+
+	if feedback
 		return feedback._id
 
-	filter =
-		feedback_id: feedback._id
-	rr = ReviewRequests.findOne filter
+	return gen_feedback solution, review, user
 
-	modify_field_unprotected Feedback, feedback._id, "published", false
-	modify_field_unprotected ReviewRequests, rr._id, "feedback_done", false
-	modify_field_unprotected ReviewRequests, rr._id, "feedback_finished", new Date()
 
-	msg = "Feedback (" + feedback._id + ") feedback reopened by: " + get_user_mail user
-	log_event msg, event_logic, event_info
+###############################################
+@gen_feedback = (solution, review, user) ->
+	if solution._id != review.solution_id
+		msg = "solution._id: " + solution._id
+		msg += " differs from review.solution_id :" + review.solution_id
+		log_event msg, event_create, event_crit
+		throw new Meteor.Error msg
 
-	return feedback._id
+	feedback =
+		owner_id: solution.owner_id
+		parent_id: review._id
+		review_id: review._id
+		solution_id: solution._id
+		challenge_id: solution.challenge_id
+		requester_id: review.owner_id
+		visible_to: "owner"
+		template_id: "feedback"
+		requested: new Date()
+		assigned: false
+		published: false
+
+	feedback_id = store_document_unprotected Feedback, feedback
+	return feedback_id
+
+
+###############################################
+@reopen_feedback = (feedback, user) ->
+	throw new Meteor.Error("not implemented")
 
 
 

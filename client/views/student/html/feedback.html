@@ -32,6 +32,14 @@
 				Rating <em>{{rating}}</em> of <em>5</em>
 			{{else}}
 				Please provide feedback to see the rating
+
+				{{#if is_feedback_broken}}
+					<btn class="btn btn-theme pull-right"
+						{{repair_disabled}}
+						 id="repair_feedback">
+						Repair Feedback
+					</btn>
+				{{/if}}
 			{{/if}}
 		</h2>
 

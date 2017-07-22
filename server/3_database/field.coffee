@@ -15,8 +15,8 @@
 
 	res = modify_field_unprotected collection, id, field, value
 
-	if typeof value == "string"
-		predaid_add_text collection, id, field
+	#if typeof value == "string"
+		#predaid_add_text collection, id, field
 
 	return res
 
