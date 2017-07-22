@@ -297,5 +297,8 @@ Meteor.publish "challenge_summary", (parameter) ->
 	##############################################
 	profile_cursor = Profiles.find(filter, mod)
 
+	log_publication "Multiple Cursor", null, {},
+			{}, "challenge_summary", user_id
+
 	return [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
 

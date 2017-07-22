@@ -48,7 +48,9 @@
 		requester = get_profile_name profile, true
 		requester += "(" + requester_id + ")"
 
-	msg = crs.count() + " " + collection_name
+	msg = ""
+	msg += if crs then crs.count() else "undisclosed amount"
+	msg += " " + collection_name
 	msg += if requester then " to: " + requester else ""
 	msg += if name then " from: " + name else ""
 	msg += " via: " + origin
