@@ -1,0 +1,45 @@
+{
+  "name": "worklearn",
+  "description": "The worklearn platform helps mooqita to find jobs for students.",
+
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+
+  "addons": [
+    "papertrail"
+  ],
+
+	"buildpacks": [
+    {
+      "url": "https://github.com/AdmitHub/meteor-buildpack-horse.git"
+    }
+  ],
+
+  "scripts": {
+  },
+
+  "env": {
+    "DROP_BOX_ACCESS_TOKEN": {
+      "required": true
+    },
+    "HTTP_FORWARDED_COUNT": {
+      "required": true
+    },
+    "MAIL_URL": {
+      "required": true
+    },
+    "MONGO_URL": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "ROOT_URL": {
+      "required": true
+    }
+  }
+}
