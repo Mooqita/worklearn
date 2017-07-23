@@ -1,0 +1,190 @@
+<!------------------------------------------------
+|
+|	Student profile
+|
+-------------------------------------------------->
+<template name="student_profile">
+	{{#mooqita_wide_spacing}}
+		{{#with _profile}}
+			{{#unless profile_done}}
+				<div class="alert alert-warning" style="margin-top: 25px">
+					<h2>Todo List: Profile</h2>
+					<hr>
+					Here is a list of things you should do to complete your profile.
+					<ul>
+						{{#unless _profile.given_name}}
+							<li>Fill in your given name</li>
+						{{/unless}}
+						{{#unless _profile.family_name}}
+							<li>And your family name</li>
+						{{/unless}}
+						{{#unless _profile.avatar}}
+							<li>Upload a picture of you or choose an avatar.</li>
+						{{/unless}}
+						{{#unless _profile.resume}}
+							<li>Please write your resume.</li>
+						{{/unless}}
+						{{#unless _profile.job_interested}}
+							<li>Let us know if you are interested in job offerings from our partners.</li>
+						{{/unless}}
+					</ul>
+				</div>
+			{{/unless}}
+
+				<div class="row editable padding-top">
+					<div class="col-sm-4 col-ms-4 col-xs-12">
+						<h2 class="header">Picture</h2>
+
+						{{#if _profile.avatar}}
+							{{>avatar collection_name = "Profiles"
+								observable = _profile.avatar
+								item_id = _profile._id
+								field = "avatar"}}
+						{{/if}}
+
+						{{>upload method="set_field" collection_name="Profiles"
+							item_id=_profile._id field="avatar" max_size=500000}}
+					</div>
+
+					<div class="col-sm-8 col-ms-8 col-xs-12">
+						<div class="row editable">
+							<div class="col-md-12">
+								<h2>Name</h2>
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="given_name" placeholder="Given name"}}
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="middle_name" placeholder="Middle name"}}
+							</div>
+
+							<div class="col-md-4">
+								{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="family_name" placeholder="Family name"}}
+							</div>
+						</div>
+
+						<div class="row editable">
+							<div class="col-md-8">
+								<h2 class="header">Registered E-Mail</h2>
+
+								<div style="padding-top: 15px">
+									<em><b>{{email}}</b></em>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<h2 class="header">Notifications</h2>
+								{{>select_input method="set_field" collection_name="Profiles"
+										item_id=_profile._id field="mail_notifications"
+										options=mail_notifications_options}}
+							</div>
+						</div>
+
+						<div class="row editable">
+							<div class="col-md-12">
+								<h2 class="header">Are you looking for a job?</h2>
+							</div>
+
+							<div class="col-md-12">
+								<p>
+									If you are looking for a job please let us know.
+									We put you in our pool of candidates. When we find
+									a suitable company we will connect you with their
+									recruiting team.
+								</p>
+
+								<p>
+									<em>
+										<b>
+											We only try to match you when you choose yes
+											in this field.
+										</b>
+									</em>
+								</p>
+							</div>
+
+							<div class="col-md-12">
+								{{>select_input method="set_field" collection_name="Profiles"
+										item_id=_profile._id field="job_interested"
+										options=job_interested_options}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+			{{#if job_interested}}
+				<div class="item padding-top">
+					<div class="row editable">
+						<div class="col-md-12">
+							<h2 class="header">
+								What kind a job are you looking for?
+							</h2>
+						</div>
+
+						<div class="col-md-4">
+							{{>select_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="job_type" options=job_type_options}}
+						</div>
+
+						<div class="col-md-4">
+							{{>select_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="job_locale" options=job_locale_options}}
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Profiles"
+									item_id=_profile._id field="hours_per_week"
+									placeholder="Hours per week" type="number"}}
+						</div>
+					</div>
+
+					<div class="row editable" style="margin-top:10px">
+						<div class="col-md-12">
+							<h2 class="header">Where are you living?</h2>
+						</div>
+
+						<div class="col-md-8">
+							{{>country_state method="set_field" collection_name="Profiles"
+								item_id=_profile._id c_field="country" s_field="state"}}
+						</div>
+
+						<div class="col-md-4">
+							{{>basic_input method="set_field" collection_name="Profiles"
+								item_id=_profile._id field="city" placeholder="city name"}}
+						</div>
+					</div>
+				</div>
+			{{/if}}
+
+			<div class="editable">
+				<h2 class="header">Resume</h2>
+				{{>text_input method="set_field" collection_name="Profiles"
+						item_id=_profile._id field="resume"
+						placeholder="Tell us a little more about you."}}
+			</div>
+
+			{{#each messages}}
+				{{>user_message}}
+			{{/each}}
+		{{/with}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+	<!--div class="col-md-12">
+		<h2>Credits <span class="badge background-contrast">1</span></h2>
+		<p>
+			Credits is the currency in Mooqita.
+			Every time you write a review you get credits.
+			You can spend these credits requesting reviews.
+			Every review that you write will also influence
+			your resume and your score card.
+		</p>
+
+
+	</div-->

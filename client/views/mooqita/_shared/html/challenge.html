@@ -1,0 +1,14 @@
+<template name="challenge">
+	{{#if solution}}
+		{{#with solution}}
+			{{>student_solution}}
+		{{/with}}
+	{{else}}
+		{{#if _is_owner "Challenges" _id}}
+			{{>company_challenge}}
+		{{else}}
+			<h1>{{title}}</h1>
+			<p>{{content}}</p>
+		{{/if}}
+	{{/if}}
+</template>

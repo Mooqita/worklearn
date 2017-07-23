@@ -1,0 +1,137 @@
+<!------------------------------------------------
+|
+|	Feedback
+|
+-------------------------------------------------->
+<template name="student_feedback_review">
+	{{#unless Template.subscriptionsReady}}
+		{{>wait}}
+	{{else}}
+		{{#with feedback}}
+			<h1>Feedback on Your Review</h1>
+
+			{{>more content=content}}
+
+			<h2>Rating <em>{{rating}}</em> of <em>5</em></h2>
+		{{/with}}
+	{{/unless}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Feedback editor
+|
+-------------------------------------------------->
+<template name="student_feedback_solution">
+	{{#unless Template.subscriptionsReady}}
+		{{>wait}}
+	{{else}}
+		<h2>
+			{{#if _is_public "Feedback" feedback._id}}
+				Rating <em>{{rating}}</em> of <em>5</em>
+			{{else}}
+				Please provide feedback to see the rating
+			{{/if}}
+		</h2>
+
+		{{>more content=content}}
+
+		{{#with feedback}}
+			<div class="indent_l1">
+				{{#unless _is_public "Feedback"}}
+					<div class="alert alert-warning">
+						<h2>Todo List: Feedback</h2>
+						<hr>
+						Here is a list of things to do:
+						<ul>
+							{{#unless _is_saved "Feedback"}}
+								<li>
+									Write a short feedback what you like about the
+									review and how you think it could improve.
+								</li>
+							{{/unless}}
+
+							{{#unless rating}}
+								<li>Please also rate the review.</li>
+							{{/unless}}
+
+							{{#unless publishable}}
+								<li>Save it!</li>
+							{{/unless}}
+							<li>Publish it!</li>
+						</ul>
+					</div>
+				{{/unless}}
+
+				<h2>Your Feedback</h2>
+				{{#unless _is_public "Feedback"}}
+					{{>text_input method="set_field" collection_name="Feedback"
+						item_id=_id field="content" placeholder="Please give feedback."}}
+				{{else}}
+					{{>more content=content}}
+				{{/unless}}
+
+				{{#if _is_public "Feedback"}}
+					<h2 class="text-right">
+						You gave the review a rating of <em>{{rating}}</em> out of <em>5</em>
+					</h2>
+				{{/if}}
+
+				{{#unless _is_public "Feedback"}}
+					<h2>Helpfulness</h2>
+					{{>select_input method="set_field" collection_name="Feedback"
+							item_id=_id field="rating" options=_rating_options }}
+				{{/unless}}
+
+				{{#unless _is_public "Feedback"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish_feedback">Make public</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+			</div>
+		{{/with}}
+	{{/unless}}
+</template>
+
+<template name="publish_feedback">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Publish feedback</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to publish your feedback?<br>
+						If you publish your review it will be send to <br>
+						the author of the review. <br>
+					</p>
+
+					<p>
+						<em>This can not be undone!</em>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme" id="publish" data-dismiss="modal">Publish</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
