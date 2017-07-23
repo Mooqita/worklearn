@@ -1,4 +1,25 @@
 ###############################################
+@get_profile_name_by_user_id = (user_id, short = false, plus_id=true) ->
+	p_f =
+		owner_id: user_id
+	profile = Profiles.findOne p_f
+
+	if !profile
+		return "unknown"
+
+	name = (profile.given_name ? "") + " "
+
+	if not short
+		name += (profile.middle_name ? "") + " "
+		name += profile.family_name ? ""
+
+	if plus_id
+		name += "("+String(user_id)+")"
+
+	return name
+
+
+###############################################
 @get_profile_name = (profile, short = false) ->
 	if !profile
 		return ""

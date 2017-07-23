@@ -11,6 +11,8 @@
 @event_mail = "mail"
 @event_testing = "testing"
 @event_general = "general"
+@event_navigation = "navigate"
+@event_server = "server"
 
 ###############################################################
 # severity
@@ -42,10 +44,7 @@
 		name += "(" + owner_id + ")"
 
 	if requester_id
-		p_f =
-			owner_id: requester_id
-		profile = Profiles.findOne p_f
-		requester = get_profile_name profile, true
+		requester = @get_profile_name_by_user_id requester_id, true
 		requester += "(" + requester_id + ")"
 
 	msg = ""

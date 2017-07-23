@@ -6,6 +6,16 @@
 
 ################################################################
 Meteor.methods
+	log_navigation: (old_url, new_url) ->
+		user = get_profile_name_by_user_id this.userId
+		msg = user + "," + String(old_url) + "," + String(new_url)
+		log_event msg, event_navigation, event_info
+
+	log_action: (url, method) ->
+		user = get_profile_name_by_user_id this.userId
+		msg = user + "," + String(url) + "," + String(method)
+		log_event msg, event_general, event_info
+
 	log_user: () ->
 		headers = this.connection.httpHeaders
 		con_ip = String headers["x-forwarded-for"]

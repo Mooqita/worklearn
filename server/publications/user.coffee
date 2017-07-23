@@ -201,8 +201,10 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	user = calc_statistics user, fed_given, "feedback_given"
 	user = calc_statistics user, fed_received, "feedback_received"
 
-	log_publication "UserSummaries", null, {},
-			{}, "user_summary", user_id
+	msg = "UserSummaries for: " + get_profile_name_by_user_id user_id, true
+
+	log_publication msg, null, {},
+			{}, "user_summary", this.userId
 
 	this.added "user_summaries", user_id, user
 	this.ready()
