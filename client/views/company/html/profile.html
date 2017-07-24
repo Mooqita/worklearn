@@ -1,0 +1,36 @@
+<!------------------------------------------------
+|
+|	Company profile
+|
+-------------------------------------------------->
+<template name="company_profile">
+	{{#mooqita_wide_spacing}}
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Company Logo</h2>
+
+				{{#if profile.company_logo}}
+					<div class="text-center">
+						<img class="img-responsive"
+								 src="{{download_field_value "Profiles" profile._id
+																						 "company_logo" profile.company_logo}}">
+					</div>
+				{{/if}}
+
+				{{>upload method="set_field" collection_name="Profiles"
+					item_id=_profile._id field="company_logo"}}
+			</div>
+
+			<div class="col-md-8">
+				<h2>Company Name</h2>
+				{{>basic_input method="set_field" collection_name="Profiles"
+					item_id=_profile._id field="company_name" placeholder="Name of your company"}}
+
+				<h2>Company Description</h2>
+				{{>text_input method="set_field" collection_name="Profiles"
+					item_id=_profile._id field="company_description" placeholder="Let our students know a little more about your company."}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+

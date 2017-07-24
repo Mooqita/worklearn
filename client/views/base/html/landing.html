@@ -1,0 +1,50 @@
+<!-----------------------------------------
+|
+|  Landing page Template
+|
+------------------------------------------->
+<template name="mooqita_landing">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="hero hero-background">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<div class="row" style="margin-top: 50px">
+							<div class="col-md-7 col-md-offset-0
+													col-sm-8 col-sm-offset-2
+													col-xs-12 col-xs-offset-0
+													vcenter">
+								<h1 style="padding-bottom: 50px">
+									Let's think about the future of online work and education.
+								</h1>
+							</div><!--
+							This comment is important otherwise
+							the grid system will break. Due to
+							the interpretation of the white spaces!
+							--><div class="	col-md-5 col-md-offset-0
+															col-sm-8 col-sm-offset-2
+															col-xs-12 col-xs-offset-0
+															vcenter">
+	 							{{#unless currentUser}}
+									<div class="well" style="color: black; text-align: center">
+										{{>atForm}}
+									</div>
+								{{else}}
+									{{>share}}
+								{{/unless}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="container-fluid padding-top">
+		{{#mooqita_wide_spacing}}
+			{{>post_group group_name="frontpage"}}
+		{{/mooqita_wide_spacing}}
+	</section>
+</template>
+
+

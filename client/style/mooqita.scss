@@ -23,6 +23,38 @@
 .mooqita-layout p{
 }
 
+.mooqita-layout h1{
+	margin: 0;
+	padding: 0 0 20px 0;
+}
+
+.mooqita-layout h1{
+	margin: 45px 0 0 0;
+	padding: 0 0 15px 0;
+}
+
+.mooqita-layout h1:first-child{
+	margin: 0;
+}
+
+.mooqita-layout h2{
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 25px;
+}
+
+a.mooqita,
+.mooqita-layout h2 a{
+	color: $theme;
+}
+
+a.mooqita:hover,
+.mooqita-layout h2 a:hover{
+	color: $contrast-on-theme;
+	cursor: pointer;
+	text-decoration: none;
+}
+
 .mooqita-layout p.user-data{
 	white-space: pre-wrap;       /* Since CSS 2.1 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -45,7 +77,6 @@
 	min-height: 40.5px;
 	font-size: 16px;
 }
-
 
 .mooqita-layout .editable .form-control{
 	box-shadow: none;

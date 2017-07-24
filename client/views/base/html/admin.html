@@ -1,0 +1,94 @@
+<!------------------------------------------------
+|
+| Admin templates
+|
+-------------------------------------------------->
+<template name="admin">
+	{{#if isInRole 'admin'}}
+		<h1>Admin Dashboard</h1>
+
+		{{#if isInRole 'db_admin'}}
+			<h2> Database Permission </h2>
+			<div class="well">
+				<div class="row text-center"
+						 style="border: none 1px #ddd; border-bottom-style: solid;
+						 margin-bottom: 15px; padding-bottom: 5px">
+					<div class="col-md-3"> <b>Role</b> </div>
+					<div class="col-md-3"> <b>Collection</b> </div>
+					<div class="col-md-3"> <b>Field</b> </div>
+					<div class="col-md-1"> <b>Read</b> </div>
+					<div class="col-md-1"> <b>Modify</b> </div>
+				</div>
+
+				{{#each permissions}}
+					<form class="row" style="margin-bottom: 10px">
+  					<div class="form-group col-md-3">
+							{{>basic_input method="set_field" collection_name="Permissions"
+							field="role" item_id=_id}}
+						</div>
+
+  					<div class="form-group col-md-3">
+							{{>basic_input method="set_field" collection_name="Permissions"
+							field="collection_name" item_id=_id}}
+						</div>
+
+  					<div class="form-group col-md-3">
+							{{>basic_input method="set_field" collection_name="Permissions"
+							field="field" item_id=_id}}
+						</div>
+
+  					<div class="form-group col-md-1">
+							{{>check_input method="set_field" collection_name="Permissions"
+							field="read" item_id=_id type="checkbox"}}
+						</div>
+
+  					<div class="form-group col-md-1">
+							{{>check_input method="set_field" collection_name="Permissions"
+							field="modify" item_id=_id type="checkbox"}}
+						</div>
+
+						<div class="col-md-1">
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<div class="btn btn-warning" id="remove">
+										<span class="glyphicon glyphicon-remove-circle"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				{{/each}}
+
+				<form id="db_permission" class="row">
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control edit-field" name="role"
+									 placeholder="Role required e.g. 'all' or 'admin'" />
+					</div>
+
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control edit-field" name="collection"
+									 placeholder="Collection name" />
+					</div>
+
+					<div class="form-group col-md-3">
+						<input type="text" class="form-control edit-field" name="field"
+									 placeholder="Field name">
+					</div>
+
+					<div class="form-group col-md-offset-2 col-md-1">
+						<div class="btn-group btn-group-justified">
+							<div class="btn-group">
+								<button type="submit" class="btn btn-theme">
+									<div class="glyphicon glyphicon-plus"></div>
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		{{/if}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
+

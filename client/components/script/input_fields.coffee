@@ -47,6 +47,7 @@ Template.check_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -60,9 +61,9 @@ Template.select_input.helpers
 		field = get_field_value Template.instance().data
 
 		if !(field instanceof Array)
-			field = [field]
+			field = [String(field)]
 
-		if val in field
+		if String(val) in field
 			return "selected"
 
 #########################################################
@@ -76,13 +77,17 @@ Template.select_input.events
 		collection = this.collection_name
 		item_id = this.item_id
 
+		if not isNaN value
+			value = Number(value)
+
 		if this.session_var
 			Session.set this.session_var, value
 
-		Meteor.call method, collection, item_id, field, value, undefined,
+		Meteor.call method, collection, item_id, field, value,
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -100,6 +105,7 @@ Template.basic_input.helpers
 #########################################################
 Template.basic_input.events
 	"change .edit-field": (event) ->
+		console.log this
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -113,6 +119,7 @@ Template.basic_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -144,6 +151,7 @@ Template.text_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -205,6 +213,7 @@ Template.wysiwyg_input.events
 			(err, res)->
 				if err
 					sAlert.error("Changes not saved!" + err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -247,6 +256,7 @@ Template.code_input.events
 			(err, rsp)->
 				if err
 					sAlert.error("Changes not saved!" + err)
+					console.log err
 				if rsp
 					sAlert.success("Updated: " + field)
 

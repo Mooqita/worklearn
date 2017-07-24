@@ -1,0 +1,563 @@
+<!------------------------------------------------
+|
+|	Challenge
+|
+-------------------------------------------------->
+<template name="company_challenges">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group">
+						<button class="btn btn-theme" id="add_challenge" type="button">
+							Create challenge
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input placeholder="Search for challenges" id="query"
+								 class="form-control edit-field"/>
+						<span class="input-group-btn">
+
+							<button class="btn btn-theme" type="button" id="search">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					{{>paging subscription="my_challenges" page=0 count=10 parameter=parameter}}
+				</div>
+			</div>
+
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#each challenges}}
+						{{>challenge_preview}}
+					{{else}}
+						<h2><em>No challenges yet.</em></h2>
+					{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge list
+|
+-------------------------------------------------->
+<template name="challenge_preview">
+	<h2><a id="company_challenge">{{title}}</a></h2>
+
+	{{>more content=content}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Editor
+|
+-------------------------------------------------->
+<template name="company_challenge">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#with challenge}}
+				{{#unless g_is_public "Challenges"}}
+					<div class="padding-top">
+						<div class="alert alert-warning">
+							<h2>Todo List: Challenge</h2>
+
+							A summary of things you need to do before students can see your task:
+							<ul>
+								{{#unless title}}
+									<li>Give your task a title (required)</li>
+								{{/unless}}
+
+								{{#unless content}}
+									<li>Provide a description of the task(required)</li>
+								{{/unless}}
+
+								{{#unless num_reviews}}
+									<li>Define how many reviews students have to write to finish the task</li>
+								{{/unless}}
+
+								{{#unless material}}
+									<li>Add additional materials (optional)</li>
+								{{/unless}}
+
+								{{#unless g_is_saved "Challenges"}}
+									<li>Save it!</li>
+								{{/unless}}
+
+								<li>Publish your solution you find the button below.</li>
+							</ul>
+						</div>
+					</div>
+				{{/unless}}
+
+				<div class="padding-next">
+					<h1 class="editable">
+						{{#if g_is_public "Challenges"}}
+							<em><b>LIVE</b></em>
+						{{/if}}
+
+						{{>basic_input method="set_field" collection_name="Challenges"
+						item_id=_id field="title" placeholder="Title of your challenge"}}
+
+						<!--{{#unless g_is_public "Challenges"}}
+							{{>basic_input method="set_field" collection_name="Challenges"
+							item_id=_id field="title" placeholder="Title of your challenge"}}
+						{{else}}
+							{{title}}
+						{{/unless}}-->
+					</h1>
+
+					<div class="form-group" style="display: block;overflow: hidden;">
+						<h2>Content:</h2>
+						{{>text_input method="set_field" collection_name="Challenges"
+								item_id=_id field="content" placeholder="Content"}}
+
+						<!--{{#unless g_is_public "Challenges"}}
+							{{>text_input method="set_field" collection_name="Challenges"
+									item_id=_id field="content" placeholder="Content"}}
+						{{else}}
+							{{>more content=content}}
+						{{/unless}}-->
+
+						{{#if g_is_public "Challenges"}}
+							<h2>Shareable link:</h2>
+
+							<div class="input-group">
+								<div class="input-group-btn" id="icon_download" title="select the entire url">
+									<button type="button" class="btn btn-theme">
+										<span class="glyphicon glyphicon-download"></span>
+									</button>
+								</div>
+
+								<div class="form-control"
+										 style="background: #f5f5f5; overflow: hidden"
+										 id="challenge_url">
+									<div style="white-space:nowrap">
+										{{share_url}}
+									</div>
+								</div>
+							</div>
+						{{else}}
+							<h2>Number of reviews required</h2>
+							{{>basic_input  method="set_field" collection_name="Challenges" type="number"
+									item_id=_id field="num_reviews" placeholder="Number of reviews required."}}
+						{{/if}}
+
+						<!--{{#unless g_is_public "Challenges"}}-->
+							<h2>Upload Additional material:</h2>
+							<h2>
+								{{>upload method="set_field" collection_name="Challenges"
+									item_id=_id field="material"}}
+							</h2>
+						<!--{{/unless}}-->
+
+						{{#if material}}
+							<h2>Download Additional material:</h2>
+							<h2>
+								{{>download collection_name="Challenges" item_id=_id field="material"}}
+							</h2>
+						{{/if}}
+					</div>
+
+					{{#if isInRole 'admin'}}
+						<div class="form-group">
+							<h2>Message Students</h2>
+
+							<input placeholder="Subject"
+										 class="form-control edit-field"
+										 type="text" id="subject"/>
+
+							<textarea  class="form-control edit-field" placeholder="Your message"
+												 id="message" rows="8"></textarea>
+
+							<div class="text-right" style="padding-top: 15px;">
+								<div class="btn btn-theme" id="send" {{send_disabled}}>
+									{{#if send_disabled}}
+										Sending mail
+										<span class="glyphicon glyphicon-refresh spin"></span>
+									{{else}}
+										Send Message
+									{{/if}}
+								</div>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+
+				{{#unless g_is_public "Challenges"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Make public</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+
+				{{#if g_is_public "Challenges"}}
+					{{>challenge_solutions .}}
+				{{/if}}
+			{{/with}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge solutions
+|
+-------------------------------------------------->
+<template name="challenge_solutions">
+	<div class="item padding-top">
+		<h1>Solutions</h1>
+
+		<div class="row" style="margin-bottom: 25px">
+			<div class="col-sm-7">
+				<div class="input-group" style="margin-bottom: 15px">
+					<span class="input-group-addon">
+						<label>
+							public only <input type="checkbox" id="public_only">
+						</label>
+					</span>
+
+					<input placeholder="Search for challenges" id="query"
+							 class="form-control edit-field"/>
+
+					<span class="input-group-btn">
+						<button class="btn btn-theme" type="button" id="search">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-sm-5">
+				{{>paging subscription="challenge_summary" page=0 count=10 parameter=parameter}}
+			</div>
+		</div>
+
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#each challenge_solutions}}
+				{{>challenge_solution}}
+			{{else}}
+				<p>
+					There are no solutions to your task yet.
+				</p>
+			{{/each}}
+		{{/unless}}
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge solution
+|
+-------------------------------------------------->
+<template name="challenge_solution">
+	<div class="row">
+		<div class="col-sm-2 col-ms-3">
+			{{>avatar collection_name="Profiles"
+				 observe = (profile_avatar owner_id)
+				 item_id = (profile_id owner_id)
+				 field = "avatar"}}
+		</div>
+
+		<div class="col-sm-10 col-ms-9">
+			<h2>
+				<a id="user_info">{{profile_name owner_id}}</a>
+				{{{average_rating}}}
+
+				{{#if _is_owner  "Challenges" .}}
+					<em class="pull-right"> <span class="badge background-theme"></span>Author</em>
+				{{/if}}
+
+				{{#if published}}
+					{{#if isInRole 'admin'}}
+						<span class="btn btn-contrast pull-right" id="reopen">reopen</span>
+					{{else}}
+						<span class="badge background-contrast pull-right">public</span>
+					{{/if}}
+				{{/if}}
+			</h2>
+
+			{{>more content=content}}
+			{{#if material}}
+				<h2>Additional Material</h2>
+				<h2>
+					{{>download collection_name="Solutions"
+						item_id=_id field="material"}}
+				</h2>
+			{{/if}}
+
+			{{#if reviews}}
+				<h2>
+					<a id="show_reviews" data-toggle="collapse" data-target="#{{_id}}">
+						{{#unless reviews_visible}}
+							<span class="glyphicon glyphicon-expand"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-collapse-down"></span>
+						{{/unless}}
+					</a>
+					Reviews
+				</h2>
+			{{/if}}
+		</div>
+	</div>
+
+		<div id="{{_id}}" class="row collapse">
+			<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
+				{{#each reviews}}
+					<div class="row">
+						<div class="col-sm-2 col-ms-3">
+							 {{>avatar collection_name="Profiles"
+									 observe = (profile_avatar owner_id)
+									 item_id=(profile_id owner_id)
+									 field="avatar"}}
+						</div>
+
+						<div class="col-sm-10 col-ms-9">
+							<div class="row">
+								<div class="col-xs-6">
+									<h2>
+										<a>{{profile_name owner_id}}</a>
+									</h2>
+								</div>
+
+								<div class="col-xs-6">
+									<h2>
+										Rating <em>{{rating}}</em> out of <em>5</em>
+									</h2>
+								</div>
+
+								<div class="col-xs-12">
+									{{>more content=content}}
+
+									{{#each feedback _id}}
+										<div class="row" style="margin-left: 25px">
+											<div class="col-xs-6">
+												<h2>
+													Rebuttal <a>{{profile_name owner_id}}</a>
+												</h2>
+											</div>
+
+											<div class="col-xs-6">
+												<h2>
+													Rating <em>{{rating}}</em> out of <em>5</em>
+												</h2>
+											</div>
+
+											<div class="col-xs-12">
+												{{>more content=content}}
+											</div>
+										</div>
+								{{/each}}
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge reset solution
+|
+-------------------------------------------------->
+<template name="reopen_solution">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Reopen Solution</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to reopen the solution?
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme"
+							 id="reopen" data-dismiss="modal">Reopen</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Student info modal
+|
+-------------------------------------------------->
+<template name="show_student_info">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title"></h1>
+				</div>
+
+				<div class="modal-body">
+					{{>student_info}}
+				</div>
+
+				<div class="modal-footer right">
+					<div class="btn-group">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">
+							<span class="glyphicon glyphicon-log-out"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge delete modal
+|
+-------------------------------------------------->
+<template name="delete_challenge">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Delete challenge</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to delete your challenge?<br>
+						This operation cannot be undone!
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Feedback
+|
+-------------------------------------------------->
+<template name="challenge_feedback">
+	<div class="row">
+		<div class="form-group col-md-7">
+			<label for="feedback"
+						 title="Your rating for this challenge overall">
+				Feedback
+			</label>
+
+			<textarea class="form-control" id="feedback"
+								rows="8" style="height: 183px">{{challenge_feedback}}</textarea>
+
+			<div class="btn-toolbar">
+				<span class="btn-group">
+					{{#if save_state}}
+						<div class="btn btn-red" id="save">Save</div>
+					{{else}}
+						<div class="btn btn-success" id="save">Save</div>
+					{{/if}}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="rating"
+								 title="Your rating for this challenge"
+									>Overall Rating</label>
+					<select class="form-control" id="rating" type="select">
+						<option value="null" disabled {{selected_default challenge_rating}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_rating '5'}}>great</option>
+						<option value="4" {{selected challenge_rating '4'}}>good</option>
+						<option value="3" {{selected challenge_rating '3'}}>mediocre</option>
+						<option value="2" {{selected challenge_rating '2'}}>needs improvement</option>
+						<option value="1" {{selected challenge_rating '1'}}>need lots of improvement</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="ease"
+								 title="Your rating for this challenge overall"
+									>Ease of Challenge</label>
+					<select class="form-control" id="ease" type="select">
+						<option value="null" disabled {{selected_default challenge_ease}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_ease '5'}}>too hard</option>
+						<option value="4" {{selected challenge_ease '4'}}>hard</option>
+						<option value="3" {{selected challenge_ease '3'}}>balanced</option>
+						<option value="2" {{selected challenge_ease '2'}}>easy</option>
+						<option value="1" {{selected challenge_ease '1'}}>too easy</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="timing"
+								 title="How much time did you need to solve the challenge."
+									>Time required</label>
+					<select class="form-control" id="timing" type="select">
+						<option value="null" {{selected_default challenge_timing}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_timing '5'}}>much more time required</option>
+						<option value="4" {{selected challenge_timing '4'}}>more time required</option>
+						<option value="3" {{selected challenge_timing '3'}}>balanced</option>
+						<option value="2" {{selected challenge_timing '2'}}>less time required</option>
+						<option value="1" {{selected challenge_timing '1'}}>much less time required</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+

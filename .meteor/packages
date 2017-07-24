@@ -70,4 +70,4 @@ markdown@1.0.12
 http@1.2.12
 gwendall:impersonate
 reactive-dict@1.1.9
-dynamic-import
+dynamic-import@0.1.1

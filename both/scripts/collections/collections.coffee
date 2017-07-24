@@ -23,9 +23,11 @@
 
 #######################################################
 @ChallengeSummary = new Mongo.Collection("challenge_summary")
-@UserCredentials = new Mongo.Collection("user_credentials")
 @TutorSolutions = new Mongo.Collection("tutor_solutions")
-@UserCredits = new Mongo.Collection("user_credits")
+
+#######################################################
+@UserCredentials = new Mongo.Collection("user_credentials")
+@UserSummaries = new Mongo.Collection("user_summaries")
 
 #######################################################
 @Admin = new Mongo.Collection("admin")

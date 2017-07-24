@@ -1,0 +1,85 @@
+<!------------------------------------------------
+|
+| Login templates
+|
+-------------------------------------------------->
+<template name="mooqita_login">
+	<div class="container-fluid">
+		{{#mooqita_wide_spacing}}
+			<div style="text-align: center; max-width: 450px;">
+				<h1>Please login to continue</h1>
+
+				<div class="well" style="color: black;">
+					{{> atForm}}
+				</div>
+			</div>
+		{{/mooqita_wide_spacing}}
+	</div>
+</template>
+
+
+<template name="first_timer">
+	<div class="container-fluid">
+		{{#mooqita_wide_spacing}}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
+						<h1>Welcome to Mooqita</h1>
+						<p>Before we can get started we need some information about you.</p>
+						<h1>Are you: </h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="select-occupation {{select_disabled}}">
+						<div class="item" id="student">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-blackboard"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<label>Student</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="select-occupation select-disabled">
+						<div class="item">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-education"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<label>Teacher</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="select-occupation select_disabled">
+						<div class="item" id="company">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-briefcase"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<label>Company</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/mooqita_wide_spacing}}
+	</div>
+</template>
