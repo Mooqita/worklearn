@@ -91,7 +91,11 @@ Template.student_feedback_solution.helpers
 		return ""
 
 	is_feedback_broken: () ->
-		return true
+		filter =
+			parent_id: this._id
+		feedback = Feedback.findOne filter
+
+		return not feedback
 
 ########################################
 Template.student_feedback_solution.events

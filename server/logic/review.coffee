@@ -29,7 +29,7 @@
 		published: false
 
 	store_document_unprotected Reviews, review
-	gen_feedback review
+	gen_feedback solution, review, user
 
 	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
 	log_event msg, event_logic, event_info

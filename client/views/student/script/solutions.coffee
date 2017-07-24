@@ -15,6 +15,7 @@ _items_missing = (collection, challenge_id) ->
 
 	filter =
 		published: true
+		owner_id: Meteor.userId()
 
 	if challenge_id
 		filter.challenge_id = challenge_id

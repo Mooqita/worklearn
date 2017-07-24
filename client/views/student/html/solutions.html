@@ -97,23 +97,11 @@
 					{{else}}
 						<div class="alert alert-warning">
 							You have not yet submitted a solution to this challenge.
-
-							{{#unless credit}}
-								<p>
-									You still have open solutions. You can start a new
-									challenge after you finished all necessary reviews.
-									Please go back to
-									<a href="user?template=student_solutions">My Challenges</a>
-									to find your open challenges.
-								</p>
-							{{/unless}}
 						</div>
 
-						{{#if credit}}
-							<div class="text-right">
-								<div class="btn btn-theme" id="take_challenge">Take challenge</div>
-							</div>
-						{{/if}}
+						<div class="text-right">
+							<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+						</div>
 					{{/each}}
 				{{/unless}}
 			{{/unless}}

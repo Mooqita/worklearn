@@ -47,6 +47,7 @@ Template.check_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -86,6 +87,7 @@ Template.select_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -103,6 +105,7 @@ Template.basic_input.helpers
 #########################################################
 Template.basic_input.events
 	"change .edit-field": (event) ->
+		console.log this
 		field = event.target.id
 		value = event.target.value
 		method = this.method
@@ -116,6 +119,7 @@ Template.basic_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -147,6 +151,7 @@ Template.text_input.events
 			(err, res) ->
 				if err
 					sAlert.error(err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -208,6 +213,7 @@ Template.wysiwyg_input.events
 			(err, res)->
 				if err
 					sAlert.error("Changes not saved!" + err)
+					console.log err
 				if res
 					sAlert.success("Updated: " + field)
 
@@ -250,6 +256,7 @@ Template.code_input.events
 			(err, rsp)->
 				if err
 					sAlert.error("Changes not saved!" + err)
+					console.log err
 				if rsp
 					sAlert.success("Updated: " + field)
 
