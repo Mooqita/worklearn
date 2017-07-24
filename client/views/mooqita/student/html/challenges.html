@@ -1,0 +1,51 @@
+<!------------------------------------------------
+|
+|	Student find challenges
+|
+-------------------------------------------------->
+<template name="student_find_challenges">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<h1>Find Challenges</h1>
+
+			<p>
+				Here you can find challenges available right now.
+			</p>
+
+			<!--div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-theme" id="find_challenge" type="button">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+
+				{{>basic_input method="set_field" collection_name="Profiles"
+					item_id=_id field="query" placeholder="search for ..."}}
+			</div-->
+
+			{{#each challenges}}
+				{{>student_challenge_preview}}
+			{{else}}
+				<p>No challenges yet.</p>
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="student_challenge_preview">
+	<hr>
+
+	<h3>
+		{{#if has_solution}}
+			<em><span class="glyphicon glyphicon-check"></span></em>
+		{{/if}}
+
+		<a id="student_solution">
+			<b><em>{{title}}</em></b>
+		</a>
+	</h3>
+
+	{{>more content=content}}
+</template>
+

@@ -1,0 +1,33 @@
+<template name="mooqita_layout" xmlns="http://www.w3.org/1999/html">
+	<div class="mooqita-layout">
+			{{#if currentUser}}
+				{{#if profile_ready}}
+					{{#if _profile.has_occupation}}
+						{{> UI.contentBlock}}
+					{{else}}
+						{{>first_timer}}
+					{{/if}}
+				{{else}}
+					{{>wait}}
+				{{/if}}
+			{{else}}
+				{{> UI.contentBlock}}
+			{{/if}}
+	</div>
+</template>
+
+
+<template name="mooqita_view">
+	{{>Template.dynamic template=_selected_view}}
+</template>
+
+
+<template name="mooqita_wide_spacing">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				{{> UI.contentBlock}}
+			</div>
+		</div>
+	</div>
+</template>

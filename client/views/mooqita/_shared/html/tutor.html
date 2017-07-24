@@ -1,0 +1,112 @@
+<template name="tutor">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input placeholder="Search for challenges" id="query"
+								 class="form-control edit-field"/>
+						<span class="input-group-btn">
+
+							<button class="btn btn-theme" type="button" id="search">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					{{>paging subscription="challenges" page=0 count=10 parameter=query}}
+				</div>
+			</div>
+
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#each challenges}}
+					<h2><a href="{{challenge_url}}">{{title}}</a></h2>
+					{{>more content=content}}
+				{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+<!------------------------------------------------
+|
+|	list all solutions for a challenge
+|
+-------------------------------------------------->
+<template name="tutor_solutions">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#with challenge}}
+					<h1>{{title}}</h1>
+					{{>more content=content}}
+				{{/with}}
+
+				{{>paging subscription="solutions_for_tutor"
+						page=0 count=10 parameter=parameter}}
+
+				{{#each solutions}}
+					<h2>
+						<a href="{{solution_url}}">
+							Student is waiting for {{wait}} since {{formatDate date}}
+						</a>
+					</h2>
+					{{>more content=content}}
+				{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	add reviews for a specific solution
+|
+-------------------------------------------------->
+<template name="tutor_solution">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#with challenge}}
+					<h1>{{title}}</h1>
+					{{>more content=content}}
+				{{/with}}
+
+				{{#with solution}}
+					<h1>Solution</h1>
+					{{>more content=content}}
+
+					{{#if material}}
+						<h2>
+							{{>download collection_name="Solutions"
+									item_id=_id field="material"
+									label="Download additional material"}}
+						</h2>
+					{{/if}}
+				{{/with}}
+			{{/unless}}
+
+			{{#unless loading}}
+				{{#unless review_url}}
+					<div class="text-right">
+						<span class="btn btn-theme" id="review">Write review</span>
+					</div>
+				{{else}}
+					<h2>Review prepared <a href="{{review_url}}">click here</a> to finish!</h2>
+				{{/unless}}
+			{{else}}
+				{{>wait}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+

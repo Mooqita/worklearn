@@ -1,0 +1,201 @@
+<!------------------------------------------------
+|
+|	Student reviews
+|
+-------------------------------------------------->
+<template name="student_reviews">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<h1>Reviews</h1>
+
+			<p>
+				Here you can find all reviews you wrote for your peers.
+				If you can not find reviews here please go back to
+				<a href="user?template=student_solutions">My Challenges</a>
+				and select the challenge you want to write a review for.
+			</p>
+
+			<!--{{#if searching}}
+				{{>wait}}
+			{{else}}
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="find_review">Find review</div>
+				</div>
+			{{/if}}
+
+			{{#if error_message}}
+				<div class="alert background-theme" style="margin-top: 15px">
+					We were not able to find a review for you yet.
+					Please come back later and try again.
+				</div>
+			{{/if}}-->
+
+			{{#each reviewed_challenges}}
+				{{#each reviews challenge_id}}
+					{{>student_review_preview}}
+				{{/each}}
+			{{else}}
+				<hr>
+
+				<h2>
+					<em>You have not submitted any reviews yet.</em>
+				</h2>
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="student_review_preview">
+	{{#if first}}
+		<hr>
+
+		<h2>{{challenge.title}}</h2>
+		{{>more content=challenge.content}}
+	{{/if}}
+
+	<div class="indent_l1">
+		<h2>
+			<a id="student_review">
+				{{#unless _is_public "Reviews"}}
+					<span class="badge background-contrast">open</span>
+				{{/unless}}
+				Your review
+			</a>
+
+			{{#if _is_public "Reviews"}}
+				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+			{{/if}}
+		</h2>
+		{{>more content=content}}
+	</div>
+</template>
+
+
+<template name="student_review">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			<div class="item padding-top">
+				{{#with challenge}}
+					<h1>{{title}}</h1>
+
+					{{>more content=content}}
+
+					{{#if material}}
+						<h2>
+							{{>download collection_name="Challenges"
+								item_id=_id field="material"}}
+						</h2>
+					{{/if}}
+				{{/with}}
+
+				{{#with solution}}
+					<h1>Solution</h1>
+
+					{{>more content=content}}
+
+					{{#if material}}
+						<h2>
+							{{>download collection_name="Solutions"
+								item_id=_id field="material"}}
+						</h2>
+					{{/if}}
+				{{/with}}
+
+				{{#with review}}
+					{{#unless _is_public "Reviews"}}
+						<h2>Todo List: Review</h2>
+						<hr>
+						<div class="alert alert-warning">
+							Here is a list of things you have to do before your review is done:
+							<ul>
+								{{#unless _is_saved "Reviews"}}
+									<li>Write your review. Well that seems obvious.</li>
+									<li>And save it!</li>
+								{{/unless}}
+
+								{{#unless rating}}
+									<li>Select a rating for the solution.</li>
+								{{/unless}}
+
+									<li>Publish your review.</li>
+							</ul>
+						</div>
+					{{/unless}}
+					<h1>Your Review</h1>
+					{{#unless _is_public "Reviews"}}
+						{{>text_input method="set_field" collection_name="Reviews"
+							item_id=_id field="content" placeholder="Please provide your feedback here"}}
+					{{else}}
+						<p>
+							{{>more content=content}}
+						</p>
+					{{/unless}}
+
+					<div class="form-group">
+						{{#unless _is_public "Reviews"}}
+							<h2>Rating</h2>
+							{{>select_input method="set_field" collection_name="Reviews"
+									item_id=_id field="rating" options=_rating_options }}
+						{{else}}
+							<h2>Your rated the solution with <em>{{rating}}</em> out of <em>5</em></h2>
+						{{/unless}}
+					</div>
+
+					{{#unless _is_public "Reviews"}}
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" id="save">Save</div>
+								</span>
+							</div>
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" {{publish_disabled}}
+											 id="publish">Make public</div>
+								</span>
+							</div>
+						</div>
+					{{else}}
+						{{>student_feedback_review}}
+					{{/unless}}
+				{{/with}}
+			</div>
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="publish_review">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Publish review</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to publish your review?<br>
+						If you publish your review it will be send to <br>
+						the author of the solution to gather feedback. <br>
+					</p>
+
+					<p>
+						<em>This can not be undone!</em>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme" id="publish" data-dismiss="modal">Publish</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

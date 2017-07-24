@@ -29,7 +29,7 @@ diff-sequence@1.0.7
 dynamic-import@0.1.1
 ecmascript@0.8.1
 ecmascript-runtime@0.4.1
-ecmascript-runtime-client@0.4.2
+ecmascript-runtime-client@0.4.3
 ecmascript-runtime-server@0.4.1
 ejson@1.0.13
 email@1.2.3

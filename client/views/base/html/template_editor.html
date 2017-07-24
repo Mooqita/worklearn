@@ -1,0 +1,78 @@
+<template name="template_dashboard">
+	{{#unless template}}
+		<h1>Dashboard: Templates</h1>
+
+		<hr>
+
+		<div class="input-group" style="padding-bottom: 15px">
+			<span class="input-group-btn">
+				<button class="btn btn-red" id="add_template" type="button">Add template</button>
+			</span>
+
+			<input type="text" class="form-control" placeholder="Search your templates ...">
+		</div>
+
+		{{#unless templates}}
+			<div class="well">
+				<p>No templates yet.</p>
+			</div>
+		{{/unless}}
+
+		{{#each templates}}
+			<div class="input-group" style="padding-bottom: 1px">
+				<span class="input-group-btn">
+					<a class="btn btn-theme" href="{{template_url}}">Edit</a>
+				</span>
+
+				<div class="form-control">{{name}}</div>
+			</div>
+		{{/each}}
+	{{else}}
+		{{>template_editor template}}
+	{{/unless}}
+</template>
+
+
+<template name="template_editor">
+	<div class="well">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template name</label>
+					{{>basic_input method="set_field" collection_name="Templates"
+							item_id=_id field="name" placeholder="Template name" type="text"}}
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Template identifier</label>
+					<a class="form-control" href="{{response_url}}"><em>{{_id}}</em></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{#if template_exists}}
+		{{#if template_loaded}}
+			{{>code_input method="set_field" collection_name="Templates" item_id=_id field="code"}}
+		{{else}}
+			{{>wait}}
+		{{/if}}
+	{{else}}
+		{{>ER_404}}
+	{{/if}}
+</template>
+
+
+<template name="_edit_template_toggle">
+	{{#if _can_edit_template template._id 'editor'}}
+		<div style="top:10px; left:10px; position: fixed; z-index: 1">
+      <div class="tool-background" id="edit">
+        <span class="glyphicon glyphicon-edit"></span>
+      </div>
+    </div>
+	{{/if}}
+</template>
+
+
