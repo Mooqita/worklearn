@@ -73,14 +73,10 @@ Template.student_solution_preview.helpers
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
-
-########################################
-Template.student_solution_preview.events
-	"click #student_solution": () ->
+	solution_url: () ->
 		param =
 			challenge_id: this.challenge_id
-			template: "student_solution"
-		FlowRouter.setQueryParams param
+		return build_url "student_solution", param
 
 
 ########################################
@@ -189,6 +185,22 @@ Template.student_solution_reviews.helpers
 		res = "" + n
 		return res
 
+	num_reviews: () ->
+		filter =
+			owner_id: this.owner_id
+			challenge_id: this.challenge_id
+		res = Reviews.find filter
+		return res.count()
+
+	can_start_review: () ->
+		challenge = Challenges.findOne this.challenge_id
+		items_required = challenge.num_reviews
+		filter =
+			owner_id: this.owner_id
+			challenge_id: this.challenge_id
+		res = Reviews.find filter
+		return items_required > res.count()
+
 	reviews: () ->
 		filter =
 			owner_id:
@@ -244,8 +256,7 @@ Template.student_solution_reviews.events
 						review_id: rsp.review_id
 						solution_id: rsp.solution_id
 						challenge_id: rsp.challenge_id
-						template: "student_review"
-					FlowRouter.setQueryParams param
+					return FlowRouter.go build_url "student_review", param
 
 	"click #request_review":(event)->
 		if event.target.attributes.disabled

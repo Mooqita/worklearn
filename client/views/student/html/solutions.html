@@ -46,7 +46,7 @@
 				<span class="badge background-contrast">new</span>
 			{{/unless}}
 
-			<a id="student_solution">
+			<a href="{{solution_url}}">
 				{{challenge.title}}
 			</a>
 
@@ -120,7 +120,7 @@
 				<hr>
 				<p>
 					Please do not forget to go to your
-					<a href="user?template=student_profile" target="_blank">profile</a>
+					<a href="{{profile_url "student"}}" target="_blank">profile</a>
 					and let us know if you want to take part in the
 					final paid challenge or you are interested in job
 					offerings.
@@ -161,12 +161,14 @@
 					{{#if is_review_missing}}
 						<li>
 							<p>
-								Write <b>{{missing_reviews}} more reviews</b> for your peers.
+								Write and finish <b>{{missing_reviews}} more reviews</b> for your peers.
 								Please keep in mind that <b>you have 24 hours</b> to finish a review
-								after you clicked the button. Please start the review only if you
-								have time to finish it. It is a courtesy to your peers to not make
-								them hold there breath so long. Visit our <a href="help/#9NARA6Bbzpgj63GeJ">
-								How to Write a Great Review</a> article if you want some tips.
+								after you clicked the button. You can find your reviews
+								<a href="{{build_url "student_reviews"}}">here</a>.
+								Please start the review only if you have time to finish it. It is a
+								courtesy to your peers to not make	them hold there breath so long.
+								Visit our <a href="help/#9NARA6Bbzpgj63GeJ"> How to Write a Great
+								Review</a> article if you want some tips.
 							</p>
 							{{#unless g_is_public "Solutions"}}
 								<b>Publish your solution to start writing reviews.</b>
@@ -177,7 +179,9 @@
 												<div id="republish" class="btn btn-theme">Republish</div>
 											{{/unless}}
 
-											<div id="find_review" class="btn btn-theme">Start a review</div>
+											{{#if can_start_review}}
+												<div id="find_review" class="btn btn-theme">Start a review</div>
+											{{/if}}
 										</div>
 								{{else}}
 									<div class="text-right" style="padding-top:15px">

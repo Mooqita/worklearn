@@ -28,19 +28,19 @@
 	solution_profile = Profiles.findOne filter
 
 	subject = "Mooqita: You got a new review"
-	url = "user?template=student_solution&challenge_id=" + challenge._id
+	url = build_url "student_solution", {challenge_id: challenge._id}
 
 	name = if solution_profile then solution_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received a new review in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " +  "www.mooqita.org/" + url + "\n\n"
+	body += "To check it out, follow this link: " +  "https://mooqita.org" + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"www.mooqita.org/" + "user?template=student_profile\n"
+					"https://mooqita.org" + build_url "student_profile"
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -63,7 +63,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: A review timed out"
-	url = "user?template=student_solution&challenge_id=" + challenge._id
+	url = build_url "student_solution", {challenge_id: challenge._id}
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
 
@@ -77,7 +77,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"www.mooqita.org/" + "user?template=student_profile\n"
+					"https://mooqita.org" + build_url "student_profile"
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -103,23 +103,25 @@
 		owner_id: review.owner_id
 	review_profile = Profiles.findOne filter
 
+	param =
+		review_id: + review._id
+		solution_id: + solution._id
+		challenge_id: challenge._id
+
+	url = build_url "student_review", param
 	subject = "Mooqita: New feedback for your reviews"
-	url = "user?template=student_review" +
-		"&review_id=" + review._id +
-		"&solution_id=" + solution._id +
-		"&challenge_id=" + challenge._id
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received feedback to one of your reviews in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " + "www.mooqita.org/" + url + "\n\n"
+	body += "To check it out, follow this link: " + "https://mooqita.org" + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: "+
-					"www.mooqita.org/" + "user?template=student_profile\n"
+					"https://mooqita.org" + build_url "student_profile"
 
 	owner = Meteor.users.findOne review.owner_id
 	send_message_mail owner, subject, body, url

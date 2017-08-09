@@ -78,7 +78,8 @@
 <template name="optional_menu">
 	{{#if isInRole 'tutor'}}
 		<span>
-			<a class="navigation-button control-navigate" id="tutor">
+			<a class="navigation-button control-navigate"
+					 href="{{build_url "tutor"}}">
 				Tutor
 			</a>
 		</span>

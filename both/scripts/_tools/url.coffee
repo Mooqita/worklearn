@@ -11,3 +11,14 @@
 		return true
 
 	return false
+
+##############################################
+@build_url = (template, query, absolute=false) ->
+	app = if absolute then "app" else "/app"
+	url = FlowRouter.path app+"/"+template, null, query
+
+	if absolute
+		url = Meteor.absoluteUrl(url)
+
+	return url
+

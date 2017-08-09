@@ -40,13 +40,3 @@ Template.student_challenge_preview.helpers
 
 		return Solutions.find(filter).count()>0
 
-
-########################################
-Template.student_challenge_preview.events
-	"click #student_solution": () ->
-		param =
-			challenge_id: this._id
-			template: "student_solution"
-		FlowRouter.setQueryParams param
-
-

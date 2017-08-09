@@ -9,38 +9,37 @@
 			{{>optional_menu}}
 
 			<span>
-				<a class="navigation-button control-navigate" id="student_profile">
+				<a class="navigation-button control-navigate"
+					 href="{{build_url "student_profile"}}">
 					Profile
 				</a>
 			</span>
 
-			<!--span>
-				<a class="navigation-button control-navigate" id="student_find_challenges">
-					Find Challenges
-				</a>
-			</span-->
-
 			<span>
-				<a class="navigation-button control-navigate" id="student_solutions">
+				<a class="navigation-button control-navigate"
+					 href="{{build_url "student_solutions"}}">
 					My Challenges
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button control-navigate" id="student_reviews">
+				<a class="navigation-button control-navigate"
+					 href="{{build_url "student_reviews"}}">
 					Reviews
 				</a>
 			</span>
 
 			<span>
-				<a class="navigation-button control-navigate" id="student_credentials">
+				<a class="navigation-button control-navigate"
+					 href="{{build_url "student_credentials"}}">
 					Resume
 				</a>
 			</span>
 
 
 				<span class="pull-right">
-					<a class="navigation-button control-navigate" id="student_messages">
+					<a class="navigation-button control-navigate"
+						 href="{{build_url "student_messages"}}">
 						Messages
 						{{#if num_new_messages}}
 							<span class="badge background-contrast">{{num_new_messages}}</span>

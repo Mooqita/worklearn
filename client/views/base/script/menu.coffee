@@ -18,11 +18,3 @@ Template.mooqita_menu.events
 		Meteor.logout()
 		FlowRouter.go "/"
 
-	"click .control-navigate": (event)->
-		lnk = event.target.id
-		if lnk
-			param =
-				template: lnk
-
-			FlowRouter.go "/user", null, param
-

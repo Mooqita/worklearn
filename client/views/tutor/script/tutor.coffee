@@ -20,8 +20,7 @@ Template.tutor.helpers
 	challenge_url: () ->
 		queryParams =
 			challenge_id: this._id
-			template: "tutor_solutions"
-		url = FlowRouter.path "user", null, queryParams
+		url = build_url "tutor_solutions", queryParams
 		return url
 
 ########################################
@@ -68,8 +67,7 @@ Template.tutor_solutions.helpers
 		queryParams =
 			solution_id: this.solution_id
 			challenge_id: challenge_id
-			template: "tutor_solution"
-		url = FlowRouter.path "user", null, queryParams
+		url = build_url "tutor_solution", queryParams
 		return url
 
 
@@ -122,7 +120,6 @@ Template.tutor_solution.events
 						review_id: res.review_id
 						solution_id: res.solution_id
 						challenge_id: res.challenge_id
-						template: "student_review"
-					url = FlowRouter.path "user", null, queryParams
+					url = build_url "student_review", queryParams
 					ins.review_url.set url
 

@@ -8,7 +8,6 @@
 
 #######################################################
 @Permissions = new Mongo.Collection("permissions")
-@Templates = new Mongo.Collection("templates")
 @Summaries = new Mongo.Collection("summaries")
 
 #######################################################

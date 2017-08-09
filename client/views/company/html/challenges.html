@@ -55,7 +55,11 @@
 |
 -------------------------------------------------->
 <template name="challenge_preview">
-	<h2><a id="company_challenge">{{title}}</a></h2>
+	<h2>
+		<a href="{{build_url "company_challenge" (object challenge_id=_id)}}">
+			{{title}}
+		</a>
+	</h2>
 
 	{{>more content=content}}
 </template>

@@ -41,7 +41,7 @@
 
 	<div class="indent_l1">
 		<h2>
-			<a id="student_review">
+			<a href="{{review_url}}">
 				{{#unless g_is_public "Reviews"}}
 					<span class="badge background-contrast">open</span>
 				{{/unless}}
@@ -153,7 +153,10 @@
 				{{/with}}
 
 				<span class="btn-group btn-group-justified">
-					<div class="btn btn-theme" id="go_to_solution">Go back to your Solution</div>
+					<a class="btn btn-theme"
+						 href="{{solution_url}}">
+						Go back to your Solution
+					</a>
 				</span>
 			</div>
 		{{/unless}}

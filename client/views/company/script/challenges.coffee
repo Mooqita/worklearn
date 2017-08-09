@@ -55,13 +55,8 @@ Template.challenge_preview.helpers
 
 		return "No description available, yet."
 
-########################################
-Template.challenge_preview.events
-	"click #company_challenge": () ->
-		param =
-			challenge_id: this._id
-			template: "company_challenge"
-		FlowRouter.setQueryParams param
+	challenge_link: () ->
+		return build_url "company_challenge", {challenge_id: this._id}
 
 
 ########################################
@@ -111,8 +106,9 @@ Template.company_challenge.helpers
 		return ""
 
 	share_url: ->
-		url = "user?template=student_solution&challenge_id=" + this._id
-		url = Meteor.absoluteUrl(url)
+		param =
+			challenge_id: this._id
+		url = build_url "student_solution", param, true
 		return url
 
 ########################################

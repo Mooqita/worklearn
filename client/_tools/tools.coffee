@@ -1,20 +1,6 @@
-#######################################################
-@find_response_names = (collection_name) ->
-	collection = get_collection collection_name
-
-	tmpls = [{value:"", label:"Select response"}]
-
-	d_tmpls = collection.find().fetch()
-	d_tmpls = ({label:t.title, value:t._id} for t in d_tmpls)
-
-	tmpls.push d_tmpls...
-
-	return tmpls
-
-
 ##############################################
 @get_selected_view = () ->
-	selected = FlowRouter.getQueryParam("template")
+	selected = FlowRouter.getParam("template")
 	if not selected
 		selected = "landing_page"
 	return selected

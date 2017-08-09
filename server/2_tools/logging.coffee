@@ -41,11 +41,9 @@
 			owner_id: owner_id
 		profile = Profiles.findOne p_f
 		name = get_profile_name profile, true
-		name += "(" + owner_id + ")"
 
 	if requester_id
-		requester = @get_profile_name_by_user_id requester_id, true
-		requester += "(" + requester_id + ")"
+		requester = get_profile_name_by_user_id requester_id, true
 
 	msg = ""
 	msg += if crs then crs.count() else "undisclosed amount"
