@@ -10,27 +10,26 @@
 	document["modified"] = new Date()
 	document["loaded"] = true
 
-	if not document.owner_id
+	if not ("owner_id" of document)
 		document["owner_id"] = Meteor.userId()
-	if not document.visible_to
+	if not ("visible_to" of document)
 		document["visible_to"] = "owner"
-	if not document.view_order
+	if not ("view_order" of document)
 		document["view_order"] = 1
-	if not document.removal_id
+	if not ("removal_id" of document)
 		document["removal_id"] = Random.id()
-	if not document.template_id
+	if not ("template_id" of document)
 		document["template_id"] = "response"
-	if not document.index
+	if not ("index" of document)
 		document["index"] = -1
-	if not document.parent_id
+	if not ("parent_id" of document)
 		document["parent_id"] = ""
-	if not document.single_parent
+	if not ("single_parent" of document)
 		document["single_parent"] = false
-	if not document.group_name
+	if not ("group_name" of document)
 		document["group_name"] = ""
 
 	id = collection.insert document
-
 	return id
 
 
