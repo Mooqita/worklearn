@@ -117,26 +117,12 @@
 
 						{{>basic_input method="set_field" collection_name="Challenges"
 						item_id=_id field="title" placeholder="Title of your challenge"}}
-
-						<!--{{#unless g_is_public "Challenges"}}
-							{{>basic_input method="set_field" collection_name="Challenges"
-							item_id=_id field="title" placeholder="Title of your challenge"}}
-						{{else}}
-							{{title}}
-						{{/unless}}-->
 					</h1>
 
 					<div class="form-group" style="display: block;overflow: hidden;">
 						<h2>Content:</h2>
-						{{>text_input method="set_field" collection_name="Challenges"
+						{{>markdown_input method="set_field" collection_name="Challenges"
 								item_id=_id field="content" placeholder="Content"}}
-
-						<!--{{#unless g_is_public "Challenges"}}
-							{{>text_input method="set_field" collection_name="Challenges"
-									item_id=_id field="content" placeholder="Content"}}
-						{{else}}
-							{{>more content=content}}
-						{{/unless}}-->
 
 						{{#if g_is_public "Challenges"}}
 							<h2>Shareable link:</h2>
@@ -158,17 +144,16 @@
 							</div>
 						{{else}}
 							<h2>Number of reviews required</h2>
-							{{>basic_input  method="set_field" collection_name="Challenges" type="number"
-									item_id=_id field="num_reviews" placeholder="Number of reviews required."}}
+							{{>basic_input  method="set_field" collection_name="Challenges"
+									type="number" item_id=_id field="num_reviews"
+									placeholder="Number of reviews required."}}
 						{{/if}}
 
-						<!--{{#unless g_is_public "Challenges"}}-->
-							<h2>Upload Additional material:</h2>
-							<h2>
-								{{>upload method="set_field" collection_name="Challenges"
-									item_id=_id field="material"}}
-							</h2>
-						<!--{{/unless}}-->
+						<h2>Upload Additional material:</h2>
+						<h2>
+							{{>upload method="set_field" collection_name="Challenges"
+								item_id=_id field="material"}}
+						</h2>
 
 						{{#if material}}
 							<h2>Download Additional material:</h2>

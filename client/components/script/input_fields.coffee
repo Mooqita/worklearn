@@ -156,6 +156,50 @@ Template.text_input.events
 					sAlert.success("Updated: " + field)
 
 #########################################################
+# markdown_input
+#########################################################
+
+#########################################################
+Template.markdown_input.onCreated ->
+	this.preview = new ReactiveVar(false)
+
+#########################################################
+Template.markdown_input.helpers
+	value: () ->
+		return get_field_value(this)
+
+	is_selected: () ->
+		return ""
+
+	options: () ->
+		return []
+
+	preview: () ->
+		return Template.instance().preview.get()
+
+#########################################################
+Template.markdown_input.events
+	"click #preview_toggle": (event) ->
+		tmpl = Template.instance()
+		state = tmpl.preview.get()
+		tmpl.preview.set !state
+
+	"change .edit-field": (event) ->
+		field = event.target.id
+		value = event.target.value
+		method = this.method
+		collection = this.collection_name
+		item_id = this.item_id
+
+		Meteor.call method, collection, item_id, field, value, undefined,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+					console.log err
+				if res
+					sAlert.success("Updated: " + field)
+
+#########################################################
 # wysiwyg_input input
 #########################################################
 

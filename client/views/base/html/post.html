@@ -111,7 +111,7 @@
 
 	{{#if g_is_editing _id}}
 		{{#_edit_tools  collection_name="Posts" _id=_id}}
-			{{>code_input method="set_field" collection_name="Posts"
+			{{>wysiwyg_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 		{{/_edit_tools}}
 	{{else}}
@@ -137,7 +137,7 @@
 		{{/if}}
 
 		{{#if g_is_editing _id}}
-			{{>code_input method="set_field" collection_name="Posts" field="abstract"
+			{{>wysiwyg_input method="set_field" collection_name="Posts" field="abstract"
 				placeholder="Title" item_id=_id}}
 		{{else}}
 			{{{abstract}}}
@@ -241,7 +241,7 @@
 		</h1>
 
 		{{#if g_is_editing _id}}
-			{{>code_input method="set_field" collection_name="Posts"
+			{{>wysiwyg_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 		{{else}}
 			{{#if abstract}}
@@ -434,7 +434,7 @@
 				{{/if}}
 
 				{{#if g_is_editing _id}}
-					{{>code_input method="set_field" collection_name="Posts"
+					{{>wysiwyg_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}
 				{{else}}
 					{{#if abstract}}

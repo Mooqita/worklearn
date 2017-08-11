@@ -22,6 +22,39 @@
 						 id="{{field}}" rows="12">{{value}}</textarea>
 </template>
 
+<template name="markdown_input">
+	<style>
+		.outline{
+			padding: 5px;
+			border: 2px solid #ddd;
+			border-radius: 4px;
+			margin-bottom: 15px;
+		}
+	</style>
+	{{#if preview}}
+		<div class="outline">
+			{{#markdown}}{{{value}}}{{/markdown}}
+		</div>
+
+		<div class="right text-right">
+			<a class="btn btn-theme" style="min-width: 100px"
+				 id="preview_toggle">edit</a>
+		</div>
+	{{else}}
+		<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
+							 id="{{field}}" rows="12">{{value}}</textarea>
+
+		<div class="right text-right" style="margin-top: 15px">
+			<a class="btn btn-theme"  style="min-width: 100px" target="_blank"
+				 href="https://daringfireball.net/projects/markdown/syntax">
+				markdown documentation
+			</a>
+			<a class="btn btn-theme" style="min-width: 100px"
+				 id="preview_toggle">preview</a>
+		</div>
+	{{/if}}
+</template>
+
 <template name="wysiwyg_input">
 	<div class="row">
 		<div class="col-md-12">
