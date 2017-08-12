@@ -74,7 +74,7 @@
 
 				<h2>Your Feedback</h2>
 				{{#unless g_is_public "Feedback"}}
-					{{>text_input method="set_field" collection_name="Feedback"
+					{{>markdown_input method="set_field" collection_name="Feedback"
 						item_id=_id field="content" placeholder="Please give feedback."}}
 				{{else}}
 					{{>more content=content}}

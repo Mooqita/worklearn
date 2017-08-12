@@ -115,7 +115,7 @@
 					{{/unless}}
 					<h1>Your Review</h1>
 					{{#unless g_is_public "Reviews"}}
-						{{>text_input method="set_field" collection_name="Reviews"
+						{{>markdown_input method="set_field" collection_name="Reviews"
 							item_id=_id field="content" placeholder="Please provide your feedback here"}}
 					{{else}}
 						<p>
