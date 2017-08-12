@@ -65,7 +65,7 @@ _find_review = (user, challenge) ->
 	# The user has expertise for the solution
 	filter =
 		requester_id:
-			$nin: user._id
+			$ne: user._id
 		published: false
 		$or:[	{assigned: false}
 					{modified:
