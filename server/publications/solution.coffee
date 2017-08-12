@@ -95,6 +95,8 @@ Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
 
 #######################################################
 Meteor.publish "solutions_for_tutor", (parameter) ->
+	throw new Meteor.Error("solutions_for_tutor is not implemented at the moment")
+
 	pattern =
 		query: Match.Optional(String)
 		challenge_id: String

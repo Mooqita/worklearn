@@ -104,8 +104,8 @@
 	review_profile = Profiles.findOne filter
 
 	param =
-		review_id: + review._id
-		solution_id: + solution._id
+		review_id: review._id
+		solution_id: solution._id
 		challenge_id: challenge._id
 
 	url = build_url "student_review", param
