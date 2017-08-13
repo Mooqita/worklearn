@@ -3,9 +3,11 @@
 | Admin templates
 |
 -------------------------------------------------->
-<template name="admin">
+<template name="mooqita_admin">
 	{{#if isInRole 'admin'}}
 		<h1>Admin Dashboard</h1>
+
+		<button class="btn btn-theme" id="download_csv">Download CSV</button>
 
 		{{#if isInRole 'db_admin'}}
 			<h2> Database Permission </h2>

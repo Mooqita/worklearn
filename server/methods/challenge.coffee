@@ -30,6 +30,9 @@ Meteor.methods
 
 		solutions.forEach (solution) ->
 			user = Meteor.users.findOne solution.owner_id
+			name = get_profile_name_by_user_id user._id, true, false
+			subject =	subject.replace("<<name>>", name)
+			message =	message.replace("<<name>>", name)
 			send_mail user, subject, message
 
 		return solutions.count()

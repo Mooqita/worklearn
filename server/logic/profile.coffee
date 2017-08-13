@@ -12,7 +12,7 @@
 	if !profile
 		return "unknown"
 
-	name = (profile.given_name ? "") + " "
+	name = (profile.given_name ? "Learner") + " "
 
 	if not short
 		name += (profile.middle_name ? "") + " "

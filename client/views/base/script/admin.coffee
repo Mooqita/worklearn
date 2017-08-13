@@ -1,11 +1,11 @@
 #########################################################
-Template.admin.onCreated ->
+Template.mooqita_admin.onCreated ->
 	self = this
 	self.autorun () ->
 		self.subscribe "permissions"
 
 #########################################################
-Template.admin.helpers
+Template.mooqita_admin.helpers
 	"permissions": ->
 		filter = {}
 
@@ -18,7 +18,10 @@ Template.admin.helpers
 		return Permissions.find(filter, mod)
 
 #########################################################
-Template.admin.events
+Template.mooqita_admin.events
+	"click #download_csv": () ->
+		Meteor.call "export_data_to_csv"
+
 	"click #remove": () ->
 		Meteor.call "remove_permission", this._id,
 			(err, res) ->

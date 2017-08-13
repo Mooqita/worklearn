@@ -12,7 +12,16 @@ _format_data =
 		return Papa.unparse data
 
 
-@export_data = (collection) ->
+@export_pandas_zip = (data, name) ->
+	formattedData = _format_data["json"]( data )
+
+	zip = new JSZip()
+	zip.file name+".json", formattedData
+	promise = zip.generateAsync {type : "base64"}
+
+	return promise.await()
+
+@export_collection_zip = (collection) ->
 	data = collection.find({owner_id: Meteor.userId()}).fetch()
 	formattedData = _format_data["json"]( data )
 

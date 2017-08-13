@@ -30,7 +30,7 @@
 	subject = "Mooqita: You got a new review"
 	url = build_url "student_solution", {challenge_id: challenge._id}
 
-	name = if solution_profile then solution_profile.given_name ? "user" else "user"
+	name = if solution_profile then solution_profile.given_name ? "learner" else "learner"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received a new review in: \n"
@@ -65,7 +65,7 @@
 	subject = "Mooqita: A review timed out"
 	url = build_url "student_solution", {challenge_id: challenge._id}
 
-	name = if review_profile then review_profile.given_name ? "user" else "user"
+	name = if review_profile then review_profile.given_name ? "learner" else "learner"
 
 	body = "Hi " + name + ",\n\n"
 	body += "One of the reviews you were working on timed out in: \n"

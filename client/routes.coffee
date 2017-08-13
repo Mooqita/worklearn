@@ -186,9 +186,10 @@ FlowRouter.route "/app/:template",
 FlowRouter.route '/admin',
 	name: 'admin',
 	action: (params) ->
+		console.log "admin"
 		data =
-			menu: "menu"
-			layout: "layout"
-			content: "admin"
+			menu: "mooqita_menu"
+			layout: "mooqita_layout"
+			content: "mooqita_admin"
 		BlazeLayout.render "body_template", data
 
