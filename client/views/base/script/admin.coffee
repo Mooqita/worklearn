@@ -1,3 +1,6 @@
+########################################
+import { saveAs } from 'file-saver'
+
 #########################################################
 Template.mooqita_admin.onCreated ->
 	self = this
@@ -20,7 +23,16 @@ Template.mooqita_admin.helpers
 #########################################################
 Template.mooqita_admin.events
 	"click #download_csv": () ->
-		Meteor.call "export_data_to_csv"
+		Meteor.call "export_data_to_csv",
+			(err, res) ->
+				sAlert.error("done export")
+				console.log [err,res]
+				if err
+					sAlert.error(err)
+				else
+					sAlert.error("success")
+					blob = base64_to_blob res, "application/zip"
+					saveAs blob, "responses.zip"
 
 	"click #remove": () ->
 		Meteor.call "remove_permission", this._id,

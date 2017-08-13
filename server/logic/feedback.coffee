@@ -1,36 +1,4 @@
 ###############################################
-@finish_feedback = (feedback, user) ->
-	if not feedback.rating
-		throw new Meteor.Error "Feedback: " + feedback._id + " Does not have a rating."
-
-	if feedback.published
-		throw new Meteor.Error "Feedback: " + feedback._id + " is already published."
-
-	modify_field_unprotected Feedback, feedback._id, "published", true
-
-	feedback = Feedback.findOne feedback._id
-	send_feedback_message feedback
-
-	msg = "Feedback (" + feedback._id + ") feedback finished by: " + get_user_mail user
-	log_event msg, event_logic, event_info
-
-	return feedback._id
-
-
-###############################################
-@repair_feedback = (solution, review, user) ->
-	filter =
-		solution_id: solution._id
-		review_id: review._id
-	feedback = Feedback.findOne filter
-
-	if feedback
-		return feedback._id
-
-	return gen_feedback solution, review, user
-
-
-###############################################
 @gen_feedback = (solution, review, user) ->
 	if solution._id != review.solution_id
 		msg = "solution._id: " + solution._id
@@ -53,6 +21,40 @@
 
 	feedback_id = store_document_unprotected Feedback, feedback
 	return feedback_id
+
+
+###############################################
+@finish_feedback = (feedback, user) ->
+	if not feedback.rating
+		throw new Meteor.Error "Feedback: " + feedback._id + " Does not have a rating."
+
+	if feedback.published
+		throw new Meteor.Error "Feedback: " + feedback._id + " is already published."
+
+	review = Reviews.findOne feedback.review_id
+	modify_field_unprotected Feedback, feedback._id, "published", true
+	modify_field_unprotected Feedback, feedback._id, "requester_id", review.owner_id
+
+	feedback = Feedback.findOne feedback._id
+	send_feedback_message feedback
+
+	msg = "Feedback (" + feedback._id + ") feedback finished by: " + get_user_mail user
+	log_event msg, event_logic, event_info
+
+	return feedback._id
+
+
+###############################################
+@repair_feedback = (solution, review, user) ->
+	filter =
+		solution_id: solution._id
+		review_id: review._id
+	feedback = Feedback.findOne filter
+
+	if feedback
+		return feedback._id
+
+	return gen_feedback solution, review, user
 
 
 ###############################################

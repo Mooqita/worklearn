@@ -1,6 +1,11 @@
 import JSZip from 'jszip'
 
 _format_data =
+	csv: (data) ->
+		str_csv = require('csv-string')
+		promise = str_csv.stringify data
+		return promise
+
 	xml: (data) ->
 		return json2xml { 'content': data }, { header: true }
 
@@ -8,15 +13,12 @@ _format_data =
 		res = JSON.stringify data, null, 2
 		return res
 
-  csv: (data) ->
-		return Papa.unparse data
-
 
 @export_pandas_zip = (data, name) ->
-	formattedData = _format_data["json"]( data )
+	formattedData = _format_data["csv"](data)
 
 	zip = new JSZip()
-	zip.file name+".json", formattedData
+	zip.file name+".csv", formattedData
 	promise = zip.generateAsync {type : "base64"}
 
 	return promise.await()

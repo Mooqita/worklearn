@@ -9,60 +9,59 @@ Meteor.methods
 		if not Roles.userIsInRole user, "admin"
 			throw new Meteor.Error('Not permitted.')
 
-		res =
-			type: []
-			challenge_id: []
-			provider_id: []
-			provider_name: []
-			recipient_id: []
-			recipient_name: []
-			rating: []
-			content: []
-			content_length: []
+		res = [["type",	"challenge_id",	"provider_id", "provider_name",
+						"recipient_id", "recipient_name",	"rating",	"content",
+						"content_length"]]
 
 		filter =
 			published: true
 
 		solutions = Solutions.find filter
 		solutions.forEach (solution) ->
+			r = []
 			p_name = get_profile_name_by_user_id solution.owner_id, true, false
-			res["type"] = 1
-			res["challenge_id"] = solution.challenge_id
-			res["provider_id"] = solution.owner_id
-			res["provider_name"] = p_name
-			res["recipient_id"] = -1
-			res["recipient_name"] = ""
-			res["rating"] = -1
-			res["content"] = solution.content
-			res["content_length"] = solution.content.split(" ").length
+			r.push("solution")
+			r.push(solution.challenge_id)
+			r.push(solution.owner_id)
+			r.push(p_name)
+			r.push(-1)
+			r.push("")
+			r.push(-1)
+			r.push(solution.content)
+			r.push(solution.content.split(" ").length)
+			res.push(r)
 
 		reviews = Reviews.find filter
 		reviews.forEach (review) ->
-			p_name = get_profile_name_by_user_id review.provider_id, true, false
+			r = []
+			p_name = get_profile_name_by_user_id review.owner_id, true, false
 			r_name = get_profile_name_by_user_id review.requester_id, true, false
-			res["type"] = 2
-			res["challenge_id"] = review.challenge_id
-			res["provider_id"] = review.owner_id
-			res["provider_name"] = p_name
-			res["recipient_id"] = review.requester_id
-			res["recipient_name"] = r_name
-			res["rating"] = parseInt(review.rating)
-			res["content"] = review.content
-			res["content_length"] = review.content.split(" ").length
+			r.push("review")
+			r.push(review.challenge_id)
+			r.push(review.owner_id)
+			r.push(p_name)
+			r.push(review.requester_id)
+			r.push(r_name)
+			r.push(parseInt(review.rating))
+			r.push(review.content)
+			r.push(review.content.split(" ").length)
+			res.push(r)
 
 		feedbacks = Feedback.find filter
 		feedbacks.forEach (feedback) ->
-			p_name = get_profile_name_by_user_id review.provider_id, true, false
-			r_name = get_profile_name_by_user_id review.requester_id, true, false
-			res["type"] = 3
-			res["challenge_id"] = feedback.challenge_id
-			res["provider_id"] = feedback.owner_id
-			res["provider_name"] = p_name
-			res["recipient_id"] = feedback.requester_id
-			res["recipient_name"] = r_name
-			res["rating"] = parseInt(feedback.rating)
-			res["content"] = feedback.content
-			res["content_length"] = feedback.content.split(" ").length
+			r = []
+			p_name = get_profile_name_by_user_id feedback.owner_id, true, false
+			r_name = get_profile_name_by_user_id feedback.requester_id, true, false
+			r.push("feedback")
+			r.push(feedback.challenge_id)
+			r.push(feedback.owner_id)
+			r.push(p_name)
+			r.push(feedback.requester_id)
+			r.push(r_name)
+			r.push(parseInt(feedback.rating))
+			r.push(feedback.content)
+			r.push(feedback.content.split(" ").length)
+			res.push(r)
 
 		zip = export_pandas_zip res, "rating_data"
 
