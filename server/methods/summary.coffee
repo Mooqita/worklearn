@@ -16,20 +16,21 @@ Meteor.methods
 						"review_rating", "review_content", "review_length",
 						"feedback_rating", "feedback_content", "feedback_length"]]
 
-		filter =
+		filter_s =
 			published: true
 
-		solutions = Solutions.find filter
+		solutions = Solutions.find filter_s
 		solutions.forEach (solution) ->
 
-			filter =
+			filter_r =
 				solution_id: solution._id
-			reviews = Reviews.find filter
+
+			reviews = Reviews.find filter_r
 			reviews.forEach (review) ->
 
-				filter =
+				filter_f =
 					review_id: review._id
-				feedback = Feedback.find filter
+				feedback = Feedback.find filter_f
 
 				r = []
 				s_name = get_profile_name_by_user_id solution.owner_id, true, false
@@ -37,6 +38,7 @@ Meteor.methods
 
 				r.push(s_name)
 				r.push(solution.owner_id)
+
 				r.push(r_name)
 				r.push(review.owner_id)
 
