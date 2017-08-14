@@ -40,7 +40,7 @@ Meteor.methods
 				r.push(r_name)
 				r.push(review.owner_id)
 
-				r.push(solution_id)
+				r.push(solution._id)
 				r.push(solution.challenge_id)
 
 				r.push(solution.content)
