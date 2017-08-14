@@ -30,7 +30,7 @@ Meteor.methods
 
 				filter_f =
 					review_id: review._id
-				feedback = Feedback.find filter_f
+				feedback = Feedback.findOne filter_f
 
 				r = []
 				s_name = get_profile_name_by_user_id solution.owner_id, true, false
