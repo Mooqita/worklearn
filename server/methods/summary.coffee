@@ -43,32 +43,30 @@ Meteor.methods
 				r.push(solution._id)
 				r.push(solution.challenge_id)
 
-				r.push(solution.content)
-				r.push(solution.content.split(" ").length)
+				if solution.content
+					r.push(solution.content)
+					r.push(solution.content.split(" ").length)
+				else
+					r.push("")
+					r.push(0)
 
 				r.push(review.rating)
-				r.push(review.content)
-				r.push(review.content.split(" ").length)
+				if review.content
+					r.push(review.content)
+					r.push(review.content.split(" ").length)
+				else
+					r.push("")
+					r.push(0)
 
 				r.push(feedback.rating)
-				r.push(feedback.content)
-				r.push(feedback.content.split(" ").length)
+				if feedback.content
+					r.push(feedback.content)
+					r.push(feedback.content.split(" ").length)
+				else
+					r.push("")
+					r.push(0)
 
 				res.push(r)
-
-			r = []
-			p_name = get_profile_name_by_user_id feedback.owner_id, true, false
-			r_name = get_profile_name_by_user_id feedback.requester_id, true, false
-			r.push("feedback")
-			r.push(feedback.challenge_id)
-			r.push(feedback.owner_id)
-			r.push(p_name)
-			r.push(feedback.requester_id)
-			r.push(r_name)
-			r.push(parseInt(feedback.rating))
-			r.push(feedback.content)
-			r.push(feedback.content.split(" ").length)
-			res.push(r)
 
 		zip = export_pandas_zip res, "rating_data"
 
