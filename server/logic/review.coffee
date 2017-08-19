@@ -173,8 +173,8 @@ _find_review = (user, challenge) ->
 ###############################################
 @reopen_review = (review, user) ->
 	# we can reopen a review when:
-
 	# The feedback has no content yet
+
 	filter =
 		review_id: review._id
 		published: false

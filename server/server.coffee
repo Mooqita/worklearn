@@ -6,30 +6,36 @@
 
 #####################################################
 @add_admin = () ->
-	secret = Secrets.findOne()
-	user =
-		email: 'admin@worklearn.com',
-		password: secret.mkpswd,
+	user = Accounts.findUserByEmail("admin@mooqita.org")
 
-	admin = Accounts.createUser(user)
-	Roles.setUserRoles admin, ['admin', 'db_admin', 'editor', 'challenge_designer']
-	a_id = gen_profile admin
+	if !user
+		secret = Secrets.findOne()
+		user =
+			email: "admin@mooqita.org",
+			password: secret.mkpswd,
 
-	msg = "admin added " + user.email + " " +a_id
+		user = Accounts.createUser(user)
+		Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
+
+	filter =
+		owner_id: user._id
+
+	profile = Profiles.findOne filter
+
+	if profile
+		return profile._id
+
+	profile_id = gen_profile admin, "student"
+
+	msg = "admin added " + user.email + " " + profile_id
 	loig_event msg, event_testing, event_info
-	return admin
+	return profile_id
+
 
 #####################################################
 @initialize_database = () ->
-	admin = Accounts.findUserByEmail('admin@worklearn.com')
-	if not admin
-		add_admin()
-	else
-		filter =
-			owner_id: admin._id
-		profile = Profiles.findOne filter
-		if not profile
-			gen_profile admin._id
+	add_admin()
+	run_tests()
 
 	return true
 

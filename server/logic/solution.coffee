@@ -54,8 +54,8 @@
 ###############################################
 @reopen_solution = (solution, user) ->
 	# we can reopen a solution when:
-
 	# There are no published reviews
+
 	filter =
 		solution_id: solution._id
 		published: false

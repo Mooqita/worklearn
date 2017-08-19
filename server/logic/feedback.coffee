@@ -61,5 +61,7 @@
 @reopen_feedback = (feedback, user) ->
 	throw new Meteor.Error("not implemented")
 
+	#TODO: decide if we need a feedback reopen
+
 
 
