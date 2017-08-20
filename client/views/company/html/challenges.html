@@ -151,7 +151,7 @@
 
 						<h2>Upload Additional material:</h2>
 						<h2>
-							{{>upload method="set_field" collection_name="Challenges"
+							{{>upload method="upload_file" collection_name="Challenges"
 								item_id=_id field="material"}}
 						</h2>
 
@@ -278,6 +278,10 @@
 		</div>
 
 		<div class="col-sm-10 col-ms-9">
+			<h2>Upload letter of recommendation for <em>{{profile_name owner_id}}</em>:</h2>
+			{{>upload method="add_recommendation" collection_name="Solutions"
+				item_id=_id field="recommendations"}}
+
 			<h2>
 				<a id="user_info">{{profile_name owner_id}}</a>
 				{{{average_rating}}}
@@ -319,60 +323,60 @@
 		</div>
 	</div>
 
-		<div id="{{_id}}" class="row collapse">
-			<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
-				{{#each reviews}}
-					<div class="row">
-						<div class="col-sm-2 col-ms-3">
-							 {{>avatar collection_name="Profiles"
-									 observe = (profile_avatar owner_id)
-									 item_id=(profile_id owner_id)
-									 field="avatar"}}
-						</div>
+	<div id="{{_id}}" class="row collapse">
+		<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
+			{{#each reviews}}
+				<div class="row">
+					<div class="col-sm-2 col-ms-3">
+						 {{>avatar collection_name="Profiles"
+								 observe = (profile_avatar owner_id)
+								 item_id=(profile_id owner_id)
+								 field="avatar"}}
+					</div>
 
-						<div class="col-sm-10 col-ms-9">
-							<div class="row">
-								<div class="col-xs-6">
-									<h2>
-										<a>{{profile_name owner_id}}</a>
-									</h2>
-								</div>
+					<div class="col-sm-10 col-ms-9">
+						<div class="row">
+							<div class="col-xs-6">
+								<h2>
+									<a>{{profile_name owner_id}}</a>
+								</h2>
+							</div>
 
-								<div class="col-xs-6">
-									<h2>
-										Rating <em>{{rating}}</em> out of <em>5</em>
-									</h2>
-								</div>
+							<div class="col-xs-6">
+								<h2>
+									Rating <em>{{rating}}</em> out of <em>5</em>
+								</h2>
+							</div>
 
-								<div class="col-xs-12">
-									{{>more content=content}}
+							<div class="col-xs-12">
+								{{>more content=content}}
 
-									{{#each feedback _id}}
-										<div class="row" style="margin-left: 25px">
-											<div class="col-xs-6">
-												<h2>
-													Rebuttal <a>{{profile_name owner_id}}</a>
-												</h2>
-											</div>
-
-											<div class="col-xs-6">
-												<h2>
-													Rating <em>{{rating}}</em> out of <em>5</em>
-												</h2>
-											</div>
-
-											<div class="col-xs-12">
-												{{>more content=content}}
-											</div>
+								{{#each feedback _id}}
+									<div class="row" style="margin-left: 25px">
+										<div class="col-xs-6">
+											<h2>
+												Rebuttal <a>{{profile_name owner_id}}</a>
+											</h2>
 										</div>
-								{{/each}}
-								</div>
+
+										<div class="col-xs-6">
+											<h2>
+												Rating <em>{{rating}}</em> out of <em>5</em>
+											</h2>
+										</div>
+
+										<div class="col-xs-12">
+											{{>more content=content}}
+										</div>
+									</div>
+							{{/each}}
 							</div>
 						</div>
 					</div>
-				{{/each}}
-			</div>
+				</div>
+			{{/each}}
 		</div>
+	</div>
 </template>
 
 

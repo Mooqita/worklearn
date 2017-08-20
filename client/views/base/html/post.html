@@ -84,7 +84,7 @@
 		{{/if}}
 
 		{{#if g_is_editing _id}}
-			{{>upload method="set_field" collection_name="Posts"
+			{{>upload method="upload_file" collection_name="Posts"
 					field="avatar" item_id=_id box_id="avatar"}}
 		{{/if}}
 
@@ -177,7 +177,7 @@
 				field = "avatar"}}
 
 			{{#if g_is_editing _id}}
-				{{>upload method="set_field" collection_name="Posts"
+				{{>upload method="upload_file" collection_name="Posts"
 						field="avatar" item_id=_id box_id="avatar"}}
 			{{/if}}
 
@@ -303,8 +303,8 @@
 		{{/if}}
 
 		{{#if g_is_editing _id}}
-			{{>upload method="set_field" field="figure"
-					item_id=_id box_id="figure" collection_name="Posts"}}
+			{{>upload method="upload_file" collection_name="Posts"
+					field="figure" item_id=_id box_id="figure"}}
 		{{/if}}
 
 		{{#if figure}}
@@ -384,7 +384,7 @@
 				{{/if}}
 
 				{{#if g_is_editing _id}}
-					{{>upload method="set_field" collection_name="Posts"
+					{{>upload method="upload_file" collection_name="Posts"
 							field="figure" item_id=_id box_id="figure"}}
 				{{/if}}
 			</div>
@@ -463,7 +463,7 @@
 			{{/if}}
 
 			{{#if g_is_editing _id}}
-				{{>upload method="set_field"  collection_name="Posts"
+				{{>upload method="upload_file"  collection_name="Posts"
 						field="paper" item_id=_id box_id="paper"}}
 			{{/if}}
 		</div>

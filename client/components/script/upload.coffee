@@ -160,6 +160,7 @@ Template.upload.events
 
 		frm.addClass('is-uploading').removeClass('is-error')
 
+		upload_method = this.method
 		filesToRead = files.length
 		filesRead = 0
 		filesUp = 0
@@ -206,7 +207,7 @@ Template.upload.events
 					frm.addClass("is-error")
 					return
 
-				Meteor.call "upload_file", col, item, field, data, type,
+				Meteor.call upload_method, col, item, field, data, type,
 					(err, rsp)->
 						filesUp += 1
 
