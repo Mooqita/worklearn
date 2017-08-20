@@ -26,6 +26,8 @@
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 
+	check id, String
+
 	s = {}
 	s[field] = value
 	s['modified'] = new Date

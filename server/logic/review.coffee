@@ -88,7 +88,7 @@ _find_review = (user, challenge) ->
 
 
 ###############################################
-@find_review = (challenge, solution, user) ->
+@assign_review = (challenge, solution, user) ->
 	if solution
 		filter =
 			solution_id: solution._id
@@ -155,13 +155,13 @@ _find_review = (user, challenge) ->
 	solution = Solutions.findOne request.solution_id
 	challenge = Challenges.findOne review.challenge_id
 
-	provided = num_provided_reviews solution
+	requested = num_requested_reviews solution
 	required = 	challenge.num_reviews
 
 	r_owner = Meteor.users.findOne review.owner_id
 
 	if solution.published
-		if required > provided
+		if required > requested
 			request_review solution, r_owner
 
 	msg = "Review (" + review._id + ") review finished by: " + get_user_mail user
@@ -172,6 +172,9 @@ _find_review = (user, challenge) ->
 
 ###############################################
 @reopen_review = (review, user) ->
+	if !review.published
+		return review._id
+
 	# we can reopen a review when:
 	# The feedback has no content yet
 
@@ -181,8 +184,11 @@ _find_review = (user, challenge) ->
 
 	feedback = Feedback.find filter
 
-	if feedback.count()>0
-		throw new Meteor.Error "in-progress", "The review already has a feedback."
+	# There are no assigned reviews that
+	# have been touched in the last 24 hours
+	for f in feedback
+		if f.content
+			throw new Meteor.Error "in-progress", "The Review already has feedback."
 
 	modify_field_unprotected Reviews, review._id, "published", false
 

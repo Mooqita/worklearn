@@ -29,7 +29,10 @@ Meteor.methods
 
 		call = Meteor.bindEnvironment (err, res, body) ->
 			if !err && res.statusCode == 200
-				ip = JSON.parse(body)
+				try
+					ip = JSON.parse(body)
+				catch
+					ip = "unknown"
 			else
 				ip =
 					error: err

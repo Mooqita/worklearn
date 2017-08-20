@@ -28,6 +28,9 @@
 
 ###############################################
 @finish_solution = (solution, user) ->
+	if solution.published
+		return solution._id
+
 	requested = num_requested_reviews solution
 	provided = num_provided_reviews solution
 	credits = provided - requested
@@ -53,6 +56,9 @@
 
 ###############################################
 @reopen_solution = (solution, user) ->
+	if !solution.published
+		return solution._id
+
 	# we can reopen a solution when:
 	# There are no published reviews
 
@@ -78,6 +84,9 @@
 		throw new Meteor.Error "in-progress", "The Solution already has reviews."
 
 	modify_field_unprotected Solutions, solution._id, "published", false
+
+	Reviews.remove filter
+	Feedback.remove filter
 
 	msg = "Solution (" + solution.id + ") reopened by: " + get_user_mail user
 	log_event msg, event_logic, event_info

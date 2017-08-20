@@ -1,5 +1,12 @@
 ###############################################
 @gen_feedback = (solution, review, user) ->
+	filter =
+		review_id: review._id
+
+	feedback = Feedback.findOne filter
+	if feedback
+		return feedback._id
+
 	if solution._id != review.solution_id
 		msg = "solution._id: " + solution._id
 		msg += " differs from review.solution_id :" + review.solution_id
@@ -59,9 +66,17 @@
 
 ###############################################
 @reopen_feedback = (feedback, user) ->
-	throw new Meteor.Error("not implemented")
+	if !feedback.published
+		return feedback._id
 
-	#TODO: decide if we need a feedback reopen
+	modify_field_unprotected Feedback, feedback._id, "published", false
+
+	msg = "Feedback (" + review.id + ") reopened by: " + get_user_mail user
+	log_event msg, event_logic, event_info
+
+	return feedback._id
+
+
 
 
 
