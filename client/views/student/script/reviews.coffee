@@ -170,7 +170,7 @@ Template.publish_review.events
 		Meteor.call "finish_review", this.response_id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error "Publish review error: " + err
 				if res
 					sAlert.success "Review published!"
 

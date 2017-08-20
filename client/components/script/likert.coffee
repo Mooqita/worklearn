@@ -37,6 +37,6 @@ Template.likert_item.events
 		Meteor.call method, collection, item_id, field, value,
 			(err, res)->
 				if(err)
-					sAlert.error(err)
+					sAlert.error("Likert item error: " + err)
 				if res
 					sAlert.success("Updated: " + field)

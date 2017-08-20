@@ -6,7 +6,7 @@ _add_profile = (occupation) ->
 	Meteor.call "add_profile", param,
 		(err) ->
 			if err
-				sAlert.error(err)
+				sAlert.error("Likert item error: " + err)
 
 
 ##########################################################

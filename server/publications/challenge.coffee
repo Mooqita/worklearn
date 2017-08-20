@@ -112,7 +112,7 @@ _get_profile_data = (user_id, entry) ->
 
 	profile = Profiles.findOne filter
 	if profile
-		entry["name"] = get_profile_name profile
+		entry["name"] = get_profile_name profile, false, false
 		entry["avatar"] = get_avatar profile
 
 	return entry

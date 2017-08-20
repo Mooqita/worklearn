@@ -37,7 +37,7 @@ Template.download.events
 		Meteor.call "download_file", collection_name, item_id, field,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Download template error: " + err)
 				else
 					pack = unpack_item res
 					blob = base64_to_blob pack.data, res.type

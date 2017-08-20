@@ -46,7 +46,7 @@ Template.check_input.events
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Check input error: " + err)
 					console.log err
 				if res
 					sAlert.success("Updated: " + field)
@@ -86,7 +86,7 @@ Template.select_input.events
 		Meteor.call method, collection, item_id, field, value,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Select input error: " + err)
 					console.log err
 				if res
 					sAlert.success("Updated: " + field)
@@ -118,7 +118,7 @@ Template.basic_input.events
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Basic input error: " + err)
 					console.log err
 				if res
 					sAlert.success("Updated: " + field)
@@ -150,7 +150,7 @@ Template.text_input.events
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Text input error: " + err)
 					console.log err
 				if res
 					sAlert.success("Updated: " + field)
@@ -194,7 +194,7 @@ Template.markdown_input.events
 		Meteor.call method, collection, item_id, field, value, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Markdown input error: " + err)
 					console.log err
 				if res
 					sAlert.success("Updated: " + field)

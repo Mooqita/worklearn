@@ -114,7 +114,7 @@ Template.tutor_solution.events
 			(err, res)->
 				ins.loading_review.set false
 				if err
-					sAlert.error(err)
+					sAlert.error "Tutor start review error: " + err
 				else
 					queryParams =
 						review_id: res.review_id

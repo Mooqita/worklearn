@@ -28,7 +28,7 @@ Template.mooqita_admin.events
 				sAlert.error("done export")
 				console.log [err,res]
 				if err
-					sAlert.error(err)
+					sAlert.error("CSV export error: " + err)
 				else
 					sAlert.error("success")
 					blob = base64_to_blob res, "application/zip"
@@ -38,7 +38,7 @@ Template.mooqita_admin.events
 		Meteor.call "remove_permission", this._id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Remove permission error: " + err)
 				else
 					sAlert.info("Permission removed")
 
@@ -57,6 +57,6 @@ Template.mooqita_admin.events
 		Meteor.call "add_db_permission", role, collection, field, types, actions,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Add permission error: " + err)
 				else
 					sAlert.info("Permission added: "+ res)

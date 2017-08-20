@@ -127,7 +127,7 @@ Template.student_solution.events
 		Meteor.call "add_solution", id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Take challenge error: " + err)
 				if res
 					sAlert.success "Challenge accepted!"
 
@@ -249,7 +249,7 @@ Template.student_solution_reviews.events
 
 				if err
 					ins.review_error.set true
-					sAlert.error err
+					sAlert.error "Find solution to review error: " + err
 				if rsp
 					ins.review_error.set false
 					param =
@@ -265,7 +265,7 @@ Template.student_solution_reviews.events
 		Meteor.call 'request_review', this._id,
 			(err, rsp) ->
 				if err
-					sAlert.error err
+					sAlert.error "Request review error: " + err
 				if rsp
 					sAlert.success "Review requested!"
 
@@ -290,7 +290,7 @@ Template.student_solution_reviews.events
 				template.publishing.set false
 
 				if err
-					sAlert.error(err)
+					sAlert.error "Republish error: " + err
 				if res
 					sAlert.success "Solution published!"
 
@@ -309,7 +309,7 @@ Template.publish_solution.events
 				self.publishing.set false
 
 				if err
-					sAlert.error(err)
+					sAlert.error "Likert item error: " + err
 				if res
 					sAlert.success "Solution published!"
 

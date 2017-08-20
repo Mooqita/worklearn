@@ -15,4 +15,4 @@ Template.student_messages.events
 		Meteor.call "set_field", "Messages", this._id, "seen", true,
 			(err, rsp) ->
 				if err
-					sAlert.error err
+					sAlert.error "Click message error: " + err

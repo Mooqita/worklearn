@@ -324,7 +324,7 @@ Template.country_state.events
 		Meteor.call method, collection, item_id, field, text, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Country select error: " + err)
 				if res
 					sAlert.success("Updated country")
 
@@ -342,7 +342,7 @@ Template.country_state.events
 		Meteor.call method, collection, item_id, field, text, undefined,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("State select error: " + err)
 				if res
 					sAlert.success("Updated state")
 

@@ -1,9 +1,21 @@
 #######################################################
 #
-#	Moocita collections
-# Created by Markus on 26/10/2015.
+#	Mooqita
+# Created by Markus on 20/8/2017.
 #
 #######################################################
+
+#######################################################
+Meteor.publish "my_profile", () ->
+	user_id = this.userId
+	filter =
+		owner_id: user_id
+
+	fields = visible_fields Profiles, user_id, filter
+	crs = Profiles.find filter, fields
+
+	log_publication "Profile", crs, filter, {}, "profiles", user_id
+	return crs
 
 #######################################################
 # Resumes
@@ -11,11 +23,15 @@
 
 #######################################################
 Meteor.publish "user_credentials", (user_id) ->
-	check user_id, String
-
 	if user_id
+		check user_id, String
 		if not Roles.userIsInRole this.userId, "admin"
-			throw new Meteor.Error("Not permitted.")
+			if this.userId != user_id
+				filter =
+					owner_id: user_id
+				profile = Profiles.findOne filter
+				if profile.locale
+					throw new Meteor.Error("Not permitted.")
 
 	if !user_id
 		user_id = this.userId
@@ -33,7 +49,7 @@ Meteor.publish "user_credentials", (user_id) ->
 		profile = Profiles.findOne filter
 
 		if profile
-			resume.name = get_profile_name profile
+			resume.name = get_profile_name profile, false, false
 			resume.owner_id = profile._id
 			resume.self_description = profile.resume
 			resume.avatar = get_avatar profile
@@ -82,11 +98,14 @@ Meteor.publish "user_credentials", (user_id) ->
 				profile = Profiles.findOne filter
 
 				if feedback.published
+					review.feedback = {}
+					review.feedback.content = feedback.content
+					review.feedback.rating = feedback.rating
 					review.rating = r.rating
 					abs_rating += parseInt(r.rating)
 					num_ratings += 1
 					if profile
-						review.name = get_profile_name profile
+						review.name = get_profile_name profile ,false ,false
 						review.avatar = get_avatar profile
 
 				review.review = r.content

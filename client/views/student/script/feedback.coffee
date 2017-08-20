@@ -111,7 +111,6 @@ Template.student_feedback_solution.events
 		if event.target.attributes.disabled
 			return
 
-		sAlert.info("")
 		self = this
 		template = Template.instance()
 		template.publishing.set true
@@ -121,7 +120,7 @@ Template.student_feedback_solution.events
 				template.publishing.set false
 
 				if err
-					sAlert.error(err)
+					sAlert.error "Repair feedback error: " + err
 				if res
 					sAlert.success "Feedback repaired!"
 
@@ -136,7 +135,7 @@ Template.publish_feedback.events
 		Meteor.call "finish_feedback", this.feedback_id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error "Finish feedback error: " + err
 				if res
 					sAlert.success "Feedback published!"
 

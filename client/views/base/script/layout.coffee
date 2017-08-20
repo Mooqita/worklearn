@@ -28,7 +28,7 @@ Template.mooqita_layout.onCreated ->
 		Meteor.subscribe "my_profile",
 			(err, res) ->
 				if err
-					sAlert.error err
+					sAlert.error "Profile subscription error: " + err
 					console.log err
 				self.is_ready.set true
 

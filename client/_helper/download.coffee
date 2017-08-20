@@ -17,7 +17,8 @@ Template.registerHelper "download_field_value", (collection_name, item_id, field
 		Meteor.call "download_file", collection_name, item_id, field,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error "Download helper error: " + err
+					console.log err
 				else
 					d_o =
 						rng: get_field_value null, field, item_id, collection_name

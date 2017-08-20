@@ -58,7 +58,7 @@ Template.post_group.events
 		Meteor.call 'add_post', template_id, parent_id, group_name, index,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Add post error: " + err)
 
 
 #########################################################

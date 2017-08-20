@@ -45,7 +45,7 @@
 
 	students = []
 	for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		mail = String(i) + "uni@edu"
+		mail = String(i) + "@uni.edu"
 		profile_id = test_user_creation mail, "student"
 		profile = Profiles.findOne profile_id
 		user = Meteor.users.findOne profile.owner_id
@@ -112,6 +112,7 @@
 	modify_field_unprotected Profiles, profile_id, "job_type", Random.choice ["free", "full"]
 	modify_field_unprotected Profiles, profile_id, "occupation", occupation
 	modify_field_unprotected Profiles, profile_id, "resume", faker.lorem.paragraphs 2
+	modify_field_unprotected Profiles, profile_id, "job_interested", true
 	modify_field_unprotected Profiles, profile_id, "test_object", true
 
 	return profile_id
@@ -123,11 +124,13 @@
 	if not user
 		test_user_creation "designer@mooqita.org", "company"
 		user = Accounts.findUserByEmail("designer@mooqita.org")
+		Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
 
 	challenge_id = gen_challenge user
 
 	modify_field_unprotected Challenges, challenge_id, "title", title
 	modify_field_unprotected Challenges, challenge_id, "content", faker.lorem.paragraphs(3)
+	modify_field_unprotected Challenges, challenge_id, "test_object", true
 
 	#TODO: add test for material
 
@@ -148,6 +151,7 @@
 
 	solution_id = gen_solution challenge, user
 	modify_field_unprotected Solutions, solution_id, "content", faker.lorem.paragraphs(3)
+	modify_field_unprotected Solutions, solution_id, "test_object", true
 
 	solution = Solutions.findOne solution_id
 	solution_id = finish_solution solution, user
@@ -169,6 +173,7 @@
 
 	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs(3)
 	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Reviews, res.review_id, "test_object", true
 
 	review = Reviews.findOne res.review_id
 	review_id = finish_review review, user
@@ -189,6 +194,7 @@
 
 	modify_field_unprotected Feedback, feedback_id, "content", faker.lorem.paragraphs(3)
 	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Feedback, feedback_id, "test_object", true
 
 	feedback = Feedback.findOne feedback_id
 

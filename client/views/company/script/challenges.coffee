@@ -32,7 +32,7 @@ Template.company_challenges.events
 		Meteor.call "add_challenge",
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Add challenge error: " + err)
 
 
 ########################################
@@ -135,7 +135,7 @@ Template.company_challenge.events
 		Meteor.call "finish_challenge", this._id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error("Finish challenge error: " + err)
 				if res
 					sAlert.success "Challenge published!"
 
@@ -154,7 +154,7 @@ Template.company_challenge.events
 			(err, res) ->
 				inst.send_disabled.set(false)
 				if err
-					sAlert.error(err)
+					sAlert.error "Send message error: " + err
 				if res
 					sAlert.success "Message send."
 
@@ -285,7 +285,7 @@ Template.reopen_solution.events
 		Meteor.call "reopen_solution", self.id,
 			(err, res) ->
 				if err
-					sAlert.error(err)
+					sAlert.error "Reopen solution error: " + err
 				if res
 					sAlert.success "Solution reopened!"
 
