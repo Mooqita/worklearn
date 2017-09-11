@@ -6,12 +6,11 @@
 <template name="mooqita_login">
 	<div class="container-fluid">
 		{{#mooqita_wide_spacing}}
-			<div style="text-align: center; max-width: 450px;">
-				<h1>Please login to continue</h1>
+			<h1>Please login to continue</h1>
 
-				<div class="well" style="color: black;">
-					{{> atForm}}
-				</div>
+			<div class="well" style="color: black;">
+				{{isActiveRoute 'home'}}
+				{{> atForm}}
 			</div>
 		{{/mooqita_wide_spacing}}
 	</div>
