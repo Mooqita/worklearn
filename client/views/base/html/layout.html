@@ -9,15 +9,17 @@
 
 
 <template name="pre_loader">
-	{{#if g_get_login}}
-		{{#unless profile.has_occupation}}
-			{{>Template.dynamic template=g_get_login}}
+	<div class="mooqita-layout">
+		{{#if g_get_login}}
+			{{#unless profile.has_occupation}}
+				{{>Template.dynamic template=g_get_login}}
+			{{else}}
+				{{> Template.dynamic template=g_get_layout}}
+			{{/unless}}
 		{{else}}
 			{{> Template.dynamic template=g_get_layout}}
-		{{/unless}}
-	{{else}}
-		{{> Template.dynamic template=g_get_layout}}
-	{{/if}}
+		{{/if}}
+	</div>
 </template>
 
 
