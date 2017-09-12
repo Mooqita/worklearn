@@ -14,7 +14,6 @@ Template.mooqita_menu.helpers
 
 ########################################
 Template.mooqita_menu.events
-	'click .logout': (event) ->
+	'click #logout': (event) ->
 		Meteor.logout()
-		FlowRouter.go "/"
 

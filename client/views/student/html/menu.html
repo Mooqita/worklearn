@@ -4,49 +4,44 @@
 |
 -------------------------------------------------->
 <template name="student_menu">
-	<div class="container-fluid navigation-background background-theme">
-		<div class="row">
-			{{>optional_menu}}
+	{{>optional_menu}}
 
-			<span>
-				<a class="navigation-button control-navigate"
-					 href="{{build_url "student_profile"}}">
-					Profile
-				</a>
-			</span>
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "student_profile"}}">
+			Profile
+		</a>
+	</li>
 
-			<span>
-				<a class="navigation-button control-navigate"
-					 href="{{build_url "student_solutions"}}">
-					My Challenges
-				</a>
-			</span>
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "student_solutions"}}">
+			My Challenges
+		</a>
+	</li>
 
-			<span>
-				<a class="navigation-button control-navigate"
-					 href="{{build_url "student_reviews"}}">
-					Reviews
-				</a>
-			</span>
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "student_reviews"}}">
+			Reviews
+		</a>
+	</li>
 
-			<span>
-				<a class="navigation-button control-navigate"
-					 href="{{build_url "student_credentials"}}">
-					Resume
-				</a>
-			</span>
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "student_credentials"}}">
+			Resume
+		</a>
+	</li>
 
-
-				<span class="pull-right">
-					<a class="navigation-button control-navigate"
-						 href="{{build_url "student_messages"}}">
-						Messages
-						{{#if num_new_messages}}
-							<span class="badge background-contrast">{{num_new_messages}}</span>
-						{{/if}}
-					</a>
-				</span>
-		</div>
-	</div>
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "student_messages"}}">
+			Messages
+			{{#if num_new_messages}}
+				<span class="badge background-contrast">{{num_new_messages}}</span>
+			{{/if}}
+		</a>
+	</li>
 </template>
 

@@ -1,3 +1,7 @@
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
+
 ##############################################
 @get_selected_view = () ->
 	selected = FlowRouter.getParam("template")

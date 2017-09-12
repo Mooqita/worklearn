@@ -1,10 +1,5 @@
 accounts-base@1.3.2
-accounts-facebook@1.2.1
-accounts-github@1.3.0
-accounts-google@1.2.0
-accounts-oauth@1.1.15
 accounts-password@1.4.0
-accounts-twitter@1.3.0
 accounts-ui@1.1.9
 accounts-ui-unstyled@1.2.1
 alanning:roles@1.2.16
@@ -40,15 +35,9 @@ ecmascript-runtime-server@0.4.1
 ejson@1.0.14
 email@1.2.3
 es5-shim@4.6.15
-facebook-config-ui@1.0.0
-facebook-oauth@1.3.2
 fastclick@1.0.13
 fourseven:scss@4.5.4
 geojson-utils@1.0.10
-github-config-ui@1.0.0
-github-oauth@1.2.0
-google-config-ui@1.0.0
-google-oauth@1.2.4
 gwendall:body-events@0.1.6
 gwendall:impersonate@0.2.2
 hot-code-push@1.0.4
@@ -60,6 +49,7 @@ jparker:crypto-core@0.1.0
 jparker:crypto-sha256@0.1.1
 jquery@1.11.10
 juliancwirko:s-alert@3.2.0
+kadira:blaze-layout@2.3.0
 lai:collection-extensions@0.2.1_1
 launch-screen@1.1.1
 less@2.7.9
@@ -84,9 +74,6 @@ mongo-id@1.0.6
 mongo-livedata@1.0.12
 npm-bcrypt@0.9.3
 npm-mongo@2.2.30
-oauth@1.1.13
-oauth1@1.1.11
-oauth2@1.1.11
 observe-sequence@1.0.16
 okgrow:analytics@3.0.1
 ordered-dict@1.0.9
@@ -117,8 +104,6 @@ templating-runtime@1.3.2
 templating-tools@1.1.2
 tracker@1.1.3
 twbs:bootstrap@3.3.6
-twitter-config-ui@1.0.0
-twitter-oauth@1.2.0
 ui@1.0.13
 underscore@1.0.10
 url@1.1.0

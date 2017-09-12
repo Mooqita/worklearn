@@ -11,3 +11,24 @@ Template.registerHelper "profile_url", (type) ->
 		return build_url "company_profile"
 
 	return build_url "student_profile"
+
+##############################################
+Template.registerHelper "g_get_menu", ()->
+		Session.get "menu_template"
+
+##############################################
+Template.registerHelper "g_get_login", ()->
+		Session.get "login_template"
+
+##############################################
+Template.registerHelper "g_get_layout", ()->
+		Session.get "layout_template"
+
+##############################################
+Template.registerHelper "g_get_content", ()->
+		Session.get "content_template"
+
+##############################################
+Template.registerHelper "g_get_footer", ()->
+		Session.get "footer_template"
+

@@ -4,15 +4,53 @@
 |
 -------------------------------------------------->
 <template name="mooqita_login">
-	<div class="container-fluid">
-		{{#mooqita_wide_spacing}}
-			<h1>Please login to continue</h1>
+	{{#if currentUser}}
+		{{#if profile}}
+			{{#unless profile.has_occupation}}
+				{{>first_timer}}
+			{{/unless}}
+		{{else}}
+			{{>first_timer}}
+		{{/if}}
+	{{else}}
+		{{> mooqita_sign_in}}
+	{{/if}}
+</template>
 
-			<div class="well" style="color: black;">
-				{{isActiveRoute 'home'}}
-				{{> atForm}}
+
+<template name="mooqita_sign_in">
+	<div class="mooqita-layout">
+		<div class="hero hero-background">
+		</div>
+
+		<div class="container-fluid" style="color: #fff; background: rgb(134, 45, 101);">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="row" style="margin-top: 50px">
+						<div class="col-md-7 col-md-offset-0
+												col-sm-8 col-sm-offset-2
+												col-xs-12 col-xs-offset-0
+												vcenter">
+							<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
+							<h1 style="padding-bottom: 50px">
+								Let's think about the future of online work and education.
+							</h1>
+						</div><!--
+						This comment is important otherwise
+						the grid system will break. Due to
+						the interpretation of the white spaces!
+						--><div class="	col-md-5 col-md-offset-0
+														col-sm-8 col-sm-offset-2
+														col-xs-12 col-xs-offset-0
+														vcenter">
+							<div class="well" style="color: black; text-align: center">
+								{{>atForm}}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		{{/mooqita_wide_spacing}}
+		</div>
 	</div>
 </template>
 

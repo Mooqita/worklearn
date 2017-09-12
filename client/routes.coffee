@@ -9,7 +9,7 @@
 ##########################################################
 
 ##########################################################
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ##########################################################
 # index
@@ -19,24 +19,45 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 FlowRouter.route "/",
 	name: "index",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_landing"
-			footer: "mooqita_footer"
-		this.render "mooqita_landing"
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"login_template", "mooqita_login"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_landing"
+		Session.set	"footer_template", "mooqita_footer"
 
+		this.render "body_template"
+
+
+##########################################################
+# user routes
+##########################################################
+
+##########################################################
+FlowRouter.route "/app/:template",
+	name: "index",
+	action: (params) ->
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"login_template", "mooqita_login"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_view"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
+
+##########################################################
+# basic routes
+##########################################################
 
 ##########################################################
 FlowRouter.route "/help",
 	name: "index",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_help"
-			footer: "mooqita_footer"
-		this.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_help"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
 
 
 ##########################################################
@@ -47,40 +68,24 @@ FlowRouter.route "/help",
 FlowRouter.route "/privacy",
 	name: "privacy",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_privacy"
-			footer: "mooqita_footer"
-		this.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_privacy"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
 
 ##########################################################
 FlowRouter.route "/terms-of-use",
 	name: "terms-of-use",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_terms"
-			footer: "mooqita_footer"
-		this.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_terms"
+		Session.set	"footer_template", "mooqita_footer"
 
+		this.render "body_template"
 
-##########################################################
-# user routes
-##########################################################
-
-##########################################################
-FlowRouter.route "/app/:template",
-	name: "index",
-	triggersEnter: [AccountsTemplates.ensureSignedIn],
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_view"
-			footer: "mooqita_footer"
-		this.render "body_template", data
 
 ##########################################################
 #
