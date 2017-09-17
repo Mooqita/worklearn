@@ -244,7 +244,7 @@
 			</div>
 
 			<div class="col-sm-5">
-				{{>paging subscription="challenge_summary" page=0 count=10 parameter=parameter}}
+				{{>paging subscription="challenge_summaries" page=0 count=10 parameter=parameter}}
 			</div>
 		</div>
 
@@ -417,7 +417,7 @@
 |	Student info modal
 |
 -------------------------------------------------->
-<template name="show_student_info">
+<template name="show_student_summary">
 	<div class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -426,7 +426,8 @@
 				</div>
 
 				<div class="modal-body">
-					{{>student_info}}
+					{{>student_summary}}
+					{{>recommendation}}
 				</div>
 
 				<div class="modal-footer right">
@@ -439,6 +440,67 @@
 			</div>
 		</div>
 	</div>
+</template>
+
+<!------------------------------------------------
+|
+|	Recommendation
+|
+-------------------------------------------------->
+<template name="recommendation">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#unless g_is_public "Recommendations"}}
+				<div class="padding-top">
+					<div class="alert alert-warning">
+						<h2>Todo List: Recommendation</h2>
+
+						A summary of things you need to do before students can see your letter of recommendation:
+						<ul>
+							{{#unless letter}}
+								<li>Write a letter (required)</li>
+							{{/unless}}
+
+							{{#unless skills}}
+								<li>Provide a list of skills you would like to add for the student.</li>
+							{{/unless}}
+
+							{{#unless g_is_saved "Recommendations"}}
+								<li>Save it!</li>
+							{{/unless}}
+
+							<li>Publish your recommendation you find the button below.</li>
+						</ul>
+					</div>
+				</div>
+			{{/unless}}
+
+			<div class="padding-next">
+				<h2>Letter:</h2>
+				{{>markdown_input method="set_field" collection_name="Challenges"
+						item_id=_id field="content" placeholder="Content"}}
+			</div>
+
+			{{#unless g_is_public "Recommendation"}}
+				<div class="row">
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" id="save">Save</div>
+						</span>
+					</div>
+
+					<div class="form-group col-sm-6">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" {{publish_disabled}}
+									 id="publish">Make public</div>
+						</span>
+					</div>
+				</div>
+			{{/unless}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
 </template>
 
 

@@ -194,7 +194,7 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 
 
 #######################################################
-Meteor.publish "challenge_summary", (parameter) ->
+Meteor.publish "challenge_summaries", (parameter) ->
 	pattern =
 		challenge_id: String
 		published: Match.Optional(Boolean)
@@ -298,7 +298,7 @@ Meteor.publish "challenge_summary", (parameter) ->
 	profile_cursor = Profiles.find(filter, mod)
 
 	log_publication "Multiple Cursor", null, {},
-			{}, "challenge_summary", user_id
+			{}, "challenge_summaries", user_id
 
 	return [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
 

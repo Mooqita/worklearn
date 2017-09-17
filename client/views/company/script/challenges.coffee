@@ -281,7 +281,7 @@ Template.challenge_solution.events
 	"click #user_info": () ->
 		data = UserSummaries.findOne(this.owner_id)
 		data["user_id"] = this.owner_id
-		Modal.show 'show_student_info', data
+		Modal.show 'show_student_summary', data
 
 
 

@@ -1,14 +1,14 @@
 <!------------------------------------------------
 |
-|	Student credentials
+|	Student resumes
 |
 -------------------------------------------------->
-<template name="student_credentials">
+<template name="student_resumes">
 	{{#mooqita_wide_spacing}}
 		{{#if Template.subscriptionsReady}}
 			<!--{{>popout content="content" title="title" p_url="login"}}-->
-			{{>credential_basic current_resume}}
-			{{>credential_solutions current_resume}}
+			{{>resume_basic current_resume}}
+			{{>resume_solutions current_resume}}
 		{{else}}
 			{{>wait}}
 		{{/if}}
@@ -16,7 +16,7 @@
 </template>
 
 
-<template name="credential_basic">
+<template name="resume_basic">
 	<div class="item padding-top">
 		<div class="row">
 			<div class="col-sm-4 col-ms-4">
@@ -38,20 +38,20 @@
 </template>
 
 
-<template name="credential_solutions">
+<template name="resume_solutions">
 	{{#if solutions}}
 		<div class="item">
 			<h1>Portfolio</h1>
 
 			{{#each solutions}}
-				{{>credential_solution}}
+				{{>resume_solution}}
 			{{/each}}
 		</div>
 	{{/if}}
 </template>
 
 
-<template name="credential_solution">
+<template name="resume_solution">
 	<hr>
 
 	<div class="row">
@@ -88,7 +88,7 @@
 		<h2>Reviews</h2>
 
 		{{#each reviews}}
-			{{>credential_review}}
+			{{>resume_review}}
 		{{else}}
 			<div class="well">
 				No reviews yet.
@@ -98,7 +98,7 @@
 </template>
 
 
-<template name="credential_review">
+<template name="resume_review">
 	<div class="media" style="padding-bottom: 25px">
 		<div class="media-left">
 			<a href="{{resume_url}}">

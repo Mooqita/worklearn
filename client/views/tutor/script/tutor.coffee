@@ -64,11 +64,14 @@ Template.tutor_solutions.helpers
 		return Challenges.findOne challenge_id
 
 	solutions: () ->
+		filter =
+			owner_id:
+				$ne: Meteor.userId()
 		mod =
 			sort:
 				under_review_since: 1
 
-		return TutorSolutions.find {}, mod
+		return Solutions.find filter, mod
 
 	solution_url: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"

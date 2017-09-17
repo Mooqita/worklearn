@@ -22,7 +22,7 @@ Meteor.publish "my_profile", () ->
 #######################################################
 
 #######################################################
-Meteor.publish "user_credentials", (user_id) ->
+Meteor.publish "user_resumes", (user_id) ->
 	if user_id
 		check user_id, String
 		if not Roles.userIsInRole this.userId, "admin"
@@ -118,7 +118,7 @@ Meteor.publish "user_credentials", (user_id) ->
 			solution_list.push(solution)
 
 		resume.solutions = solution_list
-		self.added("user_credentials", user._id, resume)
+		self.added("user_resumes", user._id, resume)
 
 	filter =
 		_id: user_id
@@ -126,7 +126,7 @@ Meteor.publish "user_credentials", (user_id) ->
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)
 
-	log_publication "UserCredentials", crs, filter, {}, "credits", user_id
+	log_publication "UserResumes", crs, filter, {}, "credits", user_id
 	self.ready()
 
 #######################################################

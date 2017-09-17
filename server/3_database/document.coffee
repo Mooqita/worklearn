@@ -83,7 +83,11 @@
 	filter = []
 	roles = ["all"]
 
-	if restrict.owner_id and user_id
+	if restrict.owner_id
+		if not user_id
+			msg = "user_id undefined! If restrict variable contains owner_id user_id must be defined."
+			throw new Meteor.Error msg
+
 		if restrict.owner_id == user_id
 			owner = true
 

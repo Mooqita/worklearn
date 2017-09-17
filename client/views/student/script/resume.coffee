@@ -14,35 +14,35 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 
 ##############################################
-# credential list
+# resume list
 ##############################################
 
 ##############################################
-Template.student_credentials.onCreated () ->
+Template.student_resumes.onCreated () ->
 	self = this
 
 	self.autorun () ->
 		s_id = FlowRouter.getParam("user_id")
 		if !s_id
 			s_id = Meteor.userId()
-		self.subscribe "user_credentials", s_id
+		self.subscribe "user_resumes", s_id
 
 ##############################################
-Template.student_credentials.helpers
+Template.student_resumes.helpers
 	current_resume: () ->
-		res = UserCredentials.findOne()
+		res = UserResumes.findOne()
 		return res
 
 ##############################################
-# credential solution
+# resume solution
 ##############################################
 
 ##############################################
-Template.credential_solution.onCreated () ->
+Template.resume_solution.onCreated () ->
 	this.reviews_visible = new ReactiveVar(false)
 
 ##############################################
-Template.credential_solution.helpers
+Template.resume_solution.helpers
 	average_rating: () ->
 		if this.average
 			return this.average
@@ -53,25 +53,25 @@ Template.credential_solution.helpers
 
 
 ##############################################
-Template.credential_solution.events
+Template.resume_solution.events
 	"click #show_reviews": () ->
 		rv = Template.instance().reviews_visible
 		rv.set !rv.get()
 
 
 ##############################################
-# credential review
+# resume review
 ##############################################
 
 ##############################################
-Template.credential_review.helpers
+Template.resume_review.helpers
 	average_rating: () ->
 		if this.rating
 			return this.rating
 		return "-/-"
 
 ##############################################
-Template.credential_review.helpers
+Template.resume_review.helpers
 	resume_url: () ->
 		return ""#get_response_url(this.owner_id)
 
