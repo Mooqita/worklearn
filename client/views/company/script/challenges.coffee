@@ -4,6 +4,7 @@
 #
 ########################################
 
+
 ##########################################################
 # import
 ##########################################################
@@ -216,6 +217,7 @@ Template.challenge_solutions.events
 ########################################
 Template.challenge_solution.onCreated ->
 	self = this
+	self.adding_recommendation = new ReactiveVar(false)
 	self.reviews_visible = new ReactiveVar(false)
 
 	self.autorun ->
@@ -223,8 +225,26 @@ Template.challenge_solution.onCreated ->
 			self.data.owner_id,
 			self.data.challenge_id
 
+		self.subscribe "my_recommendation_by_recipient_id",
+			self.data.owner_id
+
 ########################################
 Template.challenge_solution.helpers
+	recommendation: () ->
+		filter =
+			recipient_id: this.owner_id
+
+		list = Recommendations.find filter
+
+		if list.count() == 0
+			return false
+
+		return list
+
+	is_adding: () ->
+		val = Template.instance().adding_recommendation.get()
+		return val
+
 	resume_url: (author_id) ->
 		return author_id
 
@@ -283,6 +303,17 @@ Template.challenge_solution.events
 		data["user_id"] = this.owner_id
 		Modal.show 'show_student_summary', data
 
+	"click #edit_recommendation": () ->
+		filter =
+			recipient_id: this.owner_id
+
+		recommendation = Recommendations.findOne filter
+
+		Modal.show 'recommendation', {recommendation: recommendation}
+
+	"click #add_recommendation": () ->
+		Template.instance().adding_recommendation.set true
+		Meteor.call "add_recommendation", this.challenge_id, this.owner_id
 
 
 ##############################################

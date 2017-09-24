@@ -1,9 +1,14 @@
 <template name="popout">
-	<a style="display: inline;" href="{{p_url}}" target="_blank">
-		<div class="glyphicon glyphicon-question-sign"
-					data-toggle="popover" data-trigger="hover"
-					data-content="{{content}}" title="{{title}}"
-					id="resume_info" style="vertical-align: top">
-		</div>
+	<a class="popout" style="display: inline;" href="{{p_url}}" target="_blank">
+		{{> popout_base content=content title=title
+				icon_class="glyphicon glyphicon-question-sign"}}
 	</a>
+</template>
+
+<template name="popout_base">
+	<div class="{{icon_class}}"
+			 data-toggle="popover" data-trigger="hover"
+				data-content="{{content}}" title="{{title}}"
+				id="popout_id" data-placement="top">
+	</div>
 </template>

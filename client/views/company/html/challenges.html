@@ -278,10 +278,6 @@
 		</div>
 
 		<div class="col-sm-10 col-ms-9">
-			<h2>Upload letter of recommendation for <em>{{profile_name owner_id}}</em>:</h2>
-			{{>upload method="add_recommendation" collection_name="Solutions"
-				item_id=_id field="recommendations"}}
-
 			<h2>
 				<a id="user_info">{{profile_name owner_id}}</a>
 				{{{average_rating}}}
@@ -291,12 +287,45 @@
 				{{/if}}
 
 				{{#if published}}
-					{{#if isInRole 'admin'}}
-						<span class="btn btn-contrast pull-right" id="reopen">reopen</span>
-					{{else}}
-						<span class="badge background-contrast pull-right">public</span>
-					{{/if}}
+					<span class="badge background-contrast">public</span>
 				{{/if}}
+
+				<div class="btn-group pull-right">
+					<span class="btn btn-theme" id="user_info">
+						{{> popout_base title="Info"
+								content="This shows statistics about the user."
+								icon_class="glyphicon glyphicon-stats"}}
+					</span>
+
+						{{#unless recommendation}}
+							{{#if is_adding}}
+								<span class="btn btn-theme">
+									<div class="glyphicon glyphicon-refresh spin">
+									</div>
+								</span>
+							{{else}}
+								<span class="btn btn-theme" id="add_recommendation">
+									{{> popout_base title="Recommendation"
+											content="Add a letter of recommendation for your student."
+											icon_class="glyphicon glyphicon-plus-sign"}}
+								</span>
+							{{/if}}
+						{{else}}
+							<span class="btn btn-theme" id="edit_recommendation">
+								{{> popout_base title="Recommendation"
+										content="Edit your letter of recommendation."
+										icon_class="glyphicon glyphicon-pencil"}}
+							</span>
+						{{/unless}}
+
+					{{#if isInRole 'admin'}}
+						<span class="btn btn-theme" id="reopen">
+							{{> popout_base title="Reopen"
+									content="Reopens the solution and the student will be able to edit it again."
+									icon_class="glyphicon glyphicon-repeat"}}
+						</span>
+					{{/if}}
+				</div>
 			</h2>
 
 			{{>more content=content}}
@@ -427,7 +456,6 @@
 
 				<div class="modal-body">
 					{{>student_summary}}
-					{{>recommendation}}
 				</div>
 
 				<div class="modal-footer right">
@@ -442,65 +470,68 @@
 	</div>
 </template>
 
+
 <!------------------------------------------------
 |
-|	Recommendation
+|	Student letter of recommendation
 |
 -------------------------------------------------->
 <template name="recommendation">
-	{{#mooqita_wide_spacing}}
-		{{#unless Template.subscriptionsReady}}
-			{{>wait}}
-		{{else}}
-			{{#unless g_is_public "Recommendations"}}
-				<div class="padding-top">
-					<div class="alert alert-warning">
-						<h2>Todo List: Recommendation</h2>
+	<div class="modal fade">
+		{{# mooqita_wide_spacing}}
+			<div class="modal-dialog" style="width: 100%; margin: 10px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title">
+							Letter of Recommendation
+						</h1>
+					</div>
 
-						A summary of things you need to do before students can see your letter of recommendation:
-						<ul>
-							{{#unless letter}}
-								<li>Write a letter (required)</li>
+					<div class="modal-body">
+						{{#with recommendation}}
+							{{#unless g_is_public "Recommendations"}}
+								<div class="alert alert-warning">
+									<h2>Todo List: Recommendation</h2>
+
+									A summary of things you need to do before
+									students can see your letter of recommendation:
+
+									<ul>
+										{{#unless letter}}
+											<li>Write a letter (required)</li>
+										{{/unless}}
+
+										{{#unless skills}}
+											<li>Provide a list of skills you would like to add for the student.</li>
+										{{/unless}}
+
+										{{#unless g_is_saved "Recommendations"}}
+											<li>Save it!</li>
+										{{/unless}}
+
+										<li>Publish your recommendation you find the button below.</li>
+									</ul>
+								</div>
 							{{/unless}}
 
-							{{#unless skills}}
-								<li>Provide a list of skills you would like to add for the student.</li>
-							{{/unless}}
+							<div class="padding-next">
+								{{>markdown_input method="set_field" collection_name="Recommendations"
+										item_id=_id field="content" placeholder="Letter of recommendation"}}
+							</div>
+						{{/with}}
+					</div>
 
-							{{#unless g_is_saved "Recommendations"}}
-								<li>Save it!</li>
-							{{/unless}}
-
-							<li>Publish your recommendation you find the button below.</li>
-						</ul>
+					<div class="modal-footer right">
+						<div class="btn-group">
+							<a type="button" class="btn btn-theme" data-dismiss="modal">
+								<span class="glyphicon glyphicon-log-out"></span>
+							</a>
+						</div>
 					</div>
 				</div>
-			{{/unless}}
-
-			<div class="padding-next">
-				<h2>Letter:</h2>
-				{{>markdown_input method="set_field" collection_name="Challenges"
-						item_id=_id field="content" placeholder="Content"}}
 			</div>
-
-			{{#unless g_is_public "Recommendation"}}
-				<div class="row">
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" id="save">Save</div>
-						</span>
-					</div>
-
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" {{publish_disabled}}
-									 id="publish">Make public</div>
-						</span>
-					</div>
-				</div>
-			{{/unless}}
-		{{/unless}}
-	{{/mooqita_wide_spacing}}
+		{{/mooqita_wide_spacing}}
+	</div>
 </template>
 
 

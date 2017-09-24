@@ -94,14 +94,11 @@ FlowRouter.route "/terms-of-use",
 ##########################################################
 
 ##########################################################
-'''FlowRouter.route '/admin',
+FlowRouter.route '/admin',
 	name: 'admin',
 	action: (params) ->
-		console.log "admin"
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_admin"
-		this.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_admin"
 
-'''
+		this.render "body_template"

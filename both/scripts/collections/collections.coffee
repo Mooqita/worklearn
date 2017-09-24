@@ -10,7 +10,7 @@
 @Summaries = new Mongo.Collection("summaries")
 
 #######################################################
-@Recommendations = new Mongo.Collection("Recommendations")
+@Recommendations = new Mongo.Collection("recommendations")
 @Challenges = new Mongo.Collection("challenges")
 @Solutions = new Mongo.Collection("solutions")
 @Feedback = new Mongo.Collection("feedback")

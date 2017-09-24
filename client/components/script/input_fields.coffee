@@ -105,7 +105,6 @@ Template.basic_input.helpers
 #########################################################
 Template.basic_input.events
 	"change .edit-field": (event) ->
-		console.log this
 		field = event.target.id
 		value = event.target.value
 		method = this.method

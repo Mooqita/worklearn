@@ -67,6 +67,16 @@
 	text-decoration: none;
 }
 
+.mooqita-layout .popover{
+    min-width:200px;
+}
+
+.mooqita-layout .popover-title,
+.mooqita-layout .popover-content{
+	color: $text;
+}
+
+
 ////////////////////////////////////////////////
 // paragraphs
 ////////////////////////////////////////////////
@@ -282,6 +292,14 @@ a.mooqita:hover,
 	top: 0;
 	left: 0;
 	right: 0;
+}
+
+.mooqita-layout .hero.logged-in{
+	background-repeat: repeat, no-repeat;
+	background-size: auto auto, cover;
+	background-position: 0 0, top center;
+	min-height: 350px;
+	position: relative;
 }
 
 .mooqita-layout .hero h1 {

@@ -1,22 +1,4 @@
 ###############################################
-@add_recommendation_save = (collection, item_id, field, data) ->
-	user = Meteor.user()
-	if !user
-		throw new Meteor.Error('Not permitted.')
-
-	if !Roles.userIsInRole(user._id, 'challenge_designer')
-		throw new Meteor.Error('Not permitted.')
-
-	mod =
-		$push:
-			recommendations: data
-		$set:
-			modified: new Date
-
-	collection.update(item_id, mod)
-
-
-###############################################
 @gen_solution = (challenge, user) ->
 	filter =
 		challenge_id: challenge._id
