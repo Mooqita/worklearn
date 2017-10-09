@@ -243,7 +243,7 @@ Template.student_solution_reviews.events
 
 		challenge_id = this.challenge_id
 
-		Meteor.call 'find_review_for_challenge', challenge_id,
+		Meteor.call 'assign_review_with_challenge', challenge_id,
 			(err, rsp) ->
 				ins.searching.set false
 
