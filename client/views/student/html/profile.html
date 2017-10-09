@@ -6,6 +6,9 @@
 <template name="student_profile">
 	{{#mooqita_wide_spacing}}
 		{{#with profile}}
+			{{>tags method="set_field" collection_name="Profiles"
+					item_id=_id field="tags" rating_options=g_rating_options }}
+
 			{{#unless profile_done}}
 				<div class="alert alert-warning" style="margin-top: 25px">
 					<h2>Todo List: Profile</h2>
