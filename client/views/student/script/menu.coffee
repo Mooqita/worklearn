@@ -1,4 +1,4 @@
-Template.student_menu.onCreated ->
+Template.learner_menu.onCreated ->
 	self = this
 
 	self.autorun ->
@@ -7,7 +7,7 @@ Template.student_menu.onCreated ->
 		Meteor.subscribe "my_reviews"
 
 
-Template.student_menu.helpers
+Template.learner_menu.helpers
 	review_time: () ->
 		if this.review_time>0
 			return how_much_time this.review_time

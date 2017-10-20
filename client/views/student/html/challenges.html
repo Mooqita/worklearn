@@ -1,9 +1,9 @@
 <!------------------------------------------------
 |
-|	Student find challenges
+|	Learner find challenges
 |
 -------------------------------------------------->
-<template name="student_find_challenges">
+<template name="learner_find_challenges">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			<h1>Find Challenges</h1>
@@ -24,7 +24,7 @@
 			</div-->
 
 			{{#each challenges}}
-				{{>student_challenge_preview}}
+				{{>learner_challenge_preview}}
 			{{else}}
 				<p>No challenges yet.</p>
 			{{/each}}
@@ -33,7 +33,7 @@
 </template>
 
 
-<template name="student_challenge_preview">
+<template name="learner_challenge_preview">
 	<hr>
 
 	<h3>
@@ -41,7 +41,7 @@
 			<em><span class="glyphicon glyphicon-check"></span></em>
 		{{/if}}
 
-		<a href="{{build_url "student_solution" (object challenge_id=this._id)}}">
+		<a href="{{build_url "learner_solution" (object challenge_id=this._id)}}">
 			<b><em>{{title}}</em></b>
 		</a>
 	</h3>

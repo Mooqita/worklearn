@@ -25,7 +25,7 @@
 	if profile
 		return profile._id
 
-	profile_id = gen_profile user, "student"
+	profile_id = gen_profile user, "learner"
 
 	msg = "admin added " + user.email + " " + profile_id
 	loig_event msg, event_testing, event_info
@@ -43,23 +43,23 @@
 		challenge_id = test_challenge title
 		challenge = Challenges.findOne challenge_id
 
-	students = []
+	learners = []
 	for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		mail = String(i) + "@uni.edu"
-		profile_id = test_user_creation mail, "student"
+		profile_id = test_user_creation mail, "learner"
 		profile = Profiles.findOne profile_id
 		user = Meteor.users.findOne profile.owner_id
-		students.push user
+		learners.push user
 
 	solutions = []
-	for s in students
+	for s in learners
 		solution_id = test_solution challenge, s
 		solution = Solutions.findOne solution_id
 		solutions.push solution
 
 	for i in [1..challenge.num_reviews]
 		reviews = []
-		for s in students
+		for s in learners
 			review_id = test_review challenge, null, s
 			review = Reviews.findOne review_id
 			reviews.push review
@@ -122,7 +122,7 @@
 @test_challenge = (title) ->
 	user = Accounts.findUserByEmail("designer@mooqita.org")
 	if not user
-		test_user_creation "designer@mooqita.org", "company"
+		test_user_creation "designer@mooqita.org", "organization"
 		user = Accounts.findUserByEmail("designer@mooqita.org")
 		Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
 

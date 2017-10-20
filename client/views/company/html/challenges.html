@@ -3,7 +3,7 @@
 |	Challenge
 |
 -------------------------------------------------->
-<template name="company_challenges">
+<template name="organization_challenges">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			<div class="padding-next">
@@ -56,7 +56,7 @@
 -------------------------------------------------->
 <template name="challenge_preview">
 	<h2>
-		<a href="{{build_url "company_challenge" (object challenge_id=_id)}}">
+		<a href="{{build_url "organization_challenge" (object challenge_id=_id)}}">
 			{{title}}
 		</a>
 	</h2>
@@ -70,7 +70,7 @@
 |	Challenge Editor
 |
 -------------------------------------------------->
-<template name="company_challenge">
+<template name="organization_challenge">
 	{{#mooqita_wide_spacing}}
 		{{#unless Template.subscriptionsReady}}
 			{{>wait}}
@@ -81,7 +81,7 @@
 						<div class="alert alert-warning">
 							<h2>Todo List: Challenge</h2>
 
-							A summary of things you need to do before students can see your task:
+							A summary of things you need to do before learners can see your task:
 							<ul>
 								{{#unless title}}
 									<li>Give your task a title (required)</li>
@@ -92,7 +92,7 @@
 								{{/unless}}
 
 								{{#unless num_reviews}}
-									<li>Define how many reviews students have to write to finish the task</li>
+									<li>Define how many reviews learners have to write to finish the task</li>
 								{{/unless}}
 
 								{{#unless material}}
@@ -165,7 +165,7 @@
 
 					{{#if isInRole 'admin'}}
 						<div class="form-group">
-							<h2>Message Students</h2>
+							<h2>Message Learners</h2>
 
 							<input placeholder="Subject"
 										 class="form-control edit-field"
@@ -306,7 +306,7 @@
 							{{else}}
 								<span class="btn btn-theme" id="add_recommendation">
 									{{> popout_base title="Recommendation"
-											content="Add a letter of recommendation for your student."
+											content="Add a letter of recommendation for your learner."
 											icon_class="glyphicon glyphicon-plus-sign"}}
 								</span>
 							{{/if}}
@@ -321,7 +321,7 @@
 					{{#if isInRole 'admin'}}
 						<span class="btn btn-theme" id="reopen">
 							{{> popout_base title="Reopen"
-									content="Reopens the solution and the student will be able to edit it again."
+									content="Reopens the solution and the learner will be able to edit it again."
 									icon_class="glyphicon glyphicon-repeat"}}
 						</span>
 					{{/if}}
@@ -443,10 +443,10 @@
 
 <!------------------------------------------------
 |
-|	Student info modal
+|	Learner info modal
 |
 -------------------------------------------------->
-<template name="show_student_summary">
+<template name="show_learner_summary">
 	<div class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -455,7 +455,7 @@
 				</div>
 
 				<div class="modal-body">
-					{{>student_summary}}
+					{{>learner_summary}}
 				</div>
 
 				<div class="modal-footer right">
@@ -473,7 +473,7 @@
 
 <!------------------------------------------------
 |
-|	Student letter of recommendation
+|	Learner letter of recommendation
 |
 -------------------------------------------------->
 <template name="recommendation">
@@ -494,7 +494,7 @@
 									<h2>Todo List: Recommendation</h2>
 
 									A summary of things you need to do before
-									students can see your letter of recommendation:
+									learners can see your letter of recommendation:
 
 									<ul>
 										{{#unless letter}}
@@ -502,7 +502,7 @@
 										{{/unless}}
 
 										{{#unless skills}}
-											<li>Provide a list of skills you would like to add for the student.</li>
+											<li>Provide a list of skills you would like to add for the learner.</li>
 										{{/unless}}
 
 										{{#unless g_is_saved "Recommendations"}}
