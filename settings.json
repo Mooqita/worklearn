@@ -7,5 +7,6 @@
       "Amplitude"        : {"apiKey": "fddf3ac070c0f981e4cb054d062f484f"},
       "Segment.io"       : {"apiKey": "3M4C3w2CRzOZ9jArevk8Ycexx7Hff36G"}
     }
-  }
+  },
+  "initdefaultpermissions":"true"
 }

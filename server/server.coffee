@@ -210,6 +210,32 @@
 
 
 #####################################################
+# Helper functions to fill in default permissions
+#####################################################
+@find_permission_by_effectors = (p) ->
+	filter =
+		role: p.role
+		field: p.field
+		collection_name: p.collection_name
+	Permissions.find(filter)
+
+
+@insert_permission_unsafe = (p) ->
+	id = Permissions.insert p
+
+	if not id
+		throw new Meteor.Error 'Could not insert permission to db : ' + p
+
+	return id
+
+
+@insert_permission_safe = (p) ->
+	existing_permission = find_permission_by_effectors(p)
+
+	if existing_permission.count() == 0
+		@insert_permission_unsafe(p)
+
+#####################################################
 # start up
 #####################################################
 Meteor.startup () ->
@@ -257,6 +283,15 @@ Meteor.startup () ->
 	Reviews._ensureIndex index
 	Feedback._ensureIndex index
 	Posts._ensureIndex index
+
+	if Meteor.settings
+		if Meteor.settings.initdefaultpermissions
+			permstxt = Assets.getText("db/defaultcollections/permissions.json")
+			perms = JSON.parse(permstxt)
+
+			for perm, i in perms
+				#console.log("permission:" + i + " : " + JSON.stringify(perm))
+				insert_permission_safe(perm)
 
 Meteor.methods
 	db_test: () ->
