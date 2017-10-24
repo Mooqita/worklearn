@@ -234,6 +234,9 @@
 
 	if existing_permission.count() == 0
 		@insert_permission_unsafe(p)
+	else
+		msg = "Permissions for the following config already exist. Did not insert into db: " + JSON.stringify(p)
+		log_event msg, event_db, event_info
 
 #####################################################
 # start up
@@ -285,12 +288,18 @@ Meteor.startup () ->
 	Posts._ensureIndex index
 
 	if Meteor.settings
-		if Meteor.settings.initdefaultpermissions
-			permstxt = Assets.getText("db/defaultcollections/permissions.json")
+		if Meteor.settings.initdefaultpermissions && (Meteor.settings.initdefaultpermissions == true)
+			assetpath = "db/defaultcollections/permissions.json"
+			assetpobj = Meteor.settings.defaultpermissionsassetpath
+			if assetpobj
+				assetp = assetpobj.toString()
+				if not assetp == ""
+					assetpath = assetp
+			permstxt = Assets.getText(assetpath)
 			perms = JSON.parse(permstxt)
 
 			for perm, i in perms
-				#console.log("permission:" + i + " : " + JSON.stringify(perm))
+				#console.log("inserting permission:" + i + " : " + JSON.stringify(perm))
 				insert_permission_safe(perm)
 
 Meteor.methods
