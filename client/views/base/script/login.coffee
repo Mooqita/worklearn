@@ -1,3 +1,5 @@
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
 ##########################################################
 _add_profile = (occupation) ->
 	param =
@@ -7,7 +9,9 @@ _add_profile = (occupation) ->
 		(err) ->
 			if err
 				sAlert.error("Likert item error: " + err)
-
+			# Onboarding does not yet exist for educator/company
+			else if param.occupation is "learner"
+				FlowRouter.go "/onboarding/context/"
 
 ##########################################################
 # First time user
