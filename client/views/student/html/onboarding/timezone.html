@@ -1,0 +1,43 @@
+<template name="onboarding_timezone">
+    <div class="">
+      <p>Your work environment preferences</p>
+
+      {{> timezoneselect }}
+      {{> preflangselect }}
+
+      <p>How would you like to communicate with your team?</p>
+
+      <div>
+          <div>
+              <img style="display:block;" width="20" height="20"
+                   src="https://image.flaticon.com/icons/png/512/51/51736.png">
+              <span>Slack</span>
+          </div>
+      </div>
+
+      <input class="form-control" type="text" value="" placeholder="Add another">
+      <span>OR</span>
+      <input id="checkBox" type="checkbox"><span>I don't mind, I'll use any tool</span>
+
+      <p>This information will help us put you into a team which best suits you</p>
+      <a class="btn btn-template-transparent-primary continue" href="#">Continue</a>
+    </div>
+</template>
+
+<template name="timezoneselect">
+    <select id="category" name="category" class="category">
+        <option value="">-- Choose your timezone --</option>
+        {{#each tz in timezones}}
+            <option value="{{ tz }}">{{ tz }}</option>
+        {{/each}}
+    </select>
+</template>
+
+<template name="preflangselect">
+    <select id="category" name="category" class="category">
+        <option value="">-- Choose your timezone --</option>
+        {{#each lang in languages}}
+            <option value="{{ lang }}">{{ lang }}</option>
+        {{/each}}
+    </select>
+</template>

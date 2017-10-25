@@ -1,0 +1,11 @@
+<template name="onboarding_sort">
+    <div class="">
+        <p>Rank your course topics in order of preference</p>
+        <div>
+            {{#each tag in tags}}
+                <span class="tag course-tag label label-info">{{ tag }}</span>
+            {{/each}}
+        </div>
+        <a class="btn btn-template-transparent-primary continue" href="/onboarding/time">Continue</a>
+    </div>
+</template>
