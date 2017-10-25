@@ -102,3 +102,17 @@ FlowRouter.route '/admin',
 		Session.set	"content_template", "mooqita_admin"
 
 		this.render "body_template"
+
+##########################################################
+# onboarding routes
+##########################################################
+
+#############################R#############################
+FlowRouter.route "/onboarding/:template",
+	name: "onboarding",
+	# Attention: each phase of onboarding must be named
+	action: (params) ->
+		# TODO: what if the route URL template does not exist? onboarding/example
+		Session.set	"content_template", ("onboarding_" + params.template)
+
+		this.render "onboarding_base"
