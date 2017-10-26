@@ -1,0 +1,27 @@
+<template name="onboarding_challenges">
+    <div class="card-container">
+        <h1>Which of these previous challenges appeal to you?</h1>
+    {{#each challenges}}
+        <div class="card">
+            <div class="card-block" data-card-content="{{id}}">
+                {{ text }}
+                <button data-id="{{id}}" type="button" class="btn btn-warning btn-circle dislike-challenge">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+                <button data-id="{{id}}" type="button" class="btn btn-info btn-circle like-challenge">
+                    <i class="glyphicon glyphicon-ok like"></i>
+                </button>
+            </div>
+            <!-- TODO: this should be separate component to reduce unnecessary bloat -->
+            <div class="card-block" data-card-justify="{{id}}">
+                <p>What did you find most {{ justify_type }} about this challenge?</p>
+                <i>{{ text }}</i>
+                <input type="text" name="justifyInput" class="form-control" placeholder="We will use this to suggest appropriate challenges">
+                <button data-id="{{id}}" type="button" class="btn btn-light skip-justify-challenge">Skip</button>
+                <button data-id="{{id}}" type="button" class="btn btn-secondary add-justify-challenge">Add</button>
+            </div>
+        </div>
+    {{/each}}
+      <a class="btn btn-template-transparent-primary continue" href="/onboarding/report">Continue</a>
+    </div>
+</template>
