@@ -6,6 +6,7 @@ Template.onboarding_course.helpers
 
 Template.onboarding_course.events
   "click .continue": (event) ->
+    # TODO: this can be undefined
     selectedTags = Session.get "coursetags"
     if (selectedTags.length) < 3
       alert("At least three tags must be selected")
