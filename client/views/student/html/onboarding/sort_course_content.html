@@ -1,11 +1,24 @@
 <template name="onboarding_sort">
     <div class="">
         <p>Rank your course topics in order of preference</p>
-        <div>
-            {{#each tag in tags}}
-                <span class="tag course-tag label label-info">{{ tag }}</span>
-            {{/each}}
-        </div>
+
+        <div class="podium">
+			<table id="ladder">
+				<tr>
+					<td><div class="dropTarget dragula-container" id="podiumContainer1"></div><br/><div id="podium1"></div></td>
+					<td><div class="dropTarget dragula-container" id="podiumContainer2"></div><br/><div id="podium2"></div></td>
+					<td><div class="dropTarget dragula-container" id="podiumContainer3"></div><br/><div id="podium3"></div></td>
+				</tr>
+			</table>
+	  	</div>
+
+        <br/>
+
+	    <div class="dragula-container" id="poolContainer">
+	        {{#each tag in tags}}
+	            <div class="tag course-tag label label-info">{{ tag }}</div>
+	        {{/each}}
+	    </div>
         <a class="btn btn-template-transparent-primary continue" href="/onboarding/time">Continue</a>
     </div>
 </template>

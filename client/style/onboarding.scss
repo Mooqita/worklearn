@@ -11,3 +11,148 @@
 }
 
 .card-block { display: none; }
+
+/* Podium and sort */
+.podium td {
+    height: 300px;
+    vertical-align: bottom;
+    padding: 5px;
+}
+
+#podium1, #podium2, #podium3 {
+    width: 150px;
+    background: gray;
+}
+#podium1 { /* gold */
+    height: 280px;
+}
+#podium2 { /* silver */
+    height: 200px;
+}
+#podium3 { /* bronze */
+    height: 120px;
+}
+
+#poolContainer {
+	display: block;
+	background-color: #dfdfdf;
+	border-radius: 5px;
+	min-height: 50px;
+	margin: 0 auto;
+	padding: 2em;
+}
+
+.dropTarget {
+	border: 2px dashed #D9D9D9;
+	border-radius: 5px;
+	min-height: 60px;
+	margin: 0 auto;
+	margin-top: 10px;
+	padding: 2em;
+	display: block;
+	text-align: center;
+}
+
+#poolContainer > div {
+  transition: all .5s ease;
+}
+
+#poolContainer > div:active {
+  -webkit-animation: wiggle 0.3s 0s infinite ease-in;
+  animation: wiggle 0.3s 0s infinite ease-in;
+  opacity: .6;
+  border: 2px solid #000;
+}
+
+#poolContainer > div:hover {
+  border: 2px solid gray;
+  opacity: .8;
+}
+
+#dropTarget {
+  border: 2px dashed #D9D9D9;
+  border-radius: 5px;
+  min-height: 50px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 2em;
+  display: block;
+  text-align: center;
+}
+
+#dropTarget > div {
+  transition: all .5s;
+  text-align: center;
+  float: left;
+  padding: 1em;
+  margin: 0 1em 1em 0;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  border: 2px solid skyblue;
+  background: #F7F7F7;
+  transition: all .5s ease;
+}
+
+#dropTarget > div:active {
+  -webkit-animation: wiggle 0.3s 0s infinite ease-in;
+  animation: wiggle 0.3s 0s infinite ease-in;
+  opacity: .6;
+  border: 2px solid #000;
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(2deg);
+  }
+  75% {
+    -webkit-transform: rotate(-2deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(-2deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  padding: 1em;
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.gu-mirror {
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+
+/* End podium and sort */
