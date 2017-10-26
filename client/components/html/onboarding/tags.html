@@ -1,0 +1,10 @@
+<!---------------------------------------------------------
+| usage example: {{>obtags method="set_field" tags="list_of_tags" }}
+---------------------------------------------------------->
+<template name="obtags">
+    <div class="tags">
+    {{#each tag in tags}}
+        <span class="tag label label-info">{{ tag }}</span>
+    {{/each}}
+    </div>
+</template>
