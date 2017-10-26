@@ -1,0 +1,16 @@
+<template name="onboarding_softskillselection">
+    <h1>Your team working skills</h1>
+
+{{#each questions }}
+    <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/56376-200.png" width="40" height="40">
+    <div>
+        <p>{{ question }}</p>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            {{>likert_item low_label="AGREE" high_label="DISAGREE"
+                    method="softskillselection" item_id=id}}
+        </div>
+    </div>
+{{/each}}
+
+    <a class="btn btn-template-transparent-primary continue" href="/onboarding/techskillselection">Continue</a>
+</template>
