@@ -19,4 +19,6 @@ Template.onboarding_course.events
 
   "click .continue": (event) ->
     # TODO: save to database for this particular user
+    if Template.instance().selectedItems.length < 3
+      alert("At least three tags must be selected")
     alert(Template.instance().selectedItems)
