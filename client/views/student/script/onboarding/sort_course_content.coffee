@@ -17,4 +17,13 @@ Template.onboarding_sort.onRendered () ->
 			if target.classList.contains('dropTarget') and target.childElementCount == 0
 				return true;
 			return false
-	});
+	}).on('drop', (el, target, source, sibling) ->
+		switch target.id
+			when 'poolContainer'
+				ind = topThree.indexOf(el.innerHTML)
+				if ind != -1
+					topThree[ind] = null
+			when 'podiumContainer1' then window.topThree[0] = el.innerHTML;
+			when 'podiumContainer2' then window.topThree[1] = el.innerHTML;
+			when 'podiumContainer3' then window.topThree[2] = el.innerHTML;
+	);
