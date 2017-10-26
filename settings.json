@@ -8,5 +8,6 @@
       "Segment.io"       : {"apiKey": "3M4C3w2CRzOZ9jArevk8Ycexx7Hff36G"}
     }
   },
-  "initdefaultpermissions":"true"
+  "initdefaultpermissions":true,
+  "defaultpermissionsassetpath":"db/defaultcollections/permissions.json"
 }
