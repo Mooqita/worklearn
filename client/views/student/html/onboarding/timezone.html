@@ -1,43 +1,42 @@
 <template name="onboarding_timezone">
     <div class="">
-      <p>Your work environment preferences</p>
+        <p>Your work environment preferences</p>
 
-      {{> timezoneselect }}
-      {{> preflangselect }}
+        {{> timezoneselect }}
+        {{> preflangselect }}
 
-      <p>How would you like to communicate with your team?</p>
+        <p>How would you like to communicate with your team?</p>
 
-      <div>
-          <div>
-              <img style="display:block;" width="20" height="20"
-                   src="https://image.flaticon.com/icons/png/512/51/51736.png">
-              <span>Slack</span>
-          </div>
-      </div>
+        <div id="commTags">
+            {{#each tag in tags}}
+                <span class="tag comm-tag label label-info">{{ tag }}</span>
+            {{/each}}
+        </div>
 
-      <input class="form-control" type="text" value="" placeholder="Add another">
-      <span>OR</span>
-      <input id="checkBox" type="checkbox"><span>I don't mind, I'll use any tool</span>
+        <input id="addcomValue" class="form-control" type="text" value="" placeholder="Add another" />
+        <input class="form-control addcom" type="submit" value="Add" />
+        <span>OR</span>
+        <label><input id="checkBox" type="checkbox"> <span>I don't mind, I'll use any tool</span></label>
 
-      <p>This information will help us put you into a team which best suits you</p>
-      <a class="btn btn-template-transparent-primary continue" href="#">Continue</a>
+        <p>This information will help us put you into a team which best suits you</p>
+        <a class="btn btn-template-transparent-primary continue" href="/onboarding/softskillselection">Continue</a>
     </div>
 </template>
 
 <template name="timezoneselect">
-    <select id="category" name="category" class="category">
+    <select id="timezone" name="category" class="category">
         <option value="">-- Choose your timezone --</option>
         {{#each tz in timezones}}
-            <option value="{{ tz }}">{{ tz }}</option>
+            <option>{{ tz }}</option>
         {{/each}}
     </select>
 </template>
 
 <template name="preflangselect">
-    <select id="category" name="category" class="category">
-        <option value="">-- Choose your timezone --</option>
+    <select id="language" name="category" class="category">
+        <option value="">-- Choose your language --</option>
         {{#each lang in languages}}
-            <option value="{{ lang }}">{{ lang }}</option>
+            <option>{{ lang }}</option>
         {{/each}}
     </select>
 </template>
