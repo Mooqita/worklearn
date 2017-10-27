@@ -1,7 +1,6 @@
 <template name="onboarding_sort">
     <div class="">
         <p>Rank your course topics in order of preference</p>
-
         <div class="podium">
 			<table id="ladder">
 				<tr>
@@ -13,6 +12,7 @@
 	  	</div>
 
         <br/>
+        <p>{{ errorMessage }}</p>
 
 	    <div class="dragula-container" id="poolContainer">
 	        {{#each tag in tags}}
