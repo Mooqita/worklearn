@@ -1,0 +1,53 @@
+<template name="progress_past">
+	<div class="onboarding_progress stepwizard-step">
+		<a href="{{stageUrl}}" type="button" class="btn progress-past btn-circle"></a>
+		<p>{{stageDesc}}</p>
+	</div>
+</template>
+
+<template name="progress_current">
+	<div class="onboarding_progress stepwizard-step">
+		<a href="{{stageUrl}}" type="button" class="btn progress-current btn-circle"><div class="bottom"></div></a>
+		<strong><p>{{stageDesc}}</p></strong>
+	</div>
+</template>
+
+<template name="progress_future">
+	<div class="onboarding_progress stepwizard-step">
+		<a href="{{stageUrl}}" type="button" class="btn btn-default btn-circle" disabled="disabled"></a>
+		<p>{{stageDesc}}</p>
+	</div>
+</template>
+
+<template name="onboarding_header">
+	<div class="container-fluid menu-container">
+		<div class="navbar" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">
+					<img src="/images/icon.png" style="height: 50px;">
+				</a>
+			</div>
+			<ul class="nav navbar-nav navbar-left" style="width:20%">
+				<h1 class="onboarding-brand-title">Mooqita</h1>
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right" style="width:50%">
+				<div class="stepwizard" style="float: right;">
+					<div class="stepwizard-row set-panel">
+						{{#each stages}}
+							{{#if equals currentStage num}}
+								{{>progress_current stageDesc=desc stageUrl=firstUrl }}
+							{{else}}
+								{{#if lessThan currentStage num}}
+									{{>progress_past stageDesc=desc stageUrl=firstUrl }}
+								{{else}}
+									{{>progress_future  stageDesc=desc stageUrl=firstUrl }}
+								{{/if}}
+							{{/if}}
+						{{/each}}
+					</div>
+				</div>
+			</ul>
+	</div>
+</div>
+</template>
