@@ -41,4 +41,7 @@ Meteor.methods
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})
 
   last_selected_tags: () ->
-    return Onboarding.find({owner_id: this.userId, coursetags: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0]
+    return Onboarding.find({owner_id: this.userId, courseTags: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0]
+
+  lastTimeComitted: () ->
+    return Onboarding.find({owner_id: this.userId, timeComitted: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].timeComitted
