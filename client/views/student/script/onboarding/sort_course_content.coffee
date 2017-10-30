@@ -5,10 +5,10 @@ Template.onboarding_sort.onCreated ->
 		(err, res) -> Session.set("selectedCourseTagsFromDB", res)
 
 Template.onboarding_sort.helpers
-	# We get the coursetags from the previous screen, but if the page is refreshed,
-	# then they would be selected from the database.
-	tags: () -> return Session.get("coursetags") || Session.get("selectedCourseTagsFromDB") || []
-	errorMessage: () -> return Session.get("errorMessage")
+	tags: () ->
+		return Session.get("coursetags") || Session.get("selectedCourseTagsFromDB").coursetags || []
+	errorMessage: () ->
+		return Session.get("errorMessage")
 
 Template.onboarding_sort.onRendered () ->
 	dragula = require 'dragula'
