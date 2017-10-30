@@ -16,7 +16,7 @@ Template.onboarding_sort.onRendered () ->
 				return true;
 			if target.classList.contains('dropTarget') and target.childElementCount == 0
 				return true;
-			return false
+			return false;
 	}).on('drop', (el, target, source, sibling) ->
 		switch target.id
 			when 'poolContainer'
