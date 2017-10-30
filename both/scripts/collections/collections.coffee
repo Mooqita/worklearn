@@ -29,3 +29,5 @@
 #######################################################
 @Admin = new Mongo.Collection("admin")
 
+#######################################################
+@Onboarding = new Mongo.Collection("onboarding")

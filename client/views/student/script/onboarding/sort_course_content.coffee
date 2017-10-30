@@ -1,10 +1,14 @@
 Template.onboarding_sort.onCreated ->
   window.topThree = [null, null, null]
-  window.tagPool = ["API design", "Flask", "Generators", "Iterators"] # TODO get this from DB
-
+	# As this is an ASYNC call we must call it here to populate the related helper.
+	Meteor.call "last_selected_tags",
+		(err, res) -> Session.set("selectedCourseTagsFromDB", res)
 
 Template.onboarding_sort.helpers
-  tags: () -> return window.tagPool
+	tags: () ->
+		return Session.get("coursetags") || Session.get("selectedCourseTagsFromDB").coursetags || []
+	errorMessage: () ->
+		return Session.get("errorMessage")
 
 Template.onboarding_sort.onRendered () ->
 	dragula = require 'dragula'
@@ -27,3 +31,14 @@ Template.onboarding_sort.onRendered () ->
 			when 'podiumContainer2' then window.topThree[1] = el.innerHTML;
 			when 'podiumContainer3' then window.topThree[2] = el.innerHTML;
 	);
+
+Template.onboarding_sort.events
+	"click .continue": (event) ->
+		first = window.topThree[0]
+		second = window.topThree[1]
+		third = window.topThree[2]
+
+		if (!(first?) || !(second?) || !(third?))
+			Session.set "errorMessage", "You must select your top three favourite"
+			return false
+		Meteor.call "storeOrderedTags", {0: first, 1: second, 2: third}

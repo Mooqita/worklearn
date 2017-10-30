@@ -1,6 +1,7 @@
 <template name="onboarding_course">
     <div class="">
       <p>Which subjects in {{ title }} interest you?</p>
+      <p>{{ errorMessage }} </p>
       {{>obtags method="coursetags" tags=tags}}
       <a class="btn btn-template-transparent-primary continue" href="/onboarding/sort">Continue</a>
     </div>
