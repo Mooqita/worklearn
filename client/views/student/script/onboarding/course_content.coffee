@@ -7,9 +7,7 @@ Template.onboarding_course.helpers
 Template.onboarding_course.events
   "click .continue": (event) ->
     # Note: this is set in the onboarding/tags component
-    selectedTags = Session.get "coursetags"
+    selectedTags = Session.get "coursetagsSelected"
     if selectedTags == undefined || (selectedTags.length) < 3
       Session.set "errorMessage", "At least three tags must be selected"
       return false
-    else
-      Meteor.call "coursetags", selectedTags

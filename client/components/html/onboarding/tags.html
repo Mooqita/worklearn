@@ -4,7 +4,7 @@
 <template name="obtags">
     <div class="tags">
     {{#each tag in tags}}
-        <span class="tag label label-info">{{ tag }}</span>
+        <span class="tag label label-info {{ isSelected tag }}">{{ tag }}</span>
     {{/each}}
     </div>
 </template>

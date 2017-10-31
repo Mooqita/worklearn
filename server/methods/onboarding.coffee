@@ -1,6 +1,15 @@
 Meteor.methods
   coursetags: (data) ->
-    Meteor.call "insertOnboardingForUser", "courseTags", data
+    Meteor.call "insertOnboardingForUser", "courseTags", data.tags
+
+  coursetagsSelected: () ->
+    # Because this is the first method to be called within the onboarding phase we must
+    # create an empty row, e.g. by invoking insertOnboardingForUser with empty params
+    courseTags = Onboarding.find({owner_id: this.userId, courseTags: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
+    if (courseTags.length == 0)
+      Meteor.call "insertOnboardingForUser", "courseTags", []
+    else
+      return courseTags[0].courseTags
 
   storeOrderedTags: (order) ->
     Meteor.call "insertOnboardingForUser", "orderedTags", order
@@ -31,7 +40,7 @@ Meteor.methods
       # If the document does not exist then first create it;
       # TODO: there is probably a simpler way to create a mongoDB schema
       id = store_document_unprotected Onboarding, {
-        courseTags: {},
+        courseTags: [],
         orderedTags: {},
         timeComitted: 0,
         softSkills: {},
