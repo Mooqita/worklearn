@@ -11,6 +11,18 @@ Meteor.methods
     else
       return courseTags[0].courseTags
 
+  techskills: (data) ->
+    doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
+    doc.techSkills[data.category] = data.tags
+    # TODO: could use the general method, but would create another doc unnecessarily.
+    Onboarding.update(doc._id, { $set: techSkills: doc.techSkills } )
+
+  techskillsSelected: (category) ->
+    # TODO: error validation & using the same type of find a lot
+    techSkills = Onboarding.find({owner_id: this.userId, techSkills: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
+    selectedTechSkillsByCategory = techSkills[0].techSkills[category]
+    return if selectedTechSkillsByCategory? then selectedTechSkillsByCategory else []
+
   storeOrderedTags: (order) ->
     Meteor.call "insertOnboardingForUser", "orderedTags", order
 
@@ -44,7 +56,7 @@ Meteor.methods
         orderedTags: {},
         timeComitted: 0,
         softSkills: {},
-        techSkills: [],
+        techSkills: {},
         challenges: []
       }
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})
