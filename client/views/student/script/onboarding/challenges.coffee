@@ -6,10 +6,12 @@ Template.onboarding_challenges.helpers
   challenges: () -> return [
     {
       id: 1,
+      title: "Competitive Tweeting",
       text: "Your client would like to view all tweets by their competitors"
     },
     {
       id: 2,
+      title: "Bad web design? Sour grapes.",
       text: "Your client would like to know the weather conditions \n" +
         "for crop growth of Freisa grapes in real-time on their tractor. \n" +
         "Implement a website that they could use on their phone \n" +
