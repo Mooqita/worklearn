@@ -22,10 +22,6 @@
   color: #8D0162;
 }
 
-.btn-circle {
-  background-color: #8D0162;
-}
-
 .progress-current {
   border-width: 2px;
   background-color: white;
@@ -78,7 +74,7 @@
     text-align: center;
     position: relative;
 }
-.btn-circle {
+.stepwizard-step .btn-circle {
     width: 20px;
     height: 20px;
     text-align: center;
