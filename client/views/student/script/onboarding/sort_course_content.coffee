@@ -6,7 +6,7 @@ Template.onboarding_sort.onCreated ->
 
 Template.onboarding_sort.helpers
 	tags: () ->
-		return Session.get("coursetags") || Session.get("selectedCourseTagsFromDB").coursetags || []
+		return Session.get("coursetags") || Session.get("selectedCourseTagsFromDB").courseTags || []
 	errorMessage: () ->
 		return Session.get("errorMessage")
 

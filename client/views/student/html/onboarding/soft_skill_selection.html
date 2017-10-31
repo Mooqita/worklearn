@@ -6,8 +6,14 @@
     <div>
         <p>{{ question }}</p>
         <div class="btn-group" role="group" aria-label="Basic example">
-            {{>likert_item low_label="AGREE" high_label="DISAGREE"
-                    method="softskillselection" item_id=id}}
+            {{>likert_item
+                    low_label="AGREE"
+                    high_label="DISAGREE"
+                    collection_name="Onboarding"
+                    field="softSkillResponse"
+                    method="softskillselection"
+                    item_id=id
+            }}
         </div>
     </div>
 {{/each}}
