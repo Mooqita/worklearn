@@ -8,6 +8,7 @@ Meteor.methods
     courseTags = Onboarding.find({owner_id: this.userId, courseTags: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
     if (courseTags.length == 0)
       Meteor.call "insertOnboardingForUser", "courseTags", []
+      return []
     else
       return courseTags[0].courseTags
 
