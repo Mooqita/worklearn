@@ -19,7 +19,7 @@ Template.onboarding_challenges.helpers
     }
   ]
 
-  justify_type: () -> return Session.get "response_type"
+  vote: () -> return Session.get "vote"
 
 Template.onboarding_challenges.events
   "click .like-challenge": (event) ->
