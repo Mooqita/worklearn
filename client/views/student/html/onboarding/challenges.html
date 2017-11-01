@@ -6,10 +6,10 @@
             <div class="card-block" data-card-content="{{id}}">
                 {{ text }}
                 <button data-id="{{id}}" type="button" class="btn btn-warning btn-circle dislike-challenge">
-                    <i class="glyphicon glyphicon-remove"></i>
+                    <i data-id="{{id}}" class="glyphicon glyphicon-remove"></i>
                 </button>
                 <button data-id="{{id}}" type="button" class="btn btn-info btn-circle like-challenge">
-                    <i class="glyphicon glyphicon-ok like"></i>
+                    <i data-id="{{id}}" class="glyphicon glyphicon-ok like"></i>
                 </button>
             </div>
             <!-- TODO: this should be separate component to reduce unnecessary bloat -->

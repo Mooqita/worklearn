@@ -23,27 +23,23 @@ Template.onboarding_challenges.helpers
 
 Template.onboarding_challenges.events
   "click .like-challenge": (event) ->
-    Session.set "response_type", "appealing"
-    console.log("TODO: store that the challenge was LIKED")
+    Session.set "vote", 1
 
   "click .dislike-challenge": (event) ->
-    Session.set "response_type", "unappealing"
-    console.log("TODO: store that the challenge was DISLIKED")
+    Session.set "vote", 0
 
   "click .like-challenge, click .dislike-challenge": (event) ->
-    id = $(event.target).parent().data("id")
-    $(".card-block" + "[data-card-content='" + id + "']").toggle()
-    $(".card-block" + "[data-card-justify='" + id + "']").toggle()
-
-  "click .add-justify-challenge": (event) ->
-    justification = $(event.target).parent().find("input[name='justifyInput']").val()
-    console.log("TODO: store justification for this challenge [by id]" + justification)
+    id = $(event.target).data("id")
+    $(".card-block[data-card-content='" + id + "']").toggle()
+    $(".card-block[data-card-justify='" + id + "']").toggle()
 
   "click .add-justify-challenge, click .skip-justify-challenge": (event) ->
     current_id = $(event.target).data("id")
+    justification = $(event.target).parent().find("input[name='justifyInput']").val()
+    Meteor.call "addChallengeJustification", current_id, justification, Session.get("vote")
 
-    $(".card-block" + "[data-card-justify='" + current_id + "']").toggle()
-    $(".card-block" + "[data-card-content='" + (Number.parseInt(current_id) + 1) + "']").toggle()
+    $(".card-block[data-card-justify='" + current_id + "']").toggle()
+    $(".card-block[data-card-content='" + (Number.parseInt(current_id) + 1) + "']").toggle()
 
     # TODO [hack]: if all challenges were responded to, then redirect them to the next page?
     challenges = Template.onboarding_challenges.__helpers.get("challenges").call()

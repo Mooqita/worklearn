@@ -44,6 +44,11 @@ Meteor.methods
 
     Meteor.call "insertOnboardingForUser", "softSkills", skills
 
+  addChallengeJustification: (cid, justification="", vote=-1) ->
+    doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
+    doc.challenges[cid] = {"justification": justification, "liked": vote}
+    Onboarding.update(doc._id, { $set: challenges: doc.challenges } )
+
   insertOnboardingForUser: (fieldName, data) ->
     # Does this document exist for the user?
     doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()
@@ -58,7 +63,7 @@ Meteor.methods
         timeComitted: 0,
         softSkills: {},
         techSkills: {},
-        challenges: []
+        challenges: {}
       }
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})
 
