@@ -9,5 +9,6 @@ Template.onboarding_course.events
     # Note: this is set in the onboarding/tags component
     selectedTags = Session.get "coursetagsSelected"
     if selectedTags == undefined || (selectedTags.length) < 3
-      Session.set "errorMessage", "At least three tags must be selected"
+      Session.set "errorMessage", true
       return false
+    Session.set "errorMessage", false

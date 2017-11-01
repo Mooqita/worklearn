@@ -1,8 +1,14 @@
 <template name="onboarding_course">
-    <div class="">
-      <p>Which subjects in {{ title }} interest you?</p>
-      <p>{{ errorMessage }} </p>
-      {{>obtags method="coursetags" tags=tags}}
-      <a class="btn btn-template-transparent-primary continue" href="/onboarding/sort">Continue</a>
+    <h2>Which subjects in <b>{{ title }}</b> interest you?</h2>
+    {{#if errorMessage }}
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" onClick="$('.alert-dismissable').toggle()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        At least three tags must be selected
     </div>
+    {{/if}}
+    {{>obtags method="coursetags" tags=tags}}
+    <a href="/onboarding/sort" onClick="$('.alert-dismissable').show()"
+       class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
 </template>
