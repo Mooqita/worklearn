@@ -30,7 +30,6 @@ Template.onboarding_header.helpers
   lessThan: (lhs, rhs) -> return lhs > rhs
   firstUrl: () -> 
     if this.urls.length > 0
-      console.log (this.urls[0])
       return this.urls[0]
     else 
       return ""

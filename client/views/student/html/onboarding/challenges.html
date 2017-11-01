@@ -6,15 +6,19 @@
             <div class="card-block" data-card-content="{{id}}">
                 {{ text }}
                 <button data-id="{{id}}" type="button" class="btn btn-warning btn-circle dislike-challenge">
-                    <i class="glyphicon glyphicon-remove"></i>
+                    <i data-id="{{id}}" class="glyphicon glyphicon-remove"></i>
                 </button>
                 <button data-id="{{id}}" type="button" class="btn btn-info btn-circle like-challenge">
-                    <i class="glyphicon glyphicon-ok like"></i>
+                    <i data-id="{{id}}" class="glyphicon glyphicon-ok like"></i>
                 </button>
             </div>
             <!-- TODO: this should be separate component to reduce unnecessary bloat -->
             <div class="card-block" data-card-justify="{{id}}">
-                <p>What did you find most {{ justify_type }} about this challenge?</p>
+                <p>
+                    What did you find most
+                    {{#if vote}} appealing {{else}} unappealing {{/if}}
+                    about this challenge?
+                </p>
                 <i>{{ text }}</i>
                 <input type="text" name="justifyInput" class="form-control" placeholder="We will use this to suggest appropriate challenges">
                 <button data-id="{{id}}" type="button" class="btn btn-light skip-justify-challenge">Skip</button>
