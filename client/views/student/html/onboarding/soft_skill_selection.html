@@ -1,22 +1,55 @@
 <template name="onboarding_softskillselection">
-    <h1>Your team working skills</h1>
+    <h2>Your team working skills</h2>
 
-{{#each questions }}
-    <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/56376-200.png" width="40" height="40">
-    <div>
+    <div class="taskDescription">
+        <p>Please rate the accuracy of each of the statements below.</p>
+        <p>This will help us place you into a team you're more likely to work well with.</p>
+    </div>
+
+    {{#each questions }}
+    <div class="card likertGroup" style="width: 70%">
+        <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/56376-200.png"/>
         <p>{{ question }}</p>
         <div class="btn-group" role="group" aria-label="Basic example">
             {{>likert_item
-                    low_label="AGREE"
-                    high_label="DISAGREE"
-                    collection_name="Onboarding"
-                    field="softSkillResponse"
-                    method="softskillselection"
-                    item_id=id
+                low_label="DISAGREE"
+                high_label="AGREE"
+                collection_name="Onboarding"
+                field="softSkillResponse"
+                method="softskillselection"
+                item_id=id
             }}
         </div>
     </div>
-{{/each}}
+    {{/each}}
 
-    <a class="btn btn-template-transparent-primary continue" href="/onboarding/techskillselection">Continue</a>
+<a href="/onboarding/techskillselection" class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
+
+<style type="text/css">
+    .taskDescription {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .likertGroup {
+        text-align: center;
+        padding: 30px;
+        margin: 25px auto 20px auto;
+        width: 50%;
+    }
+
+    .likertGroup img{
+        max-width:230px;
+        max-height:95px;
+        width: auto;
+        height: auto;
+    }
+
+    .likertGroup p{
+        padding: 10px;
+        font-size: 17px;
+    }
+</style>
+
 </template>
