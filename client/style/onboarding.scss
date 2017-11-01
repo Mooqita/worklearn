@@ -14,8 +14,6 @@
 }
 
 .onboarding-brand-title {
-  font-family: round;
-  margin: 0px;
   padding-top: 10px;
   padding-left: 10px;
   vertical-align: center;
@@ -123,45 +121,57 @@
 
 .card-block { display: none; }
 
+
+#ladder {
+  width: 100%;
+}
 /* Podium and sort */
+
+.podium { margin: 20px 0; }
+
 .podium td {
-    height: 300px;
     vertical-align: bottom;
     padding: 5px;
+    width: 33%;
 }
 
 #podium1, #podium2, #podium3 {
-    width: 150px;
     background: gray;
+    margin-top: 1em;
 }
 #podium1 { /* gold */
-    height: 280px;
+    height: 120px;
 }
 #podium2 { /* silver */
-    height: 200px;
+    height: 80px;
 }
 #podium3 { /* bronze */
-    height: 120px;
+    height: 40px;
 }
 
 #poolContainer {
 	display: block;
 	background-color: #dfdfdf;
 	border-radius: 5px;
-	min-height: 50px;
 	margin: 0 auto;
-	padding: 2em;
+	padding: 1em;
+    margin-bottom: 1em;
+    height: 57px;
 }
 
 .dropTarget {
-	border: 2px dashed #D9D9D9;
-	border-radius: 5px;
-	min-height: 60px;
-	margin: 0 auto;
-	margin-top: 10px;
-	padding: 2em;
-	display: block;
-	text-align: center;
+    border: 2px dashed #D9D9D9;
+    border-radius: 5px;
+    min-height: 40px;
+    text-align: center;
+}
+
+.dropTarget .tag {
+    margin-top: 7px;
+}
+
+.course-tag {
+  margin: 0;
 }
 
 #poolContainer > div {
