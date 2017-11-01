@@ -30,6 +30,17 @@ Meteor.methods
   timeComitted: (time) ->
     Meteor.call "insertOnboardingForUser", "timeComitted", time
 
+  commtags: (data) ->
+    Meteor.call "insertOnboardingForUser", "commTags", data.tags
+
+  commtagsSelected: () ->
+    commTags = Onboarding.find({owner_id: this.userId, commTags: { "$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
+    if (commTags.length == 0)
+      Meteor.call "insertOnboardingForUser", "commTags", []
+      return []
+    else
+      return commTags[0].commTags
+
   softskillselection: (collection, item_id, field, value) ->
     # Has this user already created skills?
     doesSoftSkillsExist = Onboarding.find({owner_id: this.userId, softSkills: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
@@ -61,6 +72,7 @@ Meteor.methods
         courseTags: [],
         orderedTags: {},
         timeComitted: 0,
+        commTags: [],
         softSkills: {},
         techSkills: {},
         challenges: {}

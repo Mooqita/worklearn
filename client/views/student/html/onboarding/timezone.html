@@ -7,11 +7,7 @@
 
         <p>How would you like to communicate with your team?</p>
 
-        <div id="commTags">
-            {{#each tag in tags}}
-                <span class="tag comm-tag label label-info">{{ tag }}</span>
-            {{/each}}
-        </div>
+        {{>obtags method="commtags" category="commtags" tags=tags}}
 
         <input id="addcomValue" class="form-control" type="text" value="" placeholder="Add another" />
         <input class="form-control addcom" type="submit" value="Add" />
