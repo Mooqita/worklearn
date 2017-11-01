@@ -26,7 +26,7 @@ Template.likert_item.helpers
 
 Template.likert_item.events
 	'click .likert_value': (event, template) ->
-		value = Number(event.target.innerText)
+		value = Number(event.target.dataset.value)
 		self = Template.instance().data
 		item_id = self.item_id
 		method = self.method

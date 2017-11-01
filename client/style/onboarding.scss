@@ -13,13 +13,15 @@
   position: absolute;
 }
 
+.navbar {
+  margin-bottom: 0;
+}
+
 .onboarding-brand-title {
-  font-family: round;
-  margin: 0px;
-  padding-top: 10px;
+  margin-top: 10px;
   padding-left: 10px;
-  vertical-align: center;
   color: #8D0162;
+  display: inline-block;
 }
 
 .progress-current {
@@ -40,7 +42,7 @@
 }
 .stepwizard {
     display: table;
-    width: 50%;
+    width: 70%;
     position: relative;
 }
 
@@ -171,6 +173,10 @@
 
 .card-block { display: none; }
 
+#ladder {
+  width: 100%;
+}
+
 /* Likert */
 .likertGroup {
   text-align: center;
@@ -190,47 +196,135 @@
   padding: 10px;
   font-size: 17px;
 }
+
+
+.likert_value {
+  border-radius: 150px !important;
+  padding: 0;
+  cursor: pointer;
+  transition: none;
+  margin-right: .4em;
+}
+
+.likert-options {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0;
+}
+
+
+.likert-1, .likert-7 {
+  width: 34px;
+  height: 34px;
+}
+
+.likert-2, .likert-6 {
+  width: 28px;
+  height: 28px;
+}
+
+.likert-3, .likert-5 {
+  width: 22px;
+  height: 22px;
+}
+
+.likert-4 {
+  background-color: #FFF;
+  width: 22px;
+  height: 22px;
+  border: 4px solid #ececeb;
+}
+
+/* AGREE */
+
+.likert-1, .likert-2, .likert-3 {
+  background-color: #FFF;
+  padding: 0 !important;
+  border: 4px solid #94657E !important;
+}
+
+.likert-4 {
+  width: 28px;
+  height: 28px;
+  border: 4px solid #ECECEB !important;
+}
+
+.likert-5, .likert-6, .likert-7 {
+  background-color: #FFF !important;
+  padding: 0 !important;
+  border: 4px solid #4C9070 !important;
+}
+
+.likert-1:hover, .likert-2:hover, .likert-3:hover,
+.likert-1.active, .likert-2.active, .likert-3.active {
+  box-shadow: none !important;
+  background-color: #94657E !important;
+}
+
+.likert-4:hover, .likert-4.active {
+  box-shadow: none !important;
+  background-color: #ECECEB !important;
+}
+
+.likert-5:hover, .likert-6:hover, .likert-7:hover,
+.likert-5.active, .likert-6.active, .likert-7.active {
+  box-shadow: none !important;
+  background-color: #4C9070 !important;
+}
+
 /* end likert */
 
 /* Podium and sort */
+
+.podium { margin: 20px 0; }
+
 .podium td {
-    height: 300px;
     vertical-align: bottom;
     padding: 5px;
+    width: 33%;
 }
 
 #podium1, #podium2, #podium3 {
-    width: 150px;
     background: gray;
+    margin-top: 1em;
 }
 #podium1 { /* gold */
-    height: 280px;
+    height: 120px;
 }
 #podium2 { /* silver */
-    height: 200px;
+    height: 80px;
 }
 #podium3 { /* bronze */
-    height: 120px;
+    height: 40px;
 }
 
 #poolContainer {
 	display: block;
 	background-color: #dfdfdf;
 	border-radius: 5px;
-	min-height: 50px;
 	margin: 0 auto;
-	padding: 2em;
+	padding: 1em;
+    margin-bottom: 1em;
+    height: 57px;
 }
 
 .dropTarget {
-	border: 2px dashed #D9D9D9;
-	border-radius: 5px;
-	min-height: 60px;
-	margin: 0 auto;
-	margin-top: 10px;
-	padding: 2em;
-	display: block;
-	text-align: center;
+    border: 2px dashed #D9D9D9;
+    border-radius: 5px;
+    min-height: 40px;
+    text-align: center;
+}
+
+.dropTarget .tag {
+    margin-top: 7px;
+}
+
+.course-tag {
+  margin: 0;
 }
 
 #poolContainer > div {
@@ -337,7 +431,6 @@
 
 /* End podium and sort */
 
-
 /* challenge opinions */
 
 .challengeGroup {
@@ -388,3 +481,12 @@
 }
 
 /* end challenge opinions */
+
+/* tech skills */
+
+.category {
+  font-weight: 800;
+  font-variant: small-caps;
+}
+
+/* end tech skills */
