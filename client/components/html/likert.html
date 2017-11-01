@@ -1,13 +1,13 @@
 <template name="likert_item">
-    {{> sAlert }}
     <div class="btn-toolbar" role="toolbar"
 			 aria-label="Likert scale range {{low_label}} to {{high_label}}">
 
-		<div class="btn-group" data-toggle="buttons">
+		<div class="btn-group likert-options" data-toggle="buttons">
 			<a class="btn btn-link disabled" disabled>{{low_label}}</a>
+
 			{{#each levels}}
-				<label class="btn btn-default likert_value {{selected .}}">
-					<input type="radio" name="likert_value" value="{{.}}"> {{.}}
+				<label class="btn btn-default likert_value {{selected .}} likert-{{ . }}" data-value="{{ . }}">
+					<input type="radio" name="likert_value" value="{{.}}">
 				</label>
 			{{/each}}
 			<a class="btn btn-link disabled" disabled>{{high_label}}</a>
