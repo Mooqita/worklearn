@@ -1,16 +1,11 @@
 <template name="onboarding_time">
+    <h2>How many hours per week are you able to commit to Mooqita tasks?</h2>
 
-    <div class="">
-      <p>How many hours per week are you able to commit to completing Mooqita tasks?</p>
+    <div id="timeCommitSlider"></div>
 
-      <br/>
-
-        <div id="slider"></div>
-
-      <br/>
-
-      <p>That's about <strong id="approxMins"></strong> minutes for each day of your six week course</p>
-      <a class="btn btn-template-transparent-primary continue" href="/onboarding/timezone">Continue</a>
+    <div id="timeCommitSlider_info">
+    	<p>That's about <strong id="approxMins"></strong> minutes for each day of your six week course</p>
     </div>
 
+    <a href="/onboarding/timezone" class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
 </template>

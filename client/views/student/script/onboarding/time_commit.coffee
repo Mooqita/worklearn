@@ -23,7 +23,7 @@ Template.onboarding_time.UpdateHoursLabel = () ->
 	numHrs = if window.hours % 1 == 0 then "#{Math.round(window.hours)}" else "#{window.hours}"
 	hrs = numHrs
 	if parseInt(window.hours) == parseInt(window.maxHours) then hrs += "+"
-	slider = $("#slider").data("roundSlider")
+	slider = $("#timeCommitSlider").data("roundSlider")
 	slider.tooltip.context.innerText = hrs + "\nhours"
 
 	dailyMins = numHrs / 7 * 60
@@ -36,8 +36,8 @@ Template.onboarding_time.UpdateHoursLabel = () ->
 
 Template.onboarding_time.onRendered () ->
 	$.getScript("https://cdn.jsdelivr.net/npm/round-slider@1.3/dist/roundslider.min.js", () ->
-			$("#slider").roundSlider()
-			slider = $("#slider").data("roundSlider")
+			$("#timeCommitSlider").roundSlider()
+			slider = $("#timeCommitSlider").data("roundSlider")
 			slider.option("radius", 120)
 			slider.option("circleShape", "pie")
 			slider.option("sliderType", "min-range")
@@ -51,7 +51,7 @@ Template.onboarding_time.onRendered () ->
 		);
 
 Template.onboarding_time.events
-	"change #slider, drag #slider": (event) ->
+	"change #timeCommitSlider, drag #timeCommitSlider": (event) ->
 		Template.onboarding_time.PercentToHours(event.value)
 		Template.onboarding_time.UpdateHoursLabel()
 
