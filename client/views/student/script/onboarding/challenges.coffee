@@ -7,15 +7,19 @@ Template.onboarding_challenges.helpers
     {
       id: 1,
       title: "Competitive Tweeting",
-      text: "Your client would like to view all tweets by their competitors"
+      image: "http://www.evolvingseo.com/wp-content/uploads/2014/08/twitter-analytics.jpg",
+      text: "Your client would like to view all of their competitor's tweets and
+       get an idea of how each one was emotionally received by their customers. 
+       Create a website which runs and illustrates a sentiment analysis on responses made
+        to each tweet made by a given Twitter account in the last 30 days."
     },
     {
       id: 2,
       title: "Bad web design? Sour grapes.",
-      text: "Your client would like to know the weather conditions \n" +
-        "for crop growth of Freisa grapes in real-time on their tractor. \n" +
-        "Implement a website that they could use on their phone \n" +
-        "whilst harvesting their crop."
+      image: "http://www.westernfarmpress.com/sites/westernfarmpress.com/files/styles/article_featured_standard/public/uploads/2015/09/grape-spraying.jpg?itok=ewc3N8eg",
+      text: "Your client would like to know the weather conditions for crop growth
+       of Freisa grapes in real-time on their tractor. Implement a website that they
+        could use on their phone whilst harvesting their crop."
     }
   ]
 

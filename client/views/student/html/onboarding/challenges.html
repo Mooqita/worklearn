@@ -1,31 +1,43 @@
 <template name="onboarding_challenges">
-    <div class="card-container">
-        <h1>Which of these previous challenges appeal to you?</h1>
-    {{#each challenges}}
-        <div class="card">
-            <div class="card-block" data-card-content="{{id}}">
-                {{ text }}
-                <button data-id="{{id}}" type="button" class="btn btn-warning btn-circle dislike-challenge">
-                    <i data-id="{{id}}" class="glyphicon glyphicon-remove"></i>
-                </button>
-                <button data-id="{{id}}" type="button" class="btn btn-info btn-circle like-challenge">
-                    <i data-id="{{id}}" class="glyphicon glyphicon-ok like"></i>
-                </button>
-            </div>
-            <!-- TODO: this should be separate component to reduce unnecessary bloat -->
-            <div class="card-block" data-card-justify="{{id}}">
-                <p>
-                    What did you find most
-                    {{#if vote}} appealing {{else}} unappealing {{/if}}
-                    about this challenge?
-                </p>
-                <i>{{ text }}</i>
-                <input type="text" name="justifyInput" class="form-control" placeholder="We will use this to suggest appropriate challenges">
-                <button data-id="{{id}}" type="button" class="btn btn-light skip-justify-challenge">Skip</button>
-                <button data-id="{{id}}" type="button" class="btn btn-secondary add-justify-challenge">Add</button>
-            </div>
-        </div>
-    {{/each}}
-      <a class="btn btn-template-transparent-primary continue" href="/onboarding/report">Continue</a>
+    
+    <h2>Which of these existing challenges appeal to you?</h2>
+
+    <div class="taskDescription">
+        <p>Please like or dislike each challenge below, and then give a brief explanation for your reasoning.</p>
+        <p>This will give us an idea of the kind of challenges to create for you.</p>
     </div>
+
+    {{#each challenges}}            
+            <div class="card challengeGroup card-block" data-card-content="{{id}}">
+                <h3>{{title}}</h3>
+                <img src="{{image}}">
+                <p>{{text}}</p>
+                <button data-id="{{id}}" type="button" class="btn btn-circle dislike-challenge">
+                    <i data-id="{{id}}" class="glyphicon glyphicon-thumbs-down"></i>
+                </button>
+                <button data-id="{{id}}" type="button" class="btn btn-circle like-challenge">
+                    <i data-id="{{id}}" class="glyphicon glyphicon-thumbs-up like"></i>
+                </button>
+            </div>
+
+            <!-- TODO: this should be separate component to reduce unnecessary bloat -->
+            <div class="card challengeGroup card-block" data-card-justify="{{id}}">
+                <h3>{{title}}</h3>
+                <p>{{ text }}</p>
+                <h3>
+                    <strong>
+                        What did you find
+                        {{#if vote}} appealing {{else}} unappealing {{/if}}
+                        about this challenge?
+                    </strong>
+                </h3>
+
+                <textarea type="text" rows="3" name="justifyInput" class="form-control" placeholder="We will use this to suggest appropriate challenges"></textarea>
+
+                <button data-id="{{id}}" type="button" class="btn btn-primary active continue add-justify-challenge">Continue</button>
+            </div>
+    {{/each}}
+    
+    <!-- <a href="/onboarding/report" class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a> -->
+
 </template>

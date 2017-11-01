@@ -336,3 +336,55 @@
 }
 
 /* End podium and sort */
+
+
+/* challenge opinions */
+
+.challengeGroup {
+  text-align: center;
+  padding: 15px 30px 30px 30px;
+  margin: 25px auto 10px auto;
+  width: 70%;
+}
+
+.challengeGroup p {
+    padding: 15px;
+}
+
+.challengeGroup h3 {
+    border-bottom: .03em solid #bdbdbd;
+    margin-bottom: 10px;
+    padding: 0px 15px 15px 15px;
+}
+
+.challengeGroup img{
+  max-width:300px;
+  max-height:150px;
+  width: auto;
+  height: auto;
+  margin: 10px 30px 5px 30px;
+}
+
+.challengeGroup .btn:hover {
+    color: #e0e0e0;
+}
+
+.challengeGroup textarea {
+    margin-bottom: 15px;
+}
+
+.dislike-challenge, .like-challenge {
+    margin: 5px 15px 5px 15px;
+    width: 65px;
+    color: white;
+}
+
+.dislike-challenge {
+    background-color: #ef5350;
+}
+
+.like-challenge {
+    background-color: #66bb6a;
+}
+
+/* end challenge opinions */
