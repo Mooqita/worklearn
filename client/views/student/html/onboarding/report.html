@@ -1,0 +1,60 @@
+<template name="onboarding_report">
+
+    <div class="container">
+        <h1>Final steps</h1>
+        <p>This is what you've told us so far:</p>
+
+        <div class="row">
+            <div class="col-md-3 report-capsule">
+                <h3>The parts of your course you found most interesting:</h3>
+                {{#each courseContent}}
+                    {{#if equals rank 1}}
+                        <p><strong>{{title}}</strong></p>
+                    {{else}}
+                        {{title}}
+                    {{/if}}
+                {{/each}}
+            </div>
+
+            <div class="col-md-3 report-capsule">
+                <h3>You said you could do <b>{{hours}} hours</b> of work per week</h3>
+            </div>
+
+            <div class="col-md-3 report-capsule">
+                <h3>You would like to use these skills:</h3>
+                {{#each skill in skills }}
+                    <p>{{skill}}</p>
+                {{/each}}
+            </div>
+
+            <div class="col-md-3 report-capsule">
+                <h3>You found these existing challenges appealing:</h3>
+                {{#each likedChallenges}}
+                    <p>{{title}}</p>
+                {{/each}}
+            </div>
+
+        </div>
+
+        <h2>Do you have any ideas for new challenges which you'd like to complete?</h2>
+        <p>Using what you've told us, can you imagine a challenge which you could complete over a few weeks, either alone or as a part of a team?</p>
+
+        <input type="text" name="challengeIdea" class="form-control" placeholder="My awesome challenge idea">
+        <button data-id="{{id}}" type="button" class="btn btn-secondary add-justify-challenge">Add Another</button>
+
+        <br/>
+
+        <a class="btn btn-template-transparent-primary continue" href="/onboarding/techskillselection">I'm done</a>
+    </div>
+
+<style type="text/css">
+    .report-capsule {
+      border-radius: 5px;
+      background-color: #b95298;
+      color: white;
+      padding: 3px;
+    }
+</style>
+
+
+</template>

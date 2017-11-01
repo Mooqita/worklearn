@@ -1,5 +1,8 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
+Template.registerHelper('equals', (lhs, rhs) ->
+  return lhs == rhs
+)
 
 Template.onboarding_header.stages = () ->
   return [
