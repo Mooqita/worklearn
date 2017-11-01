@@ -254,14 +254,6 @@ Template.onboarding_timezone.helpers
   tags: () -> return commtags
 
 Template.onboarding_timezone.events
-  "click .comm-tag": (event) ->
-    if event.target.className.includes("selected")
-      event.target.classList.remove("selected")
-      Template.instance().selectedComms = Template.instance().selectedComms.filter((e) => e != event.target.innerText.toLowerCase())
-    else
-      event.target.className += " selected"
-      Template.instance().selectedComms.push(event.target.innerText.toLowerCase())
-
   "click .continue": (event) ->
 # TODO: save to database for this particular user
     alert(Template.instance().selectedComms)
@@ -272,11 +264,11 @@ Template.onboarding_timezone.events
       lowtags = (v.toLowerCase() for v in commtags)
       index = lowtags.indexOf(val)
       if (index > 0)
-        $(".comm-tag")[index].className += " selected"
+        $(".tag")[index].className += " selected"
       else
-        tag = $("<span class='tag comm-tag label label-info selected'></span>")
+        tag = $("<span class='tag label label-info selected'></span>")
         tag[0].innerText = $("#addcomValue").val()
-        $("#commTags").append(tag)
+        $("#commtags").append(tag)
       Template.instance().selectedComms.push(val)
 
     $("#addcomValue")[0].value = ""

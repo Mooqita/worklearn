@@ -11,7 +11,7 @@ Template.obtags.onCreated ->
 Template.obtags.helpers
   # Only called when page loads, so pre-sets all the previously selected tags
   isSelected: (item) ->
-    return if (Session.get(Template.instance().data.tagID).indexOf(item) >= 0) then "selected" else ""
+    return if (Session.get(Template.instance().data.tagID).filter((e) => e.toLowerCase() == item.toLowerCase()).length > 0) then "selected" else ""
 
 Template.obtags.events
   "click .tag": (event) ->
@@ -20,7 +20,7 @@ Template.obtags.events
 
     if event.target.className.includes("selected")
       event.target.classList.remove("selected")
-      Session.set(_tagID, Session.get(_tagID).filter((e) => e != event.target.innerText))
+      Session.set(_tagID, Session.get(_tagID).filter((e) => e.toLowerCase() != event.target.innerText.toLowerCase()))
     else
       event.target.className += " selected"
       _tags = Session.get(_tagID)
