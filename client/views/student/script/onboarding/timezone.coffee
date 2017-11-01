@@ -1,7 +1,8 @@
 commtags = ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
 
 Template.onboarding_timezone.onCreated ->
-  this.selectedComms = []
+  Meteor.call "commtagsSelected",
+    (err, res) -> Session.set("selectedCommTagsFromDB", res)
 
 Template.timezoneselect.helpers
   timezones: () -> return ["(UTC-12:00) International Date Line West",
@@ -251,16 +252,24 @@ Template.timezoneselect.onRendered ->
   $("#language")[0].selectedIndex = 20 # English
 
 Template.onboarding_timezone.helpers
-  tags: () -> return commtags
+  tags: () -> 
+    fixedtags = commtags.slice(0)
+    selectedtags = Session.get("selectedCommTagsFromDB")
+    if (selectedtags)
+      customtags = selectedtags.filter((e) => fixedtags.indexOf(e) < 0)  
+      return fixedtags.concat(customtags)
+    else
+      return fixedtags
 
 Template.onboarding_timezone.events
   "click .continue": (event) ->
-# TODO: save to database for this particular user
-    alert(Template.instance().selectedComms)
+    # validation
 
   "click .addcom": (event) ->
     val = $("#addcomValue").val().toLowerCase()
-    if (val && Template.instance().selectedComms.indexOf(val) < 0)
+    tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
+    tags = Session.get(tagID)
+    if (val && tags.indexOf(val) < 0)
       lowtags = (v.toLowerCase() for v in commtags)
       index = lowtags.indexOf(val)
       if (index > 0)
@@ -269,6 +278,8 @@ Template.onboarding_timezone.events
         tag = $("<span class='tag label label-info selected'></span>")
         tag[0].innerText = $("#addcomValue").val()
         $("#commtags").append(tag)
-      Template.instance().selectedComms.push(val)
+      tags.push(val)
+      Session.set(tagID, tags)
+      Meteor.call "commtags", {category:"commtags", tags: tags} # save to db
 
     $("#addcomValue")[0].value = ""

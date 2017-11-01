@@ -11,7 +11,10 @@ Template.obtags.onCreated ->
 Template.obtags.helpers
   # Only called when page loads, so pre-sets all the previously selected tags
   isSelected: (item) ->
-    return if (Session.get(Template.instance().data.tagID).filter((e) => e.toLowerCase() == item.toLowerCase()).length > 0) then "selected" else ""
+    prevtags = Session.get(Template.instance().data.tagID)
+    if (prevtags)
+      return if prevtags.filter((e) => e.toLowerCase() == item.toLowerCase()).length > 0 then "selected" else ""
+    return ""
 
 Template.obtags.events
   "click .tag": (event) ->
