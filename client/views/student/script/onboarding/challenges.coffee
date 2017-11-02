@@ -25,6 +25,8 @@ Template.onboarding_challenges.helpers
 
   vote: () -> return Session.get "vote"
 
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
 Template.onboarding_challenges.events
   "click .like-challenge": (event) ->
     Session.set "vote", 1
@@ -48,4 +50,4 @@ Template.onboarding_challenges.events
     # TODO [hack]: if all challenges were responded to, then redirect them to the next page?
     challenges = Template.onboarding_challenges.__helpers.get("challenges").call()
     if (challenges.length) == ((challenges.findIndex (x) -> x.id == current_id) + 1)
-      alert("Thanks for responding to all challenges. You can now view your responses...")
+      FlowRouter.go("/onboarding/report")
