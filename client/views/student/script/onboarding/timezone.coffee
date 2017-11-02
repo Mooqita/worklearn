@@ -1,4 +1,3 @@
-commtags = ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
 tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
 
 Template.timezoneselect.helpers
@@ -251,22 +250,27 @@ Template.preflangselect.onRendered ->
     (err, res) -> $("#language")[0].selectedIndex = res || 20 # English
 
 Template.onboarding_timezone.helpers
-  tags: () -> commtags
+  tags: () -> ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
 
 selectOrAddTag = (tag) =>
-    val = tag.toLowerCase()
-    tags = Session.get(tagID)
-    if (val && tags.indexOf(val) < 0)
-      lowtags = (v.toLowerCase() for v in commtags)
-      index = lowtags.indexOf(val)
-      if (index > 0)
-        $(".tag")[index].className += " selected"
-      else
-        tag = $("<span class='tag label label-info selected'></span>")
-        tag[0].innerText = $("#addcomValue").val()
-        $("#commtags").append(tag)
-      tags.push(val)
-      Session.set(tagID, tags)
+  selectedtags = Session.get(tagID)
+  lowertags = t.toLowerCase() for t in selectedtags
+  lowertag = tag.toLowerCase()
+  
+  if (lowertags.indexOf(lowertag) < 0)
+    # not selected yet
+    selectedtags.push(tag)
+    Session.set(tagID, selectedtags)
+
+  spantags = $(".tag").map(() -> this.innerText.toLowerCase()).get()
+  spanindex = spantags.indexOf(lowertag)
+
+  if (spanindex >= 0)
+    $(".tag")[spanindex].className += " selected"
+  else
+    newtag = $("<span class='tag label label-info selected'></span>")
+    newtag[0].innerText = tag
+    $("#commtags").append(newtag)
 
 Template.onboarding_timezone.onRendered ->
   Meteor.call "commtagsSelected",
@@ -285,7 +289,7 @@ Template.onboarding_timezone.events
   "click .addcom": (event) ->
     selectOrAddTag($("#addcomValue").val())
     $("#addcomValue")[0].value = ""
-    Meteor.call "commtags", {category:"commtags", tags: tags} # save to db
+    Meteor.call "commtags", {category:"commtags", tags: Session.get(tagID)} # save to db
 
   "change #timezone" : (event) ->
     Meteor.call "insertOnboardingForUser", "tzIndex", event.target.selectedIndex
