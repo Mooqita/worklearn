@@ -39,7 +39,7 @@ Template.onboarding_challenges.events
 
   "click .add-justify-challenge, click .skip-justify-challenge": (event) ->
     current_id = $(event.target).data("id")
-    justification = $(event.target).parent().find("input[name='justifyInput']").val()
+    justification = $(event.target).parent().find("textarea[name='justifyInput']").val()
     Meteor.call "addChallengeJustification", current_id, justification, Session.get("vote")
 
     $(".card-block[data-card-justify='" + current_id + "']").toggle()
