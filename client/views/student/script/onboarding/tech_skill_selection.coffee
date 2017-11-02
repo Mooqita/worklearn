@@ -4,7 +4,7 @@ Template.onboarding_techskillselection.helpers
     {
       category: "proglang",
       title: "Programming languages",
-      tags: ["Python", "C#", "Javascript", "Java"]
+      tags: ["Python", "C#", "Javascript", "Java", "C++", "CoffeeScript", "R", "Objective C", "Kotlin"]
     },
     {
       category: "databases",

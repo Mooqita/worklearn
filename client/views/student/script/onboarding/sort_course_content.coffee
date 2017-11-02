@@ -39,6 +39,6 @@ Template.onboarding_sort.events
 		third = window.topThree[2]
 
 		if (!(first?) || !(second?) || !(third?))
-			Session.set "errorMessage", "You must select your top three favourite"
+			Session.set "errorMessage", "Please select your top three favourite topics"
 			return false
 		Meteor.call "storeOrderedTags", {0: first, 1: second, 2: third}

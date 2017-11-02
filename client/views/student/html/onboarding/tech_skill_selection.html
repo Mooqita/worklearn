@@ -1,13 +1,20 @@
 <template name="onboarding_techskillselection">
-    <h2>Your technical skills</h2>
+    <h2>Choose technical skills</h2>
+
     <div class="taskDescription">
-        <p>Please select the skills that you would like to apply in Mooqita</p>
+        <p>Please select the skills that you would like to apply in Mooqita.</p>
+        <p>This will inform the design of tasks and will help us group people with different skillsets together.</p>
     </div>
+
+    <br/>
+
     {{#each topics}}
-    <div class="tech-skill-group">
-        <h4 class="category">{{ title }}</h4>
+    <div class="card tech-skill-group">
+        <h3 class="category">{{ title }}</h3>
         {{>obtags method="techskills" category=category tags=tags}}
     </div>
     {{/each}}
+
     <a href="/onboarding/challenges" class="btn btn-sm btn-primary active continue pull-right">Continue</a>
+
 </template>
