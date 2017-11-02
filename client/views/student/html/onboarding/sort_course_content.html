@@ -1,5 +1,11 @@
 <template name="onboarding_sort">
-    <h2>Rank your course topics in order of preference</h2>
+    <h2>Rank your chosen course topics</h2>
+
+    <div class="taskDescription">
+        <p>Please rank your top three chosen topics in order of preference.</p>
+        <p>This will give us a better idea of what areas we should focus on when creating Mooqita tasks.</p>
+    </div>
+
     {{#if errorMessage }}
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" onClick="$('.alert-dismissable').toggle()">
@@ -13,15 +19,15 @@
             <tr>
                 <td>
                     <div class="dropTarget dragula-container" id="podiumContainer2"></div>
-                    <div id="podium2"></div>
+                    <div id="podium2">2<sup>nd</sup></div>
                 </td>
                 <td>
                     <div class="dropTarget dragula-container" id="podiumContainer1"></div>
-                    <div id="podium1"></div>
+                    <div id="podium1"><img src="/images/wreath.png" style="width: 30%; margin: 20px 0px 10px 0px"><p>1<sup>st</sup></p></div>
                 </td>
                 <td>
                     <div class="dropTarget dragula-container" id="podiumContainer3"></div>
-                    <div id="podium3"></div>
+                    <div id="podium3">3<sup>rd</sup></div>
                 </td>
             </tr>
         </table>
