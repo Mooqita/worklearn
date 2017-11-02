@@ -72,7 +72,10 @@ Meteor.methods
         courseTags: [],
         orderedTags: {},
         timeComitted: 0,
+        tzIndex: 10,
+        langIndex: 20,
         commTags: [],
+        commAny: false,
         softSkills: {},
         techSkills: {},
         challenges: {}
@@ -84,3 +87,12 @@ Meteor.methods
 
   lastTimeComitted: () ->
     return Onboarding.find({owner_id: this.userId, timeComitted: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].timeComitted
+
+  lastTzIndex: () ->
+    return Onboarding.find({owner_id: this.userId, tzIndex: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].tzIndex
+
+  lastLangIndex: () ->
+    return Onboarding.find({owner_id: this.userId, langIndex: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].langIndex
+
+  lastCommAny: () ->
+    return Onboarding.find({owner_id: this.userId, commAny: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].commAny

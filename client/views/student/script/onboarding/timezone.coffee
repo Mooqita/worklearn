@@ -1,8 +1,5 @@
 commtags = ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
-
-Template.onboarding_timezone.onCreated ->
-  Meteor.call "commtagsSelected",
-    (err, res) -> Session.set("selectedCommTagsFromDB", res)
+tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
 
 Template.timezoneselect.helpers
   timezones: () -> return ["(UTC-12:00) International Date Line West",
@@ -142,7 +139,8 @@ Template.timezoneselect.helpers
     "(UTC+14:00) Kiritimati Island"]
 
 Template.timezoneselect.onRendered ->
-  $("#timezone")[0].selectedIndex = 10 # US
+  Meteor.call "lastTzIndex",
+    (err, res) -> $("#timezone")[0].selectedIndex = res || 10 # US
 
 Template.preflangselect.helpers
   languages: () -> return ["Albanian",
@@ -248,26 +246,15 @@ Template.preflangselect.helpers
     "Yoruba",
     "Zulu"]
 
-Template.timezoneselect.onRendered ->
-  $("#language")[0].selectedIndex = 20 # English
+Template.preflangselect.onRendered ->
+  Meteor.call "lastLangIndex",
+    (err, res) -> $("#language")[0].selectedIndex = res || 20 # English
 
 Template.onboarding_timezone.helpers
-  tags: () -> 
-    fixedtags = commtags.slice(0)
-    selectedtags = Session.get("selectedCommTagsFromDB")
-    if (selectedtags)
-      customtags = selectedtags.filter((e) => fixedtags.indexOf(e) < 0)  
-      return fixedtags.concat(customtags)
-    else
-      return fixedtags
+  tags: () -> commtags
 
-Template.onboarding_timezone.events
-  "click .continue": (event) ->
-    # validation
-
-  "click .addcom": (event) ->
-    val = $("#addcomValue").val().toLowerCase()
-    tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
+selectOrAddTag = (tag) =>
+    val = tag.toLowerCase()
     tags = Session.get(tagID)
     if (val && tags.indexOf(val) < 0)
       lowtags = (v.toLowerCase() for v in commtags)
@@ -280,6 +267,31 @@ Template.onboarding_timezone.events
         $("#commtags").append(tag)
       tags.push(val)
       Session.set(tagID, tags)
-      Meteor.call "commtags", {category:"commtags", tags: tags} # save to db
 
+Template.onboarding_timezone.onRendered ->
+  Meteor.call "commtagsSelected",
+    (err, res) -> 
+      selectedtags = Session.get(tagID)
+      if (selectedtags)
+        selectOrAddTag(tag) for tag in selectedtags
+
+  Meteor.call "lastCommAny",
+    (err, res) -> $("#commany")[0].checked = res
+
+Template.onboarding_timezone.events
+  "click .continue": (event) ->
+    # validation
+
+  "click .addcom": (event) ->
+    selectOrAddTag($("#addcomValue").val())
     $("#addcomValue")[0].value = ""
+    Meteor.call "commtags", {category:"commtags", tags: tags} # save to db
+
+  "change #timezone" : (event) ->
+    Meteor.call "insertOnboardingForUser", "tzIndex", event.target.selectedIndex
+
+  "change #language" : (event) ->
+    Meteor.call "insertOnboardingForUser", "langIndex", event.target.selectedIndex
+
+  "change #commany" : (event) ->
+    Meteor.call "insertOnboardingForUser", "commAny", event.target.checked
