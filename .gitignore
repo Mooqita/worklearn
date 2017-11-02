@@ -4,3 +4,4 @@ secrets.txt
 tmp/
 package-lock.json
 meteor
+/.vs
