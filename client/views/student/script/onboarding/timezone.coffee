@@ -1,8 +1,4 @@
-commtags = ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
-
-Template.onboarding_timezone.onCreated ->
-  Meteor.call "commtagsSelected",
-    (err, res) -> Session.set("selectedCommTagsFromDB", res)
+tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
 
 Template.timezoneselect.helpers
   timezones: () -> return ["(UTC-12:00) International Date Line West",
@@ -142,7 +138,8 @@ Template.timezoneselect.helpers
     "(UTC+14:00) Kiritimati Island"]
 
 Template.timezoneselect.onRendered ->
-  $("#timezone")[0].selectedIndex = 10 # US
+  Meteor.call "lastTzIndex",
+    (err, res) -> $("#timezone")[0].selectedIndex = res || 10 # US
 
 Template.preflangselect.helpers
   languages: () -> return ["Albanian",
@@ -248,38 +245,57 @@ Template.preflangselect.helpers
     "Yoruba",
     "Zulu"]
 
-Template.timezoneselect.onRendered ->
-  $("#language")[0].selectedIndex = 20 # English
+Template.preflangselect.onRendered ->
+  Meteor.call "lastLangIndex",
+    (err, res) -> $("#language")[0].selectedIndex = res || 20 # English
 
 Template.onboarding_timezone.helpers
-  tags: () -> 
-    fixedtags = commtags.slice(0)
-    selectedtags = Session.get("selectedCommTagsFromDB")
-    if (selectedtags)
-      customtags = selectedtags.filter((e) => fixedtags.indexOf(e) < 0)  
-      return fixedtags.concat(customtags)
-    else
-      return fixedtags
+  tags: () -> ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
+
+selectOrAddTag = (tag) =>
+  selectedtags = Session.get(tagID)
+  lowertags = t.toLowerCase() for t in selectedtags
+  lowertag = tag.toLowerCase()
+  
+  if (lowertags.indexOf(lowertag) < 0)
+    # not selected yet
+    selectedtags.push(tag)
+    Session.set(tagID, selectedtags)
+
+  spantags = $(".tag").map(() -> this.innerText.toLowerCase()).get()
+  spanindex = spantags.indexOf(lowertag)
+
+  if (spanindex >= 0)
+    $(".tag")[spanindex].className += " selected"
+  else
+    newtag = $("<span class='tag label label-info selected'></span>")
+    newtag[0].innerText = tag
+    $("#commtags").append(newtag)
+
+Template.onboarding_timezone.onRendered ->
+  Meteor.call "commtagsSelected",
+    (err, res) -> 
+      selectedtags = Session.get(tagID)
+      if (selectedtags)
+        selectOrAddTag(tag) for tag in selectedtags
+
+  Meteor.call "lastCommAny",
+    (err, res) -> $("#commany")[0].checked = res
 
 Template.onboarding_timezone.events
   "click .continue": (event) ->
     # validation
 
   "click .addcom": (event) ->
-    val = $("#addcomValue").val().toLowerCase()
-    tagID = "commtagsSelectedcommtags" # this.data.method + "Selected" + category
-    tags = Session.get(tagID)
-    if (val && tags.indexOf(val) < 0)
-      lowtags = (v.toLowerCase() for v in commtags)
-      index = lowtags.indexOf(val)
-      if (index > 0)
-        $(".tag")[index].className += " selected"
-      else
-        tag = $("<span class='tag label label-info selected'></span>")
-        tag[0].innerText = $("#addcomValue").val()
-        $("#commtags").append(tag)
-      tags.push(val)
-      Session.set(tagID, tags)
-      Meteor.call "commtags", {category:"commtags", tags: tags} # save to db
-
+    selectOrAddTag($("#addcomValue").val())
     $("#addcomValue")[0].value = ""
+    Meteor.call "commtags", {category:"commtags", tags: Session.get(tagID)} # save to db
+
+  "change #timezone" : (event) ->
+    Meteor.call "insertOnboardingForUser", "tzIndex", event.target.selectedIndex
+
+  "change #language" : (event) ->
+    Meteor.call "insertOnboardingForUser", "langIndex", event.target.selectedIndex
+
+  "change #commany" : (event) ->
+    Meteor.call "insertOnboardingForUser", "commAny", event.target.checked
