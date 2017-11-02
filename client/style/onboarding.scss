@@ -519,6 +519,19 @@
   position: absolute;
 }
 
-hr { margin: 10px 0; }
-#addTagContainer > * { display: inline; }
-#addcomValue { margin: 10px 0; }
+hr {
+  margin: 10px 0;
+}
+
+#addTagContainer > * {
+  display: inline;
+}
+
+.addcom {
+  width: 25%;
+}
+
+#addcomValue {
+  width: 60%;
+  margin: 10px 0;
+}
