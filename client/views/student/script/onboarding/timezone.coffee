@@ -299,3 +299,8 @@ Template.onboarding_timezone.events
 
   "change #commany" : (event) ->
     Meteor.call "insertOnboardingForUser", "commAny", event.target.checked
+
+  "keyup #addcomValue" : (event) ->
+    if (event.key == "Enter")
+      $("#addcomButton").click()
+      event.preventDefault()
