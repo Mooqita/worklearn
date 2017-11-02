@@ -114,7 +114,7 @@
 .taskDescription {
   text-align: center;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* End Course */
@@ -288,24 +288,34 @@
     width: 33%;
 }
 
+.podium sup {
+  font-size: 15px;
+}
+
 #podium1, #podium2, #podium3 {
-    background: gray;
+    background: #8D0162;
     margin-top: 1em;
+    text-align: center;
+    vertical-align: center;
+    color: white;
+    font-size: 25px;
 }
 #podium1 { /* gold */
-    height: 120px;
+    height: 160px;
 }
 #podium2 { /* silver */
-    height: 80px;
+    height: 110px;
+    line-height: 110px;
 }
 #podium3 { /* bronze */
-    height: 40px;
+    height: 60px;
+    line-height: 60px;
 }
 
 #poolContainer {
 	display: block;
-	background-color: #dfdfdf;
-	border-radius: 5px;
+	border: 2px dashed #D6A3C6;
+  border-radius: 5px;
 	margin: 0 auto;
 	padding: 1em;
     margin-bottom: 1em;
@@ -313,7 +323,7 @@
 }
 
 .dropTarget {
-    border: 2px dashed #D9D9D9;
+    border: 2px dashed #D6A3C6;
     border-radius: 5px;
     min-height: 40px;
     text-align: center;
@@ -370,7 +380,7 @@
   -webkit-animation: wiggle 0.3s 0s infinite ease-in;
   animation: wiggle 0.3s 0s infinite ease-in;
   opacity: .6;
-  border: 2px solid #000;
+  border: 2px solid #D9D9D9;
 }
 
 @-webkit-keyframes wiggle {
@@ -436,8 +446,8 @@
 .challengeGroup {
   text-align: center;
   padding: 15px 30px 30px 30px;
-  margin: 25px auto 10px auto;
-  width: 70%;
+  margin: 20px auto 10px auto;
+  width: 80%;
 }
 
 .challengeGroup p {
@@ -467,7 +477,7 @@
 }
 
 .dislike-challenge, .like-challenge {
-    margin: 5px 15px 5px 15px;
+    margin: 0px 15px 5px 10px;
     width: 65px;
     color: white;
 }

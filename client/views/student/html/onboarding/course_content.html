@@ -1,5 +1,11 @@
 <template name="onboarding_course">
     <h2>Which subjects in <b>{{ title }}</b> interest you?</h2>
+
+    <div class="taskDescription">
+        <p>Please choose <b>at least three</b> of the modules from your course which interest you the most.</p>
+        <p>This will give us an idea of what areas we should focus on when creating Mooqita tasks.</p>
+    </div>
+
     {{#if errorMessage }}
     <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" onClick="$('.alert-dismissable').toggle()">
