@@ -500,3 +500,24 @@
 }
 
 /* end tech skills */
+
+#timezone, #language {
+  width: 33%;
+  margin: 0 1em 1em 0;
+}
+
+#commtags {
+  display: inline-block;
+  width: 80%;
+  margin: .68em 1rem;
+}
+
+#addTagContainer {
+  width: 15%;
+  display: inline-block;
+  position: absolute;
+}
+
+hr { margin: 10px 0; }
+#addTagContainer > * { display: inline; }
+#addcomValue { margin: 10px 0; }
