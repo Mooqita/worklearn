@@ -2,6 +2,12 @@ Meteor.publish "onboardingForUserPUB", () ->
   return Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1})
 
 Meteor.methods
+  addChallenge: (data) ->
+    challenges = Onboarding.find({owner_id: this.userId, suggestedChallenges: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
+    challenges[0].suggestedChallenges.push(data)
+    console.log ("Added a challenge: " + data)
+    Meteor.call "insertOnboardingForUser", "suggestedChallenges", challenges[0].suggestedChallenges
+
   coursetags: (data) ->
     Meteor.call "insertOnboardingForUser", "courseTags", data.tags
 
@@ -82,7 +88,8 @@ Meteor.methods
         commAny: false,
         softSkills: {},
         techSkills: {},
-        challenges: {}
+        challenges: {},
+        suggestedChallenges: []
       }
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})
 
