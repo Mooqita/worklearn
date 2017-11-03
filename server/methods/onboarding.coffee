@@ -1,3 +1,6 @@
+Meteor.publish "onboardingForUserPUB", () ->
+  return Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1})
+
 Meteor.methods
   coursetags: (data) ->
     Meteor.call "insertOnboardingForUser", "courseTags", data.tags
