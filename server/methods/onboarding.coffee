@@ -2,6 +2,9 @@ Meteor.methods
   coursetags: (data) ->
     Meteor.call "insertOnboardingForUser", "courseTags", data.tags
 
+  onboardingForUser: () ->
+    return Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
+
   coursetagsSelected: () ->
     # Because this is the first method to be called within the onboarding phase we must
     # create an empty row, e.g. by invoking insertOnboardingForUser with empty params
