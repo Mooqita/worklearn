@@ -76,7 +76,8 @@ Meteor.methods
         orderedTags: {},
         timeComitted: 0,
         tzIndex: 10,
-        langIndex: 20,
+        lang1Index: 20,
+        lang2Index: null,
         commTags: [],
         commAny: false,
         softSkills: {},
@@ -94,8 +95,11 @@ Meteor.methods
   lastTzIndex: () ->
     return Onboarding.find({owner_id: this.userId, tzIndex: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].tzIndex
 
-  lastLangIndex: () ->
-    return Onboarding.find({owner_id: this.userId, langIndex: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].langIndex
+  lastLang1Index: () ->
+    return Onboarding.find({owner_id: this.userId, lang1Index: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].lang2Index
+
+  lastLang2Index: () ->
+    return Onboarding.find({owner_id: this.userId, lang2Index: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].lang2Index
 
   lastCommAny: () ->
     return Onboarding.find({owner_id: this.userId, commAny: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].commAny

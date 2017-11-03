@@ -176,6 +176,7 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+  padding: 10px 20px 20px 20px;
 }
 
 .card-block { display: none; }
@@ -509,21 +510,34 @@
 
 /* end tech skills */
 
-#timezone, #language {
-  width: 33%;
-  margin: 0 1em 1em 0;
-}
 
+/* Time zone and comms */
 #commtags {
   display: inline-block;
   width: 80%;
   margin: .68em 1rem;
 }
 
-#addTagContainer {
-  width: 15%;
-  display: inline-block;
-  position: absolute;
+.centeredDropdowns {
+  width: 85%;
+  text-align: center;
+  margin: 10px auto 5px auto;
+}
+
+#tagContainerTimezone {
+  width: 85%;
+  text-align: center;
+  margin: 10px auto 5px auto;
+}
+
+.addTagContainer {
+  width: 35%;
+  margin: 5px auto 10px auto;
+}
+
+.category {
+  width:45%;
+  margin: 0 1em 1em 0;
 }
 
 hr {
@@ -542,6 +556,8 @@ hr {
   width: 60%;
   margin: 10px 0;
 }
+
+/* end timezone and comms */
 
 .btn-toolbar {
   margin-left:-30px;
