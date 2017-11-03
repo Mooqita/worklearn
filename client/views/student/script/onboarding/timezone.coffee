@@ -246,12 +246,14 @@ Template.preflangselect.helpers
     "Zulu"]
 
 Template.preflangselect.onRendered ->
-  Meteor.call "lastLangIndex",
-    (err, res) -> $("#language")[0].selectedIndex = res || 20 # English
+  Meteor.call "lastLang1Index",
+    (err, res) -> $("#language1")[0].selectedIndex = res || 20 # English
+  Meteor.call "lastLang2Index",
+    (err, res) ->  if res then $("#language2")[0].selectedIndex = res
 
 Template.onboarding_timezone.helpers
-  tags: () -> ["Phone", "Skype", "Google Hangouts", "Email", "Facebook", "Facebook Messenger", "Slack", "Google+", "WhatsApp", "LINE", "WeChat", "Telegram", "Viber", "Kik", "QQ Mobile"]
-
+  tags: () -> ["Email","Facebook Messenger","Facebook","Google Hangouts","Google+","Kik","LINE","Phone","QQ Mobile","Skype","Slack","Telegram","Viber","WeChat","WhatsApp"]
+  
 selectOrAddTag = (tag) =>
   selectedtags = Session.get(tagID)
   lowertags = t.toLowerCase() for t in selectedtags
@@ -294,8 +296,11 @@ Template.onboarding_timezone.events
   "change #timezone" : (event) ->
     Meteor.call "insertOnboardingForUser", "tzIndex", event.target.selectedIndex
 
-  "change #language" : (event) ->
-    Meteor.call "insertOnboardingForUser", "langIndex", event.target.selectedIndex
+  "change #language1" : (event) ->
+    Meteor.call "insertOnboardingForUser", "lang1Index", event.target.selectedIndex
+
+  "change #language2" : (event) ->
+    Meteor.call "insertOnboardingForUser", "lang2Index", event.target.selectedIndex
 
   "change #commany" : (event) ->
     Meteor.call "insertOnboardingForUser", "commAny", event.target.checked

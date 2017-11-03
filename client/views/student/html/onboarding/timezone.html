@@ -3,41 +3,59 @@
     <h2>Your work environment preferences</h2>
 
     <div class="taskDescription">
-        <p>Please select your preferences for communicating with your team on Mooqita.
-        This will help us put you into a team which best suits you</p>
+        <p>Please select your preferences for communicating with your team on Mooqita.</p>
+        <p>This will help us put you into a team which best suits you.</p>
     </div>
 
-    <div id="centeredDropdowns">
-        {{> timezoneselect }}
-        {{> preflangselect }}
+    <div class="card">
+
+        <div class="taskDescription">
+            <p>Which timezone do you live in, and what is your preferred working language?</p>
+        </div>
+
+        <div class="centeredDropdowns">
+            {{> timezoneselect }}
+            {{> preflangselect dropdownId="language1"}}
+        </div>
+
+        <div class="taskDescription">
+            <p>Do you have another language you are comfortable using? (Optional)</p>
+        </div>
+
+        <div class="centeredDropdowns">
+            {{> preflangselect dropdownId="language2"}}
+        </div>
     </div>
 
     <hr>
 
-    <div class="taskDescription">
-        <p>What tools do you use and find valuable when communicating in teams?</p>
-    </div>
+    <div class="card">
+        <div class="taskDescription">
+            <p>What tools do you like to use when communicating in teams?</p>
+        </div>
 
-    <div id="tagContainerTimezone">
-        {{>obtags method="commtags" category="commtags" tags=tags}}
-    </div>
+        <div id="tagContainerTimezone">
+            {{>obtags method="commtags" category="commtags" tags=tags}}
+        </div>
 
-    <div id="addTagContainer">
-        <input id="addcomValue" class="form-control" type="text" value="" placeholder="Use another tool?" />
-        <input id="addcomButton" class="btn btn-sm btn-primary form-control addcom" type="submit" value="Add" />
-        
-        <br>
+        <div class="addTagContainer">
+            <input id="addcomValue" class="form-control" type="text" value="" placeholder="Use another tool?" style="display: inline-block;" />
+            <input id="addcomButton" class="btn btn-sm btn-primary form-control addcom" type="submit" value="Add" />
 
-        <label style="margin-top: 25px;">
-            <input id="commany" type="checkbox">
-            <span>I don't mind, I'll use any tool</span>
-        </label>
+            <br>
+
+            <label style="margin-top: 15px;">
+                <input id="commany" type="checkbox">
+                <span>I don't mind, I'll use any tool</span>
+            </label>
+        </div>
+
     </div>
 
     <hr>
 
     <a href="/onboarding/softskillselection"
-       class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
+    class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
 
 </template>
 
@@ -45,16 +63,16 @@
     <select id="timezone" name="category" class="category">
         <option value="">-- Choose your timezone --</option>
         {{#each tz in timezones}}
-            <option>{{ tz }}</option>
+        <option>{{ tz }}</option>
         {{/each}}
     </select>
 </template>
 
 <template name="preflangselect">
-    <select id="language" name="category" class="category">
+    <select id="{{dropdownId}}" name="category" class="category">
         <option value="">-- Choose your language --</option>
         {{#each lang in languages}}
-            <option>{{ lang }}</option>
+        <option>{{ lang }}</option>
         {{/each}}
     </select>
 </template>

@@ -176,6 +176,7 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+  padding: 10px 20px 20px 20px;
 }
 
 .card-block { display: none; }
@@ -517,7 +518,7 @@
   margin: .68em 1rem;
 }
 
-#centeredDropdowns {
+.centeredDropdowns {
   width: 85%;
   text-align: center;
   margin: 10px auto 5px auto;
@@ -529,7 +530,7 @@
   margin: 10px auto 5px auto;
 }
 
-#addTagContainer {
+.addTagContainer {
   width: 35%;
   margin: 5px auto 10px auto;
 }
