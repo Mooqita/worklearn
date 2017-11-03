@@ -1,6 +1,13 @@
 Template.onboarding_report.onCreated ->
   this.subscribe "onboardingForUserPUB"
 
+
+Template.onboarding_report.events
+  "click .continue": (event) ->
+    chall = $("textarea[name='challengeIdea']").val()
+    console.log (chall)
+    Meteor.call "addChallenge", chall
+
 Template.onboarding_report.helpers
   skills: () ->
     return Object.values(Onboarding.find().fetch()[0].techSkills).reduce((a,b) -> return a.concat(b)) || []

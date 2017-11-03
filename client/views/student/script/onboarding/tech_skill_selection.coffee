@@ -8,7 +8,12 @@ Template.onboarding_techskillselection.helpers
     },
     {
       category: "databases",
-      title: "Database management systems",
-      tags: ["MongoDB", "MySQL", "Oracle"]
+      title: "Database systems",
+      tags: ["MongoDB", "MySQL", "Oracle", "SQL"]
+    },
+    {
+      category: "databases",
+      title: "Development Tools",
+      tags: ["Visual Studio", "GitHub", "GitLab", "Sublime Text", "Atlassian Jira", "WebStorm", "PyCharm", "Vim", "Android Studio", "XCode", "Xamarin Studio"]
     }
   ]

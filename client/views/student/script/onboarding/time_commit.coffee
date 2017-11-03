@@ -54,7 +54,5 @@ Template.onboarding_time.events
 	"change #timeCommitSlider, drag #timeCommitSlider": (event) ->
 		Template.onboarding_time.PercentToHours(event.value)
 		Template.onboarding_time.UpdateHoursLabel()
-
-Template.onboarding_time.events
 	"click .continue": (event) ->
 		Meteor.call "timeComitted", window.hours
