@@ -509,21 +509,34 @@
 
 /* end tech skills */
 
-#timezone, #language {
-  width: 33%;
-  margin: 0 1em 1em 0;
-}
 
+/* Time zone and comms */
 #commtags {
   display: inline-block;
   width: 80%;
   margin: .68em 1rem;
 }
 
+#centeredDropdowns {
+  width: 85%;
+  text-align: center;
+  margin: 10px auto 5px auto;
+}
+
+#tagContainerTimezone {
+  width: 85%;
+  text-align: center;
+  margin: 10px auto 5px auto;
+}
+
 #addTagContainer {
-  width: 15%;
-  display: inline-block;
-  position: absolute;
+  width: 35%;
+  margin: 5px auto 10px auto;
+}
+
+.category {
+  width:45%;
+  margin: 0 1em 1em 0;
 }
 
 hr {
@@ -542,6 +555,8 @@ hr {
   width: 60%;
   margin: 10px 0;
 }
+
+/* end timezone and comms */
 
 .btn-toolbar {
   margin-left:-30px;

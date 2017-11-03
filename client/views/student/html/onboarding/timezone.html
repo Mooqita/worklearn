@@ -1,31 +1,44 @@
 <template name="onboarding_timezone">
+
     <h2>Your work environment preferences</h2>
+
     <div class="taskDescription">
         <p>Please select your preferences for communicating with your team on Mooqita.
         This will help us put you into a team which best suits you</p>
     </div>
-    {{> timezoneselect }}
-    {{> preflangselect }}
+
+    <div id="centeredDropdowns">
+        {{> timezoneselect }}
+        {{> preflangselect }}
+    </div>
 
     <hr>
 
-    <p>What tools do you use and find valuable when communicating in teams?</p>
+    <div class="taskDescription">
+        <p>What tools do you use and find valuable when communicating in teams?</p>
+    </div>
 
     <div id="tagContainerTimezone">
         {{>obtags method="commtags" category="commtags" tags=tags}}
-
-        <div id="addTagContainer">
-            <input id="addcomValue" class="form-control" type="text" value="" placeholder="Add tag" />
-            <input id="addcomButton" class="btn btn-sm btn-primary form-control addcom" type="submit" value="+" />
-        </div>
     </div>
+
+    <div id="addTagContainer">
+        <input id="addcomValue" class="form-control" type="text" value="" placeholder="Use another tool?" />
+        <input id="addcomButton" class="btn btn-sm btn-primary form-control addcom" type="submit" value="Add" />
+        
+        <br>
+
+        <label style="margin-top: 25px;">
+            <input id="commany" type="checkbox">
+            <span>I don't mind, I'll use any tool</span>
+        </label>
+    </div>
+
     <hr>
-    <label style="margin-top: 7px;">
-        <input id="commany" type="checkbox">
-        <span>I don't mind, I'll use any tool</span>
-    </label>
+
     <a href="/onboarding/softskillselection"
        class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
+
 </template>
 
 <template name="timezoneselect">

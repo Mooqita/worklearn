@@ -250,7 +250,7 @@ Template.preflangselect.onRendered ->
     (err, res) -> $("#language")[0].selectedIndex = res || 20 # English
 
 Template.onboarding_timezone.helpers
-  tags: () -> ["phone", "Skype", "Hangout", "e-mail", "Facebook", "Slack", "Messenger"]
+  tags: () -> ["Phone", "Skype", "Google Hangouts", "Email", "Facebook", "Facebook Messenger", "Slack", "Google+", "WhatsApp", "LINE", "WeChat", "Telegram", "Viber", "Kik", "QQ Mobile"]
 
 selectOrAddTag = (tag) =>
   selectedtags = Session.get(tagID)
