@@ -1,16 +1,12 @@
 Template.onboarding_report.onCreated ->
-  Meteor.call "onboardingForUser",
-    (err, res) ->
-      Session.set("courseContentOrdered", res.orderedTags)
-      Session.set("techSkills", res.techSkills)
-      Session.set("challenges", res.challenges)
-      Session.set("hoursComitted", res.timeComitted)
+  this.subscribe "onboardingForUserPUB"
 
 Template.onboarding_report.helpers
-  skills: () -> return Object.values(Session.get("techSkills")).reduce((a,b) -> return a.concat(b))
+  skills: () ->
+    return Object.values(Onboarding.find().fetch()[0].techSkills).reduce((a,b) -> return a.concat(b)) || []
 
   likedChallenges: () ->
-    return [
+    knownChallenges = [
       {
         id: 1,
         title: "Competitive Tweeting",
@@ -26,8 +22,18 @@ Template.onboarding_report.helpers
       }
     ]
 
+    userChallenges = Onboarding.find().fetch()[0].challenges
+    _likedChallengeKeys = []
+
+    Object.keys(userChallenges).forEach((k) =>
+      if userChallenges[k].liked
+        _likedChallengeKeys.push(parseInt(k))
+    )
+
+    return knownChallenges.filter((c) -> _likedChallengeKeys.includes(c.id))
+
   courseContent: () ->
-    ordered = Session.get("courseContentOrdered")
+    ordered = Onboarding.find().fetch()[0].orderedTags
     return [
       {
         id: 1,
@@ -46,4 +52,4 @@ Template.onboarding_report.helpers
       }
     ]
 
-  hours: () -> return Session.get "hoursComitted"
+  hours: () -> return Onboarding.find().fetch()[0].timeComitted || 2
