@@ -1,4 +1,4 @@
-Template.onboarding_techskillselection.helpers
+Template.onboarding_techexistingselection.helpers
   # This should return all topics, identifying the ones that have been selected?
   topics: () -> return [
     {

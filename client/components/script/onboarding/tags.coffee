@@ -30,4 +30,6 @@ Template.obtags.events
       _tags.push(event.target.innerText)
       Session.set(_tagID, _tags)
 
+    console.log ("Selected: " + self.method)
+
     Meteor.call self.method, {category: self.category, tags: Session.get(_tagID)}

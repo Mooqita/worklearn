@@ -27,11 +27,23 @@ Meteor.methods
     # TODO: could use the general method, but would create another doc unnecessarily.
     Onboarding.update(doc._id, { $set: techSkills: doc.techSkills } )
 
+  existingSkills: (data) ->
+    doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
+    doc.existingSkills[data.category] = data.tags
+    # TODO: could use the general method, but would create another doc unnecessarily.
+    Onboarding.update(doc._id, { $set: existingSkills: doc.existingSkills } )
+
   techskillsSelected: (category) ->
     # TODO: error validation & using the same type of find a lot
     techSkills = Onboarding.find({owner_id: this.userId, techSkills: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
     selectedTechSkillsByCategory = techSkills[0].techSkills[category]
     return if selectedTechSkillsByCategory? then selectedTechSkillsByCategory else []
+
+  existingSkillsSelected: (category) ->
+    # TODO: error validation & using the same type of find a lot
+    existingSkills = Onboarding.find({owner_id: this.userId, existingSkills: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
+    selectedExistingSkillsByCategory = existingSkills[0].existingSkills[category]
+    return if selectedExistingSkillsByCategory? then selectedExistingSkillsByCategory else []
 
   storeOrderedTags: (order) ->
     Meteor.call "insertOnboardingForUser", "orderedTags", order
@@ -88,6 +100,7 @@ Meteor.methods
         commAny: false,
         softSkills: {},
         techSkills: {},
+        existingSkills: {},
         challenges: {},
         suggestedChallenges: []
       }

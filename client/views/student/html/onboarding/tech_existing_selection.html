@@ -1,0 +1,20 @@
+<template name="onboarding_techexistingselection">
+    <h2>What technical skills are you already confident with?</h2>
+
+    <div class="taskDescription">
+        <p>Please select the skills that you have already had a good amount of experience with.</p>
+        <p>This will inform the design of tasks and will help us group people with different skillsets together.</p>
+    </div>
+
+    <br/>
+
+    {{#each topics}}
+    <div class="card tech-skill-group">
+        <h2>{{ title }}</h2>
+        {{>obtags method="existingSkills" category=category tags=tags}}
+    </div>
+    {{/each}}
+
+    <a href="/onboarding/techskillselection" class="btn btn-sm btn-primary active continue pull-right">Continue</a>
+
+</template>

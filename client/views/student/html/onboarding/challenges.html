@@ -1,10 +1,10 @@
 <template name="onboarding_challenges">
     
-    <h2>Which of these existing challenges appeal to you?</h2>
+    <h2>Which of these existing group challenges appeal to you?</h2>
 
     <div class="taskDescription">
-        <p>Please like or dislike each challenge below, and then give a brief explanation for your reasoning.</p>
-        <p>This will give us an idea of the kind of challenges to create for you.</p>
+        <p>Here are some examples of the kinds of challenges you might be asked to complete as part of a small team. Please like or dislike each, and then give a brief explanation for your reasoning.</p>
+        <p>This will give us an idea of the kind of challenges to create for you!</p>
     </div>
 
     {{#each challenges}}            
@@ -28,11 +28,12 @@
                     <strong>
                         What did you find
                         {{#if vote}} appealing {{else}} unappealing {{/if}}
-                        about this challenge?
+                        about this group challenge?
                     </strong>
                 </h3>
 
-                <textarea type="text" rows="3" name="justifyInput" class="form-control" placeholder="We will use this to suggest appropriate challenges"></textarea>
+                <textarea type="text" rows="3" name="justifyInput" class="form-control" 
+                placeholder="Did you {{#if vote}}like{{else}}dislike{{/if}} the subject matter? The technical challenge? Was it {{#if vote}}relevant{{else}}irrelevant{{/if}} to your studies? Let us know!"></textarea>
 
                 <button data-id="{{id}}" type="button" class="btn btn-primary active continue add-justify-challenge">Continue</button>
             </div>

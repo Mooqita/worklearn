@@ -23,6 +23,8 @@ Template.onboarding_header.stages = () ->
     }
   ]
 
+Template.onboarding_header.onRendered () ->
+  Meteor.defer(() -> $('body').scrollTop(0))
 
 Template.onboarding_header.helpers
   stages: () -> return Template.onboarding_header.stages()
