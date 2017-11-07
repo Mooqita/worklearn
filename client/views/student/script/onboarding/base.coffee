@@ -23,9 +23,6 @@ Template.onboarding_header.stages = () ->
     }
   ]
 
-Template.onboarding_header.onRendered () ->
-  Meteor.defer(() -> $('body').scrollTop(0))
-
 Template.onboarding_header.helpers
   stages: () -> return Template.onboarding_header.stages()
   equals: (lhs, rhs) -> return lhs == rhs
@@ -35,7 +32,8 @@ Template.onboarding_header.helpers
       return this.urls[0]
     else 
       return ""
-  currentStage: () -> 
+  currentStage: () ->
+    window.scrollTo(0, 0)
     FlowRouter.watchPathChange()
     for stage in Template.onboarding_header.stages()
       if stage.urls.indexOf(FlowRouter.current().path) > -1
