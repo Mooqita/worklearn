@@ -14,7 +14,12 @@
         At least three tags must be selected
     </div>
     {{/if}}
-    {{>obtags method="coursetags" tags=tags}}
+
+    <div class="card" style="text-align: center">
+            {{>obtags method="coursetags" tags=tags}}
+    </div>
+    <br>
+
     <a href="/onboarding/sort" onClick="$('.alert-dismissable').show()"
        class="btn btn-sm btn-primary active continue pull-right" aria-pressed="true">Continue</a>
 </template>
