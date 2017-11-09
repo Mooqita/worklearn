@@ -38,4 +38,6 @@ Template.onboarding_header.helpers
     for stage in Template.onboarding_header.stages()
       if stage.urls.indexOf(FlowRouter.current().path) > -1
         return stage.num    
+    if FlowRouter.current().path == "/onboarding/goodbye"
+      return Template.onboarding_header.stages().length + 1
     return 0
