@@ -9,20 +9,20 @@
 
     <div class="row">
 
-        <div class="col-md-6 report-capsule vcenter">
+        <div class="col-md-5 report-capsule vcenter">
             <h3>You would like to use these skills:</h3>
             {{#each skill in skills }}
-            <p>{{skill}}</p>
+            <p class="tag label label-info">{{skill}}</p>
             {{/each}}
         </div>
 
-        <div class="col-md-5 report-capsule vcenter">
+        <div class="col-md-6 report-capsule vcenter">
             <h3>The parts of your course you found most interesting:</h3>
             {{#each courseContent}}
             {{#if equals rank 1}}
-            <p><strong>{{title}}</strong></p>
+            <span class="tag label label-info"><strong>{{title}}</strong></span><hr>
             {{else}}
-            {{title}}
+            <span class="tag label label-info">{{title}}</span>
             {{/if}}
             {{/each}}
         </div>
@@ -30,15 +30,15 @@
     </div>
     <div class="row">
 
-        <div class="col-md-5 report-capsule vcenter">
-            <h3>You said you could do <b>{{hours}} hours</b> of work per week</h3>
-        </div>
-
         <div class="col-md-6 report-capsule vcenter">
             <h3>You found these existing challenges appealing:</h3>
             {{#each likedChallenges}}
-            <p>{{title}}</p>
+            <p class="tag label label-info">{{title}}</p>
             {{/each}}
+        </div>
+
+        <div class="col-md-5 report-capsule vcenter">
+            <h3>You said you could do <b>{{hours}} hours</b> of work per week</h3>
         </div>
 
     </div>
