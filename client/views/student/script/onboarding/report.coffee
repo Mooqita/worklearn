@@ -10,6 +10,7 @@ Template.onboarding_report.events
 
 Template.onboarding_report.helpers
   skills: () ->
+    if Onboarding.find().fetch()[0] == undefined then return []
     return Object.values(Onboarding.find().fetch()[0].techSkills).reduce((a,b) -> return a.concat(b)) || []
 
   likedChallenges: () ->
@@ -29,6 +30,7 @@ Template.onboarding_report.helpers
       }
     ]
 
+    if Onboarding.find().fetch()[0] == undefined then return []
     userChallenges = Onboarding.find().fetch()[0].challenges
     _likedChallengeKeys = []
 
@@ -40,6 +42,7 @@ Template.onboarding_report.helpers
     return knownChallenges.filter((c) -> _likedChallengeKeys.includes(c.id))
 
   courseContent: () ->
+    if Onboarding.find().fetch()[0] == undefined then return []
     ordered = Onboarding.find().fetch()[0].orderedTags
     return [
       {
@@ -59,4 +62,6 @@ Template.onboarding_report.helpers
       }
     ]
 
-  hours: () -> return Onboarding.find().fetch()[0].timeComitted || 2
+  hours: () -> 
+    if Onboarding.find().fetch()[0] == undefined then return []
+    return Onboarding.find().fetch()[0].timeComitted || 2

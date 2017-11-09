@@ -19,7 +19,7 @@ Template.onboarding_header.stages = () ->
     {
       num: 3,
       desc: "Your Mooqita",
-      urls: ["/onboarding/techskillselection", "/onboarding/challenges", "/onboarding/report"]
+      urls: ["/onboarding/techexistingselection", "/onboarding/techskillselection", "/onboarding/challenges", "/onboarding/report"]
     }
   ]
 
