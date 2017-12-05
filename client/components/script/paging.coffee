@@ -18,7 +18,7 @@ Template.paging.onCreated ->
 		handler =
 			onStop: (err) ->
 				if err
-					sAlert.error("Likert item error: " + err)
+					sAlert.error("Paging subscript error: " + err)
 			onReady: (res) ->
 				sAlert.success("Success!")
 

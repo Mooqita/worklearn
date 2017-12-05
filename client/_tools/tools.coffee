@@ -33,7 +33,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 	if item_id == -1
 		return undefined
 
-	collection = global[collection_name]
+	collection = get_collection(collection_name)
 	if not collection
 		console.log "collection not found: " + collection_name
 		return undefined

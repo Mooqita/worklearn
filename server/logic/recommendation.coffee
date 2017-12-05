@@ -2,6 +2,7 @@
 @gen_recommendation = (user, recipient_id) ->
 	recommendation =
 		recipient_id: recipient_id
+		visible_to: "owner"
 		owner_id: user._id
 
 	res = store_document_unprotected Recommendations, recommendation

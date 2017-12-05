@@ -21,7 +21,6 @@
 		challenge_id: solution.challenge_id
 		requester_id: review.owner_id
 		visible_to: "owner"
-		template_id: "feedback"
 		requested: new Date()
 		assigned: false
 		published: false

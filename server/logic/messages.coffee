@@ -2,6 +2,7 @@
 @gen_message = (user, title, message, url) ->
 	#save message
 	msg =
+		visible_to: "owner"
 		owner_id: user._id
 		content: message
 		title: title

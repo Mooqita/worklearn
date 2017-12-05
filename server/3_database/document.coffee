@@ -12,22 +12,6 @@
 
 	if not ("owner_id" of document)
 		document["owner_id"] = Meteor.userId()
-	if not ("visible_to" of document)
-		document["visible_to"] = "owner"
-	if not ("view_order" of document)
-		document["view_order"] = 1
-	if not ("removal_id" of document)
-		document["removal_id"] = Random.id()
-	if not ("template_id" of document)
-		document["template_id"] = "response"
-	if not ("index" of document)
-		document["index"] = -1
-	if not ("parent_id" of document)
-		document["parent_id"] = ""
-	if not ("single_parent" of document)
-		document["single_parent"] = false
-	if not ("group_name" of document)
-		document["group_name"] = ""
 
 	id = collection.insert document
 	return id

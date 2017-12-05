@@ -73,6 +73,7 @@ Template.select_input.events
 		value = target.options[target.selectedIndex].value;
 		field = event.target.id
 		value = event.target.value
+
 		method = this.method
 		collection = this.collection_name
 		item_id = this.item_id
@@ -114,7 +115,7 @@ Template.basic_input.events
 		if this.type == "number"
 			value = Number(value)
 
-		Meteor.call method, collection, item_id, field, value, undefined,
+		Meteor.call method, collection, item_id, field, value, null,
 			(err, res) ->
 				if err
 					sAlert.error("Basic input error: " + err)

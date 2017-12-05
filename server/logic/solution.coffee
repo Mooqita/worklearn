@@ -13,10 +13,8 @@
 		index: 1
 		owner_id: user._id
 		parent_id: challenge._id
-		view_order: 1
-		group_name: ""
-		template_id: "solution"
 		challenge_id: challenge._id
+		visible_to: "owner"
 		published: false
 
 	s_id = store_document_unprotected Solutions, solution

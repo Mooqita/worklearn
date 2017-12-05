@@ -30,8 +30,9 @@
 	return array
 
 @base64_to_byte = (base64String) ->
-	decoded		= atob base64String
-	length		= decoded.length
+	Base64 = require('js-base64').Base64
+	decoded = Base64.atob base64String
+	length	 = decoded.length
 	byteArray = buildByteArray decoded, length
 
 	return byteArray
@@ -45,3 +46,7 @@
 	res = new Blob [byteArray], {type: mime_type}
 	return res
 
+@binary_string_to_base64 = (binary_string) ->
+	Base64 = require('js-base64').Base64
+	base = Base64.btoa(binary_string)
+	return base

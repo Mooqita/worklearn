@@ -23,7 +23,6 @@
 		challenge_id: challenge._id
 		requester_id: solution.owner_id
 		visible_to: "owner"
-		template_id: "review"
 		requested: new Date()
 		assigned: false
 		published: false

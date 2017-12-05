@@ -1,42 +1,4 @@
 ###############################################
-@get_profile_name_by_user_id = (user_id, short = false, plus_id=true) ->
-	p_f =
-		owner_id: user_id
-	profile = Profiles.findOne p_f
-
-	return get_profile_name(profile, short, plus_id)
-
-
-###############################################
-@get_profile_name = (profile, short = false, plus_id=true) ->
-	if !profile
-		return "unknown"
-
-	name = (profile.given_name ? "Learner") + " "
-
-	if not short
-		name += (profile.middle_name ? "") + " "
-		name += profile.family_name ? ""
-
-	if plus_id
-		name += "("+String(profile.owner_id)+")"
-
-	return name
-
-
-###############################################
-@get_user_mail = (user) ->
-	address = "unknown"
-
-	if user.emails
-		mail = user.emails[0]
-		if mail
-			address = mail.address
-
-	return address
-
-
-###############################################
 @gen_profile = (user, occupation) ->
 	if not occupation
 		occupation = "student"
@@ -51,8 +13,8 @@
 		notification_cycle: "day"
 		last_notification: new Date()
 		has_occupation: true
-		template_id: "profile"
 		occupation: occupation
+		visible_to: "owner"
 		requested: 0
 		provided: 0
 		owner_id: user._id

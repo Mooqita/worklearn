@@ -1,13 +1,3 @@
-#######################################################
-@get_avatar = (profile) ->
-	avatar = ""
-
-	if profile.avatar
-		if typeof profile.avatar == "number"
-			avatar = download_dropbox_file Profiles, profile._id, "avatar"
-		else
-			avatar = profile.avatar
-
 ###############################################
 @num_requested_reviews  = (solution) ->
 	if solution

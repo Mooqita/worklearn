@@ -5,7 +5,7 @@
 |		 item_id=_id field="rating" rating_options=g_rating_options }}
 ---------------------------------------------------------->
 <template name="tags">
-	<div style="padding: 5px 10px;">
+	<div style="padding: 5px 0px;">
 		{{#each tags}}
 			{{> tag}}
 		{{/each}}
@@ -17,13 +17,16 @@
 </template>
 
 <template name="tag">
-	<div class="badge background-contrast" style="font-size: 1em">
-		{{.}}
+	<div class="badge background-theme"
+			 style="font-size: 1em; margin-top: 5px">
+		{{label}}
 
-		<select class="form-control edit-field" id="{{field}}">
-			{{#each options}}
-				<option value="{{value}}" {{is_selected value}}>{{label}}</option>
-			{{/each}}
-		</select>
+		<form>
+			<select class="form-control tags">
+				{{#each options}}
+					<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+				{{/each}}
+			</select>
+		</form>
 	</div>
 </template>
