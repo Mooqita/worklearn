@@ -73,7 +73,7 @@ Template.learner_reviews.events
 		inst.searching.set true
 		Session.set "find_review_error", false
 
-		Meteor.call "find_review",
+		Meteor.call "assign_review",
 			(err, res) ->
 				inst.searching.set false
 				if err

@@ -1,23 +1,23 @@
 ###############################################
 Meteor.methods
-	find_review: () ->
+	assign_review: () ->
 		user = Meteor.user()
 
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
-		res = find_review null, null, user
+		res = assign_review null, null, user
 		return res
 
 
-	find_review_for_challenge: (challenge_id) ->
+	assign_review_with_challenge: (challenge_id) ->
 		user = Meteor.user()
 		challenge = find_document  Challenges, challenge_id, false
-		res = find_review challenge, null, user
+		res = assign_review challenge, null, user
 		return res
 
 
-	get_review_for_tutor: (solution_id) ->
+	assign_review_to_tutor: (solution_id) ->
 		user = Meteor.user()
 		solution = find_document  Solutions, solution_id, false
 
