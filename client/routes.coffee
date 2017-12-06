@@ -1,9 +1,15 @@
 ##########################################################
 #
-#	Moocita routes
+#	Mooqita routes
 #
 ##########################################################
 
+##########################################################
+# import
+##########################################################
+
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ##########################################################
 # index
@@ -13,78 +19,46 @@
 FlowRouter.route "/",
 	name: "index",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_landing"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"login_template", "mooqita_login"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_landing"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
+
 
 ##########################################################
-FlowRouter.route "/team",
-	name: "index",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_team"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+# user routes
+##########################################################
 
 ##########################################################
-FlowRouter.route "/research",
+FlowRouter.route "/app/:template",
 	name: "index",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_research"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"login_template", "mooqita_login"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_view"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
+
+##########################################################
+# basic routes
+##########################################################
 
 ##########################################################
 FlowRouter.route "/help",
 	name: "index",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_help"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_help"
+		Session.set	"footer_template", "mooqita_footer"
 
-##########################################################
-FlowRouter.route "/bugs",
-	name: "index",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_bugs"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		this.render "body_template"
 
-##########################################################
-FlowRouter.route "/about",
-	name: "index",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_about"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
-
-##########################################################
-FlowRouter.route "/work-learn",
-	name: "worklearn",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_work_learn"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
 
 ##########################################################
 # Terms
@@ -94,87 +68,24 @@ FlowRouter.route "/work-learn",
 FlowRouter.route "/privacy",
 	name: "privacy",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_privacy"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_privacy"
+		Session.set	"footer_template", "mooqita_footer"
+
+		this.render "body_template"
 
 ##########################################################
 FlowRouter.route "/terms-of-use",
 	name: "terms-of-use",
 	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_terms"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_terms"
+		Session.set	"footer_template", "mooqita_footer"
 
-##########################################################
-# login and accounts
-##########################################################
+		this.render "body_template"
 
-##########################################################
-FlowRouter.route "/login",
-	name: "user.signin",
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_login"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
-
-##########################################################
-AccountsTemplates.configure
-	confirmPassword: true,
-	enablePasswordChange: true,
-	forbidClientAccountCreation: false,
-	overrideLoginErrors: true,
-	sendVerificationEmail: true,
-	lowercaseUsername: false,
-	focusFirstInput: true,
-
-	#Appearance
-	showAddRemoveServices: true,
-	showForgotPasswordLink: true,
-	showLabels: true,
-	showPlaceholders: true,
-	showResendVerificationEmailLink: false,
-
-	# Client-side Validation
-	continuousValidation: false,
-	negativeFeedback: false,
-	negativeValidation: true,
-	positiveValidation: true,
-	positiveFeedback: true,
-	showValidating: true,
-
-	# Privacy Policy and Terms of Use
-	privacyUrl: 'privacy',
-	termsUrl: 'terms-of-use',
-
-##########################################################
-AccountsTemplates.configureRoute 'signIn',
-	path: '/login'
-
-##########################################################
-# user routes
-##########################################################
-
-##########################################################
-FlowRouter.route "/app/:template",
-	name: "index",
-	triggersEnter: [AccountsTemplates.ensureSignedIn],
-	action: (params) ->
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_view"
-			footer: "mooqita_footer"
-		BlazeLayout.render "body_template", data
 
 ##########################################################
 #
@@ -186,10 +97,8 @@ FlowRouter.route "/app/:template",
 FlowRouter.route '/admin',
 	name: 'admin',
 	action: (params) ->
-		console.log "admin"
-		data =
-			menu: "mooqita_menu"
-			layout: "mooqita_layout"
-			content: "mooqita_admin"
-		BlazeLayout.render "body_template", data
+		Session.set	"menu_template", "mooqita_menu"
+		Session.set	"layout_template", "mooqita_layout"
+		Session.set	"content_template", "mooqita_admin"
 
+		this.render "body_template"

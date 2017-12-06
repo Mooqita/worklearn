@@ -1,8 +1,15 @@
 ########################################
 #
-# student solutions
+# learner solutions
 #
 ########################################
+
+##########################################################
+# import
+##########################################################
+
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ########################################
 # functions
@@ -30,7 +37,7 @@ _items_missing = (collection, challenge_id) ->
 ########################################
 
 ########################################
-Template.student_solutions.onCreated ->
+Template.learner_solutions.onCreated ->
 	Session.set "selected_solution", 0
 	self = this
 	self.autorun () ->
@@ -38,17 +45,17 @@ Template.student_solutions.onCreated ->
 
 
 ########################################
-Template.student_solutions.helpers
+Template.learner_solutions.helpers
 	solutions: () ->
 		return Solutions.find()
 
 
 ########################################
-# student solution preview
+# learner solution preview
 ########################################
 
 ########################################
-Template.student_solution_preview.onCreated ->
+Template.learner_solution_preview.onCreated ->
 	self = this
 
 	self.autorun () ->
@@ -60,7 +67,7 @@ Template.student_solution_preview.onCreated ->
 
 
 ########################################
-Template.student_solution_preview.helpers
+Template.learner_solution_preview.helpers
 	is_finished: () ->
 		r = _items_missing Reviews, this.challenge_id
 		f = _items_missing Feedback, this.challenge_id
@@ -76,15 +83,15 @@ Template.student_solution_preview.helpers
 	solution_url: () ->
 		param =
 			challenge_id: this.challenge_id
-		return build_url "student_solution", param
+		return build_url "learner_solution", param
 
 
 ########################################
-# student solution editor
+# learner solution editor
 ########################################
 
 ########################################
-Template.student_solution.onCreated ->
+Template.learner_solution.onCreated ->
 	self = this
 	self.autorun () ->
 		if not FlowRouter.getQueryParam("challenge_id")
@@ -97,7 +104,7 @@ Template.student_solution.onCreated ->
 
 
 ########################################
-Template.student_solution.helpers
+Template.learner_solution.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam "challenge_id"
 		res = Challenges.findOne id
@@ -121,7 +128,7 @@ Template.student_solution.helpers
 
 
 ########################################
-Template.student_solution.events
+Template.learner_solution.events
 	"click #take_challenge":()->
 		id = FlowRouter.getQueryParam("challenge_id")
 		Meteor.call "add_solution", id,
@@ -137,7 +144,7 @@ Template.student_solution.events
 ##############################################
 
 ##############################################
-Template.student_solution_reviews.onCreated ->
+Template.learner_solution_reviews.onCreated ->
 	self = this
 	self.publishing = new ReactiveVar false
 	self.review_error = new ReactiveVar false
@@ -148,7 +155,7 @@ Template.student_solution_reviews.onCreated ->
 		self.subscribe "reviews_by_solution_id", solution_id
 
 ##############################################
-Template.student_solution_reviews.helpers
+Template.learner_solution_reviews.helpers
 	has_filled_profile: () ->
 		filter =
 			owner_id: Meteor.userId()
@@ -230,7 +237,7 @@ Template.student_solution_reviews.helpers
 
 
 ########################################
-Template.student_solution_reviews.events
+Template.learner_solution_reviews.events
 	"click #find_review": (event)->
 		if event.target.attributes.disabled
 			return
@@ -256,7 +263,7 @@ Template.student_solution_reviews.events
 						review_id: rsp.review_id
 						solution_id: rsp.solution_id
 						challenge_id: rsp.challenge_id
-					return FlowRouter.go build_url "student_review", param
+					return FlowRouter.go build_url "learner_review", param
 
 	"click #request_review":(event)->
 		if event.target.attributes.disabled

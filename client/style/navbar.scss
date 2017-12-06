@@ -8,13 +8,17 @@
 
 ////////////////////////////////////////////////
 .menu-container{
-	border-bottom: 1px solid $theme;
+	border-bottom: 2px solid $theme;
 }
 
 .navbar {
-	padding-top: 15px;
-	padding-bottom: 10px;
-	margin-bottom: 15px;
+	padding-bottom: 0px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.navbar-brand {
+	padding: 5px 0px 0px 0px;
 }
 
 .navbar a{
@@ -25,14 +29,13 @@
 
 .nav > li > a:hover,
 .nav > li > a:focus{
-	color: $theme-light;
-	background: none;
+	color: $text-on-theme;
+	background: $theme;
 }
 
 .navbar .active .btn{
 	color: $text-on-theme;
 	background: $theme;
-	padding: 15px;
 }
 
 .navbar .active .btn:hover{
@@ -40,6 +43,7 @@
 }
 
 .navbar-toggle {
+	margin-top: 12px;
 	border: 2px solid $theme;
 }
 

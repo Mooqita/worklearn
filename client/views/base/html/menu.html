@@ -20,8 +20,8 @@
 	<div class="container-fluid menu-container">
 		<div class="navbar" role="navigation">
 			<div class="navbar-header">
-				<a class="navbar-brand logo" href="/">
-					<span><img src="/images/mooqita.jpg" style="height: 50px;"></span>
+				<a class="navbar-brand" href="/">
+					<img src="/images/icon.png" style="height: 50px;">
 				</a>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -31,52 +31,23 @@
 				</button>
 			</div>
 
-			<div class="navbar-collapse collapse" style="padding-top: 15px;">
+			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<!--li class="active">
-						<a href="/team">Team</a>
-					</li>
-
-					<li class="active">
-						<a href="/research">Research</a>
-					</li>
-
-					<li class="active" style="margin-left: 15px; margin-top: 2px;">
-						<a class="btn btn-highlight nav-x"
-							 href="mailto:info@mooqita.org?Subject=Getting%20in%20Touch">
-							Get in Touch
-						</a>
-					</li>
-
-					<li class="active" style="margin-left: 15px; margin-top: 2px;">
-						<a class="btn btn-highlight nav-x"
-							 href="https://www.flipcause.com/secure/cause_pdetails/MjAzMjQ="
-							 target="_blank">
-							Donate
-						</a>
-					</li-->
-
-					<li class="active" style="margin-left: 15px; margin-top: 2px;">
-						<a class="btn btn-highlight nav-x"
-							 href="https://www.mooqita.org"
-							 target="_blank">
-							Website
-						</a>
-					</li>
+					{{#if sub_menu}}
+						{{>Template.dynamic template=sub_menu}}
+					{{/if}}
 
 					{{#if currentUser}}
 						<li class="active">
-							<a class="logout">Logout</a>
+							<a class="navigation-button control-navigate" id="logout">
+								Logout
+							</a>
 						</li>
 					{{/if}}
 				</ul>
 			</div>
 		</div>
 	</div>
-
-	{{#if sub_menu}}
-		{{>Template.dynamic template=sub_menu}}
-	{{/if}}
 </template>
 
 
@@ -85,11 +56,11 @@
 -------------------------------------------------->
 <template name="optional_menu">
 	{{#if isInRole 'tutor'}}
-		<span>
+		<li class="active">
 			<a class="navigation-button control-navigate"
 					 href="{{build_url "tutor"}}">
 				Tutor
 			</a>
-		</span>
+		</li>
 	{{/if}}
 </template>

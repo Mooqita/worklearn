@@ -93,6 +93,7 @@ main{
 
 footer{
 	min-height: 250px;
+	color: $text-on-theme;
 	background-color: $theme-dark;
 	border-top-width: 4px;
 	border-top-style: solid;
@@ -116,12 +117,10 @@ footer{
 
 ////////////////////////////////////////////////
 .btn{
-	margin: auto;
 	padding: 8px 10px
 }
 
 .btn:hover{
-	margin: auto;
 	padding: 9px 9px 7px 11px;
 
   -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);

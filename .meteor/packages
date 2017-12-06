@@ -18,32 +18,14 @@ es5-shim@4.6.15               # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.8.1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4            # Server-side component of the `meteor shell` command
 
+
+# coffeescript
 coffeescript
 
-kadira:flow-router
-kadira:blaze-layout
 
-twbs:bootstrap
-fourseven:scss
-
-juliancwirko:s-alert
-
-check@1.2.5
-alanning:roles
-
-raix:ui-dropped-event
-session@1.1.7
-random@1.0.10
-
-lukemadera:social-share
-
-perak:codemirror
-summernote:summernote
-jparker:crypto-sha256
-spacebars-compiler
-meteorhacks:aggregate
-
+# user accounts
 service-configuration@1.0.11
+
 accounts-password@1.4.0
 accounts-base@1.3.1
 accounts-ui@1.1.9
@@ -53,22 +35,61 @@ accounts-ui@1.1.9
 #accounts-github@1.2.1
 #accounts-twitter@1.2.1
 
+#facebook-config-ui
+#google-config-ui
+#github-config-ui
+#twitter-config-ui
+
 useraccounts:core
 useraccounts:bootstrap
-useraccounts:flow-routing
 
-#facebook-config-ui@1.0.0
-#github-config-ui@1.0.0
-#google-config-ui@1.0.0
-#twitter-config-ui@1.0.0
 
-peppelg:bootstrap-3-modal
-practicalmeteor:faker
-email@1.2.3
-dburles:mongo-collection-instances
-markdown@1.0.12
-http@1.2.12
+# router
+
+ostrio:flow-router-extra
+kadira:blaze-layout
+
+
+# styling
+
+twbs:bootstrap
+fourseven:scss
+
+
+# missing functionality
+
+raix:ui-dropped-event
+juliancwirko:s-alert
+
+
+# security
+
+check@1.2.5
+alanning:roles
+jparker:crypto-sha256
 gwendall:impersonate
+
+
+# data generation
+
+random@1.0.10
+practicalmeteor:faker
+
+
+# essentials
+
+session@1.1.7
+email@1.2.3
+http@1.2.12
+
+markdown@1.0.12
 reactive-dict@1.1.9
-dynamic-import@0.1.1
+
+
+# database
+
+meteorhacks:aggregate
+dburles:mongo-collection-instances
+
 okgrow:analytics
+peppelg:bootstrap-3-modal

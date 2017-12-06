@@ -1,5 +1,13 @@
+##########################################################
+# import
+##########################################################
+
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
+
 ########################################
-# list
+# tutor
 ########################################
 
 ########################################
@@ -56,11 +64,14 @@ Template.tutor_solutions.helpers
 		return Challenges.findOne challenge_id
 
 	solutions: () ->
+		filter =
+			owner_id:
+				$ne: Meteor.userId()
 		mod =
 			sort:
 				under_review_since: 1
 
-		return TutorSolutions.find {}, mod
+		return Solutions.find filter, mod
 
 	solution_url: () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
@@ -120,6 +131,6 @@ Template.tutor_solution.events
 						review_id: res.review_id
 						solution_id: res.solution_id
 						challenge_id: res.challenge_id
-					url = build_url "student_review", queryParams
+					url = build_url "learner_review", queryParams
 					ins.review_url.set url
 

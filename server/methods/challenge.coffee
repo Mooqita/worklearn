@@ -13,7 +13,7 @@ Meteor.methods
 		challenge = find_document Challenges, challenge_id, true
 		return finish_challenge challenge, user
 
-	send_message_to_challenge_students: (challenge_id, subject, message) ->
+	send_message_to_challenge_learners: (challenge_id, subject, message) ->
 		user = Meteor.user()
 
 		if not user

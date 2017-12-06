@@ -1,34 +1,35 @@
 <!------------------------------------------------
 |
-|	Company profile
+|	Organization profile
 |
 -------------------------------------------------->
-<template name="company_profile">
+<template name="organization_profile">
 	{{#mooqita_wide_spacing}}
 		<div class="row">
-			<div class="col-md-4">
-				<h2>Company Logo</h2>
+			<div class="col-sm-4 col-ms-4 col-xs-12">
+				<h2 class="header">Organization Logo</h2>
 
-				{{#if profile.company_logo}}
-					<div class="text-center">
-						<img class="img-responsive"
-								 src="{{download_field_value "Profiles" profile._id
-																						 "company_logo" profile.company_logo}}">
-					</div>
+				{{#if profile.avatar}}
+					{{>avatar collection_name = "Profiles"
+						observable = profile.avatar
+						item_id = profile._id
+						field = "avatar"}}
 				{{/if}}
 
 				{{>upload method="upload_file" collection_name="Profiles"
-					item_id=_profile._id field="company_logo"}}
+					item_id=profile._id field="avatar" max_size=500000}}
 			</div>
 
-			<div class="col-md-8">
-				<h2>Company Name</h2>
+			<div class="col-sm-8 col-ms-8 col-xs-12">
+				<h2>Organization Name</h2>
 				{{>basic_input method="set_field" collection_name="Profiles"
-					item_id=_profile._id field="company_name" placeholder="Name of your company"}}
+						item_id=profile._id field="organization_name"
+						placeholder="Name of your organization"}}
 
-				<h2>Company Description</h2>
+				<h2>Organization Description</h2>
 				{{>text_input method="set_field" collection_name="Profiles"
-					item_id=_profile._id field="company_description" placeholder="Let our students know a little more about your company."}}
+						item_id=profile._id field="organization_description"
+						placeholder="Let our learners know a little more about your organization."}}
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}

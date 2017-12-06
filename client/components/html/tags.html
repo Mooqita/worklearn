@@ -1,0 +1,29 @@
+<!---------------------------------------------------------
+|
+| usage example:
+|	{{>tags method="set_field" collection_name="Reviews"
+|		 item_id=_id field="rating" rating_options=g_rating_options }}
+---------------------------------------------------------->
+<template name="tags">
+	<div style="padding: 5px 10px;">
+		{{#each tags}}
+			{{> tag}}
+		{{/each}}
+	</div>
+
+	<input placeholder='separate each tag with a ","'
+			 class="form-control edit-field" type="text"
+			 id="{{field}}" value="{{tag_line}}"/>
+</template>
+
+<template name="tag">
+	<div class="badge background-contrast" style="font-size: 1em">
+		{{.}}
+
+		<select class="form-control edit-field" id="{{field}}">
+			{{#each options}}
+				<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+			{{/each}}
+		</select>
+	</div>
+</template>

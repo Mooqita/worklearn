@@ -1,17 +1,17 @@
 ##############################################
 #
-#student_feedback_review
+#learner_feedback_review
 #
 ##############################################
 
 ##############################################
-Template.student_feedback_review.onCreated ->
+Template.learner_feedback_review.onCreated ->
 	self  = this
 	self.autorun () ->
 		self.subscribe "feedback_by_review_id", self.data._id
 
 ##############################################
-Template.student_feedback_review.helpers
+Template.learner_feedback_review.helpers
 	feedback: () ->
 		filter =
 			parent_id: this._id
@@ -25,7 +25,7 @@ Template.student_feedback_review.helpers
 
 ##############################################
 #
-# student_review_feedback
+# learner_review_feedback
 #
 ##############################################
 
@@ -34,11 +34,11 @@ Template.student_feedback_review.helpers
 ########################################
 
 ########################################
-Template.student_feedback_solution.onCreated ->
+Template.learner_feedback_solution.onCreated ->
 	this.publishing = new ReactiveVar(false)
 
 ########################################
-Template.student_feedback_solution.helpers
+Template.learner_feedback_solution.helpers
 	feedback: () ->
 		filter =
 			parent_id: this._id
@@ -98,7 +98,7 @@ Template.student_feedback_solution.helpers
 		return not feedback
 
 ########################################
-Template.student_feedback_solution.events
+Template.learner_feedback_solution.events
 	"click #publish_feedback":(event)->
 		if event.target.attributes.disabled
 			return

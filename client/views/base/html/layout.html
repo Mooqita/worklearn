@@ -4,72 +4,78 @@
 |
 -------------------------------------------------->
 <template name="body_template" xmlns="http://www.w3.org/1999/html">
-	<div class="wrapper">
-		{{#if menu}}
-			<header>
-				{{>Template.dynamic template=menu}}
-			</header>
-		{{/if}}
+	{{>pre_loader}}
+</template>
 
-		<main>
-			{{>sAlert}}
 
-			{{#if Template.subscriptionsReady}}
-				{{#if login}}
-					{{#unless profile}}
-						{{>Template.dynamic template=login}}
-					{{else}}
-						{{>render_content}}
-					{{/unless}}
-				{{else}}
-					{{>render_content}}
-				{{/if}}
-			{{/if}}
-		</main>
-
-		{{#if footer}}
-			<div class="footer-push"> </div>
+<template name="pre_loader">
+	<div class="mooqita-layout">
+		{{#if g_get_login}}
+			{{#unless profile.has_occupation}}
+				{{>Template.dynamic template=g_get_login}}
+			{{else}}
+				{{> Template.dynamic template=g_get_layout}}
+			{{/unless}}
+		{{else}}
+			{{> Template.dynamic template=g_get_layout}}
 		{{/if}}
 	</div>
-
-	{{#if footer}}
-		<footer>
-			{{>Template.dynamic template=footer}}
-		</footer>
-	{{/if}}
 </template>
 
 
-<template name="render_content">
-	{{#if layout}}
-		{{#Template.dynamic template=layout}}
-			{{#with ini_context}}
-				{{>Template.dynamic template=content}}
-			{{/with}}
-		{{/Template.dynamic}}
-	{{else}}
-		{{#with ini_context}}
-			{{>Template.dynamic template=content}}
-		{{/with}}
-	{{/if}}
-</template>
-
-
-<template name="mooqita_layout" xmlns="http://www.w3.org/1999/html">
-	<div class="mooqita-layout">
-			{{#if currentUser}}
-				{{#if profile_ready}}
-					{{#if profile.has_occupation}}
-						{{> UI.contentBlock}}
-					{{else}}
-						{{>first_timer}}
-					{{/if}}
-				{{else}}
-					{{>wait}}
-				{{/if}}
-			{{else}}
-				{{> UI.contentBlock}}
+<template name="mooqita_layout">
+	<div class="wrapper">
+		<div class="mooqita-layout">
+			{{#if g_get_menu}}
+				<header>
+					{{>Template.dynamic template=g_get_menu}}
+				</header>
 			{{/if}}
+
+			<main>
+				{{>sAlert}}
+
+				{{>Template.dynamic template=g_get_content}}
+			</main>
+
+			{{#if g_get_footer}}
+				<div class="footer-push"> </div>
+			{{/if}}
+		</div>
+
+		{{#if g_get_footer}}
+			<div class="mooqita-layout">
+				<footer>
+					{{>Template.dynamic template=g_get_footer}}
+				</footer>
+			</div>
+		{{/if}}
+	</div>
+</template>
+
+
+<template name="mooqita_landing">
+	<div class="mooqita-layout">
+		<div class="hero hero-background logged-in">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="row" style="margin-top: 50px">
+						<div class="col-md-7 col-md-offset-0
+												col-sm-8 col-sm-offset-2
+												col-xs-12 col-xs-offset-0
+												vcenter">
+							<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
+							<h1 style="padding-bottom: 50px">
+								We help students to find the job they love by bringing education and work closer together.
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
 	</div>
 </template>
 

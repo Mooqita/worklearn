@@ -1,16 +1,29 @@
 ########################################
 #
-# company challenges view
+# organization challenges view
 #
 ########################################
 
+
+##########################################################
+# import
+##########################################################
+
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
+
 ########################################
-Template.company_challenges.onCreated ->
+# organization challenges
+########################################
+
+########################################
+Template.organization_challenges.onCreated ->
 	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
 ########################################
-Template.company_challenges.helpers
+Template.organization_challenges.helpers
 	parameter: () ->
 		return Template.instance().parameter
 
@@ -21,7 +34,7 @@ Template.company_challenges.helpers
 		return Challenges.find(filter)
 
 ########################################
-Template.company_challenges.events
+Template.organization_challenges.events
 	"change #query":(event)->
 		event.preventDefault()
 		q = event.target.value
@@ -56,7 +69,7 @@ Template.challenge_preview.helpers
 		return "No description available, yet."
 
 	challenge_link: () ->
-		return build_url "company_challenge", {challenge_id: this._id}
+		return build_url "organization_challenge", {challenge_id: this._id}
 
 
 ########################################
@@ -66,7 +79,7 @@ Template.challenge_preview.helpers
 ########################################
 
 ########################################
-Template.company_challenge.onCreated ->
+Template.organization_challenge.onCreated ->
 	self = this
 	self.send_disabled = new ReactiveVar(false)
 
@@ -78,7 +91,7 @@ Template.company_challenge.onCreated ->
 
 
 ########################################
-Template.company_challenge.helpers
+Template.organization_challenge.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
 		return Challenges.findOne id
@@ -108,11 +121,11 @@ Template.company_challenge.helpers
 	share_url: ->
 		param =
 			challenge_id: this._id
-		url = build_url "student_solution", param, true
+		url = build_url "learner_solution", param, true
 		return url
 
 ########################################
-Template.company_challenge.events
+Template.organization_challenge.events
 	"click #icon_download": (e, n)->
 		if document.selection
 			range = document.body.createTextRange()
@@ -150,7 +163,7 @@ Template.company_challenge.events
 		message = template.find("#message").value
 		subject = template.find("#subject").value
 
-		Meteor.call "send_message_to_challenge_students", this._id, subject, message,
+		Meteor.call "send_message_to_challenge_learners", this._id, subject, message,
 			(err, res) ->
 				inst.send_disabled.set(false)
 				if err
@@ -204,6 +217,7 @@ Template.challenge_solutions.events
 ########################################
 Template.challenge_solution.onCreated ->
 	self = this
+	self.adding_recommendation = new ReactiveVar(false)
 	self.reviews_visible = new ReactiveVar(false)
 
 	self.autorun ->
@@ -211,8 +225,26 @@ Template.challenge_solution.onCreated ->
 			self.data.owner_id,
 			self.data.challenge_id
 
+		self.subscribe "my_recommendation_by_recipient_id",
+			self.data.owner_id
+
 ########################################
 Template.challenge_solution.helpers
+	recommendation: () ->
+		filter =
+			recipient_id: this.owner_id
+
+		list = Recommendations.find filter
+
+		if list.count() == 0
+			return false
+
+		return list
+
+	is_adding: () ->
+		val = Template.instance().adding_recommendation.get()
+		return val
+
 	resume_url: (author_id) ->
 		return author_id
 
@@ -269,8 +301,19 @@ Template.challenge_solution.events
 	"click #user_info": () ->
 		data = UserSummaries.findOne(this.owner_id)
 		data["user_id"] = this.owner_id
-		Modal.show 'show_student_info', data
+		Modal.show 'show_learner_summary', data
 
+	"click #edit_recommendation": () ->
+		filter =
+			recipient_id: this.owner_id
+
+		recommendation = Recommendations.findOne filter
+
+		Modal.show 'recommendation', {recommendation: recommendation}
+
+	"click #add_recommendation": () ->
+		Template.instance().adding_recommendation.set true
+		Meteor.call "add_recommendation", this.challenge_id, this.owner_id
 
 
 ##############################################

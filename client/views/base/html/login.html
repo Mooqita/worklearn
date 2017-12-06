@@ -4,16 +4,53 @@
 |
 -------------------------------------------------->
 <template name="mooqita_login">
-	<div class="container-fluid">
-		{{#mooqita_wide_spacing}}
-			<div style="text-align: center; max-width: 450px;">
-				<h1>Please login to continue</h1>
+	{{#if currentUser}}
+		{{#if profile}}
+			{{#unless profile.has_occupation}}
+				{{>first_timer}}
+			{{/unless}}
+		{{else}}
+			{{>first_timer}}
+		{{/if}}
+	{{else}}
+		{{> mooqita_sign_in}}
+	{{/if}}
+</template>
 
-				<div class="well" style="color: black;">
-					{{> atForm}}
+
+<template name="mooqita_sign_in">
+	<div class="mooqita-layout">
+		<div class="hero hero-background">
+		</div>
+
+		<div class="container-fluid" style="color: #fff; background: rgb(134, 45, 101);">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="row" style="margin-top: 50px">
+						<div class="col-md-7 col-md-offset-0
+												col-sm-8 col-sm-offset-2
+												col-xs-12 col-xs-offset-0
+												vcenter">
+							<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
+							<h1 style="padding-bottom: 50px">
+								We help students to find the job they love by bringing education and work closer together.
+							</h1>
+						</div><!--
+						This comment is important otherwise
+						the grid system will break. Due to
+						the interpretation of the white spaces!
+						--><div class="	col-md-5 col-md-offset-0
+														col-sm-8 col-sm-offset-2
+														col-xs-12 col-xs-offset-0
+														vcenter">
+							<div class="well" style="color: black; text-align: center">
+								{{>atForm}}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		{{/mooqita_wide_spacing}}
+		</div>
 	</div>
 </template>
 
@@ -34,14 +71,14 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="select-occupation {{select_disabled}}">
-						<div class="item" id="student">
+						<div class="item" id="learner">
 							<div class="row">
 								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
 									<div class="glyphicon glyphicon-blackboard"></div>
 								</div>
 
 								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Student</label>
+									<label>Learner</label>
 								</div>
 							</div>
 						</div>
@@ -57,7 +94,7 @@
 								</div>
 
 								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Teacher</label>
+									<label>Educator</label>
 								</div>
 							</div>
 						</div>
@@ -66,14 +103,14 @@
 
 				<div class="col-md-4">
 					<div class="select-occupation select_disabled">
-						<div class="item" id="company">
+						<div class="item" id="organization">
 							<div class="row">
 								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
 									<div class="glyphicon glyphicon-briefcase"></div>
 								</div>
 
 								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
-									<label>Company</label>
+									<label>Organization</label>
 								</div>
 							</div>
 						</div>

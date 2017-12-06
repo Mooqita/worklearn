@@ -13,7 +13,7 @@
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
-// basics
+// Mooqita layout
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
@@ -23,6 +23,20 @@
 .mooqita-layout p{
 }
 
+////////////////////////////////////////////////
+// Misc
+////////////////////////////////////////////////
+.mooqita-layout .indent_l1{
+	margin-left: 45px;
+}
+
+.mooqita-layout .padding-next{
+	padding-bottom: 25px;
+}
+
+////////////////////////////////////////////////
+// header
+////////////////////////////////////////////////
 .mooqita-layout h1{
 	margin: 0;
 	padding: 0 0 20px 0;
@@ -43,18 +57,29 @@
 	margin-bottom: 25px;
 }
 
-a.mooqita,
 .mooqita-layout h2 a{
 	color: $theme;
 }
 
-a.mooqita:hover,
 .mooqita-layout h2 a:hover{
 	color: $contrast-on-theme;
 	cursor: pointer;
 	text-decoration: none;
 }
 
+.mooqita-layout .popover{
+    min-width:200px;
+}
+
+.mooqita-layout .popover-title,
+.mooqita-layout .popover-content{
+	color: $text;
+}
+
+
+////////////////////////////////////////////////
+// paragraphs
+////////////////////////////////////////////////
 .mooqita-layout p.user-data{
 	white-space: pre-wrap;       /* Since CSS 2.1 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -64,14 +89,9 @@ a.mooqita:hover,
 	margin-bottom: 25px;
 }
 
-.mooqita-layout .indent_l1{
-	margin-left: 45px;
-}
-
-.mooqita-layout .padding-next{
-	padding-bottom: 25px;
-}
-
+////////////////////////////////////////////////
+// forms
+////////////////////////////////////////////////
 .mooqita-layout .form-control{
 	border: 2px solid #ddd;
 	min-height: 40.5px;
@@ -187,6 +207,11 @@ a.mooqita:hover,
 	color: $theme;
 }
 
+////////////////////////////////////////////////
+// occpuation selection
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
 .mooqita-layout .select-occupation{
 	font-size: 1.5em;
 	text-align: center;
@@ -217,25 +242,31 @@ a.mooqita:hover,
 ////////////////////////////////////////////////
 // footer
 ////////////////////////////////////////////////
-
-////////////////////////////////////////////////
-.mooqita-footer{
+.mooqita-layout footer h1, .h1{
+	color: $text-on-theme;
 }
 
-.mooqita-footer h1, .h1{
-	font-size: 22px;
-	font-weight: 400;
-	color: $theme-light;
+.mooqita-layout footer h1:first-child,
+.mooqita-layout footer .h1:first-child{
+	margin-top: 25px;
+	margin-bottom: 15px;
+	padding: 0px;
 }
 
-.mooqita-footer a, .a{
+.mooqita-layout footer a{
 	font-size: 18px;
-	font-weight: 400;
-	color: $theme-light;
+	color: $contrast-on-theme;
 }
 
-.mooqita-footer hr, .hr{
-	border-top: 2px solid $theme;
+.mooqita-layout footer a:hover{
+	color: $contrast-on-theme-dark;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.mooqita-layout footer hr,
+.mooqita-layout footer .hr{
+	border-top: 2px solid $contrast-on-theme;
 	width: 25%;
 }
 
@@ -249,20 +280,29 @@ a.mooqita:hover,
 }
 
 ////////////////////////////////////////////////
-.hero {
+.mooqita-layout .hero {
 	background-repeat: repeat, no-repeat;
 	background-size: auto auto, cover;
 	background-position: 0 0, top center;
-	overflow: hidden;
 	padding-left: 20px;
 	padding-right: 20px;
-	padding-bottom: 100px;
-	position: relative;
-	height: auto;
+	position: absolute;
 	min-height: 350px;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
-.hero h1 {
+.mooqita-layout .hero.logged-in{
+	background-repeat: repeat, no-repeat;
+	background-size: auto auto, cover;
+	background-position: 0 0, top center;
+	min-height: 350px;
+	position: relative;
+}
+
+.mooqita-layout .hero h1 {
 	color: #fff;
 	max-width: 650px;
 	font-size: 50px;
@@ -270,7 +310,7 @@ a.mooqita:hover,
 	text-align: center;
 }
 
-.hero-background{
+.mooqita-layout .hero-background{
 //	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
 	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
 }

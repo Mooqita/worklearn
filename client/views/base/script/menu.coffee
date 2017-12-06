@@ -6,15 +6,14 @@ Template.mooqita_menu.helpers
 			return false
 
 		switch profile.occupation
-			when "student" then return "student_menu"
-			when "teacher" then return "teacher_menu"
-			when "company" then return "company_menu"
+			when "learner" then return "learner_menu"
+			when "educator" then return "educator_menu"
+			when "organization" then return "organization_menu"
 			else return false
 
 
 ########################################
 Template.mooqita_menu.events
-	'click .logout': (event) ->
+	'click #logout': (event) ->
 		Meteor.logout()
-		FlowRouter.go "/"
 
