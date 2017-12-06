@@ -1,42 +1,42 @@
 <!------------------------------------------------
 |
-|	Student menu
+|	Learner menu
 |
 -------------------------------------------------->
-<template name="student_menu">
+<template name="learner_menu">
 	{{>optional_menu}}
 
 	<li>
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "student_profile"}}">
+			 href="{{build_url "learner_profile"}}">
 			Profile
 		</a>
 	</li>
 
 	<li>
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "student_solutions"}}">
+			 href="{{build_url "learner_solutions"}}">
 			My Challenges
 		</a>
 	</li>
 
 	<li>
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "student_reviews"}}">
+			 href="{{build_url "learner_reviews"}}">
 			Reviews
 		</a>
 	</li>
 
 	<li>
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "student_resumes"}}">
+			 href="{{build_url "learner_resumes"}}">
 			Resume
 		</a>
 	</li>
 
 	<li>
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "student_messages"}}">
+			 href="{{build_url "learner_messages"}}">
 			Messages
 			{{#if num_new_messages}}
 				<span class="badge background-contrast">{{num_new_messages}}</span>

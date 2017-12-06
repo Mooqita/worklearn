@@ -1,4 +1,4 @@
-Template.student_messages.helpers
+Template.learner_messages.helpers
 	messages: () ->
 		filter =
 			owner_id: Meteor.userId()
@@ -10,7 +10,7 @@ Template.student_messages.helpers
 
 		return Messages.find filter, mod
 
-Template.student_messages.events
+Template.learner_messages.events
 	"click #message": ->
 		Meteor.call "set_field", "Messages", this._id, "seen", true,
 			(err, rsp) ->

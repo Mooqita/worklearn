@@ -39,7 +39,7 @@
 ###############################################
 @gen_profile = (user, occupation) ->
 	if not occupation
-		occupation = "student"
+		occupation = "learner"
 
 	profile = Profiles.findOne user._id
 

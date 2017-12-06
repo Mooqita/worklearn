@@ -18,7 +18,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ##############################################
 
 ##############################################
-Template.student_resumes.onCreated () ->
+Template.learner_resumes.onCreated () ->
 	self = this
 
 	self.autorun () ->
@@ -28,7 +28,7 @@ Template.student_resumes.onCreated () ->
 		self.subscribe "user_resumes", s_id
 
 ##############################################
-Template.student_resumes.helpers
+Template.learner_resumes.helpers
 	current_resume: () ->
 		res = UserResumes.findOne()
 		return res

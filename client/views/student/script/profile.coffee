@@ -1,4 +1,4 @@
-Template.student_profile.helpers
+Template.learner_profile.helpers
 	email: () ->
 		user = Meteor.user()
 
