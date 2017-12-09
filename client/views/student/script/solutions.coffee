@@ -80,11 +80,6 @@ Template.student_solution_preview.helpers
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
-	solution_url: () ->
-		param =
-			challenge_id: this.challenge_id
-		return build_url "student_solution", param
-
 
 ########################################
 # student solution editor

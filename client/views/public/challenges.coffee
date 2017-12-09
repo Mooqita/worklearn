@@ -42,8 +42,6 @@ Template.find_challenges.helpers
 
 		return "No description available, yet."
 
-	challenge_link: () ->
-		return build_url "challenge", {challenge_id: this._id}
 
 ########################################
 Template.find_challenges.events

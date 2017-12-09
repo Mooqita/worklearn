@@ -46,7 +46,7 @@
 				<span class="badge background-contrast">new</span>
 			{{/unless}}
 
-			<a href="{{solution_url}}">
+			<a href="{{build_url "challenge" (object challenge_id=challenge._id)}}">
 				{{challenge.title}}
 			</a>
 
@@ -120,7 +120,7 @@
 				<hr>
 				<p>
 					Please do not forget to go to your
-					<a href="{{profile_url "student"}}" target="_blank">profile</a>
+					<a href="{{build_url "profile"}}" target="_blank">profile</a>
 					and let us know if you want to take part in the
 					final paid challenge or you are interested in job
 					offerings.

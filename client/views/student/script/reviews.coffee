@@ -99,13 +99,6 @@ Template.student_review_preview.helpers
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
-	review_url: () ->
-		param =
-			review_id: this._id
-			solution_id: this.solution_id
-			challenge_id: this.challenge_id
-		return build_url "student_review", param
-
 
 ########################################
 # review editor

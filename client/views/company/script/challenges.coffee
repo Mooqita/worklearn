@@ -68,9 +68,6 @@ Template.challenge_preview.helpers
 
 		return "No description available, yet."
 
-	challenge_link: () ->
-		return build_url "company_challenge", {challenge_id: this._id}
-
 
 ########################################
 #
@@ -118,11 +115,6 @@ Template.company_challenge.helpers
 
 		return ""
 
-	share_url: ->
-		param =
-			challenge_id: this._id
-		url = build_url "student_solution", param, true
-		return url
 
 ########################################
 Template.company_challenge.events
@@ -244,9 +236,6 @@ Template.challenge_solution.helpers
 	is_adding: () ->
 		val = Template.instance().adding_recommendation.get()
 		return val
-
-	resume_url: (author_id) ->
-		return author_id
 
 	average_rating: () ->
 		filter =

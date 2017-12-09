@@ -41,7 +41,9 @@
 
 	<div class="indent_l1">
 		<h2>
-			<a href="{{review_url}}">
+			<a href="{{build_url "review" (object review_id=_id
+																						solution_id=solution_id
+																						challenge_id=challenge_id)}}">
 				{{#unless g_is_public "Reviews"}}
 					<span class="badge background-contrast">open</span>
 				{{/unless}}

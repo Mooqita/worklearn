@@ -138,7 +138,7 @@ Meteor.publish "challenges", (parameter) ->
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "challenges", user_id
 
-	sleep(2000)
+	#sleep(2000)
 	return crs
 
 

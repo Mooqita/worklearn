@@ -29,7 +29,7 @@
 	solution_profile = Profiles.findOne filter
 
 	subject = "Mooqita: You got a new review"
-	url = build_url "student_solution", {challenge_id: challenge._id}
+	url = build_url "student_solution", {challenge_id: challenge._id}, false, false
 
 	name = if solution_profile then solution_profile.given_name ? "learner" else "learner"
 
@@ -41,7 +41,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://mooqita.org" + build_url "student_profile"
+					"https://mooqita.org" + build_url "student_profile", false, false
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -64,7 +64,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: A review timed out"
-	url = build_url "student_solution", {challenge_id: challenge._id}
+	url = build_url "student_solution", {challenge_id: challenge._id}, false, false
 
 	name = if review_profile then review_profile.given_name ? "learner" else "learner"
 
@@ -78,7 +78,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://mooqita.org" + build_url "student_profile"
+					"https://mooqita.org" + build_url "student_profile", false, false
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -109,7 +109,7 @@
 		solution_id: solution._id
 		challenge_id: challenge._id
 
-	url = build_url "student_review", param
+	url = build_url "student_review", param, false, false
 	subject = "Mooqita: New feedback for your reviews"
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
@@ -122,7 +122,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: "+
-					"https://mooqita.org" + build_url "student_profile"
+					"https://mooqita.org" + build_url "student_profile", false, false
 
 	owner = Meteor.users.findOne review.owner_id
 	send_message_mail owner, subject, body, url

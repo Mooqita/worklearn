@@ -12,7 +12,7 @@
 					{{#paging subscription="challenges" page=0 count=10 parameter=parameter}}
 						{{#each challenges}}
 							<h2>
-								<a href="{{challenge_link}}">
+								<a href="{{build_url "challenge" (object challenge_id=_id)}}">
 									{{title}}
 								</a>
 							</h2>
@@ -28,11 +28,3 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
-
-<!------------------------------------------------
-|
-|	Challenge Editor
-|
--------------------------------------------------->
-<template name="challenge">
-</template>
