@@ -15,9 +15,59 @@
 |
 -------------------------------------------------->
 <template name="paging">
-	<div class="btn-group btn-group-justified" role="group" aria-label="...">
-		<div class="btn btn-theme" id="prev">previous</div>
-		<div class="btn">Page: {{page}}</div>
-		<div class="btn btn-theme" id="next">next</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="input-group">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-theme dropdown-toggle"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Sorted by {{sort_function}}
+						<span class="caret">
+						</span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</div>
+
+				<input placeholder="Search for challenges" id="query"
+						 class="form-control edit-field"/>
+
+				<span class="input-group-btn">
+					<button class="btn btn-theme" type="button" id="search">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</div>
 	</div>
+
+	<div>
+		{{#unless Template.subscriptionsReady}}
+			{{> wait}}
+		{{else}}
+			{{> Template.contentBlock}}
+		{{/unless}}
+	</div>
+
+	<nav aria-label="...">
+		<ul class="pager">
+			<li class="previous">
+				<a href="?page={{page}}" id="prev"><span aria-hidden="true">&larr;</span> Previous</a>
+			</li>
+
+			<li>
+				<span>Page: {{page}}</span>
+			</li>
+
+			<li class="next">
+				<a href="?page={{page}}" id="next">Next <span aria-hidden="true">&rarr;</span></a>
+			</li>
+		</ul>
+	</nav>
 </template>

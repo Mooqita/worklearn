@@ -10,7 +10,7 @@ Template.student_find_challenges.onCreated ->
 	Session.set "selected_challenge", 0
 	
 	self.autorun () ->
-		self.subscribe "challenges"
+		#self.subscribe "challenges"
 
 
 ########################################

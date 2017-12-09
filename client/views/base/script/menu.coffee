@@ -6,7 +6,7 @@ Template.mooqita_menu.helpers
 			return false
 
 		switch profile.occupation
-			when "student" then return "student_menu"
+			when "learner" then return "student_menu"
 			when "teacher" then return "teacher_menu"
 			when "company" then return "company_menu"
 			else return false
