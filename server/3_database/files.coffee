@@ -102,7 +102,7 @@ _upload_dropbox_file = (collection, item_id, field, value, type)->
 		throw new Meteor.Error "not permitted"
 
 	#TODO: implement fine grained access control
-	#if not item.published and item.visible_to != "all"
+	# if not item.published and item.visible_to != "all"
 	#	deny_action_save 'read', collection, item_id, field
 
 	data = download_dropbox_file collection, item_id, field

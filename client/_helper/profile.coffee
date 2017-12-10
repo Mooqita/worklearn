@@ -17,6 +17,7 @@ Template.registerHelper "profile_id", (owner_id) ->
 
 	return profile._id
 
+
 ########################################
 Template.registerHelper "profile_avatar", (owner_id) ->
 	filter =
@@ -28,19 +29,15 @@ Template.registerHelper "profile_avatar", (owner_id) ->
 
 	return profile.avatar
 
+
 ########################################
 Template.registerHelper "profile_name", (owner_id) ->
 	filter =
 		owner_id: owner_id
 	profile = Profiles.findOne filter
 
-	if not profile
-		return undefined
+	return get_profile_name profile, false, false
 
-	if profile.given_name
-		return profile.given_name
-
-	return "A Doe (Name unknown)"
 
 ########################################
 Template.registerHelper "_is_owner", (collection_name, obj) ->

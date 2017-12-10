@@ -25,7 +25,7 @@ _challenge_fields =
 #######################################################
 
 #######################################################
-_get_solution_data = (solution_id) ->
+'''_get_solution_data = (solution_id) ->
 	solution = Solutions.findOne solution_id
 
 	entry = _get_profile_data solution.owner_id, {}
@@ -115,7 +115,7 @@ _get_profile_data = (user_id, entry) ->
 		entry["name"] = get_profile_name profile, false, false
 		entry["avatar"] = get_avatar profile
 
-	return entry
+	return entry'''
 
 
 #######################################################
@@ -138,7 +138,6 @@ Meteor.publish "challenges", (parameter) ->
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "challenges", user_id
 
-	#sleep(2000)
 	return crs
 
 

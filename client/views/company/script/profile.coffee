@@ -10,6 +10,23 @@ Template.company_profile.helpers
 	parameter: () ->
 		return Template.instance().parameter
 
+	role: (member_id, item) ->
+		console.log member_id, item
+
+		if member_id == item.owner_id
+			return "Owner"
+
+		filter =
+			member_id: member_id
+			resource_id: item._id
+		adm = Admissions.findOne(filter)
+
+		if adm
+			return adm.role
+
+		return "none"
+
+
 ########################################
 Template.company_profile.events
 	"click #add_member": (event) ->

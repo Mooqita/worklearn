@@ -42,8 +42,6 @@ Template.paging.helpers
 		return String(Template.instance().size.get())
 
 	items: () ->
-		console.log "that works"
-
 		collection_name = Template.instance().data.collection_name
 		collection = get_collection collection_name
 		return collection.find()

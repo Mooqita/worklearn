@@ -33,7 +33,7 @@
 ###############################################
 @get_profile_name = (profile, short = false, plus_id=true) ->
 	if !profile
-		return "unknown"
+		return "A Doe (Name unknown)"
 
 	name = (profile.given_name ? "Learner") + " "
 

@@ -45,9 +45,26 @@
 			</div>
 		{{/with}}
 
-		{{#paging subscription="admissions" page=0 count=10 collection_name="profiles" parameter=parameter}}
+		{{#paging subscription="collaborators" page=0 count=10 collection_name="profiles" parameter=parameter}}
 			{{#each items}}
-				{{_id}}
+				<div class="row">
+					<div class="col-sm-2">
+						{{>avatar collection_name="Profiles"
+							 observe = (profile_avatar owner_id)
+							 item_id = (profile_id owner_id)
+							 field = "avatar"}}
+					</div>
+
+					<div class="col-ms-6">
+						<h2>
+							<a href="">{{profile_name owner_id}}</a>
+						</h2>
+					</div>
+
+					<div class="col-ms-4">
+						{{role owner_id profile}}
+					</div>
+				</div>
 			{{else}}
 				<h2><em>Not shared.</em></h2>
 			{{/each}}

@@ -47,6 +47,8 @@
 
 	item = Admissions.findOne admission
 	if item
+		msg = "item already in list"
+		log_event msg
 		return item._id
 
 	item_id = Admissions.insert admission
@@ -62,7 +64,9 @@
 
 	options =
 		fields:
+			resource_id: 1
 			member_id: 1
+			role: 1
 		skip: skip
 		limit: limit
 
