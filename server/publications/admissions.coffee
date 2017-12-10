@@ -45,49 +45,15 @@ Meteor.publish "admissions", (parameter) ->
 
 
 #######################################################
-Meteor.publish "collaborators", (parameter) ->
-	pattern =
-		query: Match.Optional(String)
-		collection_name: String
-		item_id: String
-		page: Number
-		size: Number
-	check parameter, pattern
-
-	collection_name = parameter.collection_name
-	item_id = parameter.item_id
-	user_id = this.userId
+Meteor.publish "collaborator", (user_id) ->
+	check user_id, String
 
 	if not user_id
 		throw Meteor.Error("Not permitted.")
 
-	collection = get_collection_save collection_name
-	item = collection.findOne item_id
-
-	if not item
-		throw Meteor.Error("Not permitted.")
-
-	user_ids = new Set()
-
-	##############################################
-	# retrieving admissions
-	##############################################
-
-	##############################################
-	admission_cursor = get_admissions item, parameter.page, parameter.size
-	admission_cursor.forEach (entry) ->
-		user_ids.add entry.member_id
-
-	user_ids = Array.from(user_ids)
-
-	##############################################
-	# retrieving profiles
-	##############################################
-
 	##############################################
 	filter =
-		owner_id:
-			$in: user_ids
+		owner_id: user_id
 
 	options =
 		fields:
@@ -97,9 +63,9 @@ Meteor.publish "collaborators", (parameter) ->
 			owner_id: 1
 			avatar: 1
 
-	profile_cursor = Profiles.find filter, options
+	crs = Profiles.find filter, options
 
-	log_publication "Multiple Cursor", null, {},
-			{}, "collaborators", user_id
+	log_publication "Profiles", crs, filter,
+			options, "collaborators", user_id
 
-	return [admission_cursor, profile_cursor]
+	return crs

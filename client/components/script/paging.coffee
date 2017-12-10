@@ -21,7 +21,6 @@ Template.paging.onCreated ->
 				if err
 					sAlert.error("Paging subscript error: " + err)
 			onReady: (res) ->
-				console.log res
 				sAlert.success("Success!")
 
 		subscription = self.data.subscription
