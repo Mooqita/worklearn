@@ -131,6 +131,16 @@
 
 
 #######################################################
+@get_roles = (collection, item_id, user_id) ->
+	if not collection
+		throw new Meteor.Error('Collection not found:' + collection)
+
+	roles = Roles.getRolesForUser user_id, item_id
+	
+	return roles
+
+
+#######################################################
 @deny_action = (action, collection, item_id, field) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
@@ -145,6 +155,8 @@
 	check action, String
 	check field, String
 
+	field = field.split(".")[0]
+
 	roles = ['all']
 	user = Meteor.user()
 
@@ -154,6 +166,8 @@
 
 		if is_owner collection, item_id, user._id
 			roles.push 'owner'
+
+		roles.push get_roles collection, item_id, user
 
 	filter =
 		role:

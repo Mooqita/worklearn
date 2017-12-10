@@ -51,7 +51,7 @@
 		{{#unless Template.subscriptionsReady}}
 			{{> wait}}
 		{{else}}
-			{{> Template.contentBlock}}
+			{{> Template.contentBlock items=items}}
 		{{/unless}}
 	</div>
 

@@ -14,7 +14,7 @@ _routes =
 		profile: "teacher_profile"
 		challenge: "teacher_challenge"
 		challenges: "teacher_challenges"
-	company:
+	organization:
 		menu: "company_menu"
 		profile: "company_profile"
 		challenge: "company_challenge"

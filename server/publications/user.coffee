@@ -6,6 +6,36 @@
 #######################################################
 
 #######################################################
+Meteor.publish "find_users_by_mail": (mail_fragment) ->
+	#todo this is dangerous make sure we are not
+	#todo submitting data not suitable for sharing
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error('Not permitted.')
+
+	if mail_fragment.length < 5
+		return []
+
+	check mail_fragment, String
+	filter =
+		emails:
+			$elemMatch:
+				address:
+					$regex : new RegExp(mail_fragment, "i")
+
+	options =
+		fields:
+			emails: 1
+		skip: 0,
+		limit: 10
+
+	crs = Meteor.users.find filter, options
+	users = crs.fetch()
+
+	return users
+
+#######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
 	filter =

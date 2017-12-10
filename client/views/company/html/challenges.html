@@ -6,31 +6,21 @@
 <template name="company_challenges">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
-			<div class="padding-next">
-				<div class="btn-toolbar" role="toolbar">
-					<div class="btn-group">
-						<button class="btn btn-theme" id="add_challenge" type="button">
-							Create challenge
-						</button>
-					</div>
-				</div>
-			</div>
 
-			<div class="row" style="margin-bottom: 25px">
-				<div class="col-sm-6">
-					<div class="input-group">
-						<input placeholder="Search for challenges" id="query"
-								 class="form-control edit-field"/>
-						<span class="input-group-btn">
-
-							<button class="btn btn-theme" type="button" id="search">
-								<span class="glyphicon glyphicon-search"></span>
-							</button>
-						</span>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="padding-next">
+						<div class="btn-group btn-group-justified">
+							<div class="btn-group">
+								<button class="btn btn-theme" id="add_challenge" type="button">
+									Create challenge
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					{{>paging subscription="my_challenges" page=0 count=10 parameter=parameter}}
 				</div>
 			</div>

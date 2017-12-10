@@ -7,7 +7,8 @@
 
 #######################################################
 @Permissions = new Mongo.Collection("permissions")
-@Summaries = new Mongo.Collection("summaries")
+@Admissions =  new Mongo.Collection("admissions")
+@Groups = new Mongo.Collection("groups")
 
 #######################################################
 @Recommendations = new Mongo.Collection("recommendations")
@@ -23,8 +24,8 @@
 @ChallengeSummaries = new Mongo.Collection("challenge_summaries")
 
 #######################################################
-@UserResumes = new Mongo.Collection("user_resumes")
 @UserSummaries = new Mongo.Collection("user_summaries")
+@UserResumes = new Mongo.Collection("user_resumes")
 
 #######################################################
 @EduCertTemplate = new Mongo.Collection("edu_cert_templates")

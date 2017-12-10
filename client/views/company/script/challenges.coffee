@@ -35,12 +35,6 @@ Template.company_challenges.helpers
 
 ########################################
 Template.company_challenges.events
-	"change #query":(event)->
-		event.preventDefault()
-		q = event.target.value
-		ins = Template.instance()
-		ins.parameter.set "query", q
-
 	"click #add_challenge": () ->
 		Meteor.call "add_challenge",
 			(err, res) ->

@@ -12,6 +12,7 @@ Template.paging.onCreated ->
 
 	self.page = new ReactiveVar page
 	self.size = new ReactiveVar size
+	self.query = new ReactiveVar parameter.query || ""
 	self.parameter = parameter
 
 	self.autorun () ->
@@ -20,12 +21,14 @@ Template.paging.onCreated ->
 				if err
 					sAlert.error("Paging subscript error: " + err)
 			onReady: (res) ->
+				console.log res
 				sAlert.success("Success!")
 
 		subscription = self.data.subscription
 		parameter = self.parameter.all()
 		parameter.page = self.page.get()
 		parameter.size = self.size.get()
+		parameter.query = self.query.get()
 
 		self.subscribe subscription, parameter, handler
 
@@ -37,6 +40,13 @@ Template.paging.helpers
 
 	size: () ->
 		return String(Template.instance().size.get())
+
+	items: () ->
+		console.log "that works"
+
+		collection_name = Template.instance().data.collection_name
+		collection = get_collection collection_name
+		return collection.find()
 
 
 ########################################
@@ -52,3 +62,10 @@ Template.paging.events
 		if p == 0
 			return
 		ins.page.set p-1
+
+	"change #query":(event)->
+		event.preventDefault()
+		q = event.target.value
+		ins = Template.instance()
+		ins.query.set q
+

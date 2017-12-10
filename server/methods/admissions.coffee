@@ -1,21 +1,20 @@
 ################################################################
 #
-# Markus 1/23/2017
+# Markus 12/10/2017
 #
 ################################################################
 
 ###############################################
 Meteor.methods
-	add_profile: (param) ->
-		check param.occupation, String
+	add_admissions: (collection_name, item_id, admissions) ->
+		check collection_name, String
+		check item_id, String
+		check admissions, [{email:String, role:String}]
+
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		profile = Profiles.findOne user._id
+		return gen_admissions collection_name, item_id, admissions
 
-		if profile
-			throw new Meteor.Error "Profile already created"
-
-		return gen_profile user, param.occupation
