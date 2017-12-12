@@ -51,7 +51,6 @@ Meteor.publish "collaborator", (user_id) ->
 	if not user_id
 		throw Meteor.Error("Not permitted.")
 
-	##############################################
 	filter =
 		owner_id: user_id
 

@@ -42,7 +42,7 @@
 	admission =
 		collection_name: collection_name
 		resource_id: item._id
-		member_id: user._id
+		consumer_id: user._id
 		role: role
 
 	item = Admissions.findOne admission

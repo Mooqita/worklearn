@@ -16,7 +16,6 @@ _review_fields =
 		content: 1
 		owner_id: 1
 		published: 1
-		parent_id: 1
 		solution_id: 1
 		challenge_id: 1
 

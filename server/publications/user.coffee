@@ -120,7 +120,7 @@ Meteor.publish "user_resumes", (user_id) ->
 				review = {}
 
 				filter =
-					parent_id: r._id
+					review_id: r._id
 				feedback = Feedback.findOne filter
 
 				filter =

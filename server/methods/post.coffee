@@ -19,11 +19,9 @@ Meteor.methods
 			index: index
 			parent_id: parent_id
 			template_id: template_id
-			single_parent: false
 			group_name: group_name
-			visible_to: "editor"
 
-		id = store_document_unprotected collection, post
+		id = store_document_unprotected collection, post, user
 
 		msg = "Post added: " + JSON.stringify post, null, 2
 		log_event msg, event_create, event_info

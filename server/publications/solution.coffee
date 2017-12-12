@@ -17,7 +17,6 @@ _solution_fields =
 		owner_id: 1
 		completed: 1
 		published: 1
-		parent_id: 1
 		challenge_id: 1
 
 

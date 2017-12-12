@@ -14,18 +14,15 @@
 		throw new Meteor.Error msg
 
 	feedback =
-		owner_id: solution.owner_id
-		parent_id: review._id
 		review_id: review._id
 		solution_id: solution._id
 		challenge_id: solution.challenge_id
 		requester_id: review.owner_id
-		visible_to: "owner"
 		requested: new Date()
 		assigned: false
 		published: false
 
-	feedback_id = store_document_unprotected Feedback, feedback
+	feedback_id = store_document_unprotected Feedback, feedback, user
 	return feedback_id
 
 

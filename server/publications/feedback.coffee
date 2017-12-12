@@ -15,8 +15,8 @@ _feedback_fields =
 		rating: 1
 		content: 1
 		owner_id: 1
-		parent_id: 1
 		published: 1
+		review_id: 1
 		solution_id: 1
 		challenge_id: 1
 
@@ -67,7 +67,7 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 	user_id = this.userId
 
 	filter =
-		parent_id: review_id
+		review_id: review_id
 		owner_id: user_id
 	crs = Feedback.find filter, _feedback_fields
 

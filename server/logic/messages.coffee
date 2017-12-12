@@ -3,13 +3,12 @@
 	#save message
 	msg =
 		visible_to: "owner"
-		owner_id: user._id
 		content: message
 		title: title
 		seen: false
 		url: url
 
-	m_id = store_document_unprotected Messages, msg
+	m_id = store_document_unprotected Messages, msg, user
 
 	return m_id
 

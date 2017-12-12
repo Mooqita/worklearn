@@ -5,22 +5,17 @@
 #######################################################
 
 #######################################################
-@store_document_unprotected = (collection, document)->
+@store_document_unprotected = (collection, document, owner)->
 	document["created"] = new Date()
 	document["modified"] = new Date()
-	document["loaded"] = true
-
-	if not ("owner_id" of document)
-		document["owner_id"] = Meteor.userId()
 
 	id = collection.insert document
 	item = collection.findOne id
-	if not document["owner_id"]
+
+	if not owner
 		return id
 
-	user = Meteor.users.findOne()
-	if not user
-		return id
+	user = Meteor.users.findOne owner._id
 
 	gen_admission collection._name, item, user, "owner"
 	return id

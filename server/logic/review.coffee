@@ -17,17 +17,14 @@
 
 	review =
 		_id: review_id
-		owner_id: null
-		parent_id: solution._id
 		solution_id: solution._id
 		challenge_id: challenge._id
 		requester_id: solution.owner_id
-		visible_to: "owner"
 		requested: new Date()
 		assigned: false
 		published: false
 
-	store_document_unprotected Reviews, review
+	store_document_unprotected Reviews, review, null
 	gen_feedback solution, review, user
 
 	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user

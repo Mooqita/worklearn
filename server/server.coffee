@@ -44,27 +44,17 @@ _initialize_indices = ()->
 
 	index =
 		resource_id: 1
-		user_id: 1
+		consumer_id: 1
 		role: 1
 	Admissions._ensureIndex index
 
 	index =
-		owner_id: 1
-	Challenges._ensureIndex index
-	Solutions._ensureIndex index
-	Reviews._ensureIndex index
-	Feedback._ensureIndex index
-	Profiles._ensureIndex index
-	Messages._ensureIndex index
-	Posts._ensureIndex index
+		collection_name: 1
+		role: 1
+	Permissions._ensureIndex index
 
 	index =
 		parent_id: 1
-	Challenges._ensureIndex index
-	Solutions._ensureIndex index
-	Reviews._ensureIndex index
-	Feedback._ensureIndex index
-	Profiles._ensureIndex index
 	Posts._ensureIndex index
 
 	index =
