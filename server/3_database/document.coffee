@@ -14,6 +14,10 @@
 		document["owner_id"] = Meteor.userId()
 
 	id = collection.insert document
+	item = collection.findOne id
+	user = Meteor.user()
+
+	gen_admission collection._name, item, user, "owner"
 	return id
 
 

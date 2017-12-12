@@ -69,3 +69,4 @@ Meteor.publish "collaborator", (user_id) ->
 			options, "collaborators", user_id
 
 	return crs
+

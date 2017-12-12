@@ -42,6 +42,9 @@ Template.paging.helpers
 
 	items: () ->
 		collection_name = Template.instance().data.collection_name
+		if not collection_name
+			return []
+
 		collection = get_collection collection_name
 		return collection.find()
 

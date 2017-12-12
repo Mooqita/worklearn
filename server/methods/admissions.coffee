@@ -16,5 +16,8 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		return gen_admissions collection_name, item_id, admissions
+		collection = get_collection_save collection_name
+		item = collection.findOne item_id
+
+		return gen_admissions collection_name, item, admissions
 
