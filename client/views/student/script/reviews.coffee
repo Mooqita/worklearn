@@ -1,6 +1,6 @@
 ########################################
 #
-# student review
+# learner review
 #
 ########################################
 
@@ -16,12 +16,12 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ########################################
 
 ########################################
-Template.student_reviews.onCreated ->
+Template.learner_reviews.onCreated ->
 	this.searching = new ReactiveVar(false)
 	Session.set "find_review_error", false
 
 ########################################
-Template.student_reviews.helpers
+Template.learner_reviews.helpers
 	reviewed_challenges: () ->
 		filter = {}
 		mod =
@@ -67,13 +67,13 @@ _handle_error = (err) ->
 	console.log err
 
 ########################################
-Template.student_reviews.events
+Template.learner_reviews.events
 	"click #find_review": () ->
 		inst = Template.instance()
 		inst.searching.set true
 		Session.set "find_review_error", false
 
-		Meteor.call "find_review",
+		Meteor.call "assign_review",
 			(err, res) ->
 				inst.searching.set false
 				if err
@@ -87,7 +87,7 @@ Template.student_reviews.events
 ########################################
 
 ########################################
-Template.student_review_preview.onCreated ->
+Template.learner_review_preview.onCreated ->
 	self = this
 	self.autorun () ->
 		id = self.data.challenge_id
@@ -95,7 +95,7 @@ Template.student_review_preview.onCreated ->
 
 
 ########################################
-Template.student_review_preview.helpers
+Template.learner_review_preview.helpers
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
@@ -105,7 +105,7 @@ Template.student_review_preview.helpers
 ########################################
 
 ########################################
-Template.student_review.onCreated ->
+Template.learner_review.onCreated ->
 	self = this
 	self.challenge_expanded = new ReactiveVar(false)
 
@@ -117,12 +117,12 @@ Template.student_review.onCreated ->
 		self.subscribe "challenge_by_id", FlowRouter.getQueryParam("challenge_id")
 
 ########################################
-Template.student_review.helpers
+Template.learner_review.helpers
 	solution_url: ()->
 		param =
 			solution_id: FlowRouter.getQueryParam("solution_id")
 			challenge_id: FlowRouter.getQueryParam("challenge_id")
-		return build_url "student_solution", param
+		return build_url "learner_solution", param
 
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
@@ -150,7 +150,7 @@ Template.student_review.helpers
 
 
 ########################################
-Template.student_review.events
+Template.learner_review.events
 	"click #publish":(event)->
 		if event.target.attributes.disabled
 			return

@@ -5,7 +5,7 @@
 ########################################
 
 ########################################
-Template.student_find_challenges.onCreated ->
+Template.learner_find_challenges.onCreated ->
 	self = this
 	Session.set "selected_challenge", 0
 	
@@ -14,7 +14,7 @@ Template.student_find_challenges.onCreated ->
 
 
 ########################################
-Template.student_find_challenges.helpers
+Template.learner_find_challenges.helpers
 	challenges: () ->
 		return Challenges.find()
 
@@ -24,7 +24,7 @@ Template.student_find_challenges.helpers
 ########################################
 
 ########################################
-Template.student_challenge_preview.onCreated ->
+Template.learner_challenge_preview.onCreated ->
 	self = this
 	Session.set "selected_challenge", 0
 
@@ -32,7 +32,7 @@ Template.student_challenge_preview.onCreated ->
 		self.subscribe "my_solutions_by_challenge_id", self.data._id
 
 ########################################
-Template.student_challenge_preview.helpers
+Template.learner_challenge_preview.helpers
 	has_solution:() ->
 		filter =
 			owner_id: Meteor.userId()

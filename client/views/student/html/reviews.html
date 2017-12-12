@@ -3,7 +3,7 @@
 |	Learner reviews
 |
 -------------------------------------------------->
-<template name="student_reviews">
+<template name="learner_reviews">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			<h1>Reviews</h1>
@@ -11,13 +11,13 @@
 			<p>
 				Here you can find all reviews you wrote for your peers.
 				If you can not find reviews here please go back to
-				<a href="/app/student_solutions">My Challenges</a>
+				<a href="/app/learner_solutions">My Challenges</a>
 				and select the challenge you want to write a review for.
 			</p>
 
 			{{#each reviewed_challenges}}
 				{{#each reviews challenge_id}}
-					{{>student_review_preview}}
+					{{>learner_review_preview}}
 				{{/each}}
 			{{else}}
 				<hr>
@@ -31,7 +31,7 @@
 </template>
 
 
-<template name="student_review_preview">
+<template name="learner_review_preview">
 	{{#if first}}
 		<hr>
 
@@ -63,7 +63,7 @@
 </template>
 
 
-<template name="student_review">
+<template name="learner_review">
 	{{#mooqita_wide_spacing}}
 		{{#unless Template.subscriptionsReady}}
 			{{>wait}}
@@ -150,7 +150,7 @@
 							</div>
 						</div>
 					{{else}}
-						{{>student_feedback_review}}
+						{{>learner_feedback_review}}
 					{{/unless}}
 				{{/with}}
 

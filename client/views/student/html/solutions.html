@@ -3,7 +3,7 @@
 |	Learner solutions
 |
 -------------------------------------------------->
-<template name="student_solutions">
+<template name="learner_solutions">
 	{{#mooqita_wide_spacing}}
 		{{#unless Template.subscriptionsReady}}
 			{{>wait}}
@@ -16,7 +16,7 @@
 				</p>
 
 				{{#each solutions}}
-					{{>student_solution_preview}}
+					{{>learner_solution_preview}}
 				{{else}}
 					<hr>
 
@@ -35,7 +35,7 @@
 |	Learner solution preview
 |
 -------------------------------------------------->
-<template name="student_solution_preview">
+<template name="learner_solution_preview">
 	<hr>
 
 	{{#unless Template.subscriptionsReady}}
@@ -64,7 +64,7 @@
 |	Learner solution editor
 |
 -------------------------------------------------->
-<template name="student_solution">
+<template name="learner_solution">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			{{#unless Template.subscriptionsReady}}
@@ -93,7 +93,7 @@
 					{{/with}}
 
 					{{#each solutions}}
-						{{>student_solution_reviews}}
+						{{>learner_solution_reviews}}
 					{{else}}
 						<div class="alert alert-warning">
 							You have not yet submitted a solution to this challenge.
@@ -110,7 +110,7 @@
 </template>
 
 
-<template name="student_solution_reviews">
+<template name="learner_solution_reviews">
 	{{#unless Template.subscriptionsReady}}
 		{{>wait}}
 	{{else}}
@@ -164,7 +164,7 @@
 								Write and finish <b>{{missing_reviews}} more reviews</b> for your peers.
 								Please keep in mind that <b>you have 24 hours</b> to finish a review
 								after you clicked the button. You can find your reviews
-								<a href="{{build_url "student_reviews"}}">here</a>.
+								<a href="{{build_url "learner_reviews"}}">here</a>.
 								Please start the review only if you have time to finish it. It is a
 								courtesy to your peers to not make	them hold there breath so long.
 								Visit our <a href="help/#9NARA6Bbzpgj63GeJ"> How to Write a Great
@@ -261,7 +261,7 @@
 		{{#if g_is_public "Solutions"}}
 			<h1>Reviews you received</h1>
 			{{#each reviews}}
-				{{>student_feedback_solution}}
+				{{>learner_feedback_solution}}
 			{{else}}
 				<p>No reviews yet.</p>
 			{{/each}}

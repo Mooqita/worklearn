@@ -140,7 +140,7 @@
 		throw new Meteor.Error('Collection not found:' + collection)
 
 	roles = Roles.getRolesForUser user_id, item_id
-	
+
 	return roles
 
 

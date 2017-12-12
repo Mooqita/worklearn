@@ -1,6 +1,6 @@
 ########################################
 #
-# company challenges view
+# organization challenges view
 #
 ########################################
 
@@ -14,16 +14,16 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 
 ########################################
-# company challenges
+# organization challenges
 ########################################
 
 ########################################
-Template.company_challenges.onCreated ->
+Template.organization_challenges.onCreated ->
 	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
 ########################################
-Template.company_challenges.helpers
+Template.organization_challenges.helpers
 	parameter: () ->
 		return Template.instance().parameter
 
@@ -34,7 +34,13 @@ Template.company_challenges.helpers
 		return Challenges.find(filter)
 
 ########################################
-Template.company_challenges.events
+Template.organization_challenges.events
+	"change #query":(event)->
+		event.preventDefault()
+		q = event.target.value
+		ins = Template.instance()
+		ins.parameter.set "query", q
+
 	"click #add_challenge": () ->
 		Meteor.call "add_challenge",
 			(err, res) ->
@@ -62,6 +68,9 @@ Template.challenge_preview.helpers
 
 		return "No description available, yet."
 
+	challenge_link: () ->
+		return build_url "organization_challenge", {challenge_id: this._id}
+
 
 ########################################
 #
@@ -70,7 +79,7 @@ Template.challenge_preview.helpers
 ########################################
 
 ########################################
-Template.company_challenge.onCreated ->
+Template.organization_challenge.onCreated ->
 	self = this
 	self.send_disabled = new ReactiveVar(false)
 
@@ -82,7 +91,7 @@ Template.company_challenge.onCreated ->
 
 
 ########################################
-Template.company_challenge.helpers
+Template.organization_challenge.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
 		return Challenges.findOne id
@@ -111,7 +120,7 @@ Template.company_challenge.helpers
 
 
 ########################################
-Template.company_challenge.events
+Template.organization_challenge.events
 	"click #icon_download": (e, n)->
 		if document.selection
 			range = document.body.createTextRange()
@@ -149,7 +158,7 @@ Template.company_challenge.events
 		message = template.find("#message").value
 		subject = template.find("#subject").value
 
-		Meteor.call "send_message_to_challenge_students", this._id, subject, message,
+		Meteor.call "send_message_to_challenge_learners", this._id, subject, message,
 			(err, res) ->
 				inst.send_disabled.set(false)
 				if err
@@ -284,7 +293,7 @@ Template.challenge_solution.events
 	"click #user_info": () ->
 		data = UserSummaries.findOne(this.owner_id)
 		data["user_id"] = this.owner_id
-		Modal.show 'show_student_summary', data
+		Modal.show 'show_learner_summary', data
 
 	"click #edit_recommendation": () ->
 		filter =

@@ -28,23 +28,23 @@ Template.first_timer.helpers
 
 ##########################################################
 Template.first_timer.events
-	"click #student": () ->
+	"click #learner": () ->
 		if Template.instance().adding_profile.get()
 			return
 
 		Template.instance().adding_profile.set true
-		_add_profile("student")
+		_add_profile("learner")
 
-	"click #teacher": () ->
+	"click #educator": () ->
 		if Template.instance().adding_profile.get()
 			return
 
 		Template.instance().adding_profile.set true
-		_add_profile("teacher")
+		_add_profile("educator")
 
-	"click #company": () ->
+	"click #organization": () ->
 		if Template.instance().adding_profile.get()
 			return
 
 		Template.instance().adding_profile.set true
-		_add_profile("company")
+		_add_profile("organization")
