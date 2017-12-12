@@ -190,10 +190,11 @@ _add_admin = (email, password) ->
 	if not user
 		user =
 			email: "admin@mooqita.org",
-			password: secret.mkpswd,
+			password: password,
 
 		user = Accounts.createUser(user)
 		Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
+		user = Accounts.findUserByEmail(email)
 
 	filter =
 		owner_id: user._id
@@ -201,6 +202,7 @@ _add_admin = (email, password) ->
 	profile = Profiles.findOne filter
 
 	if profile
+		log_event "-- admin already exists"
 		return profile._id
 
 	profile_id = gen_profile user, "learner"

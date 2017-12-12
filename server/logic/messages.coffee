@@ -29,19 +29,19 @@
 	solution_profile = Profiles.findOne filter
 
 	subject = "Mooqita: You got a new review"
-	url = build_url "learner_solution", {challenge_id: challenge._id}
+	url = build_url "challenge", {challenge_id: challenge._id}, true, "learner"
 
 	name = if solution_profile then solution_profile.given_name ? "learner" else "learner"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received a new review in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " +  "https://mooqita.org" + url + "\n\n"
+	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://app.mooqita.org" + build_url "learner_profile"
+					"" + build_url "profile", {}, true, "learner"
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -64,7 +64,7 @@
 	review_profile = Profiles.findOne filter
 
 	subject = "Mooqita: A review timed out"
-	url = build_url "learner_solution", {challenge_id: challenge._id}
+	url = build_url "challenge", {challenge_id: challenge._id}, false, "learner"
 
 	name = if review_profile then review_profile.given_name ? "learner" else "learner"
 
@@ -78,7 +78,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://app.mooqita.org" + build_url "learner_profile"
+					build_url "learner_profile", {}, true
 
 	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
@@ -109,7 +109,7 @@
 		solution_id: solution._id
 		challenge_id: challenge._id
 
-	url = build_url "learner_review", param
+	url = build_url "learner_review", param, true, "learner"
 	subject = "Mooqita: New feedback for your reviews"
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
@@ -122,7 +122,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: "+
-					"https://app.mooqita.org" + build_url "learner_profile"
+					build_url "profile", {}, true, "learner"
 
 	owner = Meteor.users.findOne review.owner_id
 	send_message_mail owner, subject, body, url

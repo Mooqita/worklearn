@@ -15,7 +15,12 @@
 
 	id = collection.insert document
 	item = collection.findOne id
-	user = Meteor.user()
+	if not document["owner_id"]
+		return id
+
+	user = Meteor.users.findOne()
+	if not user
+		return id
 
 	gen_admission collection._name, item, user, "owner"
 	return id

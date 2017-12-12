@@ -9,16 +9,16 @@ _routes =
 		challenge: "student_solution"#"learner_challenge"
 		challenges: "student_solutions"#"learner_challenge"
 		review: "student_review"
-	teacher:
-		menu: "teacher_menu"
-		profile: "teacher_profile"
-		challenge: "teacher_challenge"
-		challenges: "teacher_challenges"
+	educator:
+		menu: "educator_menu"
+		profile: "educator_profile"
+		challenge: "educator_challenge"
+		challenges: "educator_challenges"
 	organization:
-		menu: "company_menu"
-		profile: "company_profile"
-		challenge: "company_challenge"
-		challenges: "company_challenges"
+		menu: "organization_menu"
+		profile: "organization_profile"
+		challenge: "organization_challenge"
+		challenges: "organization_challenges"
 
 
 ##########################################################
@@ -37,15 +37,18 @@ _routes =
 
 
 ##############################################
-@build_url = (template, query, absolute=false, lookup=true) ->
-	if lookup
+@build_url = (template, query, absolute=false, occupation=null) ->
+	if not occupation
 		profile = get_profile()
 		if profile
-			oc_routes = _routes[profile.occupation]
-			if oc_routes
-				tmp = oc_routes[template]
-				if tmp
-					template = tmp
+			occupation = profile.occupation
+
+	if occupation
+		oc_routes = _routes[occupation]
+		if oc_routes
+			tmp = oc_routes[template]
+			if tmp
+				template = tmp
 
 	app = if absolute then "app" else "/app"
 	url = FlowRouter.path app+"/"+template, null, query
