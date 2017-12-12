@@ -3,14 +3,12 @@ Template.registerHelper "profile", (owner_id=null) ->
 	if not owner_id
 		owner_id = Meteor.userId()
 		
-	return get_profile(owner_id)
+	return get_profile owner_id
 
 
 ########################################
 Template.registerHelper "profile_id", (owner_id) ->
-	filter =
-		owner_id: owner_id
-	profile = Profiles.findOne filter
+	profile = get_profile owner_id
 
 	if not profile
 		return undefined
@@ -20,9 +18,7 @@ Template.registerHelper "profile_id", (owner_id) ->
 
 ########################################
 Template.registerHelper "profile_avatar", (owner_id) ->
-	filter =
-		owner_id: owner_id
-	profile = Profiles.findOne filter
+	profile = get_profile owner_id
 
 	if not profile
 		return undefined
@@ -32,9 +28,7 @@ Template.registerHelper "profile_avatar", (owner_id) ->
 
 ########################################
 Template.registerHelper "profile_name", (owner_id) ->
-	filter =
-		owner_id: owner_id
-	profile = Profiles.findOne filter
+	profile = get_profile owner_id
 
 	return get_profile_name profile, false, false
 

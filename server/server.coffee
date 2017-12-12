@@ -43,8 +43,14 @@ _initialize_indices = ()->
 	log_event msg
 
 	index =
-		resource_id: 1
+		collection_name: 1
 		consumer_id: 1
+		role: 1
+	Admissions._ensureIndex index
+
+	index =
+		collection_name: 1
+		resource_id: 1
 		role: 1
 	Admissions._ensureIndex index
 
@@ -186,10 +192,7 @@ _add_admin = (email, password) ->
 		Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
 		user = Accounts.findUserByEmail(email)
 
-	filter =
-		owner_id: user._id
-
-	profile = Profiles.findOne filter
+	profile = get_profile user._id
 
 	if profile
 		log_event "-- admin already exists"
@@ -315,11 +318,7 @@ _test_challenge = (title) ->
 
 #####################################################
 _test_solution = (challenge, user) ->
-	filter =
-		challenge_id: challenge._id
-		owner_id: user._id
-
-	solution = Solutions.findOne filter
+	solution = get_document user._id, "owner", "solutions", {challenge_id: challenge._id}
 	if solution
 		return solution._id
 

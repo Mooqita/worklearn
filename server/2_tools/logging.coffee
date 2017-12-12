@@ -37,9 +37,7 @@
 	origin = origin || "unknown"
 
 	if owner_id
-		p_f =
-			owner_id: owner_id
-		profile = Profiles.findOne p_f
+		profile = get_profile owner_id
 		name = get_profile_name profile, true
 
 	if requester_id

@@ -28,10 +28,7 @@ Template.organization_challenges.helpers
 		return Template.instance().parameter
 
 	challenges: () ->
-		filter =
-			owner_id: Meteor.userId()
-
-		return Challenges.find(filter)
+		return get_my_documents "challenges"
 
 ########################################
 Template.organization_challenges.events
@@ -291,7 +288,7 @@ Template.challenge_solution.events
 		Modal.show 'reopen_solution', data
 
 	"click #user_info": () ->
-		data = UserSummaries.findOne(this.owner_id)
+		data = get_my_document "user_summaries"
 		data["user_id"] = this.owner_id
 		Modal.show 'show_learner_summary', data
 

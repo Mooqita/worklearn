@@ -51,9 +51,6 @@ Meteor.publish "collaborator", (user_id) ->
 	if not user_id
 		throw Meteor.Error("Not permitted.")
 
-	filter =
-		owner_id: user_id
-
 	options =
 		fields:
 			given_name : 1
@@ -62,7 +59,7 @@ Meteor.publish "collaborator", (user_id) ->
 			owner_id: 1
 			avatar: 1
 
-	crs = Profiles.find filter, options
+	crs = get_documents user_id, "owner", "profiles", {}, options
 
 	log_publication "Profiles", crs, filter,
 			options, "collaborators", user_id

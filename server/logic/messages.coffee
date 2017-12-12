@@ -22,10 +22,7 @@
 @send_review_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
-
-	filter =
-		owner_id: solution.owner_id
-	solution_profile = Profiles.findOne filter
+	solution_profile = get_profile solution.owner_id
 
 	subject = "Mooqita: You got a new review"
 	url = build_url "challenge", {challenge_id: challenge._id}, true, "learner"
@@ -98,10 +95,7 @@
 	challenge = Challenges.findOne feedback.challenge_id
 	solution = Solutions.findOne feedback.solution_id
 	review = Reviews.findOne feedback.review_id
-
-	filter =
-		owner_id: review.owner_id
-	review_profile = Profiles.findOne filter
+	review_profile = get_profile review.owner_id
 
 	param =
 		review_id: review._id

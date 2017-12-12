@@ -27,10 +27,7 @@ Template.edu_certs.helpers
 		return Template.instance().parameter
 
 	cert_templates: () ->
-		filter =
-			owner_id: Meteor.userId()
-
-		return EduCertTemplate.find(filter)
+		return get_my_documents "edu_cert_template"
 
 ########################################
 Template.edu_certs.events

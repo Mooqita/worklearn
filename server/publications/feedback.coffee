@@ -23,10 +23,7 @@ _feedback_fields =
 #######################################################
 Meteor.publish "my_feedback", () ->
 	user_id = this.userId
-
-	filter =
-		owner_id: user_id
-	crs = Feedback.find filter, _feedback_fields
+	crs = get_my_documents "feedback", {}, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
 			_feedback_fields, "my_feedback", user_id
@@ -51,10 +48,7 @@ Meteor.publish "my_feedback_by_solution_id", (solution_id) ->
 	check solution_id, String
 	user_id = this.userId
 
-	filter =
-		solution_id: solution_id
-		owner_id: user_id
-	crs = Feedback.find filter, _feedback_fields
+	crs = get_my_documents "feedback", {solution_id: solution_id}, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
 			_feedback_fields, "my_feedback_by_solution_id", user_id

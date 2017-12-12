@@ -22,12 +22,11 @@ _items_missing = (collection, challenge_id) ->
 
 	filter =
 		published: true
-		owner_id: Meteor.userId()
 
 	if challenge_id
 		filter.challenge_id = challenge_id
 
-	items_provided = collection.find(filter).count()
+	items_provided = get_my_documents("challenges", filter).count()
 	res = items_required - items_provided
 	return res
 
@@ -108,18 +107,14 @@ Template.learner_solution.helpers
 	solutions: () ->
 		filter =
 			challenge_id: FlowRouter.getQueryParam "challenge_id"
-			owner_id: Meteor.userId()
 
 		res = Solutions.find filter
 		return res
 
 	has_solutions: () ->
-		filter =
-			challenge_id: FlowRouter.getQueryParam "challenge_id"
-			owner_id: Meteor.userId()
-
-		res = Solutions.find filter
-		return res.count() > 0
+		challenge_id: FlowRouter.getQueryParam "challenge_id"
+		crs = get_my_documents "solutions", {challenge_id: challenge_id}
+		return crs.count() > 0
 
 
 ########################################
@@ -152,9 +147,7 @@ Template.learner_solution_reviews.onCreated ->
 ##############################################
 Template.learner_solution_reviews.helpers
 	has_filled_profile: () ->
-		filter =
-			owner_id: Meteor.userId()
-		profile = Profiles.findOne filter
+		profile = Profiles.findOne()
 
 		if profile.job_interested
 			return true
@@ -189,8 +182,8 @@ Template.learner_solution_reviews.helpers
 
 	num_reviews: () ->
 		filter =
-			owner_id: this.owner_id
 			challenge_id: this.challenge_id
+
 		res = Reviews.find filter
 		return res.count()
 
@@ -205,8 +198,6 @@ Template.learner_solution_reviews.helpers
 
 	reviews: () ->
 		filter =
-			owner_id:
-				$ne: this.owner_id
 			solution_id: this._id
 		res = Reviews.find filter
 		return res

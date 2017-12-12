@@ -11,6 +11,9 @@ _message_fields =
 #######################################################
 Meteor.publish "my_messages", () ->
 	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
 	restrict =
 		owner_id: user_id
 

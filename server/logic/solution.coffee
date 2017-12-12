@@ -1,10 +1,6 @@
 ###############################################
 @gen_solution = (challenge, user) ->
-	filter =
-		challenge_id: challenge._id
-		owner_id: user._id
-
-	solution = Solutions.findOne filter
+	solution = get_document user, "owner", "solutions", {challenge_id: challenge._id}
 	if solution
 		return solution._id
 

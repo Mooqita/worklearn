@@ -24,7 +24,8 @@ _format_data =
 	return promise.await()
 
 @export_collection_zip = (collection) ->
-	data = collection.find({owner_id: Meteor.userId()}).fetch()
+	data = get_my_documents collection._name
+	data = data.fetch()
 	formattedData = _format_data["json"]( data )
 
 	zip = new JSZip()

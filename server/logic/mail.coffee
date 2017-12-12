@@ -2,16 +2,12 @@
 @send_message_mail = (user, subject, body) ->
 	msg = "@send_message_mail trying to send mail message"
 	log_event msg, event_mail, event_info
-	# handle notifications
-	p_filter =
-		owner_id: user._id
-
-	profile = Profiles.findOne p_filter
 
 	if not user.emails
 		throw new Meteor.Error "send_mail could not find an email address for user: " + user._id
 
 	to = user.emails[0].address
+	profile = get_profile user._id
 
 	if not profile
 		send_mail to, subject, body

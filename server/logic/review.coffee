@@ -36,16 +36,13 @@
 ###############################################
 _find_review = (user, challenge) ->
 	# find all solutions this user has already reviewed
-	filter =
-		owner_id: user._id
-
 	mod =
 		fields:
 			solution_id: 1
 
-	crs = Reviews.find(filter, mod).fetch()
-
-	handled = _.uniq(_.pluck(crs, 'solution_id'))
+	crs = get_documents user, "owner", "reviews", {}, mod
+	reviews = crs.fetch()
+	handled = _.uniq(_.pluck(reviews, 'solution_id'))
 
 	# find the keywords for the user to make sure they understand what they review
 	#corpus = collect_keywords user._id

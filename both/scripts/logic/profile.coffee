@@ -3,9 +3,7 @@
 	if not user_id
 		user_id = Meteor.userId()
 
-	filter =
-		owner_id: user_id
-	profile = Profiles.findOne filter
+	profile = get_document user_id, "owner", "profiles"
 
 	return profile
 
@@ -23,9 +21,7 @@
 
 ###############################################
 @get_profile_name_by_user_id = (user_id, short = false, plus_id=true) ->
-	p_f =
-		owner_id: user_id
-	profile = Profiles.findOne p_f
+	profile = get_profile p_f
 
 	return get_profile_name(profile, short, plus_id)
 
@@ -42,7 +38,8 @@
 		name += profile.family_name ? ""
 
 	if plus_id
-		name += "("+String(profile.owner_id)+")"
+		user_id = get_document_owner "profiles", profile._id
+		name += "(" + user_id + ")"
 
 	return name
 

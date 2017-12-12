@@ -22,13 +22,12 @@
 		requester_id = this.userId
 
 	filter =
-		owner_id: requester_id
 		published: true
 
 	if solution
 		filter.challenge_id = solution.challenge_id
 
-	res = Reviews.find filter
+	res = get_document requester_id, "owner", "reviews", filter
 	return  res.count()
 
 

@@ -1,6 +1,9 @@
 #######################################################
 Meteor.publish "my_recommendations", () ->
 	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
 	filter =
 		owner_id: user_id
 

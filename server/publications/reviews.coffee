@@ -26,6 +26,9 @@ _review_fields =
 #######################################################
 Meteor.publish "my_reviews", () ->
 	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
 	restrict =
 		owner_id: user_id
 

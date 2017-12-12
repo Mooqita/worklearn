@@ -1,15 +1,15 @@
+#######################################################
 Template.learner_messages.helpers
 	messages: () ->
-		filter =
-			owner_id: Meteor.userId()
-
 		mod =
 			sort:
 				seen: 1
 				title: 1
 
-		return Messages.find filter, mod
+		return get_my_documents "messages", {}, mod
 
+
+#######################################################
 Template.learner_messages.events
 	"click #message": ->
 		Meteor.call "set_field", "Messages", this._id, "seen", true,
