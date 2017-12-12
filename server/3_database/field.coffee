@@ -5,13 +5,16 @@
 #######################################################
 
 #######################################################
-@modify_field = (collection, id, field, value) ->
+@modify_field = (collection, item_id, field, value) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 
-	deny_action('modify', collection, id, field)
-
 	check value, Match.OneOf String, Number, Boolean
+	check item_id, String
+	check field, String
+
+	if not can_edit collection, item_id, field
+		throw new Meteor.Error "Not permitted."
 
 	res = modify_field_unprotected collection, id, field, value
 

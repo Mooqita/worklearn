@@ -1,3 +1,4 @@
+################################################################
 @unpack_item = (item) ->
 	mime = require('mime');
 
@@ -20,7 +21,8 @@
 
 	return res
 
-@buildByteArray = (string, stringLength) ->
+################################################################
+@build_byte_array = (string, stringLength) ->
 	buffer = new ArrayBuffer stringLength
 	array  = new Uint8Array buffer
 
@@ -29,14 +31,16 @@
 
 	return array
 
+################################################################
 @base64_to_byte = (base64String) ->
 	Base64 = require('js-base64').Base64
 	decoded = Base64.atob base64String
 	length	 = decoded.length
-	byteArray = buildByteArray decoded, length
+	byteArray = build_byte_array decoded, length
 
 	return byteArray
 
+################################################################
 @base64_to_blob = (base64String, mime_type) ->
 	byteArray = base64_to_byte base64String
 
@@ -46,6 +50,7 @@
 	res = new Blob [byteArray], {type: mime_type}
 	return res
 
+################################################################
 @binary_string_to_base64 = (binary_string) ->
 	Base64 = require('js-base64').Base64
 	base = Base64.btoa(binary_string)

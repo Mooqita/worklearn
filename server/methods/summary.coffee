@@ -33,21 +33,21 @@ Meteor.methods
 
 			reviews = Reviews.find filter_r
 			reviews.forEach (review) ->
-
 				filter_f =
 					review_id: review._id
 				feedback = Feedback.findOne filter_f
 
+				s_owner = get_document_owner Solutions, solution
+				r_owner = get_document_owner Reviews, review
+
+				s_name = get_profile_name_by_user_id s_owner._id, true, false
+				r_name = get_profile_name_by_user_id r_owner._id, true, false
+
 				r = []
-				s_name = get_profile_name_by_user_id solution.owner_id, true, false
-				r_name = get_profile_name_by_user_id review.owner_id, true, false
-
 				r.push(s_name)
-				r.push(solution.owner_id)
-
 				r.push(r_name)
-				r.push(review.owner_id)
-
+				r.push(s_owner._id)
+				r.push(r_owner._id)
 				r.push(solution._id)
 				r.push(solution.challenge_id)
 

@@ -2,6 +2,22 @@
 # Post
 #########################################################
 
+#######################################################
+Template.registerHelper "post_can_edit", (collection_name, item_id) ->
+	collection = get_collection collection_name
+	user_id = Meteor.userId()
+	item = collection.findOne(item_id)
+	owns = can_edit collection_name, item, user_id
+	editor = Roles.userIsInRole user_id, "editor"
+	return owns or editor
+
+
+######################################################
+Template.registerHelper "post_is_editing", (item_id) ->
+	is_ed = item_id == Session.get("editing_response")
+	return is_ed
+
+
 #########################################################
 # Post group
 #########################################################

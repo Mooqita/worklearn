@@ -8,7 +8,6 @@
 Meteor.methods
 	assign_review: () ->
 		user = Meteor.user()
-
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
@@ -18,25 +17,37 @@ Meteor.methods
 
 	assign_review_with_challenge: (challenge_id) ->
 		user = Meteor.user()
-		challenge = find_document  Challenges, challenge_id, false
+		if not user._id
+			throw new Meteor.Error('Not permitted.')
+
+		challenge = get_document_unprotected  Challenges, challenge_id
 		res = assign_review challenge, null, user
 		return res
 
 
 	assign_review_to_tutor: (solution_id) ->
 		user = Meteor.user()
-		solution = find_document  Solutions, solution_id, false
-
-		if not Roles.userIsInRole user, "tutor"
+		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
-		res = find_review null, solution, user
+		solution = get_document_unprotected Solutions, solution_id
+
+		if not has_role Challenges, solution.challenge_id, user, TUTOR
+			throw new Meteor.Error('Not permitted.')
+
+		res = assign_review null, solution, user
 		return res
 
 
 	finish_review: (review_id) ->
 		user = Meteor.user()
-		review = find_document Reviews, review_id, true
+		if not user._id
+			throw new Meteor.Error('Not permitted.')
+
+		if not can_edit Reviews, review_id, user
+			throw new Meteor.Error('Not permitted.')
+
+		review = get_document_unprotected Reviews, review_id
 		review_id = finish_review review, user
 
 		res =

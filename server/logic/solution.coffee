@@ -1,6 +1,6 @@
 ###############################################
 @gen_solution = (challenge, user) ->
-	solution = get_document user, "owner", "solutions", {challenge_id: challenge._id}
+	solution = get_document user, OWNER, "solutions", {challenge_id: challenge._id}
 	if solution
 		return solution._id
 

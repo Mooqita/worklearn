@@ -2,7 +2,7 @@
 @gen_message = (user, title, message, url) ->
 	#save message
 	msg =
-		visible_to: "owner"
+		visible_to: OWNER
 		content: message
 		title: title
 		seen: false
@@ -22,7 +22,8 @@
 @send_review_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
-	solution_profile = get_profile solution.owner_id
+	owner = get_document_owner "solutions", solution
+	solution_profile = get_profile owner._id
 
 	subject = "Mooqita: You got a new review"
 	url = build_url "challenge", {challenge_id: challenge._id}, true, "learner"
@@ -39,7 +40,6 @@
 	body += "You can disable mail notifications in your profile: " +
 					"" + build_url "profile", {}, true, "learner"
 
-	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
 
 	title = "New Review"
@@ -54,10 +54,8 @@
 @send_review_timeout_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
-
-	filter =
-		owner_id: review.owner_id
-	review_profile = Profiles.findOne filter
+	owner = get_document_owner "reviews", review
+	review_profile = get_profile owner._id
 
 	subject = "Mooqita: A review timed out"
 	url = build_url "challenge", {challenge_id: challenge._id}, false, "learner"
@@ -76,7 +74,6 @@
 	body += "You can disable mail notifications in your profile: " +
 					build_url "learner_profile", {}, true
 
-	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
 
 	title = "Review timeout"
@@ -95,7 +92,8 @@
 	challenge = Challenges.findOne feedback.challenge_id
 	solution = Solutions.findOne feedback.solution_id
 	review = Reviews.findOne feedback.review_id
-	review_profile = get_profile review.owner_id
+	owner = get_document_owner "reviews", review
+	review_profile = get_profile owner._id
 
 	param =
 		review_id: review._id
@@ -117,7 +115,6 @@
 	body += "You can disable mail notifications in your profile: "+
 					build_url "profile", {}, true, "learner"
 
-	owner = Meteor.users.findOne review.owner_id
 	send_message_mail owner, subject, body, url
 
 	title = "New Feedback"

@@ -1,15 +1,3 @@
-##########################################################
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
-
-
-##############################################
-@get_selected_view = () ->
-	selected = FlowRouter.getParam("template")
-	if not selected
-		selected = "landing_page"
-	return selected
-
-
 #######################################################
 @get_field_value = (self, field, item_id, collection_name) ->
 	#TODO: replace collection_name with collection object if possible to enhance consistency

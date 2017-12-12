@@ -1,5 +1,5 @@
 ########################################
-Template.registerHelper "profile", (owner_id=null) ->
+Template.registerHelper "g_profile", (owner_id=null) ->
 	if not owner_id
 		owner_id = Meteor.userId()
 		
@@ -7,7 +7,7 @@ Template.registerHelper "profile", (owner_id=null) ->
 
 
 ########################################
-Template.registerHelper "profile_id", (owner_id) ->
+Template.registerHelper "g_profile_id", (owner_id) ->
 	profile = get_profile owner_id
 
 	if not profile
@@ -17,7 +17,7 @@ Template.registerHelper "profile_id", (owner_id) ->
 
 
 ########################################
-Template.registerHelper "profile_avatar", (owner_id) ->
+Template.registerHelper "g_profile_avatar", (owner_id) ->
 	profile = get_profile owner_id
 
 	if not profile
@@ -27,19 +27,22 @@ Template.registerHelper "profile_avatar", (owner_id) ->
 
 
 ########################################
-Template.registerHelper "profile_name", (owner_id) ->
+Template.registerHelper "g_profile_name", (owner_id) ->
 	profile = get_profile owner_id
 
 	return get_profile_name profile, false, false
 
 
 ########################################
-Template.registerHelper "_is_owner", (collection_name, obj) ->
+Template.registerHelper "g_is_owner", (collection_name, obj) ->
 	if typeof obj == "string"
 		collection = get_collection collection_name
 		obj = collection.findOne obj
 
-	owner = obj.owner_id == Meteor.userId()
-	return owner
+	owner_cursor = get_document_owners "profiles", profile._id
+	owner_cursor.forEach (owner) ->
+		if owner._id == Meteor.userId()
+			return true
 
+	return false
 

@@ -10,14 +10,14 @@
 
 <template name="pre_loader">
 	<div class="mooqita-layout">
-		{{#if g_get_login}}
+		{{#if layout_selected_login}}
 			{{#unless profile.has_occupation}}
-				{{>Template.dynamic template=g_get_login}}
+				{{>Template.dynamic template=layout_selected_login}}
 			{{else}}
-				{{> Template.dynamic template=g_get_layout}}
+				{{> Template.dynamic template=layout_selected_layout}}
 			{{/unless}}
 		{{else}}
-			{{> Template.dynamic template=g_get_layout}}
+			{{> Template.dynamic template=layout_selected_layout}}
 		{{/if}}
 	</div>
 </template>
@@ -26,27 +26,27 @@
 <template name="mooqita_layout">
 	<div class="wrapper">
 		<div class="mooqita-layout">
-			{{#if g_get_menu}}
+			{{#if layout_selected_menu}}
 				<header>
-					{{>Template.dynamic template=g_get_menu}}
+					{{>Template.dynamic template=layout_selected_menu}}
 				</header>
 			{{/if}}
 
 			<main>
 				{{>sAlert}}
 
-				{{>Template.dynamic template=g_get_content}}
+				{{>Template.dynamic template=layout_selected_content}}
 			</main>
 
-			{{#if g_get_footer}}
+			{{#if layout_selected_footer}}
 				<div class="footer-push"> </div>
 			{{/if}}
 		</div>
 
-		{{#if g_get_footer}}
+		{{#if layout_selected_footer}}
 			<div class="mooqita-layout">
 				<footer>
-					{{>Template.dynamic template=g_get_footer}}
+					{{>Template.dynamic template=layout_selected_footer}}
 				</footer>
 			</div>
 		{{/if}}
@@ -54,51 +54,8 @@
 </template>
 
 
-<template name="mooqita_landing">
-	<!--div class="mooqita-layout">
-		<div class="hero hero-background logged-in">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<div class="row" style="margin-top: 50px">
-							<div class="col-md-7 col-md-offset-0
-													col-sm-8 col-sm-offset-2
-													col-xs-12 col-xs-offset-0
-													vcenter">
-								<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
-								<h1 style="padding-bottom: 50px">
-									Find the job you love by working on challenges that make a difference.
-								</h1>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="row" style="margin-top: 50px">
-						<div class="col-md-7 col-md-offset-0
-												col-sm-8 col-sm-offset-2
-												col-xs-12 col-xs-offset-0
-												vcenter">
-							<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
-							<h1 style="padding-bottom: 50px">
-								We help students to find the job they love by bringing education and work closer together.
-							</h1>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-	</div-->
-	{{>find_challenges}}
-</template>
-
-
 <template name="mooqita_view">
-	{{>Template.dynamic template=g_selected_view}}
+	{{>Template.dynamic template=layout_selected_view}}
 </template>
 
 

@@ -6,15 +6,21 @@
 Meteor.methods
 	repair_feedback: (review_id) ->
 		user = Meteor.user()
-		review = find_document Reviews, review_id, false
-		solution = find_document Solutions, review.solution_id, true
+		if not can_edit Reviews, review_id, user
+			throw new Meteor.Error 'Not permitted.'
+
+		review = get_document_unprotected Reviews, review_id
+		solution = get_document_unprotected Solutions, review.solution_id
 
 		return repair_feedback solution, review, user
 
 
 	finish_feedback: (feedback_id) ->
 		user = Meteor.user()
-		feedback = find_document Feedback, feedback_id, true
+		if not can_edit Feedback, feedback_id, user
+			throw new Meteor.Error 'Not permitted.'
+
+		feedback = get_document_unprotected Feedback, feedback_id
 		feedback_id = finish_feedback feedback, user
 
 		res =

@@ -59,7 +59,7 @@ Meteor.publish "collaborator", (user_id) ->
 			owner_id: 1
 			avatar: 1
 
-	crs = get_documents user_id, "owner", "profiles", {}, options
+	crs = get_documents user_id, OWNER, "profiles", {}, options
 
 	log_publication "Profiles", crs, filter,
 			options, "collaborators", user_id

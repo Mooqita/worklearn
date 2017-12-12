@@ -14,12 +14,13 @@
 
 	review_id = Random.id()
 	challenge = Challenges.findOne solution.challenge_id
+	owner = get_document_owner "solutions", solution
 
 	review =
 		_id: review_id
 		solution_id: solution._id
 		challenge_id: challenge._id
-		requester_id: solution.owner_id
+		requester_id: owner._id
 		requested: new Date()
 		assigned: false
 		published: false
@@ -40,7 +41,7 @@ _find_review = (user, challenge) ->
 		fields:
 			solution_id: 1
 
-	crs = get_documents user, "owner", "reviews", {}, mod
+	crs = get_documents user, OWNER, "reviews", {}, mod
 	reviews = crs.fetch()
 	handled = _.uniq(_.pluck(reviews, 'solution_id'))
 
@@ -134,13 +135,14 @@ _find_review = (user, challenge) ->
 	# Find the solution the review provider submitted.
 	# The solution has to be submitted to the same challenge
 	# as the solution in the review.
+	owner = get_document_owner "reviews", review
 	filter =
-		requester_id: review.owner_id
+		requester_id: owner._id
 		challenge_id: review.challenge_id
 
 	request = Reviews.findOne filter
 	if not request
-		if Roles.userIsInRole review.owner_id, "tutor"
+		if Roles.userIsInRole owner, "tutor"
 			return review._id
 
 		throw new Meteor.Error "A non tutor provided a review without a solution."
@@ -151,11 +153,9 @@ _find_review = (user, challenge) ->
 	requested = num_requested_reviews solution
 	required = 	challenge.num_reviews
 
-	r_owner = Meteor.users.findOne review.owner_id
-
 	if solution.published
 		if required > requested
-			request_review solution, r_owner
+			request_review solution, owner
 
 	msg = "Review (" + review._id + ") review finished by: " + get_user_mail user
 	log_event msg, event_logic, event_info

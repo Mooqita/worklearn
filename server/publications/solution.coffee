@@ -134,7 +134,7 @@ Meteor.publish "solutions_for_tutor", (parameter) ->
 		sort:
 			under_review_since: 1
 
-	crs = find_documents_paged_unprotected ReviewRequests, filter, mod, parameter
+	crs = get_documents_paged_unprotected ReviewRequests, filter, mod, parameter
 	handler = crs.observeChanges
 		added: (id, fields) ->
 			credit = gen_tut id

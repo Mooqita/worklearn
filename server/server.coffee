@@ -224,8 +224,7 @@ _initialize_database = () ->
 	for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		mail = String(i) + "@uni.edu"
 		profile_id = _test_user_creation mail, "learner"
-		profile = Profiles.findOne profile_id
-		user = Meteor.users.findOne profile.owner_id
+		user = get_document_owner "profiles", profile_id
 		learners.push user
 
 	solutions = []
@@ -245,7 +244,7 @@ _initialize_database = () ->
 		filter =
 			solution_id: solution._id
 		reviews = Reviews.find(filter).fetch()
-		user = Meteor.users.findOne solution.owner_id
+		user = get_document_owner "solution", owner_id
 
 		for review in reviews
 			_test_feedback solution, review, user
@@ -318,7 +317,7 @@ _test_challenge = (title) ->
 
 #####################################################
 _test_solution = (challenge, user) ->
-	solution = get_document user._id, "owner", "solutions", {challenge_id: challenge._id}
+	solution = get_document user._id, OWNER, "solutions", {challenge_id: challenge._id}
 	if solution
 		return solution._id
 

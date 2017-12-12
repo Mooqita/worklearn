@@ -98,7 +98,7 @@
 	recipient_mail = recipient_mail.split("\n")[0]
 	recipient_mail = recipient_mail.split("\r")[0]
 
-	template = find_document EduCertTemplate, recipient.cert_template_id, false
+	template = get_document_unprotected EduCertTemplate, recipient.cert_template_id
 	badge_img = download_file EduCertTemplate, template._id, "image"
 
 	assertion_id = Random.id()

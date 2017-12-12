@@ -54,7 +54,7 @@ Meteor.publish "my_cert_templates", (parameter) ->
 	user_id = this.userId
 	filter = filter_visible_documents user_id, {owner_id: user_id}
 
-	crs = find_documents_paged_unprotected EduCertTemplate, filter,
+	crs = get_documents_paged_unprotected EduCertTemplate, filter,
 			_cert_template_fields, parameter
 
 	log_publication "EduCertTemplate", crs, filter,
@@ -93,7 +93,7 @@ Meteor.publish "my_recipients", (parameter) ->
 	user_id = this.userId
 	filter = filter_visible_documents user_id, {owner_id: user_id}
 
-	crs = find_documents_paged_unprotected EduCertRecipients, filter,
+	crs = get_documents_paged_unprotected EduCertRecipients, filter,
 			_cert_recipient_fields, parameter
 
 	log_publication "EduCertRecipients", crs, filter,
@@ -114,9 +114,11 @@ Meteor.publish "recipient_by_id", (recipient_id) ->
 
 #######################################################
 Meteor.publish "assertion_by_recipient_id", (recipient_id) ->
-	user_id = this.userId
+	user = Meteor.user()
+	if not can_edit EduCertRecipients, recipient_id, user
+		throw new Meteor.Error('Not permitted.')
 
-	recipient = find_document EduCertRecipients, recipient_id, false
+	recipient = get_document_unprotected EduCertRecipients, recipient_id
 	crs = find_cert_assertions recipient
 
 	log_publication "EduCertAssertions", crs, {_id:recipient_id},

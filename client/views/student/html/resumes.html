@@ -22,7 +22,7 @@
 			<div class="col-sm-4 col-ms-4">
 				{{>avatar collection_name = "Profiles"
 					observable = avatar
-					item_id = (profile_id _id)
+					item_id = (g_profile_id _id)
 					field = "avatar"}}
 			</div>
 
@@ -101,12 +101,12 @@
 <template name="resume_review">
 	<div class="media" style="padding-bottom: 25px">
 		<div class="media-left">
-			<a href="{{build_url "resume"}}">
+			<a href="{{g_build_url "resume"}}">
 				<img class="media-object img-circle" src="{{avatar}}" width="64px">
 			</a>
 
 			<h2>
-				<a href="{{build_url "resume"}}">{{name}}</a>
+				<a href="{{g_build_url "resume"}}">{{name}}</a>
 			</h2>
 		</div>
 

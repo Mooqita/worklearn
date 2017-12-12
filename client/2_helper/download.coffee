@@ -3,7 +3,7 @@
 ########################################
 
 ########################################
-Template.registerHelper "download_field_value", (collection_name, item_id, field, observe) ->
+Template.registerHelper "g_download_field_value", (collection_name, item_id, field, observe) ->
 	value = get_field_value null, field, item_id, collection_name
 
 	if value

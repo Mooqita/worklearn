@@ -51,7 +51,7 @@
 
 <template name="cert_template_preview">
 	<h2>
-		<a href="{{build_url "cert_template" (object cert_id=_id)}}">
+		<a href="{{g_build_url "cert_template" (g_object cert_id=_id)}}">
 			{{title}}
 		</a>
 	</h2>
@@ -85,7 +85,7 @@
 						item_id=_id field="image" max_size=256000}}
 
 					<img class="img-responsive"
-						 src="{{download_field_value "edu_cert_templates" _id "image" image}}"
+						 src="{{g_download_field_value "edu_cert_templates" _id "image" image}}"
 						 alt="">
 				</div>
 			</div>
@@ -149,7 +149,7 @@
 						<div class="form-group">
 							<label for="exampleInputEmail1">Unique Identifier</label>
 							<input type="email" class="form-control" id="exampleInputEmail1"
-										 aria-describedby="emailHelp" readonly placeholder="{{profile.owner_id}}">
+										 aria-describedby="emailHelp" readonly placeholder="{{currentUser._id}}">
 							<small id="emailHelp" class="form-text text-muted">ID of your user account on mooqita</small>
 						</div>
 					</form>
@@ -196,7 +196,7 @@
 
 	<h2>
 		<span class="badge background-contrast">new</span>
-		<a href="{{build_url "cert_recipient" (object recipient_id=_id)}}">
+		<a href="{{g_build_url "cert_recipient" (g_object recipient_id=_id)}}">
 			{{email}}
 		</a>
 

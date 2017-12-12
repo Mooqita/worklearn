@@ -18,7 +18,7 @@ Template.organization_profile.events
 		profile = get_profile()
 		mails =
 			email: mails
-			role: "owner"
+			role: OWNER
 
 		Meteor.call "add_admissions", "profiles", profile._id, [mails],
 			(res, err) ->
@@ -46,7 +46,7 @@ Template.collaborator.onCreated ->
 		console.log member_id, item
 
 		if member_id == item.owner_id
-			return "Owner"
+			return OWNER
 
 		filter =
 			member_id: member_id

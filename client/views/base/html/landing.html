@@ -3,10 +3,10 @@
 |  Landing page Template
 |
 ------------------------------------------->
-<template name="mooqita_landing_2">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="hero hero-background">
+<template name="mooqita_landing">
+	<!--div class="mooqita-layout">
+		<div class="hero hero-background logged-in">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<div class="row" style="margin-top: 50px">
@@ -14,41 +14,33 @@
 													col-sm-8 col-sm-offset-2
 													col-xs-12 col-xs-offset-0
 													vcenter">
+								<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
 								<h1 style="padding-bottom: 50px">
-									Welcome to the Mooqita app.
-									<hr>
-									Looking for our website? <br>
-									<a href="https://www.mooqita.org"
-										 target="_blank" style="color: #8cc9ac">
-										This way please.
-									</a>
+									Find the job you love by working on challenges that make a difference.
 								</h1>
-							</div><!--
-							This comment is important otherwise
-							the grid system will break. Due to
-							the interpretation of the white spaces!
-							--><div class="	col-md-5 col-md-offset-0
-															col-sm-8 col-sm-offset-2
-															col-xs-12 col-xs-offset-0
-															vcenter">
-	 							{{#unless currentUser}}
-									<div class="well" style="color: black; text-align: center">
-										{{>atForm}}
-									</div>
-								{{/unless}}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="row" style="margin-top: 50px">
+						<div class="col-md-7 col-md-offset-0
+												col-sm-8 col-sm-offset-2
+												col-xs-12 col-xs-offset-0
+												vcenter">
+							<h1 style="font-family: round; font-size: 100px">Mooqita</h1>
+							<h1 style="padding-bottom: 50px">
+								We help students to find the job they love by bringing education and work closer together.
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-
-	<section class="container-fluid padding-top">
-		{{#mooqita_wide_spacing}}
-			{{>post_group group_name="frontpage"}}
-		{{/mooqita_wide_spacing}}
-	</section>
+		</div>
+	</div-->
+	{{>find_challenges}}
 </template>
-
-

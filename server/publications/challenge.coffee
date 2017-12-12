@@ -37,8 +37,7 @@ Meteor.publish "challenges", (parameter) ->
 		throw new Meteor.Error "Not permitted."
 
 	filter = filter_visible_documents user_id
-
-	crs = find_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
+	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "challenges", user_id
@@ -62,7 +61,7 @@ Meteor.publish "my_challenges", (parameter) ->
 		owner_id: user_id
 
 	filter = filter_visible_documents user_id, restrict
-	crs = find_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
+	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
 			_challenge_fields, "my_challenges", user_id
@@ -124,9 +123,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	challenge = Challenges.findOne parameter.challenge_id
-
-	if challenge.owner_id != user_id
+	if not can_view Challenges, parameter.challenge_id, user_id
 		throw Meteor.Error("Not permitted.")
 
 	filter =
@@ -151,10 +148,11 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 
 	##############################################
-	solution_cursor = find_documents_paged_unprotected Solutions, filter, mod, parameter
+	solution_cursor = get_documents_paged_unprotected Solutions, filter, mod, parameter
 	solution_cursor.forEach (solution) ->
+		owner = get_document_owner Solutions, solution
 		solution_ids.add solution._id
-		profile_ids.add solution.owner_id
+		profile_ids.add owner._id
 
 	##############################################
 	# retrieving reviews
@@ -180,7 +178,8 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 	review_cursor = Reviews.find(filter, mod)
 	review_cursor.forEach (entry) ->
-		profile_ids.add entry.owner_id
+		owner = get_document_owner Reviews, entry
+		profile_ids.add owner._id
 
 	##############################################
 	# retrieving feedback
@@ -189,7 +188,8 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 	feedback_cursor = Feedback.find(filter, mod)
 	feedback_cursor.forEach (entry) ->
-		profile_ids.add entry.owner_id
+		owner = get_document_owner Feedback, entry
+		profile_ids.add owner._id
 
 	##############################################
 	# retrieving profiles

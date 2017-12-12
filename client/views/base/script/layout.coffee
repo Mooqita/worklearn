@@ -4,6 +4,38 @@
 #
 ################################################
 
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
+
+##############################################
+Template.registerHelper "layout_selected_menu", ()->
+	Session.get "menu_template"
+
+##############################################
+Template.registerHelper "layout_selected_login", ()->
+	Session.get "login_template"
+
+##############################################
+Template.registerHelper "layout_selected_layout", ()->
+	Session.get "layout_template"
+
+##############################################
+Template.registerHelper "layout_selected_content", ()->
+	Session.get "content_template"
+
+##############################################
+Template.registerHelper "layout_selected_footer", ()->
+	Session.get "footer_template"
+
+##############################################
+Template.registerHelper "layout_selected_view", ()->
+	selected = FlowRouter.getParam("template")
+	if not selected
+		selected = "landing_page"
+	return selected
+
+
 ################################################
 Template.pre_loader.onCreated ->
 	self = this
@@ -19,3 +51,5 @@ Template.pre_loader.onCreated ->
 				if err
 					sAlert.error "Profile subscription error: " + err
 					console.log err
+
+

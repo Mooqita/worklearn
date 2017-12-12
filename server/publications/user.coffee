@@ -72,25 +72,15 @@ Meteor.publish "user_resumes", (user_id) ->
 	self = this
 	prepare_resume = (user) ->
 		resume = {}
-
-		filter =
-			owner_id: user._id
-
-		profile = Profiles.findOne filter
+		profile = get_profile user
 
 		if profile
 			resume.name = get_profile_name profile, false, false
-			resume.owner_id = profile._id
 			resume.self_description = profile.resume
 			resume.avatar = get_avatar profile
 
-		solution_filter =
-			published: true
-			owner_id: user._id
-			#in_portfolio: true
-
 		solution_list = []
-		solution_cursor = Solutions.find solution_filter
+		solution_cursor = get_documents user, OWNER, Solutions, {published: true}
 
 		solution_cursor.forEach (s) ->
 			solution = {}
@@ -102,9 +92,8 @@ Meteor.publish "user_resumes", (user_id) ->
 				solution.challenge = if !challenge.confidential then challenge.content else null
 				solution.challenge_title = challenge.title
 
-				filter =
-					owner_id: challenge.owner_id
-				profile = Profiles.findOne filter
+				owner = get_document_owner Challenges, challenge
+				profile = get_document owner, OWNER, Profiles
 
 				if profile
 					solution.challenge_owner_avatar = get_avatar profile
@@ -123,9 +112,8 @@ Meteor.publish "user_resumes", (user_id) ->
 					review_id: r._id
 				feedback = Feedback.findOne filter
 
-				filter =
-					owner_id: r.owner_id
-				profile = Profiles.findOne filter
+				owner = get_document_owner Profiles, r
+				profile = get_profile owner
 
 				if feedback.published
 					review.feedback = {}

@@ -1,10 +1,12 @@
 ##############################################
-@get_profile = (user_id) ->
-	if not user_id
-		user_id = Meteor.userId()
+@get_profile = (user) ->
+	if not user
+		user = Meteor.userId()
 
-	profile = get_document user_id, "owner", "profiles"
+	if typeof user != "string"
+		user = user._id
 
+	profile = get_document user, OWNER, "profiles"
 	return profile
 
 
@@ -21,8 +23,7 @@
 
 ###############################################
 @get_profile_name_by_user_id = (user_id, short = false, plus_id=true) ->
-	profile = get_profile p_f
-
+	profile = get_profile user_id
 	return get_profile_name(profile, short, plus_id)
 
 
@@ -30,6 +31,9 @@
 @get_profile_name = (profile, short = false, plus_id=true) ->
 	if !profile
 		return "A Doe (Name unknown)"
+
+	if typeof profile == "string"
+		profile = get_profile profile
 
 	name = (profile.given_name ? "Learner") + " "
 
@@ -46,7 +50,8 @@
 
 ###############################################
 @get_profile_mail = (profile) ->
-	user = Meteor.users.findOne profile.owner_id
+	profile_owner_id = get_document_owner "profiles", profile._id
+	user = Meteor.users.findOne profile_owner_id
 
 	if not user
 		return null

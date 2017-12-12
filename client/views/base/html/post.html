@@ -49,11 +49,11 @@
 |
 ------------------------------------------->
 <template name="post">
-	{{#if g_can_edit "Posts" _id}}
+	{{#if post_can_edit "Posts" _id}}
 		{{>_edit_toggle}}
 	{{/if}}
 
-	{{#if g_is_editing _id}}
+	{{#if post_is_editing _id}}
 		{{#_edit_tools  collection_name="Posts" _id=_id}}
 			{{>wysiwyg_input method="set_field" collection_name="Posts"
 					field="abstract" item_id=_id}}

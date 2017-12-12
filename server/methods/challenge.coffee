@@ -16,8 +16,11 @@ Meteor.methods
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()
-		challenge = find_document Challenges, challenge_id, true
-		return finish_challenge challenge, user
+		if can_edit Challenges, challenge_id, user
+			throw new Meteor.Error("Not permitted.")
+
+		item = get_document_unprotected Challenges, challenge_id
+		return finish_challenge item, user
 
 	send_message_to_challenge_learners: (challenge_id, subject, message) ->
 		user = Meteor.user()
@@ -25,7 +28,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, 'admin')
+		if not has_permission Challenges, challenge_id, user, SEND_MAIL
 			throw new Meteor.Error('Not permitted.')
 
 		# we need to know who is registered for a course.
@@ -35,8 +38,8 @@ Meteor.methods
 		solutions = Solutions.find filter
 
 		solutions.forEach (solution) ->
-			user = Meteor.users.findOne solution.owner_id
-			name = get_profile_name_by_user_id user._id, true, false
+			owner = get_document_owner "solutions", solution
+			name = get_profile_name_by_user_id owner._id, true, false
 			subject =	subject.replace("<<name>>", name)
 			message =	message.replace("<<name>>", name)
 			send_mail user, subject, message

@@ -13,11 +13,6 @@ Template.registerHelper "g_debug", (obj, message="") ->
 
 
 ########################################
-Template.registerHelper "g_selected_view", () ->
-	return get_selected_view()
-
-
-########################################
 Template.registerHelper "g_is_public", (collection_name, obj=null) ->
 	if typeof obj == "string"
 		collection = get_collection collection_name
@@ -49,32 +44,7 @@ Template.registerHelper "g_is_saved", (collection_name, obj=null) ->
 	return true
 
 
-#######################################################
-Template.registerHelper "g_can_edit", (collection_name, item_id) ->
-	collection = get_collection collection_name
-	item = collection.findOne(item_id)
-	owns = item.owner_id == Meteor.userId()
-	editor = Roles.userIsInRole Meteor.userId(), "editor"
-	return owns or editor
-
-
-#######################################################
-Template.registerHelper "g_is_editing", (item_id) ->
-	is_ed = item_id == Session.get("editing_response")
-	return is_ed
-
-
-#######################################################
-Template.registerHelper "g_item_visibility", () ->
-	opts = [
-		{value:"", label:"Who can read your post"}
-		{value:"all", label:"Everyone"}
-		{value:"anonymous", label:"Registered Users"}
-		{value:"editor", label:"Editors"}]
-	return opts
-
-
-#######################################################
+########################################################
 Template.registerHelper "g_rating_options", () ->
 	opts = [
 		{value:"", label:"Select your rating"}

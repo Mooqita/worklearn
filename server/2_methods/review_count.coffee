@@ -1,7 +1,8 @@
 ###############################################
 @num_requested_reviews  = (solution) ->
 	if solution
-		requester_id = solution.owner_id
+		owner = get_document_owner "solutions", solution
+		requester_id = owner._id
 	else
 		requester_id = this.userId
 
@@ -17,7 +18,8 @@
 ###############################################
 @num_provided_reviews = (solution) ->
 	if solution
-		requester_id = solution.owner_id
+		owner = get_document_owner "solutions", solution
+		requester_id = owner._id
 	else
 		requester_id = this.userId
 
@@ -27,7 +29,7 @@
 	if solution
 		filter.challenge_id = solution.challenge_id
 
-	res = get_document requester_id, "owner", "reviews", filter
+	res = get_document requester_id, OWNER, "reviews", filter
 	return  res.count()
 
 
