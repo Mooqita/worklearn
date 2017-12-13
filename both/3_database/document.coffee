@@ -22,7 +22,6 @@ _get_filter = (user_id, role, collection_name, filter) ->
 	if role != WILDCARD
 		admission_filter["role"] = role
 
-
 	admission_ids = []
 	admission_cursor = Admissions.find admission_filter
 	admission_cursor.forEach (admission) ->
@@ -149,24 +148,6 @@ _get_admissary_filter = (collection_name, document_id, role) ->
 
 ########################################
 @has_role = (collection, item, user, role) ->
-	if typeof collection == "string"
-		collection = get_collection collection
-		collection_name = collection._name
-	else
-		collection_name = collection._name
-
-	if typeof item == "string"
-		item = collection.findOne(item)
-
-	if not item._id
-		throw new Meteor.Error('Not permitted.')
-
-	if typeof user == "string"
-		user = Meteor.users.findOne(user)
-
-	if not user._id
-		throw new Meteor.Error('Not permitted.')
-
 	admission_cursor = get_document_admissaries collection, item, role
 	admission_cursor.forEach (admission) ->
 		if admission.consumer_id == user._id

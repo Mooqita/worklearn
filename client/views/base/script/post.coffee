@@ -8,8 +8,7 @@ Template.registerHelper "post_can_edit", (collection_name, item_id) ->
 	user_id = Meteor.userId()
 	item = collection.findOne(item_id)
 	owns = can_edit collection_name, item, user_id
-	editor = Roles.userIsInRole user_id, "editor"
-	return owns or editor
+	return owns
 
 
 ######################################################

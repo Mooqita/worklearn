@@ -55,7 +55,7 @@ Meteor.publish "my_profile", () ->
 Meteor.publish "user_resumes", (user_id) ->
 	if user_id
 		check user_id, String
-		if not Roles.userIsInRole this.userId, "admin"
+		if not has_role Profiles, WILDCARD, this.userId, ADMIN
 			if this.userId != user_id
 				filter =
 					owner_id: user_id
@@ -153,7 +153,7 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	check challenge_id, String
 
 	if user_id
-		if not Roles.userIsInRole this.userId, "challenge_designer"
+		if not has_role Challenges, challenge_id, this.userId, DESIGNER
 			throw new Meteor.Error("Not permitted.")
 
 	if !user_id

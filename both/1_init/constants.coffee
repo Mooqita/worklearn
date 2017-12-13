@@ -11,9 +11,13 @@
 @USER = "user"
 
 #######################################################
+@ADMIN = "admin"
+
+#######################################################
 @TUTOR = "tutor"
 @LEARNER = "learner"
 @EDUCATOR = "educator"
+@DESIGNER = "designer"
 @ORGANIZATION = "organization"
 
 #######################################################

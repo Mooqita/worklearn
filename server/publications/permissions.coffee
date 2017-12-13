@@ -8,10 +8,10 @@
 #######################################################
 Meteor.publish "permissions", () ->
 	user_id = this.userId
-	if !user_id
+	if not user_id
 		throw new Meteor.Error "Not permitted."
 
-	if !Roles.userIsInRole user_id, "admin"
+	if not has_role Permissions, WILDCARD, ADMIN
 		throw new Meteor.Error "Not permitted."
 
 	crs = Permissions.find()

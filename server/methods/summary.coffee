@@ -12,7 +12,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if not Roles.userIsInRole user, "admin"
+		if not has_role WILDCARD, WILDCARD, user, ADMIN
 			throw new Meteor.Error('Not permitted.')
 
 		res = [["solution_owner_name", "solution_owner_id",

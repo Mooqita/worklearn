@@ -12,7 +12,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, 'editor')
+		if can_edit Posts, WILDCARD, user
 			throw new Meteor.Error('Not permitted.')
 
 		post =

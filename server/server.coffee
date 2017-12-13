@@ -189,7 +189,7 @@ _add_admin = (email, password) ->
 			password: password,
 
 		user = Accounts.createUser(user)
-		Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
+		#Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
 		user = Accounts.findUserByEmail(email)
 
 	profile = get_profile user._id
@@ -300,7 +300,7 @@ _test_challenge = (title) ->
 	if not user
 		_test_user_creation "designer@mooqita.org", "organization"
 		user = Accounts.findUserByEmail("designer@mooqita.org")
-		Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
+		#Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
 
 	challenge_id = gen_challenge user
 

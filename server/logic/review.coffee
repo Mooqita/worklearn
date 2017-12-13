@@ -4,9 +4,8 @@
 	provided = num_provided_reviews solution
 	credits = provided - requested
 
-	if not Roles.userIsInRole user, "challenge_designer"
-		if credits < 0
-			throw new Meteor.Error "User needs more credits to request reviews."
+	if credits < 0
+		throw new Meteor.Error "User needs more credits to request reviews."
 
 	#WordPOS = require("wordpos")
 	#wordpos = new WordPOS()
@@ -142,7 +141,7 @@ _find_review = (user, challenge) ->
 
 	request = Reviews.findOne filter
 	if not request
-		if Roles.userIsInRole owner, "tutor"
+		if not has_role Challenges, challenge, TUTOR
 			return review._id
 
 		throw new Meteor.Error "A non tutor provided a review without a solution."

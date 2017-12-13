@@ -8,10 +8,10 @@
 Meteor.methods
 	add_db_permission: (role, collection_name, field) ->
 		user = Meteor.user()
-		if !user
+		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, 'db_admin')
+		if not has_role Permissions, WILDCARD, user._id, ADMIN
 			throw new Meteor.Error('Not permitted.')
 
 		check role, String
@@ -46,13 +46,13 @@ Meteor.methods
 		return res
 
 	remove_permission: (id) ->
+		check id, String
+
 		user = Meteor.user()
 		if !user
 			throw new Meteor.Error 'Not permitted.'
 
-		if !Roles.userIsInRole user._id, 'db_admin'
+		if  not has_role Permissions, WILDCARD, user._id, 'db_admin'
 			throw new Meteor.Error 'Not permitted.'
-
-		check id, String
 
 		Permissions.remove(id)

@@ -105,8 +105,9 @@ Meteor.publish "solutions_for_tutor", (parameter) ->
 
 	self = this
 	user_id = this.userId
+	challenge_id = parameter.challenge_id
 
-	if not Roles.userIsInRole user_id, "tutor"
+	if not has_role Challenges, challenge_id, TUTOR
 		throw new Meteor.Error("Not permitted.")
 
 	gen_tut = (id) ->
