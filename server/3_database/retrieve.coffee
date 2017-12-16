@@ -40,28 +40,17 @@
 
 
 #######################################################
-@get_visible_fields = (collection, user_id, filter) ->
+@get_visible_fields = (user, role, collection, filter) ->
 	throw new Meteor.Error "@get_visible_fields is not implemented."
 
-	owner = false
-
-	if filter.owner_id
-		if filter.owner_id == user_id
-			owner = true
-
-	roles = ['all']
-	if owner
-		roles.push 'owner'
-
-	if user_id
-		user = Meteor.users.findOne(user_id)
+	roles = [PUBLIC]
 
 	if user
-		roles.push user.roles ...
-		roles.push 'anonymous'
+		roles.push USER
 
 	res = {}
-	edit_fields = Permissions.find({}, {fields:{field:1}}).fetch()
+	edit_fields = get_documents user, role, Permissions, filter
+	edit_fields = edit_fields.fetch()
 
 	for field in edit_fields
 		filter =
@@ -119,7 +108,7 @@
 		throw new Meteor.Error 'Edit not permitted: ' + field
 
 	for permission in permissions.fetch()
-		if permission[action]==true
+		if permission["modify"]==true
 			return true
 
 	throw new Meteor.Error 'Edit not permitted: ' + field
