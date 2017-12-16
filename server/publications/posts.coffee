@@ -10,12 +10,12 @@ Meteor.publish "posts", (group_name) ->
 	check group_name, String
 
 	user_id = this.userId
-	restrict =
+	filter =
 		group_name: group_name
 		published: true
 
 	crs = Posts.find filter, fields
 
-	log_publication "Posts", crs, filter, restrict, "posts", user_id
+	log_publication crs, user_id, "posts"
 	return crs
 

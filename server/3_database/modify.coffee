@@ -5,7 +5,7 @@
 #######################################################
 
 #######################################################
-@modify_field = (collection, item_id, field, value) ->
+@set_field = (collection, item_id, field, value) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 

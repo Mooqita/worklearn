@@ -36,17 +36,10 @@ _update_tag = (old_tags, new_tag) ->
 #############################################################
 _meteor_tag = (self, event, value) ->
 	field = self.field
-	method = self.method
 	collection = self.collection_name
 	item_id = self.item_id
 
-	Meteor.call method, collection, item_id, field, value, undefined,
-		(err, res) ->
-			if err
-				sAlert.error "Tags input error: " + err
-				console.log err
-			if res
-				sAlert.success "Updated: " + field
+	set_field collection, item_id, field, value
 
 
 #############################################################

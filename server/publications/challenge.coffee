@@ -38,9 +38,7 @@ Meteor.publish "challenges", (parameter) ->
 	filter = get_filter IGNORE, IGNORE, Challenges, {public:true}
 	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
-	log_publication "Challenges", crs, filter,
-			_challenge_fields, "challenges", user_id
-
+	log_publication crs, user_id, "challenges"
 	return crs
 
 
@@ -59,8 +57,7 @@ Meteor.publish "my_challenges", (parameter) ->
 	filter = get_my_filter Challenges, {}
 	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
-	log_publication "Challenges", crs, filter,
-			_challenge_fields, "my_challenges", user_id
+	log_publication crs, user_id, "my_challenges"
 	return crs
 
 
@@ -77,9 +74,8 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 		published: true
 
 	crs = Challenges.find filter, _challenge_fields
+	log_publication crs, user_id, "challenge_by_id"
 
-	log_publication "Challenges", crs, filter,
-			_challenge_fields, "challenge_by_id", user_id
 	return crs
 
 
@@ -92,8 +88,7 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 	filter = get_my_filter {_id:challenge_id}
 	crs = Challenges.find filter, _challenge_fields
 
-	log_publication "Challenges", crs, filter,
-			_challenge_fields, "my_challenge_by_id", user_id
+	log_publication crs, user_id, "my_challenge_by_id"
 	return crs
 
 
@@ -187,7 +182,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	user_ids = Array.from(user_ids)
 	filter =
 		_id:
-			$in: profile_ids
+			$in: user_ids
 
 	mod =
 		fields:
@@ -202,8 +197,6 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	profile_cursor = get_documents IGNORE, IGNORE, Profiles, filter, mod
 	result = [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
 
-	log_publication "Multi", result, {},
-			{}, "challenge_summaries", user_id
-
+	log_publication result, user_id, "challenge_summaries"
 	return result
 

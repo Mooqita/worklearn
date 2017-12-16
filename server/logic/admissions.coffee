@@ -60,20 +60,3 @@
 	return item_id
 
 
-#######################################################
-@get_admissions = (item, skip, limit) ->
-	limit = if limit < 100 then limit else 100
-
-	filter =
-		resource_id: item._id
-
-	options =
-		fields:
-			resource_id: 1
-			member_id: 1
-			role: 1
-		skip: skip
-		limit: limit
-
-	crs = Admissions.find(filter, options)
-	return crs

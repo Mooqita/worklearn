@@ -15,6 +15,5 @@ Meteor.publish "my_messages", () ->
 
 	crs = get_my_documents Messages, {}, _message_fields
 
-	log_publication "Messages", crs, filter,
-			_message_fields, "my_messages", user_id
+	log_publication crs, user_id, "my_messages"
 	return crs

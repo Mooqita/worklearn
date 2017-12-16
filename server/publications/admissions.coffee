@@ -9,10 +9,29 @@
 # item header
 #######################################################
 
+###############################################################################
+_admission_fields =
+	fields:
+		collection_name: 1
+		resource_id: 1
+		consumer_id: 1
+		role: 1
+
 #######################################################
 _collaborator_fields =
 	fields:
 		emails: 1
+
+#######################################################
+Meteor.publish "my_admissions", () ->
+	user_id = this.userId
+	if not user_id
+		throw Meteor.Error("Not permitted.")
+
+	crs = get_my_admissions user_id, IGNORE, _admission_fields
+	log_publication crs, user_id, "my_admissions"
+
+	return crs
 
 #######################################################
 Meteor.publish "admissions", (parameter) ->
@@ -24,12 +43,12 @@ Meteor.publish "admissions", (parameter) ->
 		size: Number
 	check parameter, pattern
 
-	collection_name = parameter.collection_name
-	item_id = parameter.item_id
 	user_id = this.userId
-
 	if not user_id
 		throw Meteor.Error("Not permitted.")
+
+	collection_name = parameter.collection_name
+	item_id = parameter.item_id
 
 	collection = get_collection_save collection_name
 	item = collection.findOne item_id
@@ -37,10 +56,17 @@ Meteor.publish "admissions", (parameter) ->
 	if not item
 		throw Meteor.Error("Not permitted.")
 
-	crs = get_admissions item, parameter.page, parameter.size
+	page = parameter.page || 0
+	limit = parameter.size || 10
+	limit = if limit < 100 then limit else 100
 
-	log_publication "Admissions", crs, {},
-			{}, "admissions", user_id
+	options = _admission_fields
+	options["skip"] = page * limit
+	options["limit"] = limit
+
+	crs = get_admissions item, options
+	log_publication crs, user_id, "admissions"
+
 	return crs
 
 
@@ -56,13 +82,10 @@ Meteor.publish "collaborator", (user_id) ->
 			given_name : 1
 			family_name : 1
 			middle_name : 1
-			owner_id: 1
 			avatar: 1
 
 	crs = get_documents user_id, OWNER, "profiles", {}, options
-
-	log_publication "Profiles", crs, filter,
-			options, "collaborators", user_id
+	log_publication crs, user_id, "collaborators"
 
 	return crs
 

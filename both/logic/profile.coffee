@@ -42,8 +42,8 @@
 		name += profile.family_name ? ""
 
 	if plus_id
-		user_id = get_document_owner "profiles", profile._id
-		name += "(" + user_id + ")"
+		user = get_document_owner "profiles", profile._id
+		name += "(" + user._id + ")"
 
 	return name
 

@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="organization_profile">
 	{{#mooqita_wide_spacing}}
-		{{#with profile}}
+		{{#with g_profile}}
 			<div class="row">
 				<div class="col-sm-4 col-ms-4 col-xs-12">
 					<h2 class="header">Organization Logo</h2>
@@ -43,38 +43,43 @@
 					</div>
 				</div>
 			</div>
-		{{/with}}
 
-		{{#paging subscription="admissions" page=0 count=10 collection_name="admissions" parameter=parameter}}
-			{{#each items}}
-				{{>collaborator}}
-			{{else}}
-				<h2><em>Not shared.</em></h2>
-			{{/each}}
-		{{/paging}}
+			{{#paging subscription="admissions" collection_name="admissions"
+								 page=0 count=10 parameter=parameter filter=(g_object resource_id=_id)}}
+				{{#each items}}
+					{{>collaborator}}
+				{{else}}
+					<h2><em>Not shared.</em></h2>
+				{{/each}}
+			{{/paging}}
+		{{/with}}
 
 	{{/mooqita_wide_spacing}}
 </template>
 
 
 <template name="collaborator">
-	<div class="row">
-		<div class="col-sm-2">
-			{{>avatar collection_name="Profiles"
-				 observe = (g_profile_avatar member_id)
-				 item_id = (g_profile_id member_id)
-				 field = "avatar"}}
-		</div>
+	{{#if Template.subscriptionsReady}}
+		<div class="row">
+			<div class="col-sm-2">
+				{{>avatar collection_name="Profiles"
+					 observe = (g_profile_avatar consumer_id)
+					 item_id = (g_profile_id consumer_id)
+					 field = "avatar"}}
+			</div>
 
-		<div class="col-ms-6">
-			<h2>
-				<a href="">{{g_profile_name member_id}}</a>
-			</h2>
-		</div>
+			<div class="col-ms-6">
+				<h2>
+					<a href="">{{g_profile_name consumer_id}}</a>
+				</h2>
+			</div>
 
-		<div class="col-ms-4">
-			{{role}}
+			<div class="col-ms-4">
+				{{role}}
+			</div>
 		</div>
-	</div>
+	{{else}}
+		{{>wait}}
+	{{/if}}
 </template>
 

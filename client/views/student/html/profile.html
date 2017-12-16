@@ -5,26 +5,26 @@
 -------------------------------------------------->
 <template name="learner_profile">
 	{{#mooqita_wide_spacing}}
-		{{#with profile}}
+		{{#with g_profile}}
 			{{#unless profile_done}}
 				<div class="alert alert-warning" style="margin-top: 25px">
 					<h2>Todo List: Profile</h2>
 					<hr>
 					Here is a list of things you should do to complete your profile.
 					<ul>
-						{{#unless profile.given_name}}
+						{{#unless g_profile.given_name}}
 							<li>Fill in your given name</li>
 						{{/unless}}
-						{{#unless profile.family_name}}
+						{{#unless g_profile.family_name}}
 							<li>And your family name</li>
 						{{/unless}}
-						{{#unless profile.avatar}}
+						{{#unless g_profile.avatar}}
 							<li>Upload a picture of you or choose an avatar.</li>
 						{{/unless}}
-						{{#unless profile.resume}}
+						{{#unless g_profile.resume}}
 							<li>Please write your resume.</li>
 						{{/unless}}
-						{{#unless profile.job_interested}}
+						{{#unless g_profile.job_interested}}
 							<li>Let us know if you are interested in job offerings from our partners.</li>
 						{{/unless}}
 					</ul>
@@ -35,15 +35,15 @@
 				<div class="col-sm-4 col-ms-4 col-xs-12">
 					<h2 class="header">Picture</h2>
 
-					{{#if profile.avatar}}
+					{{#if g_profile.avatar}}
 						{{>avatar collection_name = "Profiles"
-							observable = profile.avatar
-							item_id = profile._id
+							observable = g_profile.avatar
+							item_id = g_profile._id
 							field = "avatar"}}
 					{{/if}}
 
 					{{>upload method="upload_file" collection_name="Profiles"
-						item_id=profile._id field="avatar" max_size=500000}}
+						item_id=g_profile._id field="avatar" max_size=500000}}
 				</div>
 
 				<div class="col-sm-8 col-ms-8 col-xs-12">
@@ -54,17 +54,17 @@
 
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="given_name" placeholder="Given name"}}
+								item_id=g_profile._id field="given_name" placeholder="Given name"}}
 						</div>
 
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="middle_name" placeholder="Middle name"}}
+								item_id=g_profile._id field="middle_name" placeholder="Middle name"}}
 						</div>
 
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="family_name" placeholder="Family name"}}
+								item_id=g_profile._id field="family_name" placeholder="Family name"}}
 						</div>
 					</div>
 
@@ -80,7 +80,7 @@
 						<div class="col-md-4">
 							<h2 class="header">Notifications</h2>
 							{{>select_input method="set_field" collection_name="Profiles"
-									item_id=profile._id field="mail_notifications"
+									item_id=g_profile._id field="mail_notifications"
 									options=mail_notifications_options}}
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 
 						<div class="col-md-12">
 							{{>select_input method="set_field" collection_name="Profiles"
-									item_id=profile._id field="job_interested"
+									item_id=g_profile._id field="job_interested"
 									options=job_interested_options}}
 						</div>
 					</div>
@@ -127,17 +127,17 @@
 
 						<div class="col-md-4">
 							{{>select_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="job_type" options=job_type_options}}
+								item_id=g_profile._id field="job_type" options=job_type_options}}
 						</div>
 
 						<div class="col-md-4">
 							{{>select_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="job_locale" options=job_locale_options}}
+								item_id=g_profile._id field="job_locale" options=job_locale_options}}
 						</div>
 
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
-									item_id=profile._id field="hours_per_week"
+									item_id=g_profile._id field="hours_per_week"
 									placeholder="Hours per week" type="number"}}
 						</div>
 					</div>
@@ -149,12 +149,12 @@
 
 						<div class="col-md-8">
 							{{>country_state method="set_field" collection_name="Profiles"
-								item_id=profile._id c_field="country" s_field="state"}}
+								item_id=g_profile._id c_field="country" s_field="state"}}
 						</div>
 
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
-								item_id=profile._id field="city" placeholder="city name"}}
+								item_id=g_profile._id field="city" placeholder="city name"}}
 						</div>
 					</div>
 			{{/if}}
@@ -163,7 +163,7 @@
 				<div class="col-md-12">
 					<h2 class="header">Resume</h2>
 					{{>markdown_input method="set_field" collection_name="Profiles"
-							item_id=profile._id field="resume"
+							item_id=g_profile._id field="resume"
 							placeholder="Tell us a little more about you."}}
 				</div>
 			</div>

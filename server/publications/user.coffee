@@ -39,7 +39,7 @@ Meteor.publish "my_profile", () ->
 
 	crs = get_my_documents Profiles
 
-	log_publication "Profile", crs, filter, {}, "profiles", user_id
+	log_publication crs, user_id, "profiles"
 	return crs
 
 #######################################################
@@ -137,7 +137,7 @@ Meteor.publish "user_resumes", (user_id) ->
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)
 
-	log_publication "UserResumes", crs, filter, {}, "credits", user_id
+	log_publication crs, user_id, "user_resumes"
 	self.ready()
 
 #######################################################
@@ -225,10 +225,6 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	user = calc_statistics user, fed_given, "feedback_given"
 	user = calc_statistics user, fed_received, "feedback_received"
 
-	msg = "UserSummaries for: " + get_profile_name_by_user_id user_id, true
-
-	log_publication msg, null, {},
-			{}, "user_summary", this.userId
-
+	log_publication crs, this.userId, "user_summary"
 	this.added "user_summaries", user_id, user
 	this.ready()

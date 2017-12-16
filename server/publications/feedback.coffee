@@ -24,8 +24,7 @@ Meteor.publish "my_feedback", () ->
 	user_id = this.userId
 	crs = get_my_documents "feedback", {}, _feedback_fields
 
-	log_publication "Feedback", crs, filter,
-			_feedback_fields, "my_feedback", user_id
+	log_publication crs, user_id, "my_feedback"
 	return crs
 
 #######################################################
@@ -36,8 +35,7 @@ Meteor.publish "my_feedback_by_challenge_id", (challenge_id) ->
 	filter = {challenge_id: challenge_id}
 	crs = get_my_documents "feedback", filter, _feedback_fields
 
-	log_publication "Feedback", crs, filter,
-			_feedback_fields, "my_feedback_by_challenge_id", user_id
+	log_publication crs, user_id, "my_feedback_by_challenge_id"
 	return crs
 
 #######################################################
@@ -47,8 +45,7 @@ Meteor.publish "my_feedback_by_solution_id", (solution_id) ->
 
 	crs = get_my_documents "feedback", {solution_id: solution_id}, _feedback_fields
 
-	log_publication "Feedback", crs, filter,
-			_feedback_fields, "my_feedback_by_solution_id", user_id
+	log_publication crs, user_id, "my_feedback_by_solution_id"
 	return crs
 
 
@@ -59,8 +56,7 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 
 	crs = get_my_documents "feedback", {review_id: review_id}, _feedback_fields
 
-	log_publication "Feedback", crs, filter,
-			_feedback_fields, "my_feedback_by_review_id", user_id
+	log_publication crs, user_id, "my_feedback_by_review_id"
 	return crs
 
 
@@ -73,6 +69,5 @@ Meteor.publish "feedback_by_review_id", (review_id) ->
 		review_id: review_id
 	crs = Feedback.find filter, _feedback_fields
 
-	log_publication "Feedback", crs, _feedback_fields,
-			_feedback_fields, "feedback_by_review_id", user_id
+	log_publication crs, user_id, "feedback_by_review_id"
 	return crs

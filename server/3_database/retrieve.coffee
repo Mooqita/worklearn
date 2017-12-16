@@ -94,7 +94,7 @@
 	check item_id, String
 	check field, String
 
-	roles = get_roles collection, item_id, user
+	roles = get_roles user, collection, item_id
 	field = field.split(".")[0]
 	filter =
 		role:

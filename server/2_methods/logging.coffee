@@ -33,26 +33,38 @@
 	console.log msg
 
 #######################################################
-@log_publication = (collection_name, crs, filter, fields, origin, requester_id, owner_id) ->
-	origin = origin || "unknown"
+@log_publication = (cursor, user, origin) ->
+	if not Array.isArray cursor
+		cursor = [cursor]
 
-	if owner_id
-		profile = get_profile owner_id
+	if not origin
+		stack = stack_trace()
+		origin = stack.split()[3]
+
+	for crs in cursor
+		description = crs._cursorDescription
+		collection = description.collectionName
+		filter = description.collectionName
+		options = description.collectionName
+
+		_log_publication collection, crs, filter, options, origin, user
+
+#######################################################
+_log_publication = (collection_name, crs, filter, fields, origin, user) ->
+	if typeof user != "string"
+		user = user._id
+
+	origin = origin || "unknown"
+	count = crs.count()
+
+	if user
+		profile = get_profile user
 		name = get_profile_name profile, true
 
-	if requester_id
-		requester = get_profile_name_by_user_id requester_id, true
-
-	if Array.isArray crs
-		count = crs.join()
-	else
-		count = crs.count()
-
-	msg = "publish [" + collection_name + "] "
-	msg += "[" + count + "] "
-	msg += if requester then " to: " + requester else ""
-	msg += if name then " from: " + name else ""
-	msg += " via: " + "[" + origin + "]"
+	msg =  "[" + origin + "] "
+	msg += "published [" + count + "] "
+	msg += "[" + collection_name + "] "
+	msg += if user then " to: " + name else ""
 
 	log_event msg, event_pub, event_info
 

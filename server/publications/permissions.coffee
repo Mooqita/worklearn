@@ -15,6 +15,6 @@ Meteor.publish "permissions", () ->
 		throw new Meteor.Error "Not permitted."
 
 	crs = Permissions.find()
-	log_publication "Permissions", crs, {}, {}, "permissions", user_id
+	log_publication crs, user_id, "permissions"
 	return crs
 

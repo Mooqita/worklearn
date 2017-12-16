@@ -8,6 +8,7 @@
 @IGNORE = "_|_"
 
 #######################################################
+@RECIPIENT = "recipient"
 @PUBLIC = "public"
 @OWNER = "owner"
 @USER = "user"

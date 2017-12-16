@@ -41,6 +41,10 @@
 ###############################################################################
 
 ###############################################################################
+# filter
+###############################################################################
+
+###############################################################################
 @_get_admission_filter = (collection_name, document_id, consumer_id, role) ->
 	check role, String
 
@@ -93,7 +97,7 @@
 
 #######################################################
 @get_filter = (user, role, collection_name, filter) ->
-	if user != IGNORE and role != IGNORE
+	if user == IGNORE and role == IGNORE
 		msg = "user and role set to ignore returning filter"
 		log_event msg, event_db, event_warn
 		return filter
@@ -112,8 +116,105 @@
 #######################################################
 @get_my_filter = (collection, filter) ->
 	user = Meteor.user()
-	filter = get_filter collection, user, OWNER, filter
+	filter = get_filter user, OWNER, collection, filter
 	return filter
+
+
+###############################################################################
+# admissions
+###############################################################################
+
+###############################################################################
+_admission_fields =
+	fields:
+		collection_name: 1
+		resource_id: 1
+		consumer_id: 1
+		role: 1
+
+
+#######################################################
+@get_admissions = (user, role, collection, resource, options={}) ->
+	admission_filter = _get_admission_filter collection, resource, user, role
+	admission_cursor = Admissions.find admission_filter, options
+	return admission_cursor
+
+
+#######################################################
+@get_admission = (user, role, collection, resource, options={}) ->
+	admission_filter = _get_admission_filter collection, resource, user, role
+	admission = Admissions.findOne admission_filter, options
+	return admission
+
+
+#######################################################
+@get_my_admissions = (collection, resource, options={}) ->
+	user = Meteor.user()
+	admission_cursor = get_admissions user, OWNER, collection, resource, options={}
+	return admission_cursor
+
+
+#######################################################
+@get_my_admission = (collection, resource, options={}) ->
+	user = Meteor.user()
+	admission = get_admission user, OWNER, collection, resource, options={}
+	return admission
+
+
+###############################################################################
+# admissaries
+###############################################################################
+
+#######################################################
+@get_document_admissaries = (collection, document_id, role) ->
+	owner_ids = []
+	admission_cursor = get_admissions IGNORE, role, collection, document_id
+	admission_cursor.forEach (admission) ->
+		owner_ids.push admission.consumer_id
+
+	filter["_id"] = {$in: owner_ids}
+	owner_cursor = Meteor.users.find filter
+	return owner_cursor
+
+
+#######################################################
+@get_document_owners = (collection, document_id) ->
+	owner_cursor = get_document_admissaries collection, document_id, OWNER
+	return owner_cursor
+
+
+#######################################################
+@get_document_owner = (collection, document_id) ->
+	user_id = Meteor.userId()
+	admission = get_admission user_id, OWNER collection, document_id
+	if not admission
+		return null
+
+	user = Meteor.users.findOne(admission.consumer_id)
+	return user
+
+
+###############################################################################
+# documents
+###############################################################################
+
+###############################################
+@get_document_unprotected = (collection, item_id) ->
+	check item_id, String
+
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error("Not permitted.")
+
+	if typeof collection is "string"
+		collection = get_collection collection
+
+	item = collection.findOne item_id
+	if not item
+		throw new Meteor.Error("Not permitted.")
+
+	return item
 
 
 #######################################################
@@ -136,25 +237,6 @@
 	return collection.findOne filter, options
 
 
-###############################################
-@get_document_unprotected = (collection, item_id) ->
-	check item_id, String
-
-	user = Meteor.user()
-
-	if not user
-		throw new Meteor.Error("Not permitted.")
-
-	if typeof collection is "string"
-		collection = get_collection collection
-
-	item = collection.findOne item_id
-	if not item
-		throw new Meteor.Error("Not permitted.")
-
-	return item
-
-
 #######################################################
 @get_my_documents = (collection, filter={}, options={}) ->
 	if typeof collection != "string"
@@ -175,62 +257,24 @@
 	return collection.findOne filter, options
 
 
-#######################################################
-@get_document_admission = (collection, document_id, role) ->
-	admission_filter = _get_admission_filter collection, document_id, IGNORE, role
-	admission = Admissions.findOne admission_filter
-	return admission
-
-
-#######################################################
-@get_document_admissions = (collection, document_id, role) ->
-	admission_filter = _get_admission_filter collection, document_id, IGNORE, role
-	admission_cursor = Admissions.find admission_filter
-	return admission_cursor
-
-
-#######################################################
-@get_document_owner = (collection, document_id) ->
-	admission = get_document_admission collection, document_id, IGNORE, OWNER
-	if not admission
-		return null
-
-	user = Meteor.users.findOne(admission.consumer_id)
-	return user
-
-
-#######################################################
-@get_document_owners = (collection, document_id) ->
-	owner_cursor = get_document_admissaries collection, document_id, OWNER
-	return owner_cursor
-
-
-#######################################################
-@get_document_admissaries = (collection, document_id, role) ->
-	owner_ids = []
-	admission_cursor = get_document_admissions collection, document_id, role
-	admission_cursor.forEach (admission) ->
-		owner_ids.push admission.consumer_id
-
-	filter["_id"] = {$in: owner_ids}
-	owner_cursor = Meteor.users.find filter
-	return owner_cursor
-
+###############################################################################
+# roles and permissions
+###############################################################################
 
 ########################################
-@has_role = (collection, item, user, role) ->
-	admission_cursor = get_document_admissaries collection, item, role
+@has_role = (collection, document, user, role) ->
+	admission_cursor = get_admissions user, IGNORE, collection, document
 	admission_cursor.forEach (admission) ->
-		if admission.consumer_id == user._id
+		if admission.role == role
 			return true
 
 	return false
 
 
 #######################################################
-@get_roles = (collection, document, user) ->
+@get_roles = (user, collection, document) ->
 	roles = [PUBLIC]
-	admission_cursor = get_document_admissions collection, document, IGNORE
+	admission_cursor = get_admissions user, IGNORE, collection, document
 	admission_cursor.forEach (admission) ->
 		roles.push admission.role
 

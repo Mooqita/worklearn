@@ -33,9 +33,7 @@ Template.collaborator.onCreated ->
 	self = this
 	self.send_disabled = new ReactiveVar(false)
 
-	console.log self.data
-
 	self.autorun ->
-		user_id = self.data.member_id
+		user_id = self.data.consumer_id
 		self.subscribe "collaborator", user_id
 

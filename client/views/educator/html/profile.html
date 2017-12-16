@@ -11,24 +11,24 @@
 
 				{{#if g_profile.avatar}}
 					{{>avatar collection_name = "Profiles"
-						observable = profile.avatar
-						item_id = profile._id
+						observable = g_profile.avatar
+						item_id = g_profile._id
 						field = "avatar"}}
 				{{/if}}
 
 				{{>upload method="upload_file" collection_name="Profiles"
-					item_id=profile._id field="avatar" max_size=500000}}
+					item_id=g_profile._id field="avatar" max_size=500000}}
 			</div>
 
 			<div class="col-sm-8 col-ms-8 col-xs-12">
 				<h2>Company Name</h2>
 				{{>basic_input method="set_field" collection_name="Profiles"
-						item_id=profile._id field="company_name"
+						item_id=g_profile._id field="company_name"
 						placeholder="Name of your organization"}}
 
 				<h2>Company Description</h2>
 				{{>text_input method="set_field" collection_name="Profiles"
-						item_id=profile._id field="company_description"
+						item_id=g_profile._id field="company_description"
 						placeholder="Let our students know a little more about your company."}}
 			</div>
 		</div>

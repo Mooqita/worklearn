@@ -11,7 +11,7 @@
 <template name="pre_loader">
 	<div class="mooqita-layout">
 		{{#if layout_selected_login}}
-			{{#unless profile.has_occupation}}
+			{{#unless g_profile.has_occupation}}
 				{{>Template.dynamic template=layout_selected_login}}
 			{{else}}
 				{{> Template.dynamic template=layout_selected_layout}}

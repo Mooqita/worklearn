@@ -16,18 +16,18 @@ Template.paging.onCreated ->
 	self.parameter = parameter
 
 	self.autorun () ->
-		handler =
-			onStop: (err) ->
-				if err
-					sAlert.error("Paging subscript error: " + err)
-			onReady: (res) ->
-				sAlert.success("Success!")
-
 		subscription = self.data.subscription
 		parameter = self.parameter.all()
 		parameter.page = self.page.get()
 		parameter.size = self.size.get()
 		parameter.query = self.query.get()
+
+		handler =
+			onStop: (err) ->
+				if err
+					sAlert.error("Paging subscript error: " + err)
+			onReady: (res) ->
+				console.log "Subscription " + subscription + " ready."
 
 		self.subscribe subscription, parameter, handler
 
@@ -41,12 +41,14 @@ Template.paging.helpers
 		return String(Template.instance().size.get())
 
 	items: () ->
-		collection_name = Template.instance().data.collection_name
+		data = Template.instance().data
+		filter = data.filter || {}
+		collection_name = data.collection_name
 		if not collection_name
 			return []
 
 		collection = get_collection collection_name
-		return collection.find()
+		return collection.find filter
 
 
 ########################################

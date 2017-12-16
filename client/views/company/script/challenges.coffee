@@ -28,7 +28,7 @@ Template.organization_challenges.helpers
 		return Template.instance().parameter
 
 	challenges: () ->
-		return get_my_documents "challenges"
+		return get_my_documents Challenges
 
 ########################################
 Template.organization_challenges.events
