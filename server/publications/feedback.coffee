@@ -14,7 +14,6 @@ _feedback_fields =
 	fields:
 		rating: 1
 		content: 1
-		owner_id: 1
 		published: 1
 		review_id: 1
 		solution_id: 1
@@ -34,10 +33,8 @@ Meteor.publish "my_feedback_by_challenge_id", (challenge_id) ->
 	check challenge_id, String
 	user_id = this.userId
 
-	filter =
-		challenge_id: challenge_id
-		owner_id: user_id
-	crs = Feedback.find filter, _feedback_fields
+	filter = {challenge_id: challenge_id}
+	crs = get_my_documents "feedback", filter, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
 			_feedback_fields, "my_feedback_by_challenge_id", user_id
@@ -60,10 +57,7 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 	check review_id, String
 	user_id = this.userId
 
-	filter =
-		review_id: review_id
-		owner_id: user_id
-	crs = Feedback.find filter, _feedback_fields
+	crs = get_my_documents "feedback", {review_id: review_id}, _feedback_fields
 
 	log_publication "Feedback", crs, filter,
 			_feedback_fields, "my_feedback_by_review_id", user_id

@@ -41,6 +41,8 @@
 
 #######################################################
 @get_visible_fields = (collection, user_id, filter) ->
+	throw new Meteor.Error "@get_visible_fields is not implemented."
+
 	owner = false
 
 	if filter.owner_id

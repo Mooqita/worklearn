@@ -39,22 +39,3 @@ Template.collaborator.onCreated ->
 		user_id = self.data.member_id
 		self.subscribe "collaborator", user_id
 
-
-########################################
-#Template.collaborator.helpers
-	'''role: (member_id, item) ->
-		console.log member_id, item
-
-		if member_id == item.owner_id
-			return OWNER
-
-		filter =
-			member_id: member_id
-			resource_id: item._id
-		adm = Admissions.findOne(filter)
-
-		if adm
-			return adm.role
-
-		return "none"
-'''

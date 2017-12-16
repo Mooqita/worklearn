@@ -7,8 +7,6 @@
 
 #######################################################
 Meteor.publish "find_users_by_mail": (mail_fragment) ->
-	#todo this is dangerous make sure we are not
-	#todo submitting data not suitable for sharing
 	user = Meteor.user()
 
 	if not user
@@ -38,11 +36,9 @@ Meteor.publish "find_users_by_mail": (mail_fragment) ->
 #######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
-	filter =
-		owner_id: user_id
 
 	fields = get_visible_fields Profiles, user_id, filter
-	crs = Profiles.find filter, fields
+	crs = get_my_documents Profiles, filter, fields
 
 	log_publication "Profile", crs, filter, {}, "profiles", user_id
 	return crs
@@ -57,9 +53,7 @@ Meteor.publish "user_resumes", (user_id) ->
 		check user_id, String
 		if not has_role Profiles, WILDCARD, this.userId, ADMIN
 			if this.userId != user_id
-				filter =
-					owner_id: user_id
-				profile = Profiles.findOne filter
+				profile = get_document user_id, "owner", Profiles
 				if profile.locale
 					throw new Meteor.Error("Not permitted.")
 
@@ -187,20 +181,14 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	##########################################
 
 	##########################################
-	filter =
-		owner_id: user_id
-		challenge_id: challenge_id
-
-	solutions = Solutions.find filter, mod
+	filter = {challenge_id: challenge_id}
+	solutions = get_my_documents filter, mod
 
 	##########################################
 	# Find relevant Feedback and Reviews
 	##########################################
-	filter =
-		owner_id: user_id
-		challenge_id: challenge_id
-	rev_given = Reviews.find filter, mod
-	fed_given = Feedback.find filter, mod
+	rev_given = get_my_documents Reviews.find filter, mod
+	fed_given = get_my_documents Feedback.find filter, mod
 
 	filter =
 		requester_id: user_id

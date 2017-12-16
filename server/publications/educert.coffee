@@ -52,7 +52,7 @@ Meteor.publish "my_cert_templates", (parameter) ->
 	check parameter, pattern
 
 	user_id = this.userId
-	filter = filter_visible_documents user_id, {owner_id: user_id}
+	filter = get_my_filter EduCertTemplate, {}
 
 	crs = get_documents_paged_unprotected EduCertTemplate, filter,
 			_cert_template_fields, parameter
@@ -67,13 +67,8 @@ Meteor.publish "my_cert_template_by_id", (cert_id) ->
 	check cert_id, String
 
 	user_id = this.userId
-
-	restrict =
-		_id:cert_id
-		owner_id: user_id
-
-	filter = filter_visible_documents user_id, restrict
-	crs = EduCertTemplate.find filter, _cert_template_fields
+	filter = {_id: cert_id}
+	crs = get_my_documents EduCertTemplate, filter, _cert_template_fields
 
 	log_publication "EduCertTemplate", crs, filter,
 			_cert_template_fields, "my_cert_template_by_id", user_id
@@ -91,8 +86,7 @@ Meteor.publish "my_recipients", (parameter) ->
 	check parameter, pattern
 
 	user_id = this.userId
-	filter = filter_visible_documents user_id, {owner_id: user_id}
-
+	filter = get_my_filter EduCertRecipients, {}
 	crs = get_documents_paged_unprotected EduCertRecipients, filter,
 			_cert_recipient_fields, parameter
 
@@ -122,18 +116,17 @@ Meteor.publish "assertion_by_recipient_id", (recipient_id) ->
 	crs = find_cert_assertions recipient
 
 	log_publication "EduCertAssertions", crs, {_id:recipient_id},
-			_cert_assertion_fields, "assertion_by_recipient_id", user_id
+			_cert_assertion_fields, "assertion_by_recipient_id", user._id
 	return crs
 
 
 #######################################################
 Meteor.publish "assertion_by_id", (assertion_id) ->
-	user_id = this.userId
-
+	user = Meteor.user()
 	crs = EduCertAssertions.find assertion_id
 
 	log_publication "EduCertAssertions", crs, {_id:assertion_id},
-			_cert_assertion_fields, "assertion_by_id", user_id
+			_cert_assertion_fields, "assertion_by_id", user._id
 	return crs
 
 

@@ -40,12 +40,12 @@
 
 	n = collection.update(id, mod)
 
-	msg = "[collection_name] " + collection._name
-	msg += " [field] " + field + ' of ' +
-	msg += " [item] " + id
-	msg += " [value] " + value.toString().substr(0, 50)
+	msg = "[" + collection._name + "] "
+	msg += "[" + field + "] "
+	msg += "[" + id + "] "
+	msg += "set to [" + value.toString().substr(0, 30) + "]"
 
-	log_event msg, event_edit, event_info
+	log_event msg, event_db, event_edit
 	return n
 
 

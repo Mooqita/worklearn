@@ -43,12 +43,16 @@
 	if requester_id
 		requester = get_profile_name_by_user_id requester_id, true
 
-	msg = ""
-	msg += if crs then crs.count() else "undisclosed amount"
-	msg += " " + collection_name
+	if Array.isArray crs
+		count = crs.join()
+	else
+		count = crs.count()
+
+	msg = "publish [" + collection_name + "] "
+	msg += "[" + count + "] "
 	msg += if requester then " to: " + requester else ""
 	msg += if name then " from: " + name else ""
-	msg += " via: " + origin
+	msg += " via: " + "[" + origin + "]"
 
 	log_event msg, event_pub, event_info
 

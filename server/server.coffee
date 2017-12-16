@@ -269,9 +269,7 @@ _test_user_creation = (mail, occupation) ->
 		user = Meteor.users.findOne user_id
 		console.log "Test user creation: " + user.emails[0].address
 
-	filter =
-		owner_id: user._id
-	profile = Profiles.findOne filter
+	profile = get_document user, "owner", Profiles
 
 	if profile
 		return profile._id

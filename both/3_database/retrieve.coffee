@@ -41,7 +41,7 @@
 ###############################################################################
 
 ###############################################################################
-_get_admission_filter = (collection_name, document_id, consumer_id, role) ->
+@_get_admission_filter = (collection_name, document_id, consumer_id, role) ->
 	check role, String
 
 	if typeof collection_name != "string"
@@ -92,22 +92,27 @@ _get_admission_filter = (collection_name, document_id, consumer_id, role) ->
 
 
 #######################################################
-_get_filter = (user, role, collection_name, filter) ->
+@get_filter = (user, role, collection_name, filter) ->
+	if user != IGNORE and role != IGNORE
+		msg = "user and role set to ignore returning filter"
+		log_event msg, event_db, event_warn
+		return filter
+
 	admission_filter = _get_admission_filter collection_name, IGNORE, user, role
 
-	admission_ids = []
+	resource_ids = []
 	admission_cursor = Admissions.find admission_filter
 	admission_cursor.forEach (admission) ->
-		admission_ids.push admission.resource_id
+		resource_ids.push admission.resource_id
 
-	filter["_id"] = {$in: admission_ids}
+	filter["_id"] = {$in: resource_ids}
 	return filter
 
 
 #######################################################
-_get_my_filter = (collection, filter) ->
+@get_my_filter = (collection, filter) ->
 	user = Meteor.user()
-	filter = _get_filter collection, user, OWNER, filter
+	filter = get_filter collection, user, OWNER, filter
 	return filter
 
 
@@ -116,7 +121,7 @@ _get_my_filter = (collection, filter) ->
 	if typeof collection != "string"
 		collection = collection._name
 
-	filter = _get_filter user, OWNER, collection, filter
+	filter = get_filter user, role, collection, filter
 	collection = get_collection collection
 	return collection.find filter, options
 
@@ -126,7 +131,7 @@ _get_my_filter = (collection, filter) ->
 	if typeof collection != "string"
 		collection = collection._name
 
-	filter = _get_filter user, role, collection, filter
+	filter = get_filter user, role, collection, filter
 	collection = get_collection collection
 	return collection.findOne filter, options
 
@@ -155,7 +160,7 @@ _get_my_filter = (collection, filter) ->
 	if typeof collection != "string"
 		collection = collection._name
 
-	filter = _get_my_filter collection, filter
+	filter = get_my_filter collection, filter
 	collection = get_collection collection
 	return collection.find filter, options
 
@@ -165,7 +170,7 @@ _get_my_filter = (collection, filter) ->
 	if typeof collection != "string"
 		collection = collection._name
 
-	filter = _get_my_filter collection, filter
+	filter = get_my_filter collection, filter
 	collection = get_collection collection
 	return collection.findOne filter, options
 

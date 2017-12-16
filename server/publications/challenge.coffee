@@ -15,7 +15,6 @@ _challenge_fields =
 		title: 1
 		content: 1
 		material: 1
-		owner_id: 1
 		published: 1
 		num_reviews: 1
 
@@ -36,7 +35,7 @@ Meteor.publish "challenges", (parameter) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	filter = filter_visible_documents user_id
+	filter = get_filter IGNORE, IGNORE, Challenges, {public:true}
 	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
@@ -57,10 +56,7 @@ Meteor.publish "my_challenges", (parameter) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	restrict =
-		owner_id: user_id
-
-	filter = filter_visible_documents user_id, restrict
+	filter = get_my_filter Challenges, {}
 	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
 	log_publication "Challenges", crs, filter,
@@ -76,11 +72,10 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	restrict =
+	filter =
 		_id: challenge_id
 		published: true
 
-	filter = filter_visible_documents user_id, restrict
 	crs = Challenges.find filter, _challenge_fields
 
 	log_publication "Challenges", crs, filter,
@@ -94,11 +89,7 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	restrict =
-		_id:challenge_id
-		owner_id: user_id
-
-	filter = filter_visible_documents user_id, restrict
+	filter = get_my_filter {_id:challenge_id}
 	crs = Challenges.find filter, _challenge_fields
 
 	log_publication "Challenges", crs, filter,
@@ -136,12 +127,11 @@ Meteor.publish "challenge_summaries", (parameter) ->
 		fields:
 			content: 1
 			material: 1
-			owner_id: 1
 			published: 1
 			challenge_id: 1
 
 	solution_ids = new Set()
-	profile_ids = new Set()
+	user_ids = new Set()
 
 	##############################################
 	# retrieving solutions
@@ -152,7 +142,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	solution_cursor.forEach (solution) ->
 		owner = get_document_owner Solutions, solution
 		solution_ids.add solution._id
-		profile_ids.add owner._id
+		user_ids.add owner._id
 
 	##############################################
 	# retrieving reviews
@@ -168,18 +158,16 @@ Meteor.publish "challenge_summaries", (parameter) ->
 		fields:
 			rating: 1
 			content: 1
-			owner_id: 1
 			published: 1
 			challenge_id: 1
 			solution_id: 1
 			review_id: 1
-			owner_id: 1
 
 	##############################################
 	review_cursor = Reviews.find(filter, mod)
 	review_cursor.forEach (entry) ->
 		owner = get_document_owner Reviews, entry
-		profile_ids.add owner._id
+		user_ids.add owner._id
 
 	##############################################
 	# retrieving feedback
@@ -189,16 +177,16 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	feedback_cursor = Feedback.find(filter, mod)
 	feedback_cursor.forEach (entry) ->
 		owner = get_document_owner Feedback, entry
-		profile_ids.add owner._id
+		user_ids.add owner._id
 
 	##############################################
 	# retrieving profiles
 	##############################################
 
 	# resetting the filter
-	profile_ids = Array.from(profile_ids)
+	user_ids = Array.from(user_ids)
 	filter =
-		owner_id:
+		_id:
 			$in: profile_ids
 
 	mod =
@@ -208,14 +196,14 @@ Meteor.publish "challenge_summaries", (parameter) ->
 			given_name: 1
 			middle_name: 1
 			family_name: 1
-			owner_id: 1
 			avatar: 1
 
 	##############################################
-	profile_cursor = Profiles.find(filter, mod)
+	profile_cursor = get_documents IGNORE, IGNORE, Profiles, filter, mod
+	result = [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
 
-	log_publication "Multiple Cursor", null, {},
+	log_publication "Multi", result, {},
 			{}, "challenge_summaries", user_id
 
-	return [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
+	return result
 
