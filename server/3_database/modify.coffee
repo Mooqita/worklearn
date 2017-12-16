@@ -1,6 +1,6 @@
 #######################################################
 #
-# Created by Markus on 26/10/2016.
+# Created by Markus on 26/10/2017.
 #
 #######################################################
 
@@ -47,49 +47,5 @@
 
 	log_event msg, event_edit, event_info
 	return n
-
-
-#######################################################
-@visible_fields = (collection, user_id, filter) ->
-	owner = false
-
-	if filter.owner_id
-		if filter.owner_id == user_id
-			owner = true
-
-	roles = ['all']
-	if owner
-		roles.push 'owner'
-
-	if user_id
-		user = Meteor.users.findOne(user_id)
-
-	if user
-		roles.push user.roles ...
-		roles.push 'anonymous'
-
-	res = {}
-	edit_fields = Permissions.find({}, {fields:{field:1}}).fetch()
-
-	for field in edit_fields
-		filter =
-			role:
-				$in: roles
-			field: field.field
-			collection_name: collection._name
-
-		permissions = Permissions.find(filter)
-
-		if permissions.count() == 0
-			continue
-
-		for permission in permissions.fetch()
-			if action_permitted permission, 'read'
-				res[field["field"]] = 1
-
-	mod =
-		fields: res
-
-	return mod
 
 

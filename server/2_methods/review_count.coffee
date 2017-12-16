@@ -29,7 +29,7 @@
 	if solution
 		filter.challenge_id = solution.challenge_id
 
-	res = get_document requester_id, OWNER, "reviews", filter
+	res = get_documents requester_id, OWNER, "reviews", filter
 	return  res.count()
 
 

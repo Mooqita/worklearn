@@ -7,7 +7,7 @@ Meteor.publish "my_recommendations", () ->
 	filter =
 		owner_id: user_id
 
-	fields = visible_fields Recommendations, user_id, filter
+	fields = get_visible_fields Recommendations, user_id, filter
 	crs = Recommendations.find filter, fields
 
 	log_publication "Recommendations", crs, filter, {}, "recommendations", user_id
@@ -23,7 +23,7 @@ Meteor.publish "my_recommendation_by_recipient_id", (recipient_id) ->
 		owner_id: user_id
 		recipient_id: recipient_id
 
-	fields = visible_fields Recommendations, user_id, filter
+	fields = get_visible_fields Recommendations, user_id, filter
 	crs = Recommendations.find filter, fields
 
 	log_publication "Recommendations", crs, filter, {}, "recommendations", user_id
@@ -36,7 +36,7 @@ Meteor.publish "recommendation_for_me", () ->
 	filter =
 		recipient_id: user_id
 
-	fields = visible_fields Recommendations, user_id, filter
+	fields = get_visible_fields Recommendations, user_id, filter
 	crs = Recommendations.find filter, fields
 
 	log_publication "Recommendations", crs, filter, {}, "recommendations", user_id

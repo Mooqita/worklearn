@@ -1,5 +1,7 @@
 #######################################################
 #
+# Created by Markus
+#
 #######################################################
 
 #######################################################
@@ -29,29 +31,32 @@
 
 
 #######################################################
-@gen_admission = (collection_name, item, user, role) ->
-	if not item
-		throw new Meteor.Error "Item need to be defined"
+@gen_admission = (collection, item, user, role) ->
+	if typeof collection != "string"
+		collection = collection._name
 
-	if not user
-		throw new Meteor.Error "User need to be defined"
+	if typeof item != "string"
+		item = item._id
 
-	if not role
-		throw new Meteor.Error "Role need to be defined"
+	if typeof user != "string"
+		user = user._id
 
-	admission =
-		collection_name: collection_name
-		resource_id: item._id
-		consumer_id: user._id
+	if typeof role != "string"
+		throw "Role needs to be a string found: " + role
+
+	filter =
+		collection_name: collection
+		resource_id: item
+		consumer_id: user
 		role: role
 
-	item = Admissions.findOne admission
-	if item
+	admission = Admissions.findOne filter
+	if admission
 		msg = "item already in list"
 		log_event msg
 		return item._id
 
-	item_id = Admissions.insert admission
+	item_id = Admissions.insert filter
 	return item_id
 
 

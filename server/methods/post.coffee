@@ -12,7 +12,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if can_edit Posts, WILDCARD, user
+		if can_edit Posts, COLLECTION, user
 			throw new Meteor.Error('Not permitted.')
 
 		post =

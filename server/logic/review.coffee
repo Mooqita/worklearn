@@ -106,7 +106,7 @@ _find_review = (user, challenge) ->
 	if review.assigned
 		send_review_timeout_message review
 
-	modify_field_unprotected Reviews, review._id, "owner_id", user._id
+	gen_admission Reviews, review, user, OWNER
 	modify_field_unprotected Reviews, review._id, "assigned", true
 
 	res =

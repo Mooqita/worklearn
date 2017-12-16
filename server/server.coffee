@@ -185,11 +185,10 @@ _add_admin = (email, password) ->
 
 	if not user
 		user =
-			email: "admin@mooqita.org",
-			password: password,
+			email: "admin@mooqita.org"
+			password: password
 
 		user = Accounts.createUser(user)
-		#Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
 		user = Accounts.findUserByEmail(email)
 
 	profile = get_profile user._id
@@ -206,10 +205,10 @@ _add_admin = (email, password) ->
 
 ####################################################
 _initialize_database = () ->
+
 	console.log "####################################################"
 	console.log "##               adding test data                 ##"
 	console.log "####################################################"
-
 
 	title = "The test challenge"
 	filter =
@@ -241,10 +240,11 @@ _initialize_database = () ->
 			reviews.push review
 
 	for solution in solutions
+		user = get_document_owner Solutions, solution._id
+
 		filter =
 			solution_id: solution._id
 		reviews = Reviews.find(filter).fetch()
-		user = get_document_owner "solution", owner_id
 
 		for review in reviews
 			_test_feedback solution, review, user
@@ -254,6 +254,7 @@ _initialize_database = () ->
 	console.log "####################################################"
 
 	# TODO: test reviews when there is a solution like for tutors
+
 
 #####################################################
 _test_user_creation = (mail, occupation) ->
@@ -300,7 +301,6 @@ _test_challenge = (title) ->
 	if not user
 		_test_user_creation "designer@mooqita.org", "organization"
 		user = Accounts.findUserByEmail("designer@mooqita.org")
-		#Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
 
 	challenge_id = gen_challenge user
 
@@ -348,8 +348,8 @@ _test_review = (challenge, solution, user) ->
 			return
 		throw e
 
-	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs(3)
-	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs 3
+	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Reviews, res.review_id, "test_object", true
 
 	review = Reviews.findOne res.review_id
@@ -375,7 +375,7 @@ _test_feedback = (solution, review, user) ->
 		return
 
 	modify_field_unprotected Feedback, feedback_id, "content", faker.lorem.paragraphs(3)
-	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Feedback, feedback_id, "test_object", true
 
 	feedback = Feedback.findOne feedback_id

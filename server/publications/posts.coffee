@@ -14,7 +14,7 @@ Meteor.publish "posts", (group_name) ->
 		group_name: group_name
 
 	filter = filter_visible_documents user_id, restrict
-	fields = visible_fields Posts, user_id, filter
+	fields = get_visible_fields Posts, user_id, filter
 	crs = Posts.find filter, fields
 
 	log_publication "Posts", crs, filter, restrict, "posts", user_id

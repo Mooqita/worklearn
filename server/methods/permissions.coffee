@@ -11,7 +11,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if not has_role Permissions, WILDCARD, user._id, ADMIN
+		if not has_role Permissions, COLLECTION, user._id, ADMIN
 			throw new Meteor.Error('Not permitted.')
 
 		check role, String
@@ -52,7 +52,7 @@ Meteor.methods
 		if !user
 			throw new Meteor.Error 'Not permitted.'
 
-		if  not has_role Permissions, WILDCARD, user._id, 'db_admin'
+		if  not has_role Permissions, COLLECTION, user._id, 'db_admin'
 			throw new Meteor.Error 'Not permitted.'
 
 		Permissions.remove(id)

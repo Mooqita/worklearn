@@ -1,25 +1,18 @@
 #######################################################
 #
-#Created by Markus on 26/10/2015.
+# Created by Markus on 26/10/2016.
 #
 #######################################################
 
 #######################################################
-@store_document_unprotected = (collection, document, owner)->
-	document["created"] = new Date()
-	document["modified"] = new Date()
+@get_collection_save = (collection_name) ->
+	check collection_name, String
+	collection = get_collection collection_name
 
-	id = collection.insert document
-	item = collection.findOne id
+	if not collection
+		throw new Meteor.Error "Collection not found: " + collection_name
 
-	if not owner
-		return id
-
-	user = Meteor.users.findOne owner._id
-
-	gen_admission collection._name, item, user, OWNER
-	return id
-
+	return collection
 
 #######################################################
 @get_documents_paged_unprotected = (collection, filter, mod, parameter) ->
@@ -44,6 +37,50 @@
 
 	crs = collection.find filter, mod
 	return crs
+
+
+#######################################################
+@get_visible_fields = (collection, user_id, filter) ->
+	owner = false
+
+	if filter.owner_id
+		if filter.owner_id == user_id
+			owner = true
+
+	roles = ['all']
+	if owner
+		roles.push 'owner'
+
+	if user_id
+		user = Meteor.users.findOne(user_id)
+
+	if user
+		roles.push user.roles ...
+		roles.push 'anonymous'
+
+	res = {}
+	edit_fields = Permissions.find({}, {fields:{field:1}}).fetch()
+
+	for field in edit_fields
+		filter =
+			role:
+				$in: roles
+			field: field.field
+			collection_name: collection._name
+
+		permissions = Permissions.find(filter)
+
+		if permissions.count() == 0
+			continue
+
+		for permission in permissions.fetch()
+			if action_permitted permission, 'read'
+				res[field["field"]] = 1
+
+	mod =
+		fields: res
+
+	return mod
 
 
 #######################################################
@@ -84,4 +121,11 @@
 			return true
 
 	throw new Meteor.Error 'Edit not permitted: ' + field
+
+
+#######################################################
+@backup_collection = (collection_name) ->
+	collection = get_collection_save collection_name
+	data = export_data(collection)
+	return data
 
