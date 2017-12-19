@@ -1,0 +1,371 @@
+<!------------------------------------------------
+| Main Menu
+-------------------------------------------------->
+<template name="onboarding_menu">
+	<div class="container-fluid menu-container">
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="/">
+				<img src="/images/icon.png" style="height: 50px;">
+			</a>
+
+			<button class="navbar-toggler" type="button"
+							data-toggle="collapse" data-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent" aria-expanded="false"
+							aria-label="Toggle navigation">
+				<span class="icon">=</span>
+			</button>
+
+			<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<ul class="navbar-nav justify-content-end">
+					{{#if currentUser}}
+						<li class="nav-item">
+							<a class="navigation-button control-navigate" id="logout">
+								Logout
+							</a>
+						</li>
+					{{/if}}
+				</ul>
+			</div>
+		</nav>
+	</div>
+</template>
+
+<template name="onboarding">
+	<div class="container">
+		<div class="row padding-top">
+			<div class="col-md-4">
+				<div class="testimonial" style="width: 280px">
+					<div class="name-picture">
+						<img class="" alt="" src="/images/marco.jpg">
+						<h5>Marko Russiver</h5>
+						<p>Founder, CEO</p>
+						<p>Guaana</p>
+					</div>
+
+					<div class="text">
+						<p>Led by genius developers and PhD’s from Berkley,
+							Mooqita is the next epic thing in student to work
+							evaluation process. Guaana says yes.</p>
+					</div>
+				</div>
+
+				<div class="testimonial" style="width: 280px">
+					<div class="name-picture">
+						<img class="" alt="" src="/images/sergio.jpg">
+						<h5>Sergio L Hernandez A</h5>
+						<p>Engineer</p>
+						<p>Mooqita Learner</p>
+					</div>
+
+					<div class="text">
+						<p>Mooqita is the perfect chance to have an
+							international experience and share ideas
+							with people around the world.</p>
+					</div>
+				</div>
+
+				<div class="testimonial" style="width: 280px">
+					<div class="name-picture">
+						<img class="" alt="" src="/images/icon.png">
+						<h5>Xiaohong</h5>
+						<p>Student</p>
+						<p>Mooqita Learner</p>
+					</div>
+
+					<div class="text">
+						<p>As a MOOC junkie, I found myself benefit from Mooqita
+							and got a job that pays as a Rails developer. There should
+							be more people join the force to help online students the
+							way Mooqita is doing.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<h1>Find the talent you need!</h1>
+				<h2>Now and in the future</h2>
+				<p>
+					We are making it easy for you to find and attract
+					the talent you need to grow your business. We just
+					need a few things to get started.
+				</p>
+				<div style="width: 100%; align-items: right; text-align: right; padding-top: 20px">
+					<a class="btn btn-theme" href="onboarding_2">Sure I add some data</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="onboarding_2">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				<ul class="list-group" style="font-size: 10px">
+					<li class="list-group-item background-theme" style="padding: 5px">
+						<span style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em;">fingerprint</i>
+						</span>
+						<span>Define Your Companies Social DNA.</span>
+						<div style="text-align: right"><b>(0 of 10)</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">rowing</i>
+						</div>
+						<span>Define the Skill Sets You Need</span>
+						<div style="text-align: right"><b>(0 of 3)</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">people</i>
+						</div>
+						<span>See your matches</span>
+						<div style="text-align: right"><b>~20,000</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">album</i>
+						</div>
+						<span>Allow us a Prediction</span>
+					</li>
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">card_membership</i>
+						</div>
+						<span>Sign up to get in touch with your Talents</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-12 align-content-center text-center">
+						<h1>Does your company value<br>ambition over curiosity?</h1>
+					</div>
+				</div>
+
+				<div class="row padding-top">
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Yea</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">???</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Nay</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="onboarding_3">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				<ul class="list-group" style="font-size: 10px">
+					<li class="list-group-item" style="padding: 5px">
+						<span style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em;">fingerprint</i>
+						</span>
+						<span>Define Your Companies Social DNA.</span>
+						<div style="text-align: right"><b>(10 of 10)</b></div>
+					</li>
+
+					<li class="list-group-item background-theme" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">rowing</i>
+						</div>
+						<span>Define the Skill Sets You Need</span>
+						<div style="text-align: right"><b>(0 of 3)</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">people</i>
+						</div>
+						<span>See your matches</span>
+						<div style="text-align: right"><b>~5,000</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">album</i>
+						</div>
+						<span>Allow us a Prediction</span>
+					</li>
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">card_membership</i>
+						</div>
+						<span>Sign up to get in touch with your Talents</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-8">
+				<div class="row">
+					<div class="offset-md-2 col-md-8 align-content-center text-center">
+						<h1>Please let us know whom you are looking for. </h1>
+						<h2>Select the role, a general filed, and a keyword.</h2>
+						<p>Do not worry if you can not find what exactly you are
+							looking for. We will take care of that for you, you
+							will see!</p>
+					</div>
+				</div>
+
+				<div class="row padding-top">
+					<div class="col-md-12">
+						<form class="container" id="needs-validation" novalidate>
+							<div class="row">
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom01">Expertise</label>
+									<input type="text" class="form-control" id="validationCustom01"
+												 placeholder="e.g. machine learning" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										The general area of expertise e.g. machine learning,
+										human subject research, translation, etc.
+									</small>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom02">Function</label>
+									<input type="text" class="form-control" id="validationCustom02"
+												 placeholder="e.g. team-lead" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										Something along the line of intern, team-lead, ceo, etc
+									</small>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom02">A Tag</label>
+									<input type="text" class="form-control" id="validationCustom02"
+												 placeholder="e.g. python" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										Something the person whome you want to hire
+										really needs to know/do/like.
+									</small>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="align-content-center text-center">
+										<a class="btn btn-theme" href="onboarding_4">Add some skill requirements</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="onboarding_4">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				<ul class="list-group" style="font-size: 10px">
+					<li class="list-group-item" style="padding: 5px">
+						<span style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em;">fingerprint</i>
+						</span>
+						<span>Define Your Companies Social DNA.</span>
+						<div style="text-align: right"><b>(10 of 10)</b></div>
+					</li>
+
+					<li class="list-group-item background-theme" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">rowing</i>
+						</div>
+						<span>Define the Skill Sets You Need</span>
+						<div style="text-align: right"><b>(1 of 3)</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">people</i>
+						</div>
+						<span>See your matches</span>
+						<span>make sure people are aware that lower is better and validate they do it!!!</span>
+						<div style="text-align: right"><b>~1,000</b></div>
+					</li>
+
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">album</i>
+						</div>
+						<span>Allow us a Prediction</span>
+					</li>
+					<li class="list-group-item" style="padding: 5px">
+						<div style="float: left; padding-right: 10px">
+							<i class="material-icons" style="font-size: 4em">card_membership</i>
+						</div>
+						<span>Sign up to get in touch with your Talents</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-8">
+				<h1>Challenge title</h1>
+				<p>
+					Voluptate earum consequatur saepe laborum quam exercitationem.
+					Iste labore eius et rerum non nemo reprehenderit neque.
+					Magni hic aperiam culpa libero consequatur.
+					Quis consequatur voluptatum itaque dolor omnis eaque.
+					Ipsam laborum tenetur.
+					Inventore voluptas et quia.
+
+					Enim voluptatum doloremque nostrum ipsam iusto harum.
+					Dicta reprehenderit dolorem delectus rerum harum nulla hic.
+					Neque ullam quaerat.
+					Aut fugit qui officia in.
+					Nostrum enim est.
+					Corrupti sed et quaerat vel quod eius.
+
+					Rerum suscipit excepturi eius molestiae eaque enim ut.
+					Ad accusamus est fugit distinctio porro.
+					Sunt perspiciatis sequi.
+					Voluptates labore et tempore est quo sit eos.
+					Iusto sit enim et quia aut et.
+				</p>
+
+				<div class="row padding-top">
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Yea</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">???</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Nay</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

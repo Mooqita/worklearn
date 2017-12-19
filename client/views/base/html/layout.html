@@ -4,22 +4,42 @@
 |
 -------------------------------------------------->
 <template name="body_template" xmlns="http://www.w3.org/1999/html">
-	{{>pre_loader}}
+	{{>sAlert}}
+
+	{{#if layout_selected_login}}
+		{{#unless currentUser}}
+			{{>Template.dynamic template=layout_selected_login}}
+		{{else}}
+			{{#profile_loader}}
+				{{#Template.dynamic template=layout_selected_layout}}
+					{{>Template.dynamic template=layout_selected_content}}
+				{{/Template.dynamic}}
+			{{/profile_loader}}
+		{{/unless}}
+	{{else}}
+		{{#Template.dynamic template=layout_selected_layout}}
+			{{>Template.dynamic template=layout_selected_content}}
+		{{/Template.dynamic}}
+	{{/if}}
+</template>
+
+<template name="profile_loader">
+	{{#if Template.subscriptionsReady}}
+		{{>Template.contentBlock}}
+	{{else}}
+		{{#if layout_selected_layout}}
+			{{#Template.dynamic template=layout_selected_layout}}
+				{{>wait}}
+			{{/Template.dynamic}}
+		{{else}}
+			{{>wait}}
+		{{/if}}
+	{{/if}}
 </template>
 
 
-<template name="pre_loader">
-	<div class="mooqita-layout">
-		{{#if layout_selected_login}}
-			{{#unless g_profile.has_occupation}}
-				{{>Template.dynamic template=layout_selected_login}}
-			{{else}}
-				{{> Template.dynamic template=layout_selected_layout}}
-			{{/unless}}
-		{{else}}
-			{{> Template.dynamic template=layout_selected_layout}}
-		{{/if}}
-	</div>
+<template name="mooqita_view">
+	{{>Template.dynamic template=layout_selected_view}}
 </template>
 
 
@@ -33,9 +53,7 @@
 			{{/if}}
 
 			<main>
-				{{>sAlert}}
-
-				{{>Template.dynamic template=layout_selected_content}}
+				{{>Template.contentBlock}}
 			</main>
 
 			{{#if layout_selected_footer}}
@@ -54,16 +72,11 @@
 </template>
 
 
-<template name="mooqita_view">
-	{{>Template.dynamic template=layout_selected_view}}
-</template>
-
-
 <template name="mooqita_wide_spacing">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				{{> UI.contentBlock}}
+				{{>Template.contentBlock}}
 			</div>
 		</div>
 	</div>

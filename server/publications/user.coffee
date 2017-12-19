@@ -8,7 +8,6 @@
 #######################################################
 Meteor.publish "find_users_by_mail": (mail_fragment) ->
 	user = Meteor.user()
-
 	if not user
 		throw new Meteor.Error('Not permitted.')
 
@@ -36,10 +35,12 @@ Meteor.publish "find_users_by_mail": (mail_fragment) ->
 #######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
+	if not user_id
+		throw new Meteor.Error('Not permitted.')
 
 	crs = get_my_documents Profiles
 
-	log_publication crs, user_id, "profiles"
+	log_publication crs, user_id, "my_profiles"
 	return crs
 
 #######################################################

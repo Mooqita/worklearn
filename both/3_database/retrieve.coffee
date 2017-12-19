@@ -97,6 +97,9 @@
 
 #######################################################
 @get_filter = (user, role, collection_name, filter) ->
+	if not filter
+		filter = {}
+
 	if user == IGNORE and role == IGNORE
 		msg = "user and role set to ignore returning filter"
 		log_event msg, event_db, event_warn
@@ -148,16 +151,16 @@ _admission_fields =
 
 
 #######################################################
-@get_my_admissions = (collection, resource, options={}) ->
+@get_my_admissions = (role, collection, resource, options={}) ->
 	user = Meteor.user()
-	admission_cursor = get_admissions user, OWNER, collection, resource, options={}
+	admission_cursor = get_admissions user, role, collection, resource, options={}
 	return admission_cursor
 
 
 #######################################################
-@get_my_admission = (collection, resource, options={}) ->
+@get_my_admission = (role, collection, resource, options={}) ->
 	user = Meteor.user()
-	admission = get_admission user, OWNER, collection, resource, options={}
+	admission = get_admission user, role, collection, resource, options={}
 	return admission
 
 
@@ -185,8 +188,7 @@ _admission_fields =
 
 #######################################################
 @get_document_owner = (collection, document_id) ->
-	user_id = Meteor.userId()
-	admission = get_admission user_id, OWNER collection, document_id
+	admission = get_admission IGNORE, OWNER, collection, document_id
 	if not admission
 		return null
 
@@ -234,7 +236,8 @@ _admission_fields =
 
 	filter = get_filter user, role, collection, filter
 	collection = get_collection collection
-	return collection.findOne filter, options
+	document = collection.findOne filter, options
+	return document
 
 
 #######################################################

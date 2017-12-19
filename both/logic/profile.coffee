@@ -1,4 +1,29 @@
-##############################################
+###############################################
+@get_user_mail = (user) ->
+	if not user
+		user = Meteor.userId()
+
+	if typeof user == "string"
+		user = Meteor.users.findOne user
+
+	if not user
+		throw  new Meteor.Error "User not found: " + user
+
+	address = "unknown"
+
+	if user.emails
+		mail = user.emails[0]
+		if mail
+			address = mail.address
+
+	return address
+
+
+#######################################################
+# get profile
+#######################################################
+
+#######################################################
 @get_profile = (user) ->
 	if not user
 		user = Meteor.userId()
@@ -10,10 +35,22 @@
 	return profile
 
 
+###############################################
+@get_profile_name_by_user_id = (user, short = false, plus_id=true) ->
+	profile = get_profile user
+	return get_profile_name(profile, short, plus_id)
+
+
+#######################################################
+# With profile
+#######################################################
+
 #######################################################
 @get_avatar = (profile) ->
-	avatar = ""
+	if not profile
+		profile = get_profile()
 
+	avatar = ""
 	if profile.avatar
 		if typeof profile.avatar == "number"
 			avatar = download_dropbox_file Profiles, profile._id, "avatar"
@@ -22,18 +59,9 @@
 
 
 ###############################################
-@get_profile_name_by_user_id = (user_id, short = false, plus_id=true) ->
-	profile = get_profile user_id
-	return get_profile_name(profile, short, plus_id)
-
-
-###############################################
 @get_profile_name = (profile, short = false, plus_id=true) ->
-	if !profile
-		return "A Doe (Name unknown)"
-
-	if typeof profile == "string"
-		profile = get_profile profile
+	if not profile
+		profile = get_profile()
 
 	name = (profile.given_name ? "Learner") + " "
 
@@ -57,17 +85,5 @@
 		return null
 
 	return get_user_mail user
-
-
-###############################################
-@get_user_mail = (user) ->
-	address = "unknown"
-
-	if user.emails
-		mail = user.emails[0]
-		if mail
-			address = mail.address
-
-	return address
 
 

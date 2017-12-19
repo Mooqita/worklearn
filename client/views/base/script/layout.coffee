@@ -7,7 +7,6 @@
 ##########################################################
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
-
 ##############################################
 Template.registerHelper "layout_selected_menu", ()->
 	Session.get "menu_template"
@@ -37,7 +36,7 @@ Template.registerHelper "layout_selected_view", ()->
 
 
 ################################################
-Template.pre_loader.onCreated ->
+Template.profile_loader.onCreated ->
 	self = this
 
 	Meteor.call "log_user",
@@ -46,7 +45,7 @@ Template.pre_loader.onCreated ->
 				console.log ["error", err]
 
 	self.autorun ->
-		Meteor.subscribe "my_profile",
+		self.subscribe "my_profile",
 			(err, res) ->
 				if err
 					sAlert.error "Profile subscription error: " + err
@@ -55,7 +54,7 @@ Template.pre_loader.onCreated ->
 		# TODO: might get slow for n > X000 (150 Byte each.)
 		# this can happen if the user has a very large number
 		# of admissions. Not very likely at the moment though.
-		Meteor.subscribe "my_admissions",
+		self.subscribe "my_admissions",
 			(err, res) ->
 				if err
 					sAlert.error "Admissions subscription error: " + err

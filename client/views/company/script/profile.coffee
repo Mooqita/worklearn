@@ -37,3 +37,9 @@ Template.collaborator.onCreated ->
 		user_id = self.data.consumer_id
 		self.subscribe "collaborator", user_id
 
+
+########################################
+Template.collaborator.helpers
+	collaborator: ()->
+		data = Template.instance().data
+		return Profiles.findOne {user_id: data.consumer_id}
