@@ -22,7 +22,10 @@ _feedback_fields =
 #######################################################
 Meteor.publish "my_feedback", () ->
 	user_id = this.userId
-	crs = get_my_documents "feedback", {}, _feedback_fields
+	if not user_id
+		throw Meteor.Error("Not permitted.")
+
+	crs = get_my_documents Feedback, {}, _feedback_fields
 
 	log_publication crs, user_id, "my_feedback"
 	return crs
@@ -30,7 +33,10 @@ Meteor.publish "my_feedback", () ->
 #######################################################
 Meteor.publish "my_feedback_by_challenge_id", (challenge_id) ->
 	check challenge_id, String
+
 	user_id = this.userId
+	if not user_id
+		throw Meteor.Error("Not permitted.")
 
 	filter = {challenge_id: challenge_id}
 	crs = get_my_documents "feedback", filter, _feedback_fields
@@ -41,7 +47,10 @@ Meteor.publish "my_feedback_by_challenge_id", (challenge_id) ->
 #######################################################
 Meteor.publish "my_feedback_by_solution_id", (solution_id) ->
 	check solution_id, String
+
 	user_id = this.userId
+	if not user_id
+		throw Meteor.Error("Not permitted.")
 
 	crs = get_my_documents "feedback", {solution_id: solution_id}, _feedback_fields
 
@@ -52,7 +61,10 @@ Meteor.publish "my_feedback_by_solution_id", (solution_id) ->
 #######################################################
 Meteor.publish "my_feedback_by_review_id", (review_id) ->
 	check review_id, String
+
 	user_id = this.userId
+	if not user_id
+		throw Meteor.Error("Not permitted.")
 
 	crs = get_my_documents "feedback", {review_id: review_id}, _feedback_fields
 
@@ -63,7 +75,10 @@ Meteor.publish "my_feedback_by_review_id", (review_id) ->
 #######################################################
 Meteor.publish "feedback_by_review_id", (review_id) ->
 	check review_id, String
+
 	user_id = this.userId
+	if not user_id
+		throw Meteor.Error("Not permitted.")
 
 	filter =
 		review_id: review_id

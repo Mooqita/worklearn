@@ -1,14 +1,11 @@
 ########################################
 Template.registerHelper "g_profile", (owner_id=null) ->
-	if not owner_id
-		owner_id = Meteor.userId()
-		
 	return get_profile owner_id
 
 
 ########################################
-Template.registerHelper "g_profile_id", (owner_id) ->
-	profile = get_profile owner_id
+Template.registerHelper "g_profile_id", (user) ->
+	profile = get_profile user
 
 	if not profile
 		return undefined
@@ -17,18 +14,21 @@ Template.registerHelper "g_profile_id", (owner_id) ->
 
 
 ########################################
-Template.registerHelper "g_profile_avatar", (owner_id) ->
-	profile = get_profile owner_id
+Template.registerHelper "g_profile_avatar", (user) ->
+	profile = get_profile user
 
 	if not profile
 		return undefined
 
-	return profile.avatar
+	return get_avatar profile
 
 
 ########################################
-Template.registerHelper "g_profile_name", (owner_id) ->
-	profile = get_profile owner_id
+Template.registerHelper "g_profile_name", (user) ->
+	profile = get_profile user
+
+	if not profile
+		return undefined
 
 	return get_profile_name profile, false, false
 

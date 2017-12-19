@@ -28,7 +28,7 @@ Meteor.publish "my_admissions", () ->
 	if not user_id
 		throw Meteor.Error("Not permitted.")
 
-	crs = get_my_admissions user_id, IGNORE, _admission_fields
+	crs = get_my_admissions IGNORE, IGNORE, IGNORE, _admission_fields
 	log_publication crs, user_id, "my_admissions"
 
 	return crs
@@ -64,7 +64,7 @@ Meteor.publish "admissions", (parameter) ->
 	options["skip"] = page * limit
 	options["limit"] = limit
 
-	crs = get_admissions item, options
+	crs = get_admissions IGNORE, IGNORE, collection, item, options
 	log_publication crs, user_id, "admissions"
 
 	return crs
@@ -82,10 +82,14 @@ Meteor.publish "collaborator", (user_id) ->
 			given_name : 1
 			family_name : 1
 			middle_name : 1
+			user_id: 1
 			avatar: 1
 
-	crs = get_documents user_id, OWNER, "profiles", {}, options
-	log_publication crs, user_id, "collaborators"
+	profile_cursor = get_documents user_id, OWNER, "profiles", {}, options
+	admission_cursor = get_admissions user_id, OWNER, "profiles", IGNORE
+	result = [profile_cursor, admission_cursor]
 
-	return crs
+	log_publication result, user_id, "collaborators"
+
+	return result
 
