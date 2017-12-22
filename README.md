@@ -26,7 +26,7 @@ After cloning the repository we recommend to adapt _settings.json_ to your needs
 
  When Meteor is installed and you cloned the repository go to your _mooqita_folder_ and run the following command: 
  
-	meteor --s settings.json 
+	meteor -s settings.json 
  	
  This command will read _settings.json_ and initialize the database. It will setup the required permissions to run your local instance of Mooqita's worklearn platform. It can also add an admin account and add test data to the database for an easy start. If you already started the worklearn platform you might need to remove the database if the following steps fail. 
 
