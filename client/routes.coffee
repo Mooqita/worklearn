@@ -36,11 +36,11 @@ FlowRouter.route "/",
 FlowRouter.route "/test/:template",
 	name: "index",
 	action: (params) ->
-		Session.set	"menu_template", "onboarding_menu"
-		Session.set	"login_template", "mooqita_login"
+#		Session.set	"menu_template", "onboarding_menu"
+#		Session.set	"login_template", "mooqita_login"
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_view"
-		Session.set	"footer_template", "mooqita_footer"
+#		Session.set	"footer_template", "mooqita_footer"
 
 		this.render "body_template"
 
