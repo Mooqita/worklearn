@@ -5,7 +5,7 @@ The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqit
 To run your own instance of Mooqita here is a guide how to get it running on your system. We are planning to release a docker of our platform but have not found the time to do so (Help in this department would be highly appreciated).
 
 ### Install Meteor
-Install the meteor web framework. You find a detailed description of the installation process on their [website](www.meteor.com).
+Install the meteor web framework. You find a detailed description of the installation process on their [website](https://www.meteor.com/).
 
 ### Downloading Mooqita's Worklearn Platform from Git-Hub
 Go to [Mooqita's Worklearn](https://github.com/Mooqita/worklearn) project page on GitHub and clone the repository into a folder on your computer. We will call this folder on your machine _mooqita_folder_ from now on. You find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/)
