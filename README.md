@@ -11,7 +11,7 @@ Install the meteor web framework. You find a detailed description of the install
 Go to [Mooqita's Worklearn](https://github.com/Mooqita/worklearn) project page on GitHub and clone the repository into a folder on your computer. We will call this folder on your machine _mooqita_folder_ from now on. You find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/)
 
 ### First start of Mooqita
-After cloning the repository we recommend to adept _settings.json_ to your needs (_mooqita_folder/settings.json_). The following parameters are only parsed if run on your machine under localhost. They are not parsed when the system runs on a server or production system for obvious security reasons. How to run your own version of Mooqita's worklearn platform please refer to section [Server Deployment](#server) further down in this document.
+After cloning the repository we recommend to adapt _settings.json_ to your needs (_mooqita_folder/settings.json_). The following parameters are only parsed if run on your machine under localhost. They are not parsed when the system runs on a server or production system for obvious security reasons. How to run your own version of Mooqita's worklearn platform please refer to section [Server Deployment](#server) further down in this document.
 
 	"init_default_permissions":true,
 	"default_permissions_asset_path":"db/defaultcollections/permissions.json",
