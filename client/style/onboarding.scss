@@ -1,59 +1,96 @@
 ////////////////////////////////////////////////
 @import "{}/client/style/_color.scss";
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Testimonial
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
 .testimonial .text {
   color: #888;
 	font-size: 0.8em;
   margin-bottom: 20px;
 }
+
+///////////////////////////////////////////////////////////////////////////////
 .name-picture {
   float: left;
   width: 100%;
   text-align: left;
 	margin-bottom: 10px;
 }
+
 .name-picture h5 {
   font-size: 0.9em;
-  /*text-transform: uppercase;*/
   letter-spacing: 0.08em;
 }
+
 .name-picture p {
   color: #888;
   margin: 0;
   font-size: 0.8em;
 }
+
 .name-picture img {
   float: left;
   width: 74px;
   border-radius: 37px;
   margin-right: 10px;
 }
+
+///////////////////////////////////////////////////////////////////////////////
 .icon-with-background{
 	padding: 5px;
 	width: 1.5em;
 	height: 1.5em;
 	border-radius: 5px;
 }
+
 .text-after-icon{
   padding-top: 5px;
   padding-left: -5px;
   margin-left: -15px;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Hover cards
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// base
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-padding{
+	padding: 0px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 .hover-card-container{
 	text-align: center;
 	text-align: -moz-center;
 	text-align: -webkit-center;
+
+	padding: 5px;
 }
 
-.hover-card-box{
-	min-height: 210px;
-	width: 210px;
+.hover-card-container .animated,
+.hover-card-container.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
+///////////////////////////////////////////////////////////////////////////////
 .hover-card{
-	position: absolute;
-	padding: 15px 35px;
+  cursor: pointer;
+	position: relative;
 
 	display: block;
 	text-align: center;
@@ -63,33 +100,39 @@
 	color: $text;
 	background: $background;
 
-	border: 2px solid #dddddd;
+	//border: 2px solid #dddddd;
 
-  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 1);
-          box-shadow: 0px 0px 0px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
 
-	-webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+	-webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.hover_box .hover-card{
+		min-height: 150px;
 }
 
 .hover-card:hover{
-	margin: -20px;
-
+	background: $contrast-on-theme;
 	text-decoration: none;
 	z-index: 20;
 
-  -webkit-box-shadow: 20px 20px 80px rgba(0, 0, 0, 0.25);
-          box-shadow: 20px 20px 80px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
 }
 
+.hover-card:active{
+	background: $contrast-on-theme-dark;
+	text-decoration: none;
+	z-index: 20;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 .hover-card .hover-icon{
 	font-size: 6em;
-	-webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
 }
 
 .hover-card:hover .hover-icon{
@@ -97,16 +140,313 @@
 	text-decoration: none;
 }
 
+///////////////////////////////////////////////////////////////////////////////
 .hover-card .hover-text{
 	font-size: 1em;
-	-webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-	text-decoration: none;
 }
 
 .hover-card:hover .hover-text{
 	font-size: 1.5em;
+	color: #222;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-info{
+	font-size: 0.8em;
+	color: #888;
+}
+
+.hover-card:hover .hover-info{
+	color: #444;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// small
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card{
+	padding: 5px;
+	min-height: 130px;
+}
+
+.hover-card-small .hover-card:hover{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-select{
+	font-size: 1em;
+	padding: 5px;
+	border-radius: 100px;
+	background: $contrast-on-theme;
+	color: $theme;
+}
+
+.hover-card-small .hover-card:hover .hover-select{
+	font-size: 1em;
+	background: $background;
+	color: $theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-icon{
+	font-size: 2em;
+}
+
+.hover-card-small .hover-card:hover .hover-icon{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-text{
+	font-size: 1em;
+}
+
+.hover-card-small .hover-card:hover .hover-text{
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-info{
+	font-size: 0.8em;
+	color: #888;
+}
+
+.hover-card:active .hover-info{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Quick Survey
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.element-container{
+	//display: none;
+	opacity: 1.0;
+}
+
+.element-container .animated,
+.element-container.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Toggle button
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// Toggle button styles
+///////////////////////////////////////////////////////////////////////////////
+
+.toggle-button {
+//  margin: 0 20px;
+}
+
+.toggle-button {
+  position: relative;
+  display: inline-block;
+}
+
+.toggle-button label {
+    display: inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left;
+}
+
+.toggle-button input {
+    display: none;
+}
+
+.toggle-button__icon {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.toggle-button__icon:before, .toggle-button__icon:after {
+	content: "";
+	position: absolute;
+	top: 45%;
+	left: 35%;
+	transition: 0.2s ease-out;
+}
+
+.toggle-button--tuli label {
+  line-height: 20px;
+  text-indent: 30px;
+}
+
+.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon {
+  background: $theme;
+}
+
+.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon:before,
+.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon:after {
+    opacity: 1;
+}
+
+.toggle-button--tuli .toggle-button__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s;
+  border: 2px solid $theme;
+  border-radius: 1px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button--tuli .toggle-button__icon:before, .toggle-button--tuli .toggle-button__icon:after {
+	top: 5px;
+	left: 2px;
+	width: 12px;
+	height: 2px;
+	border-radius: 3px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	top: 35%;
+	background: $contrast-on-theme;
+	opacity: 0;
+	transform-origin: left center;
+}
+
+.toggle-button--tuli .toggle-button__icon:before {
+    transform: translate(0, 0) rotate(45deg) scale(0.6, 1);
+}
+
+.toggle-button--tuli .toggle-button__icon:after {
+    transform: translate(4px, 6px) rotate(-45deg);
+}
+
+.toggle-button--tuli:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Persona
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.persona {
+	margin: 0px;
+	margin-top: 5px;
+	padding: 5px;
+	background: white;
+	z-index: 2000;
+
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+.persona.visible{
+	right: 0px;
+}
+
+.persona .persona-wait{
+	opacity: 0.0;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	margin-left: -17px;
+	margin-bottom: 23px;
+	height: 0px;
+	overflow: visible;
+}
+
+.persona .waiting{
+	opacity: 1.0;
+}
+
+.persona .animated,
+.persona.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.svg-holder {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+	font-size: 12px;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Personality explanation
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.personality-explain {
+	text-align: left;
+}
+
+.personality-explain ul{
+	padding: 0px;
+}
+
+.personality-explain li{
+	position: relative;
+	display: block;
+	padding: .4em .4em .4em .8em;
+	*padding: .4em;
+	margin: .5em 0 .5em 2.5em;
+	background: #ddd;
+	color: #444;
 	text-decoration: none;
+	transition: all .3s ease-out;
+}
+
+.personality-explain li:before{
+	font-family: 'FontAwesome';
+	content: '\f067';
+	background: $contrast-on-theme;
+	position: absolute;
+	left: -2.5em;
+	top: 50%;
+	margin-top: -1em;
+	height: 2em;
+	width: 2em;
+	line-height: 2em;
+	text-align: center;
+	font-weight: bold;
+}
+
+.personality-explain .positive li:before{
+	content: '\f067';
+	background: $contrast-on-theme;
+}
+
+.personality-explain .negative li:before {
+	content: '\f068';
+	background: $theme-light;
 }

@@ -3,10 +3,21 @@
 #############################################################
 
 #############################################################
+_get_value = (template_instance) ->
+	value = get_field_value template_instance.data
+	if not value
+		value = template_instance.tag_data.get()
+
+	return value
+
+
+#############################################################
 _split_tags = (tag_line) ->
 	tags_in = tag_line.split ","
 	tags = {}
 	for tag in tags_in
+		if tag == ""
+			continue
 		el = tag.split ":"
 		tags[el[0]] = el[1] | 0
 
@@ -34,7 +45,13 @@ _update_tag = (old_tags, new_tag) ->
 
 
 #############################################################
-_meteor_tag = (self, event, value) ->
+_set_value = (template_instance, event, value) ->
+	self = template_instance.data
+	old = get_field_value self
+	if not old
+		template_instance.tag_data.set value
+		return
+
 	field = self.field
 	collection = self.collection_name
 	item_id = self.item_id
@@ -44,24 +61,24 @@ _meteor_tag = (self, event, value) ->
 
 #############################################################
 Template.tags.onCreated ->
+	this.tag_data = new ReactiveVar("")
 
 
 #########################################################
 Template.tags.events
 	"change .edit-field": (event) ->
-		data = Template.instance().data
-		value = get_field_value data
+		instance = Template.instance()
+		value = _get_value instance
 		old_tags = _split_tags value
 
 		new_tags = _split_tags event.target.value
 		value = _update_tags old_tags, new_tags
 
-		_meteor_tag data, event, value
+		_set_value instance, event, value
 
 	"change .tags": (event) ->
 		instance = Template.instance()
-		data = instance.data
-		value = get_field_value instance.data
+		value = _get_value instance
 		old_tags = _split_tags value
 
 		target = event.target
@@ -70,26 +87,26 @@ Template.tags.events
 
 		value = _update_tag old_tags, new_tag
 
-		_meteor_tag data, event, value
+		_set_value instance, event, value
 
 
 #############################################################
 Template.tags.helpers
 	clean: () ->
-		value = get_field_value Template.instance().data
+		value = _get_value Template.instance()
 		return value
 
 	tag_line: () ->
-		value = get_field_value Template.instance().data
+		value = _get_value Template.instance()
 		tags = _split_tags value
 		keys = Object.keys tags
 
 		return keys.join ",", keys
 
 	tags: () ->
-		data = Template.instance().data
-		options = data.rating_options
-		value = get_field_value data
+		instance = Template.instance()
+		options = instance.data.rating_options
+		value = _get_value instance
 		tags = _split_tags value
 
 		if not options

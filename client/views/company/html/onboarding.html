@@ -1,5 +1,7 @@
 <!------------------------------------------------
-| Main Menu
+|
+| Onboarding Main Menu
+|
 -------------------------------------------------->
 <template name="onboarding_menu">
 	<div class="container-fluid menu-container">
@@ -31,7 +33,447 @@
 </template>
 
 
-<template name="testimonial">
+<!------------------------------------------------
+|
+| Hover Cards
+|
+-------------------------------------------------->
+<template name="hover_card">
+	<div class="hover-card-container animated hover-card-small">
+		<div class="hover-card-box animated">
+			<div class="hover-card animated onboarding-select">
+				{{#if icon}}
+					<span class="hover-icon fa {{icon}}"></span>
+				{{/if}}
+
+				<p class="hover-text animated">{{message}}</p>
+				<small class="form-text hover-info animated">{{popup}}</small>
+
+				{{#if selected}}
+					<div style="position: absolute; left:5px; top:5px"
+							 class="badge badge-info hover-select animated">
+						<span class="fa fa-check"></span>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<!------------------------------------------------
+|
+| Persona
+|
+-------------------------------------------------->
+<template name="persona">
+	<div class="svg-holder animated" id="{{persona_id}}">
+		<div class="persona-wait animated" id="{{persona_wait_id}}">
+			{{>wait}}
+		</div>
+	</div>
+
+	{{redraw}}
+</template>
+
+<!------------------------------------------------
+|
+| Onboarding Main Interaction
+|
+-------------------------------------------------->
+<template name="onboarding">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-7 col-lg-offset-1 col-md-8 col-md-offset-0 col-sm-10 col-sm-offset-1">
+				<h1 style="text-align: center; padding-top: 30px">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
+
+				<h1>Find the talent you need!</h1>
+				<p style="padding-bottom: 25px">
+					We are making it easy for you to find and attract
+					the talent you need to grow your business.
+				</p>
+
+				<h1>Role</h1>
+				<p>Don't worry you can change this later and refine it as you like.</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-7 col-lg-offset-1 col-md-8 col-md-offset-0 col-sm-10 col-sm-offset-1">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-paint-brush color-theme" href="#"
+								dict=candidate_info key="role" value="design"
+								message="Designer" popup="UX/UI Designer, Creative Director, etc."}}
+					</div>
+
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-cogs color-theme" href="#"
+								dict=candidate_info key="role" value="ops"
+								message="Operations" popup="Finance, Accounting, Human Resources, etc."}}
+					</div>
+
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-laptop color-theme" href="#"
+								dict=candidate_info key="role" value="dev"
+								message="Developer" popup="Mobile / Fullstack Developer, DevOps, etc."}}
+					</div>
+
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-pie-chart color-theme" href="#"
+								dict=candidate_info key="role" value="sales"
+								message="Sales" popup="Sales Manager, Account Manager, etc."}}
+					</div>
+
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-comments-o color-theme" href="#"
+								dict=candidate_info key="role" value="marketing"
+								message="Marketing" popup="Content Creator, Marketing Manager, etc."}}
+					</div>
+
+					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+						{{>hover_card icon="fa-question-circle color-theme" href="#"
+								dict=candidate_info key="role" value="other"
+								message="Others" popup="Attorney , etc."}}
+					</div>
+				</div>
+
+				<h1>Competencies</h1>
+				<p>
+					Finding the candidate with the right skill set is important.
+					Mooqita however can do more. We can help you find the person
+					that will complement your teams social fabric.
+				</p>
+				<div class="row" style="padding: 20px 0px">
+					<div class="col-sm-6 padding-next">
+						<div class="toggle-button toggle-button--tuli">
+							<input id="team_id" type="checkbox"
+										 aria-describedby="team_explain">
+							<label for="team_id">Leading People</label>
+							<div class="toggle-button__icon"></div>
+						</div>
+
+						<div>
+							<small id="team_explain" class="form-text text-muted">
+								Does the candidate need to lead other members of your team?
+							</small>
+						</div>
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						<div class="toggle-button toggle-button--tuli">
+							<input id="strategic_id" type="checkbox"
+										 aria-describedby="strategic_explain">
+							<label for="strategic_id">Strategic Decisions</label>
+							<div class="toggle-button__icon"></div>
+						</div>
+
+						<div>
+							<small id="strategic_explain" class="form-text text-muted">
+								Decisions that influence the shape of your product or your
+								companies culture require a special kind of person.
+							</small>
+						</div>
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						<div class="toggle-button toggle-button--tuli">
+							<input id="idea_id" type="checkbox"
+										 aria-describedby="idea_explain">
+							<label for="idea_id">Contributing Ideas</label>
+							<div class="toggle-button__icon"></div>
+						</div>
+
+						<div>
+							<small id="idea_explain" class="form-text text-muted">
+								Do you need fresh and new ideas for products or features?
+								Then you check this.
+							</small>
+						</div>
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						<div class="toggle-button toggle-button--tuli">
+							<input id="process_id" type="checkbox"
+										 aria-describedby="process_explain">
+							<label for="process_id">Process Design</label>
+							<div class="toggle-button__icon"></div>
+						</div>
+
+						<div>
+							<small id="process_explain" class="form-text text-muted">
+								The gritty little things that need to be done again and
+								again. If someone has a working solution...
+							</small>
+						</div>
+					</div>
+				</div>
+
+					<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
+					<div class="btn btn-theme" id="make_profile">
+						Generate Candidate Profile
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-lg-3 col-md-4 col-md-offset-0 col-sm-10 col-sm-offset-1">
+				<div class="persona animated" id="{{persona_holder_id}}">
+					<h2 style="margin-top: 0px">Challenges</h2>
+					<h2>Persona</h2>
+					{{>persona persona_data=persona_data}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="persona_done">
+	{{#mooqita_wide_spacing}}
+		<div class="row">
+			<div class="col-lg-10">
+				<h1>Persona</h1>
+				<p>
+					Excellent you created a persona for your candidate.
+					To save your progress you can register an account.
+					By adding the personality of your team you can get
+					even better results.
+				</p>
+			</div>
+			<div class="col-lg-10">
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+<!-----------------------------------------------------------------------------
+|
+| Survey
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey">
+	<div class="padding-top">
+		<div class="progress" style="height: 30px">
+			<div class="progress-bar background-theme" role="progressbar"
+					 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
+					 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+				<span>{{count}} of {{total}}</span>
+			</div>
+		</div>
+
+		{{#let question=current_question}}
+			{{#quick_survey_element answers=answers
+															question=question
+															responses=(g_array 1 2 3 4 5)}}
+				{{>Template.contentBlock}}
+			{{/quick_survey_element}}
+		{{/let}}
+	</div>
+</template>
+
+
+<!-----------------------------------------------------------------------------
+|
+| Survey Question
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey_element">
+	{{redraw}}
+
+	<div class="text-center element-container animated">
+		{{#if question}}
+			<h2>{{question}}</h2>
+			<div class="row">
+				<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
+						 style="padding: 10px">
+					<div class="text-left">Disagree</div>
+				</div>
+				{{#each response in responses}}
+					<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
+						<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
+							{{response}}
+						</div>
+					</div>
+				{{/each}}
+				<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
+					<div class="text-right">Agree</div>
+				</div>
+			</div>
+			<small id="process_explain" class="form-text text-muted">
+				You can type the number as well.
+			</small>
+		{{else}}
+		{{/if}}
+
+			{{>Template.contentBlock}}
+	</div>
+</template>
+
+<!-----------------------------------------------------------------------------
+|
+| Questionnaire for Team members
+|
+------------------------------------------------------------------------------>
+<template name="team_member">
+	{{#mooqita_wide_spacing}}
+		{{#quick_survey answers=answers
+				questions=(g_array
+				"Am the life of the party"
+				"Feel little concern for others"
+				"Am always prepared"
+				"Get stressed out easily"
+				"Have a rich vocabulary"
+				"Don't talk a lot"
+				"Am interested in people"
+				"Leave my belongings around"
+				"Am relaxed most of the time"
+				"Have difficulty understanding abstract ideas"
+				"Feel comfortable around people"
+				"Insult people"
+				"Pay attention to details"
+				"Worry about things"
+				"Have a vivid imagination"
+				"Keep in the background"
+				"Sympathize with others' feelings"
+				"Make a mess of things"
+				"Seldom feel blue"
+				"Am not interested in abstract ideas"
+				"Start conversations"
+				"Am not interested in other people's problems"
+				"Get chores done right away"
+				"Am easily disturbed"
+				"Have excellent ideas"
+				"Have little to say"
+				"Have a soft heart"
+				"Often forget to put things back in their proper place"
+				"Get upset easily"
+				"Do not have a good imagination"
+				"Talk to a lot of different people at parties"
+				"Am not really interested in others"
+				"Like order"
+				"Change my mood a lot"
+				"Am quick to understand things"
+				"Don't like to draw attention to myself"
+				"Take time out for others"
+				"Shirk my duties"
+				"Have frequent mood swings"
+				"Use difficult words"
+				"Don't mind being the center of attention"
+				"Feel others' emotions"
+				"Follow a schedule"
+				"Get irritated easily"
+				"Spend time reflecting on things"
+				"Am quiet around strangers"
+				"Make people feel at ease"
+				"Am exacting in my work"
+				"Often feel blue"
+				"Am full of ideas")}}
+
+		<div class="row padding-top">
+			<h1>Excellent! Thank you for finishing the questionnaire.</h1>
+		</div>
+
+		<p>
+			<div class="persona animated" style="float: right;">
+			<div class="row"></div>
+				<div class="col-md-4 col-sm-6 col-xs-12 background-theme" style="height: 50px">
+				</div>
+					{{>persona persona_data=persona_data}}
+			</div>
+
+			Das Fünf-Faktoren-Modell (oder auch: „Big Five“) geht davon aus,
+			dass die Persönlichkeit eines Menschen anhand von fünf voneinander
+			unabhängigen Eigenschaften umrissen werden kann: emotionale Stabilität,
+			Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit.
+			Selbstverständlich ist die Persönlichkeit eines Individuums derart komplex und
+			einzigartig, dass die verschiedenen Ausprägungen auf diesen fünf Dimensionen
+			kein allumfassendes Bild eines Menschen widerspiegeln können. Vielmehr dient
+			das Fünf-Faktoren-Modell als Orientierungsrahmen, der Möglichkeit zur Reflexion
+			bieten kann. Bitte beachten Sie auch: Eine bestimmte Ausprägungen in einer der
+			Dimensionen ist nichts, was man per se als etwas Gutes oder Schlechtes bezeichnen
+			kann. Ob sich eine Persönlichkeitseigenschaft eher als Vor- oder Nachteil erweist,
+			hängt immer auch von den konkreten Anforderungen einer Lebenssituation ab.
+		</p>
+
+		<div class="personality-explain">
+			<div class="row padding-next">
+				<div class="col-sm-12">
+					<h2>Emotional Stability</h2>
+					<p>
+						Dieses Persönlichkeitsmerkmal beschreibt die
+						emotionale Ausgeglichenheit. Es sagt etwas darüber
+						aus, wie schnell eine Person eine Situation
+						als emotional belastend empfindet.
+
+						Mit einer Ausprägung von 62 (bei einem Mittelwert
+						von 50 und einer Standardabweichung von 10) haben
+						Sie einen hohen Wert erreicht. (ca. 88% der Befragten
+						der Normstichprobe geben einen ähnlichen oder niedrigeren Wert an).
+
+						Personen mit einem vergleichbaren Wert zeichnen sich
+						häufig durch eine hohe Stressresistenz aus und sind
+						im Allgemeinen eher zuversichtlich.
+					</p>
+				</div>
+			</div>
+
+			<div class="row positive padding-next">
+				<div class="col-sm-6">
+					<b>Strength of high stability</b>
+					<ul>
+						<li>sind ausgeglichen und sorgenfrei</li>
+						<li>sind nicht so leicht aus der Fassung zu bringen</li>
+						<li>sind eher optimistisch</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6">
+					<b>Strength of low stability</b>
+					<ul>
+						<li>nehmen Gefühle intensiv und deutlich wahr</li>
+						<li>handeln vorsichtig und überlegt</li>
+						<li>sind sensibel für sich und ihr Umfeld</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row negative">
+				<div class="col-sm-6">
+					<b>Weaknesses of high stability</b>
+					<ul>
+						<li>können recht abgeklärt auf Andere wirken</li>
+						<li>handeln bisweilen voreilig und unvorsichtig</li>
+						<li>unterschätzen ggf. Risiken und Gefahren</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6">
+					<b>Weakness of low stability</b>
+					<ul>
+						<li>sind stressanfällig</li>
+						<li>erleben häufig negative Gefühle wie Angst oder Nervosität</li>
+						<li>machen sich viele Sorgen</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+			<h2>Mediator</h2>
+			<h2>Visionary</h2>
+			<h2>Organizer</h2>
+		{{/quick_survey}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!-----------------------------------------------------------------------------
+|
+| Testimonials
+|
+------------------------------------------------------------------------------>
+
+<!--template name="testimonial">
 <div>
 	<div class="testimonial" style="width: 280px">
 		<div class="name-picture">
@@ -128,53 +570,121 @@
 			</div>
 			<span>Onboard new team members support</span>
 		</li>
-
 	</ul>
 </template>
 
-<template name="onboarding">
+
+<template name="onboarding_social">
 	<div class="container">
-		<div class="row padding-top">
-			<div class="col-md-6 offset-md-3">
+		<div class="row padding-top padding-next">
+			<div class="col-md-6 offset-md-3 no-gutters">
 				<h1 style="text-align: center;">
 					<img style="width: 300px" src="/images/mooqita.jpg">
 				</h1>
-				<h1>Find the talent you need!</h1>
-				<p>
-					We are making it easy for you to find and attract
-					the talent you need to grow your business.
-				</p>
+				<h1 style="text-align: right">Social Factors</h1>
+			</div>
+		</div>
 
-				<div class="row">
-					<div class="col-md-4 ">
-						{{>hover_card icon="computer" message="Tech" href="onboarding_2"}}
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<p style="text-align: right">Which personality traits would thrive most in your company? <b>(Select <em>5</em>)</b></p>
+
+				<div class="row no-gutters">
+					<div class="col-md">
+						{{>select_item icon="" message="curiosity" href="onboarding_sign_in"}}
 					</div>
 
-					<div class="col-md-4">
-						{{>hover_card icon="computer" message="Design" href="onboarding_2"}}
+					<div class="col-md">
+						{{>select_item icon="" message="flexibility" href="onboarding_sign_in"}}
 					</div>
 
-					<div class="col-md-4">
-						{{>hover_card icon="computer" message="Scientist" href="onboarding_2"}}
+					<div class="col-md">
+						{{>select_item icon="" message="assertiveness" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="compassion" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="confidence" href="onboarding_sign_in"}}
 					</div>
 				</div>
 
+				<div class="row no-gutters">
+					<div class="col-md ">
+						{{>select_item icon="" message="commitment" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="dependabile" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="independance" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="competitive" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="optimisim" href="onboarding_sign_in"}}
+					</div>
+				</div>
+
+				<hr>
+
+				<p>Which personality traits would be every ones pet pew? <b>(Select <em>5</em>)</b></p>
+
+				<div class="row no-gutters">
+					<div class="col-md">
+						{{>select_item icon="" message="curiosity" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="flexibility" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="assertiveness" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="compassion" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="confidence" href="onboarding_sign_in"}}
+					</div>
+				</div>
+
+				<div class="row no-gutters">
+					<div class="col-md ">
+						{{>select_item icon="" message="commitment" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="dependabile" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="independance" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="competitive" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="optimisim" href="onboarding_sign_in"}}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-
-<template name="hover_card">
-	<div class="hover-card-container">
-		<div class="hover-card-box">
-			<a class="hover-card" href="{{href}}">
-				<i class="material-icons color-theme hover-icon">{{icon}}</i>
-				<p class="hover-text">{{message}}</p>
-			</a>
-		</div>
-	</div>
-</template>
 
 <template name="onboarding_2">
 	<div class="container" style="padding-top: 35px">
@@ -390,5 +900,5 @@
 			</div>
 		</div>
 	</div>
-</template>
+</template-->
 

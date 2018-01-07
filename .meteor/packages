@@ -43,15 +43,19 @@ useraccounts:core
 useraccounts:bootstrap
 
 
+# CSS
+
+fourseven:scss
+standard-minifier-css
+twbs:bootstrap
+fortawesome:fontawesome
+
+
 # router
 
 ostrio:flow-router-extra
 kadira:blaze-layout
-
-
-# styling
-
-fourseven:scss
+simple:json-routes
 
 
 # missing functionality
@@ -82,16 +86,9 @@ http@1.3.0
 markdown@1.0.12
 reactive-dict@1.2.0
 
-
 # database
 
 meteorhacks:aggregate
 dburles:mongo-collection-instances
 
-okgrow:analytics
-peppelg:bootstrap-3-modal
-simple:json-routes
-alanning:roles@1.2.14
-standard-minifier-css
-alexwine:bootstrap-4
-planettraining:material-design-icons-font
+d3js:d3

@@ -93,9 +93,19 @@
 // forms
 ////////////////////////////////////////////////
 .mooqita-layout .form-control{
-	border: 2px solid #ddd;
-	min-height: 40.5px;
-	font-size: 16px;
+	border-color: $theme;
+//	min-height: 40.5px;
+//	font-size: 16px;
+}
+
+.mooqita-layout .form-control.tags{
+	background: $background;
+	color: $text;
+}
+
+.mooqita-layout .form-control.tags:focus{
+	background: $background;
+	color: $text;
 }
 
 .mooqita-layout .badge .form-control{
