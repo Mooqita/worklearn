@@ -254,23 +254,23 @@
 |
 ------------------------------------------------------------------------------>
 <template name="quick_survey">
-	<div class="padding-top">
-		<div class="progress" style="height: 30px">
-			<div class="progress-bar background-theme" role="progressbar"
-					 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
-					 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-				<span>{{count}} of {{total}}</span>
+	{{#let question=current_question}}
+		<div class="padding-top">
+			<div class="progress" style="height: 30px">
+				<div class="progress-bar background-theme" role="progressbar"
+						 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
+						 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+					<span>{{count}} of {{total}}</span>
+				</div>
 			</div>
-		</div>
 
-		{{#let question=current_question}}
-			{{#quick_survey_element answers=answers
-															question=question
-															responses=(g_array 1 2 3 4 5)}}
-				{{>Template.contentBlock}}
-			{{/quick_survey_element}}
-		{{/let}}
-	</div>
+				{{#quick_survey_element answers=answers
+																question=question
+																responses=(g_array 1 2 3 4 5)}}
+					{{>Template.contentBlock}}
+				{{/quick_survey_element}}
+		</div>
+	{{/let}}
 </template>
 
 
@@ -284,8 +284,9 @@
 
 	<div class="text-center element-container animated padding-top">
 		{{#if question}}
-			<h2>{{question}}</h2>
-			<span>
+			<P>I see myself as someone who...</P>
+			<h2><em>{{question}}</em></h2>
+			<div style="margin-left: 8%">
 				<div class="row">
 					<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
 							 style="padding: 10px">
@@ -302,7 +303,7 @@
 						<div class="text-right">Agree</div>
 					</div>
 				</div>
-			</span>
+			</div>
 			<small id="process_explain" class="form-text text-muted">
 				You can type the number as well.
 			</small>
