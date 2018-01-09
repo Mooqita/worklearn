@@ -282,32 +282,33 @@
 <template name="quick_survey_element">
 	{{redraw}}
 
-	<div class="text-center element-container animated">
+	<div class="text-center element-container animated padding-top">
 		{{#if question}}
 			<h2>{{question}}</h2>
-			<div class="row">
-				<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
-						 style="padding: 10px">
-					<div class="text-left">Disagree</div>
-				</div>
-				{{#each response in responses}}
-					<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
-						<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
-							{{response}}
-						</div>
+			<span>
+				<div class="row">
+					<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
+							 style="padding: 10px">
+						<div class="text-left">Disagree</div>
 					</div>
-				{{/each}}
-				<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
-					<div class="text-right">Agree</div>
+					{{#each response in responses}}
+						<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
+							<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
+								{{response}}
+							</div>
+						</div>
+					{{/each}}
+					<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
+						<div class="text-right">Agree</div>
+					</div>
 				</div>
-			</div>
+			</span>
 			<small id="process_explain" class="form-text text-muted">
 				You can type the number as well.
 			</small>
 		{{else}}
-		{{/if}}
-
 			{{>Template.contentBlock}}
+		{{/if}}
 	</div>
 </template>
 
@@ -318,150 +319,298 @@
 ------------------------------------------------------------------------------>
 <template name="team_member">
 	{{#mooqita_wide_spacing}}
-		{{#quick_survey answers=answers
-				questions=(g_array
-				"Am the life of the party"
-				"Feel little concern for others"
-				"Am always prepared"
-				"Get stressed out easily"
-				"Have a rich vocabulary"
-				"Don't talk a lot"
-				"Am interested in people"
-				"Leave my belongings around"
-				"Am relaxed most of the time"
-				"Have difficulty understanding abstract ideas"
-				"Feel comfortable around people"
-				"Insult people"
-				"Pay attention to details"
-				"Worry about things"
-				"Have a vivid imagination"
-				"Keep in the background"
-				"Sympathize with others' feelings"
-				"Make a mess of things"
-				"Seldom feel blue"
-				"Am not interested in abstract ideas"
-				"Start conversations"
-				"Am not interested in other people's problems"
-				"Get chores done right away"
-				"Am easily disturbed"
-				"Have excellent ideas"
-				"Have little to say"
-				"Have a soft heart"
-				"Often forget to put things back in their proper place"
-				"Get upset easily"
-				"Do not have a good imagination"
-				"Talk to a lot of different people at parties"
-				"Am not really interested in others"
-				"Like order"
-				"Change my mood a lot"
-				"Am quick to understand things"
-				"Don't like to draw attention to myself"
-				"Take time out for others"
-				"Shirk my duties"
-				"Have frequent mood swings"
-				"Use difficult words"
-				"Don't mind being the center of attention"
-				"Feel others' emotions"
-				"Follow a schedule"
-				"Get irritated easily"
-				"Spend time reflecting on things"
-				"Am quiet around strangers"
-				"Make people feel at ease"
-				"Am exacting in my work"
-				"Often feel blue"
-				"Am full of ideas")}}
+		{{#quick_survey answers=answers questions=questions}}
 
-		<div class="row padding-top">
-			<h1>Excellent! Thank you for finishing the questionnaire.</h1>
-		</div>
+			<h1 style="text-align: left; padding-bottom: 25px">
+				Excellent! Thank you for finishing the questionnaire.
+			</h1>
 
-		<p>
-			<div class="persona animated" style="float: right;">
-			<div class="row"></div>
-				<div class="col-md-4 col-sm-6 col-xs-12 background-theme" style="height: 50px">
-				</div>
+			<p style="text-align: left">
+				<div class="persona animated col-sm-6 col-ms-6 col-xs-12"
+						 style="float: right; min-height: 150px; margin-left: 15px; margin-bottom: 15px">
 					{{>persona persona_data=persona_data}}
-			</div>
+				</div>
 
-			Das Fünf-Faktoren-Modell (oder auch: „Big Five“) geht davon aus,
-			dass die Persönlichkeit eines Menschen anhand von fünf voneinander
-			unabhängigen Eigenschaften umrissen werden kann: emotionale Stabilität,
-			Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit.
-			Selbstverständlich ist die Persönlichkeit eines Individuums derart komplex und
-			einzigartig, dass die verschiedenen Ausprägungen auf diesen fünf Dimensionen
-			kein allumfassendes Bild eines Menschen widerspiegeln können. Vielmehr dient
-			das Fünf-Faktoren-Modell als Orientierungsrahmen, der Möglichkeit zur Reflexion
-			bieten kann. Bitte beachten Sie auch: Eine bestimmte Ausprägungen in einer der
-			Dimensionen ist nichts, was man per se als etwas Gutes oder Schlechtes bezeichnen
-			kann. Ob sich eine Persönlichkeitseigenschaft eher als Vor- oder Nachteil erweist,
-			hängt immer auch von den konkreten Anforderungen einer Lebenssituation ab.
-		</p>
+				This test uses the „Big Five“ personality model. It assumes that personality
+				is a combination of five independent factors: Emotional <em>Stability</em>,
+				<em>Extroversion</em>, <em>Openness</em> for Experiences,	<em>Agreeableness</em>,
+				<em>(Conscientiousness)</em>. The figure shows the relation of these factors we
+				calculated from your test results.
+				This model is very useful to describe aspects of personality the test
+				does not represent the entire complexity of a human being. The model gives a frame
+				That we use to match you with jobs other people with your personality liked.
+			</p>
 
-		<div class="personality-explain">
-			<div class="row padding-next">
-				<div class="col-sm-12">
-					<h2>Emotional Stability</h2>
-					<p>
-						Dieses Persönlichkeitsmerkmal beschreibt die
-						emotionale Ausgeglichenheit. Es sagt etwas darüber
-						aus, wie schnell eine Person eine Situation
-						als emotional belastend empfindet.
+			<div class="personality-explain">
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Emotional Stability</h2>
+						<p>
+							This personality trait describes how strong a person
+							feels emotions. It also indicates how much an intense
+							situation is perceived as stressful.
 
-						Mit einer Ausprägung von 62 (bei einem Mittelwert
-						von 50 und einer Standardabweichung von 10) haben
-						Sie einen hohen Wert erreicht. (ca. 88% der Befragten
-						der Normstichprobe geben einen ähnlichen oder niedrigeren Wert an).
+							With a score of <em>{{score "Stability"}}</em>
+							(at a population average of <em>{{mean "Stability"}}</em>) you
+							reached a <em>{{level "Stability"}}</em> score.
+							Approximately <em>{{percentile "Stability"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
 
-						Personen mit einem vergleichbaren Wert zeichnen sich
-						häufig durch eine hohe Stressresistenz aus und sind
-						im Allgemeinen eher zuversichtlich.
-					</p>
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Openness to Experiences</h2>
+						<p>
+							With a score of <em>{{score "Openness"}}</em>
+							(at a population average of <em>{{mean "Openness"}}</em>) you
+							reached a <em>{{level "Openness"}}</em> score.
+							Approximately <em>{{percentile "Openness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Agreeableness</h2>
+						<p>
+							With a score of <em>{{score "Agreeableness"}}</em>
+							(at a population average of <em>{{mean "Agreeableness"}}</em>) you
+							reached a <em>{{level "Agreeableness"}}</em> score.
+							Approximately <em>{{percentile "Agreeableness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Extroversion</h2>
+						<p>
+							With a score of <em>{{score "Extroversion"}}</em>
+							(at a population average of <em>{{mean "Extroversion"}}</em>) you
+							reached a <em>{{level "Extroversion"}}</em> score.
+							Approximately <em>{{percentile "Extroversion"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Conscientiousness</h2>
+						<p>
+							With a score of <em>{{score "Conscientiousness"}}</em>
+							(at a population average of <em>{{mean "Conscientiousness"}}</em>) you
+							reached a <em>{{level "Conscientiousness"}}</em> score.
+							Approximately <em>{{percentile "Conscientiousness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-
-			<div class="row positive padding-next">
-				<div class="col-sm-6">
-					<b>Strength of high stability</b>
-					<ul>
-						<li>sind ausgeglichen und sorgenfrei</li>
-						<li>sind nicht so leicht aus der Fassung zu bringen</li>
-						<li>sind eher optimistisch</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6">
-					<b>Strength of low stability</b>
-					<ul>
-						<li>nehmen Gefühle intensiv und deutlich wahr</li>
-						<li>handeln vorsichtig und überlegt</li>
-						<li>sind sensibel für sich und ihr Umfeld</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="row negative">
-				<div class="col-sm-6">
-					<b>Weaknesses of high stability</b>
-					<ul>
-						<li>können recht abgeklärt auf Andere wirken</li>
-						<li>handeln bisweilen voreilig und unvorsichtig</li>
-						<li>unterschätzen ggf. Risiken und Gefahren</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6">
-					<b>Weakness of low stability</b>
-					<ul>
-						<li>sind stressanfällig</li>
-						<li>erleben häufig negative Gefühle wie Angst oder Nervosität</li>
-						<li>machen sich viele Sorgen</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-			<h2>Mediator</h2>
-			<h2>Visionary</h2>
-			<h2>Organizer</h2>
 		{{/quick_survey}}
 	{{/mooqita_wide_spacing}}
 </template>

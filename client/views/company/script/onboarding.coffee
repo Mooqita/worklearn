@@ -1,4 +1,89 @@
 #########################################################
+# locals
+#########################################################
+
+#########################################################
+_persona = [ { label: "Manager", value: 1 },
+						 { label: "Organizer", value: 1 },
+						 { label: "Mediator", value: 1 },
+						 { label: "Builder", value: 1 },
+						 { label: "Visionary", value: 1 } ]
+
+#########################################################
+_personality = [ { label: "Stability", value: 1 },
+								 { label: "Openness", value: 1 },
+								 { label: "Agreeableness", value: 1 },
+								 { label: "Extroversion", value: 1 },
+								 { label: "Conscientiousness", value: 1 } ]
+
+#########################################################
+_questions = ["Am the life of the party",
+				"Feel little concern for others",
+				"Am always prepared",
+				"Get stressed out easily",
+				"Have a rich vocabulary",
+				"Don't talk a lot",
+				"Am interested in people",
+				"Leave my belongings around",
+				"Am relaxed most of the time",
+				"Have difficulty understanding abstract ideas",
+				"Feel comfortable around people",
+				"Insult people",
+				"Pay attention to details",
+				"Worry about things",
+				"Have a vivid imagination",
+				"Keep in the background",
+				"Sympathize with others' feelings",
+				"Make a mess of things",
+				"Seldom feel blue",
+				"Am not interested in abstract ideas",
+				"Start conversations",
+				"Am not interested in other people's problems",
+				"Get chores done right away",
+				"Am easily disturbed",
+				"Have excellent ideas",
+				"Have little to say",
+				"Have a soft heart",
+				"Often forget to put things back in their proper place",
+				"Get upset easily",
+				"Do not have a good imagination",
+				"Talk to a lot of different people at parties",
+				"Am not really interested in others",
+				"Like order",
+				"Change my mood a lot",
+				"Am quick to understand things",
+				"Don't like to draw attention to myself",
+				"Take time out for others",
+				"Shirk my duties",
+				"Have frequent mood swings",
+				"Use difficult words",
+				"Don't mind being the center of attention",
+				"Feel others' emotions",
+				"Follow a schedule",
+				"Get irritated easily",
+				"Spend time reflecting on things",
+				"Am quiet around strangers",
+				"Make people feel at ease",
+				"Am exacting in my work",
+				"Often feel blue",
+				"Am full of ideas"]
+
+#########################################################
+_calculate_trait = (trait, answers) ->
+	v = (i) ->
+		q = _questions[i-1]
+		n = answers.get q
+
+		return Number(n)
+
+	switch trait
+		when "Extroversion" then return 20 + v(1) - v(6)  + v(11) - v(16) + v(21) - v(26) + v(31) - v(36) + v(41) - v(46)
+		when "Agreeableness" then return 14 - v(2) + v(7)  - v(12) + v(17) - v(22) + v(27) - v(32) + v(37) + v(42) + v(47)
+		when "Conscientiousness" then return 14 + v(3) - v(8)  + v(13) - v(18) + v(23) - v(28) + v(33) - v(38) + v(43) + v(48)
+		when "Stability" then return 2  + v(4) - v(9)  + v(14) - v(19) + v(24) + v(29) + v(34) + v(39) + v(44) + v(49)
+		when "Openness" then return 8  + v(5) - v(10) + v(15) - v(20) + v(25) - v(30) + v(35) + v(40) + v(45) + v(50)
+
+#########################################################
 #
 # Hover Cards
 #
@@ -34,20 +119,6 @@ Template.hover_card.events
 #########################################################
 
 #########################################################
-_persona = [ { label: "Manager", value: 1 },
-						 { label: "Organizer", value: 1 },
-						 { label: "Mediator", value: 1 },
-						 { label: "Builder", value: 1 },
-						 { label: "Visionary", value: 1 } ]
-
-#########################################################
-_personality = [ { label: "Stability", value: 1 },
-								 { label: "Openness", value: 1 },
-								 { label: "Agreeableness", value: 1 },
-								 { label: "Extroversion", value: 1 },
-								 { label: "Conscientiousness", value: 1 } ]
-
-#########################################################
 Template.team_member.onCreated () ->
 	this.answers = new ReactiveDict()
 	this.persona_data = new ReactiveVar(_personality)
@@ -59,10 +130,57 @@ Template.team_member.helpers
 		answers = instance.answers
 		return answers
 
+	questions: () ->
+		return _questions
+
 	persona_data: () ->
 		instance = Template.instance()
-		persona = instance.persona_data
-		return persona
+		answers = instance.answers
+
+		E = _calculate_trait "Extroversion", answers
+		A = _calculate_trait "Agreeableness", answers
+		C = _calculate_trait "Conscientiousness", answers
+		S = _calculate_trait "Stability", answers
+		O = _calculate_trait "Openness", answers
+
+		persona = [ { label: "Stability", value: S },
+						 		{ label: "Openness", value: O },
+						 		{ label: "Agreeableness", value: A },
+						 		{ label: "Extroversion", value: E },
+						 		{ label: "Conscientiousness", value: C } ]
+
+		instance.persona_data.set persona
+		return instance.persona_data
+
+	score:(score_name)->
+		instance = Template.instance()
+		answers = instance.answers
+		return _calculate_trait score_name, answers
+
+	mean:(score_name)->
+		instance = Template.instance()
+		answers = instance.answers
+		return _calculate_trait score_name, answers
+
+	percentile:(score_name)->
+		instance = Template.instance()
+		answers = instance.answers
+		return _calculate_trait score_name, answers
+
+	level:(score_name)->
+		instance = Template.instance()
+		answers = instance.answers
+		score = _calculate_trait score_name, answers
+
+		if score>22
+			return "high"
+
+		if score<13
+			return "low"
+
+		return "balanced"
+
+
 
 
 #########################################################
@@ -339,7 +457,7 @@ Template.onboarding.events
 _svg = null
 
 #########################################################
-_draw_persona = (data, id, width = 350, height = 200) ->
+_draw_persona = (data, id, width = 400, height = 200) ->
 	if not data
 		console.log "no data"
 		return
@@ -365,7 +483,7 @@ _draw_persona = (data, id, width = 350, height = 200) ->
 		_svg.append("g")
 			.attr("class", "lines")
 
-		_svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+		_svg.attr("transform", "translate(" + ((width / 2) + 15) + "," + height / 2 + ")")
 
 	arc = d3.svg.arc()
 		.outerRadius(radius * 0.8)
