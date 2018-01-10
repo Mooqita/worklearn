@@ -16,7 +16,7 @@ _handle_startup_setting = () ->
 	if not Meteor.settings
 		return
 
-	if not get_environment()=="local"
+	if get_environment() != "local"
 		return
 
 	# add an admin if on localhost
