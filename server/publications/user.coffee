@@ -8,6 +8,9 @@
 #######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
+	if user_id == undefined
+		return []
+
 	filter =
 		owner_id: user_id
 
