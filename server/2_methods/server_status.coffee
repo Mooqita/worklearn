@@ -7,7 +7,7 @@
 
 #####################################################
 @get_environment = () ->
-	if(process.env.ROOT_URL == "http://localhost:3000/")
+	if process.env.IS_LOCAL
 		return "local"
 	else
 		return "live"

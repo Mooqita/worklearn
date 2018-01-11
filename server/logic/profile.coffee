@@ -30,7 +30,7 @@
 	else
 		profile.name = "Profile for unknown"
 
-	msg = "User profile created: " + get_user_mail user + " (" + user._id + ")"
+	msg = "User profile created: " + (get_user_mail user) + " (" + user._id + ")"
 	log_event msg, event_db, event_imp
 
 	return store_document_unprotected Profiles, profile, user

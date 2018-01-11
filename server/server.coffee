@@ -101,7 +101,7 @@ _check_environment_variables = () ->
 		msg = "-- MAIL_URL is set."
 		log_event msg
 	else
-		msg = "-- MAIL_URL not set. Mail notifications are disabled!"
+		msg = "-- MAIL_URL not set. Mail notifications disabled!"
 		log_event msg, event_general, event_warn
 
 
@@ -110,7 +110,7 @@ _check_environment_variables = () ->
 		msg = "-- DROP_BOX_ACCESS_TOKEN is set."
 		log_event msg
 	else
-		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files is disabled!"
+		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files disabled!"
 		log_event msg, event_general, event_warn
 
 	msg = "Environment variables checked"
