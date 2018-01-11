@@ -1,20 +1,34 @@
 <!------------------------------------------------
 |
-|	Organization menu
+|	Company menu
 |
 -------------------------------------------------->
 <template name="organization_menu">
 	<li class="active">
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "organization_profile"}}">
-			Organization Profile
+			 href="{{g_build_url "organization_profile"}}">
+			Organization
 		</a>
 	</li>
 
 	<li class="active">
 		<a class="navigation-button control-navigate"
-			 href="{{build_url "organization_challenges"}}">
+			 href="{{g_build_url "learner_profile"}}">
+			{{g_profile_name}}
+		</a>
+	</li>
+
+	<li class="active">
+		<a class="navigation-button control-navigate"
+			 href="{{g_build_url "challenges"}}">
 			Challenges <span class="badge background-contrast"></span>
+		</a>
+	</li>
+
+	<li class="active">
+		<a class="navigation-button control-navigate"
+			 href="{{g_build_url "talents"}}">
+			Talents
 		</a>
 	</li>
 </template>

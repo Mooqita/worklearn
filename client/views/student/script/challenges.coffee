@@ -10,7 +10,7 @@ Template.learner_find_challenges.onCreated ->
 	Session.set "selected_challenge", 0
 	
 	self.autorun () ->
-		self.subscribe "challenges"
+		#self.subscribe "challenges"
 
 
 ########################################
@@ -34,9 +34,6 @@ Template.learner_challenge_preview.onCreated ->
 ########################################
 Template.learner_challenge_preview.helpers
 	has_solution:() ->
-		filter =
-			owner_id: Meteor.userId()
-			challenge_id: this._id
-
-		return Solutions.find(filter).count()>0
+		solutions_cursor = get_my_documents "solutions", {challenge_id: this._id}
+		return solutions_cursor.count() > 0
 

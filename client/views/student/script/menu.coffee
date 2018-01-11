@@ -17,9 +17,6 @@ Template.learner_menu.helpers
 			return how_much_time this.feedback_time
 
 	num_new_messages: () ->
-		filter =
-			owner_id: Meteor.userId()
-			seen: false
-
-		return Messages.find(filter).count()
+		crs = get_my_documents("messages", {seen:false})
+		return crs.count()
 

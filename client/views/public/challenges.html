@@ -1,0 +1,32 @@
+<!------------------------------------------------
+|
+|	Challenge
+|
+-------------------------------------------------->
+<template name="find_challenges">
+	{{#mooqita_wide_spacing}}
+		<div class="padding-top">
+			<h1>Discover Challenges</h1>
+			<p style="padding-bottom: 35px">Find the challenge that is right for you.</p>
+
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-12">
+					{{#paging subscription="challenges" page=0 count=10 parameter=parameter}}
+						{{#each challenges}}
+							<h2>
+								<a href="{{g_build_url "challenge" (g_object challenge_id=_id)}}">
+									{{title}}
+								</a>
+							</h2>
+
+							{{>more content=content}}
+						{{else}}
+								<h2><em>No challenges yet.</em></h2>
+						{{/each}}
+					{{/paging}}
+				</div>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+

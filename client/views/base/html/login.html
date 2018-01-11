@@ -5,8 +5,8 @@
 -------------------------------------------------->
 <template name="mooqita_login">
 	{{#if currentUser}}
-		{{#if profile}}
-			{{#unless profile.has_occupation}}
+		{{#if g_profile}}
+			{{#unless g_profile.has_occupation}}
 				{{>first_timer}}
 			{{/unless}}
 		{{else}}

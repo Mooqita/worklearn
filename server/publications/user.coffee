@@ -6,15 +6,41 @@
 #######################################################
 
 #######################################################
+Meteor.publish "find_users_by_mail": (mail_fragment) ->
+	user = Meteor.user()
+	if not user
+		throw new Meteor.Error('Not permitted.')
+
+	if mail_fragment.length < 5
+		return []
+
+	check mail_fragment, String
+	filter =
+		emails:
+			$elemMatch:
+				address:
+					$regex : new RegExp(mail_fragment, "i")
+
+	options =
+		fields:
+			emails: 1
+		skip: 0,
+		limit: 10
+
+	crs = Meteor.users.find filter, options
+	users = crs.fetch()
+
+	return users
+
+#######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
-	filter =
-		owner_id: user_id
+	if not user_id
+		throw new Meteor.Error('Not permitted.')
 
-	fields = visible_fields Profiles, user_id, filter
-	crs = Profiles.find filter, fields
+	crs = get_my_documents Profiles
 
-	log_publication "Profile", crs, filter, {}, "profiles", user_id
+	log_publication crs, user_id, "my_profiles"
 	return crs
 
 #######################################################
@@ -25,11 +51,9 @@ Meteor.publish "my_profile", () ->
 Meteor.publish "user_resumes", (user_id) ->
 	if user_id
 		check user_id, String
-		if not Roles.userIsInRole this.userId, "admin"
+		if not has_role Profiles, WILDCARD, this.userId, ADMIN
 			if this.userId != user_id
-				filter =
-					owner_id: user_id
-				profile = Profiles.findOne filter
+				profile = get_document user_id, "owner", Profiles
 				if profile.locale
 					throw new Meteor.Error("Not permitted.")
 
@@ -42,25 +66,15 @@ Meteor.publish "user_resumes", (user_id) ->
 	self = this
 	prepare_resume = (user) ->
 		resume = {}
-
-		filter =
-			owner_id: user._id
-
-		profile = Profiles.findOne filter
+		profile = get_profile user
 
 		if profile
 			resume.name = get_profile_name profile, false, false
-			resume.owner_id = profile._id
 			resume.self_description = profile.resume
 			resume.avatar = get_avatar profile
 
-		solution_filter =
-			published: true
-			owner_id: user._id
-			#in_portfolio: true
-
 		solution_list = []
-		solution_cursor = Solutions.find solution_filter
+		solution_cursor = get_documents user, OWNER, Solutions, {published: true}
 
 		solution_cursor.forEach (s) ->
 			solution = {}
@@ -72,9 +86,8 @@ Meteor.publish "user_resumes", (user_id) ->
 				solution.challenge = if !challenge.confidential then challenge.content else null
 				solution.challenge_title = challenge.title
 
-				filter =
-					owner_id: challenge.owner_id
-				profile = Profiles.findOne filter
+				owner = get_document_owner Challenges, challenge
+				profile = get_document owner, OWNER, Profiles
 
 				if profile
 					solution.challenge_owner_avatar = get_avatar profile
@@ -90,12 +103,11 @@ Meteor.publish "user_resumes", (user_id) ->
 				review = {}
 
 				filter =
-					parent_id: r._id
+					review_id: r._id
 				feedback = Feedback.findOne filter
 
-				filter =
-					owner_id: r.owner_id
-				profile = Profiles.findOne filter
+				owner = get_document_owner Profiles, r
+				profile = get_profile owner
 
 				if feedback.published
 					review.feedback = {}
@@ -126,7 +138,7 @@ Meteor.publish "user_resumes", (user_id) ->
 	crs = Meteor.users.find(filter)
 	crs.forEach(prepare_resume)
 
-	log_publication "UserResumes", crs, filter, {}, "credits", user_id
+	log_publication crs, user_id, "user_resumes"
 	self.ready()
 
 #######################################################
@@ -135,7 +147,7 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	check challenge_id, String
 
 	if user_id
-		if not Roles.userIsInRole this.userId, "challenge_designer"
+		if not has_role Challenges, challenge_id, this.userId, DESIGNER
 			throw new Meteor.Error("Not permitted.")
 
 	if !user_id
@@ -169,20 +181,14 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	##########################################
 
 	##########################################
-	filter =
-		owner_id: user_id
-		challenge_id: challenge_id
-
-	solutions = Solutions.find filter, mod
+	filter = {challenge_id: challenge_id}
+	solutions = get_my_documents filter, mod
 
 	##########################################
 	# Find relevant Feedback and Reviews
 	##########################################
-	filter =
-		owner_id: user_id
-		challenge_id: challenge_id
-	rev_given = Reviews.find filter, mod
-	fed_given = Feedback.find filter, mod
+	rev_given = get_my_documents Reviews.find filter, mod
+	fed_given = get_my_documents Feedback.find filter, mod
 
 	filter =
 		requester_id: user_id
@@ -220,10 +226,6 @@ Meteor.publish "user_summary", (user_id, challenge_id) ->
 	user = calc_statistics user, fed_given, "feedback_given"
 	user = calc_statistics user, fed_received, "feedback_received"
 
-	msg = "UserSummaries for: " + get_profile_name_by_user_id user_id, true
-
-	log_publication msg, null, {},
-			{}, "user_summary", this.userId
-
+	log_publication crs, this.userId, "user_summary"
 	this.added "user_summaries", user_id, user
 	this.ready()

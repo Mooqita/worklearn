@@ -14,7 +14,7 @@ Template.learner_feedback_review.onCreated ->
 Template.learner_feedback_review.helpers
 	feedback: () ->
 		filter =
-			parent_id: this._id
+			review_id: this._id
 		feedback = Feedback.findOne filter
 		if feedback
 			if feedback.published
@@ -41,7 +41,7 @@ Template.learner_feedback_solution.onCreated ->
 Template.learner_feedback_solution.helpers
 	feedback: () ->
 		filter =
-			parent_id: this._id
+			review_id: this._id
 		return Feedback.findOne filter
 
 	publishable: () ->
@@ -92,7 +92,7 @@ Template.learner_feedback_solution.helpers
 
 	is_feedback_broken: () ->
 		filter =
-			parent_id: this._id
+			review_id: this._id
 		feedback = Feedback.findOne filter
 
 		return not feedback

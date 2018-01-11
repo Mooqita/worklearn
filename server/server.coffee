@@ -43,22 +43,24 @@ _initialize_indices = ()->
 	log_event msg
 
 	index =
-		owner_id: 1
-	Challenges._ensureIndex index
-	Solutions._ensureIndex index
-	Reviews._ensureIndex index
-	Feedback._ensureIndex index
-	Profiles._ensureIndex index
-	Messages._ensureIndex index
-	Posts._ensureIndex index
+		collection_name: 1
+		consumer_id: 1
+		role: 1
+	Admissions._ensureIndex index
+
+	index =
+		collection_name: 1
+		resource_id: 1
+		role: 1
+	Admissions._ensureIndex index
+
+	index =
+		collection_name: 1
+		role: 1
+	Permissions._ensureIndex index
 
 	index =
 		parent_id: 1
-	Challenges._ensureIndex index
-	Solutions._ensureIndex index
-	Reviews._ensureIndex index
-	Feedback._ensureIndex index
-	Profiles._ensureIndex index
 	Posts._ensureIndex index
 
 	index =
@@ -99,7 +101,7 @@ _check_environment_variables = () ->
 		msg = "-- MAIL_URL is set."
 		log_event msg
 	else
-		msg = "-- MAIL_URL not set. Mail notifications are disabled!"
+		msg = "-- MAIL_URL not set. Mail notifications disabled!"
 		log_event msg, event_general, event_warn
 
 
@@ -108,7 +110,7 @@ _check_environment_variables = () ->
 		msg = "-- DROP_BOX_ACCESS_TOKEN is set."
 		log_event msg
 	else
-		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files is disabled!"
+		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files disabled!"
 		log_event msg, event_general, event_warn
 
 	msg = "Environment variables checked"
@@ -183,19 +185,16 @@ _add_admin = (email, password) ->
 
 	if not user
 		user =
-			email: email,
-			password: password,
+			email: "admin@mooqita.org"
+			password: password
 
 		user = Accounts.createUser(user)
-		Roles.setUserRoles user, ["admin", "db_admin", "editor", "challenge_designer"]
 		user = Accounts.findUserByEmail(email)
 
-	filter =
-		owner_id: user._id
-
-	profile = Profiles.findOne filter
+	profile = get_profile user._id
 
 	if profile
+		log_event "-- admin already exists"
 		return profile._id
 
 	profile_id = gen_profile user, "learner"
@@ -206,10 +205,10 @@ _add_admin = (email, password) ->
 
 ####################################################
 _initialize_database = () ->
+
 	console.log "####################################################"
 	console.log "##               adding test data                 ##"
 	console.log "####################################################"
-
 
 	title = "The test challenge"
 	filter =
@@ -224,8 +223,7 @@ _initialize_database = () ->
 	for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		mail = String(i) + "@uni.edu"
 		profile_id = _test_user_creation mail, "learner"
-		profile = Profiles.findOne profile_id
-		user = Meteor.users.findOne profile.owner_id
+		user = get_document_owner "profiles", profile_id
 		learners.push user
 
 	solutions = []
@@ -242,10 +240,11 @@ _initialize_database = () ->
 			reviews.push review
 
 	for solution in solutions
+		user = get_document_owner Solutions, solution._id
+
 		filter =
 			solution_id: solution._id
 		reviews = Reviews.find(filter).fetch()
-		user = Meteor.users.findOne solution.owner_id
 
 		for review in reviews
 			_test_feedback solution, review, user
@@ -255,6 +254,7 @@ _initialize_database = () ->
 	console.log "####################################################"
 
 	# TODO: test reviews when there is a solution like for tutors
+
 
 #####################################################
 _test_user_creation = (mail, occupation) ->
@@ -269,9 +269,7 @@ _test_user_creation = (mail, occupation) ->
 		user = Meteor.users.findOne user_id
 		console.log "Test user creation: " + user.emails[0].address
 
-	filter =
-		owner_id: user._id
-	profile = Profiles.findOne filter
+	profile = get_document user, "owner", Profiles
 
 	if profile
 		return profile._id
@@ -301,7 +299,6 @@ _test_challenge = (title) ->
 	if not user
 		_test_user_creation "designer@mooqita.org", "organization"
 		user = Accounts.findUserByEmail("designer@mooqita.org")
-		Roles.setUserRoles user, ["admin", "editor", "challenge_designer"]
 
 	challenge_id = gen_challenge user
 
@@ -318,11 +315,7 @@ _test_challenge = (title) ->
 
 #####################################################
 _test_solution = (challenge, user) ->
-	filter =
-		challenge_id: challenge._id
-		owner_id: user._id
-
-	solution = Solutions.findOne filter
+	solution = get_document user._id, OWNER, "solutions", {challenge_id: challenge._id}
 	if solution
 		return solution._id
 
@@ -353,8 +346,8 @@ _test_review = (challenge, solution, user) ->
 			return
 		throw e
 
-	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs(3)
-	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs 3
+	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Reviews, res.review_id, "test_object", true
 
 	review = Reviews.findOne res.review_id
@@ -380,7 +373,7 @@ _test_feedback = (solution, review, user) ->
 		return
 
 	modify_field_unprotected Feedback, feedback_id, "content", faker.lorem.paragraphs(3)
-	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1,2,3,4,5]
+	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Feedback, feedback_id, "test_object", true
 
 	feedback = Feedback.findOne feedback_id
@@ -404,4 +397,5 @@ Meteor.startup () ->
 		_handle_startup_setting()
 	catch e
 		console.log e
-
+		msg = String(e)
+		log_event msg, event_testing, event_err

@@ -28,10 +28,7 @@ Template.organization_challenges.helpers
 		return Template.instance().parameter
 
 	challenges: () ->
-		filter =
-			owner_id: Meteor.userId()
-
-		return Challenges.find(filter)
+		return get_my_documents Challenges
 
 ########################################
 Template.organization_challenges.events
@@ -118,11 +115,6 @@ Template.organization_challenge.helpers
 
 		return ""
 
-	share_url: ->
-		param =
-			challenge_id: this._id
-		url = build_url "learner_solution", param, true
-		return url
 
 ########################################
 Template.organization_challenge.events
@@ -245,9 +237,6 @@ Template.challenge_solution.helpers
 		val = Template.instance().adding_recommendation.get()
 		return val
 
-	resume_url: (author_id) ->
-		return author_id
-
 	average_rating: () ->
 		filter =
 			solution_id: this._id
@@ -299,7 +288,7 @@ Template.challenge_solution.events
 		Modal.show 'reopen_solution', data
 
 	"click #user_info": () ->
-		data = UserSummaries.findOne(this.owner_id)
+		data = get_my_document "user_summaries"
 		data["user_id"] = this.owner_id
 		Modal.show 'show_learner_summary', data
 

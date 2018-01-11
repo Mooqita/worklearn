@@ -21,41 +21,45 @@
 	padding: 5px 0px 0px 0px;
 }
 
-.navbar a{
+.navbar-nav .nav-item a{
 	font-size: 1.5em;
 	font-weight: 300;
 	color: $theme;
 }
 
-.nav > li > a:hover,
-.nav > li > a:focus{
+a:not([href]):not([tabindex]):focus,
+a:not([href]):not([tabindex]):hover {
 	color: $text-on-theme;
 	background: $theme;
 }
 
-.navbar .active .btn{
+.navbar-nav .active .btn{
 	color: $text-on-theme;
 	background: $theme;
 }
 
-.navbar .active .btn:hover{
+.navbar-nav .active .btn:hover{
 	padding: 16px 14px 14px 16px;
 }
 
-.navbar-toggle {
-	margin-top: 12px;
+.navbar-light .navbar-toggler {
+	color: $theme;
 	border: 2px solid $theme;
 }
 
-.navbar-toggle:hover{
-	padding: 9px 9px 9px 11px;
+.navbar-toggler:hover{
+  -webkit-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
+          box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
+}
 
+.navbar-toggler:focus{
+	padding: 5px 11px 3px 13px;
   -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
           box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
 }
 
-.navbar-toggle .icon-bar{
-	background: $theme;
+.navbar-toggler .icon{
+	color: $theme;
 }
 
 

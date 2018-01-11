@@ -8,7 +8,7 @@
 Meteor.methods
 	set_field: (collection_name, item_id, field, data)->
 		collection = get_collection_save collection_name
-		return modify_field collection, item_id, field, data
+		return set_field collection, item_id, field, data
 
 	upload_file: (collection_name, item_id, field, data, type)->
 		collection = get_collection_save collection_name
