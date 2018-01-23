@@ -4,11 +4,11 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ##########################################################
 _routes =
 	learner:
-		menu: "student_menu"
-		profile: "student_profile"
-		challenge: "student_solution"#"learner_challenge"
-		challenges: "student_solutions"#"learner_challenge"
-		review: "student_review"
+		menu: "learner_menu"
+		profile: "learner_profile"
+		challenge: "learner_challenge"
+		challenges: "learner_challenge"
+		review: "learner_review"
 	educator:
 		menu: "educator_menu"
 		profile: "educator_profile"

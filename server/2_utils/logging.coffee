@@ -32,6 +32,15 @@
 
 	console.log msg
 
+###############################################################
+@log_error = (error) ->
+	msg = "[exception]"
+	msg += "[error]"
+	msg += error.message
+	msg += stack ? ""
+
+	console.log msg
+
 #######################################################
 @log_publication = (cursor, user, origin) ->
 	if not Array.isArray cursor
@@ -51,8 +60,9 @@
 
 #######################################################
 _log_publication = (collection_name, crs, filter, fields, origin, user) ->
-	if typeof user != "string"
-		user = user._id
+	if user
+		if typeof user != "string"
+			user = user._id
 
 	origin = origin || "unknown"
 	count = crs.count()

@@ -67,7 +67,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 .hover-padding{
-	padding: 0px;
+	//padding: 0px;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -77,6 +77,16 @@
 	text-align: -webkit-center;
 
 	padding: 5px;
+}
+
+a.hover-card-container{
+	text-decoration: none;
+}
+
+a.hover-card-container:not([href]):not([tabindex]):focus,
+a.hover-card-container:not([href]):not([tabindex]):hover {
+	color: $text;
+	background: white;
 }
 
 .hover-card-container .animated,
@@ -264,12 +274,22 @@
     display: none;
 }
 
-.toggle-button__icon {
+.toggle-button label {
+  line-height: 20px;
+  text-indent: 30px;
+}
+
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon {
+  background: $theme;
+}
+
+.toggle-button-icon {
     cursor: pointer;
     pointer-events: none;
 }
 
-.toggle-button__icon:before, .toggle-button__icon:after {
+.toggle-button-icon:before,
+.toggle-button-icon:after {
 	content: "";
 	position: absolute;
 	top: 45%;
@@ -277,21 +297,7 @@
 	transition: 0.2s ease-out;
 }
 
-.toggle-button--tuli label {
-  line-height: 20px;
-  text-indent: 30px;
-}
-
-.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon {
-  background: $theme;
-}
-
-.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon:before,
-.toggle-button--tuli input[type=checkbox]:checked ~ .toggle-button__icon:after {
-    opacity: 1;
-}
-
-.toggle-button--tuli .toggle-button__icon {
+.toggle-button .toggle-button-icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -304,8 +310,8 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.toggle-button--tuli .toggle-button__icon:before, .toggle-button--tuli .toggle-button__icon:after {
-	top: 5px;
+.toggle-button .toggle-button-icon:before,
+.toggle-button .toggle-button-icon:after {
 	left: 2px;
 	width: 12px;
 	height: 2px;
@@ -317,17 +323,22 @@
 	transform-origin: left center;
 }
 
-.toggle-button--tuli .toggle-button__icon:before {
+.toggle-button .toggle-button-icon:before {
     transform: translate(0, 0) rotate(45deg) scale(0.6, 1);
 }
 
-.toggle-button--tuli .toggle-button__icon:after {
+.toggle-button .toggle-button-icon:after {
     transform: translate(4px, 6px) rotate(-45deg);
 }
 
-.toggle-button--tuli:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon {
+.toggle-button:hover input[type=checkbox]:not(:checked) ~ .toggle-button-icon {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon:before,
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon:after {
+    opacity: 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -449,4 +460,135 @@ polyline{
 .personality-explain .negative li:before {
 	content: '\f068';
 	background: $theme-light;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Register modal
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(170, 170, 170, 0.5);
+	opacity: 0.25;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-frame{
+	position: relative;
+	top: 10%;
+
+	padding-bottom: 0px;
+	background: white;
+	border-radius: 10px;
+	margin: auto;
+	max-width: 450px;
+
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .register-finish{
+	padding: 10px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .close-register{
+	position: absolute;
+	border-radius: 100%;
+	right: -15px;
+	top: -15px;
+	padding: 6px 10px;
+	background: $theme;
+	border-color: $theme-dark;
+	color: white;
+}
+
+.register-modal .close-register:hover{
+	color: $contrast-on-theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .at-form{
+	padding-bottom: 0px;
+}
+
+.register-modal #at-btn{
+	border-color: $theme-dark;
+	background: $theme;
+	color: white;
+}
+
+.register-modal #at-btn:hover{
+	color: $contrast-on-theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .modal-body{
+	padding-bottom: 0px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .modal-dialog{
+	width: 450px;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.auto-complete-list{
+	padding-left: 0px;
+}
+
+.auto-complete-list li{
+	position: relative;
+	display: block;
+	padding: .4em .4em .4em .6em;
+	*padding: .4em;
+	margin: .5em 0 .5em 1em;
+	background: #eee;
+	color: #444;
+	text-decoration: none;
+	transition: all .3s ease-out;
+}
+
+.auto-complete-list li:before{
+	content: '';
+	background: $contrast-on-theme;
+
+	position: absolute;
+	margin-top: -1.1em;
+	height: 2.22em;
+	width: 1.0em;
+	left: -1.0em;
+	top: 50%;
+
+	line-height: 2em;
+	text-align: center;
+	font-weight: bold;
+	border-bottom-left-radius: 100px;
+	border-top-left-radius: 100px;
+}
+
+.auto-complete-list li:hover{
+	cursor: pointer;
+	background: $contrast-on-theme;
+}
+
+.is-table-row {
+	display: table;
+}
+
+.is-table-row [class*="col-"] {
+	float: none;
+	display: table-cell;
+	vertical-align: top;
 }

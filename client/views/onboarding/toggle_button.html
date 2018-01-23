@@ -1,0 +1,16 @@
+<template name="toggle_button">
+	<div class="toggle-button">
+		<input id="{{id}}" type="checkbox" {{checked}}
+					 aria-describedby="{{id}}_explain">
+		<label for="{{id}}">{{label}}</label>
+		<div class="toggle-button-icon"></div>
+	</div>
+
+	{{#if explain}}
+		<div>
+			<small id="{{id}}_explain" class="form-text text-muted">
+				{{explain}}
+			</small>
+		</div>
+	{{/if}}
+</template>

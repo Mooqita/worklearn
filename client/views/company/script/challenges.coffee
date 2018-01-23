@@ -290,6 +290,7 @@ Template.challenge_solution.events
 	"click #user_info": () ->
 		data = get_my_document "user_summaries"
 		data["user_id"] = this.owner_id
+
 		Modal.show 'show_learner_summary', data
 
 	"click #edit_recommendation": () ->

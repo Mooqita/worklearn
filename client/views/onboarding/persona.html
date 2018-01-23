@@ -1,0 +1,16 @@
+<!------------------------------------------------
+|
+| Persona
+|
+-------------------------------------------------->
+<template name="persona">
+	{{redraw}}
+
+	<div class="persona">
+		<div class="svg-holder animated" id="{{persona_id}}">
+			<div class="persona-wait animated" id="{{persona_wait_id}}">
+				{{>wait}}
+			</div>
+		</div>
+	</div>
+</template>

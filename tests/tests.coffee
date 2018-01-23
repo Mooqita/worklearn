@@ -63,7 +63,7 @@ _test_user_creation = (mail, occupation) ->
 
 		user_id = Accounts.createUser(user)
 		user = Meteor.users.findOne user_id
-		console.log "Test user creation: " + user.emails[0].address
+		console.log "Test user creation: " + get_user_mail(user)
 
 	profile = get_document user, OWNER, Profiles
 

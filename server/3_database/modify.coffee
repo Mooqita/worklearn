@@ -6,6 +6,10 @@
 
 #######################################################
 @set_field = (collection, item_id, field, value) ->
+	user = Meteor.user()
+	if not user
+		throw new Meteor.error "Not permitted"
+
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 
@@ -13,10 +17,12 @@
 	check item_id, String
 	check field, String
 
-	if not can_edit collection, item_id, field
+	csn = can_edit collection, item_id, user
+
+	if not csn
 		throw new Meteor.Error "Not permitted."
 
-	res = modify_field_unprotected collection, id, field, value
+	res = modify_field_unprotected collection, item_id, field, value
 
 	#if typeof value == "string"
 		#predaid_add_text collection, id, field

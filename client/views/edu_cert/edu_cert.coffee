@@ -89,7 +89,7 @@ Template.cert_template.helpers
 		return disabled
 
 	email: () ->
-		return Meteor.user().emails[0].address
+		return get_user_mail()
 
 	recipients: () ->
 		return EduCertRecipients.find()

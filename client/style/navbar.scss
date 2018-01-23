@@ -82,7 +82,8 @@ a:not([href]):not([tabindex]):hover {
 	font-size: 20px;
 }
 
-.navigation-button{
+.nav > li > a.navigation-button{
+	background: $theme;
 	color: #eee;
 	padding: 15px;
 	margin: 5px;
@@ -90,12 +91,13 @@ a:not([href]):not([tabindex]):hover {
 	text-decoration: none;
 }
 
-.navigation-button:hover{
-	color: $contrast-on-theme;
-	padding: 15px;
-	margin: 5px;
-	font-style: normal;
-	text-decoration: none;
-	cursor: pointer;
+.nav > li > a.navigation-button:active,
+.nav > li > a.navigation-button:focus{
+	background: $theme-light;
+	color: #222;
 }
 
+.nav > li > a.navigation-button:hover{
+	background: $theme;
+	color: $contrast-on-theme;
+}

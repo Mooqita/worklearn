@@ -15,9 +15,10 @@
 	if not owner
 		return id
 
-	user = Meteor.users.findOne owner._id
+	if typeof owner == "string"
+		owner = Meteor.users.findOne owner._id
 
-	gen_admission collection._name, item, user, OWNER
+	gen_admission collection._name, item, owner, OWNER
 	return id
 
 

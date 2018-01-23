@@ -113,6 +113,11 @@ _check_environment_variables = () ->
 		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files disabled!"
 		log_event msg, event_general, event_warn
 
+	token = process.env.MONGO_URL
+	if token
+		msg = "-- MONGO_URL is set."
+		log_event msg
+
 	msg = "Environment variables checked"
 	log_event msg
 
@@ -267,7 +272,7 @@ _test_user_creation = (mail, occupation) ->
 
 		user_id = Accounts.createUser(user)
 		user = Meteor.users.findOne user_id
-		console.log "Test user creation: " + user.emails[0].address
+		console.log "Test user creation: " + get_user_mail(user)
 
 	profile = get_document user, "owner", Profiles
 

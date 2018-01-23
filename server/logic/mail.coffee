@@ -3,10 +3,7 @@
 	msg = "@send_message_mail trying to send mail message"
 	log_event msg, event_mail, event_info
 
-	if not user.emails
-		throw new Meteor.Error "send_mail could not find an email address for user: " + user._id
-
-	to = user.emails[0].address
+	to = get_user_mail(user)
 	profile = get_profile user._id
 
 	if not profile

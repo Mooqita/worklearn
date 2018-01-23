@@ -1,11 +1,6 @@
 Template.learner_profile.helpers
 	email: () ->
-		user = Meteor.user()
-
-		if not user.emails
-			return "no email registered"
-
-		return user.emails[0].address
+		return get_user_mail()
 
 	mail_notifications_options:() ->
 		return [{value:"", label:"Notifications ?"}

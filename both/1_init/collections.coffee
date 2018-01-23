@@ -9,6 +9,7 @@
 @Permissions = new Mongo.Collection("permissions")
 @Admissions =  new Mongo.Collection("admissions")
 @Groups = new Mongo.Collection("groups")
+@Jobs = new Mongo.Collection("jobs")
 
 #######################################################
 @Recommendations = new Mongo.Collection("recommendations")

@@ -35,10 +35,8 @@ Meteor.publish "find_users_by_mail": (mail_fragment) ->
 #######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
-	if not user_id
-		throw new Meteor.Error('Not permitted.')
 
-	crs = get_my_documents Profiles
+	crs = Profiles.find {user_id: user_id}
 
 	log_publication crs, user_id, "my_profiles"
 	return crs

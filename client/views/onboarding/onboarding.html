@@ -1,0 +1,359 @@
+<!------------------------------------------------
+|
+| Onboarding Intro
+|
+-------------------------------------------------->
+<template name="onboarding_intro">
+	{{#unless has_jobs}}
+		{{#mooqita_wide_spacing}}
+			<div class="row padding-top" style="margin-top: 20%">
+				<div class="col-sm-6">
+					<h1 style="text-align: center; padding-top: 30px">
+						<img style="width: 300px" src="/images/mooqita.jpg">
+					</h1>
+				</div>
+
+				<div class="col-sm-6">
+					<h1>Find the talent you need!</h1>
+					<p style="padding-bottom: 25px">
+						We are making it easy for you to find and attract
+						the perfect talent you need to grow your business.
+					</p>
+					<a class="btn btn-theme" href="onboarding_role">Get started</a>
+				</div>
+			</div>
+		{{/mooqita_wide_spacing}}
+	{{/unless}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Role
+|
+-------------------------------------------------->
+<template name="onboarding_role">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Role</h1>
+		<p>Please select the main role of your candidate.
+			Don't worry you can change this later.</p>
+
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-paint-brush color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key ="role" value="design" message="Designer"
+						text="UX/UI Designer, Creative Director, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-cogs color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key ="role" value="ops" message="Operations"
+						text="Finance, Accounting, Human Resources, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-laptop color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key="role" value="dev"	message="Developer"
+						text="Mobile / Fullstack Developer, DevOps, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-pie-chart color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key="role" value="sales"	message="Sales"
+						text="Sales Manager, Account Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-comments-o color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key="role" value="marketing"	message="Marketing"
+						text="Content Creator, Marketing Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-question-circle color-theme" href="onboarding_competency"
+						session="onboarding_job_posting" key="role" value="other"	message="Others"
+						text="Attorney , etc."}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Competency
+|
+-------------------------------------------------->
+<template name="onboarding_competency">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Competencies</h1>
+		<p>
+			Finding the candidate with the right skill set is important.
+			Mooqita however can do more. We can help you find the person
+			that will complement your teams social fabric.
+		</p>
+		<div class="row" style="padding: 20px 0px">
+			<div class="col-sm-6 padding-next">
+				<div class="toggle-button toggle-button">
+					<input id="team_id" type="checkbox"
+								 aria-describedby="team_explain">
+					<label for="team_id">Leading People</label>
+					<div class="toggle-button-icon"></div>
+				</div>
+
+				<div>
+					<small id="team_explain" class="form-text text-muted">
+						Does the candidate need to lead other members of your team?
+					</small>
+				</div>
+			</div>
+
+			<div class="col-sm-6 padding-next">
+				<div class="toggle-button toggle-button">
+					<input id="strategic_id" type="checkbox"
+								 aria-describedby="strategic_explain">
+					<label for="strategic_id">Strategic Decisions</label>
+					<div class="toggle-button-icon"></div>
+				</div>
+
+				<div>
+					<small id="strategic_explain" class="form-text text-muted">
+						Decisions that influence the shape of your product or your
+						companies culture require a special kind of person.
+					</small>
+				</div>
+			</div>
+
+			<div class="col-sm-6 padding-next">
+				<div class="toggle-button toggle-button">
+					<input id="idea_id" type="checkbox"
+								 aria-describedby="idea_explain">
+					<label for="idea_id">Contributing Ideas</label>
+					<div class="toggle-button-icon"></div>
+				</div>
+
+				<div>
+					<small id="idea_explain" class="form-text text-muted">
+						Do you need fresh and new ideas for products or features?
+						Then you check this.
+					</small>
+				</div>
+			</div>
+
+			<div class="col-sm-6 padding-next">
+				<div class="toggle-button toggle-button">
+					<input id="process_id" type="checkbox"
+								 aria-describedby="process_explain">
+					<label for="process_id">Process Design</label>
+					<div class="toggle-button-icon"></div>
+				</div>
+
+				<div>
+					<small id="process_explain" class="form-text text-muted">
+						The gritty little things that need to be done again and
+						again. If someone has a working solution...
+					</small>
+				</div>
+			</div>
+		</div>
+
+			<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
+			<a class="btn btn-theme" href="onboarding_finish">
+				Generate
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Finish
+|
+-------------------------------------------------->
+<template name="onboarding_finish">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		{{#unless has_profile}}
+			<div class="row">
+				<div class="col-lg-10">
+					<h1>Persona</h1>
+					<p>
+						Excellent you created a persona for your candidate.
+						To save your progress you can register an account.
+						By adding the personality of your team you can get
+						even better results.
+					</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<button type="submit" id="register"
+									class="btn btn-theme">
+						Register
+					</button>
+				</div>
+				<div class="col-md-6">
+					{{>persona persona_data=persona_data}}
+				</div>
+			</div>
+		{{else}}
+			{{>job_posting}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Register
+|
+-------------------------------------------------->
+<template name="onboarding_register">
+	<div class="modal fade register-modal">
+		<div class="register-frame animated">
+			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
+				<div class="fa fa-times"></div>
+			</button>
+
+			{{>atForm}}
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Job Posting
+|
+-------------------------------------------------->
+<template name="job_posting">
+	{{#each job in jobs}}
+		<h1>Role</h1>
+		<p>Please select the main role of your candidate.</p>
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-paint-brush color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="design"
+						message="Designer" text="UX/UI Designer, Creative Director, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-cogs color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="ops"
+						message="Operations" text="Finance, Accounting, Human Resources, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-laptop color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="dev"
+						message="Developer" text="Mobile / Fullstack Developer, DevOps, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-pie-chart color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="sales"
+						message="Sales" text="Sales Manager, Account Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-comments-o color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="marketing"
+						message="Marketing" text="Content Creator, Marketing Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-question-circle color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="other"
+						message="Others" text="Attorney , etc."}}
+			</div>
+		</div>
+
+		<h1>Competencies</h1>
+		<p>
+			Finding the candidate with the right skill set is important.
+			Mooqita however can do more. We can help you find the person
+			that will complement your teams social fabric.
+		</p>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="row" style="padding: 20px 0px">
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Strategic Decisions"
+								collection_name="jobs" item_id=job._id field="strategic"
+								explain="Does the candidate need to lead other members of your team?"}}
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Leading People"
+								collection_name="jobs" item_id=job._id field="team"
+								explain = "Does the candidate need to make strategic descisions about the companies future?"}}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Contributing Ideas"
+								collection_name="jobs" item_id=job._id field="idea"
+								explain = "Do you need fresh and new ideas for products or features?"}}
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Process Design"
+								collection_name="jobs" item_id=job._id field="process"
+								explain = "Does the person need to specifiy processes followed by others?"}}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				{{>persona persona_data=(persona_data job)}}
+			</div>
+		</div>
+
+		{{>group_page}}
+
+	{{/each}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding Group
+|
+-------------------------------------------------->
+<template name="group_page">
+	<h1>Invite team members</h1>
+
+	<select class="selectpicker user_select_class"
+					id="user_select" data-live-search="true">
+		{{#each mail in possible_users}}
+			<option data-tokens="{{mail}}">{{mail}}</option>
+		{{/each}}
+	</select>
+
+	<ul class="auto-complete-list">
+		{{#each mail in selected_users}}
+			<li class="auto-complete-list-item" id="{{mail}}">
+				{{mail}}
+			</li>
+		{{/each}}
+	</ul>
+
+	<div class="btn btn-theme" id="invite">Invite</div>
+</template>
+
+

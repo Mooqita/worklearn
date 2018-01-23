@@ -266,12 +266,14 @@ _admission_fields =
 
 ########################################
 @has_role = (collection, document, user, role) ->
+	has = false
 	admission_cursor = get_admissions user, IGNORE, collection, document
 	admission_cursor.forEach (admission) ->
 		if admission.role == role
-			return true
+			has = true
+			return
 
-	return false
+	return has
 
 
 #######################################################

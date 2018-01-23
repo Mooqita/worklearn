@@ -1,0 +1,370 @@
+<!-----------------------------------------------------------------------------
+|
+| Questionnaire for Team members
+|
+------------------------------------------------------------------------------>
+<template name="team_member">
+	{{#mooqita_wide_spacing}}
+		{{#quick_survey answers=answers questions=questions}}
+
+			<h1 style="text-align: left; padding-bottom: 25px">
+				Excellent! Thank you for finishing the questionnaire.
+			</h1>
+
+			<p style="text-align: left">
+				<div class="persona animated col-sm-6 col-ms-6 col-xs-12"
+						 style="float: right; min-height: 150px; margin-left: 15px; margin-bottom: 15px">
+					{{>persona persona_data=persona_data}}
+				</div>
+
+				This test uses the „Big Five“ personality model. It assumes that personality
+				is a combination of five independent factors: Emotional <em>Stability</em>,
+				<em>Extroversion</em>, <em>Openness</em> for Experiences,	<em>Agreeableness</em>,
+				<em>(Conscientiousness)</em>. The figure shows the relation of these factors we
+				calculated from your test results.
+				This model is very useful to describe aspects of personality the test
+				does not represent the entire complexity of a human being. The model gives a frame
+				That we use to match you with jobs other people with your personality liked.
+			</p>
+
+			<div class="personality-explain">
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Emotional Stability</h2>
+						<p>
+							This personality trait describes how strong a person
+							feels emotions. It also indicates how much an intense
+							situation is perceived as stressful.
+
+							With a score of <em>{{score "Stability"}}</em>
+							(at a population average of <em>{{mean "Stability"}}</em>) you
+							reached a <em>{{level "Stability"}}</em> score.
+							Approximately <em>{{percentile "Stability"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Openness to Experiences</h2>
+						<p>
+							With a score of <em>{{score "Openness"}}</em>
+							(at a population average of <em>{{mean "Openness"}}</em>) you
+							reached a <em>{{level "Openness"}}</em> score.
+							Approximately <em>{{percentile "Openness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Agreeableness</h2>
+						<p>
+							With a score of <em>{{score "Agreeableness"}}</em>
+							(at a population average of <em>{{mean "Agreeableness"}}</em>) you
+							reached a <em>{{level "Agreeableness"}}</em> score.
+							Approximately <em>{{percentile "Agreeableness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Extroversion</h2>
+						<p>
+							With a score of <em>{{score "Extroversion"}}</em>
+							(at a population average of <em>{{mean "Extroversion"}}</em>) you
+							reached a <em>{{level "Extroversion"}}</em> score.
+							Approximately <em>{{percentile "Extroversion"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<h2>Conscientiousness</h2>
+						<p>
+							With a score of <em>{{score "Conscientiousness"}}</em>
+							(at a population average of <em>{{mean "Conscientiousness"}}</em>) you
+							reached a <em>{{level "Conscientiousness"}}</em> score.
+							Approximately <em>{{percentile "Conscientiousness"}}%</em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of high stability</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of low stability</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of high stability</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of low stability</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		{{/quick_survey}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!-----------------------------------------------------------------------------
+|
+| Survey
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey">
+	{{#let question=current_question}}
+		<div class="padding-top">
+			<div class="progress" style="height: 30px">
+				<div class="progress-bar background-theme" role="progressbar"
+						 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
+						 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+					<span>{{count}} of {{total}}</span>
+				</div>
+			</div>
+
+				{{#quick_survey_element answers=answers
+																question=question
+																responses=(g_array 1 2 3 4 5)}}
+					{{>Template.contentBlock}}
+				{{/quick_survey_element}}
+		</div>
+	{{/let}}
+</template>
+
+
+<!-----------------------------------------------------------------------------
+|
+| Survey Question
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey_element">
+	{{redraw}}
+
+	<div class="text-center element-container animated padding-top">
+		{{#if question}}
+			<P>I see myself as someone who...</P>
+			<h2><em>{{question}}</em></h2>
+			<div style="margin-left: 8%">
+				<div class="row">
+					<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
+							 style="padding: 10px">
+						<div class="text-left">Disagree</div>
+					</div>
+					{{#each response in responses}}
+						<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
+							<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
+								{{response}}
+							</div>
+						</div>
+					{{/each}}
+					<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
+						<div class="text-right">Agree</div>
+					</div>
+				</div>
+			</div>
+			<small id="process_explain" class="form-text text-muted">
+				You can type the number as well.
+			</small>
+		{{else}}
+			{{>Template.contentBlock}}
+		{{/if}}
+	</div>
+</template>
+
+

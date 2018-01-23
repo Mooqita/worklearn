@@ -9,7 +9,7 @@ AccountsTemplates.configure
 	forbidClientAccountCreation: false,
 	overrideLoginErrors: true,
 	sendVerificationEmail: true,
-	lowercaseUsername: false,
+	lowercaseUsername: true,
 	focusFirstInput: true,
 
 	#Appearance
@@ -19,14 +19,3 @@ AccountsTemplates.configure
 	showPlaceholders: true,
 	showResendVerificationEmailLink: true,
 
-	# Client-side Validation
-	continuousValidation: false,
-	negativeFeedback: false,
-	negativeValidation: true,
-	positiveValidation: true,
-	positiveFeedback: true,
-	showValidating: true,
-
-	# Privacy Policy and Terms of Use
-	privacyUrl: 'privacy',
-	termsUrl: 'terms-of-use',

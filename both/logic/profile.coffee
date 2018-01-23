@@ -1,26 +1,7 @@
-###############################################
-@get_user_mail = (user) ->
-	if not user
-		user = Meteor.userId()
-
-	if typeof user == "string"
-		user = Meteor.users.findOne user
-
-	if not user
-		throw  new Meteor.Error "User not found: " + user
-
-	address = "unknown"
-
-	if user.emails
-		mail = user.emails[0]
-		if mail
-			address = mail.address
-
-	return address
-
-
 #######################################################
-# get profile
+#
+# User, Profile, and Account functionality
+#
 #######################################################
 
 #######################################################
