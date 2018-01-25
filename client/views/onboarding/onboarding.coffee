@@ -251,19 +251,44 @@ Template.onboarding_register.helpers
 #########################################################
 
 #########################################################
+_ensure_company = () ->
+	filter =
+		collection_name: "companies"
+	admissions = Admissions.find(filter).fetch()
+	self.subscribe "my_companies", admissions,
+		(err, res) ->
+			if Companies.find().count() == 0
+				Meteor.call "add_company", data,
+					(err, res) ->
+						if Jobs.find().count() == 0
+							Meteor.call "add_job_post", data
+
+
+
+#########################################################
 Template.job_posting.onCreated () ->
 	self = this
 	data = Session.get "onboarding_job_posting"
 
 	self.autorun ()->
 		self.subscribe "my_admissions"
-		filter =
+
+		org_filter =
+			collection_name: "organization"
+		org_admissions = Admissions.find(org_filter).fetch()
+
+		job_filter =
 			collection_name: "jobs"
-		admissions = Admissions.find(filter).fetch()
-		self.subscribe "my_jobs", admissions,
-			(err, res) ->
-				if Jobs.find().count() == 0
-					Meteor.call "add_job_post", data
+		job_admissions = Admissions.find(job_filter).fetch()
+
+		self.subscribe "my_organizations", org_admissions
+		self.subscribe "my_jobs", job_admissions
+
+		self.subscriptionsReady (err, res) ->
+			sAlert.error err
+			sAlert.success res
+			if Organizations.find().count() == 0
+				Meteor.call "onboard_organization", data
 
 
 #########################################################
@@ -272,7 +297,6 @@ Template.job_posting.helpers
 		return Jobs.find()
 
 	persona_data: (data) ->
-		console.log data
 		res = _build_persona(data)
 		return res
 
@@ -298,17 +322,6 @@ Template.group_page.onCreated ()  ->
 	self.selected = new ReactiveVar([])
 
 	self.find_user = (event) ->
-		value = event.target.value
-		if value.length > 3
-			Meteor.call "find_user", value,
-				(err, res) ->
-					if res
-						mails = (a.emails[0].address for a,index in res)
-						self.candidates.set mails
-		else
-			self.candidates.set []
-
-	self.update_candidate = (event) ->
 		event = event || window.event
 		switch event.keyCode
 			when 38 then return
@@ -316,7 +329,14 @@ Template.group_page.onCreated ()  ->
 			when 37 then return
 			when 39 then return
 
-		$('.user_select_class').selectpicker('refresh')
+		value = event.target.value
+		Meteor.call "find_user", value,
+			(err, res) ->
+				if res
+					mails = (a.emails[0].address for a,index in res)
+					self.candidates.set mails
+
+	self.update_candidate = (event) ->
 
 	self.update_selected = (event) ->
 		val = $('.user_select_class').val()
@@ -348,8 +368,10 @@ Template.group_page.helpers
 		inst = Template.instance()
 		users = inst.candidates.get()
 
-		return users
+		console.log "refresh", users.length
+		$('.user_select_class').selectpicker('refresh')
 
+		return users
 
 	selected_users: () ->
 		inst = Template.instance()

@@ -6,16 +6,7 @@
 
 ################################################################
 Meteor.methods
-	add_group: () ->
-		user_id = Meteor.userId()
-		if not user_id
-			throw new Meteor.Error "Not authorised"
-
-		data = {}
-		res = store_document_unprotected Groups, data, user_id
-		return res
-
-	add_job_post: (data) ->
+	onboard_organization: (data) ->
 		pattern =
 			role:String,
 			idea:Number,
@@ -28,13 +19,15 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error "Not authorized"
 
-		id = store_document_unprotected Jobs, data, user
+		company_id = store_document_unprotected Organizations, {}, user
+		data["company_id"] = company_id
 
-		return id
+		job_id = store_document_unprotected Jobs, data, user
+		return job_id
 
-	invite_team_member: (group_id, emails) ->
+	invite_team_member: (company_id, emails) ->
 		check emails, [String]
-		check group_id, String
+		check company_id, String
 
 		user_id = Meteor.userId()
 		if not user_id
@@ -44,17 +37,15 @@ Meteor.methods
 		ids = []
 
 		for email in emails
-			console.log email
-
 			filter =
-				group_id: group_id
+				company_id: company_id
 				email: email
 
 			crs = Invitations.find filter
 			if crs.count() > 0
 				continue
 
-			if not is_owner Groups, group_id, user_id
+			if not is_owner Organizations, company_id, user_id
 				throw new Meteor.Error "Not authorised"
 
 			filter["host"] = user_id
@@ -77,8 +68,11 @@ Meteor.methods
 		if not user_id
 			throw new Meteor.Error "Not authorised"
 
-		reg = new RegExp mail
 		check mail, String
+		if mail.length < 4
+			return []
+
+		reg = new RegExp mail
 		filter =
 			"emails.address":
 				$regex: reg
@@ -90,7 +84,5 @@ Meteor.methods
 				emails: 1
 
 		crs = Meteor.users.find filter, options
-		console.log crs.count()
-
 		return crs.fetch()
 

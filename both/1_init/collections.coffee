@@ -8,11 +8,11 @@
 #######################################################
 @Permissions = new Mongo.Collection("permissions")
 @Admissions =  new Mongo.Collection("admissions")
-@Groups = new Mongo.Collection("groups")
-@Jobs = new Mongo.Collection("jobs")
+@Admin = new Mongo.Collection("admin")
 
 #######################################################
 @Recommendations = new Mongo.Collection("recommendations")
+@Organizations = new Mongo.Collection("organizations")
 @Challenges = new Mongo.Collection("challenges")
 @Solutions = new Mongo.Collection("solutions")
 @Feedback = new Mongo.Collection("feedback")
@@ -20,6 +20,7 @@
 @Messages = new Mongo.Collection("messages")
 @Reviews = new Mongo.Collection("reviews")
 @Posts = new Mongo.Collection("posts")
+@Jobs = new Mongo.Collection("jobs")
 
 #######################################################
 @ChallengeSummaries = new Mongo.Collection("challenge_summaries")
@@ -32,7 +33,4 @@
 @EduCertTemplate = new Mongo.Collection("edu_cert_templates")
 @EduCertAssertions = new Mongo.Collection("edu_cert_assertions")
 @EduCertRecipients = new Mongo.Collection("edu_cert_recipients")
-
-#######################################################
-@Admin = new Mongo.Collection("admin")
 
