@@ -274,7 +274,7 @@ Template.job_posting.onCreated () ->
 		self.subscribe "my_admissions"
 
 		org_filter =
-			collection_name: "organization"
+			collection_name: "organizations"
 		org_admissions = Admissions.find(org_filter).fetch()
 
 		job_filter =
@@ -284,9 +284,8 @@ Template.job_posting.onCreated () ->
 		self.subscribe "my_organizations", org_admissions
 		self.subscribe "my_jobs", job_admissions
 
-		self.subscriptionsReady (err, res) ->
-			sAlert.error err
-			sAlert.success res
+		if self.subscriptionsReady()
+			console.log "ready"
 			if Organizations.find().count() == 0
 				Meteor.call "onboard_organization", data
 
@@ -412,7 +411,9 @@ Template.group_page.events
 	"click #invite": () ->
 		inst = Template.instance()
 		selected = inst.selected.get()
-		Meteor.call "invite_team_member", selected, "company",
+		org = Organizations.findOne()
+
+		Meteor.call "invite_team_member", org._id, selected,
 			(err, res) ->
 				sAlert.error err
 				sAlert.success res
