@@ -339,10 +339,7 @@
 	<h1>Invite team members</h1>
 
 	<select class="selectpicker user_select_class"
-					id="user_select" data-live-search="true">
-		{{#each mail in possible_users}}
-			<option data-tokens="{{mail}}">{{mail}}</option>
-		{{/each}}
+					multiple id="user_select" data-live-search="true">
 	</select>
 
 	<ul class="auto-complete-list">
@@ -354,6 +351,31 @@
 	</ul>
 
 	<div class="btn btn-theme" id="invite">Invite</div>
+
+	<hr>
+
+	<h1>Pending invitations</h1>
+	<ul class="auto-complete-list">
+		{{#each invitation in invitations}}
+			{{invitation.accepted}}
+			<li class="auto-complete-list-item" id="{{invitation.email}}">
+				{{invitation.email}}
+				<a href="{{invitation_url invitation}}">{{invitation_url invitation}}</a>
+			</li>
+		{{/each}}
+	</ul>
+
+	<hr>
+
+	<h1>Team Members</h1>
+	<ul class="auto-complete-list">
+		{{#each profile in members}}
+			<li class="auto-complete-list-item">
+				{{g_name_from_profile profile}}
+			</li>
+		{{/each}}
+	</ul>
+
 </template>
 
 

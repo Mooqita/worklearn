@@ -37,7 +37,7 @@ _routes =
 
 
 ##############################################
-@build_url = (template, query, absolute=false, occupation=null) ->
+@build_url = (template, query, absolute=false, occupation=null, base_name=null) ->
 	if not occupation
 		profile = get_profile()
 		if profile
@@ -50,8 +50,11 @@ _routes =
 			if tmp
 				template = tmp
 
-	app = if absolute then "app" else "/app"
-	url = FlowRouter.path app+"/"+template, null, query
+	if not base_name
+		base_name = "app"
+
+	base = if absolute then base_name else "/" + base_name
+	url = FlowRouter.path base + "/" + template, null, query
 
 	if absolute
 		url = Meteor.absoluteUrl(url)

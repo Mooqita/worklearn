@@ -281,7 +281,13 @@ Template.job_posting.onCreated () ->
 			collection_name: "jobs"
 		job_admissions = Admissions.find(job_filter).fetch()
 
+		invite_filter =
+			collection_name: "invitations"
+		invite_admissions = Admissions.find(invite_filter).fetch()
+
+		self.subscribe "send_invitations", invite_admissions
 		self.subscribe "my_organizations", org_admissions
+		self.subscribe "team_members", org_admissions[0]
 		self.subscribe "my_jobs", job_admissions
 
 		if self.subscriptionsReady()
@@ -315,6 +321,18 @@ Template.job_posting.events
 #########################################################
 
 #########################################################
+_refresh = (mails)->
+	$('#user_select').empty()
+
+	for mail in mails
+		console.log mail
+		html = '<option data-tokens="' + mail + '">' + mail + '</option>'
+		$('#user_select').append html
+
+	$('.user_select_class').selectpicker 'refresh'
+
+
+#########################################################
 Template.group_page.onCreated ()  ->
 	self = this
 	self.candidates = new ReactiveVar([])
@@ -333,18 +351,21 @@ Template.group_page.onCreated ()  ->
 			(err, res) ->
 				if res
 					mails = (a.emails[0].address for a,index in res)
-					self.candidates.set mails
-
-	self.update_candidate = (event) ->
+					mails.push value
+					_refresh(mails)
 
 	self.update_selected = (event) ->
-		val = $('.user_select_class').val()
+		mails = $('.user_select_class').val()
 
-		selected = new Set(self.selected.get())
-		selected.add val
+		for val in mails
+			if not check_mail val
+				return
 
-		new_selected = Array.from(selected)
-		self.selected.set new_selected
+			selected = new Set(self.selected.get())
+			selected.add val
+
+			new_selected = Array.from(selected)
+			self.selected.set new_selected
 
 
 #########################################################
@@ -363,25 +384,28 @@ Template.group_page.helpers
 
 		return profile
 
-	possible_users: () ->
-		inst = Template.instance()
-		users = inst.candidates.get()
-
-		console.log "refresh", users.length
-		$('.user_select_class').selectpicker('refresh')
-
-		return users
-
 	selected_users: () ->
 		inst = Template.instance()
 		return inst.selected.get()
 
-	is_last: (mail) ->
-		if mail != "__is__last__"
-			return false
+	invitations: () ->
+		return Invitations.find()
 
-		#$('.user_select_class').selectpicker('refresh')
-		return true
+	invitation_url: (invitation) ->
+		console.log invitation
+
+		param =
+			organization_id: invitation.organization_id
+			invitation_id: invitation._id
+
+		return build_url "invitation", param
+
+	members: () ->
+		return Profiles.find()
+
+	get_given_name: (profile) ->
+		get_profile_name profile
+
 
 
 #########################################################
@@ -389,14 +413,11 @@ Template.group_page.events
 	"show.bs.select .user_select_class": () ->
 		inst = Template.instance()
 
-		$(".user_select_class input").off "keydown", inst.find_user
-		$(".user_select_class input").on "keydown", inst.find_user
+		$(".user_select_class input").off "keyup", inst.find_user
+		$(".user_select_class input").on "keyup", inst.find_user
 
-		$(".user_select_class input").off "keyup", inst.update_candidate
-		$(".user_select_class input").on "keyup", inst.update_candidate
-
-		$(".user_select_class").off "click", inst.update_selected
-		$(".user_select_class").on "click", inst.update_selected
+		$(".selectpicker").off "changed.bs.select", inst.update_selected
+		$(".selectpicker").on "changed.bs.select", inst.update_selected
 
 	"click .auto-complete-list-item": (event) ->
 		inst = Template.instance()

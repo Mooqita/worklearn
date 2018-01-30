@@ -13,6 +13,7 @@
 #######################################################
 @Recommendations = new Mongo.Collection("recommendations")
 @Organizations = new Mongo.Collection("organizations")
+@Invitations = new Mongo.Collection("invitations")
 @Challenges = new Mongo.Collection("challenges")
 @Solutions = new Mongo.Collection("solutions")
 @Feedback = new Mongo.Collection("feedback")

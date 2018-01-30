@@ -5,6 +5,11 @@
 #######################################################
 
 ################################################################
+# TODO: this does not conform to mooqita's seperation of concern
+# Moving logic and only keep security checks.
+################################################################
+
+################################################################
 Meteor.methods
 	add_post: (template_id, parent_id, group_name, index) ->
 		user = Meteor.user()

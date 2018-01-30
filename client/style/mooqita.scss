@@ -94,8 +94,9 @@
 ////////////////////////////////////////////////
 .mooqita-layout .form-control{
 	border-color: $theme;
-//	min-height: 40.5px;
-//	font-size: 16px;
+	border-width: 2px;
+	height: 40.5px;
+	font-size: 16px;
 }
 
 .mooqita-layout .form-control.tags{

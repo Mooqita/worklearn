@@ -35,3 +35,9 @@ AccountsTemplates.configure
 	# Privacy Policy and Terms of Use
 	# privacyUrl: 'privacy',
 	# termsUrl: 'terms-of-use',
+
+	texts:
+		inputIcons:
+			isValidating: "fa fa-spinner fa-spin"
+			hasSuccess: "fa fa-check"
+			hasError: "fa fa-times"

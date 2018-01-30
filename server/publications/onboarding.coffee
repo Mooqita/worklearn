@@ -37,3 +37,7 @@ Meteor.publish "my_organizations", (admissions) ->
 	log_publication crs, user_id, "my_organizations"
 	return crs
 
+
+#######################################################
+Meteor.publish "team_members", (admissions) ->
+	return []

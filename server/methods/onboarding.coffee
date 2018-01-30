@@ -21,53 +21,22 @@ Meteor.methods
 
 		org = get_my_document Organizations
 		if not org
-			org_id = store_document_unprotected Organizations, {}, user
-			org = Organizations.findOne org_id
+			org_id = gen_organization()
+		else
+			org_id = org._id
 
 		job = get_my_document Jobs
 		if not job
-			data["company_id"] = org._id
-			job_id = store_document_unprotected Jobs, data, user
-			job = Jobs.findOne job_id
+			data["organization_id"] = org_id
+			job_id = gen_job data
+		else
+			job_id = job._id
 
-		return job._id
+		return job_id
 
-	invite_team_member: (organization_id, emails) ->
-		check emails, [String]
-		check organization_id, String
 
-		user_id = Meteor.userId()
-		if not user_id
-			throw new Meteor.Error "Not authorised"
-
-		name = get_profile_name()
-		ids = []
-
-		for email in emails
-			filter =
-				organization_id: organization_id
-				email: email
-
-			crs = Invitations.find filter
-			if crs.count() > 0
-				continue
-
-			if not is_owner Organizations, organization_id, user_id
-				throw new Meteor.Error "Not authorised"
-
-			filter["host"] = user_id
-			invitation_id = store_document_unprotected Invitations, filter, user_id
-			ids.push invitation_id
-
-			url = build_url "invitation", {invitation_id: invitation_id}, true
-
-			subject = "Mooqita: Invitation from " + name
-			body = name + " has send you an invitation to join Mooqita."
-			body += "Please follow this link: " + url
-			body += "to check out the invitation. You can chose on the website if you want to join or not."
-			send_mail email, subject, body
-
-		return ids
+	add_job: (data) ->
+		return []
 
 
 	find_user: (mail) ->
@@ -92,4 +61,58 @@ Meteor.methods
 
 		crs = Meteor.users.find filter, options
 		return crs.fetch()
+
+
+	invite_team_member: (organization_id, emails) ->
+		check emails, [String]
+		check organization_id, String
+
+		host_id = Meteor.userId()
+		if not host_id
+			throw new Meteor.Error "Not authorised"
+
+		if not is_owner Organizations, organization_id, host_id
+			throw new Meteor.Error "Not authorised"
+
+		ids = []
+		host_name = get_profile_name undefined , false, false
+		for email in emails
+			invitation_id = gen_invitation organization_id, email, host_id, host_name
+			ids.push invitation_id
+
+		return ids
+
+
+	register_to_accept_invitation: (invitation_id, password) ->
+		check invitation_id, String
+		check password, String
+
+		invitation = Invitations.findOne invitation_id
+		if not invitation
+			throw new Meteor.error "Invitation not found."
+
+		organization = Organizations.findOne invitation.organization_id
+		host_id = invitation.host_id
+
+		if not is_owner Organizations, organization._id, host_id
+			throw new Meteor.Error "The host is not authorized to invite members."
+
+		user =
+			email: invitation.email
+			password: password
+		gen_user user, "employee"
+
+		org_id = accept_invitation invitation_id
+		return org_id
+
+
+	accept_invitation: (invitation_id) ->
+		user_id = Meteor.userId()
+		if not user_id
+			throw new Meteor.Error "Not authorised"
+
+		check invitation_id, String
+
+		org_id = accept_invitation invitation_id
+		return org_id
 

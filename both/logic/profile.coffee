@@ -9,6 +9,9 @@
 	if not user
 		user = Meteor.userId()
 
+	if not user
+		return null
+
 	if typeof user != "string"
 		user = user._id
 
@@ -44,7 +47,13 @@
 	if not profile
 		profile = get_profile()
 
-	name = (profile.given_name ? "Learner") + " "
+	if profile.given_name
+		name = profile.given_name
+	else
+		name = get_profile_mail profile
+		short = true
+
+	name += " "
 
 	if not short
 		name += (profile.middle_name ? "") + " "

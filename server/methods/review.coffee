@@ -11,7 +11,7 @@ Meteor.methods
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
-		res = assign_review null, null, user
+		res = assign_review null, user
 		return res
 
 
@@ -21,7 +21,7 @@ Meteor.methods
 			throw new Meteor.Error('Not permitted.')
 
 		challenge = get_document_unprotected  Challenges, challenge_id
-		res = assign_review challenge, null, user
+		res = assign_review challenge, user
 		return res
 
 
@@ -35,7 +35,7 @@ Meteor.methods
 		if not has_role Challenges, solution.challenge_id, user, TUTOR
 			throw new Meteor.Error('Not permitted.')
 
-		res = assign_review null, solution, user
+		res = get_open_review_for_solution solution
 		return res
 
 

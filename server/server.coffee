@@ -4,7 +4,6 @@
 #
 #####################################################
 
-
 #####################################################
 _handle_startup_setting = () ->
 	# make sure all indices are created
@@ -26,11 +25,36 @@ _handle_startup_setting = () ->
 
 	# set default permissions if necessary
 	if Meteor.settings.init_default_permissions && (Meteor.settings.init_default_permissions == true)
-		_initialize_permissions()
+		initialize_permissions()
 
 	# add test data
 	if Meteor.settings.init_test_data
-		_initialize_database()
+		run_database_test_bed()
+
+
+#####################################################
+_add_admin = (email, password) ->
+	log_event "Adding admin"
+	user = Accounts.findUserByEmail(email)
+
+	if not user
+		user =
+			email: "admin@mooqita.org"
+			password: password
+
+		user = Accounts.createUser(user)
+		user = Accounts.findUserByEmail(email)
+
+	profile = get_profile user._id
+
+	if profile
+		log_event "-- admin already exists"
+		return profile._id
+
+	profile_id = gen_profile user, "learner"
+	msg = "admin added " + user.email + " " + profile_id
+	log_event msg, event_testing, event_info
+	return profile_id
 
 
 #####################################################
@@ -264,22 +288,21 @@ _initialize_database = () ->
 #####################################################
 _test_user_creation = (mail, occupation) ->
 	user = Accounts.findUserByEmail(mail)
-
-	if not user
-		user =
-			email: mail,
-			password: "none",
-
-		user_id = Accounts.createUser(user)
-		user = Meteor.users.findOne user_id
-		console.log "Test user creation: " + get_user_mail(user)
-
 	profile = get_document user, "owner", Profiles
 
 	if profile
-		return profile._id
+		return
 
-	profile_id = gen_profile user
+	user =
+		email: mail
+		password: "none"
+
+	user_id = Accounts.createUser(user)
+	user = Meteor.users.findOne user_id
+	console.log "Test user creation: " + get_user_mail(user)
+
+	profile = get_document user, "owner", Profiles
+
 	modify_field_unprotected Profiles, profile_id, "avatar", faker.image.avatar()
 	modify_field_unprotected Profiles, profile_id, "given_name", faker.name.firstName()
 	modify_field_unprotected Profiles, profile_id, "family_name", faker.name.lastName()
@@ -343,9 +366,9 @@ _test_solution = (challenge, user) ->
 
 
 #####################################################
-_test_review = (challenge, solution, user) ->
+_test_review = (challenge, user) ->
 	try
-		res = assign_review challenge, solution, user
+		res = assign_review challenge, user
 	catch e
 		if e.error == "no-review"
 			return

@@ -5,6 +5,10 @@
 ################################################################
 
 ################################################################
+# TODO: are permissions still necessary?
+################################################################
+
+################################################################
 Meteor.methods
 	add_db_permission: (role, collection_name, field) ->
 		user = Meteor.user()
@@ -18,7 +22,6 @@ Meteor.methods
 		check field, String
 		check collection_name, String
 
-# TODO: is this necessary?
 #		secret = Secrets.findOne()
 
 #		if not collection_name in secret.collections

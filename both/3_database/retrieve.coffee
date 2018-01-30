@@ -112,6 +112,17 @@
 	admission_cursor.forEach (admission) ->
 		resource_ids.push admission.resource_id
 
+	if filter._id
+		if typeof filter._id == "string"
+			restrict = new Set([filter._id])
+		else if filter._id.$in
+			restrict = new Set(filter._id.$in)
+		else
+			throw new Meteor.Error "Filter with _id rules are not fully implemented."
+
+	if restrict
+		resource_ids = (x for x in resource_ids when restrict.has x)
+
 	filter["_id"] = {$in: resource_ids}
 	return filter
 

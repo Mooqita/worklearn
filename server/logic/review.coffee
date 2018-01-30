@@ -77,18 +77,13 @@ _find_review = (user, challenge) ->
 	if challenge
 		filter.challenge_id = challenge._id
 
-	return Reviews.findOne filter, mod
+	review = Reviews.findOne filter, mod
+	return review
 
 
 ###############################################
-@assign_review = (challenge, solution, user) ->
-	if solution
-		filter =
-			solution_id: solution._id
-			published: false
-		review = Reviews.findOne filter
-	else
-		review = _find_review user, challenge
+@assign_review = (challenge, user) ->
+	review = _find_review user, challenge
 
 	if not review
 		throw new Meteor.Error "no-review", "There are no solutions to review at the moment."
@@ -121,6 +116,16 @@ _find_review = (user, challenge) ->
 
 
 ###############################################
+@get_open_review_for_solution = (solution) ->
+	filter =
+		solution_id: solution._id
+		published: false
+	review = Reviews.findOne filter
+
+	return review
+
+
+###############################################
 @finish_review = (review, user) ->
 	if not review.rating
 		throw new Meteor.Error "Review: " + review._id + " Does not have a rating."
@@ -141,8 +146,8 @@ _find_review = (user, challenge) ->
 
 	request = Reviews.findOne filter
 	if not request
-		if not has_role Challenges, challenge, TUTOR
-			return review._id
+		if not has_role Challenges, challenge, user, TUTOR
+			return request._id
 
 		throw new Meteor.Error "A non tutor provided a review without a solution."
 

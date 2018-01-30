@@ -23,6 +23,8 @@ Meteor.methods
 		return finish_challenge item, user
 
 	send_message_to_challenge_learners: (challenge_id, subject, message) ->
+		#TODO: move to logic
+
 		user = Meteor.user()
 
 		if not user

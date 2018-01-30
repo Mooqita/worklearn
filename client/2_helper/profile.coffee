@@ -34,6 +34,17 @@ Template.registerHelper "g_profile_name", (user) ->
 
 
 ########################################
+Template.registerHelper "g_name_from_profile", (profile) ->
+	if not profile
+		profile = get_profile()
+
+	if not profile
+		return undefined
+
+	return get_profile_name profile, false, false
+
+
+########################################
 Template.registerHelper "g_is_owner", (collection_name, obj) ->
 	if typeof obj == "string"
 		collection = get_collection collection_name
