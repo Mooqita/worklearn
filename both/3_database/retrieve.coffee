@@ -96,6 +96,13 @@
 
 
 #######################################################
+_union = (a, b)->
+	res = []
+	for x in a
+		if b.has(x)
+			res.push(x)
+	return res
+
 @get_filter = (user, role, collection_name, filter) ->
 	if not filter
 		filter = {}
@@ -107,10 +114,10 @@
 
 	admission_filter = _get_admission_filter collection_name, IGNORE, user, role
 
-	resource_ids = []
+	admitted_ids = []
 	admission_cursor = Admissions.find admission_filter
 	admission_cursor.forEach (admission) ->
-		resource_ids.push admission.resource_id
+		admitted_ids.push admission.resource_id
 
 	if filter._id
 		if typeof filter._id == "string"
@@ -121,7 +128,12 @@
 			throw new Meteor.Error "Filter with _id rules are not fully implemented."
 
 	if restrict
-		resource_ids = (x for x in resource_ids when restrict.has x)
+		resource_ids = _union(admitted_ids, restrict)
+	else
+		resource_ids = admitted_ids
+
+	if not Array.isArray(resource_ids)
+		throw new Meteor.Error "Resource ids need to be an array."
 
 	filter["_id"] = {$in: resource_ids}
 	return filter

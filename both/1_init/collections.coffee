@@ -29,6 +29,7 @@
 #######################################################
 @UserSummaries = new Mongo.Collection("user_summaries")
 @UserResumes = new Mongo.Collection("user_resumes")
+@TeamMembers = new Mongo.Collection("team_members")
 
 #######################################################
 @EduCertTemplate = new Mongo.Collection("edu_cert_templates")

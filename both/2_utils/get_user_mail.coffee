@@ -9,7 +9,7 @@ _getEmailFromService = ( services ) ->
 		user = Meteor.userId()
 
 	if typeof user == "string"
-		user = Meteor.users.findOne user
+		user = Meteor.users.findOne(user)
 
 	if not user
 		throw  new Meteor.Error "User not found: " + user

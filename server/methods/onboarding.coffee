@@ -84,8 +84,10 @@ Meteor.methods
 
 
 	register_to_accept_invitation: (invitation_id, password) ->
-		check invitation_id, String
-		check password, String
+		pattern =
+			algorithm: String
+			digest: String
+		check password, pattern
 
 		invitation = Invitations.findOne invitation_id
 		if not invitation

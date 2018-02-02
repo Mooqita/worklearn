@@ -27,7 +27,6 @@ service-configuration@1.0.11
 
 accounts-password@1.5.0
 accounts-base@1.4.0
-accounts-ui@1.2.0
 
 #accounts-facebook@1.1.1
 #accounts-google@1.1.1

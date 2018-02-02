@@ -336,8 +336,46 @@
 |
 -------------------------------------------------->
 <template name="group_page">
-	<h1>Invite team members</h1>
+	<h1>Team Members</h1>
+	{{#each member in members}}
+		<div class="row">
+			<div class="col-md-6">
+				{{member.name}}
+			</div>
 
+			<div class="col-md-6">
+				{{#let data=(persona_data member)}}
+					{{#if data}}
+						{{>persona persona_data=data}}
+					{{else}}
+						This person has not yet have a persona.
+					{{/if}}
+				{{/let}}
+			</div>
+		</div>
+	{{/each}}
+
+	{{#each invitation in invitations}}
+		{{#unless invitation.accepted}}
+			<div class="row">
+				<div class="col-md-6">
+					{{invitation.email}}
+				</div>
+
+				<div class="col-md-3">
+					pending
+				</div>
+
+				<div class="col-md-3">
+					<a href="{{invitation_url invitation}}">invite url</a>
+				</div>
+			</div>
+		{{/unless}}
+	{{/each}}
+
+	<hr>
+
+	<h2>Invite new Members</h2>
 	<select class="selectpicker user_select_class"
 					multiple id="user_select" data-live-search="true">
 	</select>
@@ -351,30 +389,6 @@
 	</ul>
 
 	<div class="btn btn-theme" id="invite">Invite</div>
-
-	<hr>
-
-	<h1>Pending invitations</h1>
-	<ul class="auto-complete-list">
-		{{#each invitation in invitations}}
-			{{invitation.accepted}}
-			<li class="auto-complete-list-item" id="{{invitation.email}}">
-				{{invitation.email}}
-				<a href="{{invitation_url invitation}}">{{invitation_url invitation}}</a>
-			</li>
-		{{/each}}
-	</ul>
-
-	<hr>
-
-	<h1>Team Members</h1>
-	<ul class="auto-complete-list">
-		{{#each profile in members}}
-			<li class="auto-complete-list-item">
-				{{g_name_from_profile profile}}
-			</li>
-		{{/each}}
-	</ul>
 
 </template>
 

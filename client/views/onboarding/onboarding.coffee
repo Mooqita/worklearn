@@ -264,7 +264,6 @@ _ensure_company = () ->
 							Meteor.call "add_job_post", data
 
 
-
 #########################################################
 Template.job_posting.onCreated () ->
 	self = this
@@ -285,13 +284,16 @@ Template.job_posting.onCreated () ->
 			collection_name: "invitations"
 		invite_admissions = Admissions.find(invite_filter).fetch()
 
+		organization_id = ""
+		if org_admissions.length > 0
+			organization_id = org_admissions[0].resource_id
+
 		self.subscribe "send_invitations", invite_admissions
 		self.subscribe "my_organizations", org_admissions
-		self.subscribe "team_members", org_admissions[0]
+		self.subscribe "team_members", organization_id
 		self.subscribe "my_jobs", job_admissions
 
 		if self.subscriptionsReady()
-			console.log "ready"
 			if Organizations.find().count() == 0
 				Meteor.call "onboard_organization", data
 
@@ -302,6 +304,7 @@ Template.job_posting.helpers
 		return Jobs.find()
 
 	persona_data: (data) ->
+		console.log TeamMembers.find().fetch()
 		res = _build_persona(data)
 		return res
 
@@ -401,11 +404,22 @@ Template.group_page.helpers
 		return build_url "invitation", param
 
 	members: () ->
-		return Profiles.find()
+		return TeamMembers.find()
 
 	get_given_name: (profile) ->
 		get_profile_name profile
 
+	persona_data: (profile) ->
+		collection_name = "profiles"
+		item_id = profile._id
+		field = "big_five"
+
+		big_five_answers = get_field_value this, field, item_id, collection_name
+
+		if not big_five_answers
+			return undefined
+
+		return calculate_persona_40 big_five_answers
 
 
 #########################################################

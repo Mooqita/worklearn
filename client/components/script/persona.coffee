@@ -23,6 +23,9 @@ _draw_persona = (instance, width = 400, height = 200) ->
 		console.log "no id"
 		return
 
+	if not data.has_text
+		height = width
+
 	radius = Math.min(width, height) / 2
 
 	_svg = instance.svg.get()
@@ -88,6 +91,10 @@ _draw_persona = (instance, width = 400, height = 200) ->
 	#############################################################################
 	# Text Labels
 	#############################################################################
+
+	#############################################################################
+	if not data.has_text
+		return
 
 	#############################################################################
 	midAngle = (d) ->

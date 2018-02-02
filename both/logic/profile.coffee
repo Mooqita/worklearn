@@ -43,6 +43,17 @@
 
 
 ###############################################
+@get_profile_id = (profile) ->
+	if not profile
+		profile = get_profile()
+
+	if profile
+		return profile._id
+
+	return undefined
+
+
+###############################################
 @get_profile_name = (profile, short = false, plus_id=true) ->
 	if not profile
 		profile = get_profile()

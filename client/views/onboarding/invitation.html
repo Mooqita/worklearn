@@ -1,6 +1,6 @@
 <!------------------------------------------------
 |
-|	Company profile
+|	Invitations
 |
 -------------------------------------------------->
 <template name="invitations">
@@ -36,81 +36,110 @@
 </template>
 
 
+<!------------------------------------------------
+|
+|	Invitation
+|
+-------------------------------------------------->
 <template name="invitation">
 	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
 		<div class="padding-top">
-			{{#with invitation}}
-				<div class="row">
-					<div class="col-sm-6 padding-next">
-						<h1>Invitation to join Mooqita.</h1>
+			{{#unless currentUser}}
+				{{>invitation_register}}
+			{{else}}
+				{{>invitation_accept}}
+			{{/unless}}
 
-						<p>
-							Your host <em><b>{{host}}</b></em> has invited you to join
-							their organization <em><b>{{organization.name}}</b></em> on Mooqita.
-							To join just select and confirm your password. An email will
-							be send to the address chosen by your host.
-						</p>
-
-							{{#unless currentUser}}
-								<h2>You already have an account?</h2>
-								<p>
-									If you are already registered with: <br>
-									<em><b>{{email}}</b></em>. <br>
-									Please login and check your open invitations
-									<a href="{{invite_url}}" style="text-decoration: underline;"><b>here</b></a>.
-								</p>
-							{{else}}
-								{{#unless accepted}}
-									<div class="btn btn-theme" id="accept">Accept Invitation</div>
-								{{else}}
-									<h2><em>You accepted this invitation</em></h2>
-								{{/unless}}
-							{{/unless}}
-						</div>
-
-					{{#unless currentUser}}
-						<div class="col-sm-6">
-							<form>
-								<div class="form-group">
-									<label for="at-field-mail">Registered email</label>
-									<label class="form-control" id="at-field-mail" aria-describedby="mail_explain">
-										{{email}}
-									</label>
-									<small id="mail_explain" class="form-text text-muted">
-										If you would like to use a different mail let your host
-										re-invite you with that email.
-									</small>
-								</div>
-
-								<div class="form-group">
-									<label for="at-field-password">Choose your password</label>
-									<input type="password" class="form-control" id="at-field-password"
-												 name="at-field-password" placeholder="Password" autocapitalize="none"
-												 autocorrect="off" aria-describedby="password_explain">
-									<small id="password_explain" class="form-text text-muted">
-										Your password needs to be 8 characters long and contain at least
-										1 digit, 1 lower-case character, and 1 upper-case character.
-									</small>
-								</div>
-
-								<div class="form-group">
-									<label for="at-field-password_again">Confirm your password</label>
-									<input type="password" class="form-control" id="at-field-password_again"
-												 name="at-field-password_again" placeholder="Password (again)"
-												 autocapitalize="none" autocorrect="off"
-												 aria-describedby="password_again_explain">
-									<small id="password_again_explain" class="form-text text-muted">
-										You probably know the drill... Please retype your password.
-									</small>
-								</div>
-
-								<div class="btn btn-theme" id="register">Register</div>
-							</form>
-						</div>
-					{{/unless}}
-				</div>
-			{{/with}}
+			{{#if invitation.accepted}}
+				<h2><em>You accepted this invitation</em></h2>
+			{{/if}}
 		</div>
 	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="invitation_accept">
+	<div class="row">
+		<div class="col-sm-6 padding-next">
+			<h1>Invitation to join Mooqita.</h1>
+
+			<p>
+				Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
+				their organization <em><b>{{organization.name}}</b></em> on Mooqita.
+			</p>
+
+			{{#unless invitation.accepted}}
+				<div class="btn btn-theme" id="accept">Accept Invitation</div>
+			{{/unless}}
+		</div>
+	</div>
+</template>
+
+
+<template name="invitation_register">
+	<div class="row">
+		<div class="col-sm-6 padding-next">
+			<h1>Invitation to join Mooqita.</h1>
+
+			<p>
+				Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
+				their organization <em><b>{{organization.name}}</b></em> on Mooqita.
+				To join just select and confirm your password. An email will
+				be send to the address chosen by your host.
+			</p>
+
+			<h2>You already have an account?</h2>
+
+			<p>
+				If you are already registered with: <br>
+				<em><b>{{email}}</b></em>. <br>
+				Please login and check your open invitations
+				<a href="{{invite_url}}" style="text-decoration: underline;"><b>here</b></a>.
+			</p>
+		</div>
+
+		<div class="col-sm-6">
+			<form>
+				<div class="form-group">
+					<label for="at-field-mail">Registered email</label>
+					<label class="form-control" id="at-field-mail" aria-describedby="mail_explain">
+						{{email}}
+					</label>
+					<small id="mail_explain" class="form-text text-muted">
+						If you would like to use a different mail let your host
+						re-invite you with that email.
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="at-field-password">Choose your password</label>
+					<input type="password" class="form-control" id="at-field-password"
+								 name="at-field-password" placeholder="Password" autocapitalize="none"
+								 autocorrect="off" aria-describedby="password_explain">
+					<small id="password_explain" class="form-text text-muted">
+						Your password needs to be 8 characters long and contain at least
+						1 digit, 1 lower-case character, and 1 upper-case character.
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="at-field-password_again">Confirm your password</label>
+					<input type="password" class="form-control" id="at-field-password_again"
+								 name="at-field-password_again" placeholder="Password (again)"
+								 autocapitalize="none" autocorrect="off"
+								 aria-describedby="password_again_explain">
+					<small id="password_again_explain" class="form-text text-muted">
+						You probably know the drill... Please retype your password.
+					</small>
+				</div>
+
+				<div class="btn btn-theme" id="register">Register</div>
+			</form>
+		</div>
+	</div>
 </template>
 

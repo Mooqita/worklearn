@@ -5,7 +5,8 @@
 ------------------------------------------------------------------------------>
 <template name="team_member">
 	{{#mooqita_wide_spacing}}
-		{{#quick_survey answers=answers questions=questions}}
+		{{#quick_survey answers=answers questions=questions
+										collection_name="profiles" item_id=g_profile_id field="big_five"}}
 
 			<h1 style="text-align: left; padding-bottom: 25px">
 				Excellent! Thank you for finishing the questionnaire.
@@ -21,10 +22,10 @@
 				is a combination of five independent factors: Emotional <em>Stability</em>,
 				<em>Extroversion</em>, <em>Openness</em> for Experiences,	<em>Agreeableness</em>,
 				<em>(Conscientiousness)</em>. The figure shows the relation of these factors we
-				calculated from your test results.
-				This model is very useful to describe aspects of personality the test
-				does not represent the entire complexity of a human being. The model gives a frame
-				That we use to match you with jobs other people with your personality liked.
+				calculated from your test results. This model is very useful to describe aspects
+				of personality the test does not represent the entire complexity of a human being.
+				The model gives a frame that we use to match you with jobs other people with your
+				personality liked.
 			</p>
 
 			<div class="personality-explain">
@@ -300,71 +301,4 @@
 		{{/quick_survey}}
 	{{/mooqita_wide_spacing}}
 </template>
-
-
-<!-----------------------------------------------------------------------------
-|
-| Survey
-|
------------------------------------------------------------------------------->
-<template name="quick_survey">
-	{{#let question=current_question}}
-		<div class="padding-top">
-			<div class="progress" style="height: 30px">
-				<div class="progress-bar background-theme" role="progressbar"
-						 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
-						 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-					<span>{{count}} of {{total}}</span>
-				</div>
-			</div>
-
-				{{#quick_survey_element answers=answers
-																question=question
-																responses=(g_array 1 2 3 4 5)}}
-					{{>Template.contentBlock}}
-				{{/quick_survey_element}}
-		</div>
-	{{/let}}
-</template>
-
-
-<!-----------------------------------------------------------------------------
-|
-| Survey Question
-|
------------------------------------------------------------------------------->
-<template name="quick_survey_element">
-	{{redraw}}
-
-	<div class="text-center element-container animated padding-top">
-		{{#if question}}
-			<P>I see myself as someone who...</P>
-			<h2><em>{{question}}</em></h2>
-			<div style="margin-left: 8%">
-				<div class="row">
-					<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
-							 style="padding: 10px">
-						<div class="text-left">Disagree</div>
-					</div>
-					{{#each response in responses}}
-						<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
-							<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
-								{{response}}
-							</div>
-						</div>
-					{{/each}}
-					<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
-						<div class="text-right">Agree</div>
-					</div>
-				</div>
-			</div>
-			<small id="process_explain" class="form-text text-muted">
-				You can type the number as well.
-			</small>
-		{{else}}
-			{{>Template.contentBlock}}
-		{{/if}}
-	</div>
-</template>
-
 
