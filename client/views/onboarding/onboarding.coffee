@@ -18,6 +18,12 @@ _persona = [ { label: "Manager", value: 1 },
 						 { label: "Builder", value: 1 },
 						 { label: "Visionary", value: 1 } ]
 
+_5_persona = [ { label: "Stability", value: 1 },
+							{ label: "Openness", value: 1 },
+							{ label: "Agreeableness", value: 1 },
+							{ label: "Extroversion", value: 1 },
+							{ label: "Conscientiousness", value: 1 } ]
+
 #########################################################
 _role_map =
 	design:
@@ -58,6 +64,151 @@ _role_map =
 		visionary: 0.2
 
 #########################################################
+_map_job_to_person =
+	Organizer: "Conscientiousness"
+	Visionary: "Openness"
+	Mediator: "Agreeableness"
+	Manager: "Extroversion"
+	Builder: "Stability"
+
+#########################################################
+_map_person_to_job =
+	Conscientiousness: "Organizer"
+	Agreeableness: "Mediator"
+	Extroversion: "Manager"
+	Stability: "Builder"
+	Openness: "Visionary"
+
+#########################################################
+_intermediate_to_vis = (inter)->
+	res = []
+	for t, v of inter
+		r =
+			label: t
+			value: v
+		res.push r
+
+	return res
+
+
+#########################################################
+_map = (a, map) ->
+	inter = {}
+
+	if not a
+		return a
+
+	if not (a.length > 0)
+		return a
+
+	for t in a
+		label = t.label
+		if map
+			label = map[label]
+		inter[label] = t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_normalize = (a, w=undefined) ->
+	if not w
+		w = 0.0
+
+		for t in a
+			w += t.value
+
+	for t in a
+		t.value = t.value / w
+
+	return a
+
+
+#########################################################
+_add = (a, b) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value
+
+	for t in b
+		inter[t.label] += t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_sub = (a, b) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value
+
+	for t in b
+		inter[t.label] -= t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_mul = (a, b) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value
+
+	for t in b
+		inter[t.label] *= t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_div = (a, b) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value
+
+	for t in b
+		inter[t.label] /= t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_extract_requirements = (team) ->
+	n = team.length
+
+	if n == 0
+		return undefined
+
+	avg =
+		Conscientiousness: 0
+		Agreeableness: 0
+		Extroversion: 0
+		Stability: 0
+		Openness: 0
+
+	n = 0
+	for member in team
+		if not member.big_five
+			continue
+
+		b5 = calculate_persona_40 member.big_five
+		n += 1
+
+		for t in b5
+			inv = t.value
+			avg[t.label] = avg[t.label] + inv
+
+	if n == 0
+		return undefined
+
+	return _intermediate_to_vis avg
+
+
+#########################################################
 _build_persona = (data) ->
 	if not data
 		return
@@ -91,11 +242,11 @@ _build_persona = (data) ->
 
 	sum = man + org + med + bui + vis
 
-	persona = [ { label: "Manager", value: man/sum },
-							{ label: "Organizer", value: org/sum },
-							{ label: "Mediator", value: med/sum },
-							{ label: "Builder", value: bui/sum },
-							{ label: "Visionary", value: vis/sum } ]
+	persona = [ { label: "Manager", value: man / sum },
+							{ label: "Organizer", value: org / sum },
+							{ label: "Mediator", value: med / sum },
+							{ label: "Builder", value: bui / sum },
+							{ label: "Visionary", value: vis / sum } ]
 
 	return persona
 
@@ -187,9 +338,11 @@ Template.onboarding_finish.onCreated ->
 
 	self.autorun ()->
 		self.subscribe "my_admissions"
+
 		filter =
 			collection_name: "jobs"
 		admissions = Admissions.find(filter).fetch()
+
 		self.subscribe "my_jobs", admissions,
 			(err, res) ->
 				if Jobs.find().count() == 0
@@ -251,20 +404,6 @@ Template.onboarding_register.helpers
 #########################################################
 
 #########################################################
-_ensure_company = () ->
-	filter =
-		collection_name: "companies"
-	admissions = Admissions.find(filter).fetch()
-	self.subscribe "my_companies", admissions,
-		(err, res) ->
-			if Companies.find().count() == 0
-				Meteor.call "add_company", data,
-					(err, res) ->
-						if Jobs.find().count() == 0
-							Meteor.call "add_job_post", data
-
-
-#########################################################
 Template.job_posting.onCreated () ->
 	self = this
 	data = Session.get "onboarding_job_posting"
@@ -303,10 +442,32 @@ Template.job_posting.helpers
 	jobs: () ->
 		return Jobs.find()
 
-	persona_data: (data) ->
-		console.log TeamMembers.find().fetch()
-		res = _build_persona(data)
-		return res
+	job_persona: (data) ->
+		job = _build_persona(data)
+		return job
+
+	team_persona: () ->
+		members = TeamMembers.find().fetch()
+		team = _extract_requirements(members)
+		team = _map team, _map_person_to_job
+		return team
+
+	optimal_persona: (data) ->
+		members = TeamMembers.find().fetch()
+		team = _extract_requirements(members)
+		if not team
+			return undefined
+
+		team = _normalize(team)
+		team = _map team, _map_person_to_job
+
+		job = _build_persona(data)
+		job = _normalize(job)
+
+		opt = _add(job, team)
+		opt = _normalize(opt)
+
+		return opt
 
 
 #########################################################
@@ -395,8 +556,6 @@ Template.group_page.helpers
 		return Invitations.find()
 
 	invitation_url: (invitation) ->
-		console.log invitation
-
 		param =
 			organization_id: invitation.organization_id
 			invitation_id: invitation._id
@@ -409,17 +568,14 @@ Template.group_page.helpers
 	get_given_name: (profile) ->
 		get_profile_name profile
 
+	default_persona: () ->
+		return _persona
+
 	persona_data: (profile) ->
-		collection_name = "profiles"
-		item_id = profile._id
-		field = "big_five"
-
-		big_five_answers = get_field_value this, field, item_id, collection_name
-
-		if not big_five_answers
+		if not profile.big_five
 			return undefined
 
-		return calculate_persona_40 big_five_answers
+		return calculate_persona_40 profile.big_five
 
 
 #########################################################

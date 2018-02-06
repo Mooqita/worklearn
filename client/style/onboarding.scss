@@ -1,6 +1,20 @@
 ////////////////////////////////////////////////
 @import "{}/client/style/_color.scss";
 
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// basics
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.raised {
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+	padding: 5px;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Testimonial
@@ -349,28 +363,25 @@ a.hover-card-container:not([href]):not([tabindex]):hover {
 
 ///////////////////////////////////////////////////////////////////////////////
 .persona {
-	margin: 0px;
-	margin-top: 5px;
-	padding: 5px;
-	background: white;
 	z-index: 2000;
-
-  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
-          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+	position: relative;
+	//border: 1px solid #ff0000;
 }
 
 .persona.visible{
 	right: 0px;
 }
 
+.persona .center-icon{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -14px;
+	margin-top: -18px;
+}
+
 .persona .persona-wait{
 	opacity: 0.0;
-	position: absolute;
-	bottom: 50%;
-	left: 50%;
-	margin-left: -17px;
-	margin-bottom: 23px;
-	height: 0px;
 	overflow: visible;
 }
 

@@ -57,22 +57,22 @@ Template.team_member.helpers
 	score:(score_name)->
 		instance = Template.instance()
 		answers = instance.answers
-		return calculate_trait_40 score_name, answers
+		return calculate_trait_40 score_name, answers.keys
 
 	mean:(score_name)->
 		instance = Template.instance()
 		answers = instance.answers
-		return calculate_trait_40 score_name, answers
+		return calculate_trait_40 score_name, answers.keys
 
 	percentile:(score_name)->
 		instance = Template.instance()
 		answers = instance.answers
-		return calculate_trait_40 score_name, answers
+		return calculate_trait_40 score_name, answers.keys
 
 	level:(score_name)->
 		instance = Template.instance()
 		answers = instance.answers
-		score = calculate_trait_40 score_name, answers
+		score = calculate_trait_40 score_name, answers.keys
 
 		if score > 22
 			return "high"

@@ -186,27 +186,28 @@
 		</h1>
 
 		{{#unless has_profile}}
-			<div class="row">
-				<div class="col-lg-10">
+			<div class="row padding-top">
+				<div class="col-sm-5">
+					<div class="raised">
+						{{>persona persona_data=persona_data
+											 has_text=true width=300 height=180}}
+					</div>
+				</div>
+
+				<div class="col-sm-7">
 					<h1>Persona</h1>
-					<p>
+
+					<p class="padding-next">
 						Excellent you created a persona for your candidate.
 						To save your progress you can register an account.
 						By adding the personality of your team you can get
 						even better results.
 					</p>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-6">
 					<button type="submit" id="register"
 									class="btn btn-theme">
 						Register
 					</button>
-				</div>
-				<div class="col-md-6">
-					{{>persona persona_data=persona_data}}
 				</div>
 			</div>
 		{{else}}
@@ -242,7 +243,9 @@
 <template name="job_posting">
 	{{#each job in jobs}}
 		<h1>Role</h1>
+
 		<p>Please select the main role of your candidate.</p>
+
 		<div class="row">
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
 				{{>hover_card icon="fa-paint-brush color-theme"
@@ -259,7 +262,7 @@
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
 				{{>hover_card icon="fa-laptop color-theme"
 						collection_name="jobs" item_id=job._id field="role" value="dev"
-						message="Developer" text="Mobile / Fullstack Developer, DevOps, etc."}}
+						message="Developer" text="Mobile/Fullstack Developer, DevOps, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
@@ -289,7 +292,7 @@
 		</p>
 
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-7">
 				<div class="row" style="padding: 20px 0px">
 					<div class="col-sm-6 padding-next">
 						{{>toggle_button label="Strategic Decisions"
@@ -319,8 +322,28 @@
 				</div>
 			</div>
 
-			<div class="col-sm-6">
-				{{>persona persona_data=(persona_data job)}}
+			<div class="col-sm-5">
+				<div class="row">
+					<div class="col-xs-6">
+						<h2>Job Persona</h2>
+						{{>persona 	persona_data=(job_persona job) has_text=true
+												width=300 height=180}}
+					</div>
+
+					<div class="col-xs-6">
+						<h2>Team Persona</h2>
+						{{>persona	persona_data=team_persona has_text=true
+												width=300 height=180}}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<h2>Optimized Persona</h2>
+						{{>persona	persona_data=(optimal_persona job) has_text=true
+												width=300 height=180 offset_x=0}}
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -337,20 +360,25 @@
 -------------------------------------------------->
 <template name="group_page">
 	<h1>Team Members</h1>
+
+	<p>Add your team members to refine the personality profile for your job announcement.</p>
+
 	{{#each member in members}}
 		<div class="row">
-			<div class="col-md-6">
-				{{member.name}}
-			</div>
-
-			<div class="col-md-6">
+			<div class="col-md-1 col-xs-2">
 				{{#let data=(persona_data member)}}
 					{{#if data}}
-						{{>persona persona_data=data}}
+						{{>persona persona_data=data has_text=false
+											 width=300 height=300}}
 					{{else}}
-						This person has not yet have a persona.
+						{{>persona has_text=false
+											 width=300 height=300}}
 					{{/if}}
 				{{/let}}
+			</div>
+
+			<div class="col-md-11 col-xs-10">
+				{{member.name}}
 			</div>
 		</div>
 	{{/each}}
@@ -358,16 +386,31 @@
 	{{#each invitation in invitations}}
 		{{#unless invitation.accepted}}
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-1 col-xs-2">
+					{{>persona persona_data=default_persona
+										 has_text=false width=300 height=300}}
+				</div>
+
+				<div class="col-md-7 col-xs-6">
 					{{invitation.email}}
 				</div>
 
-				<div class="col-md-3">
-					pending
-				</div>
+				<div class="col-md-4 col-xs-4">
+					<div class="btn-group pull-right">
+						<span class="btn btn-theme">
+							{{> popout_base title="Pending"
+									content="The invitation was not accepted yet."
+									icon_class="fa fa-clock-o"}}
+						</span>
 
-				<div class="col-md-3">
-					<a href="{{invitation_url invitation}}">invite url</a>
+						<span class="btn btn-theme">
+							<a href="{{invitation_url invitation}}">
+								{{> popout_base title="Link"
+										content="Click this button to go to the invitation link."
+										icon_class="fa fa-link"}}
+							</a>
+						</span>
+					</div>
 				</div>
 			</div>
 		{{/unless}}
@@ -376,9 +419,24 @@
 	<hr>
 
 	<h2>Invite new Members</h2>
-	<select class="selectpicker user_select_class"
-					multiple id="user_select" data-live-search="true">
-	</select>
+
+	<div class="row">
+		<div class="col-sm-8">
+			<select class="selectpicker user_select_class form-control"
+							multiple id="user_select" data-live-search="true">
+			</select>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="padding-next">
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<div class="btn btn-theme" id="invite">Invite</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<ul class="auto-complete-list">
 		{{#each mail in selected_users}}
@@ -387,9 +445,6 @@
 			</li>
 		{{/each}}
 	</ul>
-
-	<div class="btn btn-theme" id="invite">Invite</div>
-
 </template>
 
 

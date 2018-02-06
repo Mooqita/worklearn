@@ -96,7 +96,7 @@
 
 			<p>
 				If you are already registered with: <br>
-				<em><b>{{email}}</b></em>. <br>
+				<em><b>{{invitation.email}}</b></em>. <br>
 				Please login and check your open invitations
 				<a href="{{invite_url}}" style="text-decoration: underline;"><b>here</b></a>.
 			</p>
@@ -107,7 +107,7 @@
 				<div class="form-group">
 					<label for="at-field-mail">Registered email</label>
 					<label class="form-control" id="at-field-mail" aria-describedby="mail_explain">
-						{{email}}
+						{{invitation.email}}
 					</label>
 					<small id="mail_explain" class="form-text text-muted">
 						If you would like to use a different mail let your host

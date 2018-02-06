@@ -35,8 +35,16 @@ Meteor.methods
 		return job_id
 
 
-	add_job: (data) ->
-		return []
+	add_job: (organization_id) ->
+		user = Meteor.user()
+		if not user
+			throw new Meteor.Error "Not authorized"
+
+		job =
+			organization_id: organization_id
+		job_id = gen_job job
+
+		return job_id
 
 
 	find_user: (mail) ->

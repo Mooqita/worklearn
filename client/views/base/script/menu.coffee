@@ -9,7 +9,7 @@ Template.mooqita_menu.helpers
 			when "learner" then return "learner_menu"
 			when "educator" then return "educator_menu"
 			when "organization" then return "organization_menu"
-			else return false
+			else return "organization_menu"
 
 
 ########################################

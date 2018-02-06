@@ -152,29 +152,27 @@
 						{{/if}}
 					</div>
 
-					{{#if isInRole 'admin'}}
-						<div class="form-group">
-							<h2>Message Learners</h2>
+					<div class="form-group">
+						<h2>Message Learners</h2>
 
-							<input placeholder="Subject"
-										 class="form-control edit-field"
-										 type="text" id="subject"/>
+						<input placeholder="Subject"
+									 class="form-control edit-field"
+									 type="text" id="subject"/>
 
-							<textarea  class="form-control edit-field" placeholder="Your message"
-												 id="message" rows="8"></textarea>
+						<textarea  class="form-control edit-field" placeholder="Your message"
+											 id="message" rows="8"></textarea>
 
-							<div class="text-right" style="padding-top: 15px;">
-								<div class="btn btn-theme" id="send" {{send_disabled}}>
-									{{#if send_disabled}}
-										Sending mail
-										<span class="glyphicon glyphicon-refresh spin"></span>
-									{{else}}
-										Send Message
-									{{/if}}
-								</div>
+						<div class="text-right" style="padding-top: 15px;">
+							<div class="btn btn-theme" id="send" {{send_disabled}}>
+								{{#if send_disabled}}
+									Sending mail
+									<span class="glyphicon glyphicon-refresh spin"></span>
+								{{else}}
+									Send Message
+								{{/if}}
 							</div>
 						</div>
-					{{/if}}
+					</div>
 				</div>
 
 				{{#unless g_is_public "Challenges"}}
@@ -286,34 +284,32 @@
 								icon_class="glyphicon glyphicon-stats"}}
 					</span>
 
-						{{#unless recommendation}}
-							{{#if is_adding}}
-								<span class="btn btn-theme">
-									<div class="glyphicon glyphicon-refresh spin">
-									</div>
-								</span>
-							{{else}}
-								<span class="btn btn-theme" id="add_recommendation">
-									{{> popout_base title="Recommendation"
-											content="Add a letter of recommendation for your learner."
-											icon_class="glyphicon glyphicon-plus-sign"}}
-								</span>
-							{{/if}}
-						{{else}}
-							<span class="btn btn-theme" id="edit_recommendation">
-								{{> popout_base title="Recommendation"
-										content="Edit your letter of recommendation."
-										icon_class="glyphicon glyphicon-pencil"}}
+					{{#unless recommendation}}
+						{{#if is_adding}}
+							<span class="btn btn-theme">
+								<div class="glyphicon glyphicon-refresh spin">
+								</div>
 							</span>
-						{{/unless}}
-
-					{{#if isInRole 'admin'}}
-						<span class="btn btn-theme" id="reopen">
-							{{> popout_base title="Reopen"
-									content="Reopens the solution and the learner will be able to edit it again."
-									icon_class="glyphicon glyphicon-repeat"}}
+						{{else}}
+							<span class="btn btn-theme" id="add_recommendation">
+								{{> popout_base title="Recommendation"
+										content="Add a letter of recommendation for your learner."
+										icon_class="glyphicon glyphicon-plus-sign"}}
+							</span>
+						{{/if}}
+					{{else}}
+						<span class="btn btn-theme" id="edit_recommendation">
+							{{> popout_base title="Recommendation"
+									content="Edit your letter of recommendation."
+									icon_class="glyphicon glyphicon-pencil"}}
 						</span>
-					{{/if}}
+					{{/unless}}
+
+					<span class="btn btn-theme" id="reopen">
+						{{> popout_base title="Reopen"
+								content="Reopens the solution and the learner will be able to edit it again."
+								icon_class="glyphicon glyphicon-repeat"}}
+					</span>
 				</div>
 			</h2>
 
