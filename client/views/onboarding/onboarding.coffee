@@ -138,6 +138,16 @@ _add = (a, b) ->
 
 
 #########################################################
+_add_v = (a, v) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value + v
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
 _sub = (a, b) ->
 	inter = {}
 
@@ -164,6 +174,16 @@ _mul = (a, b) ->
 
 
 #########################################################
+_mul_v = (a, v) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value * v
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
 _div = (a, b) ->
 	inter = {}
 
@@ -172,6 +192,16 @@ _div = (a, b) ->
 
 	for t in b
 		inter[t.label] /= t.value
+
+	return _intermediate_to_vis inter
+
+
+#########################################################
+_div_v = (a, v) ->
+	inter = {}
+
+	for t in a
+		inter[t.label] = t.value / v
 
 	return _intermediate_to_vis inter
 
@@ -204,6 +234,9 @@ _extract_requirements = (team) ->
 
 	if n == 0
 		return undefined
+
+	for l in avg
+		avg[l] /= n
 
 	return _intermediate_to_vis avg
 
@@ -453,6 +486,8 @@ Template.job_posting.helpers
 		return team
 
 	optimal_persona: (data) ->
+		max_change = 0.1
+
 		members = TeamMembers.find().fetch()
 		team = _extract_requirements(members)
 		if not team
@@ -464,10 +499,25 @@ Template.job_posting.helpers
 		job = _build_persona(data)
 		job = _normalize(job)
 
-		opt = _add(job, team)
-		opt = _normalize(opt)
+		j_sq = _mul(job, job)
 
-		return opt
+		j_min = _mul_v(j_sq, max_change)
+		j_min = _sub(job, j_min)
+
+		j_max = _mul_v(j_sq, -1)
+		j_max = _add_v(j_max, 1)
+		j_max = _mul_v(j_max, max_change)
+		j_max = _add(job, j_max)
+
+		dif = _sub(team, job)
+		dif = _add_v(dif, 1)
+		dif = _div_v(dif, 2)
+
+		res = _sub(j_max, j_min)
+		res = _mul(dif, res)
+		res = _add(res, j_min)
+
+		return res
 
 
 #########################################################
