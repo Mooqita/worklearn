@@ -24,12 +24,12 @@ _format_data =
 	return promise.await()
 
 @export_collection_zip = (collection) ->
-	data = get_my_documents collection._name
+	data = get_my_documents collection
 	data = data.fetch()
 	formattedData = _format_data["json"]( data )
 
 	zip = new JSZip()
-	zip.file collection._name+".json", formattedData
+	zip.file get_collection_name collection + ".json", formattedData
 	promise = zip.generateAsync {type : "base64"}
 
 	return promise.await()

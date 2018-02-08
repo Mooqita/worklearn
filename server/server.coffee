@@ -103,8 +103,9 @@ _initialize_indices = ()->
 		title: "text"
 	Challenges._ensureIndex index
 	Solutions._ensureIndex index
-	Reviews._ensureIndex index
+	Messages._ensureIndex index
 	Feedback._ensureIndex index
+	Reviews._ensureIndex index
 	Posts._ensureIndex index
 
 	msg = "MongoDB indices initialized"

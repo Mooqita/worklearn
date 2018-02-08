@@ -9,10 +9,7 @@
 	if not user
 		user = Meteor.userId()
 
-	if not user
-		return null
-
-	if typeof user != "string"
+	if typeof user == "object"
 		user = user._id
 
 	profile = get_document user, OWNER, "profiles"

@@ -3,29 +3,25 @@
 |	Learner solutions
 |
 -------------------------------------------------->
-<template name="learner_solutions">
+<template name="solutions">
 	{{#mooqita_wide_spacing}}
-		{{#unless Template.subscriptionsReady}}
-			{{>wait}}
-		{{else}}
-			<div class="item padding-top">
-				<h1>Solutions</h1>
+		<div class="padding-top">
+			<h1>Solutions</h1>
+			<p style="padding-bottom: 35px">Here you can find all the solutions you submitted to challenges.</p>
 
-				<p>
-					This page lists all solutions you wrote.
-				</p>
-
-				{{#each solutions}}
-					{{>learner_solution_preview}}
-				{{else}}
-					<hr>
-
-					<h2>
-						<em>You have not submitted any solutions yet.</em>
-					</h2>
-				{{/each}}
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-12">
+					{{#paging subscription="my_solutions" page=0 count=10
+										parameter=parameter collection_name="solutions"}}
+						{{#each items}}
+							{{>solution_preview}}
+						{{else}}
+								<h2><em>No solutions yet.</em></h2>
+						{{/each}}
+					{{/paging}}
+				</div>
 			</div>
-		{{/unless}}
+		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -35,7 +31,7 @@
 |	Learner solution preview
 |
 -------------------------------------------------->
-<template name="learner_solution_preview">
+<template name="solution_preview">
 	<hr>
 
 	{{#unless Template.subscriptionsReady}}
@@ -46,7 +42,7 @@
 				<span class="badge background-contrast">new</span>
 			{{/unless}}
 
-			<a href="{{g_build_url "challenge" (g_object challenge_id=challenge._id)}}">
+			<a href="{{g_build_url "solution" (g_object challenge_id=challenge._id)}}">
 				{{challenge.title}}
 			</a>
 
@@ -64,7 +60,7 @@
 |	Learner solution editor
 |
 -------------------------------------------------->
-<template name="learner_solution">
+<template name="solution">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			{{#unless Template.subscriptionsReady}}
@@ -93,7 +89,7 @@
 					{{/with}}
 
 					{{#each solutions}}
-						{{>learner_solution_reviews}}
+						{{>solution_reviews}}
 					{{else}}
 						<div class="alert alert-warning">
 							You have not yet submitted a solution to this challenge.
@@ -110,7 +106,7 @@
 </template>
 
 
-<template name="learner_solution_reviews">
+<template name="solution_reviews">
 	{{#unless Template.subscriptionsReady}}
 		{{>wait}}
 	{{else}}
@@ -261,7 +257,7 @@
 		{{#if g_is_public "Solutions"}}
 			<h1>Reviews you received</h1>
 			{{#each reviews}}
-				{{>learner_feedback_solution}}
+				{{>feedback_solution}}
 			{{else}}
 				<p>No reviews yet.</p>
 			{{/each}}

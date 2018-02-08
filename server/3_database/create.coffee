@@ -5,7 +5,7 @@
 #######################################################
 
 #######################################################
-@store_document_unprotected = (collection, document, owner)->
+@store_document_unprotected = (collection, document, owner, admission)->
 	document["created"] = new Date()
 	document["modified"] = new Date()
 
@@ -15,7 +15,12 @@
 	if not owner
 		return id
 
-	gen_admission collection._name, item, owner, OWNER
+	if not admission
+		return id
+
+	collection_name = get_collection_name collection
+	gen_admission collection_name, item, owner, OWNER
+
 	return id
 
 

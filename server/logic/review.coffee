@@ -96,12 +96,15 @@ _find_review = (user, challenge) ->
 
 	solution = Solutions.findOne review.solution_id
 	if not solution
-		throw new Meteor.Error "no-solution","solution not found"
+		throw new Meteor.Error "no-solution", "solution not found"
 
 	if review.assigned
 		send_review_timeout_message review
 
+	recipient = get_document_owner(Solutions, review.solution_id)
+
 	gen_admission Reviews, review, user, OWNER
+	gen_admission Reviews, review, recipient, RECIPIENT
 	modify_field_unprotected Reviews, review._id, "assigned", true
 
 	res =

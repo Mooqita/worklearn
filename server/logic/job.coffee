@@ -6,5 +6,5 @@
 	if typeof user != "string"
 		user = user._id
 
-	job_id = store_document_unprotected Jobs, job, user
+	job_id = store_document_unprotected Jobs, job, user, true
 	return job_id

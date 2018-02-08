@@ -101,8 +101,11 @@ _test_challenge = (title, designer) ->
 
 	challenge_id = gen_challenge designer
 
+	content = get_profile_name(get_profile(designer)) + ": "
+	content += faker.lorem.paragraphs(3)
+
 	modify_field_unprotected Challenges, challenge_id, "title", title
-	modify_field_unprotected Challenges, challenge_id, "content", faker.lorem.paragraphs(3)
+	modify_field_unprotected Challenges, challenge_id, "content", content
 	modify_field_unprotected Challenges, challenge_id, "test_object", true
 
 	#TODO: add test for material
@@ -131,7 +134,10 @@ _test_solution = (challenge, learner) ->
 		return solution
 
 	solution_id = gen_solution challenge, learner
-	modify_field_unprotected Solutions, solution_id, "content", faker.lorem.paragraphs(3)
+	content = get_profile_name(get_profile(learner)) + ": "
+	content += faker.lorem.paragraphs(3)
+
+	modify_field_unprotected Solutions, solution_id, "content", content
 	modify_field_unprotected Solutions, solution_id, "test_object", true
 
 	solution = get_document learner, OWNER, Solutions, {_id: solution_id}
@@ -169,8 +175,13 @@ _test_reviews = (challenge, learners) ->
 #####################################################
 _test_review = (challenge, learner) ->
 	res = assign_review challenge, learner
+	recipient = get_document_owner(Solutions, res.solution_id)
 
-	modify_field_unprotected Reviews, res.review_id, "content", faker.lorem.paragraphs 3
+	content = get_profile_name(get_profile(learner)) + " for "
+	content += get_profile_name(get_profile(recipient)) + ": "
+	content += faker.lorem.paragraphs(3)
+
+	modify_field_unprotected Reviews, res.review_id, "content", content
 	modify_field_unprotected Reviews, res.review_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Reviews, res.review_id, "test_object", true
 
@@ -192,15 +203,16 @@ _test_review = (challenge, learner) ->
 _test_feedbacks = (solutions) ->
 	feedbacks = []
 
-	for solution in solutions
-		learner = get_document_owner Solutions, solution._id
+	for solution_id in solutions
+		solution = Solutions.findOne(solution_id)
+		learner = get_document_owner Solutions, solution_id
 
-		filter = {solution_id: solution._id}
+		filter = {solution_id: solution_id}
 		reviews = get_documents learner, RECIPIENT, Reviews, filter
 
 		for review in reviews.fetch()
 			feedback = _test_feedback solution, review, learner
-			feedbacks.append feedback
+			feedbacks.push feedback
 
 	return feedbacks
 
@@ -209,11 +221,18 @@ _test_feedbacks = (solutions) ->
 _test_feedback = (solution, review, learner) ->
 	feedback_id = gen_feedback solution, review, learner
 
-	feedback = get_my_document learner, OWNER, Feedback, {_id:feedback_id}
+	feedback = Feedback.findOne(feedback_id)
+	feedback = get_document learner, OWNER, Feedback, {_id:feedback_id}
 	if feedback.published == true
 		return
 
-	modify_field_unprotected Feedback, feedback_id, "content", faker.lorem.paragraphs(3)
+	recipient = get_document_owner(Reviews, feedback.review_id)
+
+	content = get_profile_name(get_profile(learner)) + " for "
+	content += get_profile_name(get_profile(recipient)) + ": "
+	content += faker.lorem.paragraphs(3)
+
+	modify_field_unprotected Feedback, feedback_id, "content", content
 	modify_field_unprotected Feedback, feedback_id, "rating", Random.choice [1, 2, 3, 4, 5]
 	modify_field_unprotected Feedback, feedback_id, "test_object", true
 

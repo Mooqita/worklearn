@@ -48,6 +48,9 @@
 @_get_admission_filter = (collection_name, document_id, consumer_id, role) ->
 	check role, String
 
+	if consumer_id == null
+		consumer_id = ""
+
 	if typeof collection_name != "string"
 		collection_name = collection_name._name
 
@@ -245,7 +248,7 @@ _admission_fields =
 #######################################################
 @get_documents = (user, role, collection, filter={}, options={}) ->
 	if typeof collection != "string"
-		collection = collection._name
+		collection = get_collection_name collection
 
 	filter = get_filter user, role, collection, filter
 	collection = get_collection collection
@@ -255,7 +258,7 @@ _admission_fields =
 #######################################################
 @get_document = (user, role, collection, filter={}, options={}) ->
 	if typeof collection != "string"
-		collection = collection._name
+		collection = get_collection_name collection
 
 	filter = get_filter user, role, collection, filter
 	collection = get_collection collection
@@ -266,7 +269,7 @@ _admission_fields =
 #######################################################
 @get_my_documents = (collection, filter={}, options={}) ->
 	if typeof collection != "string"
-		collection = collection._name
+		collection = get_collection_name collection
 
 	filter = get_my_filter collection, filter
 	collection = get_collection collection
@@ -276,7 +279,7 @@ _admission_fields =
 #######################################################
 @get_my_document = (collection, filter={}, options={}) ->
 	if typeof collection != "string"
-		collection = collection._name
+		collection = get_collection_name collection
 
 	filter = get_my_filter collection, filter
 	collection = get_collection collection

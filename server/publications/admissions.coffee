@@ -23,17 +23,6 @@ _collaborator_fields =
 		emails: 1
 
 #######################################################
-Meteor.publish "my_admissions", () ->
-	user_id = this.userId
-	if not user_id
-		throw Meteor.Error("Not permitted.")
-
-	crs = get_my_admissions IGNORE, IGNORE, IGNORE, _admission_fields
-	log_publication crs, user_id, "my_admissions"
-
-	return crs
-
-#######################################################
 Meteor.publish "admissions", (parameter) ->
 	pattern =
 		query: Match.Optional(String)
@@ -69,6 +58,15 @@ Meteor.publish "admissions", (parameter) ->
 
 	return crs
 
+
+#######################################################
+Meteor.publish "my_admissions", () ->
+	user_id = this.userId
+
+	crs = get_my_admissions IGNORE, IGNORE, IGNORE, _admission_fields
+	log_publication crs, user_id, "my_admissions"
+
+	return crs
 
 #######################################################
 Meteor.publish "collaborator", (user_id) ->

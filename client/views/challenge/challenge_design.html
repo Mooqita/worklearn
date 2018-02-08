@@ -3,7 +3,7 @@
 |	Challenge
 |
 -------------------------------------------------->
-<template name="organization_challenges">
+<template name="designed_challenges">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
 			<div class="row">
@@ -40,26 +40,10 @@
 
 <!------------------------------------------------
 |
-|	Challenge list
-|
--------------------------------------------------->
-<template name="challenge_preview">
-	<h2>
-		<a href="{{g_build_url "challenge" (g_object challenge_id=_id)}}">
-			{{title}}
-		</a>
-	</h2>
-
-	{{>more content=content}}
-</template>
-
-
-<!------------------------------------------------
-|
 |	Challenge Editor
 |
 -------------------------------------------------->
-<template name="organization_challenge">
+<template name="challenge_design">
 	{{#mooqita_wide_spacing}}
 		{{#unless Template.subscriptionsReady}}
 			{{>wait}}

@@ -95,8 +95,12 @@
 .mooqita-layout .form-control{
 	border-color: $theme;
 	border-width: 2px;
-	height: 40.5px;
 	font-size: 16px;
+}
+
+.mooqita-layout input.form-control,
+.mooqita-layout select.form-control{
+	height: 40.5px;
 }
 
 .mooqita-layout .form-control.tags{

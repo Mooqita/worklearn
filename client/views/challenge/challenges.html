@@ -3,7 +3,7 @@
 |	Challenge
 |
 -------------------------------------------------->
-<template name="find_challenges">
+<template name="challenges">
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
 			<h1>Discover Challenges</h1>
@@ -13,13 +13,7 @@
 				<div class="col-sm-12">
 					{{#paging subscription="challenges" page=0 count=10 parameter=parameter}}
 						{{#each challenges}}
-							<h2>
-								<a href="{{g_build_url "challenge" (g_object challenge_id=_id)}}">
-									{{title}}
-								</a>
-							</h2>
-
-							{{>more content=content}}
+							{{>challenge_preview}}
 						{{else}}
 								<h2><em>No challenges yet.</em></h2>
 						{{/each}}
@@ -29,4 +23,21 @@
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>
+
+
+<!------------------------------------------------
+|
+|	Challenge list
+|
+-------------------------------------------------->
+<template name="challenge_preview">
+	<h2>
+		<a href="{{g_build_url "challenge" (g_object challenge_id=_id)}}">
+			{{title}}
+		</a>
+	</h2>
+
+	{{>more content=content}}
+</template>
+
 

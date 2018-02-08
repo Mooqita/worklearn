@@ -51,13 +51,14 @@
 	res = {}
 	edit_fields = get_documents user, role, Permissions, filter
 	edit_fields = edit_fields.fetch()
+	collection_name = get_collection_name collection
 
 	for field in edit_fields
 		filter =
 			role:
 				$in: roles
 			field: field.field
-			collection_name: collection._name
+			collection_name: collection_name
 
 		permissions = Permissions.find(filter)
 
@@ -94,13 +95,14 @@
 	check item_id, String
 	check field, String
 
+	collection_name = get_collection_name collection
 	roles = get_roles user, collection, item_id
 	field = field.split(".")[0]
 	filter =
 		role:
 			$in: roles
 		field: field
-		collection_name: collection._name
+		collection_name: collection_name
 
 	permissions = Permissions.find filter
 

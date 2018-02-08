@@ -11,5 +11,5 @@
 			name: "No name yet"
 			description: "Your organizations description"
 
-	org_id = store_document_unprotected Organizations, org, user
+	org_id = store_document_unprotected Organizations, org, user, true
 	return org_id

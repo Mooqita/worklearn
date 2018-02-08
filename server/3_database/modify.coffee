@@ -84,8 +84,9 @@
 		$set:s
 
 	n = collection.update(id, mod)
+	collection_name = get_collection_name collection
 
-	msg = "[" + collection._name + "] "
+	msg = "[" + collection_name + "] "
 	msg += "[" + field + "] "
 	msg += "[" + id + "] "
 	msg += "set to [" + value.toString().substr(0, 30) + "]"

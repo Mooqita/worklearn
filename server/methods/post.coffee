@@ -26,7 +26,7 @@ Meteor.methods
 			template_id: template_id
 			group_name: group_name
 
-		id = store_document_unprotected collection, post, user
+		id = store_document_unprotected collection, post, user, true
 
 		msg = "Post added: " + JSON.stringify post, null, 2
 		log_event msg, event_create, event_info

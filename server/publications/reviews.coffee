@@ -35,28 +35,28 @@ Meteor.publish "my_reviews", () ->
 
 
 #######################################################
-Meteor.publish "my_review_by_id", (review_id) ->
+Meteor.publish "review_by_id", (review_id) ->
 	check review_id, String
 	user_id = this.userId
 
 	filter = {_id: review_id}
-	crs = get_documents filter, _review_fields
+	crs = get_documents user_id, IGNORE, Reviews, filter, _review_fields
 
 	log_publication crs, user_id, "my_review_by_id"
 	return crs
 
 
 #######################################################
-Meteor.publish "my_reviews_by_challenge_id", (challenge_id) ->
+Meteor.publish "reviews_by_challenge_id", (challenge_id) ->
 	check challenge_id, String
 	user_id = this.userId
 
 	filter =
 		challenge_id: challenge_id
 
-	crs = get_my_documents Reviews, filter, _review_fields
+	crs = get_documents user_id, IGNORE, Reviews, filter, _review_fields
 
-	log_publication crs, user_id, "reviews_by_solution_id"
+	log_publication crs, user_id, "reviews_by_challenge_id"
 	return crs
 
 #######################################################

@@ -27,6 +27,6 @@
 	msg = "User profile created: " + mail + " (" + user._id + ")"
 	log_event msg, event_db, event_imp
 
-	return store_document_unprotected Profiles, profile, user
+	return store_document_unprotected Profiles, profile, user, true
 
 

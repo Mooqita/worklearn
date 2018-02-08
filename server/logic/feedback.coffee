@@ -24,7 +24,7 @@
 		assigned: false
 		published: false
 
-	feedback_id = store_document_unprotected Feedback, feedback, user
+	feedback_id = store_document_unprotected Feedback, feedback, user, true
 	return feedback_id
 
 

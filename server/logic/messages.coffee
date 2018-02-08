@@ -2,13 +2,12 @@
 @gen_message = (user, title, message, url) ->
 	#save message
 	msg =
-		visible_to: OWNER
 		content: message
 		title: title
 		seen: false
 		url: url
 
-	m_id = store_document_unprotected Messages, msg, user
+	m_id = store_document_unprotected Messages, msg, user, true
 
 	return m_id
 
@@ -72,7 +71,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					build_url "learner_profile", {}, true
+					build_url "profile", {}, true
 
 	send_message_mail owner, subject, body
 

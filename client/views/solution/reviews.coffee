@@ -16,12 +16,18 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ########################################
 
 ########################################
-Template.learner_reviews.onCreated ->
-	this.searching = new ReactiveVar(false)
+Template.reviews.onCreated ->
 	Session.set "find_review_error", false
 
+	self = this
+	self.searching = new ReactiveVar(false)
+
+	self.autorun () ->
+		self.subscribe "my_reviews"
+
+
 ########################################
-Template.learner_reviews.helpers
+Template.reviews.helpers
 	reviewed_challenges: () ->
 		filter = {}
 		mod =
@@ -67,7 +73,7 @@ _handle_error = (err) ->
 	console.log err
 
 ########################################
-Template.learner_reviews.events
+Template.reviews.events
 	"click #find_review": () ->
 		inst = Template.instance()
 		inst.searching.set true
@@ -87,7 +93,7 @@ Template.learner_reviews.events
 ########################################
 
 ########################################
-Template.learner_review_preview.onCreated ->
+Template.review_preview.onCreated ->
 	self = this
 	self.autorun () ->
 		id = self.data.challenge_id
@@ -95,7 +101,7 @@ Template.learner_review_preview.onCreated ->
 
 
 ########################################
-Template.learner_review_preview.helpers
+Template.review_preview.helpers
 	challenge: () ->
 		return Challenges.findOne this.challenge_id
 
@@ -105,7 +111,7 @@ Template.learner_review_preview.helpers
 ########################################
 
 ########################################
-Template.learner_review.onCreated ->
+Template.review.onCreated ->
 	self = this
 	self.challenge_expanded = new ReactiveVar(false)
 
@@ -115,14 +121,15 @@ Template.learner_review.onCreated ->
 
 		self.subscribe "solution_by_id", FlowRouter.getQueryParam("solution_id")
 		self.subscribe "challenge_by_id", FlowRouter.getQueryParam("challenge_id")
+		self.subscribe "review_by_id", FlowRouter.getQueryParam("review_id")
 
 ########################################
-Template.learner_review.helpers
+Template.review.helpers
 	solution_url: ()->
 		param =
 			solution_id: FlowRouter.getQueryParam("solution_id")
 			challenge_id: FlowRouter.getQueryParam("challenge_id")
-		return build_url "learner_solution", param
+		return build_url "solution", param
 
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
@@ -150,7 +157,7 @@ Template.learner_review.helpers
 
 
 ########################################
-Template.learner_review.events
+Template.review.events
 	"click #publish":(event)->
 		if event.target.attributes.disabled
 			return

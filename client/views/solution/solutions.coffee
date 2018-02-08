@@ -26,7 +26,7 @@ _items_missing = (collection, challenge_id) ->
 	if challenge_id
 		filter.challenge_id = challenge_id
 
-	items_provided = get_my_documents("challenges", filter).count()
+	items_provided = get_my_documents(collection, filter).count()
 	res = items_required - items_provided
 	return res
 
@@ -36,17 +36,10 @@ _items_missing = (collection, challenge_id) ->
 ########################################
 
 ########################################
-Template.learner_solutions.onCreated ->
-	Session.set "selected_solution", 0
-	self = this
-	self.autorun () ->
-		self.subscribe "my_solutions"
-
+Template.solutions.onCreated ->
 
 ########################################
-Template.learner_solutions.helpers
-	solutions: () ->
-		return Solutions.find()
+Template.solutions.helpers
 
 
 ########################################
@@ -54,7 +47,7 @@ Template.learner_solutions.helpers
 ########################################
 
 ########################################
-Template.learner_solution_preview.onCreated ->
+Template.solution_preview.onCreated ->
 	self = this
 
 	self.autorun () ->
@@ -66,7 +59,7 @@ Template.learner_solution_preview.onCreated ->
 
 
 ########################################
-Template.learner_solution_preview.helpers
+Template.solution_preview.helpers
 	is_finished: () ->
 		r = _items_missing Reviews, this.challenge_id
 		f = _items_missing Feedback, this.challenge_id
@@ -85,7 +78,7 @@ Template.learner_solution_preview.helpers
 ########################################
 
 ########################################
-Template.learner_solution.onCreated ->
+Template.solution.onCreated ->
 	self = this
 	self.autorun () ->
 		if not FlowRouter.getQueryParam("challenge_id")
@@ -95,10 +88,11 @@ Template.learner_solution.onCreated ->
 
 		self.subscribe "challenge_by_id", challenge_id
 		self.subscribe "my_solutions_by_challenge_id", challenge_id
+		self.subscribe "reviews_by_challenge_id", challenge_id
 
 
 ########################################
-Template.learner_solution.helpers
+Template.solution.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam "challenge_id"
 		res = Challenges.findOne id
@@ -108,17 +102,19 @@ Template.learner_solution.helpers
 		filter =
 			challenge_id: FlowRouter.getQueryParam "challenge_id"
 
-		res = Solutions.find filter
-		return res
+		crs = get_my_documents "solutions", filter
+		return crs
 
 	has_solutions: () ->
-		challenge_id: FlowRouter.getQueryParam "challenge_id"
-		crs = get_my_documents "solutions", {challenge_id: challenge_id}
+		filter =
+			challenge_id: FlowRouter.getQueryParam "challenge_id"
+
+		crs = get_my_documents "solutions", filter
 		return crs.count() > 0
 
 
 ########################################
-Template.learner_solution.events
+Template.solution.events
 	"click #take_challenge":()->
 		id = FlowRouter.getQueryParam("challenge_id")
 		Meteor.call "add_solution", id,
@@ -134,7 +130,7 @@ Template.learner_solution.events
 ##############################################
 
 ##############################################
-Template.learner_solution_reviews.onCreated ->
+Template.solution_reviews.onCreated ->
 	self = this
 	self.publishing = new ReactiveVar false
 	self.review_error = new ReactiveVar false
@@ -142,10 +138,10 @@ Template.learner_solution_reviews.onCreated ->
 
 	self.autorun () ->
 		solution_id = self.data._id
-		self.subscribe "reviews_by_solution_id", solution_id
+		self.subscribe "my_feedback_by_solution_id", solution_id
 
 ##############################################
-Template.learner_solution_reviews.helpers
+Template.solution_reviews.helpers
 	has_filled_profile: () ->
 		profile = Profiles.findOne()
 
@@ -223,7 +219,7 @@ Template.learner_solution_reviews.helpers
 
 
 ########################################
-Template.learner_solution_reviews.events
+Template.solution_reviews.events
 	"click #find_review": (event)->
 		if event.target.attributes.disabled
 			return

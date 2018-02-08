@@ -34,6 +34,16 @@ Template.registerHelper "g_profile_name", (user) ->
 
 
 ########################################
+Template.registerHelper "g_profile_first_name", (user) ->
+	profile = get_profile user
+
+	if not profile
+		return undefined
+
+	return get_profile_name profile, true, false
+
+
+########################################
 Template.registerHelper "g_name_from_profile", (profile) ->
 	if not profile
 		profile = get_profile()

@@ -11,7 +11,7 @@ _verbose = false
 ###############################################################################
 @set_field = (collection, document, field, value, callback=null) ->
 	if typeof collection != "string"
-		collection = collection._name
+		collection = get_collection_name collection
 
 	if typeof document != "string"
 		document = document._id

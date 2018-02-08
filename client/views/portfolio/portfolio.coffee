@@ -18,7 +18,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ##############################################
 
 ##############################################
-Template.learner_resumes.onCreated () ->
+Template.portfolio.onCreated () ->
 	self = this
 
 	self.autorun () ->
@@ -28,7 +28,7 @@ Template.learner_resumes.onCreated () ->
 		self.subscribe "user_resumes", s_id
 
 ##############################################
-Template.learner_resumes.helpers
+Template.portfolio.helpers
 	current_resume: () ->
 		res = UserResumes.findOne()
 		return res
@@ -38,11 +38,11 @@ Template.learner_resumes.helpers
 ##############################################
 
 ##############################################
-Template.resume_solution.onCreated () ->
+Template.portfolio_solution.onCreated () ->
 	this.reviews_visible = new ReactiveVar(false)
 
 ##############################################
-Template.resume_solution.helpers
+Template.portfolio_solution.helpers
 	average_rating: () ->
 		if this.average
 			return this.average
@@ -53,26 +53,26 @@ Template.resume_solution.helpers
 
 
 ##############################################
-Template.resume_solution.events
+Template.portfolio_solution.events
 	"click #show_reviews": () ->
 		rv = Template.instance().reviews_visible
 		rv.set !rv.get()
 
 
 ##############################################
-# resume review
+# portfolio review
 ##############################################
 
 ##############################################
-Template.resume_review.helpers
+Template.portfolio_review.helpers
 	average_rating: () ->
 		if this.rating
 			return this.rating
 		return "-/-"
 
 ##############################################
-Template.resume_review.helpers
-	resume_url: () ->
+Template.portfolio_review.helpers
+	portfolio_url: () ->
 		return ""#get_response_url(this.owner_id)
 
 

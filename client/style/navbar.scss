@@ -47,13 +47,24 @@ a:not([href]):not([tabindex]):hover {
 	border: 2px solid $theme;
 }
 
-.navbar-toggler:hover{
-  -webkit-box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
-          box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .5);
+.navbar-toggle{
+	background: $theme;
+	color: $background;
+
+	padding: 12px 9px 12px 9px;
 }
 
-.navbar-toggler:focus{
-	padding: 5px 11px 3px 13px;
+.icon-bar{
+	background: $background;
+}
+
+.navbar-toggle:hover{
+	padding: 13px 8px 11px 10px;
+  -webkit-box-shadow: inset 2px 2px 5px rgba(0, 0, 0, .7);
+          box-shadow: inset 2px 2px 5px rgba(0, 0, 0, .7);
+}
+
+.navbar-toggle:focus{
   -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
           box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
 }
@@ -68,23 +79,16 @@ a:not([href]):not([tabindex]):hover {
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
-.navigation-background{
-	padding: 15px;
-	padding-left: 35px;
-}
+.control-navigate{
+	font-size: 1em;
+	font-weight: 600;
 
-.navigation-background .credit-score{
-	font-size: 20px;
-	margin-right: 25px
-}
-
-.navigation-background .control-navigate{
-	font-size: 20px;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
 }
 
 .nav > li > a.navigation-button{
-	background: $theme;
-	color: #eee;
+	color: $theme;
 	padding: 15px;
 	margin: 5px;
 	font-style: normal;
@@ -93,11 +97,11 @@ a:not([href]):not([tabindex]):hover {
 
 .nav > li > a.navigation-button:active,
 .nav > li > a.navigation-button:focus{
-	background: $theme-light;
-	color: #222;
 }
 
 .nav > li > a.navigation-button:hover{
-	background: $theme;
-	color: $contrast-on-theme;
+	padding: 16px 14px 14px 16px;
+
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .27);
+          box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .27);
 }

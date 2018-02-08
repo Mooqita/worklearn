@@ -3,12 +3,12 @@
 |	Learner resumes
 |
 -------------------------------------------------->
-<template name="learner_resumes">
+<template name="portfolio">
 	{{#mooqita_wide_spacing}}
 		{{#if Template.subscriptionsReady}}
 			<!--{{>popout content="content" title="title" p_url="login"}}-->
-			{{>resume_basic current_resume}}
-			{{>resume_solutions current_resume}}
+			{{>portfolio_basic current_resume}}
+			{{>portfolio_solutions current_resume}}
 		{{else}}
 			{{>wait}}
 		{{/if}}
@@ -16,7 +16,7 @@
 </template>
 
 
-<template name="resume_basic">
+<template name="portfolio_basic">
 	<div class="item padding-top">
 		<div class="row">
 			<div class="col-sm-4 col-ms-4">
@@ -38,20 +38,20 @@
 </template>
 
 
-<template name="resume_solutions">
+<template name="portfolio_solutions">
 	{{#if solutions}}
 		<div class="item">
 			<h1>Portfolio</h1>
 
 			{{#each solutions}}
-				{{>resume_solution}}
+				{{>portfolio_solution}}
 			{{/each}}
 		</div>
 	{{/if}}
 </template>
 
 
-<template name="resume_solution">
+<template name="portfolio_solution">
 	<hr>
 
 	<div class="row">
@@ -88,7 +88,7 @@
 		<h2>Reviews</h2>
 
 		{{#each reviews}}
-			{{>resume_review}}
+			{{>portfolio_review}}
 		{{else}}
 			<div class="well">
 				No reviews yet.
@@ -98,15 +98,15 @@
 </template>
 
 
-<template name="resume_review">
+<template name="portfolio_review">
 	<div class="media" style="padding-bottom: 25px">
 		<div class="media-left">
-			<a href="{{g_build_url "resume"}}">
+			<a href="{{g_build_url "portfolio"}}">
 				<img class="media-object img-circle" src="{{avatar}}" width="64px">
 			</a>
 
 			<h2>
-				<a href="{{g_build_url "resume"}}">{{name}}</a>
+				<a href="{{g_build_url "portfolio"}}">{{name}}</a>
 			</h2>
 		</div>
 

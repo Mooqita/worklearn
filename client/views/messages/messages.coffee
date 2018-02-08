@@ -1,5 +1,5 @@
 #######################################################
-Template.learner_messages.helpers
+Template.messages.helpers
 	messages: () ->
 		mod =
 			sort:
@@ -10,9 +10,6 @@ Template.learner_messages.helpers
 
 
 #######################################################
-Template.learner_messages.events
+Template.message_preview.events
 	"click #message": ->
-		Meteor.call "set_field", "Messages", this._id, "seen", true,
-			(err, rsp) ->
-				if err
-					sAlert.error "Click message error: " + err
+		set_field Messages, this._id, "seen", true

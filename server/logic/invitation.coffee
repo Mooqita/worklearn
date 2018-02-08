@@ -11,7 +11,7 @@
 		filter["host_name"] = host_name
 		filter["host_id"] = host_id
 
-		invitation_id = store_document_unprotected Invitations, filter, host_id
+		invitation_id = store_document_unprotected Invitations, filter, host_id, true
 
 		param =
 			invitation_id: invitation_id

@@ -6,8 +6,9 @@
 
 #######################################################
 _on_reg_submit = (err, state) ->
-	sAlert.error err
-	sAlert.info state
+	if err
+		sAlert.error err
+
 	if not err
 		Modal.hide "onboarding_register"
 
