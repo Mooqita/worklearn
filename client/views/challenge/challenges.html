@@ -7,15 +7,21 @@
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
 			<h1>Discover Challenges</h1>
-			<p style="padding-bottom: 35px">Find the challenge that is right for you.</p>
 
-			<div class="row" style="margin-bottom: 25px">
+			<p class="padding-next">
+				Find the challenge that is right for you.
+			</p>
+
+			<div class="row padding-next">
 				<div class="col-sm-12">
-					{{#paging subscription="challenges" page=0 count=10 parameter=parameter}}
-						{{#each challenges}}
+					{{#paging subscription="challenges" page=0 count=10
+										parameter=parameter  collection_name="challenges"}}
+						{{#each items}}
 							{{>challenge_preview}}
 						{{else}}
-								<h2><em>No challenges yet.</em></h2>
+							<hr>
+							<h1 class="text-center padding-next"><em>No challenges yet.</em></h1>
+							<hr>
 						{{/each}}
 					{{/paging}}
 				</div>

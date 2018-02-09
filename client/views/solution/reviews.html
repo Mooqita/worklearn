@@ -5,27 +5,31 @@
 -------------------------------------------------->
 <template name="reviews">
 	{{#mooqita_wide_spacing}}
-		<div class="item padding-top">
+		<div class="padding-top">
 			<h1>Reviews</h1>
 
-			<p>
+			<p class="padding-next">
 				Here you can find all reviews you wrote for your peers.
 				If you can not find reviews here please go back to
 				<a href="/app/solutions">My Challenges</a>
 				and select the challenge you want to write a review for.
 			</p>
 
-			{{#each reviewed_challenges}}
-				{{#each reviews challenge_id}}
-					{{>review_preview}}
-				{{/each}}
-			{{else}}
-				<hr>
-
-				<h2>
-					<em>You have not submitted any reviews yet.</em>
-				</h2>
-			{{/each}}
+			<div class="row padding-next">
+				<div class="col-sm-12">
+					{{#paging subscription="my_reviews" page=0 count=10 parameter=parameter}}
+						{{#each reviewed_challenges}}
+							{{#each reviews challenge_id}}
+								{{>review_preview}}
+							{{/each}}
+						{{else}}
+							<hr>
+							<h1 class="text-center padding-next"><em>No solutions yet.</em></h1>
+							<hr>
+						{{/each}}
+					{{/paging}}
+				</div>
+			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

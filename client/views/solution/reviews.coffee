@@ -17,13 +17,10 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ########################################
 Template.reviews.onCreated ->
-	Session.set "find_review_error", false
-
 	self = this
 	self.searching = new ReactiveVar(false)
 
-	self.autorun () ->
-		self.subscribe "my_reviews"
+	Session.set "find_review_error", false
 
 
 ########################################

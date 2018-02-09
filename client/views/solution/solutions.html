@@ -7,16 +7,21 @@
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
 			<h1>Solutions</h1>
-			<p style="padding-bottom: 35px">Here you can find all the solutions you submitted to challenges.</p>
 
-			<div class="row" style="margin-bottom: 25px">
+			<p class="padding-next">
+				Here you can find all the solutions you submitted to challenges.
+			</p>
+
+			<div class="row padding-next">
 				<div class="col-sm-12">
 					{{#paging subscription="my_solutions" page=0 count=10
 										parameter=parameter collection_name="solutions"}}
 						{{#each items}}
 							{{>solution_preview}}
 						{{else}}
-								<h2><em>No solutions yet.</em></h2>
+							<hr>
+							<h1 class="text-center padding-next"><em>No solutions yet.</em></h1>
+							<hr>
 						{{/each}}
 					{{/paging}}
 				</div>

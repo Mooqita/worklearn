@@ -10,10 +10,29 @@ Template.mooqita_menu.helpers
 		return profile
 
 	menu_items: () ->
-		return [{name: "Challenges", href: build_url("challenges")}
-						{name: "Solutions", href: build_url("solutions")}
-						{name: "Reviews", href: build_url("reviews")}
-						{name: "Portfolio", href: build_url("portfolio")}]
+		mod =
+			fields:
+				collection_name: 1
+
+		adms = Admissions.find({}, mod).fetch()
+		unique = new Set()
+
+		for a in adms
+			unique.add(a.collection_name)
+
+		items = [	{name: "Organizations", href: build_url("organizations")}
+							{name: "Challenges", href: build_url("challenges")} ]
+
+		#{name: "Portfolio", href: build_url("portfolio")}
+		#filter =
+		#	collection_name: "organizations"
+		#if Admissions.find(filter).count() > 0
+
+		if unique.has("solutions")
+			items.push({name: "Solutions", href: build_url("solutions")})
+			items.push({name: "Reviews", href: build_url("reviews")})
+
+		return items
 
 	num_new_messages: () ->
 		crs = get_my_documents("messages", {seen:false})

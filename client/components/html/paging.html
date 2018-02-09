@@ -6,12 +6,15 @@
 | page: <int> current page starts at 0 default 0
 | count: <int> number of elements per page default 10 max 100
 | parameter: <ReactiveDict> for parameters passed to the subscription
+| collection_name: <string> if set the items variable will contain the
+|														items in the collection
 | subscription: <string> name of the meteor subscription to call. The
 |								subscription has to take the following form:
 |								function subscription(page, count, parameter)
 |
 | {{>paging subscription=<string> page=<int>
-|						size=<int> parameter=<ReactiveDict>}}
+|						size=<int> parameter=<ReactiveDict>
+|						collection_name=<string>}}
 |
 -------------------------------------------------->
 <template name="paging">
