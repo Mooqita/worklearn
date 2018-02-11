@@ -58,8 +58,6 @@ Template.challenge_design.onCreated ->
 
 	self.autorun ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		if not id
-			return
 		self.subscribe "my_challenge_by_id", id
 
 

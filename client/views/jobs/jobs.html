@@ -1,0 +1,163 @@
+<!------------------------------------------------
+|
+| Job Posting
+|
+-------------------------------------------------->
+<template name="jobs">
+	{{#mooqita_wide_spacing}}
+		<div class="padding-top">
+			<h1>Active Job Postings</h1>
+
+			<p class="padding-next">
+				Find the jobs you posted to our system.
+			</p>
+
+			<div class="row padding-next">
+				<div class="col-sm-12">
+					{{#paging subscription="my_jobs" page=0 count=10
+										parameter=parameter  collection_name="jobs"}}
+						{{#each items}}
+							{{>job_preview}}
+						{{else}}
+							<hr>
+							<h1 class="text-center padding-next"><em>No Jobs yet.</em></h1>
+							<hr>
+						{{/each}}
+					{{/paging}}
+				</div>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="job_preview">
+	<hr>
+
+	<h2>
+		<a href="{{g_build_url "job_posting" (g_object job_id=_id organization_id=organization_id)}}">
+			{{get_role}}
+		</a>
+	</h2>
+
+	{{>more content=content}}
+</template>
+
+<!------------------------------------------------
+|
+| Job Posting
+|
+-------------------------------------------------->
+<template name="job_posting">
+	{{#mooqita_wide_spacing}}
+		<h1>Role</h1>
+
+		<p>Please select the main role of your candidate.</p>
+
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-paint-brush color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="design"
+						message="Designer" text="UX/UI Designer, Creative Director, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-cogs color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="ops"
+						message="Operations" text="Finance, Accounting, Human Resources, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-laptop color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="dev"
+						message="Developer" text="Mobile/Fullstack Developer, DevOps, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-pie-chart color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="sales"
+						message="Sales" text="Sales Manager, Account Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-comments-o color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="marketing"
+						message="Marketing" text="Content Creator, Marketing Manager, etc."}}
+			</div>
+
+			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+				{{>hover_card icon="fa-question-circle color-theme"
+						collection_name="jobs" item_id=job._id field="role" value="other"
+						message="Others" text="Attorney , etc."}}
+			</div>
+		</div>
+
+		<h1>Competencies</h1>
+
+		<p>
+			Finding the candidate with the right skill set is important.
+			Mooqita however can do more. We can help you find the person
+			that will complement your teams social fabric.
+		</p>
+
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="row" style="padding: 20px 0px">
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Strategic Decisions"
+								collection_name="jobs" item_id=job._id field="strategic"
+								explain="Does the candidate need to lead other members of your team?"}}
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Leading People"
+								collection_name="jobs" item_id=job._id field="team"
+								explain = "Does the candidate need to make strategic descisions about the companies future?"}}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Contributing Ideas"
+								collection_name="jobs" item_id=job._id field="idea"
+								explain = "Do you need fresh and new ideas for products or features?"}}
+					</div>
+
+					<div class="col-sm-6 padding-next">
+						{{>toggle_button label="Process Design"
+								collection_name="jobs" item_id=job._id field="process"
+								explain = "Does the person need to specifiy processes followed by others?"}}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-5">
+				<div class="row">
+					<div class="col-xs-6">
+						<h2>Job Persona</h2>
+						{{>persona 	persona_data=(job_persona job) has_text=true
+												width=300 height=180}}
+					</div>
+
+					<div class="col-xs-6">
+						<h2>Team Persona</h2>
+						{{>persona	persona_data=team_persona has_text=true
+												width=300 height=180}}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<h2>Optimized Persona</h2>
+						{{>persona	persona_data=(optimal_persona job) has_text=true
+												width=300 height=180 offset_x=0}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{>group_page organization_id=organization_id}}
+
+	{{/mooqita_wide_spacing}}
+</template>
+

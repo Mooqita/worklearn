@@ -1,9 +1,32 @@
+###############################################################################
+_invitation_fields =
+	fields:
+		name: 1
+
 #######################################################
 Meteor.publish "invitation_by_id", (invitation_id) ->
 	crs = Invitations.find invitation_id
 
 	log_publication crs, undefined , "invitation_by_id"
 	return crs
+
+
+#######################################################
+Meteor.publish "invitations_by_organization_id", (organization_id) ->
+	check organization_id, String
+
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	filter =
+		_id: organization_id
+
+	crs = get_my_documents Invitations, filter, _invitation_fields
+
+	log_publication crs, user_id, "invitations_by_organization_id"
+	return crs
+
 
 #######################################################
 Meteor.publish "send_invitations", (admissions) ->

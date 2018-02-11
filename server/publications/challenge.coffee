@@ -35,7 +35,9 @@ Meteor.publish "challenges", (parameter) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	filter = get_filter IGNORE, IGNORE, Challenges, {public:true}
+	filter =
+		published: true
+
 	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
 
 	log_publication crs, user_id, "challenges"

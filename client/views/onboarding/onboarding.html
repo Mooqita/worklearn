@@ -4,26 +4,26 @@
 |
 -------------------------------------------------->
 <template name="onboarding_intro">
-	{{#unless has_jobs}}
-		{{#mooqita_wide_spacing}}
-			<div class="row padding-top" style="margin-top: 20%">
-				<div class="col-sm-6">
-					<h1 style="text-align: center; padding-top: 30px">
-						<img style="width: 300px" src="/images/mooqita.jpg">
-					</h1>
-				</div>
-
-				<div class="col-sm-6">
-					<h1>Find the talent you need!</h1>
-					<p style="padding-bottom: 25px">
-						We are making it easy for you to find and attract
-						the perfect talent you need to grow your business.
-					</p>
-					<a class="btn btn-theme" href="onboarding_role">Get started</a>
-				</div>
+	{{#mooqita_wide_spacing}}
+		<div class="row padding-top" style="margin-top: 20%">
+			<div class="col-sm-6">
+				<h1 style="text-align: center; padding-top: 30px">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
 			</div>
-		{{/mooqita_wide_spacing}}
-	{{/unless}}
+
+			<div class="col-sm-6">
+				<h1>Find the talent you need!</h1>
+
+				<p style="padding-bottom: 25px">
+					We are making it easy for you to find and attract
+					the perfect talent you need to grow your business.
+				</p>
+
+				<a class="btn btn-theme" href="onboarding_role">Get started</a>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 
@@ -39,8 +39,11 @@
 		</h1>
 
 		<h1>Role</h1>
-		<p>Please select the main role of your candidate.
-			Don't worry you can change this later.</p>
+
+		<p>
+			Please select the main role of your candidate.
+			Don't worry you can change this later.
+		</p>
 
 		<div class="row">
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
@@ -189,8 +192,8 @@
 			<div class="row padding-top">
 				<div class="col-sm-5">
 					<div class="raised">
-						{{>persona persona_data=persona_data
-											 has_text=true width=300 height=180}}
+						{{>persona persona_data=persona_data has_text=true
+											 width=300 height=180}}
 					</div>
 				</div>
 
@@ -211,7 +214,7 @@
 				</div>
 			</div>
 		{{else}}
-			{{>job_posting}}
+			{{>job_overview}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>
@@ -240,7 +243,7 @@
 | Onboarding Job Posting
 |
 -------------------------------------------------->
-<template name="job_posting">
+<template name="job_overview">
 	{{#each job in jobs}}
 		<h1>Role</h1>
 
@@ -347,7 +350,7 @@
 			</div>
 		</div>
 
-		{{>group_page}}
+		{{>group_page organization_id=organization_id}}
 
 	{{/each}}
 </template>

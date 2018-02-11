@@ -20,8 +20,12 @@ Template.mooqita_menu.helpers
 		for a in adms
 			unique.add(a.collection_name)
 
-		items = [	{name: "Organizations", href: build_url("organizations")}
-							{name: "Challenges", href: build_url("challenges")} ]
+		items = [	{name: "Organizations", href: build_url("organizations")}]
+
+		if unique.has("organizations")
+		 items.push({name: "Job Postings", href: build_url("jobs")})
+
+		items.push({name: "Challenges", href: build_url("challenges")})
 
 		#{name: "Portfolio", href: build_url("portfolio")}
 		#filter =
@@ -29,8 +33,9 @@ Template.mooqita_menu.helpers
 		#if Admissions.find(filter).count() > 0
 
 		if unique.has("solutions")
-			items.push({name: "Solutions", href: build_url("solutions")})
-			items.push({name: "Reviews", href: build_url("reviews")})
+		 items.push({name: "Solutions", href: build_url("solutions")})
+		 items.push({name: "Reviews", href: build_url("reviews")})
+
 
 		return items
 
