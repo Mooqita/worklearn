@@ -366,25 +366,22 @@
 
 	<p>Add your team members to refine the personality profile for your job announcement.</p>
 
-	{{#each member in members}}
-		<div class="row">
-			<div class="col-md-1 col-xs-2">
+	<div class="row">
+		{{#each member in members}}
+			<div class="col-sm-6 col-ms-6">
+				<h2>{{member.name}}</h2>
 				{{#let data=(persona_data member)}}
 					{{#if data}}
-						{{>persona persona_data=data has_text=false
-											 width=300 height=300}}
+						{{>persona persona_data=data has_text=true
+											 width=300 height=150}}
 					{{else}}
-						{{>persona has_text=false
-											 width=300 height=300}}
+						{{>persona has_text=true
+											 width=300 height=150}}
 					{{/if}}
 				{{/let}}
 			</div>
-
-			<div class="col-md-11 col-xs-10">
-				{{member.name}}
-			</div>
-		</div>
-	{{/each}}
+		{{/each}}
+	</div>
 
 	{{#each invitation in invitations}}
 		{{#unless invitation.accepted}}
