@@ -83,7 +83,7 @@ Meteor.methods
 			throw new Meteor.Error "Not authorised"
 
 		ids = []
-		host_name = get_profile_name undefined , false, false
+		host_name = get_profile_name undefined, false, false
 		for email in emails
 			invitation_id = gen_invitation organization_id, email, host_id, host_name
 			ids.push invitation_id

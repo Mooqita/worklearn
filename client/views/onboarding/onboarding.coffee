@@ -226,6 +226,7 @@ Template.group_page.onCreated ()  ->
 	self.autorun () ->
 		o_id = self.data.organization_id
 		self.subscribe "team_members_by_organization_id", o_id
+		self.subscribe "invitations_by_organization_id", o_id
 
 	self.find_user = (event) ->
 		event = event || window.event
@@ -300,7 +301,10 @@ Template.group_page.helpers
 		if not profile.big_five
 			return undefined
 
-		return calculate_persona_40 profile.big_five
+		persona_5 = calculate_persona_40 profile.big_five
+		persona_job = persona_map persona_5, persona_map_person_to_job
+
+		return persona_job
 
 
 #########################################################

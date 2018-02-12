@@ -67,9 +67,9 @@ Template.invitation_accept.events
 		invitation_id = FlowRouter.getQueryParam "invitation_id"
 		Meteor.call "accept_invitation", invitation_id,
 		(res, err) ->
-			console.log res
-			console.log err
-			FlowRouter.go build_url "team_member"
+			if err
+				sAlert.error(err)
+			FlowRouter.go build_url "personality"
 
 
 ###############################################################################
@@ -129,15 +129,11 @@ Template.invitation_register.events
 				sAlert.error err
 				return
 
-			user = Meteor.user()
-			console.log user
-			console.log email
-
 			Meteor.loginWithPassword email, password,
 				(err) ->
 					if err
 						sAlert.error err
 						return
 
-					FlowRouter.go build_url "team_member"
+					FlowRouter.go build_url "personality"
 

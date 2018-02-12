@@ -76,9 +76,9 @@ Template.job_posting.helpers
 		id = FlowRouter.getQueryParam("job_id")
 		return Jobs.findOne(id)
 
-	organization: () ->
+	organization_id: () ->
 		id = FlowRouter.getQueryParam("organization_id")
-		return Organizations.findOne(id)
+		return id
 
 	job_persona: (data) ->
 		job = persona_build(data)
@@ -87,6 +87,8 @@ Template.job_posting.helpers
 	team_persona: () ->
 		members = TeamMembers.find().fetch()
 		team = persona_extract_requirements(members)
+		team = persona_normalize(team)
+		team = persona_invert(team, 0.2)
 		team = persona_map team, persona_map_person_to_job
 		return team
 

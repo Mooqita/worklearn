@@ -16,13 +16,17 @@
 		param =
 			invitation_id: invitation_id
 			organization_id: organization_id
-		url = build_url "invitation", param, true, null, "onboarding"
+		url = build_url "invitation", param, "onboarding", true
 
 		subject = "Mooqita: Invitation from " + host_name
-		body = host_name + " has send you an invitation to join Mooqita."
+
+		body = "Hi,\n"
+		body += host_name + " has send you an invitation to join Mooqita.\n"
 		body += "Please follow this link: " + url
-		body += "to check out the invitation. You can chose on the "
-		body += "website if you want to join or not."
+		body += "to check out the invitation\n. You can chose on the "
+		body += "website if you want to join or not.\n\n"
+		body += "Kind regards,\n Your Mooqita Team"
+
 		send_mail email, subject, body
 
 

@@ -1,0 +1,138 @@
+<!------------------------------------------------
+|
+|	Organizations
+|
+-------------------------------------------------->
+<template name="organizations">
+	{{#mooqita_wide_spacing}}
+		{{#if need_to_register}}
+			<div class="row padding-top" style="margin-top: 60px">
+				<div class="col-sm-6">
+					<h1 style="text-align: center; padding-top: 30px">
+						<img style="width: 300px" src="/images/mooqita.jpg">
+					</h1>
+				</div>
+
+				<div class="col-sm-6">
+					<h1>Register an Organization</h1>
+
+					<p style="padding-bottom: 25px">
+						You did not yet register an organization with us.
+						If you want to do so click here:
+					</p>
+
+					<a class="btn btn-theme" id="get_started" href="{{onboarding_url}}">
+						Get started
+					</a>
+				</div>
+			</div>
+		{{else}}
+			<div class="padding-top">
+				<h1>Organizations</h1>
+
+				<p class="padding-next">
+					Find the organizations you are involved in.
+				</p>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						{{#paging subscription="my_organizations" page=0 count=10
+											collection_name="organizations"}}
+							{{#each items}}
+								{{>organization_preview}}
+							{{/each}}
+						{{/paging}}
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Organization preview
+|
+-------------------------------------------------->
+<template name="organization_preview">
+	<hr>
+
+	<h2>
+		<a href="{{g_build_url "organization" (g_object organization_id=_id)}}">
+			{{org_name}}
+		</a>
+	</h2>
+
+	{{>more content=org_description}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Organization profile
+|
+-------------------------------------------------->
+<template name="organization">
+	{{#mooqita_wide_spacing}}
+		{{#with organization}}
+			<div class="row padding-top">
+				<div class="col-sm-4 col-ms-4 col-xs-12">
+					<h2 class="header">Organization Logo</h2>
+
+					{{#if avatar}}
+						{{>avatar collection_name = "organizations"
+							observable = avatar
+							item_id = _id
+							field = "avatar"}}
+					{{/if}}
+
+					{{>upload method="upload_file" collection_name="organizations"
+						item_id=_id field="avatar" max_size=500000}}
+				</div>
+
+				<div class="col-sm-8 col-ms-8 col-xs-12">
+					<h2>Organization Name</h2>
+					{{>basic_input method="set_field" collection_name="organizations"
+							item_id=_id field="name" placeholder="Name of your organization"}}
+
+					<h2>Organization Description</h2>
+					{{>text_input method="set_field" collection_name="organizations"
+							item_id=_id field="description"
+							placeholder="Let our learners know a little more about your organization."}}
+				</div>
+			</div>
+
+			{{>group_page organization_id=_id}}
+		{{/with}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="collaborator">
+	{{#if Template.subscriptionsReady}}
+		<div class="row">
+			{{#with collaborator}}
+				<div class="col-sm-2">
+					{{>avatar collection_name="Profiles"
+						 observe = avatar
+						 item_id = _id
+						 field = "avatar"}}
+				</div>
+
+				<div class="col-ms-6">
+					<h2>
+						<a href="">{{g_profile_name .}}</a>
+					</h2>
+				</div>
+			{{/with}}
+
+				<div class="col-ms-4">
+				{{role}}
+			</div>
+		</div>
+	{{else}}
+		{{>wait}}
+	{{/if}}
+</template>
+

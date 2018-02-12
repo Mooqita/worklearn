@@ -49,6 +49,23 @@
 				"is exacting in their work",
 				"often feels blue",
 				"is full of ideas"]
+###############################################################################
+@big_5_mean =
+	Extroversion:
+		m: 3.27
+		sd: 0.89
+	Agreeableness:
+		m: 3.73
+		sd: 0.69
+	Conscientiousness:
+		m: 3.63
+		sd: 0.71
+	Stability:
+		m: 3.22
+		sd: 0.84
+	Openness:
+		m: 3.92
+		sd: 0.67
 
 
 ###############################################################################

@@ -68,12 +68,11 @@
 
 #########################################################
 @persona_optimize_team = (team, job) ->
-	max_change = 0.1
+	max_change = 0.2
 
 	team = persona_normalize(team)
 	team = persona_map team, persona_map_person_to_job
 
-	job = persona_build_persona(data)
 	job = persona_normalize(job)
 
 	j_sq = persona_mul(job, job)
@@ -220,6 +219,17 @@
 
 	for t in a
 		inter[t.label] = t.value / v
+
+	return persona_intermediate_to_vis inter
+
+
+#########################################################
+@persona_invert = (a, max) ->
+	inter = {}
+
+	for t in a
+		value = max - t.value
+		inter[t.label] = if value > 0 then value else 0.01
 
 	return persona_intermediate_to_vis inter
 

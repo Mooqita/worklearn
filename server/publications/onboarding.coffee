@@ -17,6 +17,7 @@ Meteor.publish "team_members_by_organization_id", (organization_id) ->
 			middle_name: 1
 			family_name: 1
 			big_five: 1
+			avatar:1
 
 	self = this
 	for user_id in member_ids
@@ -28,6 +29,7 @@ Meteor.publish "team_members_by_organization_id", (organization_id) ->
 			name: name
 			email: mail
 			big_five: profile.big_five
+			avatar: profile.avatar
 
 		self.added("team_members", user_id, member)
 

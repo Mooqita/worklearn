@@ -2,6 +2,9 @@
 _invitation_fields =
 	fields:
 		name: 1
+		email: 1
+		accepted: 1
+		host_name: 1
 
 #######################################################
 Meteor.publish "invitation_by_id", (invitation_id) ->
@@ -20,9 +23,9 @@ Meteor.publish "invitations_by_organization_id", (organization_id) ->
 		throw new Meteor.Error "Not permitted."
 
 	filter =
-		_id: organization_id
+		organization_id: organization_id
 
-	crs = get_my_documents Invitations, filter, _invitation_fields
+	crs = get_documents user_id, IGNORE, Invitations, filter, _invitation_fields
 
 	log_publication crs, user_id, "invitations_by_organization_id"
 	return crs
