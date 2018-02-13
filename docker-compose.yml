@@ -1,0 +1,32 @@
+# Assistance From
+# https://www.youtube.com/watch?v=Qw9zlE3t8Ko
+# https://www.youtube.com/watch?v=0w0lJn4O6YQ
+
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  worklearn:
+    build: .
+    volumes:
+      - .:/home/nodejs/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    environment:
+      - ROOT_URL=http://127.0.0.1:3000
+      - MONGO_URL=mongodb://mongo:27017/worklearndb
+
+  adminmongo:
+    image: mrvautin/adminmongo
+    ports:
+      - 1234:1234
+    depends_on:
+      - mongo
+      - worklearn
