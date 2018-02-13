@@ -37,13 +37,32 @@
 |
 -------------------------------------------------->
 <template name="challenge_preview">
+	<hr>
+
 	<h2>
-		<a href="{{g_build_url "challenge" (g_object challenge_id=_id)}}">
-			{{title}}
-		</a>
+		{{title}}
+
+		<div class="btn-group pull-right">
+			<span class="btn btn-theme">
+				<a style="color: white" href="{{g_build_url "solution" (g_object challenge_id=_id)}}">
+					{{> popout_base title="Take Challenge"
+							content="To preview this challenge click here. You can decide later if you want to solve it."
+							icon_class="fa fa-eye"}}
+				</a>
+			</span>
+
+			{{#if g_is_owner "challenges" _id}}
+				<span class="btn btn-theme">
+					<a style="color: white" href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}">
+						{{> popout_base title="Edit Challenge"
+								content="Congratulations you can edit this challenge. Click here to edit it."
+								icon_class="fa fa-edit"}}
+					</a>
+				</span>
+			{{/if}}
+		</div>
 	</h2>
 
 	{{>more content=content}}
 </template>
-
 

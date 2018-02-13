@@ -127,7 +127,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 			published: 1
 			challenge_id: 1
 
-	solution_ids = new Set()
+	resource_ids = new Set()
 	user_ids = new Set()
 
 	##############################################
@@ -137,16 +137,14 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 	solution_cursor = get_documents_paged_unprotected Solutions, filter, mod, parameter
 	solution_cursor.forEach (solution) ->
-		owner = get_document_owner Solutions, solution
-		solution_ids.add solution._id
-		user_ids.add owner._id
+		resource_ids.add solution._id
 
 	##############################################
 	# retrieving reviews
 	##############################################
 
 	# resetting the filter
-	solution_ids = Array.from(solution_ids)
+	solution_ids = Array.from(resource_ids)
 	filter =
 		solution_id:
 			$in: solution_ids
@@ -163,8 +161,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 	review_cursor = Reviews.find(filter, mod)
 	review_cursor.forEach (entry) ->
-		owner = get_document_owner Reviews, entry
-		user_ids.add owner._id
+		resource_ids.add entry._id
 
 	##############################################
 	# retrieving feedback
@@ -173,8 +170,21 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	##############################################
 	feedback_cursor = Feedback.find(filter, mod)
 	feedback_cursor.forEach (entry) ->
-		owner = get_document_owner Feedback, entry
-		user_ids.add owner._id
+		resource_ids.add entry._id
+
+	##############################################
+	# retrieving admissions
+	##############################################
+
+	# resetting the filter
+	r_ids = Array.from(resource_ids)
+	filter =
+		resource_id:
+			$in: r_ids
+
+	admission_cursor = Admissions.find(filter)
+	admission_cursor.forEach (entry) ->
+		user_ids.add(entry.consumer_id)
 
 	##############################################
 	# retrieving profiles
@@ -183,22 +193,23 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	# resetting the filter
 	user_ids = Array.from(user_ids)
 	filter =
-		_id:
+		user_id:
 			$in: user_ids
 
 	mod =
 		fields:
+			avatar: 1
 			resume: 1
+			user_id: 1
 			published: 1
 			given_name: 1
 			middle_name: 1
 			family_name: 1
-			avatar: 1
 
-	##############################################
-	profile_cursor = get_documents IGNORE, IGNORE, Profiles, filter, mod
-	result = [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
+	profile_cursor = Profiles.find(filter, mod)
 
+	result = [solution_cursor, review_cursor, feedback_cursor, profile_cursor, admission_cursor]
 	log_publication result, user_id, "challenge_summaries"
+
 	return result
 

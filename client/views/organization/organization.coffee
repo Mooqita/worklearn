@@ -90,18 +90,3 @@ Template.organization.events
 					sAlert.suc cess("Invitation send.")
 
 
-###############################################################################
-Template.collaborator.onCreated ->
-	self = this
-	self.send_disabled = new ReactiveVar(false)
-
-	self.autorun ->
-		user_id = self.data.consumer_id
-		self.subscribe "collaborator", user_id
-
-
-###############################################################################
-Template.collaborator.helpers
-	collaborator: ()->
-		data = Template.instance().data
-		return Profiles.findOne {user_id: data.consumer_id}

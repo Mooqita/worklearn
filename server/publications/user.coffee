@@ -35,8 +35,16 @@ Meteor.publish "find_users_by_mail": (mail_fragment) ->
 #######################################################
 Meteor.publish "my_profile", () ->
 	user_id = this.userId
-	crs = Profiles.find {user_id: user_id}
-	log_publication crs, user_id, "my_profiles"
+
+	if not user_id
+		user_id = ""
+
+	filter =
+		user_id: user_id
+
+	crs = Profiles.find filter
+	log_publication crs, user_id, "my_profile"
+
 	return crs
 
 #######################################################

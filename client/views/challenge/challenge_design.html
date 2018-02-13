@@ -54,7 +54,7 @@
 						<div class="alert alert-warning">
 							<h2>Todo List: Challenge</h2>
 
-							A summary of things you need to do before learners can see your task:
+							A summary of things you need to do before learners can see your challenge:
 							<ul>
 								{{#unless title}}
 									<li>Give your task a title (required)</li>
@@ -242,15 +242,18 @@
 <template name="challenge_solution">
 	<div class="row">
 		<div class="col-sm-2 col-ms-3">
-			{{>avatar collection_name="Profiles"
-				 observe = (g_profile_avatar owner_id)
-				 item_id = (g_profile_id owner_id)
-				 field = "avatar"}}
+			{{#each solution_owners}}
+				{{>avatar collection_name="Profiles"
+					 observe = avatar
+					 item_id = _id
+					 field = "avatar"}}
+			{{/each}}
+
+			<a id="user_info">User {{g_profile_name _id}}</a>
 		</div>
 
 		<div class="col-sm-10 col-ms-9">
 			<h2>
-				<a id="user_info">{{g_profile_name owner_id}}</a>
 				{{{average_rating}}}
 
 				{{#if g_is_owner "Challenges" .}}
@@ -298,6 +301,7 @@
 			</h2>
 
 			{{>more content=content}}
+
 			{{#if material}}
 				<h2>Additional Material</h2>
 				<h2>

@@ -160,6 +160,7 @@ Template.challenge_solutions.helpers
 
 		return Solutions.find filter
 
+
 ########################################
 Template.challenge_solutions.events
 	"change #public_only": () ->
@@ -183,19 +184,32 @@ Template.challenge_solutions.events
 ########################################
 Template.challenge_solution.onCreated ->
 	self = this
-	self.adding_recommendation = new ReactiveVar(false)
+
+#	owner_ids = get_document_owners(Solutions, self.data._id)
+
 	self.reviews_visible = new ReactiveVar(false)
+	self.adding_recommendation = new ReactiveVar(false)
 
-	self.autorun ->
-		self.subscribe "user_summary",
-			self.data.owner_id,
-			self.data.challenge_id
-
-		self.subscribe "my_recommendation_by_recipient_id",
-			self.data.owner_id
+#	self.autorun ->
+#		self.subscribe "user_summary",
+#			owner_ids
+#			self.data.challenge_id
+#
+#		self.subscribe "my_recommendation_by_recipient_id",
+#			owner_ids
 
 ########################################
 Template.challenge_solution.helpers
+	solution_owners: () ->
+		inst = Template.instance()
+		owner_ids = get_document_owners(Solutions, inst.data._id)
+		filter =
+			user_id:
+				$in: owner_ids
+
+		owners = Profiles.find(filter)
+		return owners
+
 	recommendation: () ->
 		filter =
 			recipient_id: this.owner_id

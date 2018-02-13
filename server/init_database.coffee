@@ -49,7 +49,8 @@ _test_get_learners = (email_template) ->
 	for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		mail = String(i) + email_template
 		profile_id = _test_user_creation mail, "learner"
-		user = get_document_owner Profiles, profile_id
+		user_id = get_document_owner Profiles, profile_id
+		user = Meteor.users.findOne(user_id)
 		learners.push user
 
 	return learners

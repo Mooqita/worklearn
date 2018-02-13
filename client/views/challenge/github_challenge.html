@@ -1,0 +1,38 @@
+<!------------------------------------------------
+|
+|	Challenge
+|
+-------------------------------------------------->
+<template name="github">
+	{{#mooqita_wide_spacing}}
+		<div class="row padding-top">
+			<h1>Git-Hub Challenges</h1>
+
+			<p class="padding-next">
+				Find challenges on git-hub
+			</p>
+
+			<div class="col-sm-12">
+				{{#paging subscription="git_challenges" page=0 count=10
+									parameter=parameter  collection_name="git_challenges"}}
+					{{#each items}}
+						{{>git_challenge_preview}}
+					{{else}}
+						<hr>
+						<h1 class="text-center padding-next"><em>No challenges yet.</em></h1>
+						<hr>
+					{{/each}}
+				{{/paging}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="git_challenge_preview">
+	<hr>
+	<h1 class="text-center">{{title}}</h1>
+	<hr>
+</template>
+
+

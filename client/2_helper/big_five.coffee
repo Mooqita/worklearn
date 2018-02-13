@@ -36,7 +36,7 @@
 				"is quick to understand things",
 				"doesn't like to draw attention to myself",
 				"takes time out for others",
-				"shrikes their duties",
+				"shirk their duties",
 				"has frequent mood swings",
 				"uses difficult words",
 				"does't mind being the center of attention",

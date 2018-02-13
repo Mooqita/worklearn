@@ -24,6 +24,9 @@
 @Jobs = new Mongo.Collection("jobs")
 
 #######################################################
+@GitChallenges = new Mongo.Collection("git_challenges")
+
+#######################################################
 @ChallengeSummaries = new Mongo.Collection("challenge_summaries")
 
 #######################################################

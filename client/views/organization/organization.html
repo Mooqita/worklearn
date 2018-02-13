@@ -40,6 +40,10 @@
 											collection_name="organizations"}}
 							{{#each items}}
 								{{>organization_preview}}
+							{{else}}
+								<hr>
+								<h1 class="text-center padding-next"><em>No Jobs yet.</em></h1>
+								<hr>
 							{{/each}}
 						{{/paging}}
 					</div>
@@ -108,31 +112,4 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
-
-<template name="collaborator">
-	{{#if Template.subscriptionsReady}}
-		<div class="row">
-			{{#with collaborator}}
-				<div class="col-sm-2">
-					{{>avatar collection_name="Profiles"
-						 observe = avatar
-						 item_id = _id
-						 field = "avatar"}}
-				</div>
-
-				<div class="col-ms-6">
-					<h2>
-						<a href="">{{g_profile_name .}}</a>
-					</h2>
-				</div>
-			{{/with}}
-
-				<div class="col-ms-4">
-				{{role}}
-			</div>
-		</div>
-	{{else}}
-		{{>wait}}
-	{{/if}}
-</template>
 

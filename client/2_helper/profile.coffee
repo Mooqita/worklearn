@@ -20,7 +20,7 @@ Template.registerHelper "g_profile_avatar", (user) ->
 	if not profile
 		return undefined
 
-	return get_avatar profile
+	return profile.avatar
 
 
 ########################################
@@ -60,9 +60,10 @@ Template.registerHelper "g_is_owner", (collection_name, obj) ->
 		collection = get_collection collection_name
 		obj = collection.findOne obj
 
-	owner_cursor = get_document_owners "profiles", profile._id
-	owner_cursor.forEach (owner) ->
-		if owner._id == Meteor.userId()
+	user_id = Meteor.userId()
+	owner_ids = get_document_owners collection_name, obj._id
+	for owner in owner_ids
+		if owner == user_id
 			return true
 
 	return false

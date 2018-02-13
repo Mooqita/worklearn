@@ -12,7 +12,7 @@
   "init_default_permissions":true,
   "default_permissions_asset_path":"db/defaultcollections/permissions.json",
 
-  "init_test_data":true,
+  "init_test_data":false,
   "admin":
   {
     "email":"admin@mooqita.org",

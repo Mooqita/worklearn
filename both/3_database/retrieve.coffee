@@ -1,28 +1,39 @@
 ###############################################################################
-
-###############################################################################
-# Acceptable values for the admission filter function
+# Permissible values for the admission filter function:
 #
-# collection_name		resource_id		consumer_id		role
-# group_id					String				document_id		String
-# user_id						X							X							X
-#	WILDCARD					WILDCARD			X							X
-# IGNORE						IGNORE				IGNORE				IGNORE
+# collection_name <string> (WILDCARD | IGNORE | group_id | user_id)
+# resource_id 		<string> (WILDCARD | IGNORE | document_id)
+# consumer_id 		<string> (WILDCARD | IGNORE | document_id)
+# role	 					<string> (IGNORE | role_string)
 #
-# Additional limitations: resource_id, collection_name
+# role_string <string> (RECIPIENT | PUBLIC | OWNER | USER)
 #
-# WILDCARD, WILDCARD:
+# WILDCARD <string>:
+# IGNORE <string>:
+#
+# document_id <string>:
+# group_id <string>:
+# user_id <string>:
+#
+#
+# Examples:
+#
+# collection_name	= WILDCARD
+# resource_id			= WILDCARD
 # finds all global admissions where resource_id = "*" and collection_name = "*":
 # e.g. if role="admin" then the user has admin rights on all collections.
 #
-# WILDCARD, IGNORE:
+# collection_name	= IGNORE
+# resource_id			= WILDCARD
 # finds all admissions resource_id="*"
 #
-# IGNORE, WILDCARD:
+# collection_name	= WILDCARD
+# resource_id			= IGNORE
 # finds all admissions for collection_name="*". Can only be used when either
 # consumer_id != IGNORE or role != IGNORE
 #
-# IGNORE, IGNORE:
+# collection_name	= IGNORE
+# resource_id			= IGNORE
 # finds all admissions. Can only be used when consumer_id != IGNORE
 #
 # Some more examples with explanations:
@@ -201,15 +212,19 @@ _admission_fields =
 	admission_cursor.forEach (admission) ->
 		owner_ids.push admission.consumer_id
 
-	filter["_id"] = {$in: owner_ids}
-	owner_cursor = Meteor.users.find filter
-	return owner_cursor
+	#filter =
+	#	_id:
+	#		$in: owner_ids
+
+	#owner_cursor = Meteor.users.find filter
+	#return owner_cursor
+	return owner_ids
 
 
 #######################################################
 @get_document_owners = (collection, document_id) ->
-	owner_cursor = get_document_admissaries collection, document_id, OWNER
-	return owner_cursor
+	owner_ids = get_document_admissaries collection, document_id, OWNER
+	return owner_ids
 
 
 #######################################################
@@ -218,8 +233,7 @@ _admission_fields =
 	if not admission
 		return null
 
-	user = Meteor.users.findOne(admission.consumer_id)
-	return user
+	return admission.consumer_id
 
 
 ###############################################################################
