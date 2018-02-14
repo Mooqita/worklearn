@@ -210,6 +210,15 @@ Template.challenge_solution.helpers
 		owners = Profiles.find(filter)
 		return owners
 
+	review_owners: (review) ->
+		owner_ids = get_document_owners(Reviews, review._id)
+		filter =
+			user_id:
+				$in: owner_ids
+
+		owners = Profiles.find(filter)
+		return owners
+
 	recommendation: () ->
 		filter =
 			recipient_id: this.owner_id

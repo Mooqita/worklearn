@@ -12,9 +12,9 @@ Meteor.publish "posts", (group_name) ->
 	user_id = this.userId
 	filter =
 		group_name: group_name
-		published: true
+		visible_to: "all"
 
-	crs = Posts.find filter, fields
+	crs = Posts.find filter
 
 	log_publication crs, user_id, "posts"
 	return crs

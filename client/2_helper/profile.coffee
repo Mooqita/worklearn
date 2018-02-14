@@ -1,6 +1,6 @@
 ########################################
-Template.registerHelper "g_profile", (owner_id=null) ->
-	return get_profile owner_id
+Template.registerHelper "g_profile", (user_id=null) ->
+	return get_profile user_id
 
 
 ########################################
@@ -44,14 +44,14 @@ Template.registerHelper "g_profile_first_name", (user) ->
 
 
 ########################################
-Template.registerHelper "g_name_from_profile", (profile) ->
+Template.registerHelper "g_name_from_profile", (profile, short) ->
 	if not profile
 		profile = get_profile()
 
 	if not profile
 		return undefined
 
-	return get_profile_name profile, false, false
+	return get_profile_name profile, short, false
 
 
 ########################################

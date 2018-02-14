@@ -4,13 +4,13 @@
 |
 ------------------------------------------->
 <template name="post_group">
-	{{#if isInRole "editor"}}
-		<div class="post-maker item">
+	{{#if "editor"}}
+		<!--div class="post-maker item">
 			<div class="row">
 				<div class="col-md-8 vcenter">
 					<em>Select template and add new element</em>
-				</div><!-- Important for vcenter
-			--><div class="col-md-4 vcenter">
+				</div--><!-- Important for vcenter
+			--><!--div class="col-md-4 vcenter">
 					<div class="input-group">
 						<div class="input-group-btn">
 							<div class="btn btn-theme" id="add_post">
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div-->
 	{{/if}}
 
 	{{#unless Template.subscriptionsReady}}
@@ -59,6 +59,7 @@
 					field="abstract" item_id=_id}}
 		{{/_edit_tools}}
 	{{else}}
+		<h1>{{title}}</h1>
 		{{#if abstract}}
 			{{{abstract}}}
 		{{/if}}
