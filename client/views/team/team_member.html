@@ -6,17 +6,39 @@
 <template name="group_page">
 	<div class="row">
 		{{#each member in members}}
-			<div class="col-sm-6 col-ms-6">
-				<h2>{{member.name}}</h2>
-				{{#let data=(persona_data member)}}
-					{{#if data}}
-						{{>persona persona_data=data has_text=true
-											 width=300 height=150}}
-					{{else}}
-						{{>persona has_text=true
-											 width=300 height=150}}
-					{{/if}}
-				{{/let}}
+			<div class="col-sm-4 col-ms-6">
+				<div class="raised"
+						 style="padding: 20px 15px 50px 15px; margin: 15px 0px;">
+					<div class="padding-next">
+						<h2 style="margin: 0px">{{member.name}}</h2>
+						<p>
+							{{#if member.owner}}
+								This is your persona.
+							{{/if}}
+						</p>
+					</div>
+
+					<div style="margin: -20px">
+						{{#let data=(persona_data member)}}
+							{{#if data}}
+								{{>persona persona_data=data has_text=true
+													 width=300 height=150}}
+							{{else}}
+								{{#if member.owner}}
+									<a href="{{g_build_url "personality"}}" target="_blank"
+										 class="btn-float btn-contrast raised animated_0_2_s"
+										 style="top:0px; right: 15px">
+										<span class="fa fa-2x fa-edit">
+										</span>
+									</a>
+								{{/if}}
+
+								{{>persona has_text=true
+													 width=300 height=150}}
+							{{/if}}
+						{{/let}}
+					</div>
+				</div>
 			</div>
 		{{/each}}
 	</div>
@@ -60,7 +82,8 @@
 	<div class="row">
 		<div class="col-sm-8">
 			<select class="selectpicker user_select_class form-control"
-							multiple id="user_select" data-live-search="true">
+							title="Enter email to invite" data-live-search="true"
+							multiple id="user_select">
 			</select>
 		</div>
 
@@ -77,8 +100,9 @@
 
 	<ul class="auto-complete-list">
 		{{#each mail in selected_users}}
-			<li class="auto-complete-list-item" id="{{mail}}">
+			<li class="auto-complete-list-item">
 				{{mail}}
+				<span id="{{mail}}" class="list-remove fa fa-remove animated_0_2_s"></span>
 			</li>
 		{{/each}}
 	</ul>

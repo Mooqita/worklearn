@@ -1,7 +1,18 @@
 <template name="basic_input">
+	{{#if label}}
+		<label for="{{field}}">{{label}}</label>
+	{{/if}}
+
 	<input placeholder="{{placeholder}}"
-			 class="form-control edit-field" type="{{type}}"
-			 id="{{field}}" value="{{value}}"/>
+				 class="form-control edit-field"
+				 type="{{type}}" id="{{field}}" value="{{value}}"
+				 aria-describedby="{{field}}_explain"/>
+
+	{{#if explain}}
+		<small id="{{field}}_explain" class="form-text text-muted">
+			{{explain}}
+		</small>
+	{{/if}}
 </template>
 
 <template name="select_input">
@@ -19,7 +30,7 @@
 
 <template name="text_input">
 	<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
-						 id="{{field}}" rows="12">{{value}}</textarea>
+						 id="{{field}}" rows="10">{{value}}</textarea>
 </template>
 
 <template name="markdown_input">

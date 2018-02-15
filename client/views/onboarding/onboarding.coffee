@@ -66,17 +66,15 @@ Template.onboarding_finish.onCreated ->
 	self = this
 
 	self.autorun ()->
-		self.subscribe "my_admissions"
+		_check_session()
+		self.subscribe "my_organizations"
 
 		filter =
 			collection_name: "jobs"
 		admissions = Admissions.find(filter).fetch()
 
-		self.subscribe "my_jobs", admissions,
-			(err, res) ->
-				#if Jobs.find().count() == 0
-				_check_session()
-				#		FlowRouter.go "onboarding_intro"
+
+		self.subscribe "my_jobs", admissions
 
 
 #########################################################
@@ -91,14 +89,26 @@ Template.onboarding_finish.helpers
 	persona_data: () ->
 		return Session.get "onboarding_persona_data"
 
-	has_profile: () ->
+	user_profile: () ->
 		profile = undefined
 		user_id = Meteor.userId()
 
 		if user_id
-			profile = Profiles.find {user_id: user_id}
+			profile = Profiles.findOne {user_id: user_id}
 
 		return profile
+
+
+	organization_profile: () ->
+		profile = Organizations.findOne()
+		return profile
+
+
+	job_id: () ->
+		job = Jobs.findOne()
+		if not job
+			return undefined
+		return job._id
 
 
 #########################################################
@@ -126,78 +136,3 @@ Template.onboarding_register.helpers
 			profile = Profiles.findOne {user_id: user_id}
 
 		return profile
-
-
-#########################################################
-# Job posting
-#########################################################
-
-#########################################################
-Template.job_overview.onCreated () ->
-	self = this
-	data = Session.get "onboarding_job_posting"
-
-	self.autorun ()->
-		org_filter =
-			collection_name: "organizations"
-		org_admissions = Admissions.find(org_filter).fetch()
-
-		job_filter =
-			collection_name: "jobs"
-		job_admissions = Admissions.find(job_filter).fetch()
-
-		invite_filter =
-			collection_name: "invitations"
-		invite_admissions = Admissions.find(invite_filter).fetch()
-
-		organization_id = ""
-		if org_admissions.length > 0
-			organization_id = org_admissions[0].resource_id
-			self.data.organization_id = organization_id
-
-		self.subscribe "send_invitations", invite_admissions
-		self.subscribe "my_organizations", org_admissions
-		self.subscribe "my_jobs", job_admissions
-
-		if self.subscriptionsReady()
-			if Organizations.find().count() == 0
-				Meteor.call "onboard_organization", data
-
-
-#########################################################
-Template.job_overview.helpers
-	jobs: () ->
-		return Jobs.find()
-
-	job_persona: (data) ->
-		job = persona_build(data)
-		return job
-
-	team_persona: () ->
-		members = TeamMembers.find().fetch()
-		team = persona_extract_requirements(members)
-		team = persona_map team, persona_map_person_to_job
-		return team
-
-	optimal_persona: (data) ->
-		members = TeamMembers.find().fetch()
-		team = persona_extract_requirements(members)
-		if not team
-			return undefined
-
-		job = persona_build(data)
-		res = persona_optimize_team(team, job)
-
-		return res
-
-
-#########################################################
-Template.job_overview.events
-	"click #new_job": () ->
-		data = Session.get "onboarding_job_posting"
-		if data
-			Meteor.call "add_job_post", data
-		else
-			sAlert.error "missing job posting data"
-
-

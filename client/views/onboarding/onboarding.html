@@ -188,7 +188,7 @@
 			<img style="width: 300px" src="/images/mooqita.jpg">
 		</h1>
 
-		{{#unless has_profile}}
+		{{#unless user_profile}}
 			<div class="row padding-top">
 				<div class="col-sm-5">
 					<div class="raised">
@@ -214,7 +214,97 @@
 				</div>
 			</div>
 		{{else}}
-			{{>job_overview}}
+			<h1>Finishing Touches</h1>
+
+			<p class="padding-next">
+				To personalize the invitation to your team members
+				we need to know your name and your organizations name
+				and a logo would be nice as well.
+			</p>
+
+			{{#let profile=user_profile}}
+				<div class="row">
+					<div class="col-sm-4 col-ms-6">
+						<div class="form-group">
+							<div class="raised text-center">
+								{{>avatar collection_name = "Profiles"
+													observable = profile.avatar
+													item_id = profile._id
+													field = "avatar"
+													explain = "Upload an image as your avatar (png, jpg, svg, etc). Maximum size ~1MB."}}
+
+								{{>upload method="upload_file" collection_name="Profiles"
+													item_id=profile._id field="avatar" max_size=1200000}}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-8 col-ms-6">
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Profiles" label="Given Name"
+								item_id=profile._id field="given_name" placeholder="Sophia (Wisdom, Greek)"}}
+						</div>
+
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Profiles" label="Middle Name"
+								item_id=profile._id field="middle_name" placeholder="Ode (Born on the road, Nigeria)"}}
+						</div>
+
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Profiles" label="Family Name"
+								item_id=profile._id field="family_name" placeholder="Sharma, (Happiness, India)"}}
+						</div>
+
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Profiles" label="Your Role"
+								item_id=profile._id field="role" placeholder="CEO, Hiring Lead, etc."}}
+						</div>
+					</div>
+				</div>
+			{{/let}}
+
+			<hr class="mooqita-line">
+
+			{{#let organization=organization_profile}}
+				<div class="row">
+					<div class="col-sm-8 col-ms-8">
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Organizations" label="Organization Name"
+									item_id=organization._id field="name" placeholder="ACME Inc."}}
+						</div>
+
+						<div class="form-group">
+							{{>text_input method="set_field" collection_name="organizations"
+									item_id=organization._id field="description"
+									placeholder="Let ous know about your mission."}}
+						</div>
+					</div>
+
+					<div class="col-sm-4 col-ms-4">
+						<div class="form-group">
+							<div class="raised text-center">
+								{{>avatar collection_name = "Organizations"
+													observable = organization.avatar
+													item_id = organization._id
+													field = "avatar"
+													explain = "Upload your company logo (png, jpg, svg, etc). Max ~2MB."}}
+
+								{{>upload method="upload_file" collection_name="Organizations"
+													item_id=organization._id field="avatar" max_size=2400000}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="btn-group btn-group-justified">
+					<a class="btn btn-theme"
+						 href="{{g_build_url "job_posting" (g_object job_id=job_id organization_id=organization._id) "app"}}">
+						Show me my job posting
+					</a>
+				</div>
+			{{/let}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>
@@ -235,127 +325,5 @@
 			{{>atForm}}
 		</div>
 	</div>
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding Job Posting
-|
--------------------------------------------------->
-<template name="job_overview">
-	{{#each job in jobs}}
-		<h1>Role</h1>
-
-		<p>Please select the main role of your candidate.</p>
-
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-paint-brush color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="design"
-						message="Designer" text="UX/UI Designer, Creative Director, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-cogs color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="ops"
-						message="Operations" text="Finance, Accounting, Human Resources, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-laptop color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="dev"
-						message="Developer" text="Mobile/Fullstack Developer, DevOps, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-pie-chart color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="sales"
-						message="Sales" text="Sales Manager, Account Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-comments-o color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="marketing"
-						message="Marketing" text="Content Creator, Marketing Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-question-circle color-theme"
-						collection_name="jobs" item_id=job._id field="role" value="other"
-						message="Others" text="Attorney , etc."}}
-			</div>
-		</div>
-
-		<h1>Competencies</h1>
-		<p>
-			Finding the candidate with the right skill set is important.
-			Mooqita however can do more. We can help you find the person
-			that will complement your teams social fabric.
-		</p>
-
-		<div class="row">
-			<div class="col-sm-7">
-				<div class="row" style="padding: 20px 0px">
-					<div class="col-sm-6 padding-next">
-						{{>toggle_button label="Strategic Decisions"
-								collection_name="jobs" item_id=job._id field="strategic"
-								explain="Does the candidate need to lead other members of your team?"}}
-					</div>
-
-					<div class="col-sm-6 padding-next">
-						{{>toggle_button label="Leading People"
-								collection_name="jobs" item_id=job._id field="team"
-								explain = "Does the candidate need to make strategic descisions about the companies future?"}}
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-6 padding-next">
-						{{>toggle_button label="Contributing Ideas"
-								collection_name="jobs" item_id=job._id field="idea"
-								explain = "Do you need fresh and new ideas for products or features?"}}
-					</div>
-
-					<div class="col-sm-6 padding-next">
-						{{>toggle_button label="Process Design"
-								collection_name="jobs" item_id=job._id field="process"
-								explain = "Does the person need to specifiy processes followed by others?"}}
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-5">
-				<div class="row">
-					<div class="col-xs-6">
-						<h2>Job Persona</h2>
-						{{>persona 	persona_data=(job_persona job) has_text=true
-												width=300 height=180}}
-					</div>
-
-					<div class="col-xs-6">
-						<h2>Team Persona</h2>
-						{{>persona	persona_data=team_persona has_text=true
-												width=300 height=180}}
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-						<h2>Optimized Persona</h2>
-						{{>persona	persona_data=(optimal_persona job) has_text=true
-												width=300 height=180 offset_x=0}}
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<h1>Team Members</h1>
-
-		<p>Add your team members to refine the personality profile for your job announcement.</p>
-
-		{{>group_page organization_id=organization_id}}
-
-	{{/each}}
 </template>
 

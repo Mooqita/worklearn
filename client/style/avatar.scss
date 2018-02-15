@@ -57,3 +57,21 @@
 	bottom: -100%;
 }
 
+.avatar-explain-container{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: $theme;
+	color: $text-on-theme;
+}
+
+.avatar-explain {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 50%;
+	width: 60%;
+	margin: -25% 0 0 -30%;
+}

@@ -34,13 +34,37 @@
 <template name="job_preview">
 	<hr>
 
-	<h2>
-		<a href="{{g_build_url "job_posting" (g_object job_id=_id organization_id=organization_id)}}">
-			{{get_role}}
-		</a>
-	</h2>
+	{{#let org=get_organization}}
+		<h2>
+			<a href="{{g_build_url "job_posting" (g_object job_id=_id organization_id=organization_id)}}">
+				{{title}}
+			</a>
 
-	{{>more content=content}}
+			<div class="pull-right" style="font-size: 16px;">
+				<div class="badge fa background-contrast"
+						 style="padding: 3px 8px;">
+					{{org.name}}
+				</div>
+
+				<div class="badge fa background-contrast"
+						 style="padding: 3px 8px;">
+					{{get_role}}
+				</div>
+
+				{{#unless published}}
+					{{>popout_base title="Not public"
+										content="Your job post is not active at the moment"
+										icon_class="badge background-theme fa fa-clock-o"}}
+				{{else}}
+					{{>popout_base title="Public"
+										content="Your job post is live"
+										icon_class="badge background-contrast fa fa-check"}}
+				{{/unless}}
+			</div>
+		</h2>
+
+		{{>more content=description}}
+	{{/let}}
 </template>
 
 <!------------------------------------------------
@@ -51,6 +75,24 @@
 <template name="job_posting">
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
+			<h1 class="editable">
+				{{#if g_is_public "jobs"}}
+					<span class="badge background-theme ready-badge">
+						LIVE
+					</span>
+				{{else}}
+					<span class="badge background-contrast ready-badge">
+						Not yet public
+					</span>
+				{{/if}}
+
+				{{>basic_input method="set_field" collection_name="jobs"
+						item_id=job._id field="title" placeholder="Click: to give your job post a title."}}
+			</h1>
+
+			{{>markdown_input method="set_field" collection_name="jobs"
+					item_id=job._id field="description" placeholder="A short description of what you are looking for."}}
+
 			<h1>Role</h1>
 
 			<p>Please select the main role of your candidate.</p>
@@ -102,7 +144,7 @@
 			</p>
 
 			<div class="row">
-				<div class="col-sm-7">
+				<div class="col-sm-8 col-ms-8">
 					<div class="row" style="padding: 20px 0px">
 						<div class="col-sm-6 padding-next">
 							{{>toggle_button label="Strategic Decisions"
@@ -132,33 +174,47 @@
 					</div>
 				</div>
 
-				<div class="col-sm-5">
-					<div class="row">
-						<div class="col-xs-6">
-							<h2>Job Persona</h2>
-							{{>persona 	persona_data=(job_persona job) has_text=true
-													width=300 height=180}}
-						</div>
-
-						<div class="col-xs-6">
-							<h2>Team Persona</h2>
-							{{>persona	persona_data=team_persona has_text=true
-													width=300 height=180}}
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<h2>Optimized Persona</h2>
-							{{>persona	persona_data=(optimal_persona job) has_text=true
-													width=300 height=180 offset_x=0}}
-						</div>
-					</div>
+				<div class="col-sm-4 col-ms-4">
+					<h2>Job Persona</h2>
+					{{>persona 	persona_data=(job_persona job) has_text=true
+											width=300 height=180}}
 				</div>
 			</div>
 
+			<h1>Team Member</h1>
+			<p>
+				These are the members of your organization. To improve your job
+				search you can add the people your candidate will work with. And
+				do not forget about yourself. So fill out your profile as well.
+			</p>
+
 			{{>group_page organization_id=organization_id}}
 
+
+			<h1>Results</h1>
+
+			<p>
+				Here you can find the persona and more information about
+				whom our algorithm is searching for.
+			</p>
+
+			<div class="row">
+				<div class="col-sm-5 col-ms-5">
+					<h2>Job Persona</h2>
+					{{>persona 	persona_data=(job_persona job) has_text=true
+											width=300 height=180}}
+
+					<h2>Team Persona</h2>
+					{{>persona	persona_data=team_persona has_text=true
+											width=300 height=180}}
+				</div>
+
+				<div class="col-sm-7 col-ms-7">
+					<h2>Optimized Persona</h2>
+					{{>persona	persona_data=(optimal_persona job) has_text=true
+											width=300 height=180 offset_x=0}}
+				</div>
+			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

@@ -30,6 +30,7 @@ Meteor.publish "team_members_by_organization_id", (organization_id) ->
 			email: mail
 			big_five: profile.big_five
 			avatar: profile.avatar
+			owner: user_id == self.userId
 
 		self.added("team_members", user_id, member)
 

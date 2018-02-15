@@ -30,9 +30,6 @@ Template.job_preview.helpers
 		inst = Template.instance()
 		data = inst.data
 
-		id = data.organization_id
-		org = Organizations.findOne id
-
 		map =
 			marketing: "Marketing"
 			design: "Design"
@@ -41,13 +38,17 @@ Template.job_preview.helpers
 			ops: "Operations"
 			dev: "Engineering"
 
-		res = "No title yet"
-
-		if org
-			res = org.name + ": "
-
-		res += map[data.role]
+		res = map[data.role]
 		return res
+
+	get_organization: () ->
+		inst = Template.instance()
+		data = inst.data
+
+		id = data.organization_id
+		org = Organizations.findOne id
+
+		return org
 
 
 #########################################################
@@ -64,10 +65,6 @@ Template.job_posting.onCreated () ->
 		self.subscribe "job_by_id", job_id
 		self.subscribe "organization_by_id", organization_id
 		self.subscribe "invitations_by_organization_id", organization_id
-
-		if self.subscriptionsReady()
-			if Organizations.find().count() == 0
-				Meteor.call "onboard_organization", data
 
 
 #########################################################
@@ -87,9 +84,14 @@ Template.job_posting.helpers
 	team_persona: () ->
 		members = TeamMembers.find().fetch()
 		team = persona_extract_requirements(members)
+
+		if not team
+			return team
+
 		team = persona_normalize(team)
 		team = persona_invert(team, 0.2)
 		team = persona_map team, persona_map_person_to_job
+
 		return team
 
 	optimal_persona: (data) ->

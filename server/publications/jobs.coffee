@@ -1,12 +1,14 @@
 ###############################################################################
 _job_fields =
 	fields:
-		role:1,
-		idea:1,
-		team:1,
-		process:1,
-		strategic:1
-		organization_id:1
+		title: 1
+		description: 1
+		role: 1
+		idea: 1
+		team: 1
+		process: 1
+		strategic: 1
+		organization_id: 1
 
 ###############################################################################
 Meteor.publish "job_by_id", (job_id) ->

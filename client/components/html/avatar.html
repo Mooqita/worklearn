@@ -2,9 +2,21 @@
 	<div class="avatar-box">
 		<div class="avatar">
 			<div class="avatar-container img-circle">
-				<img class="img-responsive img-avatar"
-						 src="{{g_download_field_value collection_name item_id field observable}}"
-						 alt="">
+				{{#unless (g_download_field_value collection_name item_id field observable)}}
+					<div class="avatar-explain-container">
+						<div class="avatar-explain">
+							{{#if is_downloading}}
+								{{>wait}}
+							{{else}}
+								{{explain}}
+							{{/if}}
+						</div>
+					</div>
+				{{else}}
+					<img class="img-responsive img-avatar"
+							 src="{{g_download_field_value collection_name item_id field observable}}"
+							 alt="">
+				{{/unless}}
 			</div>
 		</div>
 	</div>
