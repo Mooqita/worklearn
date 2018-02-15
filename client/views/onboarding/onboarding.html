@@ -355,3 +355,40 @@
 	{{/each}}
 </template>
 
+<!------------------------------------------------
+| Note: the following is for onboarding of LEARNER views
+| Onboarding Intro (similar to above, but content differs),
+| TODO: could abstract this to a shared component.
+|
+-------------------------------------------------->
+<template name="onboarding_learner_intro">
+    {{#mooqita_wide_spacing}}
+        <div class="row padding-top" style="margin-top: 20%">
+            <div class="col-sm-6">
+                <h1 style="text-align: center; padding-top: 30px">
+                    <img style="width: 300px" src="/images/mooqita.jpg">
+                </h1>
+            </div>
+
+            <div class="col-sm-6">
+                <h1>Find the job you love!</h1>
+
+                <p style="padding-bottom: 25px">
+                    We make it easy for you to find the perfect job based
+                    on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
+                </p>
+
+                <p>To get started, complete the five-minute onboarding phase so that we get a better
+                understanding of your:</p>
+                <ol>
+                    <li>Technical skills</li>
+                    <li>Time you have to work on Mooqita challenges</li>
+                    <li>Team work preferences</li>
+                    <li>Short personality quiz</li>
+                </ol>
+                <br>
+                <a class="btn btn-theme" href="onboarding_techexistingselection">Get started</a>
+            </div>
+        </div>
+    {{/mooqita_wide_spacing}}
+</template>

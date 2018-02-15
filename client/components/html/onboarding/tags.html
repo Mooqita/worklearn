@@ -1,0 +1,10 @@
+<!---------------------------------------------------------
+| usage example: {{>obtags method="set_field" category="type_of_tags" tags="list_of_tags" }}
+---------------------------------------------------------->
+<template name="obtags">
+    <div id="{{ category }}" class="tags">
+    {{#each tag in tags}}
+        <span class="tag label label-info {{ isSelected tag }}">{{ tag }}</span>
+    {{/each}}
+    </div>
+</template>
