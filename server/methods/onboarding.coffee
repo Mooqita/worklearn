@@ -134,6 +134,9 @@ Meteor.publish "onboardingForUserPUB", () ->
   return Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1})
 
 Meteor.methods
+  lastInserted: () ->
+    return Onboarding.find({}, {sort: {created: -1, limit: 1}}).fetch()[0]
+
   existingSkills: (data) ->
     doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
     doc.existingSkills[data.category] = data.tags
@@ -151,6 +154,9 @@ Meteor.methods
 
   commtags: (data) ->
     Meteor.call "insertOnboardingForUser", "commTags", data.tags
+
+  BIG5S: (personality) ->
+    Meteor.call "insertOnboardingForUser", "personality", personality
 
   commtagsSelected: () ->
     commTags = Onboarding.find({owner_id: this.userId, commTags: { "$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
@@ -175,6 +181,7 @@ Meteor.methods
         lang2Index: null,
         commTags: [],
         commAny: false,
+        personality: {},
         existingSkills: {}
       }
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})

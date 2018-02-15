@@ -1,0 +1,32 @@
+<template name="onboarding_personality_survey">
+    {{#mooqita_wide_spacing}}
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
+        <h1 class="obheader">Your working personality</h1>
+
+        <div id="ps-instructions">
+            <p style="text-align: left">
+                This survey uses a short version of "Big Five" personality model. It assumes that personality
+                is a combination of five independent factors: Emotional <em>Stability</em>,
+                <em>Extroversion</em>, <em>Openness</em> for Experiences,	<em>Agreeableness</em>,
+                <em>(Conscientiousness)</em>. The figure shows the relation of these factors we
+                calculated from your test results. This model is very useful to describe aspects
+                of personality the test does not represent the entire complexity of a human being.
+                The model gives a frame that we use to match you with jobs other people with your
+                personality liked.
+            </p>
+            <a class="btn btn-theme pull-right obcontinue" id="begin" aria-pressed="true">Begin</a>
+        </div>
+
+       <div class="survey">
+        {{#quick_survey
+                answers=answers
+                questions=questions
+                collection_name="onboarding"
+                item_id=item_id
+                field="personality"}}
+        {{/quick_survey}}
+       </div>
+    {{/mooqita_wide_spacing}}
+</template>

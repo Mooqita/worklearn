@@ -49,6 +49,26 @@
 				"is exacting in their work",
 				"often feels blue",
 				"is full of ideas"]
+
+# see: https://www.psytoolkit.org/survey-library/big5-bfi-s.html
+@big_five_short = [
+	"worries a lot",
+	"gets nervous easily",
+	"remains calm in tense situations",
+	"is talkative"
+	"is outgoing, sociable",
+	"is reserved",
+	"is original, comes up with new ideas",
+	"values artistic, aesthetic experiences",
+	"has an active imagination",
+	"is sometimes rude to others",
+	"has a forgiving nature",
+	"is considerate and kind to almost everyone",
+	"does a thorough job",
+	"tends to be lazy",
+	"does things efficiently",
+]
+
 ###############################################################################
 @big_5_mean =
 	Extroversion:
