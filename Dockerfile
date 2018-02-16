@@ -15,7 +15,7 @@
 
 FROM node:carbon
 
-RUN cd /usr/bin && curl https://install.meteor.com/ | sh
+RUN curl https://install.meteor.com/ | sh
 RUN groupadd -r nodejs && useradd -m -r -g nodejs nodejs
 USER nodejs
 RUN mkdir -p /home/nodejs/app
