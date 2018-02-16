@@ -129,45 +129,8 @@ Meteor.methods
 ################################################################
 ######################OLD OL DEV################################
 ################################################################
-
-Meteor.publish "onboardingForUserPUB", () ->
-  return Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1})
-
 Meteor.methods
-  lastInserted: () ->
-    return Onboarding.find({}, {sort: {created: -1, limit: 1}}).fetch()[0]
-
-  existingSkills: (data) ->
-    doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()[0]
-    doc.existingSkills[data.category] = data.tags
-    # TODO: could use the general method, but would create another doc unnecessarily.
-    Onboarding.update(doc._id, { $set: existingSkills: doc.existingSkills } )
-
-  existingSkillsSelected: (category) ->
-    # TODO: error validation & using the same type of find a lot
-    existingSkills = Onboarding.find({owner_id: this.userId, existingSkills: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
-    selectedExistingSkillsByCategory = existingSkills[0].existingSkills[category]
-    return if selectedExistingSkillsByCategory? then selectedExistingSkillsByCategory else []
-
-  timeComitted: (time) ->
-    Meteor.call "insertOnboardingForUser", "timeComitted", time
-
-  commtags: (data) ->
-    Meteor.call "insertOnboardingForUser", "commTags", data.tags
-
-  BIG5S: (personality) ->
-    Meteor.call "insertOnboardingForUser", "personality", personality
-
-  commtagsSelected: () ->
-    commTags = Onboarding.find({owner_id: this.userId, commTags: { "$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()
-    if (commTags.length == 0)
-      Meteor.call "insertOnboardingForUser", "commTags", []
-      return []
-    else
-      return commTags[0].commTags
-
   insertOnboardingForUser: (fieldName, data) ->
-    # Does this document exist for the user?
     doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()
     if (doc.length > 0)
       id = doc[0]._id
@@ -185,18 +148,3 @@ Meteor.methods
         existingSkills: {}
       }
     Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})
-
-  lastTimeComitted: () ->
-    return Onboarding.find({owner_id: this.userId, timeComitted: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].timeComitted
-
-  lastTzIndex: () ->
-    return Onboarding.find({owner_id: this.userId, tzIndex: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].tzIndex
-
-  lastLang1Index: () ->
-    return Onboarding.find({owner_id: this.userId, lang1Index: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].lang2Index
-
-  lastLang2Index: () ->
-    return Onboarding.find({owner_id: this.userId, lang2Index: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].lang2Index
-
-  lastCommAny: () ->
-    return Onboarding.find({owner_id: this.userId, commAny: {"$exists": true}}, {sort: {created: -1}, limit: 1}).fetch()[0].commAny

@@ -138,8 +138,7 @@ Template.timezoneselect.helpers
     "(UTC+14:00) Kiritimati Island"]
 
 Template.timezoneselect.onRendered ->
-  Meteor.call "lastTzIndex",
-    (err, res) -> $("#timezone")[0].selectedIndex = res || 10 # US
+  $("#timezone")[0].selectedIndex = Session.get("lastTzIndex") || 10
 
 Template.preflangselect.helpers
   languages: () -> return ["Albanian",
@@ -245,12 +244,6 @@ Template.preflangselect.helpers
     "Yoruba",
     "Zulu"]
 
-Template.preflangselect.onRendered ->
-  Meteor.call "lastLang1Index",
-    (err, res) -> $("#language1")[0].selectedIndex = res || 20 # English
-  Meteor.call "lastLang2Index",
-    (err, res) ->  if res then $("#language2")[0].selectedIndex = res
-
 Template.onboarding_timezone.helpers
   tags: () -> ["Email","Facebook Messenger","Facebook","Google Hangouts","Google+","Kik","LINE","Phone","QQ Mobile","Skype","Slack","Telegram","Viber","WeChat","WhatsApp"]
   
@@ -275,35 +268,32 @@ selectOrAddTag = (tag) =>
     $("#commtags").append(newtag)
 
 Template.onboarding_timezone.onRendered ->
-  Meteor.call "commtagsSelected",
-    (err, res) -> 
-      selectedtags = Session.get(tagID)
-      if (selectedtags)
-        selectOrAddTag(tag) for tag in selectedtags
+  selectedtags = Session.get(tagID)
+  if (selectedtags)
+    selectOrAddTag(tag) for tag in selectedtags
 
-  Meteor.call "lastCommAny",
-    (err, res) -> $("#commany")[0].checked = res
+  $("#commany")[0].checked = Session.get("lastCommAny")
+  $("#timezone")[0].selectedIndex = Session.get("lastTzIndex") || 10
+  $("#language1")[0].selectedIndex = Session.get("lang1Index") || 20
+  $("#language2")[0].selectedIndex = Session.get("lang2Index") || 20
 
 Template.onboarding_timezone.events
-  "click .continue": (event) ->
-    # validation
-
   "click .addcom": (event) ->
     selectOrAddTag($("#addcomValue").val())
     $("#addcomValue")[0].value = ""
-    Meteor.call "commtags", {category:"commtags", tags: Session.get(tagID)} # save to db
+    Session.set "commtags", {category:"commtags", tags: Session.get(tagID)} # save to db
 
   "change #timezone" : (event) ->
-    Meteor.call "insertOnboardingForUser", "tzIndex", event.target.selectedIndex
+    Session.set "lastTzIndex", event.target.selectedIndex
 
   "change #language1" : (event) ->
-    Meteor.call "insertOnboardingForUser", "lang1Index", event.target.selectedIndex
+    Session.set "lang1Index", event.target.selectedIndex
 
   "change #language2" : (event) ->
-    Meteor.call "insertOnboardingForUser", "lang2Index", event.target.selectedIndex
+    Session.set "lang2Index", event.target.selectedIndex
 
   "change #commany" : (event) ->
-    Meteor.call "insertOnboardingForUser", "commAny", event.target.checked
+    Session.set "commAny", event.target.checked
 
   "keyup #addcomValue" : (event) ->
     if (event.key == "Enter")

@@ -1,43 +1,34 @@
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
-
 Template.onboarding_personality_survey.onCreated ->
-  this.answers = new ReactiveDict("answers")
-  this.item_id = ""
-  Meteor.call 'lastInserted',
-    (err, res) ->
-      this.item_id = res._id
-      this.answers = res.personality
+  this.answers = new ReactiveDict()
 
 Template.onboarding_personality_survey.onRendered () ->
-  $('.survey').toggle()
+  isComplete = Session.get "personality"
+  if isComplete && Object.keys(isComplete).length == 15
+    $('#ps-instructions').hide()
+    $('.survey').hide()
+    $('#finished').show()
+  else
+    $('.survey').toggle()
+    $('#finished').toggle()
 
 Template.onboarding_personality_survey.helpers
-  item_id: () ->
-    instance = Template.instance()
-    idd = instance.item_id
-    return idd
-
   answers: () ->
-    instance = Template.instance()
-    answers = instance.answers
-    if (Object.keys(answers.keys).length == 15)
-      $('.survey').toggle()
-      Meteor.call "BIG5S", answers.keys
-      # TODO: redirect to final page, i.e. /onboarding/onboarding_finish
-    else
-      return answers
+    return Template.instance().answers
 
   questions: () ->
     return big_five_short
-
-  persona_data: () ->
-    instance = Template.instance()
-    answers = instance.answers
-    persona = calculate_persona_40 answers.keys
-    instance.persona_data.set persona
-    return instance.persona_data.get()
 
 Template.onboarding_personality_survey.events
   'click #begin': () ->
     $('#ps-instructions').hide()
     $('.survey').toggle()
+
+  'click .select-response': () ->
+    answers = Template.instance().answers
+    if answers && (Object.keys(answers.keys).length == 15)
+      Session.set "personality", answers.keys
+      $('.survey').toggle()
+      $('#finished').toggle()
+
+  "click #register": () ->
+    Modal.show 'onboarding_register'

@@ -1,16 +1,12 @@
 Template.onboarding_time.onCreated () ->
-	window.minHours = 2.0
-	window.maxHours = 14.0
-
-	Meteor.call "lastTimeComitted",
-		(err, res) ->
-			# check for previously entered value
-			if err or res == NaN or res == null or res == 0
-				res = 10.5 # default to 10.5 hours per week (90 mins per day)
-				
-			# change from hours to percent
-			window.defaultPercent = ((((res - window.minHours) / (window.maxHours - window.minHours)) * 100))	
-			Template.onboarding_time.PercentToHours(window.defaultPercent)
+  window.minHours = 2.0
+  window.maxHours = 14.0
+  window.hours = 10.5
+  if (Session.get("timeCommitted") >= 0)
+    window.hours = Session.get("timeCommitted")
+  # change from hours to percent
+  window.defaultPercent = ((((window.hours - window.minHours) / (window.maxHours - window.minHours)) * 100))
+  Template.onboarding_time.PercentToHours(window.defaultPercent)
 
 Template.onboarding_time.PercentToHours = (percentage) ->
 	# Get hours from percentage
@@ -54,5 +50,5 @@ Template.onboarding_time.events
 	"change #timeCommitSlider, drag #timeCommitSlider": (event) ->
 		Template.onboarding_time.PercentToHours(event.value)
 		Template.onboarding_time.UpdateHoursLabel()
-	"click .continue": (event) ->
-		Meteor.call "timeComitted", window.hours
+	"click .obcontinue": (event) ->
+		Session.set("timeCommitted", window.hours)
