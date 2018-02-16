@@ -71,17 +71,19 @@ _handle_selection = (instance, response) ->
 	answers.set data.question, parseInt response
 	a_count.set a_count.get() + 1
 
-	collection_name = data.collection_name
-	item_id = data.item_id
-	field = data.field
-
 	value = {}
 	for k, v of answers.keys
 		val = answers.get k
 		value[k] = val
 
-	set_field collection_name, item_id, field, value
+	if not collection_name
+		return
 
+	collection_name = data.collection_name
+	item_id = data.item_id
+	field = data.field
+
+	set_field collection_name, item_id, field, value
 
 ###############################################################################
 Template.quick_survey_element.onCreated ()->

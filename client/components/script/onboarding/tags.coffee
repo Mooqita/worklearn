@@ -1,11 +1,6 @@
 Template.obtags.onCreated ->
   category = if this.data.category? then this.data.category else ""
   this.data.tagID = this.data.method + "Selected" + category
-
-  console.log(this.data.method);
-
-  console.log(this.data.tagID);
-
   _tagID = this.data.tagID
   method = this.data.method
 
