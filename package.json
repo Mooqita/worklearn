@@ -2,7 +2,7 @@
   "name": "worklearn",
   "private": true,
   "scripts": {
-    "clean": "sh scripts/docker-clean"
+    "clean": "sh docker/scripts/docker-clean.sh"
   },
   "dependencies": {
     "atob": "^2.0.3",

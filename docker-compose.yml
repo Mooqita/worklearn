@@ -10,9 +10,8 @@ services:
       - 3000:3000
     depends_on:
       - mongo
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/worklearndb
-      - ROOT_URL=http://localhost:3000
+    env_file:
+      - ./docker/env/.worklearn-env
 
   mongo:
     image: mongo

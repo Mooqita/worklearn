@@ -2,14 +2,15 @@
   "public": {
     "analyticsSettings": {
       "Keen IO": {
-        "projectId": "",
-        "writeKey": ""
+        "projectId": "5a89e5fe46e0fb00016bc2bb",
+        "writeKey": "379E28EEC9AC601CE9840FDDA937E36C305885AEBAE7504859089C7FF503A00D68C14F57D829F4C81B96491D8F90329E5789284509DE9BEDA90973E33051EDD333695F5A3ACEB8A2459FCED1EB78110F28C249AB8DC86FD5CB64FD941451611F"
       },
       "Amplitude": {
-        "apiKey": ""
+        "apiKey": "***REMOVED***"
       },
       "Segment.io": {
-        "apiKey": ""
+        "sourceId": "***REMOVED***",
+        "apiKey": "HSA99zqYntDGiEgi1SxKvjaGxkdEHPjV"
       }
     }
   },
@@ -17,7 +18,7 @@
   "default_permissions_asset_path": "db/defaultcollections/permissions.json",
   "init_test_data": true,
   "admin": {
-    "email": "admin@mooqita.org",
-    "password": "whatever"
+    "email": "admin@mooqita-sfh.org",
+    "password": "password"
   }
 }

@@ -1,5 +1,6 @@
 node_modules/
-.idea
-secrets.txt
 tmp/
-
+secrets.txt
+settings.json
+.worklearn-env
+.idea
