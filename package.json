@@ -2,9 +2,7 @@
   "name": "worklearn",
   "private": true,
   "scripts": {
-    "clean": "sh scripts/docker-clean.sh",
-    "start": "docker-compose up -d",
-    "stop": "docker-compose stop"
+    "clean": "sh scripts/docker-clean"
   },
   "dependencies": {
     "atob": "^2.0.3",
