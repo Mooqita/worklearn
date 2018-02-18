@@ -34,6 +34,9 @@ Template.invitation.onCreated ->
 		self.subscribe "invitation_by_id", invitation_id,
 			(res, err) ->
 				invite = Invitations.findOne invitation_id
+				if not invite
+					return
+
 				if invite.accepted
 					query =
 						invitation_id: FlowRouter.getQueryParam("invitation_id")
@@ -55,6 +58,20 @@ Template.invitation.helpers
 		id = FlowRouter.getQueryParam("organization_id")
 		org = Organizations.findOne id
 		return org
+
+	is_invitee: () ->
+		id = FlowRouter.getQueryParam("invitation_id")
+		owner_id = get_document_owner(Invitations, id)
+		is_s = owner_id == Meteor.userId()
+
+		return is_s
+
+	is_sender: () ->
+		id = FlowRouter.getQueryParam("invitation_id")
+		owner_id = get_document_owner(Invitations, id)
+		is_s = owner_id == Meteor.userId()
+
+		return is_s
 
 
 ###############################################################################
@@ -135,5 +152,5 @@ Template.invitation_register.events
 						sAlert.error err
 						return
 
-					FlowRouter.go build_url "personality"
+					FlowRouter.go build_url "onboarding_team"
 

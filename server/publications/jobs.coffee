@@ -11,6 +11,18 @@ _job_fields =
 		organization_id: 1
 
 ###############################################################################
+Meteor.publish "my_jobs", (admissions) ->
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	crs = get_documents user_id, IGNORE, Jobs, {}, _job_fields
+
+	log_publication crs, user_id, "my_jobs"
+	return crs
+
+
+###############################################################################
 Meteor.publish "job_by_id", (job_id) ->
 	check job_id, String
 
@@ -21,21 +33,9 @@ Meteor.publish "job_by_id", (job_id) ->
 	filter =
 		_id: job_id
 
-	crs = get_my_documents Jobs, filter, _job_fields
+	crs = get_documents IGNORE, IGNORE, Jobs, filter, _job_fields
 
 	log_publication crs, user_id, "job_by_id"
-	return crs
-
-
-###############################################################################
-Meteor.publish "my_jobs", (admissions) ->
-	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
-
-	crs = get_my_documents Jobs, {}, _job_fields
-
-	log_publication crs, user_id, "my_jobs"
 	return crs
 
 

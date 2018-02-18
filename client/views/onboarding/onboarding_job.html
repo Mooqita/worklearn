@@ -3,7 +3,7 @@
 | Onboarding Intro
 |
 -------------------------------------------------->
-<template name="onboarding_intro">
+<template name="onboarding_job_intro">
 	{{#mooqita_wide_spacing}}
 		<div class="row padding-top" style="margin-top: 20%">
 			<div class="col-sm-6">
@@ -20,7 +20,7 @@
 					the perfect talent you need to grow your business.
 				</p>
 
-				<a class="btn btn-theme" href="onboarding_role">Get started</a>
+				<a class="btn btn-theme" href="onboarding_job_role">Get started</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -32,7 +32,7 @@
 | Onboarding Role
 |
 -------------------------------------------------->
-<template name="onboarding_role">
+<template name="onboarding_job_role">
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
@@ -47,37 +47,37 @@
 
 		<div class="row">
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-paint-brush color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-paint-brush color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key ="role" value="design" message="Designer"
 						text="UX/UI Designer, Creative Director, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-cogs color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-cogs color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key ="role" value="ops" message="Operations"
 						text="Finance, Accounting, Human Resources, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-laptop color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-laptop color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key="role" value="dev"	message="Developer"
 						text="Mobile / Fullstack Developer, DevOps, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-pie-chart color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-pie-chart color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key="role" value="sales"	message="Sales"
 						text="Sales Manager, Account Manager, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-comments-o color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-comments-o color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key="role" value="marketing"	message="Marketing"
 						text="Content Creator, Marketing Manager, etc."}}
 			</div>
 
 			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-question-circle color-theme" href="onboarding_competency"
+				{{>hover_card icon="fa-question-circle color-theme" href="onboarding_job_competency"
 						session="onboarding_job_posting" key="role" value="other"	message="Others"
 						text="Attorney , etc."}}
 			</div>
@@ -91,7 +91,7 @@
 | Onboarding Competency
 |
 -------------------------------------------------->
-<template name="onboarding_competency">
+<template name="onboarding_job_competency">
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
@@ -169,7 +169,7 @@
 		</div>
 
 			<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
-			<a class="btn btn-theme" href="onboarding_finish">
+			<a class="btn btn-theme" href="onboarding_job_finish">
 				Generate
 			</a>
 		</div>
@@ -182,7 +182,7 @@
 | Onboarding Finish
 |
 -------------------------------------------------->
-<template name="onboarding_finish">
+<template name="onboarding_job_finish">
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
@@ -315,7 +315,7 @@
 | Onboarding Register
 |
 -------------------------------------------------->
-<template name="onboarding_register">
+<template name="onboarding_job_register">
 	<div class="modal fade register-modal">
 		<div class="register-frame animated">
 			<button type="button" class="btn btn-default close-register" data-dismiss="modal">

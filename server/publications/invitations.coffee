@@ -5,6 +5,7 @@ _invitation_fields =
 		email: 1
 		accepted: 1
 		host_name: 1
+		organization_id: 1
 
 #######################################################
 Meteor.publish "invitation_by_id", (invitation_id) ->

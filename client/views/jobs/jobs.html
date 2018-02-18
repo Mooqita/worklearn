@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="jobs">
 	{{#mooqita_wide_spacing}}
-		<div class="padding-top">
+		<div class="item-set padding-top">
 			<h1>Active Job Postings</h1>
 
 			<p class="padding-next">
@@ -21,8 +21,8 @@
 						{{else}}
 							<hr>
 							<h1 class="text-center padding-next"><em>No Jobs yet.</em></h1>
-							<hr>
 						{{/each}}
+						<hr>
 					{{/paging}}
 				</div>
 			</div>
@@ -144,7 +144,7 @@
 			</p>
 
 			<div class="row">
-				<div class="col-sm-8 col-ms-8">
+				<div class="col-sm-8 col-ms-6">
 					<div class="row" style="padding: 20px 0px">
 						<div class="col-sm-6 padding-next">
 							{{>toggle_button label="Strategic Decisions"
@@ -174,7 +174,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4 col-ms-4">
+				<div class="col-sm-4 col-ms-6">
 					<h2>Job Persona</h2>
 					{{>persona 	persona_data=(job_persona job) has_text=true
 											width=300 height=180}}
@@ -182,6 +182,7 @@
 			</div>
 
 			<h1>Team Member</h1>
+
 			<p>
 				These are the members of your organization. To improve your job
 				search you can add the people your candidate will work with. And
@@ -190,6 +191,13 @@
 
 			{{>group_page organization_id=organization_id}}
 
+			<h1>Challenges</h1>
+
+			<p>
+				The next step is making sure your candidates are able to solve your challenges.
+			</p>
+
+			{{>designed_challenges}}
 
 			<h1>Results</h1>
 

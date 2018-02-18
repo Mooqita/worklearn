@@ -1,31 +1,52 @@
-#########################################################
+###############################################################################
 # locals
-#########################################################
+###############################################################################
 
-##########################################################
+################################################################################
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
-#########################################################
+###############################################################################
+_marker_div = 2.5
+_marker_width = 0.5
+_balance_level = 0.75
+
+###############################################################################
+_percent_to_x = (percent, radius, x_origin) ->
+	p = (percent / -100.0) * 2.0 - 1.0
+	rad = Math.PI * 0.5 * p
+	p_u = Math.sin(rad)
+	x = p_u * radius
+
+	return x + radius + x_origin
+
+###############################################################################
+_percent_to_y = (percent, radius, y_origin) ->
+	p = (percent / -100.0) * 2.0 - 1.0
+	rad = Math.PI * 0.5 * p
+	p_u = Math.cos(rad)
+	y = p_u * radius
+
+	return  y + y_origin
+
+###############################################################################
 #
 # Team member personality survey
 #
-#########################################################
+###############################################################################
 
-#########################################################
+###############################################################################
 Template.personality.onCreated () ->
 	this.answers = new ReactiveDict()
 	this.persona_data = new ReactiveVar(persona_big_5)
 
 
-#########################################################
+###############################################################################
 Template.personality.onRendered () ->
 	# TODO: make this reactive on the level of survey.
 	self = this
 	self.autorun () ->
 		user_id = Meteor.userId()
-		console.log user_id
 		profile = Profiles.findOne({user_id:user_id})
-		console.log profile
 
 		if profile
 			answers = profile.big_five
@@ -33,7 +54,7 @@ Template.personality.onRendered () ->
 				self.answers.set answers
 
 
-#########################################################
+###############################################################################
 Template.personality.helpers
 	answers: () ->
 		instance = Template.instance()
@@ -85,11 +106,77 @@ Template.personality.helpers
 		d = s - m
 		z = d / sd
 
-		if z > 0.5
+		if z > _balance_level
 			return "high"
 
-		if z < -0.5
+		if z < -_balance_level
 			return "low"
 
 		return "balanced"
+
+
+###############################################################################
+# Trait vis
+###############################################################################
+
+###############################################################################
+Template.trait_comparison.helpers
+	sd_n1_low: () ->
+		data = Template.instance().data
+		z = (data.mean - data.sd * _balance_level) / 40.0 * 100.0
+		return Math.round(z) - _marker_div
+
+	sd_n1_high: () ->
+		data = Template.instance().data
+		z = (data.mean - data.sd * _balance_level) / 40.0 * 100.0
+		return Math.round(z) + _marker_div
+
+	sd_p1_low: () ->
+		data = Template.instance().data
+		z = (data.mean + data.sd * _balance_level) / 40.0 * 100.0
+		return Math.round(z) - _marker_div
+
+	sd_p1_high: () ->
+		data = Template.instance().data
+		z = (data.mean + data.sd * _balance_level) / 40.0 * 100.0
+		return Math.round(z) + _marker_div
+
+	mean_p_low: () ->
+		data = Template.instance().data
+		z = (data.mean) / 40.0 * 100.0
+		return z - _marker_width
+
+	mean_p_high: () ->
+		data = Template.instance().data
+		z = (data.mean) / 40.0 * 100.0
+		return z + _marker_width
+
+	mean_p: () ->
+		data = Template.instance().data
+		z = (data.mean) / 40.0 * 100.0
+		return z
+
+	score_p_low: () ->
+		data = Template.instance().data
+		z = (data.score) / 40.0 * 100.0
+		return z - _marker_width
+
+	score_p_high: () ->
+		data = Template.instance().data
+		z = (data.score) / 40.0 * 100.0
+		return z + _marker_width
+
+	score_p: () ->
+		data = Template.instance().data
+		z = (data.score) / 40.0 * 100.0
+		return z + _marker_width
+
+	get_arc: (percent_start, percent_end, radius, x_origin, y_origin) ->
+		x_s = _percent_to_x(percent_start, radius, x_origin)
+		y_s = _percent_to_y(percent_start, radius, y_origin)
+
+		x_e = _percent_to_x(percent_end, radius, x_origin)
+		y_e = _percent_to_y(percent_end, radius, y_origin)
+
+		return "M#{x_s} #{y_s} A #{radius} #{radius}, 0, 0, 1, #{x_e} #{y_e}"
 

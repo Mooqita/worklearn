@@ -12,7 +12,7 @@ _getEmailFromService = ( services ) ->
 		user = Meteor.users.findOne(user)
 
 	if not user
-		throw  new Meteor.Error "User not found: " + user
+		return undefined
 
 	address = "unknown"
 	emails   = user.emails

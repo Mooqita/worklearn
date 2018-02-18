@@ -5,36 +5,53 @@
 -------------------------------------------------->
 <template name="designed_challenges">
 	{{#mooqita_wide_spacing}}
-		<div class="item padding-top">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="padding-next">
-						<div class="btn-group btn-group-justified">
-							<div class="btn-group">
-								<button class="btn btn-theme" id="add_challenge" type="button">
-									Create challenge
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
+		<div class="item-set padding-top">
+			<h1>
+				Challenges you designed
+				<div class="btn btn-theme pull-right"
+						 style="min-width: 50px;"
+						 id="add_challenge">
 
-				<div class="col-sm-8">
-					{{>paging subscription="my_challenges" page=0 count=10 parameter=parameter}}
+					{{>popout_base title="Add Challenge"
+							content="Click to add a new challenge."
+							icon_class="fa fa-2x fa-plus"}}
 				</div>
-			</div>
+			</h1>
 
-			{{#unless Template.subscriptionsReady}}
-				{{>wait}}
-			{{else}}
-				{{#each challenges}}
-						{{>challenge_preview}}
-					{{else}}
-						<h2><em>No challenges yet.</em></h2>
-					{{/each}}
-			{{/unless}}
+			<p class="padding-next">
+				Here you can find all the challenges you designed.
+			</p>
+
+			{{#paging subscription="my_challenges" page=0 count=10
+								parameter=parameter collection_name="challenges"}}
+				{{#each items}}
+					{{>challenge_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"><em>No Challenges yet.</em></h1>
+				{{/each}}
+
+				<hr>
+			{{/paging}}
 		</div>
 	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Preview
+|
+-------------------------------------------------->
+<template name="challenge_preview">
+	<hr>
+
+	<a href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}"
+		 class="item-set-element animated_0_5_s">
+		<h2>{{title}}</h2>
+
+		{{>more content=content}}
+	</a>
 </template>
 
 
@@ -191,7 +208,7 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	<div class="item padding-top">
+	<div class="item-set padding-top">
 		<h1>Solutions</h1>
 
 		<div class="row" style="margin-bottom: 25px">

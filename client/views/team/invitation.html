@@ -48,14 +48,18 @@
 		</h1>
 
 		<div class="padding-top">
-			{{#unless currentUser}}
-				{{>invitation_register}}
-			{{else}}
-				{{>invitation_accept}}
-			{{/unless}}
+			{{#if invitation}}
+				{{#unless currentUser}}
+					{{>invitation_register}}
+				{{else}}
+					{{>invitation_accept}}
+				{{/unless}}
 
-			{{#if invitation.accepted}}
-				<h2><em>You accepted this invitation</em></h2>
+				{{#if invitation.accepted}}
+					<h2><em>You accepted this invitation</em></h2>
+				{{/if}}
+			{{else}}
+				This invitation is not valid.
 			{{/if}}
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -67,13 +71,26 @@
 		<div class="col-sm-6 padding-next">
 			<h1>Invitation to join Mooqita.</h1>
 
-			<p>
-				Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
-				their organization <em><b>{{organization.name}}</b></em> on Mooqita.
-			</p>
+			{{#unless is_sender}}
+				<p>
+					You invited: <em><b>{{invitation.email}}</b></em> to join your
+					organization: <em><b>{{organization.name}}</b></em>.
+				</p>
 
-			{{#unless invitation.accepted}}
-				<div class="btn btn-theme" id="accept">Accept Invitation</div>
+				{{#unless invitation.accepted}}
+					<p>
+						<em><b>They have not yet accepted your invitation.</b></em>
+					</p>
+				{{/unless}}
+			{{else}}
+				<p>
+					Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
+					their organization <em><b>{{organization.name}}</b></em> on Mooqita.
+				</p>
+
+				{{#unless invitation.accepted}}
+					<div class="btn btn-theme" id="accept">Accept Invitation</div>
+				{{/unless}}
 			{{/unless}}
 		</div>
 	</div>

@@ -5,11 +5,7 @@
 ###############################################################################
 
 ###############################################################################
-_verbose = true
-
-
-###############################################################################
-@set_field = (collection, document, field, value, callback=null) ->
+@set_field = (collection, document, field, value, verbose=true, callback=null) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
 
@@ -30,7 +26,7 @@ _verbose = true
 				console.log "Client stack trace: "
 				console.log trace
 
-			if res & _verbose
+			if res & verbose
 				silent = false
 				profile = get_profile()
 				if profile

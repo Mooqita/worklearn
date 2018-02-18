@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		{{else}}
-			<div class="padding-top">
+			<div class="item-set padding-top">
 				<h1>Organizations</h1>
 
 				<p class="padding-next">
@@ -42,9 +42,9 @@
 								{{>organization_preview}}
 							{{else}}
 								<hr>
-								<h1 class="text-center padding-next"><em>No Jobs yet.</em></h1>
-								<hr>
+								<h1 class="text-center padding-next"><em>No Organizations yet.</em></h1>
 							{{/each}}
+						<hr>
 						{{/paging}}
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 					{{/if}}
 
 					{{>upload method="upload_file" collection_name="organizations"
-						item_id=_id field="avatar" max_size=500000}}
+						item_id=_id field="avatar" max_size=2400000}}
 				</div>
 
 				<div class="col-sm-8 col-ms-8 col-xs-12">

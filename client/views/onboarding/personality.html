@@ -13,10 +13,9 @@
 			</h1>
 
 			<p style="text-align: left">
-				<div class="raised col-md-6 col-sm-6 col-ms-7 col-xs-12"
-						 style="float: right; margin-left: 15px; margin-bottom: 35px">
-					{{>persona	persona_data=persona_data offset_x=-20
-											has_text=true width=300 height=130}}
+				<div class="raised  float-container col-md-6 col-sm-6 col-ms-7 col-xs-12">
+					{{>persona	persona_data=persona_data offset_x=-15
+											has_text=true width=310 height=130}}
 				</div>
 
 				This test uses the „Big Five“ personality model. It assumes that personality
@@ -24,16 +23,28 @@
 				<em><b>Extroversion</b></em>, <em><b>Openness</b></em> for Experiences,
 				<em><b>Agreeableness</b></em>, <em><b>Conscientiousness</b></em>. The figure shows
 				the relation of these factors we calculated from your test results. This model is
-				very useful to describe aspects of personality the test does not represent the entire
-				complexity of a human being. The model gives a frame that we use to match you with
-				jobs other people with your personality liked.
+				very useful to describe aspects of personality. It does not represent the entire
+				complexity of a human being. Yet the model provides a good frame to match team members.
+				Research has shown that teams are most efficient when there is a good mix of personality
+				traits. The best performing teams have a variety of low, balanced, and high scores for
+				all five traits. So no matter your results you are a valuable member of a team and we
+				help you find it. Now would also be a good time to complete your profile.
+				<div><a class="btn btn-theme pull-right" href="profile">Complete my profile</a></div>
 			</p>
 
 			<div class="personality-explain">
 				<div class="row padding-next">
 					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
 						<h2>Emotional Stability</h2>
 						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Stability")
+																		mean=(mean "Stability")
+																		sd=(sd "Stability")}}
+							</div>
+
 							This personality trait describes how strong a person
 							feels emotions. It also indicates how much an intense
 							situation is perceived as stressful.
@@ -43,6 +54,7 @@
 							reached a <em><b>{{level "Stability"}}</b></em> score.
 							Approximately <em><b>{{percentile "Stability"}}%</b></em> of
 							the population report a similar or lower score.
+
 						</p>
 					</div>
 				</div>
@@ -89,8 +101,16 @@
 
 				<div class="row padding-next">
 					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
 						<h2>Openness to Experiences</h2>
 						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Openness")
+																		mean=(mean "Openness")
+																		sd=(sd "Openness")}}
+							</div>
+
 							This trait describes how much a person is interested in new experiences.
 							With a score of <em><b>{{score "Openness"}}</b></em>
 							(at a population average of <em><b>{{mean "Openness"}}</b></em>) you
@@ -143,8 +163,16 @@
 
 				<div class="row padding-next">
 					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
 						<h2>Agreeableness</h2>
 						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Agreeableness")
+																		mean=(mean "Agreeableness")
+																		sd=(sd "Agreeableness")}}
+							</div>
+
 							The trait explains how much a person strives to establish personal relationships.
 							It also describes how considerate a person is towards others.
 							With a score of <em><b>{{score "Agreeableness"}}</b></em>
@@ -198,8 +226,16 @@
 
 				<div class="row padding-next">
 					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
 						<h2>Extroversion</h2>
 						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Extroversion")
+																		mean=(mean "Extroversion")
+																		sd=(sd "Extroversion")}}
+							</div>
+
 							The trait describes how much a person strives towards social
 							activities, interactions, and contacts.
 							With a score of <em><b>{{score "Extroversion"}}</b></em>
@@ -253,8 +289,16 @@
 
 				<div class="row padding-next">
 					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
 						<h2>Conscientiousness</h2>
 						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Conscientiousness")
+																		mean=(mean "Conscientiousness")
+																		sd=(sd "Conscientiousness")}}
+							</div>
+
 							This trait describes how controlled, organized, and disciplined
 							a person is. With a score of <em><b>{{score "Conscientiousness"}}</b></em>
 							(at a population average of <em><b>{{mean "Conscientiousness"}}</b></em>) you
@@ -309,3 +353,30 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
+
+<template name="trait_comparison">
+	<div class="svg-holder">
+		<svg viewbox="0 0 55 32" class="circular-chart">
+			<path class="circle-bg"
+						d = "{{get_arc 0 100 20 7.5 26}}"/>
+			<path class="circle blue"
+						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle light"
+						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
+			<path class="marker theme"
+						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
+
+			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="27.5" y="24" class="legend theme-fill">Score</text>
+			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
+		</svg>
+	</div>
+</template>

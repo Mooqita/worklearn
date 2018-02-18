@@ -25,7 +25,7 @@ Template.mooqita_menu.helpers
 		if unique.has("organizations")
 		 items.push({name: "Job Postings", href: build_url("jobs")})
 
-		items.push({name: "Challenges", href: build_url("challenges")})
+		items.push({name: "Challenges", href: build_url("designed_challenges")})
 
 		#{name: "Portfolio", href: build_url("portfolio")}
 		#filter =

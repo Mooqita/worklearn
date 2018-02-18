@@ -28,9 +28,9 @@ _check_session = () ->
 #########################################################
 
 #########################################################
-Template.onboarding_role.onCreated ->
+Template.onboarding_job_role.onCreated ->
 	_check_session()
-	#	FlowRouter.go "onboarding_intro"
+	#	FlowRouter.go "onboarding_job_intro"
 
 
 #########################################################
@@ -38,13 +38,13 @@ Template.onboarding_role.onCreated ->
 #########################################################
 
 #########################################################
-Template.onboarding_competency.onCreated ->
+Template.onboarding_job_competency.onCreated ->
 	_check_session()
-	#	FlowRouter.go "onboarding_intro"
+	#	FlowRouter.go "onboarding_job_intro"
 
 
 #########################################################
-Template.onboarding_competency.events
+Template.onboarding_job_competency.events
 	"click .toggle-button": () ->
 		instance = Template.instance()
 		dict = Session.get "onboarding_job_posting"
@@ -62,7 +62,7 @@ Template.onboarding_competency.events
 #########################################################
 
 #########################################################
-Template.onboarding_finish.onCreated ->
+Template.onboarding_job_finish.onCreated ->
 	self = this
 
 	self.autorun ()->
@@ -78,16 +78,16 @@ Template.onboarding_finish.onCreated ->
 
 
 #########################################################
-Template.onboarding_finish.onRendered ->
+Template.onboarding_job_finish.onRendered ->
 	Tracker.autorun () ->
 		persona_data = persona_build Session.get "onboarding_job_posting"
-		Session.set "onboarding_persona_data", persona_data
+		Session.set "onboarding_job_persona_data", persona_data
 
 
 #########################################################
-Template.onboarding_finish.helpers
+Template.onboarding_job_finish.helpers
 	persona_data: () ->
-		return Session.get "onboarding_persona_data"
+		return Session.get "onboarding_job_persona_data"
 
 	user_profile: () ->
 		profile = undefined
@@ -112,9 +112,9 @@ Template.onboarding_finish.helpers
 
 
 #########################################################
-Template.onboarding_finish.events
+Template.onboarding_job_finish.events
 	"click #register":()->
-		Modal.show 'onboarding_register'
+		Modal.show 'onboarding_job_register'
 
 
 #########################################################
@@ -122,12 +122,12 @@ Template.onboarding_finish.events
 #########################################################
 
 #########################################################
-Template.onboarding_register.onCreated ->
+Template.onboarding_job_register.onCreated ->
 	AccountsTemplates.setState("signUp")
 
 
 #########################################################
-Template.onboarding_register.helpers
+Template.onboarding_job_register.helpers
 	has_profile: () ->
 		profile = undefined
 		user_id = Meteor.userId()

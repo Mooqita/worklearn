@@ -11,7 +11,7 @@ Meteor.publish "my_organizations", (admissions) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	crs = get_my_documents Organizations, {}, _organization_fields
+	crs = get_documents user_id, IGNORE, Organizations, {}, _organization_fields
 
 	log_publication crs, user_id, "my_organizations"
 	return crs
@@ -28,7 +28,7 @@ Meteor.publish "organization_by_id", (organization_id) ->
 	filter =
 		_id: organization_id
 
-	crs = get_my_documents Organizations, filter, _organization_fields
+	crs = get_documents IGNORE, IGNORE, Organizations, filter, _organization_fields
 	log_publication crs, user_id, "organization_by_id"
 	return crs
 

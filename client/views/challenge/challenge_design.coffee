@@ -44,6 +44,26 @@ Template.designed_challenges.events
 				if err
 					sAlert.error("Add challenge error: " + err)
 
+########################################
+#
+# challenge_preview
+#
+#########################################
+
+########################################
+Template.challenge_preview.helpers
+	title: () ->
+		if this.title
+			return this.title
+
+		return "This challenge does not yet have a title."
+
+	content: () ->
+		if this.content
+			return this.content
+
+		return "No description available, yet."
+
 
 ########################################
 #

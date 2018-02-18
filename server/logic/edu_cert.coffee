@@ -40,7 +40,7 @@
 	signer_name =	get_profile_name signer_profile, false, false
 
 	signature =
-		jobTitle: "Not yet implemented",
+		jobTitle: "",
 		name: signer_name,
 		type: ["SignatureLine", "Extension"]
 		image: ""

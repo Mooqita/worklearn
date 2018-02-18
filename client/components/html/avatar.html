@@ -6,7 +6,9 @@
 					<div class="avatar-explain-container">
 						<div class="avatar-explain">
 							{{#if is_downloading}}
-								{{>wait}}
+								<span>
+									<em><span class="fa fa-refresh fa-2x spin center-icon"></span></em>
+								</span>
 							{{else}}
 								{{explain}}
 							{{/if}}

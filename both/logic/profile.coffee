@@ -9,6 +9,9 @@
 	if not user
 		user = Meteor.userId()
 
+	if not user
+		return undefined
+
 	if typeof user == "object"
 		user = user._id
 

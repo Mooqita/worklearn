@@ -359,14 +359,6 @@ a.hover-card-container:not([href]):not([tabindex]):hover {
 	right: 0px;
 }
 
-.persona .center-icon{
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -14px;
-	margin-top: -18px;
-}
-
 .persona .persona-wait{
 	opacity: 0.0;
 	overflow: visible;
@@ -408,11 +400,86 @@ polyline{
 	fill: none;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Personality explanation
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.single-chart {
+	width: 33%;
+	justify-content: space-around ;
+}
+
+.circular-chart {
+	display: block;
+}
+
+.circle-bg {
+	fill: none;
+	stroke: #eee;
+	stroke-width: 4.0;
+	stroke-linecap: round;
+}
+
+.circle {
+	fill: none;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+}
+
+.marker {
+	fill: none;
+	stroke-width: 5;
+	stroke-linecap: round;
+}
+
+.circular-chart .light {
+	stroke: #eee;
+}
+
+.circular-chart .orange {
+	stroke: #ff9f00;
+}
+
+.circular-chart .green {
+	stroke: #4CC790;
+}
+
+.circular-chart .blue {
+	stroke: #3c9ee5;
+}
+
+.circular-chart .theme {
+	stroke: $theme;
+}
+
+.circular-chart .legend {
+	fill: #666;
+	font-family: sans-serif;
+	font-size: 4px;
+	text-anchor: middle;
+}
+
+.circular-chart .orange-fill {
+	fill: #ff9f00;
+}
+
+.circular-chart .green-fill {
+	fill: #4CC790;
+}
+
+.circular-chart .blue-fill {
+	fill: #3c9ee5;
+}
+
+.circular-chart .theme-fill {
+	fill: $theme;
+	font-size: 6px;
+	font-weight: 600;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 .personality-explain {

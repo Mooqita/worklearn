@@ -157,77 +157,93 @@
 	border-radius: 20px;
 }
 
-.mooqita-layout .item {
-//	border: 2px solid #ddd;
+.mooqita-layout .item-set {
+	//border: 2px solid #ddd;
 	padding: 25px;
 	margin: 0 0 25px 0;
 }
 
-.mooqita-layout .item.padding-top{
+.mooqita-layout .item-set.padding-top{
 	margin-top: 35px;
 }
 
-.mooqita-layout .item h1{
+.mooqita-layout .item-set h1{
 	margin: 0;
 	padding: 0 0 20px 0;
 }
 
-.mooqita-layout .item h1{
+.mooqita-layout .item-set h1{
 	margin: 45px 0 0 0;
 	padding: 0 0 15px 0;
 }
 
-.mooqita-layout .item h1:first-child{
+.mooqita-layout .item-set h1:first-child{
 	margin: 0;
 }
 
-.mooqita-layout .item h2{
+.mooqita-layout .item-set h2{
 	font-size: 18px;
 	font-weight: bold;
 	margin-bottom: 25px;
+	color: $theme;
 }
 
 a.mooqita,
-.mooqita-layout .item h2 a{
+.mooqita-layout .item-set h2 a{
 	color: $theme;
 }
 
 a.mooqita:hover,
-.mooqita-layout .item h2 a:hover{
-	color: $contrast-on-theme;
+.mooqita-layout .item-set h2 a:hover{
+	color: $theme;
+	background: inherit;
 	cursor: pointer;
 	text-decoration: none;
 }
 
-.mooqita-layout .item .media-body{
-	padding-left: 20px;
+.mooqita-layout .item-set .item-set-element{
+	padding: 20px;
+	padding-top: 5px;
+	padding-bottom: 30px;
+	color: $text;
+	display: block;
 }
 
-.mooqita-layout .item .media-body h2{
-	margin: 0;
-	padding: 0 0 10px 0;
+.mooqita-layout .item-set .item-set-element:hover{
+	background: $contrast-on-theme;
+	text-decoration: none;
 }
 
-.mooqita-layout .item hr {
-	margin-bottom: 30px;
+.mooqita-layout .item-set hr {
+	margin: 0px;
+	padding: 0px
 }
 
-.mooqita-layout .item .rating_line{
+.mooqita-layout .item-set .rating_line{
 	padding: 0px 0px 20px 0px;
 	text-align: right;
 }
 
-.mooqita-layout .item .wide_link{
+.mooqita-layout .item-set .wide_link{
 	padding-top: 15px;
 	text-align: center;
 }
 
-.mooqita-layout .item .edit-toggle{
+.mooqita-layout .item-set .edit-toggle{
 	color: $theme;
 }
 
-.mooqita-layout .item .edit-toggle:hover{
+.mooqita-layout .item-set .edit-toggle:hover{
 	color: $theme;
+}
+
+.mooqita-layout .item-set .media-body{
+	padding-left: 20px;
+}
+
+.mooqita-layout .item-set .media-body h2{
+	margin: 0;
+	padding: 0 0 10px 0;
 }
 
 ////////////////////////////////////////////////
@@ -240,7 +256,7 @@ a.mooqita:hover,
 	text-align: center;
 }
 
-.mooqita-layout .select-occupation .item:hover{
+.mooqita-layout .select-occupation .item-set:hover{
 	border-color: $theme;
 }
 
@@ -249,8 +265,8 @@ a.mooqita:hover,
 	color: $theme;
 }
 
-.mooqita-layout .select-occupation.select-disabled .item,
-.mooqita-layout .select-occupation.select-disabled .item:hover,
+.mooqita-layout .select-occupation.select-disabled .item-set,
+.mooqita-layout .select-occupation.select-disabled .item-set:hover,
 .mooqita-layout .select-occupation.select-disabled .glyphicon{
 	border-color: #ddd;
 	color: #ddd;
@@ -359,6 +375,13 @@ a.mooqita:hover,
 	padding: 5px;
 }
 
+.float-container{
+	float: right;
+	margin-left: 15px;
+	margin-bottom: 35px;
+	padding: 15px;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Floating Button
 ///////////////////////////////////////////////////////////////////////////////
@@ -375,7 +398,7 @@ a.mooqita:hover,
 
 	border-radius: 50%;
 
-	overflow: hidden;
+	//overflow: hidden;
 	cursor: pointer;
 	z-index: 100;
 }
@@ -417,5 +440,24 @@ a.mooqita:hover,
 
 .pop-icon{
 	position: absolute;
+}
+
+// centered Icons
+
+.center-icon{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -14px;
+	margin-top: -18px;
+}
+
+.sign-in{
+	color: $text-on-theme;
+}
+
+.sign-in:hover{
+	color: $contrast-on-theme;
+	text-decoration: none;
 }
 
