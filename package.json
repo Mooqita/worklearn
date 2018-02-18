@@ -2,7 +2,9 @@
   "name": "worklearn",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "clean": "sh scripts/docker-clean.sh",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose stop"
   },
   "dependencies": {
     "atob": "^2.0.3",

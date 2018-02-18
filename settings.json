@@ -1,21 +1,23 @@
 {
   "public": {
     "analyticsSettings": {
-      "Keen IO"          : {
+      "Keen IO": {
         "projectId": "",
-        "writeKey": ""},
-      "Amplitude"        : {"apiKey": ""},
-      "Segment.io"       : {"apiKey": ""}
+        "writeKey": ""
+      },
+      "Amplitude": {
+        "apiKey": ""
+      },
+      "Segment.io": {
+        "apiKey": ""
+      }
     }
   },
-
-  "init_default_permissions":true,
-  "default_permissions_asset_path":"db/defaultcollections/permissions.json",
-
-  "init_test_data":true,
-  "admin":
-  {
-    "email":"admin@mooqita.org",
-    "password":"whatever"
+  "init_default_permissions": true,
+  "default_permissions_asset_path": "db/defaultcollections/permissions.json",
+  "init_test_data": true,
+  "admin": {
+    "email": "admin@mooqita.org",
+    "password": "whatever"
   }
 }
