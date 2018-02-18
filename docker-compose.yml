@@ -1,12 +1,9 @@
-# Assistance From
-# https://www.youtube.com/watch?v=Qw9zlE3t8Ko
-# https://www.youtube.com/watch?v=0w0lJn4O6YQ
-
 version: '3'
 
 services:
+  
   worklearn:
-    build: .
+    image: golden/meteor-dev
     ports:
       - 3000:3000
     depends_on:
