@@ -1,9 +1,11 @@
 version: '3'
 
 services:
-  
+
   worklearn:
     image: golden/meteor-dev
+    volumes:
+      - .:/app
     ports:
       - 3000:3000
     depends_on:
