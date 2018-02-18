@@ -16,7 +16,7 @@ Meteor.methods
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()
-		if can_edit Challenges, challenge_id, user
+		if not can_edit Challenges, challenge_id, user
 			throw new Meteor.Error("Not permitted.")
 
 		item = get_document_unprotected Challenges, challenge_id

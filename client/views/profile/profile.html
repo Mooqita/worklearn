@@ -159,16 +159,14 @@
 					</div>
 			{{/if}}
 
-			<div class="row padding-top">
-				<div class="col-md-12">
-					<h2 class="header">Resume</h2>
-					{{>markdown_input method="set_field" collection_name="Profiles"
-							item_id=g_profile._id field="resume"
-							placeholder="Tell us a little more about you."}}
-				</div>
-			</div>
+			<h1>Resume</h1>
+			{{>markdown_input method="set_field" collection_name="Profiles"
+					item_id=g_profile._id field="resume"
+					placeholder="Tell us a little more about you."}}
 		{{/with}}
 	{{/mooqita_wide_spacing}}
+
+	{{>personality}}
 </template>
 
 

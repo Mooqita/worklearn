@@ -34,20 +34,19 @@
 					Find the organizations you are involved in.
 				</p>
 
-				<div class="row padding-next">
-					<div class="col-sm-12">
-						{{#paging subscription="my_organizations" page=0 count=10
-											collection_name="organizations"}}
-							{{#each items}}
-								{{>organization_preview}}
-							{{else}}
-								<hr>
-								<h1 class="text-center padding-next"><em>No Organizations yet.</em></h1>
-							{{/each}}
+				{{#paging subscription="my_organizations" page=0 count=10
+									parameter=parameter collection_name="organizations"}}
+					{{#each items}}
+						{{>organization_preview}}
+					{{else}}
 						<hr>
-						{{/paging}}
-					</div>
-				</div>
+						<h1 class="text-center padding-next"
+								style="padding-bottom: 45px">
+							<em>No Organizations yet.</em>
+						</h1>
+					{{/each}}
+				<hr>
+				{{/paging}}
 			</div>
 		{{/if}}
 	{{/mooqita_wide_spacing}}
@@ -62,13 +61,25 @@
 <template name="organization_preview">
 	<hr>
 
-	<h2>
-		<a href="{{g_build_url "organization" (g_object organization_id=_id)}}">
-			{{org_name}}
-		</a>
-	</h2>
+	<a href="{{g_build_url "organization" (g_object organization_id=_id)}}"
+		 class="item-set-element animated_0_5_s">
+		<div class="row">
+			<div class="col-md-2 col-sm-3 col-ms-4">
+				{{#if avatar}}
+					{{>avatar collection_name = "organizations"
+						observable = avatar
+						item_id = _id
+						field = "avatar"}}
+				{{/if}}
+			</div>
 
-	{{>more content=org_description}}
+			<div class="col-md-10 col-sm-9 col-ms-8">
+				<h2>{{org_name}}</h2>
+
+				{{>more content=org_description}}
+			</div>
+		</div>
+	</a>
 </template>
 
 

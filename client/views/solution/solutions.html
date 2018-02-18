@@ -12,20 +12,19 @@
 				Here you can find all the solutions you submitted to challenges.
 			</p>
 
-			<div class="row padding-next">
-				<div class="col-sm-12">
-					{{#paging subscription="my_solutions" page=0 count=10
-										parameter=parameter collection_name="solutions"}}
-						{{#each items}}
-							{{>solution_preview}}
-						{{else}}
-							<hr>
-							<h1 class="text-center padding-next"><em>No solutions yet.</em></h1>
-							<hr>
-						{{/each}}
-					{{/paging}}
-				</div>
-			</div>
+			{{#paging subscription="my_solutions" page=0 count=10
+								parameter=parameter collection_name="solutions"}}
+				{{#each items}}
+					{{>solution_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Solutions yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+			{{/paging}}
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

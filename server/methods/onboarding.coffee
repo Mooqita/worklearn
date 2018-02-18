@@ -36,6 +36,8 @@ Meteor.methods
 
 
 	add_job: (organization_id) ->
+		check organization_id, String
+
 		user = Meteor.user()
 		if not user
 			throw new Meteor.Error "Not authorized"

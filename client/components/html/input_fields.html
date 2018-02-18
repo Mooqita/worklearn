@@ -34,37 +34,53 @@
 </template>
 
 <template name="markdown_input">
-	<style>
-		.outline{
-			padding: 5px;
-			border: 2px solid #ddd;
-			border-radius: 4px;
-			margin-bottom: 15px;
-		}
-	</style>
-	{{#if preview}}
-		<div class="outline">
-			{{#markdown}}{{{value}}}{{/markdown}}
-		</div>
+	{{#if label}}
+		<label for="{{field}}">{{label}}</label>
+	{{/if}}
 
-		<div class="right text-right">
-			<a class="btn btn-theme" style="min-width: 100px"
-				 id="preview_toggle">edit</a>
+	<div class="btn-group btn-group-justified">
+		{{#if preview}}
+			<a class="btn btn-theme"
+				 style="border-bottom-left-radius: 0px"
+				 id="preview_toggle">
+				<span class="fa fa-edit"></span>
+				Edit
+			</a>
+		{{else}}
+			<a class="btn btn-theme"
+				 style="border-bottom-left-radius: 0px"
+				 id="preview_toggle">
+				<span class="fa fa-eye"></span>
+				Preview
+			</a>
+		{{/if}}
+
+		<a class="btn btn-theme" target="_blank"
+			 style="border-bottom-right-radius: 0px"
+			 href="https://daringfireball.net/projects/markdown/syntax">
+			<span class="fa fa-book"></span>
+			Markdown Documentation
+		</a>
+	</div>
+
+	{{#if preview}}
+		<div class="form-control"
+				 style="height: 261px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+			{{#markdown}}{{{value}}}{{/markdown}}
 		</div>
 	{{else}}
 		<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
+							 style="border-top-left-radius: 0px; border-top-right-radius: 0px;"
 							 id="{{field}}" rows="11">{{value}}</textarea>
+	{{/if}}
 
-		<div class="right text-right" style="margin-top: 15px">
-			<a class="btn btn-theme"  style="min-width: 100px" target="_blank"
-				 href="https://daringfireball.net/projects/markdown/syntax">
-				markdown documentation
-			</a>
-			<a class="btn btn-theme" style="min-width: 100px"
-				 id="preview_toggle">preview</a>
-		</div>
+	{{#if explain}}
+		<small id="{{field}}_explain" class="form-text text-muted">
+			{{explain}}
+		</small>
 	{{/if}}
 </template>
+
 
 <template name="wysiwyg_input">
 	<div class="row">

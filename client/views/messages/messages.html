@@ -1,21 +1,30 @@
+<!------------------------------------------------
+|
+|	Messages
+|
+-------------------------------------------------->
 <template name="messages">
 	{{#mooqita_wide_spacing}}
-		<div class="padding-top">
+		<div class="item-set padding-top">
 			<h1>Messages</h1>
-			<p style="padding-bottom: 35px">All the messages you received.</p>
 
-			<div class="row" style="margin-bottom: 25px">
-				<div class="col-sm-12">
-					{{#paging subscription="my_messages" page=0 count=10
-										parameter=parameter collection_name="messages"}}
-						{{#each items}}
-							{{>message_preview}}
-						{{else}}
-								<h2><em>No solutions yet.</em></h2>
-						{{/each}}
-					{{/paging}}
-				</div>
-			</div>
+			<p class="padding-next">
+				All the messages you received.
+			</p>
+
+			{{#paging subscription="my_messages" page=0 count=10
+								parameter=parameter collection_name="messages"}}
+				{{#each items}}
+					{{>message_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Messages yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+			{{/paging}}
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

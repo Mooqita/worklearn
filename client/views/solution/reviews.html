@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="reviews">
 	{{#mooqita_wide_spacing}}
-		<div class="padding-top">
+		<div class="item-set padding-top">
 			<h1>Reviews</h1>
 
 			<p class="padding-next">
@@ -15,21 +15,20 @@
 				and select the challenge you want to write a review for.
 			</p>
 
-			<div class="row padding-next">
-				<div class="col-sm-12">
-					{{#paging subscription="my_reviews" page=0 count=10 parameter=parameter}}
-						{{#each reviewed_challenges}}
-							{{#each reviews challenge_id}}
-								{{>review_preview}}
-							{{/each}}
-						{{else}}
-							<hr>
-							<h1 class="text-center padding-next"><em>No solutions yet.</em></h1>
-							<hr>
-						{{/each}}
-					{{/paging}}
-				</div>
-			</div>
+			{{#paging subscription="my_reviews" page=0 count=10 parameter=parameter}}
+				{{#each reviewed_challenges}}
+					{{#each reviews challenge_id}}
+						{{>review_preview}}
+					{{/each}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Reviews yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+			{{/paging}}
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

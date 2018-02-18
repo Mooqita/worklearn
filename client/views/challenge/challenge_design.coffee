@@ -43,6 +43,11 @@ Template.designed_challenges.events
 			(err, res) ->
 				if err
 					sAlert.error("Add challenge error: " + err)
+				if res
+					query =
+						challenge_id: res
+					url = build_url "challenge_design", query
+					FlowRouter.go url
 
 ########################################
 #

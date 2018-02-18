@@ -8,6 +8,20 @@
 
 ###############################################################################
 Template.quick_survey.helpers
+	finished: () ->
+		instance = Template.instance()
+		questions = instance.data.questions
+		answers = instance.data.answers
+		answered = Object.keys answers.keys
+		open = _.difference(questions, answered)
+
+		answers.get open[0]
+
+		count = Object.keys(answers.keys).length
+		total = questions.length
+
+		return count == total
+
 	percentage: () ->
 		instance = Template.instance()
 		questions = instance.data.questions

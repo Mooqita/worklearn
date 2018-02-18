@@ -8,6 +8,7 @@
 		<div class="item-set padding-top">
 			<h1>
 				Challenges you designed
+
 				<div class="btn btn-theme pull-right"
 						 style="min-width: 50px;"
 						 id="add_challenge">
@@ -28,9 +29,11 @@
 					{{>challenge_preview}}
 				{{else}}
 					<hr>
-					<h1 class="text-center padding-next"><em>No Challenges yet.</em></h1>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Challenges yet.</em>
+					</h1>
 				{{/each}}
-
 				<hr>
 			{{/paging}}
 		</div>
@@ -66,8 +69,8 @@
 			{{>wait}}
 		{{else}}
 			{{#with challenge}}
-				{{#unless g_is_public "Challenges"}}
-					<div class="padding-top">
+				<div class="padding-top">
+					{{#unless g_is_public "Challenges"}}
 						<div class="alert alert-warning">
 							<h2>Todo List: Challenge</h2>
 
@@ -96,85 +99,70 @@
 								<li>Publish your solution you find the button below.</li>
 							</ul>
 						</div>
-					</div>
-				{{/unless}}
+					{{/unless}}
+				</div>
 
-				<div class=" padding-top padding-next">
-					<h1 class="editable">
-						{{#if g_is_public "Challenges"}}
-							<em><b>LIVE</b></em>
-						{{/if}}
+				{{#if g_is_public "challenges"}}
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon btn-theme">
+								Shareable link:
+							</div>
 
-						{{>basic_input method="set_field" collection_name="Challenges"
-						item_id=_id field="title" placeholder="Title of your challenge"}}
-					</h1>
-
-					<div class="form-group" style="display: block; overflow: hidden;">
-						<h2>Content:</h2>
-						{{>markdown_input method="set_field" collection_name="Challenges"
-								item_id=_id field="content" placeholder="Content"}}
-
-						{{#if g_is_public "Challenges"}}
-							<h2>Shareable link:</h2>
-
-							<div class="input-group">
-								<div class="input-group-btn" id="icon_download" title="select the entire url">
-									<button type="button" class="btn btn-theme">
-										<span class="glyphicon glyphicon-download"></span>
-									</button>
-								</div>
-
-								<div class="form-control"
-										 style="background: #f5f5f5; overflow: hidden"
-										 id="challenge_url">
-									<div style="white-space:nowrap">
-										{{g_build_url "challenge" (g_object challenge_id=_id)}}
-									</div>
+							<div class="form-control"
+									 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
+									 id="challenge_url">
+								<div style="white-space:nowrap">
+									{{g_build_url "challenge" (g_object challenge_id=_id) "app"}}
 								</div>
 							</div>
-						{{else}}
-							<h2>Number of reviews required</h2>
-							{{>basic_input  method="set_field" collection_name="Challenges"
-									type="number" item_id=_id field="num_reviews"
-									placeholder="Number of reviews required."}}
-						{{/if}}
 
-						<h2>Upload Additional material:</h2>
-						<h2>
-							{{>upload method="upload_file" collection_name="Challenges"
-								item_id=_id field="material"}}
-						</h2>
-
-						{{#if material}}
-							<h2>Download Additional material:</h2>
-							<h2>
-								{{>download collection_name="Challenges" item_id=_id field="material"}}
-							</h2>
-						{{/if}}
-					</div>
-
-					<div class="form-group">
-						<h2>Message Learners</h2>
-
-						<input placeholder="Subject"
-									 class="form-control edit-field"
-									 type="text" id="subject"/>
-
-						<textarea  class="form-control edit-field" placeholder="Your message"
-											 id="message" rows="8"></textarea>
-
-						<div class="text-right" style="padding-top: 15px;">
-							<div class="btn btn-theme" id="send" {{send_disabled}}>
-								{{#if send_disabled}}
-									Sending mail
-									<span class="glyphicon glyphicon-refresh spin"></span>
-								{{else}}
-									Send Message
-								{{/if}}
+							<div class="input-group-btn" id="icon_download" title="select the entire url">
+								<button type="button" class="btn btn-theme">
+									<span class="glyphicon glyphicon-download"></span>
+								</button>
 							</div>
 						</div>
 					</div>
+				{{else}}
+					<span class="badge background-contrast ready-badge">
+						Not yet public
+					</span>
+				{{/if}}
+
+				<h1 class="editable">
+					{{>basic_input method="set_field" collection_name="challenges"
+							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
+				</h1>
+
+				<div class="form-group">
+					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
+														field="content" placeholder="In this challenge you will ..."}}
 				</div>
+
+				<div class="form-group">
+					{{>basic_input method="set_field" collection_name="Challenges"
+							type="number" field="num_reviews"	label="Number of reviews required"
+							item_id=_id explain="The number of reviews a learner has to provide."
+							placeholder="Number of reviews required."}}
+				</div>
+
+				<div class="form-group">
+					<div class="input-group" style="width: 100%;">
+						<label>Upload Additional material</label>
+
+						{{>upload method="upload_file" collection_name="Challenges"
+							item_id=_id field="material"}}
+					</div>
+				</div>
+
+				{{#if material}}
+					<div class="input-group" style="width: 100%;">
+						<label>Download Additional material:</label>
+
+						{{>download collection_name="Challenges" item_id=_id field="material"}}
+					</div>
+				{{/if}}
 
 				{{#unless g_is_public "Challenges"}}
 					<div class="row">
@@ -193,6 +181,33 @@
 					</div>
 				{{/unless}}
 
+				<h1>Message Learners</h1>
+
+				<p>If you need to get in touch with your learners you can use this message system.</p>
+
+				<div class="form-group">
+					<div class="input-group">
+						<input placeholder="Subject" class="form-control" type="text" id="subject"/>
+
+						<div class="input-group-btn" id="icon_download" title="select the entire url">
+							<div class="btn btn-theme" id="send" {{send_disabled}}>
+								{{#if send_disabled}}
+									Sending mail
+									<span class="glyphicon glyphicon-refresh spin"></span>
+								{{else}}
+									Send Message
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<textarea  class="form-control"
+										 placeholder="Your message"
+										 id="message" rows="8"></textarea>
+				</div>
+
 				{{#if g_is_public "Challenges"}}
 					{{>challenge_solutions .}}
 				{{/if}}
@@ -208,46 +223,30 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	<div class="item-set padding-top">
-		<h1>Solutions</h1>
+	<h1>Solutions</h1>
 
-		<div class="row" style="margin-bottom: 25px">
-			<div class="col-sm-7">
-				<div class="input-group" style="margin-bottom: 15px">
-					<span class="input-group-addon">
-						<label>
-							public only <input type="checkbox" id="public_only">
-						</label>
-					</span>
+	<p>These are solutions your learner submitted so far.</p>
 
-					<input placeholder="Search for challenges" id="query"
-							 class="form-control edit-field"/>
-
-					<span class="input-group-btn">
-						<button class="btn btn-theme" type="button" id="search">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-				</div>
-			</div>
-
-			<div class="col-sm-5">
-				{{>paging subscription="challenge_summaries" page=0 count=10 parameter=parameter}}
-			</div>
+	<div class="form-group text-right">
+		<div class="toggle-button">
+			<input id="public_only" type="checkbox">
+			<label for="public_only">Show only published solutions</label>
+			<div class="toggle-button-icon"></div>
 		</div>
-
-		{{#unless Template.subscriptionsReady}}
-			{{>wait}}
-		{{else}}
-			{{#each challenge_solutions}}
-				{{>challenge_solution}}
-			{{else}}
-				<p>
-					There are no solutions to your task yet.
-				</p>
-			{{/each}}
-		{{/unless}}
 	</div>
+
+	{{#paging subscription="challenge_summaries" page=0 count=10 parameter=parameter}}
+		{{#each challenge_solutions}}
+			{{>challenge_solution}}
+		{{else}}
+			<hr>
+			<h1 class="text-center padding-next"
+					style="padding-bottom: 45px">
+				<em>No Jobs yet.</em>
+			</h1>
+		{{/each}}
+		<hr>
+	{{/paging}}
 </template>
 
 

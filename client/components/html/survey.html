@@ -6,22 +6,24 @@
 <template name="quick_survey">
 	{{#let question=current_question}}
 		<div class="padding-top">
-			<div class="progress" style="height: 30px">
-				<div class="progress-bar background-theme" role="progressbar"
-						 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
-						 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-					<span>{{count}} of {{total}}</span>
+			{{#unless finished}}
+				<div class="progress" style="height: 30px">
+					<div class="progress-bar background-theme" role="progressbar"
+							 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
+							 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+						<span>{{count}} of {{total}}</span>
+					</div>
 				</div>
-			</div>
+			{{/unless}}
 
-				{{#quick_survey_element answers=answers
-																question=question
-																responses=(g_array 1 2 3 4 5)
-																collection_name=collection_name
-																item_id=item_id
-																field=field}}
-					{{>Template.contentBlock}}
-				{{/quick_survey_element}}
+			{{#quick_survey_element answers=answers
+															question=question
+															responses=(g_array 1 2 3 4 5)
+															collection_name=collection_name
+															item_id=item_id
+															field=field}}
+				{{>Template.contentBlock}}
+			{{/quick_survey_element}}
 		</div>
 	{{/let}}
 </template>
