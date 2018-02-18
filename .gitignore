@@ -1,6 +1,6 @@
-node_modules/
-tmp/
+docker/env/.worklearn-env
 secrets.txt
 settings.json
-.worklearn-env
 .idea
+node_modules/
+tmp/
