@@ -12,6 +12,7 @@ services:
       - mongo
     env_file:
       - ./docker/env/.worklearn-env
+    entrypoint: meteor --settings settings.json
 
   mongo:
     image: mongo
