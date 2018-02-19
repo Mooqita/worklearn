@@ -5,7 +5,7 @@ ROOT_URL=http://localhost:3000
 MONGO_URL=mongodb://mongo:27017/worklearndb
 
 # Mail #
-MAIL_URL=smtp://SEND_MAIL_ADDRESS:@MAIL_PROVIDER:PORT
+MAIL_URL=null
 
 # Storage #
 DROP_BOX_ACCESS_TOKEN=null
