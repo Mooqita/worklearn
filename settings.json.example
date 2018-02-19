@@ -6,6 +6,7 @@
         "writeKey": ""
       },
       "Amplitude": {
+        "projectId": "",
         "apiKey": ""
       },
       "Segment.io": {

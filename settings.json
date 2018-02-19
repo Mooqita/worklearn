@@ -2,15 +2,16 @@
   "public": {
     "analyticsSettings": {
       "Keen IO": {
-        "projectId": "",
-        "writeKey": ""
+        "projectId": "5a89e5fe46e0fb00016bc2bb",
+        "writeKey": "379E28EEC9AC601CE9840FDDA937E36C305885AEBAE7504859089C7FF503A00D68C14F57D829F4C81B96491D8F90329E5789284509DE9BEDA90973E33051EDD333695F5A3ACEB8A2459FCED1EB78110F28C249AB8DC86FD5CB64FD941451611F"
       },
       "Amplitude": {
-        "apiKey": ""
+        "projectId": "***REMOVED***",
+        "apiKey": "***REMOVED***"
       },
       "Segment.io": {
-        "sourceId": "",
-        "apiKey": ""
+        "sourceId": "***REMOVED***",
+        "apiKey": "***REMOVED***"
       }
     }
   },
