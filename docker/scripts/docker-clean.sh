@@ -46,11 +46,11 @@ if [[
         docker volume rm $DOCKER_VOLUMES
     fi
 
-    npm install
-    cp -n docker/env/.worklearn-env.example docker/env/.worklearn-env
-    cp -n settings.json.example settings.json
     rm -Rf .meteor/local
     rm -Rf node_modules
+    cp -n docker/env/.worklearn-env.example docker/env/.worklearn-env
+    cp -n settings.json.example settings.json
+    npm install
     printf "\nEnvironment Cleaned Successfully\n\n"
 
 fi
