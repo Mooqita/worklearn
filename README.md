@@ -56,7 +56,7 @@ If you see Permission Denied run:
 
 `sudo npm run clean && docker-compose up`
 
-If you don’t have any Docker containers, images, or volumes, the scripts will fail but don’t panic. Next, run:
+Next, run:
 
 `docker-compose up`
 
