@@ -51,5 +51,6 @@ if [[
     cp -n settings.json.example settings.json
     rm -Rf .meteor/local
     rm -Rf node_modules
+    printf "\nEnvironment Cleaned Successfully\n\n"
 
 fi
