@@ -1,6 +1,9 @@
-docker/env/.worklearn-env
+docker/env/*
+!docker/env/*.example
 secrets.txt
 settings.json
 .idea
+.meteor/local/
+.vscode/
 node_modules/
 tmp/
