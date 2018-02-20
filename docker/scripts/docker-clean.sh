@@ -16,7 +16,7 @@ if [[
     ! -x "$(command -v npm)" 
 ]]; then
 
-    printf "\nYou Need To Install Docker & Docker Compose\n\n"
+    printf "\nYou Need To Install Node & NPM\n\n"
 
 fi
 
