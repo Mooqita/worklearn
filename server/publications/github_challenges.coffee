@@ -59,8 +59,8 @@ Meteor.publish 'git_challenges', (parameter) ->
 					if response.data and response.data.items.length > 0
 						for item in response.data.items
 							item.description = item.body.toString()
-							if item.description.length > 150
-								item.description = item.description.slice(0,149) + "\n[...]"
+							if item.description.length > 250
+								item.description = item.description.slice(0,249) + "\r\n[...]"
 							self.added('git_challenges',item.id,item))
 
 

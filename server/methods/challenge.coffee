@@ -14,6 +14,14 @@ Meteor.methods
 
 		return gen_challenge user
 
+	make_challenge: (title,content,link,type) ->
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		return bake_challenge user, title, content, link, type
+
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()
 		if not can_edit Challenges, challenge_id, user
