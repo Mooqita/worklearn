@@ -1,97 +1,111 @@
-# The Mooqita Worklearn Platform
-The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and deployed on [heroku](https://www.heroku.com) with automatic staging of our [master branch](https://github.com/Mooqita/worklearn/tree/master).
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\froman\fcharset0 Times-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red70\green137\blue204;
+\red202\green202\blue202;\red194\green126\blue101;\red26\green26\blue26;\red11\green85\blue25;\red202\green202\blue202;
+\red27\green31\blue34;\red26\green26\blue26;\red255\green255\blue255;\red27\green31\blue34;\red0\green0\blue0;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;\cssrgb\c33725\c61176\c83922;
+\cssrgb\c83137\c83137\c83137;\cssrgb\c80784\c56863\c47059;\cssrgb\c13333\c13333\c13333;\cssrgb\c0\c40000\c12941;\cssrgb\c83137\c83137\c83137;
+\cssrgb\c14118\c16078\c18039;\cssrgb\c13333\c13333\c13333;\cssrgb\c100000\c100000\c100000;\cssrgb\c14118\c16078\c18039;\csgray\c0\c0;
+}
+\margl1440\margr1440\vieww25400\viewh16000\viewkind0
+\deftab720
+\pard\pardeftab720\sl360\partightenfactor0
 
-## Local Development
-To run your own instance of Mooqita here is a guide how to get it running on your system. We are planning to release a docker of our platform but have not found the time to do so (Help in this department would be highly appreciated).
+\f0\b\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 # The Mooqita Worklearn Platform
+\b0 \strokec5 \
+The worklearn platform powers the [\strokec6 Mooqita\strokec5 ](\ul https://app.mooqita.org\ulnone ) app. Mooqita is built on [\strokec6 Meteor\strokec5 ](\ul https://www.meteor.com/\ulnone ) and most of this repository is forked from [Mooqita\'92s Worklearn]({\field{\*\fldinst{HYPERLINK "https://github.com/Mooqita/worklearn"}}{\fldrslt https://github.com/Mooqita/worklearn}}) project page. \
+\
 
-### Install Meteor
-Install the meteor web framework. You find a detailed description of the installation process on their [website](https://www.meteor.com/).
+\b ## Local Development
+\b0 \
+As part of University of Nebraska at Omaha\'92s \strokec7 ITIN4440-001 Agile Development Methods class in collaboration with the non-profits: [Siena Francis House](https://\strokec8 sienafrancis.org\strokec7 ) and [Mooqita]({\field{\*\fldinst{HYPERLINK "https://www.mooqita.org/"}}{\fldrslt https://www.mooqita.org/}}); we have created a development environment for building on the worklearn platform with \cf2 \outl0\strokewidth0 [Docker]({\field{\*\fldinst{HYPERLINK "https://www.docker.com/get-docker"}}{\fldrslt \kerning1\expnd0\expndtw0 https://www.docker.com/}}).\
+\
 
-### Downloading Mooqita's Worklearn Platform from Git-Hub
-Go to [Mooqita's Worklearn](https://github.com/Mooqita/worklearn) project page on GitHub and clone the repository into a folder on your computer. We will call this folder on your machine _mooqita_folder_ from now on. You find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/)
+\b \cf2 ### Install Docker
+\b0 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 \strokec10 To run your own instance of Mooqita here is a guide how to get it running on your system. Before you get started please have at least 5 GB or more of storage available.\
+\
+\kerning1\expnd0\expndtw0 \outl0\strokewidth0 Download the Stable Docker Community Edition that matches your operating system from their [website]({\field{\*\fldinst{HYPERLINK "https://www.docker.com/get-docker"}}{\fldrslt \cf2 https://www.docker.com/get-docker}}). Operating systems below are linked to the prospective install guides. Please note system requirements before install and run.\cf2 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 \strokec7 \
+[Windows and Docker notes]({\field{\*\fldinst{HYPERLINK "https://docs.docker.com/docker-for-windows/install/"}}{\fldrslt https://docs.docker.com/docker-for-windows/install/}}): Docker for Windows requires Windows 10 and Windows Server 2016, check the notes to see what you need to know before you install. \
+If you install the Docker Toolbox the installer automatically installs Oracle VirtualBox to run Docker. [Here is a useful video for configuring the VirtualBox and troubleshooting Windows with Docker]({\field{\*\fldinst{HYPERLINK "https://www.youtube.com/watch?v=ymlWt1MqURY"}}{\fldrslt \cf2 \outl0\strokewidth0 https://www.youtube.com/watch?v=ymlWt1MqURY}}). \
+\
+[MacOS and Docker notes]({\field{\*\fldinst{HYPERLINK "https://docs.docker.com/docker-for-mac/install/"}}{\fldrslt https://docs.docker.com/docker-for-mac/install/}}): Docker.app requires at least macOS Yosemite or El Capitan as well as permissions. You do not need the Docker Toolbox. Upon installing Docker click the app to run Docker daemon. Click the whale icon to get Preferences and then the Advanced tab - its helpful to have at least 2 CPUs and 4 or more GB memory.\
+\
+[Debian and Docker notes]({\field{\*\fldinst{HYPERLINK "https://docs.docker.com/install/linux/docker-ce/debian/"}}{\fldrslt https://docs.docker.com/install/linux/docker-ce/debian/}})\
+[Ubuntu and Docker notes]({\field{\*\fldinst{HYPERLINK "https://docs.docker.com/install/linux/docker-ce/ubuntu/"}}{\fldrslt https://docs.docker.com/install/linux/docker-ce/ubuntu/}})\
+\
+Validate you have installed and running with \'93docker --version\'94 in a command prompt.\
+\
 
-### First start of Mooqita
-After cloning the repository we recommend to adapt _settings.json_ to your needs (_mooqita_folder/settings.json_). The following parameters are only parsed if run on your machine under localhost. They are not parsed when the system runs on a server or production system for obvious security reasons. How to run your own version of Mooqita's worklearn platform please refer to section [Server Deployment](#server) further down in this document.
+\b ### Install Node and NPM\
 
-	"init_default_permissions":true,
-	"default_permissions_asset_path":"db/defaultcollections/permissions.json",
+\b0 When you install Node.js, npm is automatically installed. 
+\b \
 
-	"admin":
-	{
-	  "email":"YOUR_EMAIL",
-	  "password":"YOUR_PASSWORD"
-	}
+\b0 Check to see if you have Node installed by running \'93node -v\'94 in your command prompt.\
+Check to see if you have NPM installed by running \'93npm -v\'94 in your command prompt.\
+\
+Install Node.js and NPM for [Windows]({\field{\*\fldinst{HYPERLINK "http://blog.teamtreehouse.com/install-node-js-npm-windows"}}{\fldrslt http://blog.teamtreehouse.com/install-node-js-npm-windows}}): Will require restart.\
+\
+Install Node.js and NPM for [Mac]({\field{\*\fldinst{HYPERLINK "http://blog.teamtreehouse.com/install-node-js-npm-mac"}}{\fldrslt http://blog.teamtreehouse.com/install-node-js-npm-mac}}): Homebrew is quickest and easiest.\
+\
+Install Node.js and NPM for [Ubuntu]({\field{\*\fldinst{HYPERLINK "https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04"}}{\fldrslt https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04}})\
+\
+Verify you have both Node.js and npm installed with \'93node -v && npm -v\'94\
+\
 
-	"init_test_data":true,
+\b \strokec4 ### Downloading MooqitaSFH from Git-Hub
+\b0 \strokec5 \
+Go to [MooquitaSFH]\cf2 \cb12 \outl0\strokewidth0 (\ul https://github.com/MooqitaSFH/worklearn/\ulnone ) project page \cf2 \cb3 \outl0\strokewidth0 \strokec5 on GitHub and clone the repository into a folder someplace on your computer. Name this folder  _mooqita_folder_ .\
+You can find the documentation on how to clone a repository [\strokec6 here\strokec5 ](\ul https://help.github.com/articles/cloning-a-repository/\ulnone ).\
+\
 
- When Meteor is installed and you cloned the repository go to your _mooqita_folder_ and run the following command: 
- 
-	meteor -s settings.json 
- 	
- This command will read _settings.json_ and initialize the database. It will setup the required permissions to run your local instance of Mooqita's worklearn platform. It can also add an admin account and add test data to the database for an easy start. If you already started the worklearn platform you might need to remove the database if the following steps fail. 
+\b ### Connecting to GitHub with SSH
+\b0 \
+In order to easily commit your changes and better familiarize yourself with github please follow this [SSH guide]({\field{\*\fldinst{HYPERLINK "https://help.github.com/articles/connecting-to-github-with-ssh/"}}{\fldrslt https://help.github.com/articles/connecting-to-github-with-ssh/}}).\
+\
+\pard\pardeftab720\sl360\partightenfactor0
 
-### Setting Permissions
-Our platform uses a fine grained system to control read and write access. You find details in section _Permissions_ further down in this document. As the rules can become quite complex we provide a way to setup initial rules for local development using two parameters in _settings.json_.
+\f1\b \cf2 \strokec10 ### Building and Running Development Environment
+\f0\b0 \cf2 \cb12 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf2 If you have already gotten the above dependencies I love you and promise to never hurt you again.\cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec10 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 In your command prompt navigate to the \cf2 \cb12 \outl0\strokewidth0 _mooqita_folder_  you created and change directory to _worklearn_ then run \cf2 \cb3 \outl0\strokewidth0 \strokec10 \'93npm run clean && docker-compose up\'94. If you see 
+\f1\b Permission Denied
+\f0\b0  run \'93sudo \cf2 \cb12 \outl0\strokewidth0 npm run clean && docker-compose up\cf2 \cb3 \outl0\strokewidth0 \strokec10 \'94\
+\
+If you don\'92t have any Docker containers, images, or volumes, the scripts will fail but don\'92t panic. \cf2 \cb12 \outl0\strokewidth0 Run \'93docker-compose up\'94 and make yourself a drink. This command will download additional dependencies, build the environment, and deploy locally in about 10 beers time.\
+\
+When you see \'93App running at: http://\cf2 \cb14 localhost:3000\cf2 \cb12 \'94 kiss your computer and g\cb14 o to http://localhost:3000 in your browser. Admin login credentials: \'93\cf2 \outl0\strokewidth0 \strokec6 admin@mooqita-sfh.org\'94,\'93password\'94.\
+Navigate around the app, create and register as an organization. Familiarize yourself and try to edit one of pages by opening up the \cf2 \cb12 \outl0\strokewidth0 _worklearn_ folder in your favorite editor and modifying one of the html pages in the  _views_ directory.\
+Save the file you modified, refresh localhost, and find the change you made!\cf2 \cb14 \
+\
+\cf2 \cb3 \outl0\strokewidth0 \strokec10 When you\'92ve had enough use ctrl + c in your command prompt to gracefully stop and close the application. Quickly forcing the application to stop will result in sadness.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf2 \cb12 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 You can always work on the app by starting Docker then running \'93docker-compose up\'94 in the _worklearn_ directory. \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec10 \
+\pard\pardeftab720\sl360\partightenfactor0
 
-	"init_default_permissions":true,
-	"default_permissions_asset_path":"db/defaultcollections/permissions.json",
-	
-If _init_default_permissions_ is set to true the system searches for the file defined with _default_permissions_asset_path_. It parses its content and adds all permissions from the file to the database. If you change or add permissions it is a good idea to save your permissions to a new file and point _default_permissions_asset_path_ to it. This way you can keep the original file and in case you need to reset the database your permissions are restored easily.
-
-### Setting Up an Admin Account
-If you want to change permissions you will need admin access. To easily setup an admin account you can add the following lines to _settings.json_.
-
-	"admin":
-	{
-	  "email":"YOUR_EMAIL",
-	  "password":"YOUR_PASSWORD"
-	}
-
-### Generating Test Data
-Finally it might be interesting to see how the system looks like for a user. To allow you a quick start you can populate the database with test data using the following parameter.
-
-	"init_test_data":true
-	
-With this command the system will generate a test challenge and results from nine learners. It will also generate a challenge designer and nine learner accounts including reviews and feedbacks. To access the designer account login with the following credentials:
-	
-	email: designer@mooqita.org
-	password: none
-	
-The password is indeed the string _none_. You can also access student accounts. Using the following credentials:
-
-	email: x@uni.edu
-	password: none
-
-You need to replace the _x_ by a number between 1 and 9 to access an individual learner account.
-
-### Setting Up Email Notification
-There are a two more steps until Mooqita is fully ready. You can skip this step if email notification is not important for you. To enable email notification you need to set an environment variable _MAIL_URL_ to let meteor know how to send mails to learners. An excellent description how to setup email sending for meteor can be found [here](https://themeteorchef.com/tutorials/using-the-email-package). For our purpose you only need to set the environment variable and Mooqita will do the rest.
-
-	MAIL_URL=smtp://SEND_MAIL_ADDRESS:@MAIL_PROVIDER:PORT
-
-If the variable is set the server will log the content of the variable on start up.
-
-	[general][info] MAIL_URL set to: smtp://SEND_MAIL_ADDRESS:@MAIL_PROVIDER:PORT
-
-### Drop Box Storage
-The final setting is setting up file storage. At the moment we use dropbox to save files user upload to our system. To enable this function for your local installation you first need to sign-up for a dropbox account [here](https://www.dropbox.com/). The next step is to create a dropbox app that allows you to access your storage. You can find a description how to do that [here](https://docs.gravityforms.com/creating-a-custom-dropbox-app/). 
-
-Finally you need to generate a drop box access token as explained [here](https://blogs.dropbox.com/developers/2014/05/generate-an-access-token-for-your-own-account/). Now you can set the last environment variable:
-
-	DROP_BOX_ACCESS_TOKEN=Bearer YOUR_DROPBOX_ACCESS_TOKEN
-
-## <a name="server"></a>Server Deployment
-Coming soon.
-
-## Permissions
-Coming soon.
-
-## Known Challenges
-We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them.
-
-### Blank Page on First Start Up
-Occasionally after installing the platform accessing the website locally (http://localhost:3000/) only shows a blank page. In this cas you should use the debug console of your browser to check for missing client side packages. A common package in fact seems to be the core.js package. Run the following command to resolve the issue: 
-
-	meteor npm install --save core-js
-
-There might be more packages missing so you might need to install more packages. We do not know exactly why this is happening but it seems it is a Meteor issue and will be resolved in the future. Thanks Connor!
+\b \cf2 \strokec7 ## Known Challenges
+\b0 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf10 \cb12 \strokec10 We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them:\
+\
+Critical Docker issues with modules, images, or containers: clean and rebuild development environment.\cf2 \cb12 \outl0\strokewidth0 \
+\cf2 \cb3 \kerning1\expnd0\expndtw0 When all else fails - restart.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf2 \
+}
