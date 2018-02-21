@@ -1,97 +1,86 @@
+# README
 # The Mooqita Worklearn Platform
-The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and deployed on [heroku](https://www.heroku.com) with automatic staging of our [master branch](https://github.com/Mooqita/worklearn/tree/master).
+The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and most of this repository is forked from [Mooqita’s Worklearn](https://github.com/Mooqita/worklearn) project page. 
 
 ## Local Development
-To run your own instance of Mooqita here is a guide how to get it running on your system. We are planning to release a docker of our platform but have not found the time to do so (Help in this department would be highly appreciated).
+As part of University of Nebraska at Omaha’s ITIN4440-001 Agile Development Methods class in collaboration with the non-profits: [Siena Francis House](https://sienafrancis.org) and [Mooqita](https://www.mooqita.org/); we have created a development environment for building on the worklearn platform with [Docker](https://www.docker.com/).
 
-### Install Meteor
-Install the meteor web framework. You find a detailed description of the installation process on their [website](https://www.meteor.com/).
+### Install Docker
+To run your own instance of Mooqita here is a guide how to get it running on your system. **Before you get started please have at least 5 GB or more of storage available.**
 
-### Downloading Mooqita's Worklearn Platform from Git-Hub
-Go to [Mooqita's Worklearn](https://github.com/Mooqita/worklearn) project page on GitHub and clone the repository into a folder on your computer. We will call this folder on your machine _mooqita_folder_ from now on. You find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/)
+Download the Stable Docker Community Edition that matches your operating system from their [website](https://www.docker.com/get-docker). Operating systems below are linked to the prospective install guides. **Please note system requirements before install and run.**
 
-### First start of Mooqita
-After cloning the repository we recommend to adapt _settings.json_ to your needs (_mooqita_folder/settings.json_). The following parameters are only parsed if run on your machine under localhost. They are not parsed when the system runs on a server or production system for obvious security reasons. How to run your own version of Mooqita's worklearn platform please refer to section [Server Deployment](#server) further down in this document.
+[Windows and Docker notes](https://docs.docker.com/docker-for-windows/install/): Docker for Windows requires Windows 10 or Windows Server 2016, check the notes to see what you need to know before you install. 
+If you install the Docker Toolbox the installer automatically installs Oracle VirtualBox to run Docker. [Here is a useful video for configuring the VirtualBox and troubleshooting Windows with Docker](https://www.youtube.com/watch?v=ymlWt1MqURY). 
 
-	"init_default_permissions":true,
-	"default_permissions_asset_path":"db/defaultcollections/permissions.json",
+[MacOS and Docker notes](https://docs.docker.com/docker-for-mac/install/): Docker.app requires at least macOS Yosemite or El Capitan as well as permissions. You do not need the Docker Toolbox. Upon installing Docker click the app to run Docker daemon. Click the whale icon to get Preferences and then the Advanced tab - its helpful to have at least 2 CPUs and 4 or more GB memory.
 
-	"admin":
-	{
-	  "email":"YOUR_EMAIL",
-	  "password":"YOUR_PASSWORD"
-	}
+[Debian and Docker notes](https://docs.docker.com/install/linux/docker-ce/debian/)
 
-	"init_test_data":true,
+[Ubuntu and Docker notes](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
- When Meteor is installed and you cloned the repository go to your _mooqita_folder_ and run the following command: 
- 
-	meteor -s settings.json 
- 	
- This command will read _settings.json_ and initialize the database. It will setup the required permissions to run your local instance of Mooqita's worklearn platform. It can also add an admin account and add test data to the database for an easy start. If you already started the worklearn platform you might need to remove the database if the following steps fail. 
+Validate you have installed Docker by running:
+`docker --version`
 
-### Setting Permissions
-Our platform uses a fine grained system to control read and write access. You find details in section _Permissions_ further down in this document. As the rules can become quite complex we provide a way to setup initial rules for local development using two parameters in _settings.json_.
+### Install Node and NPM
+When you install Node.js, npm is automatically installed. 
+Check to see if you have Node and/or npm with this command:
 
-	"init_default_permissions":true,
-	"default_permissions_asset_path":"db/defaultcollections/permissions.json",
-	
-If _init_default_permissions_ is set to true the system searches for the file defined with _default_permissions_asset_path_. It parses its content and adds all permissions from the file to the database. If you change or add permissions it is a good idea to save your permissions to a new file and point _default_permissions_asset_path_ to it. This way you can keep the original file and in case you need to reset the database your permissions are restored easily.
+`node -v && npm -v`
 
-### Setting Up an Admin Account
-If you want to change permissions you will need admin access. To easily setup an admin account you can add the following lines to _settings.json_.
+[Install Node.js and NPM for Windows](http://blog.teamtreehouse.com/install-node-js-npm-windows): Will require restart.
 
-	"admin":
-	{
-	  "email":"YOUR_EMAIL",
-	  "password":"YOUR_PASSWORD"
-	}
+[Install Node.js and NPM for Mac](http://blog.teamtreehouse.com/install-node-js-npm-mac): Homebrew is quickest and easiest.
 
-### Generating Test Data
-Finally it might be interesting to see how the system looks like for a user. To allow you a quick start you can populate the database with test data using the following parameter.
+[Install Node.js and NPM for Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04)
 
-	"init_test_data":true
-	
-With this command the system will generate a test challenge and results from nine learners. It will also generate a challenge designer and nine learner accounts including reviews and feedbacks. To access the designer account login with the following credentials:
-	
-	email: designer@mooqita.org
-	password: none
-	
-The password is indeed the string _none_. You can also access student accounts. Using the following credentials:
+Verify you have both Node.js and npm installed with `node -v && npm -v`
 
-	email: x@uni.edu
-	password: none
+### Downloading MooqitaSFH from Git-Hub
+Go to [MooquitaSFH](https://github.com/MooqitaSFH/worklearn/) project page on GitHub and clone the repository into a folder someplace on your computer. Name this folder  _mooqita_folder_ 
 
-You need to replace the _x_ by a number between 1 and 9 to access an individual learner account.
+You can find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/).
 
-### Setting Up Email Notification
-There are a two more steps until Mooqita is fully ready. You can skip this step if email notification is not important for you. To enable email notification you need to set an environment variable _MAIL_URL_ to let meteor know how to send mails to learners. An excellent description how to setup email sending for meteor can be found [here](https://themeteorchef.com/tutorials/using-the-email-package). For our purpose you only need to set the environment variable and Mooqita will do the rest.
+### Connecting to GitHub with SSH
+In order to easily commit your changes and better familiarize yourself with github please follow this [SSH guide](https://help.github.com/articles/connecting-to-github-with-ssh/).
 
-	MAIL_URL=smtp://SEND_MAIL_ADDRESS:@MAIL_PROVIDER:PORT
 
-If the variable is set the server will log the content of the variable on start up.
+### Building and Running Development Environment
+If you have already gotten the above dependencies I love you and promise to never hurt you again.
 
-	[general][info] MAIL_URL set to: smtp://SEND_MAIL_ADDRESS:@MAIL_PROVIDER:PORT
+In your command prompt navigate to the _mooqita_folder_  you created and change directory to _worklearn_ then run:
 
-### Drop Box Storage
-The final setting is setting up file storage. At the moment we use dropbox to save files user upload to our system. To enable this function for your local installation you first need to sign-up for a dropbox account [here](https://www.dropbox.com/). The next step is to create a dropbox app that allows you to access your storage. You can find a description how to do that [here](https://docs.gravityforms.com/creating-a-custom-dropbox-app/). 
+`npm run clean && docker-compose up`
 
-Finally you need to generate a drop box access token as explained [here](https://blogs.dropbox.com/developers/2014/05/generate-an-access-token-for-your-own-account/). Now you can set the last environment variable:
+If you see Permission Denied run: 
 
-	DROP_BOX_ACCESS_TOKEN=Bearer YOUR_DROPBOX_ACCESS_TOKEN
+`sudo npm run clean && docker-compose up`
 
-## <a name="server"></a>Server Deployment
-Coming soon.
+Next, run:
 
-## Permissions
-Coming soon.
+`docker-compose up`
+
+Now make yourself a drink. This command will download additional dependencies, build the environment, and deploy locally in about 10 beers time.
+
+When you see “App running at: http://localhost:3000” kiss your computer and go to http://localhost:3000 in your browser. Admin login credentials:
+
++ admin@mooqita-sfh.org
++ password   
+
+Navigate around the app, create and register as an organization. Familiarize yourself and try to edit one of pages by opening up the _worklearn_ folder in your favorite editor and modifying one of the html pages in the  _views_ directory.
+Save the file you modified, refresh localhost, and find the change you made!
+
+When you’ve had enough use ctrl + c in your command prompt to gracefully stop and close the application. Quickly forcing the application to stop will result in sadness.
+
+You can always work on the app by restarting Docker then navigate to the _worklearn_ directory and run:
+
+`docker-compose up`
 
 ## Known Challenges
-We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them.
+We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them:
 
-### Blank Page on First Start Up
-Occasionally after installing the platform accessing the website locally (http://localhost:3000/) only shows a blank page. In this cas you should use the debug console of your browser to check for missing client side packages. A common package in fact seems to be the core.js package. Run the following command to resolve the issue: 
+Critical Docker issues with modules, images, or containers: clean and rebuild development environment.
 
-	meteor npm install --save core-js
+When all else fails - restart.
 
-There might be more packages missing so you might need to install more packages. We do not know exactly why this is happening but it seems it is a Meteor issue and will be resolved in the future. Thanks Connor!
+

@@ -1,5 +1,9 @@
-node_modules/
-.idea
+docker/env/*
+!docker/env/*.example
 secrets.txt
+settings.json
+.idea
+.meteor/local/
+.vscode/
+node_modules/
 tmp/
-

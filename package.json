@@ -2,7 +2,7 @@
   "name": "worklearn",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "clean": "sh docker/scripts/docker-clean.sh"
   },
   "dependencies": {
     "atob": "^2.0.3",
