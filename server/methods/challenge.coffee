@@ -14,13 +14,13 @@ Meteor.methods
 
 		return gen_challenge user
 
-	make_challenge: (title,content,link,type) ->
+	make_challenge: (title,content,link,origin) ->
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		return bake_challenge user, title, content, link, type
+		return bake_challenge user, title, content, link, origin
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()

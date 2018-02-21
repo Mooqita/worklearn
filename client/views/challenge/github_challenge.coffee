@@ -15,10 +15,6 @@ Template.git_challenge_preview.events
         if err
           sAlert.error("Add challenge error: " + err)
         if res
-          console.log(res.toString())
-#          res.title = title
-#          res.content = body
-#          res.material = html_url
           query =
             challenge_id: res
           url = build_url "challenge_design", query
