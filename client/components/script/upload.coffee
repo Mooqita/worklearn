@@ -1,13 +1,13 @@
-##############################################
+###############################################################################
 #
 # Upload
 #
 ##############################################
 
-##############################################
+###############################################################################
 _files = {}
 
-##############################################
+###############################################################################
 _get_file_data_from_event = (event) ->
 	if event.srcElement
 		crm_data = event.srcElement.result
@@ -25,7 +25,7 @@ _get_file_data_from_event = (event) ->
 
 	throw new Meteor.Error msg
 
-##############################################
+###############################################################################
 _get_file_size_text = (byte) ->
 	kb = Math.round(byte / 1024)
 	if kb < 500
@@ -37,30 +37,22 @@ _get_file_size_text = (byte) ->
 
 	return mb + " Mbyte"
 
-##############################################
-_get_box_id = () ->
-	box_id = Template.instance().box_id.get()
+###############################################################################
+_get_meta_data = (box_id) ->
 	if not box_id
-		sAlert.error('Object does not have a box_id')
-
-	return box_id
-
-##############################################
-_get_meta_data = (box_id = null) ->
-	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_get_meta_data: Object does not have a box_id')
 
 	res = _files[box_id]
 	return res
 
-##############################################
-_set_meta_data = (self, box_id = null) ->
+###############################################################################
+_set_meta_data = (self, box_id) ->
 	max = self.max_size
 	if not self.max_size
 		max = 4*1024*1024
 
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_set_meta_data: Object does not have a box_id')
 
 	_files[box_id] =
 		files: []
@@ -77,56 +69,67 @@ _set_meta_data = (self, box_id = null) ->
 	res = _files[box_id]
 	return res
 
-##############################################
-_set_files_to_read = (size, box_id = null) ->
+###############################################################################
+_set_files_to_read = (size, box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_set_files_to_read: Object does not have a box_id')
+
 	_files[box_id].files_to_read = size
 
-##############################################
-_set_cumulative_size = (size, box_id = null) ->
+###############################################################################
+_set_cumulative_size = (size, box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_set_cumulative_size: Object does not have a box_id')
+
 	_files[box_id].cumulative_size = size
 
-##############################################
-_get_cumulative_size = (box_id = null) ->
+###############################################################################
+_get_cumulative_size = (box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_get_cumulative_size: Object does not have a box_id')
+
 	return _files[box_id].cumulative_size
 
-##############################################
-_increment_files_uploaded = (box_id = null) ->
+###############################################################################
+_increment_files_uploaded = (box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_increment_files_uploaded: Object does not have a box_id')
+
 	_files[box_id].files_up = _files[box_id].files_up + 1
 
-##############################################
-_get_files_uploaded = (box_id = null) ->
+###############################################################################
+_get_files_uploaded = (box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_get_files_uploaded: Object does not have a box_id')
+
 	return _files[box_id].files_up
 
-##############################################
-_add_files = (n, box_id = null) ->
+###############################################################################
+_add_files = (n, box_id) ->
 	if not box_id
-		box_id = _get_box_id()
+		sAlert.error('_add_files: Object does not have a box_id')
+
 	d = _files[box_id].files
 	Array::push.apply d, n
 	_files[box_id].files = d
 	Session.set('_files', Math.random())
 
-##############################################
-_get_form = (box_id = null) ->
+###############################################################################
+_get_form = (box_id) ->
 	if not box_id
-		box_id = _get_box_id()
-	frm = $('#dropbox_'+box_id)
+		sAlert.error('_get_form: Object does not have a box_id')
+
+	frm = $('#dropbox_' + box_id)
 	return frm
 
-##############################################
+###############################################################################
 _upload_file = (self, file) ->
-	box_id = _get_box_id()
-	frm = _get_form()
+	box_id = self.box_id.get()
+
+	if not box_id
+		sAlert.error('_upload_file: Object does not have a box_id')
+
+	frm = _get_form(box_id)
 	fileReader = new FileReader()
 	type = file.type
 
@@ -178,11 +181,11 @@ _upload_file = (self, file) ->
 	catch error
 		sAlert.error 'File upload failed: ' + error
 
-##############################################
+###############################################################################
 # Upload
-##############################################
+###############################################################################
 
-##############################################
+###############################################################################
 Template.upload.onCreated ->
 	this.uploaded = new ReactiveVar("")
 
@@ -193,20 +196,62 @@ Template.upload.onCreated ->
 
 	box_id = Math.floor(Math.random()*10000000)
 	this.box_id = new ReactiveVar(box_id)
-	_set_meta_data(this.data)
+	_set_meta_data(this.data, box_id)
 
 
-##############################################
+###############################################################################
+Template.upload.onRendered ->
+	self = this
+	box_id = self.box_id.get()
+
+	submit_file = (event) ->
+		event.preventDefault()
+		frm = _get_form(box_id)
+
+		if frm.hasClass('is-uploading')
+			return false
+
+		if !Meteor.userId()
+			sAlert.error "Please login to upload files."
+			return
+
+		files = _get_meta_data(box_id).files
+
+		if !files
+			sAlert.error "No files selected to upload."
+			return
+
+		if files.length == 0
+			sAlert.error ("No files selected to upload.")
+			return
+
+		frm.addClass('is-uploading').removeClass('is-error')
+
+		_set_files_to_read files.length, box_id
+
+		for file in files
+			_upload_file(self, file)
+
+		event.target.files = null
+
+	id = "#dropbox_#{box_id}"
+	$(id).on "submit", submit_file
+
+
+
+###############################################################################
 Template.upload.helpers
 	uploaded: ->
 		return Template.instance().uploaded.get()
 
 	files: ->
+		box_id = Template.instance().box_id.get()
 		if Session.get('_files') != 0
-			return _get_meta_data().files
+			return _get_meta_data(box_id).files
 
 	box_id: ->
-		return _get_box_id()
+		box_id = Template.instance().box_id.get()
+		return box_id
 
 	upload_style: ()->
 		div = document.createElement('div')
@@ -220,68 +265,37 @@ Template.upload.helpers
 			return('')
 
 
-##############################################
+###############################################################################
 Template.upload.events
 	'dropped .dropbox': (event) ->
+		box_id = Template.instance().box_id.get()
 		n = event.originalEvent.dataTransfer.files
-		if n.length == 0
-			box_id = get_box_id()
-			event.originalEvent.dataTransfer.items[0].getAsString (data)->
-				_add_files ['"' + data + '"'], box_id
-				if not this.multiple
-					get_form(box_id).trigger('submit')
-		else
-			_add_files n
-			if not this.multiple
-				_get_form().trigger('submit')
-
-	'change #file': (event)->
-		n = event.target.files
-		_add_files n
+		_add_files n, box_id
 		if not this.multiple
-			_get_form().trigger('submit')
+			_get_form(box_id).trigger('submit')
 
-	'submit form': (event) ->
-		self = Template.instance()
-		event.preventDefault()
-		frm = _get_form()
-
-		if frm.hasClass('is-uploading')
-			return false
-
-		if !Meteor.userId()
-			sAlert.error "Please login to upload files."
-			return
-
-		files = _get_meta_data().files
-
-		if !files
-			sAlert.error "No files selected to upload."
-			return
-
-		if files.length == 0
-			sAlert.error ("No files selected to upload.")
-			return
-
-		frm.addClass('is-uploading').removeClass('is-error')
-
-		_set_files_to_read files.length
-
-		for file in files
-			_upload_file(self, file)
-
-		event.target.files = null
+	'change .dropbox_file': (event)->
+		box_id = Template.instance().box_id.get()
+		n = event.target.files
+		_add_files n, box_id
+		if not this.multiple
+			_get_form(box_id).trigger('submit')
 
 	'dragover .dropbox, dragenter .dropbox': (event)->
-		_get_form().addClass('is-dragover')
+		box_id = Template.instance().box_id.get()
+		_get_form(box_id).addClass('is-dragover')
 
 	'dragleave .dropbox, dragend .dropbox, drop .dropbox': (event)->
-		_get_form().removeClass('is-dragover')
+		box_id = Template.instance().box_id.get()
+		_get_form(box_id).removeClass('is-dragover')
+
+
+	'click .dropbox_restart': (event) ->
+		box_id = Template.instance().box_id.get()
+		_set_meta_data(Template.instance().data, box_id)
+		_get_form(box_id).removeClass('is-uploading').removeClass('is-error')
 
 	'dragexit .dropbox': (event) ->
 		sAlert.info('exit')
 
-	'click #restart': (event) ->
-		_set_meta_data(Template.instance().data)
-		_get_form().removeClass('is-uploading').removeClass('is-error')
 

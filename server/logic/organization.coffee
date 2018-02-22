@@ -8,8 +8,8 @@
 
 	if not org
 		org =
-			name: "No name yet"
-			description: "Your organizations description"
+			name: ""
+			description: ""
 
 	org_id = store_document_unprotected Organizations, org, user, true
 	return org_id

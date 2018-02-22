@@ -42,7 +42,7 @@ Meteor.publish 'git_challenges', (parameter) ->
 #	jobs.find params, bound
 #	HTTP.call('GET', 'https://api.github.com/search/issues?q=web+agile+language:ruby+type:issue+is:public+archived:false+state:open&per_page=10&page=1&sort=updated&order=desc',
 	if parameter.query.length > 3
-		HTTP.call('GET', 'https://api.github.com/search/issues?q=test',
+		HTTP.call('GET', 'https://api.github.com/search/repositories?q='+parameter.query,
 			headers:
 				'User-Agent': "Meteor/1.6.1",
 		 	query: parameter.query
