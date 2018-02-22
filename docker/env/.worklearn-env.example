@@ -1,5 +1,5 @@
 # Worklearn #
-ROOT_URL=http://localhost:3000
+ROOT_URL=http://0.0.0.0:3000
 
 # Database #
 MONGO_URL=mongodb://mongo:27017/worklearndb
