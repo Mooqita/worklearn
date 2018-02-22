@@ -25,21 +25,21 @@
 	background-color: $theme;
 }
 
-.dropbox.is-uploading .dropbox__input,
-.dropbox.is-success .dropbox__input,
-.dropbox.is-error .dropbox__input {
+.dropbox.is-uploading .dropbox_input,
+.dropbox.is-success .dropbox_input,
+.dropbox.is-error .dropbox_input {
 	visibility: hidden;
 }
 
-.dropbox__uploading,
-.dropbox__success,
-.dropbox__error {
+.dropbox_uploading,
+.dropbox_success,
+.dropbox_error {
 	display: none;
 }
 
-.dropbox.is-uploading .dropbox__uploading,
-.dropbox.is-success .dropbox__success,
-.dropbox.is-error .dropbox__error {
+.dropbox.is-uploading .dropbox_uploading,
+.dropbox.is-success .dropbox_success,
+.dropbox.is-error .dropbox_error {
 	display: block;
 	position: absolute;
 	top: 50%;
@@ -50,11 +50,11 @@
 	transform: translateY( -50% );
 }
 
-.dropbox__uploading {
+.dropbox_uploading {
 	font-style: italic;
 }
 
-.dropbox__success {
+.dropbox_success {
 	-webkit-animation: appear-from-inside .25s ease-in-out;
 	animation: appear-from-inside .25s ease-in-out;
 }
@@ -79,16 +79,16 @@
 	transition: outline-offset .15s ease-in-out, background-color .15s linear;
 }
 
-.dropbox__dragndrop,
-.dropbox__icon {
+.dropbox_dragndrop,
+.dropbox_icon {
 	display: none;
 }
 
-.dropbox.has-advanced-upload .dropbox__dragndrop {
+.dropbox.has-advanced-upload .dropbox_dragndrop {
 	display: inline;
 }
 
-.dropbox.has-advanced-upload .dropbox__icon {
+.dropbox.has-advanced-upload .dropbox_icon {
 	width: 100%;
 	height: 1em;
 	color: $text-on-theme;
@@ -107,7 +107,7 @@
 ////////////////////////////////
 
 ////////////////////////////////
-.dropbox__file {
+.dropbox_file {
 	width: 0.1px;
 	height: 0.1px;
 	opacity: 0;
@@ -116,7 +116,7 @@
 	z-index: -1;
 }
 
-.dropbox__file + label
+.dropbox_file + label
 {
 	max-width: 80%;
 	text-overflow: ellipsis;
@@ -126,14 +126,14 @@
 	overflow: hidden;
 }
 
-.dropbox__file + label em
+.dropbox_file + label em
 {
 	color: $contrast-on-theme;
 }
 
-.dropbox__file + label:hover em,
-.dropbox__file:focus + label em,
-.dropbox__file.has-focus + label em
+.dropbox_file + label:hover em,
+.dropbox_file:focus + label em,
+.dropbox_file.has-focus + label em
 {
 	color: $contrast-on-theme-dark;
 }
@@ -144,7 +144,7 @@
 ////////////////////////////////
 
 ////////////////////////////////
-.dropbox__button {
+.dropbox_button {
 	font-weight: 700;
 	color: $text-on-theme;
 	background-color: $contrast-on-theme;
@@ -153,8 +153,8 @@
 	margin: 40px auto 0;
 }
 
-.dropbox__button:hover,
-.dropbox__button:focus {
+.dropbox_button:hover,
+.dropbox_button:focus {
 	background-color: $theme-dark;
 }
 
@@ -164,14 +164,14 @@
 ////////////////////////////////
 
 ////////////////////////////////
-.dropbox a.dropbox__restart {
+.dropbox a.dropbox_restart {
 	font-weight: 700;
 	color: $theme-light;
 }
 
 ////////////////////////////////
-.dropbox__restart:focus,
-.dropbox__restart:hover {
+.dropbox_restart:focus,
+.dropbox_restart:hover {
 	color: #f00;
 }
 

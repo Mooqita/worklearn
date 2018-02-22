@@ -32,9 +32,9 @@
 			{{/unless}}
 
 			<div class="row padding-top">
-				<div class="col-sm-4 col-ms-4 col-xs-12">
-					<h2 class="header">Picture</h2>
+				<h1>Profile</h1>
 
+				<div class="col-sm-4 col-ms-4 col-xs-12">
 					{{#if g_profile.avatar}}
 						{{>avatar collection_name = "Profiles"
 							observable = g_profile.avatar
@@ -48,10 +48,6 @@
 
 				<div class="col-sm-8 col-ms-8 col-xs-12">
 					<div class="row">
-						<div class="col-md-12">
-							<h2>Name</h2>
-						</div>
-
 						<div class="col-md-4">
 							{{>basic_input method="set_field" collection_name="Profiles"
 								item_id=g_profile._id field="given_name" placeholder="Given name"}}
@@ -118,45 +114,45 @@
 			</div>
 
 			{{#if job_interested}}
-					<div class="row padding-top">
-						<div class="col-md-12">
-							<h2>
-								What kind a job are you looking for?
-							</h2>
-						</div>
-
-						<div class="col-md-4">
-							{{>select_input method="set_field" collection_name="Profiles"
-								item_id=g_profile._id field="job_type" options=job_type_options}}
-						</div>
-
-						<div class="col-md-4">
-							{{>select_input method="set_field" collection_name="Profiles"
-								item_id=g_profile._id field="job_locale" options=job_locale_options}}
-						</div>
-
-						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Profiles"
-									item_id=g_profile._id field="hours_per_week"
-									placeholder="Hours per week" type="number"}}
-						</div>
+				<div class="row padding-top">
+					<div class="col-md-12">
+						<h2>
+							What kind a job are you looking for?
+						</h2>
 					</div>
 
-					<div class="row" style="margin-top:10px">
-						<div class="col-md-12">
-							<h2 class="header">Where are you living?</h2>
-						</div>
-
-						<div class="col-md-8">
-							{{>country_state method="set_field" collection_name="Profiles"
-								item_id=g_profile._id c_field="country" s_field="state"}}
-						</div>
-
-						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Profiles"
-								item_id=g_profile._id field="city" placeholder="city name"}}
-						</div>
+					<div class="col-md-4">
+						{{>select_input method="set_field" collection_name="Profiles"
+							item_id=g_profile._id field="job_type" options=job_type_options}}
 					</div>
+
+					<div class="col-md-4">
+						{{>select_input method="set_field" collection_name="Profiles"
+							item_id=g_profile._id field="job_locale" options=job_locale_options}}
+					</div>
+
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Profiles"
+								item_id=g_profile._id field="hours_per_week"
+								placeholder="Hours per week" type="number"}}
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:10px">
+					<div class="col-md-12">
+						<h2 class="header">Where are you living?</h2>
+					</div>
+
+					<div class="col-md-8">
+						{{>country_state method="set_field" collection_name="Profiles"
+							item_id=g_profile._id c_field="country" s_field="state"}}
+					</div>
+
+					<div class="col-md-4">
+						{{>basic_input method="set_field" collection_name="Profiles"
+							item_id=g_profile._id field="city" placeholder="city name"}}
+					</div>
+				</div>
 			{{/if}}
 
 			<h1>Resume</h1>
