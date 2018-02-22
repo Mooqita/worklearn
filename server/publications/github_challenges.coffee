@@ -41,11 +41,19 @@ Meteor.publish 'git_challenges', (parameter) ->
 #	bound = Meteor.bindEnvironment(remote)
 #	jobs.find params, bound
 #	HTTP.call('GET', 'https://api.github.com/search/issues?q=web+agile+language:ruby+type:issue+is:public+archived:false+state:open&per_page=10&page=1&sort=updated&order=desc',
+	github_base_url = 'https://api.github.com/search/issues?q='
+	github_repo_restrict = ''
+
+	if parameter.github_selected and parameter.github_selected == false and (parameter.mooqita_selected is null || (parameter.mooqita_selected and parameter.github_selected == true))
+		github_repo_restrict = 'repo:Mooqita/mooqita-challenges'
+	else
+		github_repo_restrict = ''
+
 	if parameter.query.length > 3
-		HTTP.call('GET', 'https://api.github.com/search/issues?q=test',
+		HTTP.call('GET', github_base_url + encodeURI(parameter.query + github_repo_restrict + ' +type:issue +is:public +archived:false +state:open -label:resolved -label:bug +label:"help wanted"'),
 			headers:
-				'User-Agent': "Meteor/1.6.1",
-		 	query: parameter.query
+				'User-Agent': "Meteor/1.6.1"
+				'Accept': "application/vnd.github.v3.text-match+json"
 			params:
 				per_page: 10
 				page: 1
@@ -57,12 +65,10 @@ Meteor.publish 'git_challenges', (parameter) ->
 				else
 					#console.log(response)
 					if response.data and response.data.items.length > 0
+						#console.log(response.data)
 						for item in response.data.items
 							item.description = item.body.toString()
-							if item.description.length > 250
-								item.description = item.description.slice(0,249) + "\r\n[...]"
 							self.added('git_challenges',item.id,item))
-
 
 	#self.added('git_challenges', 1, {title: "Connection to database works!"})
 	self.ready()

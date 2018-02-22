@@ -5,38 +5,59 @@
 -------------------------------------------------->
 <template name="github">
 	{{#mooqita_wide_spacing}}
-		<div class="row padding-top">
-			<h1>Git-Hub Challenges</h1>
+		<div class="item-set padding-top">
+            <h1>Challenge Pool</h1>
+            <p>Find challenges to use or customize...</p>
 
-			<p class="padding-next">
-				Find challenges on git-hub
-			</p>
+            <h3>Challenge sources:</h3>
+            <div class="col-sm-6 padding-next">
+                <div class="toggle-button">
+                    <input id="github_id" type="checkbox" checked="true"
+                           aria-describedby="github_explain" aria-selected="true">
+                    <label for="github_id">Github <i class="fa fa-github"></i></label>
+                    <div class="toggle-button-icon"></div>
+                </div>
 
-			<div class="col-sm-12">
-				{{#paging subscription="git_challenges" page=0 count=10
-									parameter=parameter collection_name="git_challenges"}}
-					{{#each items}}
-						{{>git_challenge_preview}}
-					{{else}}
-						<hr>
-						<h1 class="text-center padding-next"><em>No challenges yet.</em></h1>
-						<hr>
-					{{/each}}
-				{{/paging}}
-			</div>
+                <div>
+                    <small id="github_explain" class="form-text text-muted">
+                        Search open issues on github...
+                    </small>
+                </div>
+            </div>
+
+            <div class="col-sm-6 padding-next">
+                <div class="toggle-button toggle-button">
+                    <input id="mooqita_id" type="checkbox" checked="true"
+                           aria-describedby="mooqita_explain" aria-selected="true">
+                    <label for="mooqita_id">Mooqita</label>
+                    <div class="toggle-button-icon"></div>
+                </div>
+
+                <div>
+                    <small id="mooqita_explain" class="form-text text-muted">
+                        Search free Mooqita template challenges...
+                    </small>
+                </div>
+            </div>
+            {{#paging placeholder="Search for challenges (e.g. agile language:ruby)"
+                      subscription="git_challenges" page=0 count=10
+                      parameter=parameter collection_name="git_challenges"}}
+                {{#each items}}
+                    {{>git_challenge_preview}}
+                {{else}}
+                    <hr>
+                    <h1 class="text-center padding-next"><em>No results found yet.</em></h1>
+                    <hr>
+                {{/each}}
+            {{/paging}}
             {{git_search_result}}
-		</div>
-	{{/mooqita_wide_spacing}}
+        </div>
+    {{/mooqita_wide_spacing}}
 </template>
 
 <template name="git_challenge_preview">
-	<hr>
 	<h1 class="text-left">{{title}}</h1>
-    <p>
-        {{#markdown}}
-        {{description}}
-        {{/markdown}}
-    </p>
+    {{>more content=description}}
     <p><em><b>Project link: </b></em><a href="{{html_url}}" target="_blank">{{html_url}}</a></p>
     <div class="left text-left" style="margin-top: 15px">
         <!-- not sure whether a custom link with parameters is the right way to go here or using an id and addressing
@@ -45,9 +66,10 @@
            href="https://daringfireball.net/projects/markdown/syntax">
             markdown documentation
         </a>-->
-        <a class="btn btn-theme" style="min-width: 100px"
+        <a class="btn btn-theme" style="min-width: 100px; padding-top: 10px"
            id="make_challenge">create challenge</a>
     </div>
+    <p>&nbsp;</p>
 	<hr>
 </template>
 
