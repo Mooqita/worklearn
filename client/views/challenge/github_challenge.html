@@ -14,7 +14,7 @@
 
 			<div class="col-sm-12">
 				{{#paging subscription="git_challenges" page=0 count=10
-									parameter=parameter  collection_name="git_challenges"}}
+									parameter=parameter collection_name="git_challenges"}}
 					{{#each items}}
 						{{>git_challenge_preview}}
 					{{else}}
@@ -24,14 +24,30 @@
 					{{/each}}
 				{{/paging}}
 			</div>
+            {{git_search_result}}
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
-
 <template name="git_challenge_preview">
 	<hr>
-	<h1 class="text-center">{{title}}</h1>
+	<h1 class="text-left">{{title}}</h1>
+    <p>
+        {{#markdown}}
+        {{description}}
+        {{/markdown}}
+    </p>
+    <p><em><b>Project link: </b></em><a href="{{html_url}}" target="_blank">{{html_url}}</a></p>
+    <div class="left text-left" style="margin-top: 15px">
+        <!-- not sure whether a custom link with parameters is the right way to go here or using an id and addressing
+        the button functionality elsewhere -->
+        <!--<a class="btn btn-theme"  style="min-width: 100px" target="_blank"
+           href="https://daringfireball.net/projects/markdown/syntax">
+            markdown documentation
+        </a>-->
+        <a class="btn btn-theme" style="min-width: 100px"
+           id="make_challenge">create challenge</a>
+    </div>
 	<hr>
 </template>
 
