@@ -284,8 +284,13 @@
 					<div class="col-md-8 col-sm-8 col-ms-6 col-xs-12">
 						<p>
 							<div class="raised" style="float: left; width: 50%; margin-right: 25px">
-								{{>persona	persona_data=(optimal_persona job) offset_x=0
-														has_text=true width=310 height=200}}
+								{{#if (optimal_persona job)}}
+										{{>persona	persona_data=(optimal_persona job) offset_x=0
+																has_text=true width=310 height=200}}
+									{{else}}
+										{{>persona	persona_data=job_persona offset_x=0
+																has_text=true width=310 height=200}}
+								{{/if}}
 							</div>
 
 							Based on what you and the team members have told us, this is the optimized persona.
