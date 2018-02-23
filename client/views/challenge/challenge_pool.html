@@ -3,7 +3,7 @@
 |	Challenge
 |
 -------------------------------------------------->
-<template name="github">
+<template name="challenge_pool">
 	{{#mooqita_wide_spacing}}
 		<div class="item-set padding-top">
             <h1>Challenge Pool</h1>
@@ -40,22 +40,22 @@
                 </div>
             </div>
             {{#paging placeholder="Search for challenges (e.g. agile language:ruby)"
-                      subscription="git_challenges" page=0 count=10
-                      parameter=parameter collection_name="git_challenges"}}
+                      subscription="pool_challenges" page=0 count=10
+                      parameter=parameter collection_name="pool_challenges"}}
                 {{#each items}}
-                    {{>git_challenge_preview}}
+                    {{>challenge_pool_preview}}
                 {{else}}
                     <hr>
                     <h1 class="text-center padding-next"><em>No results found yet.</em></h1>
                     <hr>
                 {{/each}}
             {{/paging}}
-            {{git_search_result}}
+            {{challenge_pool_search_result}}
         </div>
     {{/mooqita_wide_spacing}}
 </template>
 
-<template name="git_challenge_preview">
+<template name="challenge_pool_preview">
 	<h1 class="text-left">{{title}}</h1>
     {{>more content=description}}
     <p><em><b>Project link: </b></em><a href="{{html_url}}" target="_blank">{{html_url}}</a></p>

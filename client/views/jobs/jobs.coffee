@@ -187,3 +187,22 @@ Template.job_posting.events
 		else
 			sAlert.error "missing job posting data"
 
+	"click #add_challenge": () ->
+		loc_job_id = FlowRouter.getQueryParam("job_id")
+		Meteor.call "add_challenge", loc_job_id,
+			(err, res) ->
+				if err
+					sAlert.error("Add challenge error: " + err)
+				if res
+					query =
+						challenge_id: res
+						job_id: loc_job_id
+					url = build_url "challenge_design", query
+					FlowRouter.go url
+
+	"click #template_challenge": () ->
+		loc_job_id = FlowRouter.getQueryParam("job_id")
+		query =
+			job_id: loc_job_id
+		url = build_url "challenge_pool", query
+		FlowRouter.go url

@@ -6,21 +6,28 @@
 
 ###############################################
 Meteor.methods
-	add_challenge: () ->
+	add_challenge: (job_id) ->
+		check(job_id,Match.Optional(String))
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		return gen_challenge user
+		return gen_challenge user, job_id
 
-	make_challenge: (title,content,link,origin) ->
+	make_challenge: (title,content,link,origin,job_id) ->
+		check(title,String)
+		check(content,String)
+		check(link,String)
+		check(origin,String)
+		check(job_id,Match.Optional(String))
+
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		return bake_challenge user, title, content, link, origin
+		return bake_challenge user, title, content, link, origin, job_id
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()

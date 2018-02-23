@@ -1,9 +1,11 @@
 #######################################################
-Meteor.publish 'git_challenges', (parameter) ->
+Meteor.publish 'pool_challenges', (parameter) ->
 	pattern =
 		query: Match.Optional(String)
 		page: Number
 		size: Number
+		github_selected: Match.Optional(Boolean)
+		mooqita_selected: Match.Optional(Boolean)
 	check parameter, pattern
 
 	self = this
@@ -44,8 +46,11 @@ Meteor.publish 'git_challenges', (parameter) ->
 	github_base_url = 'https://api.github.com/search/issues?q='
 	github_repo_restrict = ''
 
-	if parameter.github_selected and parameter.github_selected == false and (parameter.mooqita_selected is null || (parameter.mooqita_selected and parameter.github_selected == true))
-		github_repo_restrict = 'repo:Mooqita/mooqita-challenges'
+	if parameter.github_selected == false
+		if parameter.mooqita_selected is undefined || parameter.mooqita_selected
+			github_repo_restrict = ' repo:Mooqita/mooqita-challenges'
+		else
+			github_repo_restrict = ''
 	else
 		github_repo_restrict = ''
 
@@ -68,7 +73,11 @@ Meteor.publish 'git_challenges', (parameter) ->
 						#console.log(response.data)
 						for item in response.data.items
 							item.description = item.body.toString()
-							self.added('git_challenges',item.id,item))
+							if github_repo_restrict == ''
+								item.origin = 'github'
+							else
+								item.origin = 'mooqita'
+							self.added('pool_challenges',item.id,item))
 
 	#self.added('git_challenges', 1, {title: "Connection to database works!"})
 	self.ready()
