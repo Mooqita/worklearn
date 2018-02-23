@@ -139,6 +139,9 @@ Template.job_challenges_preview.helpers
 		inst = Template.instance()
 		ids = inst.data.challenge_ids
 
+		if not ids
+			ids = []
+
 		filter =
 			_id:
 				$in: ids
@@ -167,6 +170,21 @@ Template.job_posting.onCreated () ->
 
 #########################################################
 Template.job_posting.helpers
+	persona_available: () ->
+		#TODO make sure that this returns true when there are team members
+		profile = Profiles.findOne()
+
+		if not profile
+			return false
+
+		if not profile.big_five
+			return false
+
+		if profile.big_five.count == 40
+			return true
+
+		return false
+
 	job: () ->
 		id = FlowRouter.getQueryParam("job_id")
 		return Jobs.findOne(id)
