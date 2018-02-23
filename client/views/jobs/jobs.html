@@ -224,13 +224,25 @@
 				Add some challenges to the job posting that candidates should be able to solve.
 				We make sure they can.
 			</p>
-
-			<select class="selectpicker user_select_class form-control" multiple
-							title="Select challenges" data-live-search="true" id="challenges_id">
-				{{#each challenges}}
-					<option value="{{_id}}">{{title}}</option>
-				{{/each}}
-			</select>
+            <h3>Add a new challenge:</h3>
+            <div class="form-inline">
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="add_challenge">
+                    <span class="fa fa-plus"></span> Blank Challenge
+                </div>
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="template_challenge">
+                    <span class="fa fa-file"></span> From Template
+                </div>
+                <select class="selectpicker user_select_class form-control" multiple
+                                title="Select one of your existing challenges" data-live-search="true" id="challenges_id">
+                    {{#each challenges}}
+                        <option value="{{_id}}">{{title}}</option>
+                    {{/each}}
+                </select>
+            </div>
 
 			{{#each job.challenge_ids}}
 				{{>job_preview}}

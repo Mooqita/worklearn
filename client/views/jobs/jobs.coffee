@@ -134,8 +134,6 @@ Template.job_posting.onCreated () ->
 		job_id = FlowRouter.getQueryParam("job_id")
 		organization_id = FlowRouter.getQueryParam("organization_id")
 
-		self.subscribe "challenges_by_ids", self.data.challenge_ids
-
 		self.subscribe "job_by_id", job_id
 		self.subscribe "organization_by_id", organization_id
 		self.subscribe "invitations_by_organization_id", organization_id
@@ -185,7 +183,7 @@ Template.job_posting.helpers
 
 	optimal_persona: (data) ->
 		members = TeamMembers.find().fetch()
-		team = persona_extract_team(members)
+		team = persona_extract_requirements(members)
 		if not team
 			return undefined
 
@@ -204,6 +202,25 @@ Template.job_posting.events
 		else
 			sAlert.error "missing job posting data"
 
+	"click #add_challenge": () ->
+		loc_job_id = FlowRouter.getQueryParam("job_id")
+		Meteor.call "add_challenge", loc_job_id,
+			(err, res) ->
+				if err
+					sAlert.error("Add challenge error: " + err)
+				if res
+					query =
+						challenge_id: res
+						job_id: loc_job_id
+					url = build_url "challenge_design", query
+					FlowRouter.go url
+
+	"click #template_challenge": () ->
+		loc_job_id = FlowRouter.getQueryParam("job_id")
+		query =
+			job_id: loc_job_id
+		url = build_url "challenge_pool", query
+		FlowRouter.go url
 
 ###############################################################################
 # Trait vis

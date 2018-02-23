@@ -9,6 +9,7 @@ _job_fields =
 		process: 1
 		strategic: 1
 		organization_id: 1
+		challenge_ids: 1
 
 ###############################################################################
 Meteor.publish "my_jobs", (admissions) ->
