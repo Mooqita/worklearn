@@ -8,7 +8,6 @@
 Template.toggle_button.onCreated ->
 	this.id = "id_" + Random.id()
 
-
 #########################################################
 Template.toggle_button.helpers
 	checked: () ->
@@ -33,7 +32,6 @@ Template.toggle_button.helpers
 
 		return ""
 
-
 	id: () ->
 		instance = Template.instance()
 		return instance.id
@@ -41,9 +39,10 @@ Template.toggle_button.helpers
 
 #########################################################
 Template.toggle_button.events
-	"click .toggle-button": () ->
+	"click .toggle-select": () ->
 		inst = Template.instance()
 		context = inst.data
+		console.log "toggled", inst.id
 
 		value = if inst.find("#"+inst.id).checked then 1 else 0
 

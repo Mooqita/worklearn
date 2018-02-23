@@ -32,7 +32,7 @@ Template.hover_card.helpers
 
 #########################################################
 Template.hover_card.events
-	"click .onboarding-select": () ->
+	"click .hover-click": () ->
 		inst = Template.instance()
 		context = inst.data
 		value = context.value

@@ -6,9 +6,10 @@ _job_fields =
 		role: 1
 		idea: 1
 		team: 1
+		social: 1
 		process: 1
 		strategic: 1
-		player: 1
+		contributor: 1
 		organization_id: 1
 		challenge_ids: 1
 
