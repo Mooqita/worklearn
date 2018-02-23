@@ -49,6 +49,10 @@ Template.designed_challenges.events
 					url = build_url "challenge_design", query
 					FlowRouter.go url
 
+	"click #template_challenge": () ->
+		url = build_url "challenge_pool"
+		FlowRouter.go url
+
 ########################################
 #
 # challenge_preview

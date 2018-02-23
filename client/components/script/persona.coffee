@@ -25,6 +25,7 @@ _draw_persona = (instance, width = 400, height = 200) ->
 	is_ready = true
 
 	if not persona
+		console.log "persona not defined"
 		persona = _default_persona
 		is_ready = false
 
@@ -83,7 +84,8 @@ _draw_persona = (instance, width = 400, height = 200) ->
 		.domain(["Manager", "Builder", "Mediator", "Organizer", "Visionary"])
 		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
 
-	key = (d) -> return d.data.label
+	key = (d) ->
+		return d.data.label
 
 	#############################################################################
 	# Donut Slices

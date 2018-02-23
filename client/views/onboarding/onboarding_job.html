@@ -16,8 +16,8 @@
 				<h1>Find the talent you need!</h1>
 
 				<p style="padding-bottom: 25px">
-					We are making it easy for you to find and attract
-					the perfect talent you need to grow your business.
+					Complete our quick onboarding steps to find and
+                    attract matching talent to grow your business.
 				</p>
 
 				<a class="btn btn-theme" href="onboarding_job_role">Get started</a>
@@ -100,12 +100,28 @@
 		<h1>Competencies</h1>
 		<p>
 			Finding the candidate with the right skill set is important.
-			Mooqita however can do more. We can help you find the person
+			However, Mooqita can do more for you. We can help you find the person
 			that will complement your teams social fabric.
 		</p>
 		<div class="row" style="padding: 20px 0px">
+            <div class="col-sm-6 padding-next">
+                <div class="toggle-button toggle-button">
+                    <input id="player_id" type="checkbox"
+                           aria-describedby="player_explain">
+                    <label for="player_id">Team Player</label>
+                    <div class="toggle-button-icon"></div>
+                </div>
+
+                <div>
+                    <small id="player_explain" class="form-text text-muted">
+                        A candidate who quickly understands what is needed and focuses on getting it done.
+                    </small>
+                </div>
+            </div>
+
 			<div class="col-sm-6 padding-next">
-				<div class="toggle-button toggle-button">
+
+                <div class="toggle-button toggle-button">
 					<input id="team_id" type="checkbox"
 								 aria-describedby="team_explain">
 					<label for="team_id">Leading People</label>
@@ -146,7 +162,6 @@
 				<div>
 					<small id="idea_explain" class="form-text text-muted">
 						Do you need fresh and new ideas for products or features?
-						Then you check this.
 					</small>
 				</div>
 			</div>
@@ -162,7 +177,7 @@
 				<div>
 					<small id="process_explain" class="form-text text-muted">
 						The gritty little things that need to be done again and
-						again. If someone has a working solution...
+						again require someone who can develop efficient processes.
 					</small>
 				</div>
 			</div>
@@ -170,7 +185,7 @@
 
 			<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
 			<a class="btn btn-theme" href="onboarding_job_finish">
-				Generate
+				Generate Matches
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -221,12 +236,12 @@
 
 
 <template name="job_overview">
-	<h1>Finishing Touches</h1>
+	<h1>Finishing Touches: Your Profile</h1>
 
 	<p class="padding-next">
 		To personalize the invitation to your team members
-		we need to know your name and your organizations name
-		and a logo would be nice as well.
+		we need to know your name and that of your organization.
+        Adding a profile picture and logo helps others recognize you and your organization.
 	</p>
 
 	{{#let profile=user_profile}}

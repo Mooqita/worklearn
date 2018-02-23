@@ -5,22 +5,31 @@
 -------------------------------------------------->
 <template name="designed_challenges">
 	{{#mooqita_wide_spacing}}
-		<div class="item-set padding-top">
-			<h1>
-				Challenges you designed
+        <div class="item-set padding-top">
+            <h1>
+                Challenges you designed
+                <div class="btn-group pull-right">
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="add_challenge">
 
-				<div class="btn btn-theme pull-right"
-						 style="min-width: 50px;"
-						 id="add_challenge">
+                    {{>popout_base title="New Blank Challenge"
+                            content="Click to add a new challenge."
+                            icon_class="fa fa-2x fa-plus"}}
+                </div>
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="template_challenge">
 
-					{{>popout_base title="Add Challenge"
-							content="Click to add a new challenge."
-							icon_class="fa fa-2x fa-plus"}}
-				</div>
-			</h1>
+                    {{>popout_base title="Create Challenge from Template"
+                            content="Click to select a template."
+                            icon_class="fa fa-2x fa-file"}}
+                </div>
+                </div>
+            </h1>
 
 			<p class="padding-next">
-				Here you can find all the challenges you designed.
+				Here you can find all the challenges you created from scratch or using a template.
 			</p>
 
 			{{#paging subscription="my_challenges" page=0 count=10

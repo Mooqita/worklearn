@@ -92,6 +92,14 @@
 |
 -------------------------------------------------->
 <template name="job_posting">
+	<style>
+		.requirement-row{
+			width: 100%;
+			display: inline-block;
+			padding-bottom: 20px;
+		}
+	</style>
+
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
 			<h1 class="editable">
@@ -106,11 +114,11 @@
 				{{/if}}
 
 				{{>basic_input method="set_field" collection_name="jobs"
-						item_id=job._id field="title" placeholder="Click: to give your job post a title."}}
+						item_id=job._id field="title" placeholder="Click here and make sure to give your job post a title!"}}
 			</h1>
 
 			{{>markdown_input method="set_field" collection_name="jobs"
-					item_id=job._id field="description" placeholder="A short description of what you are looking for."}}
+					item_id=job._id field="description" placeholder="A short description of what you are looking for in your own words. This is a good place to paste a classic hiring post description."}}
 
 			<h1>Role</h1>
 
@@ -158,17 +166,31 @@
 
 			<p>
 				Finding the candidate with the right skill set is important.
-				Mooqita however can do more. We can help you find the person
+				However, Mooqita can do more for you. We can help you find the person
 				that will complement your teams social fabric.
 			</p>
 
 			<div class="row">
 				<div class="col-sm-8 col-ms-6">
-					<div class="row" style="padding: 20px 0px">
+					<div class="row">
+						<div class="col-sm-6 padding-next">
+							{{>toggle_button label="Individual Contributor"
+									collection_name="jobs" item_id=job._id field="contributor"
+									explain="A candidate who quickly understands what is needed and focuses on getting it done."}}
+						</div>
+
 						<div class="col-sm-6 padding-next">
 							{{>toggle_button label="Strategic Decisions"
 									collection_name="jobs" item_id=job._id field="strategic"
 									explain="Does the candidate need to lead other members of your team?"}}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6 padding-next">
+							{{>toggle_button label="Social Hub"
+									collection_name="jobs" item_id=job._id field="social"
+									explain = "A candidate who brings everyone together and strengthens the teams social fabric."}}
 						</div>
 
 						<div class="col-sm-6 padding-next">
@@ -200,13 +222,15 @@
 				</div>
 			</div>
 
-			<h1>Team Member</h1>
+			<h1>Team Members</h1>
 
 			<p>
 				These are the members of your organization. To improve your job
 				search you can add the people your candidate will work with. And
-				do not forget about yourself. So fill out your profile as well.
+				do not forget about yourself. Use the edit button to complete your profile.
 			</p>
+
+      <!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
 
 			{{>group_page organization_id=organization_id}}
 
@@ -214,44 +238,140 @@
 
 			<p>
 				Add some challenges to the job posting that candidates should be able to solve.
-				We make sure they can.
+				We make sure they can. This step is very important to guarantee that we can match you with the right
+        talent. After adding new challenges it may take a few days until a great match has been found. We will
+        alert you via email!
 			</p>
 
-			<select class="selectpicker user_select_class form-control" multiple
-							title="Select challenges" data-live-search="true" id="challenges_id">
-				{{#each challenges}}
-					<option value="{{_id}}">{{title}}</option>
-				{{/each}}
-			</select>
+      <!-- TODO: Consider enforcing that at least one example challenge is added! -->
 
-			<h1>Results</h1>
+			<h3>Add a new challenge:</h3>
 
-			<p>
-				Here you can find the persona and more information about
-				whom our algorithm is searching for.
-			</p>
+			<div class="form-inline">
+				<div class="btn btn-theme"
+						 style="min-width: 40px;"
+						 id="add_challenge">
+					<span class="fa fa-plus"></span> Blank Challenge
+				</div>
+				<div class="btn btn-theme"
+						 style="min-width: 40px;"
+						 id="template_challenge">
+					<span class="fa fa-file"></span> From Challenge Pool
+				</div>
+				<select class="form-control user_select_class"
+								title="Select one of your existing challenges"
+								data-live-search="true" id="challenges_id">
+					{{#each challenges}}
+						<option value="{{_id}}">{{title}}</option>
+					{{/each}}
+				</select>
+			</div>
+
+            <h3>Challenges already linked to this job posting:</h3>
+
+			{{#if job}}
+				{{>job_challenges_preview job}}
+			{{/if}}
+
+			<h1>Optimized Persona</h1>
 
 			<div class="row">
-				<div class="col-sm-5 col-ms-5">
-					<h2>Job Persona</h2>
-					{{>persona 	persona_data=(job_persona job) has_text=true
-											width=300 height=180}}
-
-					<h2>Team Persona</h2>
-					{{>persona	persona_data=team_persona has_text=true
-											width=300 height=180}}
+				<div class="col-md-8 col-sm-8 col-ms-6 col-xs-12">
+					<p>
+						<div class="raised" style="float: left; width: 50%; margin-right: 25px">
+							{{>persona	persona_data=(optimal_persona job) offset_x=0
+													has_text=true width=310 height=200}}
+						</div>
+						Based on what you and the team members have told us, this is the optimized persona.
+						This persona represents a schema of traits that we are now scanning for in our talent pool
+						to best complement your team.
+						We will alert via email when a great match has been found.
+					</p>
 				</div>
 
-				<div class="col-sm-7 col-ms-7">
-					<h2>Optimized Persona</h2>
-					{{>persona	persona_data=(optimal_persona job) has_text=true
-											width=300 height=180 offset_x=0}}
+				<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
+					<div class="raised">
+						<div class="requirement-row">
+							<h2>Visionary</h2>
+							{{>trait_requirement score=(team_requirement "Visionary")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Organizer</h2>
+							{{>trait_requirement score=(team_requirement "Organizer")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Mediator</h2>
+							{{>trait_requirement score=(team_requirement "Mediator")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Manager</h2>
+							{{>trait_requirement score=(team_requirement "Manager")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Builder</h2>
+							{{>trait_requirement score=(team_requirement "Builder")
+																	 mean=20
+																	 sd=10}}
+						</div>
+					</div>
 				</div>
 			</div>
+
+            <!-- TODO: Add a publish button (if not yet published but at least one challenge and one persona are given). -->
+
+            <!-- TODO: Show (immediate, preliminary) matches (with conf. score) for posting (at the latest after publishing?)! -->
+
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
+<template name="job_challenges_preview">
+	<div class="item-set" style="padding: 0px">
+		{{#each challenges}}
+			{{>challenge_preview}}
+		{{/each}}
+		<hr>
+	</div>
+</template>
+
+<template name="trait_requirement">
+	<div class="svg-holder">
+		<svg viewbox="0 0 55 32" class="circular-chart">
+			<path class="circle-bg"
+						d = "{{get_arc 0 100 20 7.5 26}}"/>
+			<path class="circle blue"
+						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle light"
+						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
+			<path class="marker theme"
+						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
+
+			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="27.5" y="24" class="legend theme-fill">Score</text>
+			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
+		</svg>
+	</div>
+</template>
 
 <!------------------------------------------------
 |
