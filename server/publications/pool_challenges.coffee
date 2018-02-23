@@ -54,7 +54,7 @@ Meteor.publish 'pool_challenges', (parameter) ->
 	else
 		github_repo_restrict = ''
 
-	if parameter.query.length > 3
+	if parameter.query.length > 3 or github_repo_restrict != ''
 		HTTP.call('GET', github_base_url + encodeURI(parameter.query + github_repo_restrict + ' +type:issue +is:public +archived:false +state:open -label:resolved -label:bug +label:"help wanted" +label:"good first issue"'),
 			headers:
 				'User-Agent': "Meteor/1.6.1"

@@ -277,6 +277,7 @@
                         Based on what you and the team members have told us, this is the optimized persona.
                         This persona represents a schema of traits that we are now scanning for in our talent pool
                         to best complement your team.
+                    <br/>
                         We will alert via email when a great match has been found.
 					</p>
 				</div>
@@ -324,6 +325,26 @@
             <!-- TODO: Add a publish button (if not yet published but at least one challenge and one persona are given). -->
 
             <!-- TODO: Show (immediate, preliminary) matches (with conf. score) for posting (at the latest after publishing?)! -->
+
+            <div class="row">
+                <p>&nbsp;</p>
+                {{#unless g_is_public "Jobs"}}
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                                <span class="btn-group btn-group-justified">
+                                    <div class="btn btn-theme" id="save">Save</div>
+                                </span>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                                <span class="btn-group btn-group-justified">
+                                    <div class="btn btn-theme" {{publish_disabled}}
+                                         id="publish">Publish Job Posting Now</div>
+                                </span>
+                        </div>
+                    </div>
+                {{/unless}}
+            </div>
 
 		</div>
 	{{/mooqita_wide_spacing}}
