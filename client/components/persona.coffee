@@ -142,6 +142,16 @@
 
 
 ###############################################################################
+@persona_normalize_component = (a, min, max) ->
+	a = persona_normalize(a)
+
+	for t in a
+		t.value = min + t.value * max
+
+	return a
+
+
+###############################################################################
 @persona_add = (a, b) ->
 	inter = {}
 
@@ -229,13 +239,13 @@
 
 	for t in a
 		value = max - t.value
-		inter[t.label] = if value > 0 then value else 0.01
+		inter[t.label] = if value > 0 then value else max / 20.0
 
 	return persona_intermediate_to_vis inter
 
 
 ###############################################################################
-@persona_extract_requirements = (team) ->
+@persona_extract_team = (team) ->
 	n = team.length
 
 	if n == 0
@@ -248,23 +258,14 @@
 		Stability: 0
 		Openness: 0
 
-	n = 0
 	for member in team
 		if not member.big_five
 			continue
 
 		b5 = calculate_persona_40 member.big_five
-		n += 1
-
 		for t in b5
 			inv = t.value
 			avg[t.label] = avg[t.label] + inv
-
-	if n == 0
-		return undefined
-
-	for l in avg
-		avg[l] /= n
 
 	return persona_intermediate_to_vis avg
 
@@ -303,11 +304,11 @@
 
 	sum = man + org + med + bui + vis
 
-	persona = [ { label: "Manager", value: man / sum },
-							{ label: "Organizer", value: org / sum },
-							{ label: "Mediator", value: med / sum },
-							{ label: "Builder", value: bui / sum },
-							{ label: "Visionary", value: vis / sum } ]
+	persona = [ { label: "Manager", value: Math.round(man / sum * 100)},
+							{ label: "Organizer", value: Math.round(org / sum * 100) },
+							{ label: "Mediator", value: Math.round(med / sum * 100) },
+							{ label: "Builder", value: Math.round(bui / sum * 100) },
+							{ label: "Visionary", value: Math.round(vis / sum * 100) } ]
 
 	return persona
 

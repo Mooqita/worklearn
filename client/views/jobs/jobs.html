@@ -92,6 +92,14 @@
 |
 -------------------------------------------------->
 <template name="job_posting">
+	<style>
+		.requirement-row{
+			width: 100%;
+			display: inline-block;
+			padding-bottom: 20px;
+		}
+	</style>
+
 	{{#mooqita_wide_spacing}}
 		<div class="padding-top">
 			<h1 class="editable">
@@ -224,34 +232,96 @@
 				{{/each}}
 			</select>
 
-			<h1>Results</h1>
+			{{#each job.challenge_ids}}
+				{{>job_preview}}
+			{{/each}}
 
-			<p>
-				Here you can find the persona and more information about
-				whom our algorithm is searching for.
-			</p>
+			<h1>Optimized Persona</h1>
 
 			<div class="row">
-				<div class="col-sm-5 col-ms-5">
-					<h2>Job Persona</h2>
-					{{>persona 	persona_data=(job_persona job) has_text=true
-											width=300 height=180}}
+				<div class="col-md-8 col-sm-8 col-ms-6 col-xs-12">
+					<p>
+						<div class="raised" style="float: left; width: 50%; margin-right: 25px">
+							{{>persona	persona_data=(optimal_persona job) offset_x=0
+													has_text=true width=310 height=200}}
+						</div>
 
-					<h2>Team Persona</h2>
-					{{>persona	persona_data=team_persona has_text=true
-											width=300 height=180}}
+						Here you can find the persona and more information about
+						whom our algorithm is searching for. The following graphs
+						show you the requirements of your team.
+					</p>
 				</div>
 
-				<div class="col-sm-7 col-ms-7">
-					<h2>Optimized Persona</h2>
-					{{>persona	persona_data=(optimal_persona job) has_text=true
-											width=300 height=180 offset_x=0}}
+				<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
+					<div class="raised">
+						<div class="requirement-row">
+							<h2>Visionary</h2>
+							{{>trait_requirement score=(team_requirement "Visionary")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Organizer</h2>
+							{{>trait_requirement score=(team_requirement "Organizer")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Mediator</h2>
+							{{>trait_requirement score=(team_requirement "Mediator")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Manager</h2>
+							{{>trait_requirement score=(team_requirement "Manager")
+																	 mean=20
+																	 sd=10}}
+						</div>
+
+						<div class="requirement-row">
+							<h2>Builder</h2>
+							{{>trait_requirement score=(team_requirement "Builder")
+																	 mean=20
+																	 sd=10}}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
+
+<template name="trait_requirement">
+	<div class="svg-holder">
+		<svg viewbox="0 0 55 32" class="circular-chart">
+			<path class="circle-bg"
+						d = "{{get_arc 0 100 20 7.5 26}}"/>
+			<path class="circle blue"
+						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle light"
+						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
+			<path class="marker theme"
+						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
+
+			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="27.5" y="24" class="legend theme-fill">Score</text>
+			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
+		</svg>
+	</div>
+</template>
 
 <!------------------------------------------------
 |
