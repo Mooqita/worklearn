@@ -6,17 +6,7 @@
 
 ################################################################
 Meteor.methods
-	onboard_organization: (data) ->
-		pattern =
-			role:String,
-			idea:Number,
-			team:Number,
-			process:Number,
-			strategic:Number
-			contributor:Number
-			social: Number
-		check data, pattern
-
+	onboard_organization: () ->
 		user = Meteor.user()
 		if not user
 			throw new Meteor.Error "Not authorized"
@@ -27,12 +17,31 @@ Meteor.methods
 		else
 			org_id = org._id
 
-		job = get_my_document Jobs
-		if not job
-			data["organization_id"] = org_id
-			job_id = gen_job data
+		return org_id
+
+	onboard_job: (data, org_id) ->
+		pattern =
+			role:String
+			idea:Number
+			team:Number
+			process:Number
+			strategic:Number
+			contributor:Number
+			social: Number
+		check data, pattern
+
+		user = Meteor.user()
+		if not user
+			throw new Meteor.Error "Not authorized"
+
+		org = Organizations.findOne(org_id)
+		if not org
+			org_id = gen_organization()
 		else
-			job_id = job._id
+			org_id = org._id
+
+		data["organization_id"] = org_id
+		job_id = gen_job data
 
 		return job_id
 

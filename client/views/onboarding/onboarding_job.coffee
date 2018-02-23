@@ -142,6 +142,32 @@ Template.onboarding_job_register.helpers
 ################################################################################
 
 ################################################################################
+Template.job_overview.onCreated ->
+	self = this
+
+	self.autorun ()->
+		org_filter =
+			collection_name: "organizations"
+		org_admissions = Admissions.find(org_filter).fetch()
+
+		organization_id = ""
+		if org_admissions.length > 0
+			organization_id = org_admissions[0].resource_id
+			self.data.organization_id = organization_id
+
+		self.subscribe "my_organizations", org_admissions
+
+		if self.subscriptionsReady()
+			if Organizations.find().count() == 0
+				Meteor.call "onboard_organization",
+					(err, res) ->
+						if res
+							sAlert.success("Organization created")
+						if err
+							sAlert.error(err)
+
+
+################################################################################
 Template.job_overview.helpers
 	persona_data: () ->
 		return Session.get "onboarding_job_persona_data"
@@ -155,48 +181,27 @@ Template.job_overview.helpers
 
 		return profile
 
-
 	organization_profile: () ->
 		profile = Organizations.findOne()
 		return profile
 
 
-	job_id: () ->
-		job = Jobs.findOne()
-		if not job
-			return undefined
-		return job._id
-
-
 ################################################################################
-Template.job_overview.onCreated () ->
-	self = this
-	data = Session.get "onboarding_job_posting"
+Template.job_overview.events
+	"click #show_posting": (event) ->
+		org = Organizations.findOne()
+		data = Session.get "onboarding_job_posting"
 
-	self.autorun ()->
-		org_filter =
-			collection_name: "organizations"
-		org_admissions = Admissions.find(org_filter).fetch()
+		Meteor.call "onboard_job", data, org._id,
+			(err, res) ->
+				if err
+					sAlert.error(err)
+					return
 
-		job_filter =
-			collection_name: "jobs"
-		job_admissions = Admissions.find(job_filter).fetch()
+				query =
+					job_id: res
+					organization_id: org._id
 
-		invite_filter =
-			collection_name: "invitations"
-		invite_admissions = Admissions.find(invite_filter).fetch()
-
-		organization_id = ""
-		if org_admissions.length > 0
-			organization_id = org_admissions[0].resource_id
-			self.data.organization_id = organization_id
-
-		self.subscribe "send_invitations", invite_admissions
-		self.subscribe "my_organizations", org_admissions
-		self.subscribe "my_jobs", job_admissions
-
-		if self.subscriptionsReady()
-			if Organizations.find().count() == 0
-				Meteor.call "onboard_organization", data
-
+				href = build_url "job_posting", query, "app"
+				FlowRouter.go href
 
