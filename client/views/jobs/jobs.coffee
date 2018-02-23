@@ -134,6 +134,18 @@ Template.job_challenges_preview.onCreated () ->
 		self.subscribe "challenges_by_ids", self.data.challenge_ids
 
 #########################################################
+Template.job_challenges_preview.helpers
+	challenges: () ->
+		inst = Template.instance()
+		ids = inst.data.challenge_ids
+
+		filter =
+			_id:
+				$in: ids
+
+		return Challenges.find(filter)
+
+#########################################################
 # Job posting
 #########################################################
 
@@ -193,7 +205,7 @@ Template.job_posting.helpers
 
 	optimal_persona: (data) ->
 		members = TeamMembers.find().fetch()
-		team = persona_extract_requirements(members)
+		team = persona_extract_team(members)
 		if not team
 			return undefined
 

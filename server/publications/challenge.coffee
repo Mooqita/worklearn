@@ -110,8 +110,9 @@ Meteor.publish "challenges_by_ids", (challenge_ids) ->
 		_id:
 			$in: challenge_ids
 
-	filter = get_my_filter Challenges, {sub_filter}
-	crs = Challenges.find filter, _challenge_fields
+	# TODO: improve get_my_filter to handle multiple ids.
+	#filter = get_my_filter Challenges, {sub_filter}
+	crs = Challenges.find sub_filter, _challenge_fields
 
 	log_publication crs, user_id, "challenges_by_ids"
 	return crs

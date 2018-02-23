@@ -224,31 +224,32 @@
 				Add some challenges to the job posting that candidates should be able to solve.
 				We make sure they can.
 			</p>
-            <h3>Add a new challenge:</h3>
-            <div class="form-inline">
-                <div class="btn btn-theme"
-                     style="min-width: 40px;"
-                     id="add_challenge">
-                    <span class="fa fa-plus"></span> Blank Challenge
-                </div>
-                <div class="btn btn-theme"
-                     style="min-width: 40px;"
-                     id="template_challenge">
-                    <span class="fa fa-file"></span> From Challenge Pool
-                </div>
-                <select class="selectpicker user_select_class form-control" multiple
-                                title="Select one of your existing challenges" data-live-search="true" id="challenges_id">
-                    {{#each challenges}}
-                        <option value="{{_id}}">{{title}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            
-            {{>job_challenges_preview job}}
 
-			{{#each job.challenge_ids}}
-				{{>job_preview}}
-			{{/each}}
+			<h3>Add a new challenge:</h3>
+
+			<div class="form-inline">
+				<div class="btn btn-theme"
+						 style="min-width: 40px;"
+						 id="add_challenge">
+					<span class="fa fa-plus"></span> Blank Challenge
+				</div>
+				<div class="btn btn-theme"
+						 style="min-width: 40px;"
+						 id="template_challenge">
+					<span class="fa fa-file"></span> From Challenge Pool
+				</div>
+				<select class="selectpicker user_select_class form-control" multiple
+								title="Select one of your existing challenges"
+								data-live-search="true" id="challenges_id">
+					{{#each challenges}}
+						<option value="{{_id}}">{{title}}</option>
+					{{/each}}
+				</select>
+			</div>
+
+			{{#if job}}
+				{{>job_challenges_preview job}}
+			{{/if}}
 
 			<h1>Optimized Persona</h1>
 
@@ -310,10 +311,12 @@
 </template>
 
 <template name="job_challenges_preview">
-    {{#each challenges}}
-        {{>challenge_preview}}
-        {{.}}
-    {{/each}}
+	<div class="item-set" style="padding: 0px">
+		{{#each challenges}}
+			{{>challenge_preview}}
+		{{/each}}
+		<hr>
+	</div>
 </template>
 
 <template name="trait_requirement">
