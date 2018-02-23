@@ -85,3 +85,13 @@ Coming soon.
 
 ## Permissions
 Coming soon.
+
+## Known Challenges
+We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them.
+
+### Blank Page on First Start Up
+Occasionally after installing the platform accessing the website locally (http://localhost:3000/) only shows a blank page. In this cas you should use the debug console of your browser to check for missing client side packages. A common package in fact seems to be the core.js package. Run the following command to resolve the issue: 
+
+	meteor npm install --save core-js
+
+There might be more packages missing so you might need to install more packages. We do not know exactly why this is happening but it seems it is a Meteor issue and will be resolved in the future. Thanks Connor!
