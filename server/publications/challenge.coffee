@@ -95,6 +95,26 @@ Meteor.publish "my_challenge_by_id", (challenge_id) ->
 	log_publication crs, user_id, "my_challenge_by_id"
 	return crs
 
+#######################################################
+Meteor.publish "challenges_by_ids", (challenge_ids) ->
+	if challenge_ids and Array.isArray(challenge_ids) and challenge_ids.length > 0
+		check(challenge_ids,[String])
+	else
+		return []
+
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	sub_filter =
+		_id:
+			$in: challenge_ids
+
+	filter = get_my_filter Challenges, {sub_filter}
+	crs = Challenges.find filter, _challenge_fields
+
+	log_publication crs, user_id, "challenges_by_ids"
+	return crs
 
 #######################################################
 Meteor.publish "challenge_summaries", (parameter) ->

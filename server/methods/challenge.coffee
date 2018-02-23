@@ -20,7 +20,7 @@ Meteor.methods
 		check(content,String)
 		check(link,String)
 		check(origin,String)
-		check(job_id,Match.Optional(String))
+		check(job_id,Match.Maybe(String))
 
 		user = Meteor.user()
 

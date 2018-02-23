@@ -124,6 +124,16 @@ Template.job_preview.helpers
 
 
 #########################################################
+# Job challenges preview
+#########################################################
+
+#########################################################
+Template.job_challenges_preview.onCreated () ->
+	self = this
+	self.autorun ()->
+		self.subscribe "challenges_by_ids", self.data.challenge_ids
+
+#########################################################
 # Job posting
 #########################################################
 
