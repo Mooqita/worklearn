@@ -226,7 +226,7 @@
                 <div class="btn btn-theme"
                      style="min-width: 40px;"
                      id="template_challenge">
-                    <span class="fa fa-file"></span> From Template
+                    <span class="fa fa-file"></span> From Challenge Pool
                 </div>
                 <select class="selectpicker user_select_class form-control" multiple
                                 title="Select one of your existing challenges" data-live-search="true" id="challenges_id">
@@ -235,6 +235,8 @@
                     {{/each}}
                 </select>
             </div>
+            
+            {{>job_challenges_preview job}}
 
 			<h1>Results</h1>
 
@@ -264,6 +266,12 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
+<template name="job_challenges_preview">
+    {{#each challenges}}
+        {{>challenge_preview}}
+        {{.}}
+    {{/each}}
+</template>
 
 <!------------------------------------------------
 |
