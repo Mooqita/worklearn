@@ -114,11 +114,11 @@
 				{{/if}}
 
 				{{>basic_input method="set_field" collection_name="jobs"
-						item_id=job._id field="title" placeholder="Click: to give your job post a title."}}
+						item_id=job._id field="title" placeholder="Click here and make sure to give your job post a title!"}}
 			</h1>
 
 			{{>markdown_input method="set_field" collection_name="jobs"
-					item_id=job._id field="description" placeholder="A short description of what you are looking for."}}
+					item_id=job._id field="description" placeholder="A short description of what you are looking for in your own words. This is a good place to paste a classic hiring post description."}}
 
 			<h1>Role</h1>
 
@@ -165,14 +165,20 @@
 			<h1>Competencies</h1>
 
 			<p>
-				Finding the candidate with the right skill set is important.
-				Mooqita however can do more. We can help you find the person
-				that will complement your teams social fabric.
+                Finding the candidate with the right skill set is important.
+                However, Mooqita can do more for you. We can help you find the person
+                that will complement your teams social fabric.
 			</p>
 
 			<div class="row">
 				<div class="col-sm-8 col-ms-6">
 					<div class="row" style="padding: 20px 0px">
+                        <div class="col-sm-6 padding-next">
+                            {{>toggle_button label="Team Player"
+                                    collection_name="jobs" item_id=job._id field="player"
+                                    explain="A candidate who quickly understands what is needed and focuses on getting it done."}}
+                        </div>
+
 						<div class="col-sm-6 padding-next">
 							{{>toggle_button label="Strategic Decisions"
 									collection_name="jobs" item_id=job._id field="strategic"
@@ -208,13 +214,15 @@
 				</div>
 			</div>
 
-			<h1>Team Member</h1>
+			<h1>Team Members</h1>
 
 			<p>
 				These are the members of your organization. To improve your job
 				search you can add the people your candidate will work with. And
-				do not forget about yourself. So fill out your profile as well.
+				do not forget about yourself. Use the edit button to complete your profile.
 			</p>
+
+            <!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
 
 			{{>group_page organization_id=organization_id}}
 
@@ -222,8 +230,11 @@
 
 			<p>
 				Add some challenges to the job posting that candidates should be able to solve.
-				We make sure they can.
+				We make sure they can. This step is very important to guarantee that we can match you with the right
+                talent. After adding new challenges it may take a few days until a great match has been found. We will
+                alert you via email!
 			</p>
+            <!-- TODO: Consider enforcing that at least one example challenge is added! -->
 
 			<h3>Add a new challenge:</h3>
 
@@ -238,7 +249,7 @@
 						 id="template_challenge">
 					<span class="fa fa-file"></span> From Challenge Pool
 				</div>
-				<select class="selectpicker user_select_class form-control" multiple
+				<select class="form-control user_select_class"
 								title="Select one of your existing challenges"
 								data-live-search="true" id="challenges_id">
 					{{#each challenges}}
@@ -246,6 +257,8 @@
 					{{/each}}
 				</select>
 			</div>
+
+            <h3>Challenges already linked to this job posting:</h3>
 
 			{{#if job}}
 				{{>job_challenges_preview job}}
@@ -261,9 +274,10 @@
 													has_text=true width=310 height=200}}
 						</div>
 
-						Here you can find the persona and more information about
-						whom our algorithm is searching for. The following graphs
-						show you the requirements of your team.
+                        Based on what you and the team members have told us, this is the optimized persona.
+                        This persona represents a schema of traits that we are now scanning for in our talent pool
+                        to best complement your team.
+                        We will alert via email when a great match has been found.
 					</p>
 				</div>
 
@@ -306,6 +320,11 @@
 					</div>
 				</div>
 			</div>
+
+            <!-- TODO: Add a publish button (if not yet published but at least one challenge and one persona are given). -->
+
+            <!-- TODO: Show (immediate, preliminary) matches (with conf. score) for posting (at the latest after publishing?)! -->
+
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

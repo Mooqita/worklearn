@@ -156,10 +156,14 @@ Template.job_posting.onCreated () ->
 		job_id = FlowRouter.getQueryParam("job_id")
 		organization_id = FlowRouter.getQueryParam("organization_id")
 
+		parameter =
+			page: 0
+			size: 50
+
 		self.subscribe "job_by_id", job_id
 		self.subscribe "organization_by_id", organization_id
 		self.subscribe "invitations_by_organization_id", organization_id
-
+		self.subscribe "my_challenges", parameter
 
 #########################################################
 Template.job_posting.helpers
@@ -214,6 +218,18 @@ Template.job_posting.helpers
 
 		return res
 
+	challenges: () ->
+		challenges = Challenges.find().fetch()
+		if challenges and Array.isArray(challenges) and challenges.length > 0
+			chall_count = 0
+			for challenge in challenges
+				if challenge.title && (typeof challenge.title == 'string' || challenge.title instanceof String) && challenge.title != ""
+					challenge.title = challenge.title.substring(0,46) + " [...]"
+				else
+					chall_count++
+					challenge.title = "Untitled challenge " + chall_count
+
+		return challenges
 
 #########################################################
 Template.job_posting.events
