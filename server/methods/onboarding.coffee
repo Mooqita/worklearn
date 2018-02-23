@@ -13,6 +13,8 @@ Meteor.methods
 			team:Number,
 			process:Number,
 			strategic:Number
+			contributor:Number
+			social: Number
 		check data, pattern
 
 		user = Meteor.user()

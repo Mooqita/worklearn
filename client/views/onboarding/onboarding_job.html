@@ -103,24 +103,55 @@
 			However, Mooqita can do more for you. We can help you find the person
 			that will complement your teams social fabric.
 		</p>
+
 		<div class="row" style="padding: 20px 0px">
             <div class="col-sm-6 padding-next">
                 <div class="toggle-button toggle-button">
-                    <input id="player_id" type="checkbox"
-                           aria-describedby="player_explain">
-                    <label for="player_id">Team Player</label>
+                    <input id="contributor_id" type="checkbox"
+                           aria-describedby="contributor_explain">
+                    <label for="contributor_id">Individual Contributor</label>
                     <div class="toggle-button-icon"></div>
                 </div>
 
                 <div>
-                    <small id="player_explain" class="form-text text-muted">
+                    <small id="contributor_explain" class="form-text text-muted">
                         A candidate who quickly understands what is needed and focuses on getting it done.
                     </small>
                 </div>
             </div>
 
-			<div class="col-sm-6 padding-next">
+            <div class="col-sm-6 padding-next">
+                <div class="toggle-button toggle-button">
+                    <input id="strategic_id" type="checkbox"
+                           aria-describedby="strategic_explain">
+                    <label for="strategic_id">Strategic Decisions</label>
+                    <div class="toggle-button-icon"></div>
+                </div>
 
+                <div>
+                    <small id="strategic_explain" class="form-text text-muted">
+                        Decisions that influence the shape of your product or your
+                        companies culture require a special kind of person.
+                    </small>
+                </div>
+            </div>
+
+            <div class="col-sm-6 padding-next">
+                <div class="toggle-button toggle-button">
+                    <input id="social_id" type="checkbox"
+                           aria-describedby="social_explain">
+                    <label for="social_id">Social Hub</label>
+                    <div class="toggle-button-icon"></div>
+                </div>
+
+                <div>
+                    <small id="social_explain" class="form-text text-muted">
+                        A candidate who brings everyone together and strengthens the teams social fabric.
+                    </small>
+                </div>
+            </div>
+
+			<div class="col-sm-6 padding-next">
                 <div class="toggle-button toggle-button">
 					<input id="team_id" type="checkbox"
 								 aria-describedby="team_explain">
@@ -131,22 +162,6 @@
 				<div>
 					<small id="team_explain" class="form-text text-muted">
 						Does the candidate need to lead other members of your team?
-					</small>
-				</div>
-			</div>
-
-			<div class="col-sm-6 padding-next">
-				<div class="toggle-button toggle-button">
-					<input id="strategic_id" type="checkbox"
-								 aria-describedby="strategic_explain">
-					<label for="strategic_id">Strategic Decisions</label>
-					<div class="toggle-button-icon"></div>
-				</div>
-
-				<div>
-					<small id="strategic_explain" class="form-text text-muted">
-						Decisions that influence the shape of your product or your
-						companies culture require a special kind of person.
 					</small>
 				</div>
 			</div>
@@ -216,10 +231,12 @@
 					<h1>Persona</h1>
 
 					<p class="padding-next">
-						Excellent you created a persona for your candidate.
-						To save your progress you can register an account.
-						By adding the personality of your team you can get
-						even better results.
+                        Excellent you created <em><b>a persona</b></em> for your candidate.
+                        This persona <em><b>represents a schema of traits</b></em> that we can
+                        scan for in our talent pool to best complement your team.
+						To save your progress please register an account.
+						By adding <em><b>the personality of your team members</b></em> and <em><b>example
+                        challenges</b></em> you can get even better results.
 					</p>
 
 					<button type="submit" id="register"

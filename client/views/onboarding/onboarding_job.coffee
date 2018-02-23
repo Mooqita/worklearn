@@ -53,6 +53,8 @@ Template.onboarding_job_competency.events
 		dict["team"] = if instance.find("#team_id").checked then 1 else 0
 		dict["process"] = if instance.find("#process_id").checked then 1 else 0
 		dict["strategic"] = if instance.find("#strategic_id").checked then 1 else 0
+		dict["contributor"] = if instance.find("#contributor_id").checked then 1 else 0
+		dict["social"] = if instance.find("#social_id").checked then 1 else 0
 
 		Session.set "onboarding_job_posting", dict
 
