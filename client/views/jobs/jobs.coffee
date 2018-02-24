@@ -180,10 +180,10 @@ Template.job_posting.helpers
 		if not profile.big_five
 			return false
 
-		if profile.big_five.count == 40
-			return true
+#		if profile.big_five.count >= 40
+#			return true
 
-		return false
+		return true
 
 	job: () ->
 		id = FlowRouter.getQueryParam("job_id")
