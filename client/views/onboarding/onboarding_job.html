@@ -45,7 +45,7 @@
 			Don't worry you can change this later.
 		</p>
 
-		{{>job_role}}
+		{{>job_role href="onboarding_job_competency"}}
 
 	{{/mooqita_wide_spacing}}
 </template>
@@ -66,15 +66,15 @@
 		<p>
 			Finding the candidate with the right skill set is important.
 			However, Mooqita can do more for you. We can help you find the person
-			that will complement your teams social fabric. Select any number of competencies you deem important
-            for candidates for this job posting.
+			that will complement your teams social fabric. Select any number of
+			competencies you deem important for candidates for this job posting.
 		</p>
 
 		{{>job_competency}}
 
 		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
 			<a class="btn btn-theme" href="onboarding_job_registration">
-				Generate Matches
+				Show me my candidates profile
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -230,7 +230,7 @@
 		<hr>
 
 		<div class="btn-group btn-group-justified">
-			<div class="btn btn-theme" id="show_posting">
+			<div class="btn btn-theme" id="describe_challenge">
 				Describe your challenges
 			</div>
 		</div>
@@ -252,7 +252,7 @@
 		{{>job_describe}}
 
 		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="onboarding_select_challenges">
+			<a class="btn btn-theme" href="{{get_url}}">
 				Find the challenges
 			</a>
 		</div>
@@ -274,10 +274,11 @@
 		<h1>Challenges</h1>
 
 		<p>
-			Add some challenges to the job posting that candidates should be able to solve.
-			We make sure they can. This step is very important to guarantee that we can match you with the right
-			talent. After adding new challenges it may take a few days until a great match has been found. We will
-			alert you via email!
+			Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
+			should be able to solve</b></em>.
+			We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
+			<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
+			days until a great match has been found. <br/> We will alert you via email!
 		</p>
 
 		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
@@ -285,7 +286,7 @@
 		{{>job_challenges}}
 
 		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="add_team_members">
+			<a class="btn btn-theme" href="{{get_url}}">
 				Get in your team culture
 			</a>
 		</div>
@@ -317,7 +318,7 @@
 		{{>group_page organization_id=organization_id}}
 
 		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="onboarding_job_overview">
+			<a class="btn btn-theme" href="{{get_url}}">
 				Overview
 			</a>
 		</div>
@@ -376,7 +377,7 @@
 
 		<div class="btn-group btn-group-justified">
 			<a class="btn btn-theme" href="{{get_url}}">
-				Jobs
+				Job Overview
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}

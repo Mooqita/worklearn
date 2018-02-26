@@ -13,21 +13,23 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 Template.organizations.helpers
 	need_to_register:() ->
 		filter =
-			collection_name: "organizations"
+			c: "organizations"
 
-		if Admissions.find(filter).count() > 0
+		n_org = Admissions.find(filter).count()
+
+		if n_org > 0
 			return false
 
 		return true
 
 	onboarding_url:() ->
-		url = build_url "onboarding_role", {}, "onboarding", true
+		url = build_url "onboarding_job_role", {}, "onboarding"
 		return url
 
 ###############################################################################
 Template.organizations.events
 	"click #get_started": () ->
-		url = build_url "onboarding_role", {}, "onboarding"
+		url = build_url "onboarding_job_role", {}, "onboarding"
 		FlowRouter.redirect(url)
 
 

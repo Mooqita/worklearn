@@ -1,4 +1,5 @@
 <template name="job_describe">
+	{{#let job=get_job}}
 		<h1 class="editable">
 			{{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
 					placeholder="Click here to give your post a title!"}}
@@ -10,4 +11,5 @@
 		<p class="padding-top padding-next">
 			We use this description to find challenges for you.
 		</p>
+	{{/let}}
 </template>

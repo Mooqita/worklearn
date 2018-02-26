@@ -109,14 +109,7 @@
 	return admission_filter
 
 
-#######################################################
-_union = (a, b)->
-	res = []
-	for x in a
-		if b.has(x)
-			res.push(x)
-	return res
-
+################################################################################
 @get_filter = (user, role, collection_name, filter) ->
 	if not filter
 		filter = {}
@@ -142,7 +135,7 @@ _union = (a, b)->
 			throw new Meteor.Error "Filter with _id rules are not fully implemented."
 
 	if restrict
-		resource_ids = _union(admitted_ids, restrict)
+		resource_ids = set_union(admitted_ids, restrict)
 	else
 		resource_ids = admitted_ids
 
@@ -153,7 +146,7 @@ _union = (a, b)->
 	return filter
 
 
-#######################################################
+################################################################################
 @get_my_filter = (collection, filter) ->
 	user = Meteor.user()
 	filter = get_filter user, OWNER, collection, filter
@@ -172,29 +165,28 @@ _admission_fields =
 		u: 1
 		r: 1
 
-
-#######################################################
+################################################################################
 @get_admissions = (user, role, collection, resource, options={}) ->
 	admission_filter = _get_admission_filter collection, resource, user, role
 	admission_cursor = Admissions.find admission_filter, options
 	return admission_cursor
 
 
-#######################################################
+################################################################################
 @get_admission = (user, role, collection, resource, options={}) ->
 	admission_filter = _get_admission_filter collection, resource, user, role
 	admission = Admissions.findOne admission_filter, options
 	return admission
 
 
-#######################################################
+################################################################################
 @get_my_admissions = (role, collection, resource, options={}) ->
 	user = Meteor.user()
 	admission_cursor = get_admissions user, role, collection, resource, options={}
 	return admission_cursor
 
 
-#######################################################
+################################################################################
 @get_my_admission = (role, collection, resource, options={}) ->
 	user = Meteor.user()
 	admission = get_admission user, role, collection, resource, options={}
@@ -205,7 +197,7 @@ _admission_fields =
 # admissaries
 ###############################################################################
 
-#######################################################
+################################################################################
 @get_document_admissaries = (collection, document_id, role) ->
 	owner_ids = []
 	admission_cursor = get_admissions IGNORE, role, collection, document_id
@@ -221,13 +213,13 @@ _admission_fields =
 	return owner_ids
 
 
-#######################################################
+################################################################################
 @get_document_owners = (collection, document_id) ->
 	owner_ids = get_document_admissaries collection, document_id, OWNER
 	return owner_ids
 
 
-#######################################################
+################################################################################
 @get_document_owner = (collection, document_id) ->
 	admission = get_admission IGNORE, OWNER, collection, document_id
 	if not admission
@@ -259,7 +251,7 @@ _admission_fields =
 	return item
 
 
-#######################################################
+################################################################################
 @get_documents = (user, role, collection, filter={}, options={}) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
@@ -269,7 +261,7 @@ _admission_fields =
 	return collection.find filter, options
 
 
-#######################################################
+################################################################################
 @get_document = (user, role, collection, filter={}, options={}) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
@@ -280,7 +272,7 @@ _admission_fields =
 	return document
 
 
-#######################################################
+################################################################################
 @get_my_documents = (collection, filter={}, options={}) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
@@ -290,7 +282,7 @@ _admission_fields =
 	return collection.find filter, options
 
 
-#######################################################
+################################################################################
 @get_my_document = (collection, filter={}, options={}) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
@@ -316,7 +308,7 @@ _admission_fields =
 	return has
 
 
-#######################################################
+################################################################################
 @get_roles = (user, collection, document) ->
 	roles = [PUBLIC]
 	admission_cursor = get_admissions user, IGNORE, collection, document
@@ -329,27 +321,27 @@ _admission_fields =
 	return roles
 
 
-########################################
+################################################################################
 @is_owner = (collection, item, user) ->
 	return has_role collection, item, user, OWNER
 
 
-########################################
+################################################################################
 @has_permission = (collection, item, user, permission) ->
 	return has_role collection, item, user, OWNER
 
 
-########################################
+################################################################################
 @can_set_permission = (collection, item, user) ->
 	return has_role collection, item, user, OWNER
 
 
-########################################
+################################################################################
 @can_edit = (collection, item, user) ->
 	return has_role collection, item, user, OWNER
 
 
-########################################
+################################################################################
 @can_view = (collection, item, user) ->
 	return has_role collection, item, user, OWNER
 

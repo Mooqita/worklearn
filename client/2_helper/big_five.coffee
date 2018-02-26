@@ -121,13 +121,27 @@
 		when "Stability" then return Math.round((v(5) + v(10) + (6 - v(15))) * scale_to_40)
 		when "Openness" then return Math.round((v(4) + v(9) + v(14)) * scale_to_40)
 
+
 ###############################################################################
-@calculate_persona_40 = (answers) ->
-	C = calculate_trait_40 "Conscientiousness", answers
-	A = calculate_trait_40 "Agreeableness", answers
-	E = calculate_trait_40 "Extroversion", answers
-	S = calculate_trait_40 "Stability", answers
-	O = calculate_trait_40 "Openness", answers
+@calculate_trait = (trait, answers) ->
+	l = Object.keys(answers).length
+
+	switch
+		when l == 15 then return calculate_trait_15(trait, answers)
+		when l == 16 then return calculate_trait_15(trait, answers)
+		when l == 50 then return calculate_trait_40(trait, answers)
+		when l == 51 then return calculate_trait_40(trait, answers)
+
+	console.log "length of test: " + l
+
+
+###############################################################################
+@calculate_persona = (answers) ->
+	C = calculate_trait "Conscientiousness", answers
+	A = calculate_trait "Agreeableness", answers
+	E = calculate_trait "Extroversion", answers
+	S = calculate_trait "Stability", answers
+	O = calculate_trait "Openness", answers
 
 	persona = [ { label: "Stability", value: S },
 							{ label: "Openness", value: O },
@@ -137,18 +151,3 @@
 
 	return persona
 
-###############################################################################
-@calculate_persona_15 = (answers) ->
-	C = calculate_trait_15 "Conscientiousness", answers
-	A = calculate_trait_15 "Agreeableness", answers
-	E = calculate_trait_15 "Extroversion", answers
-	S = calculate_trait_15 "Stability", answers
-	O = calculate_trait_15 "Openness", answers
-
-	persona = [ { label: "Stability", value: S },
-		{ label: "Openness", value: O },
-		{ label: "Agreeableness", value: A },
-		{ label: "Extroversion", value: E },
-		{ label: "Conscientiousness", value: C } ]
-
-	return persona

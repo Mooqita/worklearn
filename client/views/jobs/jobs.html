@@ -227,45 +227,17 @@
 					</div>
 				</div>
 
-                <h1>Challenges</h1>
+				<h1>Challenges</h1>
 
-                <p>
-                    Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
-                    should be able to solve</b></em>.
-                    We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
-                    <em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
-                    days until a great match has been found. <br/> We will alert you via email!
-                </p>
+				<p>
+					Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
+					should be able to solve</b></em>.
+					We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
+					<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
+					days until a great match has been found. <br/> We will alert you via email!
+				</p>
 
-                <!-- TODO: Consider enforcing that at least one example challenge is added! -->
-
-                <h3>Add a new challenge:</h3>
-
-                <div class="form-inline">
-                    <div class="btn btn-theme"
-                         style="min-width: 40px;"
-                         id="add_challenge">
-                        <span class="fa fa-plus"></span> Blank Challenge
-                    </div>
-                    <div class="btn btn-theme"
-                         style="min-width: 40px;"
-                         id="template_challenge">
-                        <span class="fa fa-file"></span> From Challenge Pool
-                    </div>
-                    <select class="form-control user_select_class"
-                            title="Select one of your existing challenges"
-                            data-live-search="true" id="challenges_id">
-                        {{#each challenges}}
-                            <option value="{{_id}}">{{title}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-
-                <h3>Challenges already linked to this job posting:</h3>
-
-                {{#if job}}
-                    {{>job_challenges_preview job}}
-                {{/if}}
+				{{>job_challenges}}
 
 				<h1>Team Members</h1>
 
@@ -418,6 +390,7 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
+
 <template name="job_challenges_preview">
 	<div class="item-set" style="padding: 0px">
 		{{#each challenges}}
@@ -426,6 +399,7 @@
 		<hr>
 	</div>
 </template>
+
 
 <template name="trait_requirement">
 	<div class="svg-holder">

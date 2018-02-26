@@ -4,44 +4,42 @@
 |
 -------------------------------------------------->
 <template name="job_role">
-	{{#mooqita_wide_spacing}}
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-paint-brush color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key ="role" value="design" message="Designer"
-						text="UX/UI Designer, Creative Director, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-cogs color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key ="role" value="ops" message="Operations"
-						text="Finance, Accounting, Human Resources, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-laptop color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="dev"	message="Developer"
-						text="Mobile / Fullstack Developer, DevOps, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-pie-chart color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="sales"	message="Sales"
-						text="Sales Manager, Account Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-comments-o color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="marketing"	message="Marketing"
-						text="Content Creator, Marketing Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-question-circle color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="other"	message="Others"
-						text="Attorney , etc."}}
-			</div>
+	<div class="row">
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-paint-brush color-theme" href=href
+					session="onboarding_job_posting" key ="role" value="design" message="Designer"
+					text="UX/UI Designer, Creative Director, etc."}}
 		</div>
-	{{/mooqita_wide_spacing}}
+
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-cogs color-theme" href=href
+					session="onboarding_job_posting" key ="role" value="ops" message="Operations"
+					text="Finance, Accounting, Human Resources, etc."}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-laptop color-theme" href=href
+					session="onboarding_job_posting" key="role" value="dev"	message="Developer"
+					text="Mobile / Fullstack Developer, DevOps, etc."}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-pie-chart color-theme" href=href
+					session="onboarding_job_posting" key="role" value="sales"	message="Sales"
+					text="Sales Manager, Account Manager, etc."}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-comments-o color-theme" href=href
+					session="onboarding_job_posting" key="role" value="marketing"	message="Marketing"
+					text="Content Creator, Marketing Manager, etc."}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
+			{{>hover_card icon="fa-question-circle color-theme" href=href
+					session="onboarding_job_posting" key="role" value="other"	message="Others"
+					text="Attorney , etc."}}
+		</div>
+	</div>
 </template>
 

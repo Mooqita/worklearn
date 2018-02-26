@@ -9,12 +9,12 @@
 ################################################################################
 
 ################################################################################
-_key_from_collection_name = () ->
+_key_from_collection_name = (name) ->
 	key = "active_" + name + "_admissions"
 	return key
 
 ################################################################################
-_subscription_from_collection_name = () ->
+_subscription_from_collection_name = (name) ->
 	subscription_name = name + "_by_admissions"
 	return subscription_name
 
@@ -39,9 +39,13 @@ _make_admission_set = (collection)->
 @activate_admission = (admission) ->
 	name = admission.c
 	key = _key_from_collection_name(name)
+
 	values = Session.get(key)
 	values.push(admission._id)
+	values = values.unique()
+
 	Session.set(key, values)
+
 
 ###############################################################################
 # Autorun subscriptions

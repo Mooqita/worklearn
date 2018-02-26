@@ -262,8 +262,7 @@
 		if not member.big_five
 			continue
 
-		#b5 = calculate_persona_40 member.big_five
-		b5 = calculate_persona_15 member.big_five
+		b5 = calculate_persona member.big_five
 		for t in b5
 			inv = t.value
 			avg[t.label] = avg[t.label] + inv

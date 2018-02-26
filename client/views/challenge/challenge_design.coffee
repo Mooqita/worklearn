@@ -85,10 +85,12 @@ Template.challenge_design.onCreated ->
 	self = this
 	self.send_disabled = new ReactiveVar(false)
 
-	self.autorun ->
-		id = FlowRouter.getQueryParam("challenge_id")
-		admission = get_admission(IGNORE, IGNORE, Challenges, id)
-		activate_admission(admission)
+
+########################################
+Template.challenge_design.onRendered ->
+	id = FlowRouter.getQueryParam("challenge_id")
+	admission = get_admission(IGNORE, IGNORE, Challenges, id)
+	activate_admission(admission)
 
 
 ########################################

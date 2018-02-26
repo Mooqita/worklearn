@@ -84,6 +84,32 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 
 
 #######################################################
+Meteor.publish "challenges_by_admissions", (admissions) ->
+	param =
+		c: String
+		u: String
+		i: String
+		r: String
+	check admissions, [param]
+
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	ids = []
+	for admission in admissions
+		ids.push(admission._id)
+
+	filter =
+		_id:
+			$in: ids
+
+	crs = get_documents IGNORE, IGNORE, Challenges, filter, _challenge_fields
+	log_publication crs, user_id, "challenges_by_admissions"
+	return crs
+
+
+#######################################################
 Meteor.publish "my_challenge_by_id", (challenge_id) ->
 	user_id = this.userId
 	if !user_id

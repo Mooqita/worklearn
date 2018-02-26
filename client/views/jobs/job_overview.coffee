@@ -1,28 +1,23 @@
 ################################################################################
-# Job Overview
+# Job Description
 ################################################################################
 
 ################################################################################
-Template.job_overview.onCreated ->
-	self = this
+# local variables and methods
+################################################################################
 
-	self.autorun ()->
-		org_filter =
-			collection_name: "organizations"
-		org_admissions = Admissions.find(org_filter).fetch()
+################################################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
-		organization_id = ""
-		if org_admissions.length > 0
-			organization_id = org_admissions[0].resource_id
-			self.data.organization_id = organization_id
+################################################################################
+Template.job_describe.onRendered ->
+	job_id = FlowRouter.getQueryParam("job_id")
+	admission = get_admission(IGNORE, IGNORE, Jobs, job_id)
+	activate_admission(admission)
 
-		self.subscribe "my_organizations", org_admissions
+################################################################################
+Template.job_describe.helpers
+	get_job: () ->
+		job_id = FlowRouter.getQueryParam("job_id")
+		Jobs.findOne(job_id)
 
-		if self.subscriptionsReady()
-			if Organizations.find().count() == 0
-				Meteor.call "onboard_organization",
-					(err, res) ->
-						if res
-							sAlert.success("Organization created")
-						if err
-							sAlert.error(err)

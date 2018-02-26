@@ -24,23 +24,25 @@ _check_session = () ->
 
 
 ################################################################################
+#
 # Onboarding Role
+#
 ################################################################################
 
 ################################################################################
 Template.onboarding_job_role.onCreated ->
 	_check_session()
-	#	FlowRouter.go "onboarding_job_intro"
 
 
 ################################################################################
+#
 # Onboarding Competency
+#
 ################################################################################
 
 ################################################################################
 Template.onboarding_job_competency.onCreated ->
 	_check_session()
-	#	FlowRouter.go "onboarding_job_intro"
 
 
 ################################################################################
@@ -60,7 +62,9 @@ Template.onboarding_job_competency.events
 
 
 ################################################################################
+#
 # Onboarding Finish
+#
 ################################################################################
 
 ################################################################################
@@ -70,12 +74,6 @@ Template.onboarding_job_registration.onCreated ->
 	self.autorun ()->
 		_check_session()
 		self.subscribe "my_organizations"
-
-		filter =
-			collection_name: "jobs"
-		admissions = Admissions.find(filter).fetch()
-
-		self.subscribe "my_jobs", admissions
 
 
 ################################################################################
@@ -119,7 +117,9 @@ Template.onboarding_job_registration.events
 
 
 ################################################################################
+#
 # Onboarding register
+#
 ################################################################################
 
 ################################################################################
@@ -137,12 +137,15 @@ Template.onboarding_job_register.helpers
 
 		return profile
 
+
 ################################################################################
-# Overview after registration
+#
+# View to add Organization and user information
+#
 ################################################################################
 
 ################################################################################
-Template.job_overview.onCreated ->
+Template.onboarding_job_owner.onCreated ->
 	self = this
 
 	self.autorun ()->
@@ -188,7 +191,7 @@ Template.onboarding_job_owner.helpers
 
 ################################################################################
 Template.onboarding_job_owner.events
-	"click #show_posting": (event) ->
+	"click #describe_challenge": (event) ->
 		org = Organizations.findOne()
 		data = Session.get "onboarding_job_posting"
 
@@ -202,6 +205,74 @@ Template.onboarding_job_owner.events
 					job_id: res
 					organization_id: org._id
 
-				href = build_url "describe_job", query, "onboarding"
+				href = build_url "onboarding_describe_job", query, "onboarding"
 				FlowRouter.go href
+
+
+################################################################################
+#
+# Describe your job post
+#
+################################################################################
+
+################################################################################
+Template.onboarding_describe_job.helpers
+	get_url: () ->
+		param =
+			job_id: FlowRouter.getQueryParam("job_id")
+			organization_id: FlowRouter.getQueryParam("organization_id")
+
+		url = build_url "onboarding_select_challenges", param, "onboarding"
+		return url
+
+
+################################################################################
+#
+# Select the challenges for your jop posting
+#
+################################################################################
+
+################################################################################
+Template.onboarding_select_challenges.helpers
+	get_url: () ->
+		param =
+			job_id: FlowRouter.getQueryParam("job_id")
+			organization_id: FlowRouter.getQueryParam("organization_id")
+
+		url = build_url "onboarding_team_members", param, "onboarding"
+		return url
+
+################################################################################
+#
+# Select the challenges for your jop posting
+#
+################################################################################
+
+################################################################################
+Template.onboarding_team_members.helpers
+	get_url: () ->
+		param =
+			job_id: FlowRouter.getQueryParam("job_id")
+			organization_id: FlowRouter.getQueryParam("organization_id")
+
+		url = build_url "onboarding_job_overview", param, "onboarding"
+		return url
+
+
+################################################################################
+#
+# Select the challenges for your jop posting
+#
+################################################################################
+
+################################################################################
+Template.onboarding_job_overview.helpers
+	get_url: () ->
+		param =
+			job_id: FlowRouter.getQueryParam("job_id")
+			organization_id: FlowRouter.getQueryParam("organization_id")
+
+		url = build_url "job_posting", param, "app"
+		return url
+
 

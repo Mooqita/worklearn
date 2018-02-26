@@ -19,10 +19,14 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 FlowRouter.route "/",
 	name: "land",
 	action: (params) ->
+		Session.set	"menu_template", null
+		Session.set	"login_template", null
+		Session.set	"footer_template", null
+
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_landing"
 
-		BlazeLayout.render "mooqita_landing", {base_url:"index"}
+		BlazeLayout.render "body_template", {base_url:"index"}
 
 
 ##########################################################
@@ -33,6 +37,9 @@ FlowRouter.route "/",
 FlowRouter.route "/onboarding/:template",
 	name: "onboarding",
 	action: (params) ->
+		Session.set	"menu_template", null
+		Session.set	"login_template", null
+
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_view"
 		Session.set	"footer_template", "mooqita_footer"
@@ -61,6 +68,8 @@ FlowRouter.route "/app/:template",
 FlowRouter.route "/help",
 	name: "help",
 	action: (params) ->
+		Session.set	"login_template", null
+
 		Session.set	"menu_template", "mooqita_menu"
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_help"
@@ -77,6 +86,8 @@ FlowRouter.route "/help",
 FlowRouter.route "/privacy",
 	name: "privacy",
 	action: (params) ->
+		Session.set	"login_template", null
+
 		Session.set	"menu_template", "mooqita_menu"
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_privacy"
@@ -88,6 +99,8 @@ FlowRouter.route "/privacy",
 FlowRouter.route "/terms-of-use",
 	name: "terms-of-use",
 	action: (params) ->
+		Session.set	"login_template", null
+
 		Session.set	"menu_template", "mooqita_menu"
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_terms"
@@ -106,9 +119,12 @@ FlowRouter.route "/terms-of-use",
 FlowRouter.route '/admin',
 	name: 'admin',
 	action: (params) ->
+		Session.set	"login_template", null
+
 		Session.set	"menu_template", "mooqita_menu"
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_admin"
+		Session.set	"footer_template", "mooqita_footer"
 
 		BlazeLayout.render "body_template", {base_url:"admin"}
 

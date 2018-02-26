@@ -82,6 +82,15 @@ _handle_selection = (instance, response) ->
 	a_count = instance.answer_count
 	data = instance.data
 	answers = data.answers
+
+	max = data.max_answer_count
+	count = Object.keys(data.answers.keys).length
+
+	if count >= max
+		return
+
+	console.log max, count
+
 	answers.set data.question, parseInt response
 	a_count.set a_count.get() + 1
 
