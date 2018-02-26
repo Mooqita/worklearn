@@ -59,19 +59,22 @@ Template.personality.helpers
 		return answers
 
 	questions: () ->
-		return big_five_40
+		#return big_five_40
+		return big_five_15
 
 	persona_data: () ->
 		instance = Template.instance()
 		answers = instance.answers
-		persona = calculate_persona_40 answers.keys
+		#persona = calculate_persona_40 answers.keys
+		persona = calculate_persona_15 answers.keys
 		instance.persona_data.set persona
 		return instance.persona_data.get()
 
 	score:(score_name)->
 		instance = Template.instance()
 		answers = instance.answers
-		return calculate_trait_40 score_name, answers.keys
+		#return calculate_trait_40 score_name, answers.keys
+		return calculate_trait_15 score_name, answers.keys
 
 	mean:(score_name)->
 		return Math.round((big_5_mean[score_name].m * 10) - 10)
@@ -85,7 +88,8 @@ Template.personality.helpers
 
 		m = (big_5_mean[score_name].m - 1.0) / 4
 		sd = big_5_mean[score_name].sd / 4
-		s = calculate_trait_40(score_name, answers.keys) / 40
+		#s = calculate_trait_40(score_name, answers.keys) / 40
+		s = calculate_trait_15(score_name, answers.keys) / 40
 
 		per = percentile(s, m, sd)
 
@@ -98,7 +102,8 @@ Template.personality.helpers
 
 		m = (big_5_mean[score_name].m - 1.0) / 4
 		sd = big_5_mean[score_name].sd / 4
-		s = calculate_trait_40(score_name, answers.keys) / 40
+		#s = calculate_trait_40(score_name, answers.keys) / 40
+		s = calculate_trait_15(score_name, answers.keys) / 40
 
 		d = s - m
 		z = d / sd
@@ -121,51 +126,61 @@ Template.trait_comparison.helpers
 	sd_n1_low: () ->
 		data = Template.instance().data
 		z = (data.mean - data.sd * _balance_level) / 40.0 * 100.0
+		#z = (data.mean - data.sd * _balance_level) / 15.0 * 100.0
 		return Math.round(z) - _marker_div
 
 	sd_n1_high: () ->
 		data = Template.instance().data
 		z = (data.mean - data.sd * _balance_level) / 40.0 * 100.0
+		#z = (data.mean - data.sd * _balance_level) / 15.0 * 100.0
 		return Math.round(z) + _marker_div
 
 	sd_p1_low: () ->
 		data = Template.instance().data
 		z = (data.mean + data.sd * _balance_level) / 40.0 * 100.0
+		#z = (data.mean + data.sd * _balance_level) / 15.0 * 100.0
 		return Math.round(z) - _marker_div
 
 	sd_p1_high: () ->
 		data = Template.instance().data
 		z = (data.mean + data.sd * _balance_level) / 40.0 * 100.0
+		#z = (data.mean + data.sd * _balance_level) / 15.0 * 100.0
 		return Math.round(z) + _marker_div
 
 	mean_p_low: () ->
 		data = Template.instance().data
 		z = (data.mean) / 40.0 * 100.0
+		#z = (data.mean) / 15.0 * 100.0
 		return z - _marker_width
 
 	mean_p_high: () ->
 		data = Template.instance().data
 		z = (data.mean) / 40.0 * 100.0
+		#z = (data.mean) / 15.0 * 100.0
 		return z + _marker_width
 
 	mean_p: () ->
 		data = Template.instance().data
 		z = (data.mean) / 40.0 * 100.0
+		#z = (data.mean) / 15.0 * 100.0
 		return z
 
 	score_p_low: () ->
 		data = Template.instance().data
 		z = (data.score) / 40.0 * 100.0
+		#z = (data.score) / 15.0 * 100.0
 		return z - _marker_width
 
 	score_p_high: () ->
 		data = Template.instance().data
 		z = (data.score) / 40.0 * 100.0
+		#z = (data.score) / 15.0 * 100.0
 		return z + _marker_width
 
 	score_p: () ->
 		data = Template.instance().data
 		z = (data.score) / 40.0 * 100.0
+		#z = (data.score) / 15.0 * 100.0
 		return z + _marker_width
 
 	get_arc: (percent_start, percent_end, radius, x_origin, y_origin) ->

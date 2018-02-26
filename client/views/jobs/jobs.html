@@ -227,6 +227,46 @@
 					</div>
 				</div>
 
+                <h1>Challenges</h1>
+
+                <p>
+                    Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
+                    should be able to solve</b></em>.
+                    We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
+                    <em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
+                    days until a great match has been found. <br/> We will alert you via email!
+                </p>
+
+                <!-- TODO: Consider enforcing that at least one example challenge is added! -->
+
+                <h3>Add a new challenge:</h3>
+
+                <div class="form-inline">
+                    <div class="btn btn-theme"
+                         style="min-width: 40px;"
+                         id="add_challenge">
+                        <span class="fa fa-plus"></span> Blank Challenge
+                    </div>
+                    <div class="btn btn-theme"
+                         style="min-width: 40px;"
+                         id="template_challenge">
+                        <span class="fa fa-file"></span> From Challenge Pool
+                    </div>
+                    <select class="form-control user_select_class"
+                            title="Select one of your existing challenges"
+                            data-live-search="true" id="challenges_id">
+                        {{#each challenges}}
+                            <option value="{{_id}}">{{title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <h3>Challenges already linked to this job posting:</h3>
+
+                {{#if job}}
+                    {{>job_challenges_preview job}}
+                {{/if}}
+
 				<h1>Team Members</h1>
 
 				<p>
@@ -238,45 +278,6 @@
 				<!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
 
 				{{>group_page organization_id=organization_id}}
-
-				<h1>Challenges</h1>
-
-				<p>
-					Add some challenges to the job posting that candidates should be able to solve.
-					We make sure they can. This step is very important to guarantee that we can match you with the right
-					talent. After adding new challenges it may take a few days until a great match has been found. We will
-          alert you via email!
-				</p>
-
-				<!-- TODO: Consider enforcing that at least one example challenge is added! -->
-
-				<h3>Add a new challenge:</h3>
-
-				<div class="form-inline">
-					<div class="btn btn-theme"
-							 style="min-width: 40px;"
-							 id="add_challenge">
-						<span class="fa fa-plus"></span> Blank Challenge
-					</div>
-					<div class="btn btn-theme"
-							 style="min-width: 40px;"
-							 id="template_challenge">
-						<span class="fa fa-file"></span> From Challenge Pool
-					</div>
-					<select class="form-control user_select_class"
-									title="Select one of your existing challenges"
-									data-live-search="true" id="challenges_id">
-						{{#each challenges}}
-							<option value="{{_id}}">{{title}}</option>
-						{{/each}}
-					</select>
-				</div>
-
-				<h3>Challenges already linked to this job posting:</h3>
-
-				{{#if job}}
-					{{>job_challenges_preview job}}
-				{{/if}}
 
 				<h1>Optimized Persona</h1>
 				{{#unless persona_available}}
@@ -431,22 +432,22 @@
 		<svg viewbox="0 0 55 32" class="circular-chart">
 			<path class="circle-bg"
 						d = "{{get_arc 0 100 20 7.5 26}}"/>
-			<path class="circle blue"
+			<path class="circle orange"
 						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
-			<path class="circle green"
+			<path class="circle orange"
 						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
-			<path class="circle orange"
+			<path class="circle green"
 						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
-			<path class="circle orange"
+			<path class="circle green"
 						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
 			<path class="circle light"
 						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
 			<path class="marker theme"
 						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
 
-			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
-			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
-			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="7.5" y="31" class="legend orange-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend orange-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend green-fill">Balanced ({{mean}})</text>
 			<text x="27.5" y="24" class="legend theme-fill">Score</text>
 			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
 		</svg>

@@ -49,6 +49,27 @@
 				"is exacting in their work",
 				"often feels blue",
 				"is full of ideas"]
+
+# items below implement a well-validated short form of the big five, the bfi-s or bfi-soep
+# see: Lang, F. R., John, D., Luedtke, O., Schupp, J., & Wagner, G. G. (2011). Short assessment of the Big Five: robust across survey methods except telephone interviewing. Behavior Research Methods, 43(2), 548–567. https://doi.org/10.3758/s13428-011-0066-z
+###############################################################################
+@big_five_15 = ["does a thorough job",
+	"is talkative",
+	"is sometimes rude to others",
+	"is original, comes up with new ideas",
+	"worries a lot",
+	"has a forgiving nature",
+	"tends to be lazy",
+	"is outgoing, sociable",
+	"values artistic, aesthetic experiences",
+	"gets nervous easily",
+	"does things efficiently",
+	"is reserved",
+	"is considerate and kind to almost everyone",
+	"has an active imagination",
+	"remains calm in tense situations"
+]
+
 ###############################################################################
 @big_5_mean =
 	Extroversion:
@@ -83,6 +104,22 @@
 		when "Stability" then return 2  + v(4) - v(9)  + v(14) - v(19) + v(24) + v(29) + v(34) + v(39) + v(44) + v(49)
 		when "Openness" then return 8  + v(5) - v(10) + v(15) - v(20) + v(25) - v(30) + v(35) + v(40) + v(45) + v(50)
 
+###############################################################################
+@calculate_trait_15 = (trait, answers) ->
+	v = (i) ->
+		q = big_five_15[i-1]
+		n = answers[q]
+
+		return Number(n)
+
+	scale_to_40 = 8 / 3
+
+	switch trait
+		when "Extroversion" then return Math.round((v(2) + v(8) + (6 - v(12))) * scale_to_40)
+		when "Agreeableness" then return Math.round(((6 - v(3)) + v(6) + v(13)) * scale_to_40)
+		when "Conscientiousness" then return Math.round((v(1) + (6 - v(7)) + v(11)) * scale_to_40)
+		when "Stability" then return Math.round((v(5) + v(10) + (6 - v(15))) * scale_to_40)
+		when "Openness" then return Math.round((v(4) + v(9) + v(14)) * scale_to_40)
 
 ###############################################################################
 @calculate_persona_40 = (answers) ->
@@ -97,5 +134,21 @@
 							{ label: "Agreeableness", value: A },
 							{ label: "Extroversion", value: E },
 							{ label: "Conscientiousness", value: C } ]
+
+	return persona
+
+###############################################################################
+@calculate_persona_15 = (answers) ->
+	C = calculate_trait_15 "Conscientiousness", answers
+	A = calculate_trait_15 "Agreeableness", answers
+	E = calculate_trait_15 "Extroversion", answers
+	S = calculate_trait_15 "Stability", answers
+	O = calculate_trait_15 "Openness", answers
+
+	persona = [ { label: "Stability", value: S },
+		{ label: "Openness", value: O },
+		{ label: "Agreeableness", value: A },
+		{ label: "Extroversion", value: E },
+		{ label: "Conscientiousness", value: C } ]
 
 	return persona
