@@ -16,10 +16,10 @@
 	if not callback
 		callback = (err, res) ->
 			if err
-				err_msg = "Server error modifying " + field + ": "
+				err_msg = "Error saving " + field + ": "
 				err_msg += err
 				err_msg += "A stack trace was written to the console."
-				sAlert.error(err_msg)
+				sAlert.error(err_msg, {timeout: 60000})
 
 				console.log "Client method set_field caused server error: "
 				console.log err
@@ -32,6 +32,7 @@
 				if profile
 					silent = profile.silent
 				if not silent
-					sAlert.success("Updated: " + field + " on server")
+					sAlert.success(field + " saved.")
 
 	Meteor.call "set_field", collection, document, field, value, callback
+

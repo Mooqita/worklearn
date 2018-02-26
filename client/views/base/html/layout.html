@@ -5,7 +5,6 @@
 -------------------------------------------------->
 <template name="body_template" xmlns="http://www.w3.org/1999/html">
 	{{>sAlert}}
-
 	{{#if layout_selected_login}}
 		{{#unless currentUser}}
 			{{>Template.dynamic template=layout_selected_login}}

@@ -67,20 +67,20 @@ _initialize_indices = ()->
 	log_event msg
 
 	index =
-		collection_name: 1
-		consumer_id: 1
-		role: 1
+		c: 1 # collection_name
+		i: 1 # item_id
+		r: 1 # role
 	Admissions._ensureIndex index
 
 	index =
-		collection_name: 1
-		resource_id: 1
-		role: 1
+		c: 1 # collection_name
+		u: 1 # user_id
+		r: 1 # role
 	Admissions._ensureIndex index
 
 	index =
-		collection_name: 1
-		role: 1
+		c: 1 # collection_name
+		r: 1 # role
 	Permissions._ensureIndex index
 
 	index =

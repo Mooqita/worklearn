@@ -45,43 +45,8 @@
 			Don't worry you can change this later.
 		</p>
 
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-paint-brush color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key ="role" value="design" message="Designer"
-						text="UX/UI Designer, Creative Director, etc."}}
-			</div>
+		{{>job_role}}
 
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-cogs color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key ="role" value="ops" message="Operations"
-						text="Finance, Accounting, Human Resources, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-laptop color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="dev"	message="Developer"
-						text="Mobile / Fullstack Developer, DevOps, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-pie-chart color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="sales"	message="Sales"
-						text="Sales Manager, Account Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-comments-o color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="marketing"	message="Marketing"
-						text="Content Creator, Marketing Manager, etc."}}
-			</div>
-
-			<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-				{{>hover_card icon="fa-question-circle color-theme" href="onboarding_job_competency"
-						session="onboarding_job_posting" key="role" value="other"	message="Others"
-						text="Attorney , etc."}}
-			</div>
-		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -104,102 +69,10 @@
 			that will complement your teams social fabric.
 		</p>
 
-		<div class="row" style="padding: 20px 0px">
-            <div class="col-sm-6 padding-next">
-                <div class="toggle-button toggle-button">
-                    <input id="contributor_id" type="checkbox"
-                           aria-describedby="contributor_explain">
-                    <label for="contributor_id">Individual Contributor</label>
-                    <div class="toggle-button-icon"></div>
-                </div>
+		{{>job_competency}}
 
-                <div>
-                    <small id="contributor_explain" class="form-text text-muted">
-                        A candidate who quickly understands what is needed and focuses on getting it done.
-                    </small>
-                </div>
-            </div>
-
-            <div class="col-sm-6 padding-next">
-                <div class="toggle-button toggle-button">
-                    <input id="strategic_id" type="checkbox"
-                           aria-describedby="strategic_explain">
-                    <label for="strategic_id">Strategic Decisions</label>
-                    <div class="toggle-button-icon"></div>
-                </div>
-
-                <div>
-                    <small id="strategic_explain" class="form-text text-muted">
-                        Decisions that influence the shape of your product or your
-                        companies culture require a special kind of person.
-                    </small>
-                </div>
-            </div>
-
-            <div class="col-sm-6 padding-next">
-                <div class="toggle-button toggle-button">
-                    <input id="social_id" type="checkbox"
-                           aria-describedby="social_explain">
-                    <label for="social_id">Social Hub</label>
-                    <div class="toggle-button-icon"></div>
-                </div>
-
-                <div>
-                    <small id="social_explain" class="form-text text-muted">
-                        A candidate who brings everyone together and strengthens the teams social fabric.
-                    </small>
-                </div>
-            </div>
-
-			<div class="col-sm-6 padding-next">
-                <div class="toggle-button toggle-button">
-					<input id="team_id" type="checkbox"
-								 aria-describedby="team_explain">
-					<label for="team_id">Leading People</label>
-					<div class="toggle-button-icon"></div>
-				</div>
-
-				<div>
-					<small id="team_explain" class="form-text text-muted">
-						Does the candidate need to lead other members of your team?
-					</small>
-				</div>
-			</div>
-
-			<div class="col-sm-6 padding-next">
-				<div class="toggle-button toggle-button">
-					<input id="idea_id" type="checkbox"
-								 aria-describedby="idea_explain">
-					<label for="idea_id">Contributing Ideas</label>
-					<div class="toggle-button-icon"></div>
-				</div>
-
-				<div>
-					<small id="idea_explain" class="form-text text-muted">
-						Do you need fresh and new ideas for products or features?
-					</small>
-				</div>
-			</div>
-
-			<div class="col-sm-6 padding-next">
-				<div class="toggle-button toggle-button">
-					<input id="process_id" type="checkbox"
-								 aria-describedby="process_explain">
-					<label for="process_id">Process Design</label>
-					<div class="toggle-button-icon"></div>
-				</div>
-
-				<div>
-					<small id="process_explain" class="form-text text-muted">
-						The gritty little things that need to be done again and
-						again require someone who can develop efficient processes.
-					</small>
-				</div>
-			</div>
-		</div>
-
-			<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
-			<a class="btn btn-theme" href="onboarding_job_finish">
+		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
+			<a class="btn btn-theme" href="onboarding_job_registration">
 				Generate Matches
 			</a>
 		</div>
@@ -209,10 +82,10 @@
 
 <!------------------------------------------------
 |
-| Onboarding Finish
+| Onboarding registration time
 |
 -------------------------------------------------->
-<template name="onboarding_job_finish">
+<template name="onboarding_job_registration">
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
@@ -246,19 +119,37 @@
 				</div>
 			</div>
 		{{else}}
-			{{>job_overview}}
+			{{>onboarding_job_owner}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>
 
+<template name="onboarding_job_register">
+	<div class="modal fade register-modal">
+		<div class="register-frame animated">
+			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
+				<div class="fa fa-times"></div>
+			</button>
 
-<template name="job_overview">
-	<h1>Finishing Touches: Your Profile</h1>
+			{{>atForm}}
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding job owner and organization
+|
+-------------------------------------------------->
+<template name="onboarding_job_owner">
+	<h1>Add Your Profiles</h1>
 
 	<p class="padding-next">
 		To personalize the invitation to your team members
 		we need to know your name and that of your organization.
-        Adding a profile picture and logo helps others recognize you and your organization.
+		Adding a profile picture and logo helps others recognize
+		you and your organization.
 	</p>
 
 	{{#let profile=user_profile}}
@@ -339,26 +230,154 @@
 
 		<div class="btn-group btn-group-justified">
 			<div class="btn btn-theme" id="show_posting">
-				Show me my job posting
+				Describe your challenges
 			</div>
 		</div>
 	{{/let}}
 </template>
 
+
 <!------------------------------------------------
 |
-| Onboarding Register
+| Onboarding job description and title
 |
 -------------------------------------------------->
-<template name="onboarding_job_register">
-	<div class="modal fade register-modal">
-		<div class="register-frame animated">
-			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
-				<div class="fa fa-times"></div>
-			</button>
+<template name="onboarding_describe_job">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
 
-			{{>atForm}}
+		{{>job_describe}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="onboarding_select_challenges">
+				Find the challenges
+			</a>
 		</div>
-	</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding job challenges
+|
+-------------------------------------------------->
+<template name="onboarding_select_challenges">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Challenges</h1>
+
+		<p>
+			Add some challenges to the job posting that candidates should be able to solve.
+			We make sure they can. This step is very important to guarantee that we can match you with the right
+			talent. After adding new challenges it may take a few days until a great match has been found. We will
+			alert you via email!
+		</p>
+
+		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
+
+		{{>job_challenges}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="add_team_members">
+				Get in your team culture
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding team members
+|
+-------------------------------------------------->
+<template name="onboarding_team_members">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Team Members</h1>
+
+		<p>
+			These are the members of your organization. To improve your job
+			search you can add the people your candidate will work with. And
+			do not forget about yourself. Use the edit button to complete your profile.
+		</p>
+
+		<!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
+
+		{{>group_page organization_id=organization_id}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="onboarding_job_overview">
+				Overview
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding the fruits of your hard labor
+|
+-------------------------------------------------->
+<template name="onboarding_job_overview">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Optimized Persona</h1>
+
+		{{#unless persona_available}}
+			<p>
+				You do not yet have any persona data.
+				Fill out your profile to get better results.
+			</p>
+
+			<div class="text-right">
+				<a href="{{g_build_url "onboarding_team"}}" target="_blank"
+					 class="btn btn-theme animated_0_2_s">
+					Profile <span class="fa fa-edit"></span>
+				</a>
+			</div>
+		{{else}}
+
+			{{>job_overview}}
+
+			<div class="row padding-top">
+				{{#unless g_is_public "Jobs"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Publish Job Posting Now</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+			</div>
+		{{/unless}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="{{get_url}}">
+				Jobs
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 

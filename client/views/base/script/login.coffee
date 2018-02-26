@@ -1,4 +1,8 @@
 ##########################################################
+# local variables and methods
+##########################################################
+
+##########################################################
 _add_profile = (occupation) ->
 	param =
 		occupation: occupation
@@ -28,6 +32,9 @@ Template.first_timer.helpers
 
 ##########################################################
 Template.first_timer.events
+	"click #home": () ->
+
+
 	"click #learner": () ->
 		if Template.instance().adding_profile.get()
 			return

@@ -207,7 +207,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 
 	admission_cursor = Admissions.find(filter)
 	admission_cursor.forEach (entry) ->
-		user_ids.add(entry.consumer_id)
+		user_ids.add(entry.u)
 
 	##############################################
 	# retrieving profiles

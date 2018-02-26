@@ -64,7 +64,7 @@ Template.onboarding_job_competency.events
 ################################################################################
 
 ################################################################################
-Template.onboarding_job_finish.onCreated ->
+Template.onboarding_job_registration.onCreated ->
 	self = this
 
 	self.autorun ()->
@@ -79,14 +79,14 @@ Template.onboarding_job_finish.onCreated ->
 
 
 ################################################################################
-Template.onboarding_job_finish.onRendered ->
+Template.onboarding_job_registration.onRendered ->
 	Tracker.autorun () ->
 		persona_data = persona_build Session.get "onboarding_job_posting"
 		Session.set "onboarding_job_persona_data", persona_data
 
 
 ################################################################################
-Template.onboarding_job_finish.helpers
+Template.onboarding_job_registration.helpers
 	persona_data: () ->
 		return Session.get "onboarding_job_persona_data"
 
@@ -113,7 +113,7 @@ Template.onboarding_job_finish.helpers
 
 
 ################################################################################
-Template.onboarding_job_finish.events
+Template.onboarding_job_registration.events
 	"click #register":()->
 		Modal.show 'onboarding_job_register'
 
@@ -168,7 +168,7 @@ Template.job_overview.onCreated ->
 
 
 ################################################################################
-Template.job_overview.helpers
+Template.onboarding_job_owner.helpers
 	persona_data: () ->
 		return Session.get "onboarding_job_persona_data"
 
@@ -187,7 +187,7 @@ Template.job_overview.helpers
 
 
 ################################################################################
-Template.job_overview.events
+Template.onboarding_job_owner.events
 	"click #show_posting": (event) ->
 		org = Organizations.findOne()
 		data = Session.get "onboarding_job_posting"
@@ -202,6 +202,6 @@ Template.job_overview.events
 					job_id: res
 					organization_id: org._id
 
-				href = build_url "job_posting", query, "app"
+				href = build_url "describe_job", query, "onboarding"
 				FlowRouter.go href
 

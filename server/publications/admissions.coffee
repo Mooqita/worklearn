@@ -12,15 +12,11 @@
 ###############################################################################
 _admission_fields =
 	fields:
-		collection_name: 1
-		resource_id: 1
-		consumer_id: 1
-		role: 1
+		c: 1
+		i: 1
+		u: 1
+		r: 1
 
-#######################################################
-_collaborator_fields =
-	fields:
-		emails: 1
 
 #######################################################
 Meteor.publish "admissions", (parameter) ->

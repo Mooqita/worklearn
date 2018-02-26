@@ -95,16 +95,16 @@
 	admission_filter = {}
 
 	if document_id != IGNORE
-		admission_filter["resource_id"] = document_id
+		admission_filter["i"] = document_id
 
 	if collection_name != IGNORE
-		admission_filter["collection_name"] = collection_name
+		admission_filter["c"] = collection_name
 
 	if consumer_id != IGNORE
-		admission_filter["consumer_id"] = consumer_id
+		admission_filter["u"] = consumer_id
 
 	if role != IGNORE
-		admission_filter["role"] = role
+		admission_filter["r"] = role
 
 	return admission_filter
 
@@ -131,7 +131,7 @@ _union = (a, b)->
 	admitted_ids = []
 	admission_cursor = Admissions.find admission_filter
 	admission_cursor.forEach (admission) ->
-		admitted_ids.push admission.resource_id
+		admitted_ids.push admission.i
 
 	if filter._id
 		if typeof filter._id == "string"
@@ -167,10 +167,10 @@ _union = (a, b)->
 ###############################################################################
 _admission_fields =
 	fields:
-		collection_name: 1
-		resource_id: 1
-		consumer_id: 1
-		role: 1
+		c: 1
+		i: 1
+		u: 1
+		r: 1
 
 
 #######################################################
@@ -210,7 +210,7 @@ _admission_fields =
 	owner_ids = []
 	admission_cursor = get_admissions IGNORE, role, collection, document_id
 	admission_cursor.forEach (admission) ->
-		owner_ids.push admission.consumer_id
+		owner_ids.push admission.u
 
 	#filter =
 	#	_id:
@@ -233,7 +233,7 @@ _admission_fields =
 	if not admission
 		return null
 
-	return admission.consumer_id
+	return admission.u
 
 
 ###############################################################################
@@ -309,7 +309,7 @@ _admission_fields =
 	has = false
 	admission_cursor = get_admissions user, IGNORE, collection, document
 	admission_cursor.forEach (admission) ->
-		if admission.role == role
+		if admission.r == role
 			has = true
 			return
 
@@ -321,7 +321,7 @@ _admission_fields =
 	roles = [PUBLIC]
 	admission_cursor = get_admissions user, IGNORE, collection, document
 	admission_cursor.forEach (admission) ->
-		roles.push admission.role
+		roles.push admission.r
 
 	if user
 		roles.push USER

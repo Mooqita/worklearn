@@ -33,3 +33,29 @@ Meteor.publish "organization_by_id", (organization_id) ->
 	return crs
 
 
+###############################################################################
+Meteor.publish "organizations_by_admissions", (admissions) ->
+	param =
+		c: String
+		u: String
+		i: String
+		r: String
+	check admissions, [param]
+
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	ids = []
+	for admission in admissions
+		ids.push(admission._id)
+
+	filter =
+		_id:
+			$in: ids
+
+	crs = get_documents IGNORE, IGNORE, Organizations, filter, _organization_fields
+	log_publication crs, user_id, "organizations_by_admissions"
+	return crs
+
+

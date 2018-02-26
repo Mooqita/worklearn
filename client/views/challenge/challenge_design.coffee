@@ -87,7 +87,8 @@ Template.challenge_design.onCreated ->
 
 	self.autorun ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		self.subscribe "my_challenge_by_id", id
+		admission = get_admission(IGNORE, IGNORE, Challenges, id)
+		activate_admission(admission)
 
 
 ########################################

@@ -45,14 +45,14 @@
 		throw "Role needs to be a string found: " + role
 
 	filter =
-		collection_name: collection
-		resource_id: item
-		consumer_id: user
-		role: role
+		c: collection
+		i: item
+		u: user
+		r: role
 
 	admission = Admissions.findOne filter
 	if admission
-		msg = "item already in list"
+		msg = "Admission already exists."
 		log_event msg
 		return item._id
 
