@@ -1,0 +1,20 @@
+<template name="onboarding_time">
+    {{#mooqita_wide_spacing}}
+    <h1 style="text-align: center; padding-top: 30px">
+        <img style="width: 300px" src="/images/mooqita.jpg">
+    </h1>
+    <h1 class="obheader">How many hours per week can you commit to Mooqita?</h1>
+
+    <div class="taskDescription">
+    	<p>This will help us suggest challenges that fit around your schedule.</p>
+    </div>
+
+    <div id="timeCommitSlider"></div>
+
+    <div id="timeCommitSlider_info">
+    	<p>That's about <u><span id="approxMins"></span> minutes for each day</u></p>
+    </div>
+
+    <a href="/onboarding/onboarding_timezone" class="btn btn-theme pull-right obcontinue" aria-pressed="true">Continue</a>
+    {{/mooqita_wide_spacing}}
+</template>
