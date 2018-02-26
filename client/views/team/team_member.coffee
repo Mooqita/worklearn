@@ -98,7 +98,8 @@ Template.group_page.helpers
 		if not profile.big_five
 			return undefined
 
-		persona_5 = calculate_persona_40 profile.big_five
+		#persona_5 = calculate_persona_40 profile.big_five
+		persona_5 = calculate_persona_15 profile.big_five
 		persona_job = persona_map persona_5, persona_map_person_to_job
 
 		return persona_job

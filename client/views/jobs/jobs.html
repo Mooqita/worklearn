@@ -410,22 +410,22 @@
 		<svg viewbox="0 0 55 32" class="circular-chart">
 			<path class="circle-bg"
 						d = "{{get_arc 0 100 20 7.5 26}}"/>
-			<path class="circle blue"
+			<path class="circle orange"
 						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
-			<path class="circle green"
+			<path class="circle orange"
 						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
-			<path class="circle orange"
+			<path class="circle green"
 						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
-			<path class="circle orange"
+			<path class="circle green"
 						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
 			<path class="circle light"
 						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
 			<path class="marker theme"
 						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
 
-			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
-			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
-			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="7.5" y="31" class="legend orange-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend orange-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend green-fill">Balanced ({{mean}})</text>
 			<text x="27.5" y="24" class="legend theme-fill">Score</text>
 			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
 		</svg>
