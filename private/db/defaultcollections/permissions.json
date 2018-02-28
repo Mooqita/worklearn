@@ -1,1 +1,385 @@
-[{"role":"editor","field":"paper","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"family_name","collection_name":"profiles","modify":true,"read":true},{"role":"db_admin","field":"role","collection_name":"permissions","modify":true,"read":true},{"role":"owner","field":"owner_id","collection_name":"profiles","modify":false,"read":true,"modified":{"date":"2017-05-13T05:33:39.232Z"}},{"role":"db_admin","field":"field","collection_name":"permissions","modify":true,"read":true},{"role":"editor","field":"template_id","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"title","collection_name":"messages","modify":false,"read":true,"modified":{"date":"2017-05-14T01:47:36.384Z"}},{"role":"db_admin","field":"read","collection_name":"permissions","modify":true,"read":true},{"role":"owner","field":"rating","collection_name":"feedback","modify":true,"read":true},{"role":"owner","field":"resume","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"conference","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"company_logo","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"has_occupation","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"company_description","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"abstract","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"given_name","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"group_name","collection_name":"posts","modify":true,"read":true,"modified":{"date":"2017-05-15T02:51:55.937Z"}},{"role":"owner","field":"material","collection_name":"solutions","modify":true,"read":true},{"role":"editor","field":"title","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"seen","collection_name":"messages","modify":true,"read":true},{"role":"editor","field":"figure","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"url","collection_name":"messages","modify":false,"read":true,"modified":{"date":"2017-05-14T04:02:28.836Z"}},{"role":"owner","field":"job_interested","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"content","collection_name":"messages","modify":false,"read":true,"modified":{"date":"2017-05-14T01:47:37.544Z"}},{"role":"owner","field":"avatar","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"owner_id","collection_name":"messages","modify":false,"read":true,"modified":{"date":"2017-05-14T01:46:10.382Z"}},{"role":"owner","field":"content","collection_name":"feedback","modify":true,"read":true},{"role":"owner","field":"tutor","collection_name":"profiles","modify":false,"read":true,"modified":{"date":"2017-05-22T03:54:19.557Z"}},{"role":"owner","field":"country","collection_name":"profiles","modify":true,"read":true},{"role":"db_admin","field":"modify","collection_name":"permissions","modify":true,"read":true},{"role":"owner","field":"mail_notifications","collection_name":"profiles","modify":true,"read":true,"modified":{"date":"2017-05-13T18:16:03.797Z"}},{"role":"editor","field":"avatar","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"completed","collection_name":"solutions","modify":false,"read":true,"modified":{"date":"2017-05-13T22:14:32.074Z"}},{"role":"admin","field":"tutor","collection_name":"profiles","modify":true,"read":true,"modified":{"date":"2017-05-22T03:52:56.812Z"}},{"role":"owner","field":"job_type","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"authors","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"title","collection_name":"challenges","modify":true,"read":true},{"role":"owner","field":"content","collection_name":"reviews","modify":true,"read":true},{"role":"owner","field":"hours_per_week","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"index","collection_name":"posts","modify":true,"read":true},{"role":"editor","field":"view_order","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"content","collection_name":"solutions","modify":true,"read":true},{"role":"owner","field":"state","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"rating","collection_name":"reviews","modify":true,"read":true},{"role":"owner","field":"content","collection_name":"challenges","modify":true,"read":true},{"role":"owner","field":"company_name","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"city","collection_name":"profiles","modify":true,"read":true},{"role":"db_admin","field":"collection","collection_name":"permissions","modify":true,"read":true},{"role":"editor","field":"resume","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"middle_name","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"name","collection_name":"posts","modify":true,"read":true},{"role":"editor","field":"visible_to","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"job_locale","collection_name":"profiles","modify":true,"read":true},{"role":"editor","field":"pub_year","collection_name":"posts","modify":true,"read":true},{"role":"owner","field":"num_reviews","collection_name":"challenges","modify":true,"read":true},{"role":"owner","field":"occupation","collection_name":"profiles","modify":true,"read":true},{"role":"owner","field":"material","collection_name":"challenges","modify":true,"read":true},{"role":"editor","field":"parent_id","collection_name":"posts","modify":true,"read":true}]
+[{
+	"role": "editor",
+	"field": "paper",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "family_name",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "db_admin",
+	"field": "role",
+	"collection_name": "permissions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "owner_id",
+	"collection_name": "profiles",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-13T05:33:39.232Z"
+	}
+}, {
+	"role": "db_admin",
+	"field": "field",
+	"collection_name": "permissions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "template_id",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "title",
+	"collection_name": "messages",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-14T01:47:36.384Z"
+	}
+}, {
+	"role": "db_admin",
+	"field": "read",
+	"collection_name": "permissions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "rating",
+	"collection_name": "feedback",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "resume",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "conference",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "company_logo",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "has_occupation",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "company_description",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "abstract",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "given_name",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "group_name",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true,
+	"modified": {
+		"date": "2017-05-15T02:51:55.937Z"
+	}
+}, {
+	"role": "owner",
+	"field": "material",
+	"collection_name": "solutions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "title",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "seen",
+	"collection_name": "messages",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "figure",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "url",
+	"collection_name": "messages",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-14T04:02:28.836Z"
+	}
+}, {
+	"role": "owner",
+	"field": "job_interested",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "content",
+	"collection_name": "messages",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-14T01:47:37.544Z"
+	}
+}, {
+	"role": "owner",
+	"field": "avatar",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "owner_id",
+	"collection_name": "messages",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-14T01:46:10.382Z"
+	}
+}, {
+	"role": "owner",
+	"field": "content",
+	"collection_name": "feedback",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "tutor",
+	"collection_name": "profiles",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-22T03:54:19.557Z"
+	}
+}, {
+	"role": "owner",
+	"field": "country",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "db_admin",
+	"field": "modify",
+	"collection_name": "permissions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "mail_notifications",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true,
+	"modified": {
+		"date": "2017-05-13T18:16:03.797Z"
+	}
+}, {
+	"role": "editor",
+	"field": "avatar",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "completed",
+	"collection_name": "solutions",
+	"modify": false,
+	"read": true,
+	"modified": {
+		"date": "2017-05-13T22:14:32.074Z"
+	}
+}, {
+	"role": "admin",
+	"field": "tutor",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true,
+	"modified": {
+		"date": "2017-05-22T03:52:56.812Z"
+	}
+}, {
+	"role": "owner",
+	"field": "job_type",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "authors",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "title",
+	"collection_name": "challenges",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "course",
+	"collection_name": "challenges",
+	"modify": true,	
+	"read": true
+}, {
+	"role": "owner",
+	"field": "content",
+	"collection_name": "reviews",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "hours_per_week",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "index",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "view_order",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "content",
+	"collection_name": "solutions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "state",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "rating",
+	"collection_name": "reviews",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "content",
+	"collection_name": "challenges",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "company_name",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "city",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "db_admin",
+	"field": "collection",
+	"collection_name": "permissions",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "resume",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "middle_name",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "name",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "visible_to",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "job_locale",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "pub_year",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "num_reviews",
+	"collection_name": "challenges",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "occupation",
+	"collection_name": "profiles",
+	"modify": true,
+	"read": true
+}, {
+	"role": "owner",
+	"field": "material",
+	"collection_name": "challenges",
+	"modify": true,
+	"read": true
+}, {
+	"role": "editor",
+	"field": "parent_id",
+	"collection_name": "posts",
+	"modify": true,
+	"read": true
+}]
