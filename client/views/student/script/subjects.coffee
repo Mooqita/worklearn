@@ -24,10 +24,4 @@ Template.learner_education.events
 
 		Modal.show 'learner_comp_thinking', data
 
-	"click #learner_python":(event)->
-		data =
-			feedback_id: this._id
-
-		Modal.show 'learner_comp_thinking', data
-	
 ##########################################################
