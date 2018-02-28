@@ -71,6 +71,13 @@ Template.challenge_preview.helpers
 	challenge_link: () ->
 		return build_url "organization_challenge", {challenge_id: this._id}
 
+	course: () ->
+		if this.course
+			return this.course
+
+		return "This challenge does not yet have a subject"
+
+
 
 ########################################
 #
@@ -123,6 +130,12 @@ Template.organization_challenge.helpers
 			challenge_id: this._id
 		url = build_url "learner_solution", param, true
 		return url
+	
+	course_options:() ->
+		return [{value:"", label:"No subject"}
+			{value:"comp_thinking", label:"Comp Thinking"}
+			{value:"cobol", label:"COBOL"}
+			{value:"py", label:"Python"}]
 
 ########################################
 Template.organization_challenge.events
