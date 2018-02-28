@@ -1,0 +1,193 @@
+<!------------------------------------------------
+|
+|	Learner Education
+|
+-------------------------------------------------->
+
+<template name="learner_education">
+	<div class="container-fluid">
+		{{#mooqita_wide_spacing}}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
+						<br>
+						<p>Check out these subjects...</p>
+                        <h1>Select a subject </h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="select-occupation {{select_disabled}}">
+						<div class="item" id="learner_comp_thinking">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-blackboard"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<h2>Comp. Thinking</h2>
+								</div>
+							</div>
+						</div>
+						<progress value="22" max="100"></progress>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="select-occupation">
+						<div class="item" id="learner_python">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-education"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<h2>Python</h2>
+								</div>
+							</div>
+						</div>
+						<progress value="40" max="100"></progress>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="select-occupation">
+						<div class="item" id="learner_cobol">
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-6 text-right">
+									<div class="glyphicon glyphicon-briefcase"></div>
+								</div>
+
+								<div class="col-md-12 col-sm-6 col-xs-6 text-left">
+									<h2>Cobol</h2>
+								</div>
+							</div>
+						</div>
+						<progress value="10" max="100" id="cobol_progress"></progress>
+					</div>
+				</div>
+            </div>
+		{{/mooqita_wide_spacing}}
+	</div>
+</template>
+<!------------------------------------------------
+|
+|	COBOL Modal
+|
+-------------------------------------------------->
+<template name="learner_cobol">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">Common Business-Oriented Language (COBOL)</h2>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Despite its status as a legacy programming language, COBOL is still widely used and highly valued in business, finance, and government applications.
+						The rise of experienced COBOL programmers retiring has created a market for nearly anyone who can maintain existing systems - without being a professional programmer.<br><br>
+						This course will teach skills that are critical to understanding, writing, debugging, and maintaining COBOL programs. Topics that will be covered include language design basics, data types and manipulation, arithmetic, logical operations, and real world examples.
+						<br><br>
+					</p>
+
+					<p>
+						<em><b>Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.</b></em>
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+						<a type="button" class="btn btn-theme" data-dismiss="modal">See more</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<!------------------------------------------------
+|
+|	Comp. Thinking Modal
+|
+-------------------------------------------------->
+<template name="learner_comp_thinking">
+		<div class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Title</h2>
+					</div>
+	
+					<div class="modal-body">
+						<p>
+							This is about this course
+							<br>
+						</p>
+	
+						<p>
+							<em><b>This is why they should take this</b></em>
+						</p>
+					</div>
+	
+					<div class="modal-footer">
+						<div class="btn-group btn-group-justified">
+							<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+							<a type="button" class="btn btn-theme" data-dismiss="modal">See more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+<!------------------------------------------------
+|
+|	Python Modal
+|
+-------------------------------------------------->
+<template name="learner_python">
+		<div class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Title</h2>
+					</div>
+	
+					<div class="modal-body">
+						<p>
+							This is about this course
+							<br>
+						</p>
+	
+						<p>
+							<em><b>This is why they should take this</b></em>
+						</p>
+					</div>
+	
+					<div class="modal-footer">
+						<div class="btn-group btn-group-justified">
+							<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+							<a type="button" class="btn btn-theme" data-dismiss="modal">See more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+
+
+	<!--div class="col-md-12">
+		<h2>Credits <span class="badge background-contrast">1</span></h2>
+		<p>
+			Credits is the currency in Mooqita.
+			Every time you write a review you get credits.
+			You can spend these credits requesting reviews.
+			Every review that you write will also influence
+			your resume and your score card.
+		</p>
+
+
+	</div-->
