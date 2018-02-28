@@ -60,7 +60,7 @@
 			{{title}}
 		</a>
 	</h2>
-
+	{{course}}
 	{{>more content=content}}
 </template>
 
@@ -88,7 +88,7 @@
 								{{/unless}}
 
 								{{#unless content}}
-									<li>Provide a description of the task(required)</li>
+									<li>Provide a description of the task (required)</li>
 								{{/unless}}
 
 								{{#unless num_reviews}}
@@ -118,7 +118,11 @@
 						{{>basic_input method="set_field" collection_name="Challenges"
 						item_id=_id field="title" placeholder="Title of your challenge"}}
 					</h1>
-
+					<h2 class="header">Subject</h2>
+					{{>select_input method="set_field" collection_name="Challenges"
+							item_id=_id field="course"
+							options=course_options}}
+							
 					<div class="form-group" style="display: block; overflow: hidden;">
 						<h2>Content:</h2>
 						{{>markdown_input method="set_field" collection_name="Challenges"
