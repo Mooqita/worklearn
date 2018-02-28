@@ -48,11 +48,15 @@ Meteor.methods
 		dead = []
 
 		crs.forEach (adm) ->
-			u_crs = Meteor.users.find(adm.consumer_id)
-			if u_crs.count() > 0
-				return
+			collection = get_collection(adm.c)
+			user_c = Meteor.users.find(adm.u)
+			item_c = collection.find(adm.i)
 
-			dead.push(adm._id)
+			user_empty = user_c.count() == 0
+			item_empty = item_c.count() == 0
+
+			if user_empty or item_empty
+				dead.push(adm._id)
 
 		filter =
 			_id:

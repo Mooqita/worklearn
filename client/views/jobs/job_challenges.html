@@ -30,3 +30,15 @@
 		{{>job_challenges_preview job}}
 	{{/if}}
 </template>
+
+
+<template name="job_challenges_preview">
+	<div class="item-set" style="padding: 0px">
+		{{#each challenges}}
+			{{>challenge_preview}}
+		{{/each}}
+		<hr>
+	</div>
+</template>
+
+

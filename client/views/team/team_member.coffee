@@ -2,6 +2,13 @@
 # Team Member
 #########################################################
 
+##########################################################
+# local variables and methods
+##########################################################
+
+##########################################################
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+
 #########################################################
 _refresh = (mails)->
 	$('#user_select').empty()
@@ -21,7 +28,7 @@ Template.group_page.onCreated ()  ->
 	self.selected = new ReactiveVar([])
 
 	self.autorun () ->
-		o_id = self.data.organization_id
+		o_id = FlowRouter.getQueryParam("organization_id")
 		self.subscribe "team_members_by_organization_id", o_id
 		self.subscribe "invitations_by_organization_id", o_id
 

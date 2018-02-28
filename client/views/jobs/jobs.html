@@ -92,22 +92,16 @@
 |
 -------------------------------------------------->
 <template name="job_posting">
-	<style>
-		.requirement-row{
-			width: 100%;
-			display: inline-block;
-			padding-bottom: 20px;
-		}
-	</style>
-
 	{{#mooqita_wide_spacing}}
 		{{#unless Template.subscriptionsReady}}
-			<h1 style="padding-top: 45px; text-align: center">Please wait we are loading your Job Post.</h1>
+			<h1 style="padding-top: 45px; text-align: center">
+				Please wait we are loading your Job Post.
+			</h1>
 			{{>wait}}
 		{{else}}
-			<div class="padding-top">
-				<h1 class="editable">
-					{{#if g_is_public "jobs"}}
+			{{#let job=get_job}}
+				<div class="padding-top">
+					{{#if g_is_public "jobs" job}}
 						<span class="badge background-theme ready-badge">
 							LIVE
 						</span>
@@ -117,272 +111,69 @@
 						</span>
 					{{/if}}
 
-					{{>basic_input method="set_field" collection_name="jobs"
-							item_id=job._id field="title" placeholder="Click here and make sure to give your job post a title!"}}
-				</h1>
-
-				{{>markdown_input method="set_field" collection_name="jobs"
-						item_id=job._id field="description" placeholder="A short description of what you are looking for in your own words. This is a good place to paste a classic hiring post description."}}
-
-				<h1>Role</h1>
-
-				<p>Please select the main role of your candidate.</p>
-
-				<div class="row">
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-paint-brush color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="design"
-								message="Designer" text="UX/UI Designer, Creative Director, etc."}}
-					</div>
-
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-cogs color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="ops"
-								message="Operations" text="Finance, Accounting, Human Resources, etc."}}
-					</div>
-
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-laptop color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="dev"
-								message="Developer" text="Mobile/Fullstack Developer, DevOps, etc."}}
-					</div>
-
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-pie-chart color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="sales"
-								message="Sales" text="Sales Manager, Account Manager, etc."}}
-					</div>
-
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-comments-o color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="marketing"
-								message="Marketing" text="Content Creator, Marketing Manager, etc."}}
-					</div>
-
-					<div class="col-lg-4 col-md-6 col-ms-4 col-sm-4 col-xs-6 hover-padding">
-						{{>hover_card icon="fa-question-circle color-theme"
-								collection_name="jobs" item_id=job._id field="role" value="other"
-								message="Others" text="Attorney , etc."}}
-					</div>
-				</div>
-
-				<h1>Competencies</h1>
-
-				<p>
-					Finding the candidate with the right skill set is important.
-					However, Mooqita can do more for you. We can help you find the person
-					that will complement your teams social fabric.
-				</p>
-
-				<div class="row">
-					<div class="col-sm-8 col-ms-6"
-							 style="padding-top: 20px">
-						<div class="row">
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Individual Contributor"
-										collection_name="jobs" item_id=job._id field="contributor"
-										explain="A candidate who quickly understands what is needed and focuses on getting it done."}}
-							</div>
-
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Strategic Decisions"
-										collection_name="jobs" item_id=job._id field="strategic"
-										explain="Does the candidate need to lead other members of your team?"}}
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Social Hub"
-										collection_name="jobs" item_id=job._id field="social"
-										explain = "A candidate who brings everyone together and strengthens the teams social fabric."}}
-							</div>
-
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Leading People"
-										collection_name="jobs" item_id=job._id field="team"
-										explain = "Does the candidate need to make strategic descisions about the companies future?"}}
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Contributing Ideas"
-										collection_name="jobs" item_id=job._id field="idea"
-										explain = "Do you need fresh and new ideas for products or features?"}}
-							</div>
-
-							<div class="col-sm-6 padding-next">
-								{{>toggle_button label="Process Design"
-										collection_name="jobs" item_id=job._id field="process"
-										explain = "Does the person need to specifiy processes followed by others?"}}
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-4 col-ms-6">
-						<h2>Job Persona</h2>
-						{{>persona 	persona_data=(job_persona job) has_text=true
-												width=300 height=180}}
-					</div>
-				</div>
-
-				<h1>Challenges</h1>
-
-				<p>
-					Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
-					should be able to solve</b></em>.
-					We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
-					<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
-					days until a great match has been found. <br/> We will alert you via email!
-				</p>
-
-				{{>job_challenges}}
-
-				<h1>Team Members</h1>
-
-				<p>
-					These are the members of your organization. To improve your job
-					search you can add the people your candidate will work with. And
-					do not forget about yourself. Use the edit button to complete your profile.
-				</p>
-
-				<!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
-
-				{{>group_page organization_id=organization_id}}
-
-				<h1>Optimized Persona</h1>
-				{{#unless persona_available}}
+					<h1>Description</h1>
 					<p>
-						You do not yet have any persona data.
-						Fill out your profile to get better results.
+						This description will be analyzed with our NLP system.
 					</p>
+					{{>job_describe}}
 
-					<div class="text-right">
-						<a href="{{g_build_url "onboarding_team"}}" target="_blank"
-							 class="btn btn-theme animated_0_2_s">
-							Profile <span class="fa fa-edit"></span>
-						</a>
-					</div>
-				{{else}}
+
+					<h1>Role</h1>
+					<p>
+						Please select the main role of your candidate.
+					</p>
+					{{>job_role collection_name="jobs" item_id=job._id field="role"}}
+
+
+					<h1>Competencies</h1>
+					<p>
+						Finding the candidate with the right skill set is important.
+						However, Mooqita can do more for you. We can help you find the person
+						that will complement your teams social fabric.
+					</p>
+					{{>job_competency collection_name="jobs" item_id=job._id}}
+
+
+					<h1>Challenges</h1>
+					<p>
+						Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks
+						which candidates should be able to solve</b></em>. We make sure they can. This step
+						is <em><b>very important</b></em> to guarantee that we can <em><b>match you with the
+						right talent</b></em>. After adding new challenges it may take a few days until a
+						great match has been found. <br/> We will alert you via email!
+					</p>
+					{{>job_challenges}}
+
+
+					<!--<h1>Team Members</h1>
+					<p>
+						These are the members of your organization. To improve your job
+						search you can add the people your candidate will work with. And
+						do not forget about yourself. Use the edit button to complete your profile.
+					</p>
+					{{>group_page organization_id=organization_id}}
+
+
+					<h1>Optimized Persona</h1>
+					{{>job_persona}}-->
+				</div>
+			{{/let}}
+
+			<div class="row padding-top">
+				{{#unless g_is_public "Jobs"}}
 					<div class="row">
-						<div class="col-md-8 col-sm-8 col-ms-6 col-xs-12">
-							<div class="raised" style="float: left; width: 50%; margin-right: 25px">
-								{{>persona	persona_data=(optimal_persona job) offset_x=0
-														has_text=true width=310 height=200}}
-							</div>
-
-							<p>
-								Based on what you and the team members have told us, this is the optimized persona.
-								This persona represents a schema of traits that we are now scanning for in our talent pool
-								to best complement your team.
-							</p>
-
-							<p>
-								<em><b>We will alert you via email when a great match has been found.</b></em>
-							</p>
-
-							<h2>How is the persona composed?</h2>
-							<p>
-								Based on the extent to which the personality traits are already represented in your team
-								and based on the persona that was generated for the role fit that you are looking for we
-								build a dynamically adapted persona that represents a balance between the traits you defined
-								and what is most needed in your team using psychological work team interaction models.
-							</p>
-
-							<h2>What do the traits mean?</h2>
-
-							<h3>Visionary</h3>
-							<p>
-								The visionary trait expresses in how far someone is creative and able help further
-								developments that do not yet have a fixed goal.
-							</p>
-
-							<h3>Organizer</h3>
-							<p>
-								The organizer trait expresses in how far someone has an analytic view on the state of
-								affairs and can organize ongoing work to achieve given goals.
-							</p>
-
-							<h3>Mediator</h3>
-							<p>
-								The mediator trait expresses in how far someone can find a balance between different
-								individual and task needs and goals within an organization or development.
-							</p>
-
-							<h3>Manager</h3>
-							<p>
-								The manager trait expresses in how far someone can make plans that decompose and recompose
-								challenges leading a project to the desired outcomes.
-							</p>
-
-							<h3>Builder</h3>
-							<p>
-								The manager trait expresses in how far someone has the ability to focus on the required
-								steps to achieve a given goal and does what is needed to achieve them.
-							</p>
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
 						</div>
 
-						<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
-							<div class="raised">
-								<div class="requirement-row">
-									<h2>Visionary</h2>
-									{{>trait_requirement score=(team_requirement "Visionary")
-																			 mean=20
-																			 sd=10}}
-								</div>
-
-								<div class="requirement-row">
-									<h2>Organizer</h2>
-									{{>trait_requirement score=(team_requirement "Organizer")
-																			 mean=20
-																			 sd=10}}
-								</div>
-
-								<div class="requirement-row">
-									<h2>Mediator</h2>
-									{{>trait_requirement score=(team_requirement "Mediator")
-																			 mean=20
-																			 sd=10}}
-								</div>
-
-								<div class="requirement-row">
-									<h2>Manager</h2>
-									{{>trait_requirement score=(team_requirement "Manager")
-																			 mean=20
-																			 sd=10}}
-								</div>
-
-								<div class="requirement-row">
-									<h2>Builder</h2>
-									{{>trait_requirement score=(team_requirement "Builder")
-																			 mean=20
-																			 sd=10}}
-								</div>
-							</div>
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Publish Job Posting Now</div>
+							</span>
 						</div>
-					</div>
-
-					<!-- TODO: Add a publish button (if not yet published but at least one challenge and one persona are given). -->
-					<!-- TODO: Show (immediate, preliminary) matches (with conf. score) for posting (at the latest after publishing?)! -->
-
-					<div class="row padding-top">
-						{{#unless g_is_public "Jobs"}}
-							<div class="row">
-								<div class="form-group col-sm-6">
-									<span class="btn-group btn-group-justified">
-										<div class="btn btn-theme" id="save">Save</div>
-									</span>
-								</div>
-
-								<div class="form-group col-sm-6">
-									<span class="btn-group btn-group-justified">
-										<div class="btn btn-theme" {{publish_disabled}}
-												 id="publish">Publish Job Posting Now</div>
-									</span>
-								</div>
-							</div>
-						{{/unless}}
 					</div>
 				{{/unless}}
 			</div>
@@ -390,43 +181,6 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
-
-<template name="job_challenges_preview">
-	<div class="item-set" style="padding: 0px">
-		{{#each challenges}}
-			{{>challenge_preview}}
-		{{/each}}
-		<hr>
-	</div>
-</template>
-
-
-<template name="trait_requirement">
-	<div class="svg-holder">
-		<svg viewbox="0 0 55 32" class="circular-chart">
-			<path class="circle-bg"
-						d = "{{get_arc 0 100 20 7.5 26}}"/>
-			<path class="circle orange"
-						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
-			<path class="circle orange"
-						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
-			<path class="circle green"
-						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
-			<path class="circle green"
-						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
-			<path class="circle light"
-						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
-			<path class="marker theme"
-						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
-
-			<text x="7.5" y="31" class="legend orange-fill">Low (0)</text>
-			<text x="47.5" y="31" class="legend orange-fill">High (40)</text>
-			<text x="27.5" y="2.5" class="legend green-fill">Balanced ({{mean}})</text>
-			<text x="27.5" y="24" class="legend theme-fill">Score</text>
-			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
-		</svg>
-	</div>
-</template>
 
 <!------------------------------------------------
 |

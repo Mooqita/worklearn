@@ -41,7 +41,7 @@ _make_admission_set = (collection)->
 	key = _key_from_collection_name(name)
 
 	values = Session.get(key)
-	values.push(admission._id)
+	values.push(admission)
 	values = values.unique()
 
 	Session.set(key, values)

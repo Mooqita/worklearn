@@ -16,4 +16,3 @@ Template.job_competency.events
 		dict["social"] = if instance.find("#social_id").checked then 1 else 0
 
 		Session.set "onboarding_job_posting", dict
-

@@ -36,6 +36,7 @@ Meteor.publish "organization_by_id", (organization_id) ->
 ###############################################################################
 Meteor.publish "organizations_by_admissions", (admissions) ->
 	param =
+		_id: String
 		c: String
 		u: String
 		i: String
@@ -48,7 +49,7 @@ Meteor.publish "organizations_by_admissions", (admissions) ->
 
 	ids = []
 	for admission in admissions
-		ids.push(admission._id)
+		ids.push(admission.i)
 
 	filter =
 		_id:
