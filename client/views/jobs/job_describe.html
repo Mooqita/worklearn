@@ -1,15 +1,11 @@
 <template name="job_describe">
 	{{#let job=get_job}}
-		<h1 class="editable">
+		<h2 class="editable">
 			{{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
 					placeholder="Click here to give your post a title!"}}
-		</h1>
+		</h2>
 
 		{{>markdown_input method="set_field" collection_name="jobs"	item_id=job._id field="description"
 				placeholder="A short description of what you are looking for in your own words. This is a good place to paste a classic hiring post description."}}
-
-		<p class="padding-top padding-next">
-			We use this description to find challenges for you.
-		</p>
 	{{/let}}
 </template>

@@ -12,11 +12,13 @@
 		filter["host_id"] = host_id
 
 		invitation_id = store_document_unprotected Invitations, filter, host_id, true
+		user = Accounts.findUserByEmail(email)
+		base = if user then "app" else "onboarding"
 
 		param =
 			invitation_id: invitation_id
 			organization_id: organization_id
-		url = build_url "invitation", param, "onboarding", true
+		url = build_url "invitation", param, base, true
 
 		subject = "Mooqita: Invitation from " + host_name
 

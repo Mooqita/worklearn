@@ -21,13 +21,13 @@ Meteor.methods
 
 	onboard_job: (data, org_id) ->
 		pattern =
-			role:String
-			idea:Number
-			team:Number
-			process:Number
-			strategic:Number
-			contributor:Number
-			social: Number
+			role:Match.Optional(String)
+			idea:Match.Optional(Number)
+			team:Match.Optional(Number)
+			process:Match.Optional(Number)
+			strategic:Match.Optional(Number)
+			contributor:Match.Optional(Number)
+			social: Match.Optional(Number)
 		check data, pattern
 
 		user = Meteor.user()

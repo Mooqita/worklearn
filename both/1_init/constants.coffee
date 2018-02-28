@@ -6,6 +6,7 @@
 @COLLECTION = ""
 @WILDCARD = "*"
 @IGNORE = "_|_"
+@ANY = "*"
 
 #######################################################
 # Role String Literals

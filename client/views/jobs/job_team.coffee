@@ -24,11 +24,11 @@ _refresh = (mails)->
 #########################################################
 Template.group_page.onCreated ()  ->
 	self = this
-	self.candidates = new ReactiveVar([])
 	self.selected = new ReactiveVar([])
+	self.candidates = new ReactiveVar([])
+	o_id = FlowRouter.getQueryParam("organization_id")
 
 	self.autorun () ->
-		o_id = FlowRouter.getQueryParam("organization_id")
 		self.subscribe "team_members_by_organization_id", o_id
 		self.subscribe "invitations_by_organization_id", o_id
 
@@ -139,7 +139,10 @@ Template.group_page.events
 
 		Meteor.call "invite_team_member", org._id, selected,
 			(err, res) ->
-				sAlert.error err
-				sAlert.success res
+				if err
+					sAlert.error err
+
+				sAlert.success "Invitation send"
+				inst.selected.set([])
 
 

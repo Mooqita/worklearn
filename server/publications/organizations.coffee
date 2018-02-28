@@ -22,8 +22,6 @@ Meteor.publish "organization_by_id", (organization_id) ->
 	check organization_id, String
 
 	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
 
 	filter =
 		_id: organization_id

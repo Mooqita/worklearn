@@ -45,7 +45,8 @@
 			Don't worry you can change this later.
 		</p>
 
-		{{>job_role href="onboarding_job_competency"}}
+		{{>job_role session="onboarding_job_posting" key="role"
+				href="onboarding_job_competency"}}
 
 	{{/mooqita_wide_spacing}}
 </template>
@@ -70,7 +71,7 @@
 			competencies you deem important for candidates for this job posting.
 		</p>
 
-		{{>job_competency}}
+		{{>job_competency session="onboarding_job_posting"}}
 
 		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
 			<a class="btn btn-theme" href="onboarding_job_registration">
@@ -339,26 +340,7 @@
 
 		<h1>Optimized Persona</h1>
 
-		{{>job_overview}}
-
-		<div class="padding-top padding-next">
-			{{#unless g_is_public "Jobs"}}
-				<div class="row">
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" id="save">Save</div>
-						</span>
-					</div>
-
-					<div class="form-group col-sm-6">
-						<span class="btn-group btn-group-justified">
-							<div class="btn btn-theme" {{publish_disabled}}
-									 id="publish">Publish Job Posting Now</div>
-						</span>
-					</div>
-				</div>
-			{{/unless}}
-		</div>
+		{{>job_persona}}
 
 		<div class="btn-group btn-group-justified">
 			<a class="btn btn-theme" href="{{get_url}}">

@@ -142,6 +142,10 @@ Template.job_posting.helpers
 		return job
 
 	publish_disable: () ->
-		return false
+		return "disabled"
 
 
+#########################################################
+Template.job_posting.events
+	"click #save":()->
+		sAlert.success("Posting saved")

@@ -10,13 +10,14 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ################################################################################
-Template.job_persona.onRendered ->
+Template.job_persona.onCreated ->
 	job_id = FlowRouter.getQueryParam("job_id")
-	admission = get_admission(IGNORE, IGNORE, Jobs, job_id)
-	activate_admission(admission)
-
 	organization_id = FlowRouter.getQueryParam("organization_id")
+
 	this.autorun () ->
+		admission = get_admission(IGNORE, IGNORE, Jobs, job_id)
+		activate_admission(admission)
+
 		Meteor.subscribe("team_members_by_organization_id", organization_id)
 
 
@@ -46,8 +47,10 @@ Template.job_persona.helpers
 			return undefined
 
 		job = persona_build(data)
-		res = persona_optimize_team(team, job)
+		if not job
+			return undefined
 
+		res = persona_optimize_team(team, job)
 		return res
 
 	team_requirement: (trait) ->

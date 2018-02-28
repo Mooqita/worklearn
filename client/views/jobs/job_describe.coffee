@@ -10,7 +10,7 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ################################################################################
-Template.job_describe.onRendered ->
+Template.job_describe.onCreated ->
 	job_id = FlowRouter.getQueryParam("job_id")
 
 	this.autorun () ->
