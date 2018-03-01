@@ -1,0 +1,212 @@
+<!------------------------------------------------
+|
+| Onboarding Intro
+|
+-------------------------------------------------->
+<!------------------------------------------------
+| Note: the following is for onboarding of LEARNER views
+| Onboarding Intro (similar to above, but content differs),
+| TODO: could abstract this to a shared component.
+|
+-------------------------------------------------->
+<template name="onboarding_learner_intro">
+    {{#mooqita_wide_spacing}}
+        <div class="row padding-top" style="margin-top: 20%">
+            <div class="col-sm-6">
+                <h1 style="text-align: center; padding-top: 30px">
+                    <img style="width: 300px" src="/images/mooqita.jpg">
+                </h1>
+            </div>
+
+            <div class="col-sm-6">
+                <h1>Get practical experience and find the job you love!</h1>
+
+                <p style="padding-bottom: 25px">
+                    We make it easy for you to find the perfect job based
+                    on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
+                </p>
+
+                <p>To get started complete our five-minute onboarding phase so that we get a better
+                    understanding of your:</p>
+                <ol>
+                    <li>interests & abilities</li>
+                    <li>time you have to work on Mooqita challenges</li>
+                    <li>team work preferences</li>
+                    <li>personality</li>
+                </ol>
+                <br>
+                <a class="btn btn-theme" href="onboarding_techexistingselection">Get started</a>
+            </div>
+        </div>
+    {{/mooqita_wide_spacing}}
+</template>
+
+<!------------------------------------------------
+|
+| Onboarding Role
+|
+-------------------------------------------------->
+<template name="onboarding_learner_role">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Role</h1>
+
+		<p>
+			Please select the main role you are interested in.
+			Don't worry you can change this later.
+		</p>
+
+		{{>job_role href="onboarding_job_competency"}}
+
+	{{/mooqita_wide_spacing}}
+</template>
+
+<!------------------------------------------------
+|
+| Onboarding registration time
+|
+-------------------------------------------------->
+<template name="onboarding_learner_registration">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		{{#unless user_profile}}
+			<div class="row padding-top">
+				<div class="col-sm-5">
+					<div class="raised">
+						{{>persona persona_data=persona_data has_text=true
+											 width=300 height=180}}
+					</div>
+				</div>
+
+				<div class="col-sm-7">
+					<h1>Persona</h1>
+
+					<p class="padding-next">
+						Excellent you created <em><b>a persona</b></em> for your candidate.
+						This persona <em><b>represents a schema of traits</b></em> that we can
+						scan for in our talent pool to best complement your team.
+						To save your progress please register an account.
+						By adding <em><b>the personality of your team members</b></em> and <em><b>example
+						challenges</b></em> you can get even better results.
+					</p>
+
+					<button type="submit" id="register"
+									class="btn btn-theme">
+						Register
+					</button>
+				</div>
+			</div>
+		{{else}}
+			{{>onboarding_job_owner}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+<template name="onboarding_learner_register">
+	<div class="modal fade register-modal">
+		<div class="register-frame animated">
+			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
+				<div class="fa fa-times"></div>
+			</button>
+
+			{{>atForm}}
+		</div>
+	</div>
+</template>
+
+<!------------------------------------------------
+|
+| Onboarding job challenges
+|
+-------------------------------------------------->
+<template name="onboarding_learner_challenges">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Challenges</h1>
+
+		<p>
+			Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
+			should be able to solve</b></em>.
+			We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
+			<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
+			days until a great match has been found. <br/> We will alert you via email!
+		</p>
+
+		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
+
+		{{>job_challenges}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="{{get_url}}">
+				Get in your team culture
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+<!------------------------------------------------
+|
+| Onboarding the fruits of your hard labor
+|
+-------------------------------------------------->
+<template name="onboarding_learner_overview">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Optimized Persona</h1>
+
+		{{#unless persona_available}}
+			<p>
+				You do not yet have any persona data.
+				Fill out your profile to get better results.
+			</p>
+
+			<div class="text-right">
+				<a href="{{g_build_url "onboarding_team"}}" target="_blank"
+					 class="btn btn-theme animated_0_2_s">
+					Profile <span class="fa fa-edit"></span>
+				</a>
+			</div>
+		{{else}}
+
+			{{>job_overview}}
+
+			<div class="row padding-top">
+				{{#unless g_is_public "Jobs"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Publish Job Posting Now</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+			</div>
+		{{/unless}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="{{get_url}}">
+				Job Overview
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+

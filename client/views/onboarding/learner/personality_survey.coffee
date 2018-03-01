@@ -16,7 +16,7 @@ Template.onboarding_personality_survey.helpers
     return Template.instance().answers
 
   questions: () ->
-    return big_five_short
+    return big_five_15
 
 Template.onboarding_personality_survey.events
   'click #begin': () ->
