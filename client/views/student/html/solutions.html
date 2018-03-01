@@ -49,6 +49,7 @@
 			<a href="{{solution_url}}">
 				{{challenge.title}}
 			</a>
+			<em>Subject: </em> {{challenge.course}}
 
 			{{#if is_finished}}
 				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
@@ -77,7 +78,7 @@
 				{{else}}
 					{{#with challenge}}
 						<h1>{{title}}</h1>
-
+						<em>Subject: </em> {{course}}
 						{{#if has_solutions}}
 							{{>more content=content}}
 						{{else}}
