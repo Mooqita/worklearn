@@ -75,6 +75,7 @@ _initialize_indices = ()->
 	index =
 		content: "text"
 		title: "text"
+		course: ""
 	Challenges._ensureIndex index
 	Solutions._ensureIndex index
 	Reviews._ensureIndex index
@@ -306,6 +307,7 @@ _test_challenge = (title) ->
 	challenge_id = gen_challenge user
 
 	modify_field_unprotected Challenges, challenge_id, "title", title
+	modify_field_unprotected Challenges, challenge_id, "course", Random.choice ["COBOL", "py"]
 	modify_field_unprotected Challenges, challenge_id, "content", faker.lorem.paragraphs(3)
 	modify_field_unprotected Challenges, challenge_id, "test_object", true
 
