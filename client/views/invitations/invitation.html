@@ -43,13 +43,13 @@
 -------------------------------------------------->
 <template name="invitation">
 	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
 		<div class="padding-top">
 			{{#if invitation}}
 				{{#unless currentUser}}
+					<h1 style="text-align: center; padding-top: 30px">
+						<img style="width: 300px" src="/images/mooqita.jpg">
+					</h1>
+
 					{{>invitation_register}}
 				{{else}}
 					{{>invitation_accept}}
@@ -59,7 +59,15 @@
 					<h2><em>You accepted this invitation</em></h2>
 				{{/if}}
 			{{else}}
-				This invitation is not valid.
+				<h1 style="text-align: center; padding-top: 30px">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
+
+				<div class="padding-top">
+					<h1>
+						This invitation is invalid.
+					</h1>
+				</div>
 			{{/if}}
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -67,11 +75,20 @@
 
 
 <template name="invitation_accept">
-	<div class="row">
-		<div class="col-sm-6 padding-next">
-			<h1>Invitation to join Mooqita.</h1>
+	<h1 class="text-center">Invitation to join Mooqita.</h1>
 
-			{{#unless is_sender}}
+	<div class="row">
+		<div class="col-ms-3 col-sm-4">
+			{{#with organization}}
+				{{>avatar collection_name = "organizations"
+					observable = avatar
+					item_id = _id
+					field = "avatar"}}
+			{{/with}}
+		</div>
+
+		<div class="col-ms-7 col-sm-8">
+			{{#if is_sender}}
 				<p>
 					You invited: <em><b>{{invitation.email}}</b></em> to join your
 					organization: <em><b>{{organization.name}}</b></em>.
@@ -83,37 +100,58 @@
 					</p>
 				{{/unless}}
 			{{else}}
-				<p>
+				<p class="padding-top padding-next">
 					Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
 					their organization <em><b>{{organization.name}}</b></em> on Mooqita.
+
+					Mooqita helps companies like yours to improve their hiring process so you
+					spend less time interviewing candidates.
 				</p>
 
 				{{#unless invitation.accepted}}
-					<div class="btn btn-theme" id="accept">Accept Invitation</div>
+					<div class="text-right">
+						<div class="btn btn-theme" id="accept">Accept Invitation</div>
+					</div>
 				{{/unless}}
-			{{/unless}}
+			{{/if}}
 		</div>
 	</div>
 </template>
 
 
 <template name="invitation_register">
-	<div class="row">
+	<div class="row padding-top">
 		<div class="col-sm-6 padding-next">
 			<h1>Invitation to join Mooqita.</h1>
 
+			<div class="col-md-5 col-sm-6 col-ms-6 col-xs-12" style="float: left">
+				{{#with organization}}
+					{{>avatar collection_name = "organizations"
+						observable = avatar
+						item_id = _id
+						field = "avatar"}}
+					<div class="text-center" style="margin-bottom: 15px">
+						<em style="font-weight: bold;">
+							{{organization.name}}
+						</em>
+					</div>
+				{{/with}}
+			</div>
+
 			<p>
 				Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
-				their organization <em><b>{{organization.name}}</b></em> on Mooqita.
-				To join just select and confirm your password. An email will
-				be send to the address chosen by your host.
+				their organization on Mooqita.
 			</p>
 
-			<h2>You already have an account?</h2>
+			<p>
+				Mooqita helps companies like yours to improve
+				their hiring process so you spend less time interviewing candidates.
+			</p>
 
 			<p>
-				If you are already registered with: <br>
-				<em><b>{{invitation.email}}</b></em>. <br>
+				To join just select and confirm your password.
+				If you are already have account with:
+				<em><b>{{invitation.email}}</b></em>.
 				Please login and check your open invitations
 				<a href="{{invite_url}}" style="text-decoration: underline;"><b>here</b></a>.
 			</p>

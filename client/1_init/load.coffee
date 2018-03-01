@@ -37,11 +37,14 @@ _make_admission_set = (collection)->
 
 ################################################################################
 @activate_admission = (admission) ->
+	if not admission
+		return
+
 	name = admission.c
 	key = _key_from_collection_name(name)
 
 	values = Session.get(key)
-	values.push(admission._id)
+	values.push(admission)
 	values = values.unique()
 
 	Session.set(key, values)

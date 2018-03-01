@@ -86,7 +86,7 @@ Template.invitation_accept.events
 		(res, err) ->
 			if err
 				sAlert.error(err)
-			FlowRouter.go build_url "personality"
+			FlowRouter.go build_url "onboarding_team"
 
 
 ###############################################################################
@@ -107,6 +107,14 @@ Template.invitation_accept.helpers
 ###############################################################################
 
 ###############################################################################
+Template.invitation_register.onCreated () ->
+	self = this
+	self.autorun () ->
+		organization_id = FlowRouter.getQueryParam("organization_id")
+		self.subscribe "organization_by_id", organization_id
+
+
+###############################################################################
 Template.invitation_register.helpers
 	invite_url: () ->
 		query =
@@ -116,9 +124,6 @@ Template.invitation_register.helpers
 		url = build_url "invitation", query
 		return url
 
-
-###############################################################################
-Template.invitation_register.helpers
 	invitation: () ->
 		id = FlowRouter.getQueryParam("invitation_id")
 		inv = Invitations.findOne id

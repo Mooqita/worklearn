@@ -69,7 +69,10 @@ _log_publication = (collection_name, crs, filter, fields, origin, user) ->
 
 	if user
 		profile = get_profile user
-		name = get_profile_name profile, true
+		if profile
+			name = get_profile_name profile, true
+		else
+			name = "missing profile (" + user + ")"
 
 	msg =  "[" + origin + "] "
 	msg += "published [" + count + "] "

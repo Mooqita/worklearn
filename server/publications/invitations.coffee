@@ -23,12 +23,15 @@ Meteor.publish "invitations_by_organization_id", (organization_id) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
+	if not has_role Organizations, organization_id, user_id, OWNER
+		throw new Meteor.Error "Not permitted."
+
 	filter =
 		organization_id: organization_id
 
-	crs = get_documents user_id, IGNORE, Invitations, filter, _invitation_fields
-
+	crs = get_documents IGNORE, IGNORE, Invitations, filter, _invitation_fields
 	log_publication crs, user_id, "invitations_by_organization_id"
+
 	return crs
 
 

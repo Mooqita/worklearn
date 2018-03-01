@@ -13,9 +13,23 @@ _job_fields =
 		organization_id: 1
 		challenge_ids: 1
 
+
+###############################################################################
+Meteor.publish "my_jobs", (admissions) ->
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	crs = get_documents user_id, IGNORE, Jobs, {}, _job_fields
+
+	log_publication crs, user_id, "my_jobs"
+	return crs
+
+
 ###############################################################################
 Meteor.publish "jobs_by_admissions", (admissions) ->
 	param =
+		_id: String
 		c: String
 		u: String
 		i: String
@@ -28,7 +42,7 @@ Meteor.publish "jobs_by_admissions", (admissions) ->
 
 	ids = []
 	for admission in admissions
-		ids.push(admission._id)
+		ids.push(admission.i)
 
 	filter =
 		_id:

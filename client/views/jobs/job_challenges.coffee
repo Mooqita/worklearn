@@ -12,30 +12,20 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ###############################################################################
-Template.job_challenges.onRendered () ->
+Template.job_challenges.onCreated () ->
 	job_id = FlowRouter.getQueryParam("job_id")
-	job_ad = get_admission(IGNORE, IGNORE, Jobs, job_id)
-	activate_admission(job_ad)
-
 	organization_id = FlowRouter.getQueryParam("organization_id")
-	organization_ad = get_admission(IGNORE, IGNORE, Organizations, organization_id)
-	activate_admission(organization_ad)
+
+	this.autorun () ->
+		job_ad = get_admission(IGNORE, IGNORE, Jobs, job_id)
+		activate_admission(job_ad)
+
+		organization_ad = get_admission(IGNORE, IGNORE, Organizations, organization_id)
+		activate_admission(organization_ad)
 
 
 ###############################################################################
 Template.job_challenges.helpers
-	persona_available: () ->
-		#TODO make sure that this returns true when there are team members
-		profile = Profiles.findOne()
-
-		if not profile
-			return false
-
-		if not profile.big_five
-			return false
-
-		return true
-
 	job: () ->
 		id = FlowRouter.getQueryParam("job_id")
 		return Jobs.findOne(id)
@@ -84,4 +74,29 @@ Template.job_challenges.events
 			job_id: loc_job_id
 		url = build_url "challenge_pool", query
 		FlowRouter.go url
+
+#########################################################
+# Job challenges preview
+#########################################################
+
+#########################################################
+Template.job_challenges_preview.onCreated () ->
+	self = this
+	self.autorun ()->
+		self.subscribe "challenges_by_ids", self.data.challenge_ids
+
+#########################################################
+Template.job_challenges_preview.helpers
+	challenges: () ->
+		inst = Template.instance()
+		ids = inst.data.challenge_ids
+
+		if not ids
+			ids = []
+
+		filter =
+			_id:
+				$in: ids
+
+		return Challenges.find(filter)
 

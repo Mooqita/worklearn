@@ -1,0 +1,140 @@
+<template name="job_persona">
+	{{#unless persona_available}}
+		<p>
+			You do not yet have any persona data.
+			Fill out your profile to get better results.
+		</p>
+
+		<div class="text-right">
+			<a href="{{g_build_url "onboarding_team"}}" target="_blank"
+				 class="btn btn-theme animated_0_2_s">
+				Profile <span class="fa fa-edit"></span>
+			</a>
+		</div>
+	{{else}}
+		<div class="row">
+			<div class="col-md-8 col-sm-8 col-ms-12 col-xs-12">
+				<div class="raised" style="float: left; width: 50%; margin-right: 25px">
+					{{>persona	persona_data=(optimal_persona get_job) offset_x=0
+											has_text=true width=310 height=200}}
+				</div>
+
+				<p>
+					Based on what you and the team members have told us, this is the optimized persona.
+					This persona represents a schema of traits that we are now scanning for in our talent pool
+					to best complement your team.
+				</p>
+
+				<p>
+					<em><b>We will alert you via email when a great match has been found.</b></em>
+				</p>
+
+				<h2>How is the persona composed?</h2>
+				<p>
+					Based on the extent to which the personality traits are already represented in your team
+					and based on the persona that was generated for the role fit that you are looking for we
+					build a dynamically adapted persona that represents a balance between the traits you defined
+					and what is most needed in your team using psychological work team interaction models.
+				</p>
+
+				<h2>Visionary</h2>
+				<p>
+					The visionary trait expresses in how far someone is creative and able help further
+					developments that do not yet have a fixed goal.
+				</p>
+
+				<h2>Organizer</h2>
+				<p>
+					The organizer trait expresses in how far someone has an analytic view on the state of
+					affairs and can organize ongoing work to achieve given goals.
+				</p>
+
+				<h2>Mediator</h2>
+				<p>
+					The mediator trait expresses in how far someone can find a balance between different
+					individual and task needs and goals within an organization or development.
+				</p>
+
+				<h2>Manager</h2>
+				<p>
+					The manager trait expresses in how far someone can make plans that decompose and recompose
+					challenges leading a project to the desired outcomes.
+				</p>
+
+				<h2>Builder</h2>
+				<p>
+					The manager trait expresses in how far someone has the ability to focus on the required
+					steps to achieve a given goal and does what is needed to achieve them.
+				</p>
+			</div>
+
+			<div class="col-md-4 col-sm-4 col-ms-6 col-xs-12">
+				<div class="raised">
+					<div class="requirement-row">
+						<h2>Visionary</h2>
+						{{>trait_requirement score=(team_requirement "Visionary")
+																 mean=20
+																 sd=10}}
+					</div>
+
+					<div class="requirement-row">
+						<h2>Organizer</h2>
+						{{>trait_requirement score=(team_requirement "Organizer")
+																 mean=20
+																 sd=10}}
+					</div>
+
+					<div class="requirement-row">
+						<h2>Mediator</h2>
+						{{>trait_requirement score=(team_requirement "Mediator")
+																 mean=20
+																 sd=10}}
+					</div>
+
+					<div class="requirement-row">
+						<h2>Manager</h2>
+						{{>trait_requirement score=(team_requirement "Manager")
+																 mean=20
+																 sd=10}}
+					</div>
+
+					<div class="requirement-row">
+						<h2>Builder</h2>
+						{{>trait_requirement score=(team_requirement "Builder")
+																 mean=20
+																 sd=10}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/unless}}
+</template>
+
+
+<template name="trait_requirement">
+	<div class="svg-holder">
+		<svg viewbox="0 0 55 32" class="circular-chart">
+			<path class="circle-bg"
+						d = "{{get_arc 0 100 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle light"
+						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
+			<path class="marker theme"
+						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
+
+			<text x="7.5" y="31" class="legend orange-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend orange-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend green-fill">Balanced ({{mean}})</text>
+			<text x="27.5" y="24" class="legend theme-fill">Score</text>
+			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
+		</svg>
+	</div>
+</template>
+

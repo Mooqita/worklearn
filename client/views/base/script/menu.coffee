@@ -12,13 +12,13 @@ Template.mooqita_menu.helpers
 	menu_items: () ->
 		mod =
 			fields:
-				collection_name: 1
+				c: 1
 
 		adms = Admissions.find({}, mod).fetch()
 		unique = new Set()
 
 		for a in adms
-			unique.add(a.collection_name)
+			unique.add(a.c)
 
 		items = [	{name: "Organizations", href: build_url("organizations")}]
 

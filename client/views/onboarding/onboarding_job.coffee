@@ -44,23 +44,6 @@ Template.onboarding_job_role.onCreated ->
 Template.onboarding_job_competency.onCreated ->
 	_check_session()
 
-
-################################################################################
-Template.onboarding_job_competency.events
-	"click .toggle-button": () ->
-		instance = Template.instance()
-		dict = Session.get "onboarding_job_posting"
-
-		dict["idea"] = if instance.find("#idea_id").checked then 1 else 0
-		dict["team"] = if instance.find("#team_id").checked then 1 else 0
-		dict["process"] = if instance.find("#process_id").checked then 1 else 0
-		dict["strategic"] = if instance.find("#strategic_id").checked then 1 else 0
-		dict["contributor"] = if instance.find("#contributor_id").checked then 1 else 0
-		dict["social"] = if instance.find("#social_id").checked then 1 else 0
-
-		Session.set "onboarding_job_posting", dict
-
-
 ################################################################################
 #
 # Onboarding Finish
@@ -70,7 +53,6 @@ Template.onboarding_job_competency.events
 ################################################################################
 Template.onboarding_job_registration.onCreated ->
 	self = this
-
 	self.autorun ()->
 		_check_session()
 		self.subscribe "my_organizations"
