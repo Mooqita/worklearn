@@ -1,19 +1,23 @@
 <template name="job_challenges">
-	<h3>Add a new challenge:</h3>
+	<h2>Add a new challenge:</h2>
+
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-ms-6">
+			{{>hover_card icon="fa-edit color-theme" href=""
+					message="Create your own challenge"
+					text="Create your own challenge. From scratch or our templates."}}
+		</div>
+
+		<div class="col-md-6 col-sm-6 col-ms-6">
+			{{>hover_card icon="fa-bell-o color-theme" href=""
+					message="Let us help you"
+					text="Let our experts create a design optimized challenges for you."}}
+		</div>
+	</div>
 
 	<div class="input-group">
-		<div class="input-group-btn">
-			<div class="btn btn-theme"
-					 style="min-width: 40px;"
-					 id="add_challenge">
-				<span class="fa fa-plus"></span> Blank Challenge
-			</div>
-
-			<div class="btn btn-theme"
-					 style="min-width: 40px;"
-					 id="template_challenge">
-				<span class="fa fa-file"></span> From Challenge Pool
-			</div>
+		<div class="input-group-addon">
+			<span class="fa fa-book"></span>
 		</div>
 
 		<select class="form-control" id="challenges_id">
@@ -24,7 +28,7 @@
 		</select>
 	</div>
 
-	<h3>Challenges already linked to this job posting:</h3>
+	<h2>Challenges already linked to this job posting:</h2>
 
 	{{#if job}}
 		{{>job_challenges_preview job}}
