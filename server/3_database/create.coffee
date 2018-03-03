@@ -24,3 +24,24 @@
 	return id
 
 
+#######################################################
+@remove_documents = (collection, filter, user) ->
+	if typeof collection == "string"
+		collection = get_collection(collection)
+
+	mod =
+		fields:
+			_id: 1
+
+	items = collection.find(filter, mod).fetch()
+	ids = (i._id for i in items)
+
+	remove_admissions(collection, ids, user)
+
+	count = collection.remove filter
+	msg = count + " admissions removed by: " + get_user_mail()
+	log_event msg, event_db, event_info
+
+	return count
+
+

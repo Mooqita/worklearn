@@ -13,13 +13,13 @@
 
 	review_id = Random.id()
 	challenge = Challenges.findOne solution.challenge_id
-	owner = get_document_owner "solutions", solution
+	owner_id = get_document_owner "solutions", solution
 
 	review =
 		_id: review_id
 		solution_id: solution._id
 		challenge_id: challenge._id
-		requester_id: owner._id
+		requester_id: owner_id
 		requested: new Date()
 		assigned: false
 		published: false
@@ -27,7 +27,7 @@
 	store_document_unprotected Reviews, review, null
 	gen_feedback solution, review, user
 
-	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
+	msg = "Solution (" + solution._id + ") review requested by: " + get_user_mail user
 	log_event msg, event_logic, event_info
 
 	return review_id
@@ -101,10 +101,10 @@ _find_review = (user, challenge) ->
 	if review.assigned
 		send_review_timeout_message review
 
-	recipient = get_document_owner(Solutions, review.solution_id)
+	recipient_id = get_document_owner(Solutions, review.solution_id)
 
 	gen_admission Reviews, review, user, OWNER
-	gen_admission Reviews, review, recipient, RECIPIENT
+	gen_admission Reviews, review, recipient_id, RECIPIENT
 	modify_field_unprotected Reviews, review._id, "assigned", true
 
 	res =
@@ -142,9 +142,9 @@ _find_review = (user, challenge) ->
 	# Find the solution the review provider submitted.
 	# The solution has to be submitted to the same challenge
 	# as the solution in the review.
-	owner = get_document_owner "reviews", review
+	owner_id = get_document_owner "reviews", review
 	filter =
-		requester_id: owner._id
+		requester_id: owner_id
 		challenge_id: review.challenge_id
 
 	request = Reviews.findOne filter
@@ -162,7 +162,7 @@ _find_review = (user, challenge) ->
 
 	if solution.published
 		if required > requested
-			request_review solution, owner
+			request_review solution, owner_id
 
 	msg = "Review (" + review._id + ") review finished by: " + get_user_mail user
 	log_event msg, event_logic, event_info

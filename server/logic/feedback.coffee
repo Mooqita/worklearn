@@ -13,13 +13,10 @@
 		log_event msg, event_create, event_crit
 		throw new Meteor.Error msg
 
-	review_owner_id = get_document_owner "reviews", review._id
-
 	feedback =
 		review_id: review._id
 		solution_id: solution._id
 		challenge_id: solution.challenge_id
-		requester_id: review_owner_id
 		requested: new Date()
 		assigned: false
 		published: false
@@ -36,9 +33,9 @@
 	if feedback.published
 		throw new Meteor.Error "Feedback: " + feedback._id + " is already published."
 
-	owner = get_document_owner "reviews", feedback.review_id
+	owner_id = get_document_owner "reviews", feedback.review_id
 	modify_field_unprotected Feedback, feedback._id, "published", true
-	modify_field_unprotected Feedback, feedback._id, "requester_id", owner._id
+	modify_field_unprotected Feedback, feedback._id, "requester_id", owner_id
 
 	feedback = Feedback.findOne feedback._id
 	send_feedback_message feedback

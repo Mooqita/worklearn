@@ -48,13 +48,6 @@ Template.job_challenges.helpers
 
 ###############################################################################
 Template.job_challenges.events
-	"click #new_job": () ->
-		data = Session.get "onboarding_job_posting"
-		if data
-			Meteor.call "add_job_post", data
-		else
-			sAlert.error "missing job posting data"
-
 	"click #add_challenge": () ->
 		loc_job_id = FlowRouter.getQueryParam("job_id")
 		Meteor.call "add_challenge", loc_job_id,

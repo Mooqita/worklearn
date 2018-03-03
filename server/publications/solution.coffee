@@ -24,7 +24,7 @@ _solution_fields =
 #######################################################
 
 #######################################################
-Meteor.publish "my_solutions", () ->
+Meteor.publish "my_solutions", (admissions) ->
 	user_id = this.userId
 
 	crs = get_my_documents Solutions, {}, _solution_fields

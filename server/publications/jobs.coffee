@@ -12,6 +12,7 @@ _job_fields =
 		contributor: 1
 		organization_id: 1
 		challenge_ids: 1
+		published: 1
 
 
 ###############################################################################

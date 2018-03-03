@@ -245,7 +245,7 @@ Template.solution_reviews.events
 						review_id: rsp.review_id
 						solution_id: rsp.solution_id
 						challenge_id: rsp.challenge_id
-					return FlowRouter.go build_url "learner_review", param
+					return FlowRouter.go build_url "review", param
 
 	"click #request_review":(event)->
 		if event.target.attributes.disabled
