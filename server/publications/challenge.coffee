@@ -1,15 +1,15 @@
-#######################################################
+###############################################################################
 #
 #	Moocita collections
 # Created by Markus on 26/10/2015.
 #
-#######################################################
+###############################################################################
 
-#######################################################
+###############################################################################
 # item header
-#######################################################
+###############################################################################
 
-#######################################################
+###############################################################################
 _challenge_fields =
 	fields:
 		title: 1
@@ -21,11 +21,11 @@ _challenge_fields =
 		origin: 1
 		job_ids: 1
 
-#######################################################
+###############################################################################
 # challenges
-#######################################################
+###############################################################################
 
-#######################################################
+###############################################################################
 Meteor.publish "challenges", (parameter) ->
 	pattern =
 		query: Match.Optional(String)
@@ -46,7 +46,7 @@ Meteor.publish "challenges", (parameter) ->
 	return crs
 
 
-#######################################################
+###############################################################################
 Meteor.publish "my_challenges", (parameter) ->
 	pattern =
 		query: Match.Optional(String)
@@ -65,7 +65,7 @@ Meteor.publish "my_challenges", (parameter) ->
 	return crs
 
 
-#######################################################
+###############################################################################
 Meteor.publish "challenge_by_id", (challenge_id) ->
 	check challenge_id, String
 
@@ -83,46 +83,7 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 	return crs
 
 
-#######################################################
-Meteor.publish "challenges_by_admissions", (admissions) ->
-	param =
-		_id: String
-		c: String
-		u: String
-		i: String
-		r: String
-	check admissions, [param]
-
-	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
-
-	ids = []
-	for admission in admissions
-		ids.push(admission.i)
-
-	filter =
-		_id:
-			$in: ids
-
-	crs = get_documents IGNORE, IGNORE, Challenges, filter, _challenge_fields
-	log_publication crs, user_id, "challenges_by_admissions"
-	return crs
-
-
-#######################################################
-Meteor.publish "my_challenge_by_id", (challenge_id) ->
-	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
-
-	filter = get_my_filter Challenges, {_id:challenge_id}
-	crs = Challenges.find filter, _challenge_fields
-
-	log_publication crs, user_id, "my_challenge_by_id"
-	return crs
-
-#######################################################
+###############################################################################
 Meteor.publish "challenges_by_ids", (challenge_ids) ->
 	if challenge_ids and Array.isArray(challenge_ids) and challenge_ids.length > 0
 		check(challenge_ids,[String])
@@ -137,14 +98,13 @@ Meteor.publish "challenges_by_ids", (challenge_ids) ->
 		_id:
 			$in: challenge_ids
 
-	# TODO: improve get_my_filter to handle multiple ids.
-	#filter = get_my_filter Challenges, {sub_filter}
-	crs = Challenges.find sub_filter, _challenge_fields
+	filter = get_filter  user_id, IGNORE, Challenges, {sub_filter}
+	crs = Challenges.find filter, _challenge_fields
 
 	log_publication crs, user_id, "challenges_by_ids"
 	return crs
 
-#######################################################
+###############################################################################
 Meteor.publish "challenge_summaries", (parameter) ->
 	pattern =
 		challenge_id: String

@@ -1,16 +1,4 @@
 #######################################################
-Meteor.publish "my_recommendations", () ->
-	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
-
-	crs = get_my_documents Recommendations, {}, {}
-
-	log_publication crs, user_id, "recommendations"
-	return crs
-
-
-#######################################################
 Meteor.publish "my_recommendation_by_recipient_id", (recipient_id) ->
 	check recipient_id, String
 
