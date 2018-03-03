@@ -187,7 +187,7 @@ Template.solution_reviews.helpers
 		challenge = Challenges.findOne this.challenge_id
 		items_required = challenge.num_reviews
 		filter =
-			owner_id: this.owner_id
+			requester_id: Meteor.userId()
 			challenge_id: this.challenge_id
 		res = Reviews.find filter
 		return items_required > res.count()

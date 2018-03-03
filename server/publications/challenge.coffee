@@ -28,6 +28,7 @@ _challenge_fields =
 ###############################################################################
 Meteor.publish "challenges", (parameter) ->
 	pattern =
+		admissions: Match.Optional(admission_list)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
@@ -49,6 +50,7 @@ Meteor.publish "challenges", (parameter) ->
 ###############################################################################
 Meteor.publish "my_challenges", (parameter) ->
 	pattern =
+		admissions: Match.Optional(admission_list)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
@@ -75,11 +77,32 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 
 	filter =
 		_id: challenge_id
-		published: true
+#		published: true
 
 	crs = Challenges.find filter, _challenge_fields
 	log_publication crs, user_id, "challenge_by_id"
 
+	return crs
+
+
+###############################################################################
+Meteor.publish "challenges_by_admissions", (admissions) ->
+	check admissions, admission_list
+
+	user_id = this.userId
+	if !user_id
+		throw new Meteor.Error "Not permitted."
+
+	ids = []
+	for admission in admissions
+		ids.push(admission.i)
+
+	filter =
+		_id:
+			$in: ids
+
+	crs = get_documents IGNORE, IGNORE, Challenges, filter, _challenge_fields
+	log_publication crs, user_id, "challenges_by_admissions"
 	return crs
 
 
@@ -94,11 +117,11 @@ Meteor.publish "challenges_by_ids", (challenge_ids) ->
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	sub_filter =
+	filter =
 		_id:
 			$in: challenge_ids
 
-	filter = get_filter  user_id, IGNORE, Challenges, {sub_filter}
+	#filter = get_filter user, IGNORE, Challenges, {filter}
 	crs = Challenges.find filter, _challenge_fields
 
 	log_publication crs, user_id, "challenges_by_ids"

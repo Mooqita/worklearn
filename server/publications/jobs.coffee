@@ -54,7 +54,6 @@ Meteor.publish "jobs_by_admissions", (admissions) ->
 	return crs
 
 
-
 ###############################################################################
 Meteor.publish "job_by_id", (job_id) ->
 	check job_id, String

@@ -17,6 +17,7 @@ _review_fields =
 		published: 1
 		solution_id: 1
 		challenge_id: 1
+		requester_id: 1
 
 #######################################################
 # reviews
