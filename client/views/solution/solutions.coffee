@@ -187,7 +187,7 @@ Template.solution_reviews.helpers
 		challenge = Challenges.findOne this.challenge_id
 		items_required = challenge.num_reviews
 		filter =
-			owner_id: this.owner_id
+			requester_id: Meteor.userId()
 			challenge_id: this.challenge_id
 		res = Reviews.find filter
 		return items_required > res.count()
@@ -245,7 +245,7 @@ Template.solution_reviews.events
 						review_id: rsp.review_id
 						solution_id: rsp.solution_id
 						challenge_id: rsp.challenge_id
-					return FlowRouter.go build_url "learner_review", param
+					return FlowRouter.go build_url "review", param
 
 	"click #request_review":(event)->
 		if event.target.attributes.disabled

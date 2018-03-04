@@ -1,0 +1,48 @@
+<!-----------------------------------------------------------------------------
+|
+| Input Button:
+| Are data manipulating buttons.
+|
+| Data Sources:
+|	You can use hover cards in various ways. Depending on your needs you can send set
+| various data sources. You can set multiple but this may lead to conflicts.
+|
+| Session variables: if the parameter "session" is defined the value will be stored
+|										 in the respective variable. If "key" is defined the "value"
+|										 will be stored so that Session.get(session)[key] == value
+|
+| {{>input_button classes="btn btn-theme" icon="fa-paint-brush"
+| 							href="onboarding_competency"
+|								session="onboarding_job_posting"
+| 							key="role" value="design" text="Paintings"}}
+|
+| Reactive Dict: If "dictionary" is defined the "key" parameter is required.
+|								 Then "value" is stored so that dictionary.get(key) == value
+|
+| {{>input_button ...
+|								dictionary=data_dictionary key="role" value="design"
+| 							...}}
+|
+| Reactive Var: If "variable" is defined the data will be set so that:
+| 							variable.get() == value
+|
+| {{>input_button ...
+|								variable=data_dictionary value="design"
+| 							...}}
+|
+|	DB Field: To set a field and propagate it to the server you set "collection_name"
+|						"item_id", and "field". This will use the set_field_value function to
+|						to store value on the server and get_field_value to display the value.
+|
+| {{>input_button ...
+|								collection_name="jobs" item_id=item_id field="role" value="design"
+| 							...}}
+|
+------------------------------------------------------------------------------>
+<template name="input_button">
+	<a class="{{classes}} input-click" href="{{href}}">
+		{{#if icon}}
+			{{text}} <span class="{{icon}}"></span>
+		{{/if}}
+	</a>
+</template>

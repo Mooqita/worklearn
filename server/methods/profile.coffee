@@ -18,4 +18,4 @@ Meteor.methods
 		if profile
 			throw new Meteor.Error "Profile already created"
 
-		return gen_profile user, param.occupation
+		return gen_profile user

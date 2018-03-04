@@ -127,11 +127,9 @@ Template.job_preview.helpers
 
 #########################################################
 Template.job_posting.onCreated () ->
-	job_id = FlowRouter.getQueryParam("job_id")
-
 	this.autorun () ->
-		admission = get_admission(IGNORE, IGNORE, Jobs, job_id)
-		activate_admission(admission)
+		job_id = FlowRouter.getQueryParam("job_id")
+		Meteor.subscribe("job_by_id", job_id)
 
 
 #########################################################

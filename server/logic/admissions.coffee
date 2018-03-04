@@ -60,3 +60,17 @@
 	return item_id
 
 
+#######################################################
+@remove_admissions = (collection, item_ids, user) ->
+	filter =
+		c: get_collection_name(collection)
+		i:
+			$in: item_ids
+
+	count = Admissions.remove filter
+
+	msg = count + " admissions removed by: " + get_user_mail(user)
+	log_event msg, event_logic, event_info
+
+	return count
+

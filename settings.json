@@ -9,10 +9,10 @@
     }
   },
 
-  "init_default_permissions":true,
+  "init_default_permissions":false,
   "default_permissions_asset_path":"db/defaultcollections/permissions.json",
 
-  "init_test_data":false,
+  "init_test_data":true,
   "admin":
   {
     "email":"admin@mooqita.org",

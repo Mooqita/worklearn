@@ -24,7 +24,7 @@ _solution_fields =
 #######################################################
 
 #######################################################
-Meteor.publish "my_solutions", () ->
+Meteor.publish "my_solutions", (admissions) ->
 	user_id = this.userId
 
 	crs = get_my_documents Solutions, {}, _solution_fields
@@ -49,18 +49,6 @@ Meteor.publish "solution_by_id", (solution_id) ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication crs, user_id, "solution_by_id"
-	return crs
-
-
-#######################################################
-Meteor.publish "my_solution_by_id", (solution_id) ->
-	check solution_id, String
-	user_id = this.userId
-
-	filter = {_id: solution_id}
-	crs = get_my_documents Solutions, filter, _solution_fields
-
-	log_publication crs, user_id, "my_solution_by_id"
 	return crs
 
 

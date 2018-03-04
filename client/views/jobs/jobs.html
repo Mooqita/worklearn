@@ -102,12 +102,12 @@
 			{{#let job=get_job}}
 				<div class="padding-top">
 					<div class="text-right">
-					{{#if g_is_public "jobs" job}}
-						<span class="badge background-theme ready-badge">
+					{{#if g_is_public "jobs" job._id}}
+						<span class="badge background-contrast ready-badge">
 							LIVE
 						</span>
 					{{else}}
-						<span class="badge background-contrast ready-badge">
+						<span class="badge background-theme ready-badge">
 							Not yet public
 						</span>
 					{{/if}}
@@ -159,26 +159,33 @@
 					<h1>Optimized Persona</h1>
 					{{>job_persona}}
 				</div>
+
+				<div class="row padding-top">
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" id="save">
+										Save <span class="fa fa-save"></span>
+									</div>
+								</span>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									{{#unless g_is_public "Jobs" job._id}}
+										{{>input_button classes="btn btn-theme" icon="glyphicon glyphicon-cloud-upload"
+												collection_name="jobs" item_id=job._id field="published" value=true
+												text="Publish Job Posting"}}
+									{{else}}
+										{{>input_button classes="btn btn-theme" icon="fa fa-remove"
+												collection_name="jobs" item_id=job._id field="published" value=false
+												text="Deactivate Job Post"}}
+									{{/unless}}
+								</span>
+							</div>
+						</div>
+				</div>
 			{{/let}}
-
-			<div class="row padding-top">
-				{{#unless g_is_public "Jobs"}}
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" id="save">Save</div>
-							</span>
-						</div>
-
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" disabled="true"
-										 id="publish">Publish Job Posting Now</div>
-							</span>
-						</div>
-					</div>
-				{{/unless}}
-			</div>
 		{{/unless}}
 	{{/mooqita_wide_spacing}}
 </template>

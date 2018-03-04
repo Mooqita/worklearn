@@ -37,7 +37,7 @@
 
 	request_review solution, user
 
-	msg = "Solution (" + solution.id + ") published by: " + get_user_mail user
+	msg = "Solution (" + solution._id + ") published by: " + get_user_mail user
 	log_event msg, event_logic, event_info
 
 	#TODO: inform people on the waiting list for reviews.
@@ -53,14 +53,14 @@
 	# we can reopen a solution when:
 	# There are no published reviews
 
-	filter =
-		solution_id: solution._id
-		published: false
-
 	mod =
 		fields:
 			assigned: 1
 			modified: 1
+
+	filter =
+		solution_id: solution._id
+		published: false
 
 	reviews = Reviews.find(filter, mod).fetch()
 
@@ -76,8 +76,8 @@
 
 	modify_field_unprotected Solutions, solution._id, "published", false
 
-	Reviews.remove filter
-	Feedback.remove filter
+	remove_documents(Reviews, filter, user)
+	remove_documents(Feedback, filter, user)
 
 	msg = "Solution (" + solution.id + ") reopened by: " + get_user_mail user
 	log_event msg, event_logic, event_info

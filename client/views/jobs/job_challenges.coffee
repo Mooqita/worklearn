@@ -13,15 +13,17 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ###############################################################################
 Template.job_challenges.onCreated () ->
+	self = this
 	job_id = FlowRouter.getQueryParam("job_id")
 	organization_id = FlowRouter.getQueryParam("organization_id")
 
-	this.autorun () ->
-		job_ad = get_admission(IGNORE, IGNORE, Jobs, job_id)
-		activate_admission(job_ad)
+	self.autorun () ->
+		admissions = get_admissions(IGNORE, IGNORE, Challenges, IGNORE)
+		challenge_ids = (a.i for a in admissions.fetch())
 
-		organization_ad = get_admission(IGNORE, IGNORE, Organizations, organization_id)
-		activate_admission(organization_ad)
+		self.subscribe("job_by_id", job_id)
+		self.subscribe("challenges_by_ids", challenge_ids)
+		self.subscribe("organization_by_id", organization_id)
 
 
 ###############################################################################
@@ -48,13 +50,6 @@ Template.job_challenges.helpers
 
 ###############################################################################
 Template.job_challenges.events
-	"click #new_job": () ->
-		data = Session.get "onboarding_job_posting"
-		if data
-			Meteor.call "add_job_post", data
-		else
-			sAlert.error "missing job posting data"
-
 	"click #add_challenge": () ->
 		loc_job_id = FlowRouter.getQueryParam("job_id")
 		Meteor.call "add_challenge", loc_job_id,
@@ -99,4 +94,16 @@ Template.job_challenges_preview.helpers
 				$in: ids
 
 		return Challenges.find(filter)
+
+	has_challenges: () ->
+		inst = Template.instance()
+		ids = inst.data.challenge_ids
+
+		if not ids
+			return false
+
+		if ids.length == 0
+			return false
+
+		return true
 

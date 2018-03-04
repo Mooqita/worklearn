@@ -59,6 +59,7 @@ _test_get_learners = (email_template) ->
 _test_user_creation = (mail, occupation) ->
 	user = Accounts.findUserByEmail(mail)
 
+
 	if user
 		profile = get_document user, "owner", Profiles
 		return profile._id
@@ -144,13 +145,8 @@ _test_solution = (challenge, learner) ->
 	solution = get_document learner, OWNER, Solutions, {_id: solution_id}
 	solution_id = finish_solution solution, learner
 
-	solution = get_document learner, OWNER, Solutions, {_id: solution_id}
-	solution_id = reopen_solution solution, learner
-
-	solution = get_document learner, OWNER, Solutions, {_id: solution_id}
-	solution_id = finish_solution solution, learner
-
 	#TODO: add reopen fail test
+	#TODO: add reopen success test
 
 	return solution_id
 
@@ -167,8 +163,8 @@ _test_reviews = (challenge, learners) ->
 				console.log "review count satisfied."
 				continue
 
-			review = _test_review challenge, learner
-			reviews.push review
+			review_id = _test_review challenge, learner
+			reviews.push review_id
 
 	return reviews
 
@@ -189,15 +185,10 @@ _test_review = (challenge, learner) ->
 	review = get_document learner, OWNER, Reviews, {_id: res.review_id}
 	review_id = finish_review review, learner
 
-	review = get_document learner, OWNER, Reviews, {_id: res.review_id}
-	review_id = reopen_review review, learner
-
-	review = get_document learner, OWNER, Reviews, {_id: res.review_id}
-	review_id = finish_review review, learner
-
 	#TODO: add reopen fail test
+	#TODO: add reopen success test
 
-	return review
+	return review_id
 
 
 #####################################################

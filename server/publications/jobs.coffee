@@ -12,6 +12,7 @@ _job_fields =
 		contributor: 1
 		organization_id: 1
 		challenge_ids: 1
+		published: 1
 
 
 ###############################################################################
@@ -51,7 +52,6 @@ Meteor.publish "jobs_by_admissions", (admissions) ->
 	crs = get_documents IGNORE, IGNORE, Jobs, filter, _job_fields
 	log_publication crs, user_id, "jobs_by_admissions"
 	return crs
-
 
 
 ###############################################################################

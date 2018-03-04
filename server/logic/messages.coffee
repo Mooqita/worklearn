@@ -25,7 +25,7 @@
 	solution_profile = get_profile owner._id
 
 	subject = "Mooqita: You got a new review"
-	url = build_url "challenge", {challenge_id: challenge._id}, true, "learner"
+	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
 
 	name = if solution_profile then solution_profile.given_name ? "learner" else "learner"
 
@@ -37,7 +37,7 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"" + build_url "profile", {}, true, "learner"
+					"" + build_url "profile", {}, "app", true
 
 	send_message_mail owner, subject, body
 
@@ -52,12 +52,11 @@
 
 @send_review_timeout_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
-	solution = Solutions.findOne review.solution_id
 	owner = get_document_owner "reviews", review
 	review_profile = get_profile owner._id
 
 	subject = "Mooqita: A review timed out"
-	url = build_url "challenge", {challenge_id: challenge._id}, false, "learner"
+	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
 
 	name = if review_profile then review_profile.given_name ? "learner" else "learner"
 
@@ -99,7 +98,7 @@
 		solution_id: solution._id
 		challenge_id: challenge._id
 
-	url = build_url "learner_review", param, true, "learner"
+	url = build_url "review", param, "app", true
 	subject = "Mooqita: New feedback for your reviews"
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
@@ -107,7 +106,7 @@
 	body = "Hi " + name + ",\n\n"
 	body += "You received feedback to one of your reviews in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " + "https://mooqita.org" + url + "\n\n"
+	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 

@@ -11,9 +11,6 @@ Meteor.methods
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
-		if not has_role Challenges, challenge_id, user, LEARNER
-			throw new Meteor.Error('Not permitted.')
-
 		challenge = get_document_unprotected Challenges, challenge_id
 		solution_id = gen_solution challenge, user
 		res =

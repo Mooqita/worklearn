@@ -60,7 +60,20 @@
 
 	<a href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}"
 		 class="item-set-element animated_0_5_s">
-		<h2>{{title}}</h2>
+		<div>
+			<h2>
+				{{title}}
+					{{#if g_is_public "challenges"}}
+						<span class="badge background-contrast pull-right">
+								Public <span class="fa fa-check"></span>
+						</span>
+					{{else}}
+						<span class="badge background-theme pull-right">
+								Not yet public <span class="fa fa-edit"></span>
+						</span>
+					{{/if}}
+			</h2>
+		</div>
 
 		{{>more content=content}}
 	</a>
@@ -97,9 +110,9 @@
 									<li>Define how many reviews learners have to write to finish the task</li>
 								{{/unless}}
 
-                                {{#unless link}}
-                                    <li>Add a link to the challenge context or project (optional)</li>
-                                {{/unless}}
+								{{#unless link}}
+									<li>Add a link to the challenge context or project (optional)</li>
+								{{/unless}}
 
 								{{#unless material}}
 									<li>Add additional materials (optional)</li>

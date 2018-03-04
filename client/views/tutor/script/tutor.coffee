@@ -128,6 +128,6 @@ Template.tutor_solution.events
 						review_id: res.review_id
 						solution_id: res.solution_id
 						challenge_id: res.challenge_id
-					url = build_url "learner_review", queryParams
+					url = build_url "review", queryParams
 					ins.review_url.set url
 

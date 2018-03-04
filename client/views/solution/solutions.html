@@ -5,7 +5,7 @@
 -------------------------------------------------->
 <template name="solutions">
 	{{#mooqita_wide_spacing}}
-		<div class="padding-top">
+		<div class="item-set padding-top">
 			<h1>Solutions</h1>
 
 			<p class="padding-next">
@@ -41,20 +41,26 @@
 	{{#unless Template.subscriptionsReady}}
 		{{>wait}}
 	{{else}}
-		<h2>
-			{{#unless is_finished}}
-				<span class="badge background-contrast">new</span>
-			{{/unless}}
+		<a href="{{g_build_url "solution" (g_object challenge_id=challenge._id)}}"
+			 class="item-set-element animated_0_5_s">
 
-			<a href="{{g_build_url "solution" (g_object challenge_id=challenge._id)}}">
+			<h2>
 				{{challenge.title}}
-			</a>
 
-			{{#if is_finished}}
-				<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
-			{{/if}}
-		</h2>
-		{{>more content=challenge.content}}
+				<div class="pull-right" style="font-size: 16px;">
+					{{#unless is_finished}}
+						{{>popout_base title="Not complete"
+											content="Your solution is not yet complete"
+											icon_class="badge background-theme fa fa-clock-o"}}
+					{{else}}
+						{{>popout_base title="Ready"
+											content="Your solution is complete"
+											icon_class="badge background-contrast fa fa-check"}}
+					{{/unless}}
+				</div>
+			</h2>
+			{{>more content=challenge.content}}
+		</a>
 	{{/unless}}
 </template>
 
@@ -164,7 +170,7 @@
 								Write and finish <b>{{missing_reviews}} more reviews</b> for your peers.
 								Please keep in mind that <b>you have 24 hours</b> to finish a review
 								after you clicked the button. You can find your reviews
-								<a href="{{g_build_url "learner_reviews"}}">here</a>.
+								<a href="{{g_build_url "reviews"}}">here</a>.
 								Please start the review only if you have time to finish it. It is a
 								courtesy to your peers to not make	them hold there breath so long.
 								Visit our <a href="help/#9NARA6Bbzpgj63GeJ"> How to Write a Great
@@ -175,10 +181,6 @@
 							{{else}}
 								{{#unless searching}}
 										<div class="text-right" style="padding-top:15px">
-											{{#unless solution_ready}}
-												<div id="republish" class="btn btn-theme">Republish</div>
-											{{/unless}}
-
 											{{#if can_start_review}}
 												<div id="find_review" class="btn btn-theme">Start a review</div>
 											{{/if}}

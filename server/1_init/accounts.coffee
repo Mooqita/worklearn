@@ -4,10 +4,6 @@
 
 ###############################################
 Accounts.onCreateUser (options, user) ->
-	occupation = undefined
-	if options.profile
-		occupation = options.profile.occupation
-
-	gen_profile user, occupation
+	gen_profile user
 	return user
 

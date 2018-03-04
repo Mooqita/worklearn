@@ -11,11 +11,9 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ################################################################################
 Template.job_describe.onCreated ->
-	job_id = FlowRouter.getQueryParam("job_id")
-
 	this.autorun () ->
-		admission = get_admission(IGNORE, IGNORE, Jobs, job_id)
-		activate_admission(admission)
+		id = FlowRouter.getQueryParam("job_id")
+		Meteor.subscribe("job_by_id", id)
 
 ################################################################################
 Template.job_describe.helpers
