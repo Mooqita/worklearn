@@ -63,7 +63,7 @@ _clean_admissions = () ->
 
 ###############################################################################
 _clean_test_objects = () ->
-	collections = [Challenges, Solutions, Reviews, Feedback, Messages]
+	collections = [Organizations, Jobs, Challenges, Solutions, Reviews, Feedback, Messages]
 	filter =
 		test_object: true
 
@@ -88,12 +88,12 @@ _clean_test_objects = () ->
 ###############################################################################
 Meteor.methods
 	test_database: () ->
-		user = Meteor.user()
-		if not user
-			throw new Meteor.Error "Not permitted"
+		#user = Meteor.user()
+		#if not user
+		#	throw new Meteor.Error "Not permitted"
 
-		msg = "test_database called by: " + get_user_mail()
-		log_event msg, event_db, event_info
+		#msg = "test_database called by: " + get_user_mail()
+		#log_event msg, event_db, event_info
 
 		_clean_test_objects()
 		_clean_admissions()
@@ -107,6 +107,11 @@ Meteor.methods
 	clean_database: () ->
 		_clean_test_objects()
 		_clean_admissions()
+
+
+	test_predaid: () ->
+		ch = Challenges.findOne()
+		handle_text(Challenges, ch._id, "content", "")
 
 
 	migrate_database: () ->

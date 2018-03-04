@@ -21,8 +21,8 @@
 @send_review_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
-	owner = get_document_owner "solutions", solution
-	solution_profile = get_profile owner._id
+	owner_id = get_document_owner "solutions", solution
+	solution_profile = get_profile owner_id
 
 	subject = "Mooqita: You got a new review"
 	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
@@ -39,21 +39,21 @@
 	body += "You can disable mail notifications in your profile: " +
 					"" + build_url "profile", {}, "app", true
 
-	send_message_mail owner, subject, body
+	send_message_mail owner_id, subject, body
 
 	title = "New Review"
 	text = "You received a new review on one of your solutions in: "
 	text += challenge.title + " "
 
-	gen_message owner, title, text, url
+	gen_message owner_id, title, text, url
 
 	return true
 
 
 @send_review_timeout_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
-	owner = get_document_owner "reviews", review
-	review_profile = get_profile owner._id
+	owner_id = get_document_owner "reviews", review
+	review_profile = get_profile owner_id
 
 	subject = "Mooqita: A review timed out"
 	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
@@ -90,8 +90,8 @@
 	challenge = Challenges.findOne feedback.challenge_id
 	solution = Solutions.findOne feedback.solution_id
 	review = Reviews.findOne feedback.review_id
-	owner = get_document_owner "reviews", review
-	review_profile = get_profile owner._id
+	owner_id = get_document_owner "reviews", review
+	review_profile = get_profile owner_id
 
 	param =
 		review_id: review._id
@@ -113,12 +113,12 @@
 	body += "You can disable mail notifications in your profile: "+
 					build_url "profile", {}, true, "learner"
 
-	send_message_mail owner, subject, body, url
+	send_message_mail owner_id, subject, body, url
 
 	title = "New Feedback"
 	text = "You received new feedback on one of your reviews in: "
 	text += challenge.title
 
-	gen_message owner, title, text, url
+	gen_message owner_id, title, text, url
 
 	return true

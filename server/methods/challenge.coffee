@@ -55,8 +55,8 @@ Meteor.methods
 		solutions = Solutions.find filter
 
 		solutions.forEach (solution) ->
-			owner = get_document_owner "solutions", solution
-			name = get_profile_name_by_user_id owner._id, true, false
+			owner_id = get_document_owner "solutions", solution
+			name = get_profile_name_by_user_id owner_id, true, false
 			subject =	subject.replace("<<name>>", name)
 			message =	message.replace("<<name>>", name)
 			send_mail user, subject, message

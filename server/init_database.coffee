@@ -9,7 +9,11 @@ _designer_email = "designer@mooqita.org"
 _learner_email = "@uni.edu"
 
 #####################################################
+_organization_title_base = ["Organization "]
+
+#####################################################
 _challenge_title = "The test challenge"
+_challenge_title_base = ["Challenge "]
 
 #####################################################
 @run_database_test_bed = () ->
@@ -24,6 +28,10 @@ _challenge_title = "The test challenge"
 
 	_test_reviews challenge, learners
 	_test_feedbacks solutions
+
+	# Add more challenges and jobs for an nlp test
+	organizations = _test_organizations designer
+	_test_jobs(designer, organizations)
 
 	console.log "####################################################"
 	console.log "##               test run finished                ##"
@@ -55,10 +63,10 @@ _test_get_learners = (email_template) ->
 
 	return learners
 
-#####################################################
-_test_user_creation = (mail, occupation) ->
-	user = Accounts.findUserByEmail(mail)
 
+#####################################################
+_test_user_creation = (mail) ->
+	user = Accounts.findUserByEmail(mail)
 
 	if user
 		profile = get_document user, "owner", Profiles
@@ -75,22 +83,117 @@ _test_user_creation = (mail, occupation) ->
 	profile = get_profile user
 	profile_id = profile._id
 
+	big_five = randomize_big_five(big_five_15)
+
 	modify_field_unprotected Profiles, profile_id, "avatar", faker.image.avatar()
 	modify_field_unprotected Profiles, profile_id, "given_name", faker.name.firstName()
 	modify_field_unprotected Profiles, profile_id, "family_name", faker.name.lastName()
 	modify_field_unprotected Profiles, profile_id, "middle_name", faker.name.firstName()
+
 	modify_field_unprotected Profiles, profile_id, "city", faker.address.city()
 	modify_field_unprotected Profiles, profile_id, "country", faker.address.country()
 	modify_field_unprotected Profiles, profile_id, "state", faker.address.state()
-	modify_field_unprotected Profiles, profile_id, "hours_per_week", Math.round(Random.fraction() * 40)
-	modify_field_unprotected Profiles, profile_id, "job_locale", Random.choice ["remote", "local"]
-	modify_field_unprotected Profiles, profile_id, "job_type", Random.choice ["free", "full"]
-	modify_field_unprotected Profiles, profile_id, "occupation", occupation
-	modify_field_unprotected Profiles, profile_id, "resume", faker.lorem.paragraphs 2
+
 	modify_field_unprotected Profiles, profile_id, "job_interested", true
+	modify_field_unprotected Profiles, profile_id, "job_type", Random.choice ["free", "full"]
+	modify_field_unprotected Profiles, profile_id, "job_locale", Random.choice ["remote", "local"]
+	modify_field_unprotected Profiles, profile_id, "hours_per_week", Math.round(Random.fraction() * 40)
+
+	modify_field_unprotected Profiles, profile_id, "resume", faker.lorem.paragraphs 2
+	modify_field_unprotected Profiles, profile_id, "big_five", big_five
+
 	modify_field_unprotected Profiles, profile_id, "test_object", true
 
 	return profile_id
+
+
+#####################################################
+_test_organizations = (designer) ->
+	organizations = []
+	for i in [1..10]
+		name = _organization_title_base + i
+		organization = _test_organization(name, designer)
+		organizations.push(organization)
+
+	return organizations
+
+
+#####################################################
+_test_organization = (name, designer) ->
+	organization = Organizations.findOne({name:name})
+	if organization
+		return organization
+
+	organization_id = gen_organization(null, designer)
+
+	content = get_profile_name(get_profile(designer)) + ": "
+	content += faker.lorem.paragraphs(3)
+
+	modify_field_unprotected Organizations, organization_id, "name", name
+	modify_field_unprotected Organizations, organization_id, "description", content
+	modify_field_unprotected Organizations, organization_id, "avatar", faker.image.avatar()
+	modify_field_unprotected Organizations, organization_id, "test_object", true
+
+	organization = get_document designer, OWNER, Organizations, {_id:organization_id}
+	return organization
+
+
+#####################################################
+_test_jobs = (designer, organizations) ->
+	jobs = []
+
+	for org in organizations
+		job = _test_job(designer, org)
+		jobs.push(job)
+
+	return jobs
+
+
+#####################################################
+_test_job = (designer, organization) ->
+	title = get_profile_name(get_profile(designer)) + " for: " + organization.name
+
+	job = Jobs.findOne({title:title})
+	if job
+		return job
+
+	job_id = gen_job(null, designer)
+
+	content = title
+	content += faker.lorem.paragraphs(3)
+
+	role = Random.choice ["design", "ops", "sales", "other", "marketing", "dev"]
+
+	challenges = _test_challenges(designer, 3)
+	challenge_ids = (c._id for c in challenges)
+
+	modify_field_unprotected Jobs, job_id, "title", title
+	modify_field_unprotected Jobs, job_id, "description", content
+	modify_field_unprotected Jobs, job_id, "organization_id", organization._id
+
+	modify_field_unprotected Jobs, job_id, "role", role
+	modify_field_unprotected Jobs, job_id, "team", Random.choice [1,0]
+	modify_field_unprotected Jobs, job_id, "idea", Random.choice [1,0]
+	modify_field_unprotected Jobs, job_id, "social", Random.choice [1,0]
+	modify_field_unprotected Jobs, job_id, "process", Random.choice [1,0]
+	modify_field_unprotected Jobs, job_id, "strategic", Random.choice [1,0]
+	modify_field_unprotected Jobs, job_id, "contributor", Random.choice [1,0]
+
+	modify_field_unprotected Jobs, job_id, "challenge_ids", challenge_ids
+	modify_field_unprotected Jobs, job_id, "test_object", true
+
+	job = get_document designer, OWNER, Jobs, {_id:job_id}
+	return job
+
+
+#####################################################
+_test_challenges = (designer, count) ->
+	challenges = []
+	for i in [1..count]
+		title = faker.lorem.sentence()
+		challenges.push(_test_challenge(title, designer))
+
+	return challenges
 
 
 #####################################################
@@ -103,7 +206,7 @@ _test_challenge = (title, designer) ->
 
 	challenge_id = gen_challenge designer
 
-	content = get_profile_name(get_profile(designer)) + ": "
+	content = get_profile_name(designer) + ": "
 	content += faker.lorem.paragraphs(3)
 
 	modify_field_unprotected Challenges, challenge_id, "title", title

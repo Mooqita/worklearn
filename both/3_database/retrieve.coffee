@@ -119,6 +119,9 @@
 		log_event msg, event_db, event_warn
 		return filter
 
+	if typeof user != "string"
+		user = user._id
+
 	admission_filter = _get_admission_filter collection_name, IGNORE, user, role
 
 	admitted_ids = []

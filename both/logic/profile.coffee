@@ -12,9 +12,6 @@
 	if not user
 		return undefined
 
-	if typeof user == "object"
-		user = user._id
-
 	profile = get_document user, OWNER, "profiles"
 	return profile
 

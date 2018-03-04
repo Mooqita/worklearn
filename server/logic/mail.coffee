@@ -4,7 +4,7 @@
 	log_event msg, event_mail, event_info
 
 	to = get_user_mail(user)
-	profile = get_profile user._id
+	profile = get_profile user
 
 	if not profile
 		send_mail to, subject, body
