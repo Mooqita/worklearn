@@ -35,10 +35,7 @@
 	if not csn
 		throw new Meteor.Error "Not permitted."
 
-	res = modify_field_unprotected collection, item_id, field, value
-
-	#if typeof value == "string"
-		#predaid_add_text collection, id, field
+	res = modify_field_unprotected collection, item_id, field, value, user
 
 	return res
 
@@ -62,15 +59,11 @@
 		throw new Meteor.Error "Not permitted."
 
 	res = modify_field_unprotected collection, item_id, field, value
-
-	#if typeof value == "string"
-		#predaid_add_text collection, id, field
-
 	return res
 
 
 ###############################################################################
-@modify_field_unprotected = (collection, id, field, value) ->
+@modify_field_unprotected = (collection, id, field, value, user) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 
@@ -85,6 +78,9 @@
 
 	n = collection.update(id, mod)
 	collection_name = get_collection_name collection
+
+	if typeof value == "string"
+		handle_text(collection_name, id, field, user)
 
 	msg = "[" + collection_name + "] "
 	msg += "[" + field + "] "

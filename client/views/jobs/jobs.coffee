@@ -71,7 +71,7 @@ Template.job_select_org.events
 					query =
 						job_id: res
 						organization_id: organization_id
-					url = build_url "challenge_design", query
+					url = build_url "job_posting", query
 					FlowRouter.go url
 
 

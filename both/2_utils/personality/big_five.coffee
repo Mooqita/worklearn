@@ -151,3 +151,11 @@
 
 	return persona
 
+###############################################################################
+@randomize_big_five = (questions) ->
+	answers = {}
+
+	for q in questions
+		answers[q] = Math.round(Random.fraction() * 4) + 1
+
+	return answers
