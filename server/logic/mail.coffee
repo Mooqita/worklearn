@@ -30,7 +30,8 @@
 		log_event "Sending mail", event_mail, event_info #TODO: stack trace
 		try
 			Email.send {to, from, subject, text}
-			log_event "Mail send", event_mail, event_info #TODO: stack trace
+			msg = "Mail send to (" + to + ") : " + subject
+			log_event msg, event_mail, event_info #TODO: stack trace
 
 		catch error
 			log_event error, event_mail, event_err #TODO: stack trace
