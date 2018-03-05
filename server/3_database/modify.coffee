@@ -79,8 +79,8 @@
 	n = collection.update(id, mod)
 	collection_name = get_collection_name collection
 
-	#if typeof value == "string"
-	#	handle_text(collection_name, id, field, user)
+	if typeof value == "string"
+		handle_text(collection_name, id, field, user)
 
 	msg = "[" + collection_name + "] "
 	msg += "[" + field + "] "

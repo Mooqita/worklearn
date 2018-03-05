@@ -86,7 +86,7 @@ _clean_test_objects = () ->
 ###############################################################################
 
 ###############################################################################
-'''Meteor.methods
+Meteor.methods
 	test_database: () ->
 		user = Meteor.user()
 		if not user
@@ -151,5 +151,5 @@ _clean_test_objects = () ->
 				console.log get_collection_name collection, e._id
 
 		_minify_admissions()
-		_clean_admissions()'''
+		_clean_admissions()
 
