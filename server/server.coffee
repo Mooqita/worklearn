@@ -75,7 +75,6 @@ _initialize_indices = ()->
 	index =
 		content: "text"
 		title: "text"
-		course: ""
 	Challenges._ensureIndex index
 	Solutions._ensureIndex index
 	Reviews._ensureIndex index
@@ -406,4 +405,3 @@ Meteor.startup () ->
 		_handle_startup_setting()
 	catch e
 		console.log e
-
