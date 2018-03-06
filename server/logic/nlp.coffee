@@ -18,7 +18,7 @@ _task_map =
 	"organizations_name": ["entity", "org"]
 
 #####################################################
-class @PredaidTask
+class @NLPTask
 	constructor: (@payload, @task, @owner_id) ->
 		@priority = 0
 		@attempts = 0
@@ -68,8 +68,8 @@ class @PredaidTask
 		field: field
 		owner_id: user
 
-	ds = new PredaidTask(meta_data, task, user)
-	set_id = Predaid.insert(ds)
+	ds = new @NLPTask(meta_data, task, user)
+	set_id = NLPTasks.insert(ds)
 
 	return set_id
 
