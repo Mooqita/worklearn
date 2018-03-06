@@ -1,6 +1,6 @@
 # README
 # The Mooqita Worklearn Platform
-The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and most of this repository is forked from [Mooqita’s Worklearn](https://github.com/Mooqita/worklearn) project page. 
+The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and most of this repository is forked from [Mooqita’s Worklearn](https://github.com/Mooqita/worklearn) project page.
 
 ## Local Development
 As part of University of Nebraska at Omaha’s ITIN4440-001 Agile Development Methods class in collaboration with the non-profits: [Siena Francis House](https://sienafrancis.org) and [Mooqita](https://www.mooqita.org/); we have created a development environment for building on the worklearn platform with [Docker](https://www.docker.com/).
@@ -10,8 +10,8 @@ To run your own instance of Mooqita here is a guide how to get it running on you
 
 Download the Stable Docker Community Edition that matches your operating system from their [website](https://www.docker.com/get-docker). Operating systems below are linked to the prospective install guides. **Please note system requirements before install and run.**
 
-[Windows and Docker notes](https://docs.docker.com/docker-for-windows/install/): Docker for Windows requires Windows 10 or Windows Server 2016, check the notes to see what you need to know before you install. 
-If you install the Docker Toolbox the installer automatically installs Oracle VirtualBox to run Docker. [Here is a useful video for configuring the VirtualBox and troubleshooting Windows with Docker](https://www.youtube.com/watch?v=ymlWt1MqURY). 
+[Windows and Docker notes](https://docs.docker.com/docker-for-windows/install/): Docker for Windows requires Windows 10 or Windows Server 2016, check the notes to see what you need to know before you install.
+If you install the Docker Toolbox the installer automatically installs Oracle VirtualBox to run Docker. [Here is a useful video for configuring the VirtualBox and troubleshooting Windows with Docker](https://www.youtube.com/watch?v=ymlWt1MqURY).
 
 [MacOS and Docker notes](https://docs.docker.com/docker-for-mac/install/): Docker.app requires at least macOS Yosemite or El Capitan as well as permissions. You do not need the Docker Toolbox. Upon installing Docker click the app to run Docker daemon. Click the whale icon to get Preferences and then the Advanced tab - its helpful to have at least 2 CPUs and 4 or more GB memory.
 
@@ -23,7 +23,7 @@ Validate you have installed Docker by running:
 `docker --version`
 
 ### Install Node and NPM
-When you install Node.js, npm is automatically installed. 
+When you install Node.js, npm is automatically installed.
 Check to see if you have Node and/or npm with this command:
 
 `node -v && npm -v`
@@ -37,7 +37,7 @@ Check to see if you have Node and/or npm with this command:
 Verify you have both Node.js and npm installed with `node -v && npm -v`
 
 ### Downloading MooqitaSFH from Git-Hub
-Go to [MooquitaSFH](https://github.com/MooqitaSFH/worklearn/) project page on GitHub and clone the repository into a folder someplace on your computer. Name this folder  _mooqita_folder_ 
+Go to [MooquitaSFH](https://github.com/MooqitaSFH/worklearn/) project page on GitHub and clone the repository into a folder someplace on your computer. Name this folder  _mooqita_folder_
 
 You can find the documentation on how to clone a repository [here](https://help.github.com/articles/cloning-a-repository/).
 
@@ -52,9 +52,17 @@ In your command prompt navigate to the _mooqita_folder_  you created and change 
 
 `npm run clean && docker-compose up`
 
-If you see Permission Denied run: 
+If you see Permission Denied run:
 
-`sudo npm run clean && docker-compose up`
+`sudo npm run clean`
+
+Next, within the _worklearn_ folder open file docker/env/.worklearn-env and edit the _MAIL_URL_ and _DROPBOX_ACCESS_TOKEN_ getting the correct information for _MAIL_URL_ from
+
+https://mailtrap.io
+
+and the _DROPBOX_ACCESS_TOKEN_ from
+
+https://blogs.dropbox.com/developers/2014/05/generate-an-access-token-for-your-own-account/
 
 Next, run:
 
@@ -82,5 +90,3 @@ We are aware of some issues people experienced installing the system here is a l
 Critical Docker issues with modules, images, or containers: clean and rebuild development environment.
 
 When all else fails - restart.
-
-
