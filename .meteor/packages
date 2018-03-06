@@ -47,6 +47,7 @@ check@1.2.5
 alanning:roles
 jparker:crypto-sha256
 gwendall:impersonate
+force-ssl
 
 # Data Generation #
 random@1.0.10
