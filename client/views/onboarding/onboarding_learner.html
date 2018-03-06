@@ -8,36 +8,34 @@
 | Onboarding Intro (similar to above, but content differs),
 | TODO: could abstract this to a shared component.
 |
+| TODO: shorten the text and consider illustrating procedure
+|
 -------------------------------------------------->
 <template name="onboarding_learner_intro">
     {{#mooqita_wide_spacing}}
-        <div class="row padding-top" style="margin-top: 20%">
-            <div class="col-sm-6">
-                <h1 style="text-align: center; padding-top: 30px">
-                    <img style="width: 300px" src="/images/mooqita.jpg">
-                </h1>
-            </div>
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
 
-            <div class="col-sm-6">
-                <h1>Get practical experience and find the job you love!</h1>
+        <div class="col-md-12">
+            <h1>Get practical experience and find the job you love!</h1>
 
-                <p style="padding-bottom: 25px">
-                    We make it easy for you to find the perfect job based
-                    on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
-                </p>
+            <p style="padding-bottom: 25px">
+                We make it easy for you to find the perfect job based
+                on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
+            </p>
 
-                <p>To get started complete our five-minute onboarding phase. We will first ask you to select some
-                    challenges that represent your interests and abilities.
-                    Afterwards we will ask a few additional questions so that we get a better understanding of your:</p>
-                <ol>
-                    <li>interests & abilities</li>
-                    <li>time you have to work on Mooqita challenges</li>
-                    <li>team work preferences</li>
-                    <li>personality</li>
-                </ol>
-                <br>
-                <a class="btn btn-theme" href="onboarding_learner_challenge_select">Get started</a>
-            </div>
+            <p>To get started complete our five-minute onboarding phase. We will first ask you to <b>select</b> some
+                <b>challenges that represent your interests and abilities</b>.
+                Afterwards we will ask a few additional questions so that we get a better understanding of your:</p>
+            <ol>
+                <li>interests & abilities</li>
+                <li>time you have to work on Mooqita challenges</li>
+                <li>team work preferences</li>
+                <li>personality</li>
+            </ol>
+            <br>
+            <a class="btn btn-theme" href="onboarding_learner_challenge_select">Get started</a>
         </div>
     {{/mooqita_wide_spacing}}
 </template>
@@ -48,15 +46,26 @@
 |
 -------------------------------------------------->
 <template name="onboarding_learner_challenge_select">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
+    {{#mooqita_wide_spacing}}
 
-		<h1>Challenges of Interest</h1>
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
 
-		<p>
-			The challenges on this page represent tasks that a future employer might ask you to work on.
+        <p>
+            <em>TODO: implement a challenge search and selection interface here (using the existing search component
+                with
+                an additional search for challenges labeled 'mooqita-prime' that represent a manually curated list).
+                A list of ~20 challenges should be loaded right away. It should be possible to select multiple
+                challenges
+                without leaving the page before a "next" button is clicked to continue the onboarding flow.
+                There should also be a "own challenge" button.</em>
+        </p>
+
+        <h1>Challenges of Interest</h1>
+
+        <p>
+            The challenges on this page represent tasks that a future employer might ask you to work on.
             Please select 1 - 3 challenges that represent your interests. You can select challenges that you would
             already be able to solve, but you can also select challenges that you would like to be able to solve after
             completing some additional training.
@@ -64,21 +73,13 @@
             generate your own challenge that represents your abilities, interests, or both.
             We use these challenges to match you with potential employers and to recommend courses that you can do
             to learn more about the topics that interest you.
-		</p>
-
-        <p>
-            <em>TODO: implement a challenge search and selection interface here (using the existing search component with
-            an additional search for challenges labeled 'mooqita-prime' that represent a manually curated list).
-            A list of ~20 challenges should be loaded right away. It should be possible to select multiple challenges
-            without leaving the page before a "next" button is clicked to continue the onboarding flow.
-                There should also be a "own challenge" button.</em>
         </p>
 
         <br>
 
         <a class="btn btn-theme" href="onboarding_learner_challenge_reveal">next</a>
 
-	{{/mooqita_wide_spacing}}
+    {{/mooqita_wide_spacing}}
 </template>
 
 <!------------------------------------------------
@@ -88,9 +89,18 @@
 -------------------------------------------------->
 <template name="onboarding_learner_challenge_reveal">
     {{#mooqita_wide_spacing}}
+
         <h1 style="text-align: center; padding-top: 30px">
             <img style="width: 300px" src="/images/mooqita.jpg">
         </h1>
+
+        <p>
+            <em>TODO: <br/>
+                - only show this page if the learner selected challenges by companies <br/>
+                - implement a list of the challenges that the learner selected showing the source organizations
+                nicely next to the challenge summary
+            </em>
+        </p>
 
         <h1>Challenges of Interest</h1>
 
@@ -102,14 +112,6 @@
 
         <p>
             Press 'next' and register to begin solving challenges and for an opportunity to be hired.
-        </p>
-
-        <p>
-            <em>TODO: <br/>
-                - only show this page if the learner selected challenges by companies <br/>
-                - implement a list of the challenges that the learner selected showing the source organizations
-                nicely next to the challenge summary
-            </em>
         </p>
 
         {{#unless user_profile}}
@@ -133,14 +135,14 @@
 -------------------------------------------------->
 
 <template name="onboarding_learner_register">
-	<div class="modal fade register-modal">
-		<div class="register-frame animated">
-			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
-				<div class="fa fa-times"></div>
-			</button>
-			{{>atForm}}
-		</div>
-	</div>
+    <div class="modal fade register-modal">
+        <div class="register-frame animated">
+            <button type="button" class="btn btn-default close-register" data-dismiss="modal">
+                <div class="fa fa-times"></div>
+            </button>
+            {{>atForm}}
+        </div>
+    </div>
 </template>
 
 <!------------------------------------------------
@@ -149,31 +151,31 @@
 |
 -------------------------------------------------->
 <template name="onboarding_learner_challenges">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
+    {{#mooqita_wide_spacing}}
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
 
-		<h1>Challenges</h1>
+        <h1>Challenges</h1>
 
-		<p>
-			Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
-			should be able to solve</b></em>.
-			We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
-			<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
-			days until a great match has been found. <br/> We will alert you via email!
-		</p>
+        <p>
+            Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
+            should be able to solve</b></em>.
+            We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
+            <em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
+            days until a great match has been found. <br/> We will alert you via email!
+        </p>
 
-		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
+        <!-- TODO: Consider enforcing that at least one example challenge is added! -->
 
-		{{>job_challenges}}
+        {{>job_challenges}}
 
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Get in your team culture
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
+        <div class="btn-group btn-group-justified">
+            <a class="btn btn-theme" href="{{get_url}}">
+                Get in your team culture
+            </a>
+        </div>
+    {{/mooqita_wide_spacing}}
 </template>
 
 <!------------------------------------------------
@@ -182,54 +184,54 @@
 |
 -------------------------------------------------->
 <template name="onboarding_learner_overview">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
+    {{#mooqita_wide_spacing}}
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
 
-		<h1>Optimized Persona</h1>
+        <h1>Optimized Persona</h1>
 
-		{{#unless persona_available}}
-			<p>
-				You do not yet have any persona data.
-				Fill out your profile to get better results.
-			</p>
+        {{#unless persona_available}}
+            <p>
+                You do not yet have any persona data.
+                Fill out your profile to get better results.
+            </p>
 
-			<div class="text-right">
-				<a href="{{g_build_url "onboarding_team"}}" target="_blank"
-					 class="btn btn-theme animated_0_2_s">
-					Profile <span class="fa fa-edit"></span>
-				</a>
-			</div>
-		{{else}}
+            <div class="text-right">
+                <a href="{{g_build_url "onboarding_team"}}" target="_blank"
+                   class="btn btn-theme animated_0_2_s">
+                    Profile <span class="fa fa-edit"></span>
+                </a>
+            </div>
+        {{else}}
 
-			{{>job_overview}}
+            {{>job_overview}}
 
-			<div class="row padding-top">
-				{{#unless g_is_public "Jobs"}}
-					<div class="row">
-						<div class="form-group col-sm-6">
+            <div class="row padding-top">
+                {{#unless g_is_public "Jobs"}}
+                    <div class="row">
+                        <div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
 								<div class="btn btn-theme" id="save">Save</div>
 							</span>
-						</div>
+                        </div>
 
-						<div class="form-group col-sm-6">
+                        <div class="form-group col-sm-6">
 							<span class="btn-group btn-group-justified">
 								<div class="btn btn-theme" {{publish_disabled}}
-										 id="publish">Publish Job Posting Now</div>
+                                     id="publish">Publish Job Posting Now</div>
 							</span>
-						</div>
-					</div>
-				{{/unless}}
-			</div>
-		{{/unless}}
+                        </div>
+                    </div>
+                {{/unless}}
+            </div>
+        {{/unless}}
 
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Job Overview
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
+        <div class="btn-group btn-group-justified">
+            <a class="btn btn-theme" href="{{get_url}}">
+                Job Overview
+            </a>
+        </div>
+    {{/mooqita_wide_spacing}}
 </template>
 
