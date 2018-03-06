@@ -1,0 +1,67 @@
+<template name="onboard_learner_registered">
+    {{#mooqita_wide_spacing}}
+        <div class="row padding-top">
+            <div class="col-md-12">
+                <h1>Welcome to Mooqita, NAME</h1>
+                <p>You signed up as a learner. We take it that you are interested in solving challenges to build up a
+                    portfolio,
+                    as well as in getting suggested matches with potential employers from us. In order to provide great
+                    results
+                    we need to learn a little bit more about you. Completing each of the following steps will
+                    drastically
+                    improve
+                    the matches.</p>
+                <p><em>Interests & Abilities</em></p>
+                <p>This is crucial for finding great matching challenges and organizations for you.</p>
+                <p><em>Work Habits</em></p>
+                <p>This helps us coordinate you with others on the platform.</p>
+                <p><em>Personality</em></p>
+                <p>So we can make sure that you fit well with challenge and work teams.</p>
+                <p><em>Profile</em></p>
+                <p>Just some general information about you. Provide a classic CV to improve our matching. Here you can
+                    also ajust any of the choices from this onboarding process later on.</p>
+
+                <a class="btn btn-theme" href="onboard_learner_role">Continue Process</a>
+
+                <div class="row">
+                    <p>After completing these steps, make sure to head over to your PROFILE and enable 'job search' if
+                        you want to receive matches with potential employers and invitations to complete challenges by
+                        matching employers.</p>
+                    <p><em>TODO:<br/>
+                        (1) implement percentage complete widget to be shown on the right hand side of this page, as
+                        well as
+                        on the profile page (for learners only for now. Consider doing this for orgs too.).<br/>
+                        (2) implement a check for completion of each step and grey out + add checkmark those steps that
+                        are already completed (gives notion of progress) ... based on progress, update target
+                        of 'Continue Process' button.<br/>
+                        (3) IF AND ONLY IF: all main steps above have been completed: show link to tutorial page ...
+                        "what
+                        can I
+                        do here"
+                    </em></p>
+                </div>
+            </div>
+        </div>
+    {{/mooqita_wide_spacing}}
+</template>
+
+<template name="onboard_learner_role">
+    {{#mooqita_wide_spacing}}
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
+
+        <h1>Role</h1>
+
+        <p>
+            Please select the role that you would be most interested in.
+            Don't worry you can change this later.
+        </p>
+
+        {{>job_role session="onboarding_job_posting" key="role"
+                href="onboarding_techexistingselection"}}
+
+        <!--<a class="btn btn-theme" href="">next</a>-->
+
+    {{/mooqita_wide_spacing}}
+</template>
