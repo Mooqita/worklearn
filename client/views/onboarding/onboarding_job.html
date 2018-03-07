@@ -200,45 +200,47 @@
 
 		<hr class="mooqita-line">
 
-		{{#let organization=organization_profile}}
-			<div class="row">
-				<div class="col-sm-8 col-ms-8">
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Organizations" label="Organization Name"
-								item_id=organization._id field="name" placeholder="ACME Inc."}}
+		{{#if currentUser}}
+			{{#let organization=organization_profile}}
+				<div class="row">
+					<div class="col-sm-8 col-ms-8">
+						<div class="form-group">
+							{{>basic_input method="set_field" collection_name="Organizations" label="Organization Name"
+									item_id=organization._id field="name" placeholder="ACME Inc."}}
+						</div>
+
+						<div class="form-group">
+							{{>text_input method="set_field" collection_name="organizations"
+									item_id=organization._id field="description"
+									placeholder="Let us know about your mission."}}
+						</div>
 					</div>
 
-					<div class="form-group">
-						{{>text_input method="set_field" collection_name="organizations"
-								item_id=organization._id field="description"
-								placeholder="Let us know about your mission."}}
-					</div>
-				</div>
+					<div class="col-sm-4 col-ms-4">
+						<div class="form-group">
+							<div class="raised text-center">
+								{{>avatar collection_name = "Organizations"
+													observable = organization.avatar
+													item_id = organization._id
+													field = "avatar"
+													explain = "Upload your company logo (png, jpg, svg, etc). Max ~2MB."}}
 
-				<div class="col-sm-4 col-ms-4">
-					<div class="form-group">
-						<div class="raised text-center">
-							{{>avatar collection_name = "Organizations"
-												observable = organization.avatar
-												item_id = organization._id
-												field = "avatar"
-												explain = "Upload your company logo (png, jpg, svg, etc). Max ~2MB."}}
-
-							{{>upload method="upload_file" collection_name="Organizations"
-												item_id=organization._id field="avatar" max_size=2400000}}
+								{{>upload method="upload_file" collection_name="Organizations"
+													item_id=organization._id field="avatar" max_size=2400000}}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<hr>
+				<hr>
 
-			<div class="btn-group btn-group-justified">
-				<div class="btn btn-theme" id="describe_challenge">
-					Describe your challenges
+				<div class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="describe_challenge">
+						Describe your challenges
+					</div>
 				</div>
-			</div>
-		{{/let}}
+			{{/let}}
+		{{/if}}
 	{{/unless}}
 </template>
 

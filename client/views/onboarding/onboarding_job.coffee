@@ -132,7 +132,7 @@ Template.onboarding_job_owner.onCreated ->
 
 	self.autorun ()->
 		org_filter =
-			collection_name: "organizations"
+			c: "organizations"
 		org_admissions = Admissions.find(org_filter).fetch()
 
 		organization_id = ""
