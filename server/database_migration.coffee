@@ -9,7 +9,7 @@ _minify_admissions = () ->
 		consumer_id:
 			$exists: true
 
-	crs = Admissions.find()
+	crs = Admissions.find(filter)
 	dead = []
 	minify = []
 

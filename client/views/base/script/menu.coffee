@@ -10,15 +10,7 @@ Template.mooqita_menu.helpers
 		return profile
 
 	menu_items: () ->
-		mod =
-			fields:
-				c: 1
-
-		adms = Admissions.find({}, mod).fetch()
-		unique = new Set()
-
-		for a in adms
-			unique.add(a.c)
+		unique = get_admission_collection_names()
 
 		items = [	{name: "Organizations", href: build_url("organizations")}]
 

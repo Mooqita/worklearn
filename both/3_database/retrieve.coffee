@@ -1,9 +1,9 @@
 ###############################################################################
 # Permissible values for the admission filter function:
 #
-# collection_name <string> (WILDCARD | IGNORE | group_id | user_id)
-# resource_id 		<string> (WILDCARD | IGNORE | document_id)
-# consumer_id 		<string> (WILDCARD | IGNORE | document_id)
+# collection <string> (WILDCARD | IGNORE | group_id | user_id)
+# resource_id 		<string> (WILDCARD | IGNORE | resource)
+# consumer_id 		<string> (WILDCARD | IGNORE | resource)
 # role	 					<string> (IGNORE | role_string)
 #
 # role_string <string> (RECIPIENT | PUBLIC | OWNER | USER)
@@ -11,42 +11,42 @@
 # WILDCARD <string>:
 # IGNORE <string>:
 #
-# document_id <string>:
+# resource <string>:
 # group_id <string>:
 # user_id <string>:
 #
 #
 # Examples:
 #
-# collection_name	= WILDCARD
+# collection	= WILDCARD
 # resource_id			= WILDCARD
-# finds all global admissions where resource_id = "*" and collection_name = "*":
+# finds all global admissions where resource_id = "*" and collection = "*":
 # e.g. if role="admin" then the user has admin rights on all collections.
 #
-# collection_name	= IGNORE
+# collection	= IGNORE
 # resource_id			= WILDCARD
 # finds all admissions resource_id="*"
 #
-# collection_name	= WILDCARD
+# collection	= WILDCARD
 # resource_id			= IGNORE
-# finds all admissions for collection_name="*". Can only be used when either
-# consumer_id != IGNORE or role != IGNORE
+# finds all admissions for collection="*". Can only be used when either
+# user != IGNORE or role != IGNORE
 #
-# collection_name	= IGNORE
+# collection	= IGNORE
 # resource_id			= IGNORE
-# finds all admissions. Can only be used when consumer_id != IGNORE
+# finds all admissions. Can only be used when user != IGNORE
 #
 # Some more examples with explanations:
-# collection_name, resource_id, consumer_id, role
+# collection, resource_id, user, role
 #
 # IGNORE, IGNORE, user_id, "admin"
 # Find all admissions where the user has the role admin
 #
-# IGNORE, document_id, IGNORE, "admin"
-# Find all users with role admin for document_id
+# IGNORE, resource, IGNORE, "admin"
+# Find all users with role admin for resource
 #
-# collection_name, WILDCARD, IGNORE, "admin"
-# Find all users with role admin where collection_name = collection_name
+# collection, WILDCARD, IGNORE, "admin"
+# Find all users with role admin where collection = collection
 # and resource_id="*"
 #
 ###############################################################################
@@ -55,53 +55,54 @@
 # filter
 ###############################################################################
 
+#user, role, collection, resource,
 ###############################################################################
-@_get_admission_filter = (collection_name, document_id, consumer_id, role) ->
+@_get_admission_filter = (user, role, collection, resource) ->
 	check role, String
 
-	if consumer_id == null
-		consumer_id = ""
+	if user == null
+		user = ""
 
-	if typeof collection_name != "string"
-		collection_name = collection_name._name
+	if typeof collection != "string"
+		collection = collection._name
 
-	if typeof document_id != "string"
-		document_id = document_id._id
+	if typeof resource != "string"
+		resource = resource._id
 
-	if typeof consumer_id != "string"
-		consumer_id = consumer_id._id
+	if typeof user != "string"
+		user = user._id
 
 	if role == WILDCARD
 		msg = "role can not be a WILDCARD. Did you want to use IGNORE?"
 		throw new Meteor.Error msg
 
-	if consumer_id == WILDCARD
-		msg = "consumer_id can not be a WILDCARD. Did you want to use IGNORE?"
+	if user == WILDCARD
+		msg = "user can not be a WILDCARD. Did you want to use IGNORE?"
 		throw new Meteor.Error msg
 
 	if role == IGNORE &
-		 consumer_id == IGNORE &
-		 document_id == IGNORE &
-		 collection_name == WILDCARD
-		msg = "consumer_id can be IGNORE only if either consumer_id or collection_name is not set to IGNORE."
+		 user == IGNORE &
+		 resource == IGNORE &
+		 collection == WILDCARD
+		msg = "user can be IGNORE only if either user or collection is not set to IGNORE."
 		throw new Meteor.Error msg
 
-	if consumer_id == IGNORE &
-		 document_id == IGNORE &
-		 collection_name == IGNORE
-		msg = "resource_id can't be IGNORE if consumer_id and collection_name are IGNORE."
+	if user == IGNORE &
+		 resource == IGNORE &
+		 collection == IGNORE
+		msg = "resource_id can't be IGNORE if user and collection are IGNORE."
 		throw new Meteor.Error msg
 
 	admission_filter = {}
 
-	if document_id != IGNORE
-		admission_filter["i"] = document_id
+	if resource != IGNORE
+		admission_filter["i"] = resource
 
-	if collection_name != IGNORE
-		admission_filter["c"] = collection_name
+	if collection != IGNORE
+		admission_filter["c"] = collection
 
-	if consumer_id != IGNORE
-		admission_filter["u"] = consumer_id
+	if user != IGNORE
+		admission_filter["u"] = user
 
 	if role != IGNORE
 		admission_filter["r"] = role
@@ -110,7 +111,7 @@
 
 
 ################################################################################
-@get_filter = (user, role, collection_name, filter) ->
+@get_filter = (user, role, collection, filter) ->
 	if not filter
 		filter = {}
 
@@ -122,7 +123,7 @@
 	if typeof user != "string"
 		user = user._id
 
-	admission_filter = _get_admission_filter collection_name, IGNORE, user, role
+	admission_filter = _get_admission_filter user, role, collection, IGNORE
 
 	admitted_ids = []
 	admission_cursor = Admissions.find admission_filter
@@ -170,14 +171,14 @@ _admission_fields =
 
 ################################################################################
 @get_admissions = (user, role, collection, resource, options={}) ->
-	admission_filter = _get_admission_filter collection, resource, user, role
+	admission_filter = _get_admission_filter user, role, collection, resource
 	admission_cursor = Admissions.find admission_filter, options
 	return admission_cursor
 
 
 ################################################################################
 @get_admission = (user, role, collection, resource, options={}) ->
-	admission_filter = _get_admission_filter collection, resource, user, role
+	admission_filter = _get_admission_filter user, role, collection, resource
 	admission = Admissions.findOne admission_filter, options
 	return admission
 
@@ -196,14 +197,29 @@ _admission_fields =
 	return admission
 
 
+################################################################################
+@get_admission_collection_names = () ->
+		mod =
+			fields:
+				c: 1
+
+		adms = Admissions.find({}, mod).fetch()
+		unique = new Set()
+
+		for a in adms
+			unique.add(a.c)
+
+		return unique
+
+
 ###############################################################################
 # admissaries
 ###############################################################################
 
 ################################################################################
-@get_document_admissaries = (collection, document_id, role) ->
+@get_document_admissaries = (collection, resource, role) ->
 	owner_ids = []
-	admission_cursor = get_admissions IGNORE, role, collection, document_id
+	admission_cursor = get_admissions IGNORE, role, collection, resource
 	admission_cursor.forEach (admission) ->
 		owner_ids.push admission.u
 
@@ -217,14 +233,14 @@ _admission_fields =
 
 
 ################################################################################
-@get_document_owners = (collection, document_id) ->
-	owner_ids = get_document_admissaries collection, document_id, OWNER
+@get_document_owners = (collection, resource) ->
+	owner_ids = get_document_admissaries collection, resource, OWNER
 	return owner_ids
 
 
 ################################################################################
-@get_document_owner = (collection, document_id) ->
-	admission = get_admission IGNORE, OWNER, collection, document_id
+@get_document_owner = (collection, resource) ->
+	admission = get_admission IGNORE, OWNER, collection, resource
 	if not admission
 		return null
 

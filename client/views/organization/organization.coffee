@@ -12,12 +12,9 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 ###############################################################################
 Template.organizations.helpers
 	need_to_register:() ->
-		filter =
-			c: "organizations"
+		n_org = get_admissions(IGNORE, IGNORE, Organizations, IGNORE)
 
-		n_org = Admissions.find(filter).count()
-
-		if n_org > 0
+		if n_org.count() > 0
 			return false
 
 		return true

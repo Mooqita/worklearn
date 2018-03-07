@@ -131,9 +131,7 @@ Template.onboarding_job_owner.onCreated ->
 	self = this
 
 	self.autorun ()->
-		org_filter =
-			c: "organizations"
-		org_admissions = Admissions.find(org_filter).fetch()
+		org_admissions = get_admissions(IGNORE, IGNORE, Organizations, IGNORE).fetch()
 
 		organization_id = ""
 		if org_admissions.length > 0

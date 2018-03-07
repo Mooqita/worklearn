@@ -212,7 +212,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	# resetting the filter
 	r_ids = Array.from(resource_ids)
 	filter =
-		resource_id:
+		i:
 			$in: r_ids
 
 	admission_cursor = Admissions.find(filter)
