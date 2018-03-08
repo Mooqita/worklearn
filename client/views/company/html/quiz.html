@@ -1,0 +1,43 @@
+<!------------------------------------------------
+|
+|	Quiz
+|
+-------------------------------------------------->
+<template name="organization_quiz" template="quiz">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<form class="organization_quiz" method="post">
+					<div class="quiz_content">
+						{{#each question in quiz}}
+						    <div>
+								<h4>{{question.question}}</h4>
+								{{#let question_num=@index}}
+									{{#each answer in question.answers}}
+										<div>
+											<input type="radio" id="question_{{question_num}}" name="question_{{question_num}}" value="{{answer}}" required>
+											<label for="question_{{question_num}}">{{answer}}</label>
+										</div>
+									{{/each}}
+								{{/let}}
+						    </div>
+						{{/each}}
+					</div>
+					<input type="submit" class="btn btn-theme" name="get_results" value="Get Results">
+				</form>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+<template name="organization_quiz_results" template="results">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<div class="quiz_results">
+
+				</div>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
