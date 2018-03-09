@@ -18,6 +18,7 @@
 @Messages = new Mongo.Collection("messages")
 @Reviews = new Mongo.Collection("reviews")
 @Posts = new Mongo.Collection("posts")
+@Question = new Mongo.Collection("question")
 
 #######################################################
 @ChallengeSummaries = new Mongo.Collection("challenge_summaries")
@@ -28,4 +29,3 @@
 
 #######################################################
 @Admin = new Mongo.Collection("admin")
-
