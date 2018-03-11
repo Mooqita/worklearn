@@ -33,6 +33,18 @@ Meteor.publish "my_solutions", (admissions) ->
 	return crs
 
 #######################################################
+Meteor.publish "my_solutions_by_challenge_id", (admissions, challenge_id) ->
+	check challenge_id, String
+	user_id = this.userId
+
+	filter = {challenge_id: challenge_id}
+	crs = get_my_documents Solutions, filter, _solution_fields
+
+	log_publication crs, user_id, "my_solutions_by_challenge_id"
+	return crs
+
+
+#######################################################
 Meteor.publish "solution_by_id", (solution_id) ->
 	check solution_id, String
 	user_id = this.userId
@@ -49,18 +61,6 @@ Meteor.publish "solution_by_id", (solution_id) ->
 	crs = Solutions.find filter, _solution_fields
 
 	log_publication crs, user_id, "solution_by_id"
-	return crs
-
-
-#######################################################
-Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
-	check challenge_id, String
-	user_id = this.userId
-
-	filter = {challenge_id: challenge_id}
-	crs = get_my_documents Solutions, filter, _solution_fields
-
-	log_publication crs, user_id, "my_solutions_by_challenge_id"
 	return crs
 
 

@@ -85,9 +85,9 @@
 						<h1>{{title}}</h1>
 
 						{{#if has_solutions}}
-							{{>more content=content}}
+							{{>more content=content is_html=true}}
 						{{else}}
-							{{>more content=content expanded=true}}
+							{{>more content=content is_html=true expanded=true}}
 						{{/if}}
 
 						{{#if material}}

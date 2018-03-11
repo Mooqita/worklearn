@@ -80,15 +80,19 @@ Template.solution_preview.helpers
 ########################################
 Template.solution.onCreated ->
 	self = this
+	user = Meteor.userId()
+
 	self.autorun () ->
 		if not FlowRouter.getQueryParam("challenge_id")
 			return
 
 		challenge_id = FlowRouter.getQueryParam("challenge_id")
+		solution_ads = get_admissions(user, IGNORE, Solutions, IGNORE).fetch()
+		review_ads = get_admissions(user, IGNORE, Reviews, IGNORE).fetch()
 
 		self.subscribe "challenge_by_id", challenge_id
-		self.subscribe "my_solutions_by_challenge_id", challenge_id
-		self.subscribe "reviews_by_challenge_id", challenge_id
+		self.subscribe "my_solutions_by_challenge_id", solution_ads, challenge_id
+		self.subscribe "reviews_by_challenge_id", review_ads, challenge_id
 
 
 ########################################

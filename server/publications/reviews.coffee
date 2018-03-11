@@ -36,7 +36,7 @@ Meteor.publish "my_reviews", () ->
 
 
 #######################################################
-Meteor.publish "reviews_by_challenge_id", (challenge_id) ->
+Meteor.publish "reviews_by_challenge_id", (admissions, challenge_id) ->
 	check challenge_id, String
 	user_id = this.userId
 
