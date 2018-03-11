@@ -429,6 +429,43 @@
 </template>
 
 
+
+<!------------------------------------------------
+|
+|	Screen showing the user that the support team was
+| informed and will connect shortly
+|
+-------------------------------------------------->
+<template name="challenge_help_informed">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Support Team Message</h1>
+				</div>
+
+				<div class="modal-body">
+					<h2> Thank you for getting in touch!</h2>
+
+					<p>	Our challenge experts will get in back to you soon.</p>
+
+					<p>
+						Check the following mail address for messages: <br>
+						<em style="font-weight: 600">{{email}}</em>.
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group text-right">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Close</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
 <!------------------------------------------------
 |
 |	Challenge reset solution

@@ -50,6 +50,14 @@ Template.job_challenges.helpers
 
 ###############################################################################
 Template.job_challenges.events
+	"click #notify": () ->
+		Meteor.call "notify_support", "Help us design a challenge",
+			(err, res) ->
+				if err
+					sAlert.error("Notification error: " + err)
+				if res
+					Modal.show("challenge_help_informed", {email:res})
+
 	"click #add_challenge": () ->
 		loc_job_id = FlowRouter.getQueryParam("job_id")
 		Meteor.call "add_challenge", loc_job_id,
