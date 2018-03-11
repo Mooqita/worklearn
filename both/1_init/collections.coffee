@@ -39,3 +39,5 @@
 @EduCertAssertions = new Mongo.Collection("edu_cert_assertions")
 @EduCertRecipients = new Mongo.Collection("edu_cert_recipients")
 
+#######################################################
+@Onboarding = new Mongo.Collection("onboarding")

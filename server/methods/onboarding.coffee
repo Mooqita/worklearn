@@ -139,3 +139,25 @@ Meteor.methods
 		org_id = accept_invitation invitation_id
 		return org_id
 
+################################################################
+######################OLD OL DEV################################
+################################################################
+Meteor.methods
+  insertOnboardingForUser: (fieldName, data) ->
+    doc = Onboarding.find({owner_id: this.userId}, {sort: {created: -1}, limit: 1}).fetch()
+    if (doc.length > 0)
+      id = doc[0]._id
+    else
+      # If the document does not exist then first create it;
+      # TODO: there is probably a simpler way to create a mongoDB schema
+      id = store_document_unprotected Onboarding, {
+        timeComitted: 0,
+        tzIndex: 10,
+        lang1Index: 20,
+        lang2Index: null,
+        commTags: [],
+        commAny: false,
+        personality: {},
+        existingSkills: {}
+      }
+    Onboarding.update(id, { $set: "#{''+ fieldName + ''}": data})

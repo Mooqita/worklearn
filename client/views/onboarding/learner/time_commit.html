@@ -1,0 +1,23 @@
+<template name="onboarding_time">
+    {{#mooqita_wide_spacing}}
+        <p><em>TODO: <br/>
+            (1) make sure the slider shows upon first load<br/>
+            (2) should we ask separately regarding interest investing time A in learning (courses) and B in challenges? <br/>
+            (3) reformat to show in consistent onboarding style
+        </em></p>
+
+    <h1>How many hours per week can you commit to Mooqita?</h1>
+
+    <div class="taskDescription">
+    	<p>This will help us suggest challenges that fit around your schedule.</p>
+    </div>
+
+    <div id="timeCommitSlider"></div>
+
+    <div id="timeCommitSlider_info">
+    	<p>That's about <u><span id="approxMins"></span> minutes for each day</u></p>
+    </div>
+
+    <a href="onboarding_timezone" class="btn btn-theme pull-right obcontinue" aria-pressed="true">Continue</a>
+    {{/mooqita_wide_spacing}}
+</template>

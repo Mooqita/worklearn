@@ -4,3 +4,5 @@ secrets.txt
 tmp/
 
 /package-lock.json
+
+*-lock.json

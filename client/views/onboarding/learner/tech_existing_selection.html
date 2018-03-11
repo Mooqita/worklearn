@@ -1,0 +1,35 @@
+<!-- TODO: consider asking for resume / linkedin link earlier in process so we can fill with suggestions -->
+
+<template name="onboarding_techexistingselection">
+    {{#mooqita_wide_spacing}}
+
+        <div class="row padding-top">
+            <div class="col-md-12">
+                <p><em>TODO: <br/>
+                    (1) implement option to add own tags <br/>
+                    (2) indicate which skills the learner wants to (still) learn more about (on this or on next page) <br/>
+                    (3) implement a progress bar to show indicator of total progress on top of all of these additional
+                    onboarding pages
+                </em></p>
+
+                <h1>What technical skills are you already confident with?</h1>
+
+                <div class="taskDescription">
+                    <p>Your selection will inform the challenges we recommend to you on Mooqita.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <br/>
+
+        {{#each topics}}
+            <div class="card tech-skill-group">
+                <h2>{{ title }}</h2>
+                {{>obtags method="existingSkills" category=category tags=tags}}
+            </div>
+        {{/each}}
+
+        <a href="onboarding_time" class="btn btn-theme pull-right obcontinue">Continue</a>
+    {{/mooqita_wide_spacing}}
+</template>
