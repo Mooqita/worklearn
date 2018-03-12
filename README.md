@@ -70,13 +70,13 @@ Next, run:
 
 Now make yourself a drink. This command will download additional dependencies, build the environment, and deploy locally in about 10 beers time.
 
-When you see “App running at: http://localhost:3000” kiss your computer and go to http://localhost:3000 in your browser. Admin login credentials:
+When you see “App running at: http://0.0.0.0:3000” kiss your computer and go to http://0.0.0.0:3000 in your browser. Admin login credentials:
 
 + admin@mooqita-sfh.org
 + password   
 
 Navigate around the app, create and register as an organization. Familiarize yourself and try to edit one of pages by opening up the _worklearn_ folder in your favorite editor and modifying one of the html pages in the  _views_ directory.
-Save the file you modified, refresh localhost, and find the change you made!
+Save the file you modified, refresh webpage, and find the change you made!
 
 When you’ve had enough use ctrl + c in your command prompt to gracefully stop and close the application. Quickly forcing the application to stop will result in sadness.
 
@@ -84,8 +84,17 @@ You can always work on the app by restarting Docker then navigate to the _workle
 
 `docker-compose up`
 
+## Testing and DB
+To validate in the database you can go to http://0.0.0.0:1234 while the app is running.
+In the Collection name field enter: worklearn
+In the Connection string field enter: mongodb://mongo:27017/worklearndb
+Connect and explore.
+
 ## Known Challenges
 We are aware of some issues people experienced installing the system here is a list of known issues and how to solve them:
+
+Blank page:
+If you recieve a blank page verify that you're using http. If your browser is forcing https then comment out the "force-ssl" on line 50 of the meteor/packages and rebuild.
 
 Critical Docker issues with modules, images, or containers: clean and rebuild development environment.
 
