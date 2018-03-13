@@ -44,40 +44,76 @@
 |
 | Onboarding select example challenges
 |
+| TODO: implement a challenge search and selection interface here (using the existing search component
+|                with
+|                an additional search for challenges labeled 'mooqita-prime' that represent a manually curated list).
+|                A list of ~20 challenges should be loaded right away. It should be possible to select multiple
+|                challenges
+|                without leaving the page before a "next" button is clicked to continue the onboarding flow.
+|                There should also be a "own challenge" button.
+|
+| TODO: Markus: the save button should write the content of the challenge title and body fields into a session
+|               variable object so that it can be generated after registration
+|
+| TODO: implement a toggle button switch or check button to indicate that a learner would like to receive course
+|               recommendations based on their own challenge description
+|
 -------------------------------------------------->
 <template name="onboarding_learner_challenge_select">
     {{#mooqita_wide_spacing}}
-
         <h1 style="text-align: center; padding-top: 30px">
             <img style="width: 300px" src="/images/mooqita.jpg">
         </h1>
 
-        <p>
-            <em>TODO: implement a challenge search and selection interface here (using the existing search component
-                with
-                an additional search for challenges labeled 'mooqita-prime' that represent a manually curated list).
-                A list of ~20 challenges should be loaded right away. It should be possible to select multiple
-                challenges
-                without leaving the page before a "next" button is clicked to continue the onboarding flow.
-                There should also be a "own challenge" button.</em>
-        </p>
-
         <h1>Challenges of Interest</h1>
 
         <p>
-            The challenges on this page represent tasks that a future employer might ask you to work on.
-            Please select 1 - 3 challenges that represent your interests. You can select challenges that you would
+            Practical challenges play a crucial role in the Mooqita process. We use challenges by real-world
+            organizations to match you with potential employers. It is very important for the process that you let us
+            know which kinds of challenges are interesting to you.
+            Defining your own example challenge that represents your abilities, interests, or both, is a great way to
+            start.
+            <!-- TODO: highest-priority: also implement task selection from pre-filtered lists. -->
+            <!-- The challenges on this page represent tasks that a future employer might ask you to work on.
+            Please select 1 to 3 challenges that represent your interests. You can select challenges that you would
             already be able to solve, but you can also select challenges that you would like to be able to solve after
             completing some additional training.
             If the challenges do not represent your interests and abilities, please use the 'new challenge' button to
-            generate your own challenge that represents your abilities, interests, or both.
+            generate your own challenge .
             We use these challenges to match you with potential employers and to recommend courses that you can do
-            to learn more about the topics that interest you.
+            to learn more about the topics that interest you. -->
         </p>
 
         <br>
 
-        <a class="btn btn-theme" href="onboarding_learner_challenge_reveal">next</a>
+        <h2 class="editable">
+            {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
+                    placeholder="Click here to give your challenge a title!"}}
+        </h2>
+
+        {{>wysiwyg_input method="set_field" collection_name="jobs"	item_id=job._id field="description"
+                placeholder="Please describe a challenge that you can already solve and that demonstrates your abilities, or describe a challenge that you would like to be able to solve after completing some additional training."}}
+
+        <div class="row">
+            <div class="col-sm-6 padding-next">
+                {{>toggle_button icon="fa-paint-brush color-theme"
+                                            href="onboarding_learner_challenge_select"
+                                            session="own_challenge"
+                                            key="recommendations_wanted" label="Course Recommendations Wanted"
+                                            explain="Check this if you would like to receive recommendations for online learning courses that match the challenge you provided."}}
+            </div>
+            <div class="col-sm-6 padding-next">
+                {{>toggle_button icon="fa-paint-brush color-theme"
+                        href="onboarding_learner_challenge_select"
+                        session="own_challenge"
+                        key="can_solve_already" label="Prepared to Solve"
+                        explain="Please check this box if you think that you can already solve the task you just created."}}
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <a class="btn btn-theme" href="onboarding_learner_challenge_reveal">next</a>
+        </div>
 
     {{/mooqita_wide_spacing}}
 </template>

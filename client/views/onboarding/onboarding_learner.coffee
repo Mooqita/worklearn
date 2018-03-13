@@ -16,6 +16,9 @@ _check_session = () ->
   if not Session.get "onboarding_challenges"
     Session.set "onboarding_challenges", []
 
+  if not Session.get "own_challenge"
+    Session.set "own_challenge", {}
+
 ################################################################################
 #
 # Onboarding Challenge Select
@@ -26,10 +29,14 @@ _check_session = () ->
 Template.onboarding_learner_challenge_select.onCreated ->
   _check_session()
 
+
 ################################################################################
 Template.onboarding_learner_challenge_select.helpers
   selected_challenges: () ->
     return Session.get "onboarding_challenges"
+
+  own_challenge: () ->
+    return Session.get "own_challenge"
 
 Template.onboarding_learner_challenge_reveal.helpers
   user_profile: () ->
