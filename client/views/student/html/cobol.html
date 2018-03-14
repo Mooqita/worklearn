@@ -1,6 +1,256 @@
 <template name="COBOL_course">
+
+    <style>
+  
+  
+        .panel > .panel-heading {
+            background-image: none;
+            background-color: #A02D67;
+            color: white;
+            
+        }
+            
+        .alert > .alert-success {
+            background-color: #A02D67;
+            color: white;
+            
+        }
+        
+        .progress  {
+          background-color: white;
+            color: white;
+            height: 50px;
+        
+        }
+        
+        .progress > .progress-bar-success {
+          background-color: #862D65;
+            color: white;
+            
+        }
+        
+        .btn-group > .btn-success {
+          background-color: #862D65;
+            color: white;
+            border: none;
+            
+        }
+        
+        .btn > .btn-success {
+          background-color: #862D65;
+            color: white;
+            border: none;
+            width: 230px;
+            
+        }
+        
+        .list-group > .list-group-item {
+          
+            
+            
+        }
+        
+        </style>
+
   <div class="header">
-    <h1>Welcome to COBOL!</h1>
-    <p>This course will teach you all about the language of COBOL!</p>
+<center>
+
+  <br/>
+</center>
+
+
+
   </div>
+
+  <body>
+
+      <!--CONTAINER 1 START-->
+        <div class="container">
+            <center>
+                <h1>Course Home: <strong>COBOL</strong><!-- Trigger the modal with a button -->
+                  <span type="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#info"></span>
+                  </h1>
+      <!-- Modal -->
+        <div id="info" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+      
+          <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">About Common Business-Oriented Language (COBOL)</h3>
+                  </div>
+                  <div class="modal-body">
+                    <p>Despite its status as a legacy programming language, COBOL is still widely used and highly valued in business, finance, and government applications. The rise of experienced COBOL programmers retiring has created a market for nearly anyone who can maintain existing systems - without being a professional programmer.
+                        
+                        This course will teach skills that are critical to understanding, writing, debugging, and maintaining COBOL programs. Topics that will be covered include language design basics, data types and manipulation, arithmetic, logical operations, and real world examples. 
+                        
+                        Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+      
+            </div>
+        </div>
+
+   
+          
+        </center>
+      <!--End Modal-->
+        
+      <!--
+          <div class="alert alert-success">
+            <div class="col-md-2">
+                </span><h4><strong>Course Progress:</strong></h4>
+            </div>
+        <div class="col-md-8">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">40%
+                </div>
+            </div>
+          </div>
+        <div class="col-md-1">
+          </div>
+        <div class="btn-group">
+            <a href="#" class="btn btn-sm btn-success">View Course</a>
+            <a href="#" class="btn btn-sm btn-success">Continue</a>
+        </div>
+      </div>
+      -->
+      <!--CONTAINER 1 END-->
+        
+      <!--CONTAINER 2 START-->
+      <div class="container">
+      
+      <!--Course Progress-->
+        <div class="col-md-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3>Course Progress</h3>
+              </div>
+            <div class="panel-body">
+                    <div class="col-md-9 col-xs-12">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%"><h2>40%</h2>
+                            </div>
+                        </div>
+                     </div>
+                       <center>
+                        <div class="btn btn-right">
+                    <a href="#" class="btn btn-lg btn-success">Resume Course</a>
+                </div>
+                        <h1>Next Lesson: <strong>Loops</strong></h1>
+                      </center>
+                  </div>
+              </div>
+          </div>
+      <!--Course Progress-->
+      
+      <!--What is Python
+        <div class="col-md-6 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h4>What is Python?</h4>
+              </div>
+            <div class="panel-body">
+              The programming language Python was conceived in the late 1980s,[1] and its implementation was started in December 1989[2] by Guido van Rossum at CWI in the Netherlands as a successor to ABC capable of exception handling and interfacing with the Amoeba operating system.[3] Van Rossum is Python's principal author, and his continuing central role in deciding the direction of Python is reflected in the title given to him by the Python community, Benevolent Dictator for Life (BDFL).[4][5] Python was named for the BBC TV show Monty Python's Flying Circus.[6]
+            </div>
+              </div>
+          </div>
+      What is Python-->
+          
+      
+      
+      
+      </div>
+      <!--CONTAINER 2 END-->
+      
+      <div class="container">
+          <div class="col-md-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3>Course Content</h3>
+              </div>
+            <div class="panel-body">
+                <div class="list-group">
+                  <a href="#" class="list-group-item">
+                      <h4 class="list-group-item-heading"><strong>Lesson 1:</strong> Introduction</h4>
+                      <p class="list-group-item-text">In this lesson you will learn the basics of COBOL.</p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                      <h4 class="list-group-item-heading"><strong>Lesson 2:</strong> Variables</h4>
+                     <p class="list-group-item-text">In this lesson you will learn the basics of variables.</p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                      <h4 class="list-group-item-heading"><strong>Lesson 3:</strong> The Compiler</h4>
+                      <p class="list-group-item-text">In this lesson you will learn the basics of the compiler.</p>
+                  </a>
+                </div>
+            </div>
+              </div>
+          </div>
+      </div>
+      
+      
+      <!--CONTAINER 4 START-->
+      <div class="containter">
+      </div>
+      <div class="container">
+        <!--Recently Posted Challenges-->
+        <div class="col-md-12 col-sm-12">
+          <div class="panel panel-success">
+              <div class="panel-heading">
+                  <h3>Recently Posted Challenges</h3>
+                    <h5>Here are a list of recent challenges with COBOL</h5>
+                </div>
+                <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item"><em>Title: </em>Challenge #1<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                <a href="#" class="list-group-item"><em>Title: </em>Challenge #2<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                <a href="#" class="list-group-item"><em>Title: </em>Challenge #3<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                <a href="#" class="list-group-item"><em>Title: </em>Challenge #4<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+            </div>
+            </div>
+              <center>
+                  <div class="btn btn-right">
+                      <a href="#" class="btn btn-lg btn-success">See More</a>
+                  </div>
+              </center>
+              </div>
+        </div>
+        </div>
+      <!--Recently Posted Challenges-->
+        
+        <div class="container">
+
+      <!--Online Resources-->
+          <div class="col-md-12 col-sm-12" >
+          <div class="panel panel-success">
+              <div class="panel-heading">
+                  <h3>Online Resources</h3>
+              <p>Here is a list of useful online resources</p>
+                </div>
+                <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item"><h2>W3Schools</h2><br/><p>Great resource for practicing what you learn</p></a>
+                <a href="#" class="list-group-item"><h2>Youtube</h2><br/><p>Great resource for practicing what you learn</p></a>
+                <a href="#" class="list-group-item"><h2>Other Link</h2><br/><p>Great resource for practicing what you learn</p></a>
+            </div>
+            </div>
+              </div>
+        </div>
+      <!--Online Resources-->
+      
+      </div>
+      <!--CONTAINER 4 END-->
+      </div>
+    
+      
+      </body>
+      
+
 </template>
