@@ -1,14 +1,5 @@
 #######################################################
-#
-#	Moocita collections
-# Created by Markus on 26/10/2015.
-#
-#######################################################
-
-#######################################################
 # item header
-#######################################################
-
 #######################################################
 _question_fields =
 	fields:
@@ -19,60 +10,6 @@ _question_fields =
 		published: 1
 		num_reviews: 1
 
-
-#######################################################
-# helper
-#######################################################
-
-#######################################################
-_get_solution_data = (solution_id) ->
-	solution = Solutions.findOne solution_id
-
-	entry = _get_profile_data solution.owner_id, {}
-	entry.content = solution.content
-	entry.material = solution.material
-	entry.published = solution.published
-
-	entry = _get_reviews_data solution_id, entry
-
-	return entry
-
-
-#######################################################
-_get_reviews_data = (solution_id, entry) ->
-	filter =
-		solution_id: solution_id
-		published: true
-
-	options =
-		fields:
-			rating: 1
-			content: 1
-			owner_id: 1
-
-	review_cursor = Reviews.find filter, options
-	reviews = []
-	avg = 0
-	nt = 0
-
-	review_cursor.forEach (review) ->
-		r = _get_profile_data review.owner_id, {}
-		r = _get_feedback_data review._id, r
-		r.content = review.content
-		r.rating = review.rating
-
-		reviews.push r
-		avg += parseInt(r.rating)
-		nt += 1
-
-	avg = if nt then avg / nt else "no reviews yet"
-	entry["reviews"] = reviews
-	entry["average_rating"] = avg
-
-	return entry
-
-
-#######################################################
 _get_feedback_data = (review_id, entry) ->
 	filter =
 		review_id: review_id
@@ -104,8 +41,6 @@ _get_feedback_data = (review_id, entry) ->
 
 	return entry
 
-
-#######################################################
 _get_profile_data = (user_id, entry) ->
 	filter =
 		owner_id: user_id
@@ -117,11 +52,8 @@ _get_profile_data = (user_id, entry) ->
 
 	return entry
 
-
 #######################################################
 # questions
-#######################################################
-
 #######################################################
 Meteor.publish "questions", (parameter) ->
 	pattern =
@@ -139,8 +71,6 @@ Meteor.publish "questions", (parameter) ->
 			_question_fields, "questions", user_id
 	return crs
 
-
-#######################################################
 Meteor.publish "my_questions", (parameter) ->
 	pattern =
 		query: Match.Optional(String)
@@ -159,8 +89,6 @@ Meteor.publish "my_questions", (parameter) ->
 			_question_fields, "my_questions", user_id
 	return crs
 
-
-#######################################################
 Meteor.publish "question_by_id", (question_id) ->
 	check question_id, String
 	user_id = this.userId
@@ -176,8 +104,6 @@ Meteor.publish "question_by_id", (question_id) ->
 			_question_fields, "question_by_id", user_id
 	return crs
 
-
-#######################################################
 Meteor.publish "my_question_by_id", (question_id) ->
 	user_id = this.userId
 
@@ -191,7 +117,6 @@ Meteor.publish "my_question_by_id", (question_id) ->
 	log_publication "Questions", crs, filter,
 			_question_fields, "my_question_by_id", user_id
 	return crs
-
 
 #######################################################
 Meteor.publish "question_summaries", (parameter) ->
@@ -226,28 +151,7 @@ Meteor.publish "question_summaries", (parameter) ->
 			published: 1
 			question_id: 1
 
-	solution_ids = new Set()
 	profile_ids = new Set()
-
-	##############################################
-	# retrieving solutions
-	##############################################
-
-	##############################################
-	solution_cursor = find_documents_paged_unprotected Solutions, filter, mod, parameter
-	solution_cursor.forEach (solution) ->
-		solution_ids.add solution._id
-		profile_ids.add solution.owner_id
-
-	##############################################
-	# retrieving reviews
-	##############################################
-
-	# resetting the filter
-	solution_ids = Array.from(solution_ids)
-	filter =
-		solution_id:
-			$in: solution_ids
 
 	mod =
 		fields:
@@ -256,29 +160,12 @@ Meteor.publish "question_summaries", (parameter) ->
 			owner_id: 1
 			published: 1
 			question_id: 1
-			solution_id: 1
 			review_id: 1
 			owner_id: 1
 
 	##############################################
-	review_cursor = Reviews.find(filter, mod)
-	review_cursor.forEach (entry) ->
-		profile_ids.add entry.owner_id
-
-	##############################################
-	# retrieving feedback
-	##############################################
-
-	##############################################
-	feedback_cursor = Feedback.find(filter, mod)
-	feedback_cursor.forEach (entry) ->
-		profile_ids.add entry.owner_id
-
-	##############################################
 	# retrieving profiles
 	##############################################
-
-	# resetting the filter
 	profile_ids = Array.from(profile_ids)
 	filter =
 		owner_id:
@@ -294,10 +181,9 @@ Meteor.publish "question_summaries", (parameter) ->
 			owner_id: 1
 			avatar: 1
 
-	##############################################
 	profile_cursor = Profiles.find(filter, mod)
 
 	log_publication "Multiple Cursor", null, {},
 			{}, "question_summaries", user_id
 
-	return [solution_cursor, review_cursor, feedback_cursor, profile_cursor]
+	return [review_cursor, feedback_cursor, profile_cursor]

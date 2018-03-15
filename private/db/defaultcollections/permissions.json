@@ -290,8 +290,22 @@
   },
   {
     "role": "owner",
+    "field": "question",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
     "field": "course",
     "collection_name": "challenges",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "course",
+    "collection_name": "questions",
     "modify": true,
     "read": true
   },
