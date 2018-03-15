@@ -47,31 +47,38 @@ Template.organization_questions.events
 				if err
 					sAlert.error("Add question error: " + err)
 
-
 ########################################
 #
 # question_preview
 #
 #########################################
 
-########################################
 Template.question_preview.helpers
 	question: () ->
 		if this.question
 			return this.question
 
-		return "You have not created a question."
-
-	question_link: () ->
-		return build_url "organization_question", {question_id: this._id}
+		return 'There are missing fields in this question.'
 
 	course: () ->
 		if this.course
-			return this.course
+            course_return = ''
 
-		return "This question does not yet have a subject"
+            if this.course == 'comp_thinking'
+                course_return = 'Computational Thinking'
 
+            if this.course == 'cobol'
+                course_return = 'COBOL'
 
+            if this.course == 'py'
+                course_return = 'Python'
+
+			return course_return
+
+		return 'This question does not yet have a subject'
+
+	question_link: () ->
+		return build_url "organization_question", {question_id: this._id}
 
 ########################################
 #
@@ -110,6 +117,31 @@ Template.organization_question.helpers
 		if not question
 			return "disabled"
 
+		answer_one  = get_field_value data, "answer_one", data._id, "Questions"
+
+		if not answer_one
+			return "disabled"
+
+		answer_two = get_field_value data, "answer_two", data._id, "Questions"
+
+		if not answer_two
+			return "disabled"
+
+		answer_three  = get_field_value data, "answer_three", data._id, "Questions"
+
+		if not answer_three
+			return "disabled"
+
+		answer_four  = get_field_value data, "answer_four", data._id, "Questions"
+
+		if not answer_four
+			return "disabled"
+
+		correct_answer  = get_field_value data, "correct_answer", data._id, "Questions"
+
+		if not correct_answer
+			return "disabled"
+
 		published = get_field_value data, "published", data._id, "Questions"
 
 		if published
@@ -123,15 +155,28 @@ Template.organization_question.helpers
 		url = build_url "learner_solution", param, true
 		return url
 
-	course_options:() ->
-		return [{value:"", label:"No subject"}
-			{value:"comp_thinking", label:"Comp Thinking"}
-			{value:"cobol", label:"COBOL"}
-			{value:"py", label:"Python"}]
+	correct_answer_options: () ->
+		id = FlowRouter.getQueryParam("question_id")
+		question = Questions.findOne id
+
+		return [
+			{value: 'answer_one', label: question.answer_one},
+			{value: 'answer_two', label: question.answer_two},
+			{value: 'answer_three', label: question.answer_three},
+			{value: 'answer_four', label: question.answer_four}
+		]
+
+	course_options: () ->
+		return [
+			{value: "", label: "No subject"}
+			{value: "comp_thinking", label: "Comp Thinking"}
+			{value: "cobol", label: "COBOL"}
+			{value: "py", label: "Python"}
+		]
 
 ########################################
 Template.organization_question.events
-	"click #publish": (event)->
+	"click #publish": (event) ->
 		if event.target.attributes.disabled
 			return
 

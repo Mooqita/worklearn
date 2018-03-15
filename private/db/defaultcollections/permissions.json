@@ -297,8 +297,36 @@
   },
   {
     "role": "owner",
-    "field": "course",
-    "collection_name": "challenges",
+    "field": "answer_one",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_two",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_three",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_four",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "correct_answer",
+    "collection_name": "questions",
     "modify": true,
     "read": true
   },
@@ -306,6 +334,13 @@
     "role": "owner",
     "field": "course",
     "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "course",
+    "collection_name": "challenges",
     "modify": true,
     "read": true
   },

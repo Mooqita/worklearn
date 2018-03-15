@@ -61,7 +61,6 @@
 		</a>
 	</h2>
 	{{course}}
-	{{>more content=content}}
 </template>
 
 
@@ -76,6 +75,13 @@
 			{{>wait}}
 		{{else}}
 			{{#with question}}
+				<div class="padding-next">
+					<h1 class="editable">
+						{{#if g_is_public "Questions"}}
+							Published.
+						{{/if}}
+					</h1>
+				</div>
 				{{#unless g_is_public "Questions"}}
 					<div class="padding-top">
 						<div class="alert alert-warning">
@@ -88,46 +94,48 @@
 								{{#unless g_is_saved "Questions"}}
 									<li>Save it!</li>
 								{{/unless}}
-
-								<li>Publish your solution you find the button below.</li>
 							</ul>
 						</div>
 					</div>
 				{{/unless}}
-
 				<div class="padding-next">
-					<h1 class="editable">
-						{{#if g_is_public "Questions"}}
-							<em><b>LIVE</b></em>
-						{{/if}}
-
-						{{>basic_input method="set_field" collection_name="Questions"
-						item_id=_id field="question" placeholder="Enter the question"}}
-					</h1>
-					<h2 class="header">Subject</h2>
-					{{>select_input method="set_field" collection_name="Questions"
-							item_id=_id field="course"
-							options=course_options}}
-
-					<div class="form-group" style="display: block; overflow: hidden;">
-
+					<div class="form-group">
+						<label>Question</label>
+						{{>basic_input method="set_field" collection_name="Questions" item_id=_id field="question" placeholder="Enter the question"}}
+					</div>
+					<div class="form-group">
+						<label>Answer One</label>
+						{{>basic_input method="set_field" collection_name="Questions" item_id=_id field="answer_one" placeholder="Enter the first answer option"}}
+					</div>
+					<div class="form-group">
+						<label>Answer Two</label>
+						{{>basic_input method="set_field" collection_name="Questions" item_id=_id field="answer_two" placeholder="Enter the second answer option"}}
+					</div>
+					<div class="form-group">
+						<label>Answer Three</label>
+						{{>basic_input method="set_field" collection_name="Questions" item_id=_id field="answer_three" placeholder="Enter the third answer option"}}
+					</div>
+					<div class="form-group">
+						<label>Answer Four</label>
+						{{>basic_input method="set_field" collection_name="Questions" item_id=_id field="answer_four" placeholder="Enter the fourth"}}
+					</div>
+					<div class="form-group">
+						<label>Correct Answer</label>
+						{{>select_input method="set_field" collection_name="Questions" item_id=_id field="correct_answer" options=correct_answer_options}}
+					</div>
+					<div class="form-group">
+						<label>Subject</label>
+						{{>select_input method="set_field" collection_name="Questions" item_id=_id field="course" options=course_options}}
+					</div>
+					<div class="form-group" style="display: block; overflow: hidden;"></div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-12">
+						<span class="btn-group btn-group-justified">
+							<div class="btn btn-theme" {{publish_disabled}} id="publish">Make public</div>
+						</span>
 					</div>
 				</div>
-
-				{{#unless g_is_public "Questions"}}
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" {{publish_disabled}}
-										 id="publish">Make public</div>
-							</span>
-						</div>
-					</div>
-				{{/unless}}
-
-				{{#if g_is_public "Questions"}}
-					{{>question_solutions .}}
-				{{/if}}
 			{{/with}}
 		{{/unless}}
 	{{/mooqita_wide_spacing}}

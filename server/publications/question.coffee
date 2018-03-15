@@ -3,54 +3,16 @@
 #######################################################
 _question_fields =
 	fields:
-		title: 1
-		content: 1
-		material: 1
+		question: 1
+		answer_one: 1
+		answer_two: 1
+		answer_three: 1
+		answer_four: 1
+		course: 1
+		correct_answer: 1
 		owner_id: 1
 		published: 1
 		num_reviews: 1
-
-_get_feedback_data = (review_id, entry) ->
-	filter =
-		review_id: review_id
-		published: true
-
-	options =
-		fields:
-			rating: 1
-			content: 1
-			owner_id: 1
-
-	feedback_cursor = Feedback.find filter, options
-	feedback = []
-	avg = 0
-	nt = 0
-
-	feedback_cursor.forEach (fdb) ->
-		f = _get_profile_data fdb.owner_id, {}
-		f.content = fdb.content
-		f.rating = fdb.rating
-
-		feedback.push f
-		avg += parseInt(f.rating)
-		nt += 1
-
-	avg = if nt then avg / nt else "no reviews yet"
-	entry["feedback"] = feedback
-	entry["average_rating"] = avg
-
-	return entry
-
-_get_profile_data = (user_id, entry) ->
-	filter =
-		owner_id: user_id
-
-	profile = Profiles.findOne filter
-	if profile
-		entry["name"] = get_profile_name profile, false, false
-		entry["avatar"] = get_avatar profile
-
-	return entry
 
 #######################################################
 # questions
