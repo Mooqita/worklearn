@@ -1,13 +1,14 @@
+########################################
+import { mime } from 'mime'
+
 ################################################################
 @unpack_item = (item) ->
-	mime = require('mime')
-
 	regex = /data:([-a-zA-Z0-9\/]*);([-a-zA-Z0-9\/]*),/g
 	res = regex.exec(item)
 
 	encoding = res[2]
 	type = res[1]
-	extension = mime.extension(type)||type
+	extension = mime_to_extension(type)||type
 
 	f = res[0].length
 	t = item.length

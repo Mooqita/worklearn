@@ -131,11 +131,10 @@ _upload_file = (self, file) ->
 
 	frm = _get_form(box_id)
 	fileReader = new FileReader()
-	type = file.type
 
-	if type == ""
-		type = file.name.split(".")
-		type = type[type.length-1]
+	type = file.name.split(".")
+	type = type[type.length-1]
+	type = extension_to_mime(type)
 
 	if not typeof file == "object"
 		sAlert.error 'File upload failed not a valid file.'
