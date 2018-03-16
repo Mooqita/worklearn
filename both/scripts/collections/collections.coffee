@@ -12,16 +12,17 @@
 #######################################################
 @Recommendations = new Mongo.Collection("recommendations")
 @Challenges = new Mongo.Collection("challenges")
+@Questions = new Mongo.Collection("questions")
 @Solutions = new Mongo.Collection("solutions")
 @Feedback = new Mongo.Collection("feedback")
 @Profiles = new Mongo.Collection("profiles")
 @Messages = new Mongo.Collection("messages")
 @Reviews = new Mongo.Collection("reviews")
 @Posts = new Mongo.Collection("posts")
-@Question = new Mongo.Collection("question")
 
 #######################################################
 @ChallengeSummaries = new Mongo.Collection("challenge_summaries")
+@QuestionSummaries = new Mongo.Collection("question_summaries")
 
 #######################################################
 @UserResumes = new Mongo.Collection("user_resumes")

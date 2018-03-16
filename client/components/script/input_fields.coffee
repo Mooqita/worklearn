@@ -302,4 +302,3 @@ Template.code_input.events
 					console.log err
 				if rsp
 					sAlert.success("Updated: " + field)
-
