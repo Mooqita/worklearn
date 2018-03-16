@@ -1,6 +1,6 @@
 ################################################################
 @unpack_item = (item) ->
-	mime = require('mime');
+	mime = require('mime')
 
 	regex = /data:([-a-zA-Z0-9\/]*);([-a-zA-Z0-9\/]*),/g
 	res = regex.exec(item)
