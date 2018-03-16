@@ -87,7 +87,7 @@ a.hover-card-container{
 a.hover-card-container:not([href]):not([tabindex]):focus,
 a.hover-card-container:not([href]):not([tabindex]):hover {
 	color: $text;
-	background: white;
+	background: none;
 }
 
 .hover-card-container .animated,
