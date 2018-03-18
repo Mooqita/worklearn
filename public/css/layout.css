@@ -1,0 +1,144 @@
+.staticBodyContainer {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	font-family: "Source Sans Pro", Sans-serif
+}
+
+.staticHeader {
+	position: fixed;
+	display: flex;
+	display: -webkit-flex;
+	flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
+	height: 56px;
+	width: 100%;
+	padding: 0 16px;
+	align-items: center;
+	-webkit-align-items: center;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-shadow: 0 2px 5px 0 rgba(84, 86, 88, 0.4);
+	background-color: rgb(255, 255, 255);
+	font-size: 16px;
+}
+
+.staticHeader-leftGroup {
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+	height: 40px;
+	line-height: 39px;
+}
+
+.staticHeader-rightGroup {
+	display: flex;
+	display: -webkit-flex;
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+	margin-left: auto;
+	height: 40px;
+	line-height: 39px;
+}
+
+.staticHeader-imgItem {
+	height: 42px;
+}
+
+.static-btnItem,
+.static-btnItem:focus {
+	font-weight: 100;
+	color: rgb(15, 112, 183);
+}
+
+.static-btnItem.is-logIn,
+.static-btnItem.is-logIn:focus {
+	color: rgb(84, 86, 88);
+}
+
+.static-btnItem:link,
+.static-btnItem:active,
+.static-btnItem:hover,
+.static-btnItem:visited {
+	text-decoration: none;
+}
+
+.static-btnItem:focus {
+	text-decoration: underline;
+}
+
+.static-btnItem:hover,
+.static-btnItem.is-logIn:hover {
+	outline: none;
+	text-decoration: none;
+	color: rgb(45, 170, 225);
+	border-color: rgb(45, 170, 225);
+}
+
+.staticContentFooterContainer {
+	display: flex;
+	display: -webkit-flex;
+	margin-top: 56px;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	-webkit-flex: 1 1 auto;
+	flex: 1 1 auto;
+}
+
+.staticContent {
+	-webkit-flex: 1 0 auto;
+	flex: 1 0 auto;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	-webkit-justify-content: center;
+	width: 100%;
+	max-width: 1280px;
+	margin: auto;
+}
+
+.staticContent-title {
+	text-align: center;
+}
+
+.staticContent-subtitle {
+	text-align: center;
+	font-size: 18px;
+}
+
+.staticContent-body {
+	font-size: 18px;
+	margin-top: 32px;
+}
+
+.staticContent-section {
+	margin-top: 16px;
+}
+
+.staticFooter {
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	padding: 8px;
+	text-align: center;
+	background-color: rgb(240, 242, 244);
+}
+
+.u-marginRight8px {
+	margin-right: 8px;
+}
+
+.u-maxWidth664px {
+	max-width: 664px;
+}
+
+.u-paddingSides16px {
+	padding: 0 16px;
+}
