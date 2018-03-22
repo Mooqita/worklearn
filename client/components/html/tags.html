@@ -18,15 +18,23 @@
 
 <template name="tag">
 	<div class="badge background-theme"
-			 style="font-size: 1em; margin-top: 5px">
+			 style="font-size: 1em; margin-top: 5px; border-radius: 15px; position: relative; {{drop_style}}">
 		{{label}}
+		{{#if options}}
+			<form>
+				<select class="form-control tags">
+					{{#each options}}
+						<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+					{{/each}}
+				</select>
+			</form>
+		{{/if}}
 
-		<form>
-			<select class="form-control tags">
-				{{#each options}}
-					<option value="{{value}}" {{is_selected value}}>{{label}}</option>
-				{{/each}}
-			</select>
-		</form>
+		{{#if drop_function}}
+			<div class="btn-float background-contrast raised" id="drop"
+						style="font-size: 10px; right: -8px;	top: -8px; padding: 4px;">
+				<span class="glyphicon glyphicon-remove"></span>
+			</div>
+		{{/if}}
 	</div>
 </template>

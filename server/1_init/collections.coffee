@@ -7,6 +7,5 @@
 #######################################################
 @Secrets = new Mongo.Collection("secrets")
 @Logging = new Mongo.Collection("logging")
-@Matches = new Mongo.Collection("matches")
-@NLPTasks = new Mongo.Collection("nlp_tasks")
+@Concepts = new Mongo.Collection("concepts")
 @Documents = new Mongo.Collection("documents")

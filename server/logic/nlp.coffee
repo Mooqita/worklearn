@@ -74,3 +74,33 @@ class @NLPTask
 	return set_id
 
 
+#####################################################
+@match_text = (collection, item, field, user) ->
+	if typeof collection != "string"
+		collection = get_collection_name(collection)
+
+	if typeof item != "string"
+		item = item._id
+
+	if not item
+		throw new Meteor.Error "Item not found."
+
+	if user
+		if typeof user != "string"
+			user = user._id
+
+	meta_data =
+		collection_name: collection
+		item_id: item
+		field: field
+		owner_id: user
+
+
+	task = "match_document"
+
+	ds = new NLPTask(meta_data, task, user)
+	set_id = NLPTasks.insert(ds)
+
+	return set_id
+
+

@@ -36,7 +36,6 @@
 		throw new Meteor.Error "Not permitted."
 
 	res = modify_field_unprotected collection, item_id, field, value, user
-
 	return res
 
 

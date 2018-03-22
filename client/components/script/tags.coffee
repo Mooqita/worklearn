@@ -140,3 +140,14 @@ Template.tag.helpers
 
 		return ""
 
+	drop_style: () ->
+		inst = Template.instance()
+		if "drop_function" of inst.data
+			return "padding-right:25px;"
+		return ""
+
+#############################################################
+Template.tag.events
+	"click #drop":()->
+		inst = Template.instance()
+		inst.data.drop_function.func(inst)

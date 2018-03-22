@@ -256,14 +256,58 @@
 			<img style="width: 300px" src="/images/mooqita.jpg">
 		</h1>
 
-		{{>job_describe}}
+		<h1>Describe your job opening</h1>
+
+		<p>
+			This description we help us find challenges
+			related to your job. Learner who score high
+			on these challenges will be part of your
+			recruitment pool. No worries you can add
+			your own challenges later.
+		</p>
+
+		<p class="padding-next alert alert-info">
+			<em style="font-weight: bold">Important:</em>
+			We at Mooqita do things a little different.
+			This description is only for you and our
+			AI (artificial intelligence). Your candidates
+			will never see it. The more honest you write
+			this the better our AI can match you with
+			candidates.
+		</p>
+
+		{{#with job}}
+			{{>text_input method="set_field" collection_name="jobs"	item_id=job._id field="content"
+										placeholder="A short description of what you are looking for in your own words."}}
+		{{/with}}
 
 		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Find the challenges
-			</a>
+			<div class="btn-group">
+				{{>match_button collection_name="jobs"	item_id=job._id field="content"
+								 				in_collection="challenges" in_field="content" text="Find challenges"}}
+			</div>
 		</div>
+
+		<hr>
+
+		{{>match_tags collection_name="jobs"	item_id=job._id field="content"
+						 			in_collection="challenges" in_field="content"}}
+
 	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="challenge_match">
+	<div class="item">
+		<h2>Concepts found:
+			{{#each concept in match.c}}
+				[<em style="font-weight: 900">{{concept}}</em>]
+			{{/each}}
+		</h2>
+
+		{{>more content=text}}
+
+	</div>
 </template>
 
 
