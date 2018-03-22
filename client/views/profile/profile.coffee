@@ -45,8 +45,8 @@ Template.profile.helpers
 			return false
 		if not profile.avatar
 			return false
-		if not profile.resume
-			return false
+		#if not profile.resume
+		#	return false
 
 		return true
 
