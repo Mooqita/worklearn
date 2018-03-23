@@ -279,20 +279,20 @@
 		{{#with job}}
 			{{>text_input method="set_field" collection_name="jobs"	item_id=job._id field="content"
 										placeholder="A short description of what you are looking for in your own words."}}
-		{{/with}}
 
-		<div class="btn-group btn-group-justified">
-			<div class="btn-group">
-				{{>match_button collection_name="jobs"	item_id=job._id field="content"
-								 				in_collection="challenges" in_field="content" text="Find challenges"}}
+			<div class="btn-group btn-group-justified">
+				<div class="btn-group">
+					{{>match_button collection_name="jobs"	item_id=job._id field="content"
+													in_collection="challenges" in_field="content" text="Find challenges"}}
+				</div>
 			</div>
-		</div>
 
-		<hr>
+			<hr>
 
-		{{>match_tags collection_name="jobs"	item_id=job._id field="content"
-						 			in_collection="challenges" in_field="content"}}
+			{{>match_tags collection_name="jobs"	item_id=job._id field="content"
+										in_collection="challenges" in_field="content"}}
 
+		{{/with}}
 	{{/mooqita_wide_spacing}}
 </template>
 
