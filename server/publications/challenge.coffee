@@ -156,6 +156,8 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	mod =
 		fields:
 			content: 1
+			created: 1
+			modified: 1
 			material: 1
 			published: 1
 			challenge_id: 1
