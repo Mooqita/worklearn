@@ -197,144 +197,17 @@ Template.onboarding_job_owner.events
 
 ################################################################################
 Template.onboarding_describe_job.onCreated () ->
-	job_id = FlowRouter.getQueryParam("job_id")
-
-	self = this
-	self.matching = new ReactiveVar(false)
-	self.concepts = new ReactiveVar([])
-
-	self.parameter =
-		page: 0
-		size: 100
-		item_id: job_id
-
-	self.autorun () ->
-		self.subscribe("job_by_id", job_id)
-		self.subscribe("my_matches", self.parameter)
+	this.text = new ReactiveVar("")
 
 
 ################################################################################
 Template.onboarding_describe_job.helpers
-	parameter: () ->
-		return Template.instance().parameter
-
-	get_url: () ->
-		param =
-			job_id: FlowRouter.getQueryParam("job_id")
-			organization_id: FlowRouter.getQueryParam("organization_id")
-
-		url = build_url "onboarding_select_challenges", param, "onboarding"
-		return url
-
-	tasks: () ->
-		return NLPTasks.find().count()>0
-
-	#############################################################################
-  # job description
-	#############################################################################
-	job:()->
-		job_id = FlowRouter.getQueryParam("job_id")
-		job = Jobs.findOne(job_id)
-		return job
-
-	get_job_id:()->
-		job_id = FlowRouter.getQueryParam("job_id")
-		return job_id
-
-	#############################################################################
-  # matches
-	#############################################################################
-	match_disabled: () ->
-		if Template.instance().matching.get()
-			return "disabled"
-		return ""
-
-	is_matching: () ->
-		return Template.instance().matching.get()
-
-	n_matches: () ->
-		return Matches.find().count()
-
-	#############################################################################
-  # concepts
-	#############################################################################
-	has_concepts: () ->
-		return Matches.find().count()>0
-
-	concepts: () ->
-		res = new Set()
-		for m in Matches.find().fetch()
-			for c in m.c
-				res.add(c)
-
-		job_id = FlowRouter.getQueryParam("job_id")
-		job = Jobs.findOne(job_id)
-		if job.concepts
-			for c in job.concepts
-				res.add(c)
-
-		inst = Template.instance()
-		concepts = Array.from(res)
-		inst.concepts.set(concepts)
-
-		return concepts
-
-	n_concepts: () ->
-		inst = Template.instance()
-		concepts = inst.concepts.get()
-
-		return concepts.length
-
-	drop_function: () ->
-		job_id = FlowRouter.getQueryParam("job_id")
-		o =
-			func: (x) ->
-				concept = x.data.label
-				collection_name = get_collection_name(Jobs)
-				Meteor.call "remove_concept_from_matches", concept, collection_name, job_id
-
-		return o
+	text: () ->
+		return Template.instance().text
 
 
 ################################################################################
 Template.onboarding_describe_job.events
-	"click #match":(event)->
-		if event.target.attributes.disabled
-			return
-
-		inst = Template.instance()
-		inst.matching.set true
-
-		collection_name = "jobs"
-		item_id = FlowRouter.getQueryParam("job_id")
-		field = "content"
-
-		in_collection = "challenges"
-		in_field = "description"
-
-		Meteor.call "match_document", collection_name, item_id, field, in_collection, in_field,
-			(err, res)->
-				inst.matching.set false
-				if err
-					sAlert.error(err)
-					return
-				inst.subscribe("active_nlp_task", res.match_id)
-
-	"change #new_tag":(event)->
-		inst = Template.instance()
-		inst.matching.set true
-
-		concept = event.target.value
-		collection_name = "jobs"
-		item_id = FlowRouter.getQueryParam("job_id")
-
-		Meteor.call "add_concept", concept, collection_name, item_id,
-			(err, res)->
-				inst.matching.set false
-				if err
-					sAlert.error(err)
-					return
-				inst.subscribe("active_nlp_task", res.match_id)
 
 
 ################################################################################

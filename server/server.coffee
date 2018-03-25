@@ -109,18 +109,6 @@ _initialize_indices = ()->
 	Posts._ensureIndex index
 
 	index =
-		c: "text"
-	Matches._ensureIndex index
-
-	index =
-		ca: 1
-		cb: 1
-		fa: 1
-		fb: 1
-		ids: 1
-	Matches._ensureIndex index
-
-	index =
 		c: 1
 		i: 1
 		f: 1
@@ -136,6 +124,26 @@ _initialize_indices = ()->
 		attempts: 1
 		task: 1
 	NLPTasks._ensureIndex index
+
+	index =
+		created: 1
+	NLPTasks._ensureIndex index, {expireAfterSeconds: 360}
+
+	index =
+		c: "text"
+	Matches._ensureIndex index
+
+	index =
+		ca: 1
+		cb: 1
+		fa: 1
+		fb: 1
+		ids: 1
+	Matches._ensureIndex index
+
+	index =
+		ids: 1
+	Matches._ensureIndex index
 
 	msg = "MongoDB indices initialized"
 	log_event msg

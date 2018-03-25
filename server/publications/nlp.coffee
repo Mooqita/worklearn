@@ -11,6 +11,7 @@ Meteor.publish "active_nlp_task", (task_id) ->
 	log_publication crs, user_id, "active_nlp_task"
 	return crs
 
+
 #######################################################
 Meteor.publish "my_matches", (parameter) ->
 	pattern =
@@ -28,15 +29,10 @@ Meteor.publish "my_matches", (parameter) ->
 	if not user_id
 		throw new Meteor.Error("Not permitted")
 
-	parameter.size = if parameter.size > 100 then 100 else parameter.size
-	mod =
-		limit: parameter.size
-		skip: parameter.size * parameter.page
-
 	filter =
 		ids: parameter.item_id
 
-	crs = Matches.find filter, mod
+	crs = Matches.find filter
 
 	log_publication crs, user_id, "my_matches"
 	return crs

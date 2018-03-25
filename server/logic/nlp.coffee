@@ -1,8 +1,8 @@
-#####################################################
+###############################################################################
 # Created by Markus on 23/10/2015.
-#####################################################
+###############################################################################
 
-#####################################################
+###############################################################################
 _task_map =
 	"profiles_resume": "n_gram"
 	"organizations_description": "n_gram"
@@ -17,7 +17,7 @@ _task_map =
 	"profiles_family_name": ["entity", "person"]
 	"organizations_name": ["entity", "org"]
 
-#####################################################
+###############################################################################
 class @NLPTask
 	constructor: (@payload, @task, @owner_id) ->
 		@priority = 0
@@ -25,17 +25,18 @@ class @NLPTask
 		@locked_by = null
 		@locked_at = null
 		@last_error = null
+		@created = new Date()
 
 
-#####################################################
+###############################################################################
 # collection_name: Name of the collection the text to
 #									 analyse can be found.
 # item_id: 				 _id of the object that contains
 # 								 the text.
 # field: 					 the field name of the collection
-#####################################################
+###############################################################################
 
-#####################################################
+###############################################################################
 @handle_text = (collection, item, field, user) ->
 	if typeof collection != "string"
 		collection = get_collection_name(collection)
@@ -74,8 +75,27 @@ class @NLPTask
 	return set_id
 
 
-#####################################################
-@match_text = (collection, item, field, user) ->
+###############################################################################
+@match_text = (text, hash_id, user) ->
+	if user
+		if typeof user != "string"
+			user = user._id
+
+	meta_data =
+		text: text
+		hash_id: hash_id
+		owner_id: user
+
+	task = "match_text"
+
+	ds = new NLPTask(meta_data, task, user)
+	set_id = NLPTasks.insert(ds)
+
+	return set_id
+
+
+###############################################################################
+@match_document = (collection, item, field, in_collection, in_field, user) ->
 	if typeof collection != "string"
 		collection = get_collection_name(collection)
 
@@ -94,7 +114,6 @@ class @NLPTask
 		item_id: item
 		field: field
 		owner_id: user
-
 
 	task = "match_document"
 

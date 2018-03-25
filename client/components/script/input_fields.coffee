@@ -109,23 +109,17 @@ Template.basic_input.events
 #########################################################
 Template.text_input.helpers
 	value: () ->
-		return get_field_value(this)
-
-	is_selected: () ->
-		return ""
-
-	options: () ->
-		return []
+		context = Template.instance()
+		value = get_value_from_context(context)
+		return value
 
 #########################################################
 Template.text_input.events
 	"change .edit-field": (event) ->
-		field = event.target.id
+		context = Template.instance()
 		value = event.target.value
-		collection = this.collection_name
-		item_id = this.item_id
 
-		set_field collection, item_id, field, value
+		set_value_in_context(value, context)
 
 #########################################################
 # markdown_input

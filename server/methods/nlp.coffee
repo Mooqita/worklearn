@@ -1,18 +1,42 @@
-#######################################################
+###############################################################################
 #
 # Created by Markus
 #
-#######################################################
+###############################################################################
 
-#######################################################
+###############################################################################
 _get_document = (collection_name, item_id, field) ->
 	collection = get_collection(collection_name)
 	item = collection.findOne(item_id)
 	return item[field]
 
 
-################################################################
+###############################################################################
 Meteor.methods
+	match_text: (text, in_collection, in_field) ->
+		user = Meteor.user()
+		if not user
+			throw new Meteor.Error("Not permitted")
+
+		check text, String
+		check in_collection, String
+		check in_field, String
+
+		hash_id = fast_hash(text)
+
+		filter =
+			ids: hash_id
+		Matches.remove(filter)
+
+		match_id = match_text(text, hash_id, user)
+
+		res =
+			add_id: null
+			match_id: match_id
+
+		return res
+
+	###############################################################################
 	match_document: (collection_name, item_id, field, in_collection, in_field) ->
 		user = Meteor.user()
 		if not user
@@ -35,8 +59,8 @@ Meteor.methods
 			ids: item_id
 		Matches.remove(filter)
 
-		add_id = handle_text(collection_name, item_id, field, user)
-		match_id = match_text(collection_name, item_id, field, user)
+		add_id = handle_text(collection, item_id, field, user)
+		match_id = match_document(collection, item_id, field, in_collection, in_field, user)
 		modify_field_unprotected(collection, item_id, "matched", true)
 
 		res =
@@ -45,24 +69,26 @@ Meteor.methods
 
 		return res
 
-
+	###############################################################################
 	add_concept: (concept, collection_name, item_id) ->
 		user = Meteor.user()
-		if not user
-			throw new Meteor.Error("Not permitted")
-
-		check item_id, String
-		check concept, String
-		check collection_name, String
 
 		if concept == ""
 			return false
 
-		collection = get_collection(collection_name)
-		csn = can_edit collection, item_id, user
+		check item_id, String
+		check concept, String
+		check collection_name,  Match.Optional(String)
 
-		if not csn
-			throw new Meteor.Error "Not permitted."
+		if collection_name
+			if not user
+				throw new Meteor.Error("Not permitted")
+
+			collection = get_collection(collection_name)
+			csn = can_edit collection, item_id, user
+
+			if not csn
+				throw new Meteor.Error "Not permitted."
 
 		filter = {_id: concept}
 		mod =
@@ -72,9 +98,11 @@ Meteor.methods
 					rating: 1
 		Concepts.upsert(filter, mod, )
 
-		collection.update(item_id, {$addToSet: {concepts:concept}})
 		add_id = handle_text(collection, item_id, "concepts", user)
-		match_id = match_text(collection_name, item_id, "concepts", user)
+
+		if collection
+			collection.update(item_id, {$addToSet: {concepts:concept}})
+			match_id = match_document(collection_name, item_id, "concepts", user)
 
 		res =
 			add_id: add_id
@@ -82,21 +110,23 @@ Meteor.methods
 
 		return res
 
-
+	###############################################################################
 	remove_concept_from_matches: (concept, collection_name, item_id) ->
 		user = Meteor.user()
-		if not user
-			throw new Meteor.Error("Not permitted")
 
 		check item_id, String
 		check concept, String
-		check collection_name, String
+		check collection_name,  Match.Maybe(String)
 
-		collection = get_collection(collection_name)
-		csn = can_edit collection, item_id, user
+		if collection_name
+			if not user
+				throw new Meteor.Error("Not permitted")
 
-		if not csn
-			throw new Meteor.Error "Not permitted."
+			collection = get_collection(collection_name)
+			csn = can_edit collection, item_id, user
+
+			if not csn
+				throw new Meteor.Error "Not permitted."
 
 		filter =
 			ids: item_id
@@ -117,10 +147,12 @@ Meteor.methods
 					rating: -1
 		Concepts.update(filter, mod)
 
-		collection.update(item_id, {$pull: {concepts:concept}})
+		if collection
+			collection.update(item_id, {$pull: {concepts:concept}})
+
 		return true
 
-
+	###############################################################################
 	documents_from_match: (match_id) ->
 		match = Matches.findOne(match_id)
 

@@ -10,6 +10,11 @@
 | {{>match_button collection_name="jobs" item_id=job._id field="content"
 |					 				in_collection="challenges" in_field="content"}}
 |
+|	The following example matches the text variable with all documents from
+| the collection "challenges". Variable is a ReactiveVar!
+|
+| {{>match_button variable=text	in_collection="challenges" in_field="content"}}
+|
 ------------------------------------------------------------------------------>
 <template name="match_button">
 	<div class="btn btn-theme" id="match" {{match_disabled}}>
@@ -35,26 +40,13 @@
 |
 ------------------------------------------------------------------------------>
 <template name="match_tags">
-	{{#if tasks}}
-		<h2 class="text-center">
-			One sec please. We crunch some numbers for you.
-			<em><span class="glyphicon glyphicon-refresh spin"></span></em>
-		</h2>
-	{{else}}
-		{{#if has_concepts}}
-			<p>
-				We found <em style="font-weight: bold">{{n_matches}} matches</em>. Based on
-				<em style="font-weight: bold">{{n_concepts}} concepts</em>. If you would like
-				to refine the results you can remove unnecessary tags or add
-				your own:
-			</p>
-		{{else}}
-			<h2>Not yet.</h2>
-			<p>
-				We have not found any matches. You can also improve your results
-				by adding additional tags below...
-			</p>
-		{{/if}}
+	{{#if has_concepts}}
+		<p>
+			We found <em style="font-weight: bold">{{n_matches}} matches</em>. Based on
+			<em style="font-weight: bold">{{n_concepts}} concepts</em>. If you would like
+			to refine the results you can remove unnecessary tags or add
+			your own:
+		</p>
 
 		<h2>
 			{{#each concept in concepts}}
@@ -66,5 +58,30 @@
 			<input type="text" class="form-control" id="new_tag"
 						 placeholder="Add your own concept"/>
 		</div>
+	{{else}}
+		{{#if tasks}}
+			<h2 class="text-center">
+				One sec please. We crunch some numbers for you.
+				<em><span class="glyphicon glyphicon-refresh spin"></span></em>
+			</h2>
+		{{else}}
+			<h2>Not yet.</h2>
+			<p>
+				We have not found any matches. You can also improve your results
+				by adding additional tags below...
+			</p>
+
+			<h2>
+				{{#each concept in concepts}}
+					{{>tag label=concept drop_function=drop_function}}
+				{{/each}}
+			</h2>
+
+			<div class="form-group">
+				<input type="text" class="form-control" id="new_tag"
+							 placeholder="Add your own concept"/>
+			</div>
+		{{/if}}
 	{{/if}}
 </template>
+
