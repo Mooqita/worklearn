@@ -44,6 +44,7 @@ Template.onboarding_job_role.onCreated ->
 Template.onboarding_job_competency.onCreated ->
 	_check_session()
 
+
 ################################################################################
 #
 # Onboarding Finish
@@ -79,11 +80,9 @@ Template.onboarding_job_registration.helpers
 
 		return profile
 
-
 	organization_profile: () ->
 		profile = Organizations.findOne()
 		return profile
-
 
 	job_id: () ->
 		job = Jobs.findOne()

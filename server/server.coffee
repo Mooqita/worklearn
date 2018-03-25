@@ -127,7 +127,7 @@ _initialize_indices = ()->
 
 	index =
 		created: 1
-	NLPTasks._ensureIndex index, {expireAfterSeconds: 360}
+	NLPTasks._ensureIndex index, {expireAfterSeconds: 3600}
 
 	index =
 		c: "text"
