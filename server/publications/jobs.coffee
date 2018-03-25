@@ -2,7 +2,7 @@
 _job_fields =
 	fields:
 		title: 1
-		content: 1
+		description: 1
 		role: 1
 		idea: 1
 		team: 1

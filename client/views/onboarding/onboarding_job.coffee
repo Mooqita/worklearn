@@ -13,6 +13,9 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ################################################################################
 _check_session = () ->
+	if not Session.get "onboarding_job_description"
+		Session.set "onboarding_job_description", ""
+
 	if not Session.get "user_occupation"
 		Session.set "user_occupation", "company"
 
@@ -54,10 +57,24 @@ Template.onboarding_job_competency.onCreated ->
 ################################################################################
 Template.onboarding_job_registration.onCreated ->
 	self = this
-	self.autorun ()->
-		_check_session()
-		self.subscribe "my_organizations"
+	self.concepts = new ReactiveVar([])
+	self.data.session = "onboarding_job_description"
 
+	_check_session()
+
+	self.autorun ()->
+		text = get_value_from_context(self)
+		item_id = fast_hash(text)
+
+		parameter =
+			page: 0
+			size: 100
+			item_id: item_id
+
+		self.subscribe("my_matches", parameter)
+
+		org_admissions = get_admissions(IGNORE, IGNORE, Organizations, IGNORE).fetch()
+		self.subscribe "my_organizations", org_admissions
 
 ################################################################################
 Template.onboarding_job_registration.onRendered ->
@@ -68,8 +85,33 @@ Template.onboarding_job_registration.onRendered ->
 
 ################################################################################
 Template.onboarding_job_registration.helpers
-	persona_data: () ->
-		return Session.get "onboarding_job_persona_data"
+	has_concepts: () ->
+		return Matches.find().count()>0
+
+	concepts: () ->
+		context = Template.instance()
+		concepts = concepts_from_context(context)
+
+		context.concepts.set(concepts)
+		return concepts
+
+	n_concepts: () ->
+		context = Template.instance()
+		concepts = context.concepts.get()
+
+		return concepts.length
+
+	n_challenges: () ->
+		filter =
+			cb: "challenges"
+
+		return Matches.find(filter).count()
+
+	n_profiles: () ->
+		filter =
+			cb: "profiles"
+
+		return Matches.find(filter).count()
 
 	user_profile: () ->
 		profile = undefined
@@ -80,21 +122,46 @@ Template.onboarding_job_registration.helpers
 
 		return profile
 
-	organization_profile: () ->
-		profile = Organizations.findOne()
-		return profile
-
-	job_id: () ->
-		job = Jobs.findOne()
-		if not job
-			return undefined
-		return job._id
+	persona_data: () ->
+		return Session.get "onboarding_job_persona_data"
 
 
 ################################################################################
 Template.onboarding_job_registration.events
-	"click #register":()->
+	"click #register": () ->
 		Modal.show 'onboarding_job_register'
+
+	"click #job_overview": () ->
+		org = Organizations.findOne()
+		data = Session.get "onboarding_job_posting"
+		desc = Session.get "onboarding_job_description"
+		data.description = desc
+
+		make_job = (org_id) ->
+			Meteor.call "onboard_job", data, org_id,
+				(err, res) ->
+					if err
+						sAlert.error(err)
+						return
+
+					query =
+						job_id: res
+						organization_id: org._id
+
+					href = build_url "job_posting", query, "app"
+					FlowRouter.go href
+
+		if org
+			make_job(data, org._id)
+			return
+
+		Meteor.call "onboard_organization",
+			(err, res) ->
+				if res
+					sAlert.success("Organization created")
+					make_job(data, res)
+				if err
+					sAlert.error(err)
 
 
 ################################################################################
@@ -196,13 +263,17 @@ Template.onboarding_job_owner.events
 
 ################################################################################
 Template.onboarding_describe_job.onCreated () ->
-	this.text = new ReactiveVar("")
+	_check_session()
 
 
 ################################################################################
 Template.onboarding_describe_job.helpers
 	text: () ->
-		return Template.instance().text
+		return Session.get("text")
+
+	has_text: () ->
+		text = Session.get("text")
+		return text.length>10
 
 
 ################################################################################

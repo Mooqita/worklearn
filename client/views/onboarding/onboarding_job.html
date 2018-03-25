@@ -17,10 +17,10 @@
 
 				<p style="padding-bottom: 25px">
 					Complete our quick onboarding steps to find and
-                    attract matching talent to grow your business.
+          attract matching talent to grow your business.
 				</p>
 
-				<a class="btn btn-theme" href="onboarding_job_role">Get started</a>
+				<a class="btn btn-theme" href="onboarding_job_role">Find a perfect candidate</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -46,7 +46,7 @@
 		</p>
 
 		{{>job_role session="onboarding_job_posting" key="role"
-				href="onboarding_job_competency"}}
+								href="onboarding_job_competency"}}
 
 	{{/mooqita_wide_spacing}}
 </template>
@@ -74,8 +74,62 @@
 		{{>job_competency session="onboarding_job_posting"}}
 
 		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
+			<a class="btn btn-theme" href="onboarding_describe_job">
+				Continue (only two steps left)
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding job description and title
+|
+-------------------------------------------------->
+<template name="onboarding_describe_job">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Describe your job opening</h1>
+
+		<p>
+			This description will help us find challenges
+			related to your job. Learner who score high
+			on these challenges will be part of your
+			recruitment pool.
+		</p>
+
+		<p class="padding-next alert alert-theme">
+			<em style="font-weight: bold">Important:</em>
+			We at Mooqita do things a little different.
+			This description is for our AI (artificial
+			intelligence). Do not think too much about
+			it right now. Just give us a few lines to
+			get working. You can add more later on.
+		</p>
+
+		{{>text_input session="onboarding_job_description"
+									placeholder="A short description of what you are looking for in your own words."}}
+
+		<div class="btn-group btn-group-justified">
+			<div class="btn-group">
+				{{>match_button session="onboarding_job_description"
+												in_collection="challenges" in_field="content"
+												text="Find challenges"}}
+			</div>
+		</div>
+
+		<hr>
+
+		{{>match_tags session="onboarding_job_description"
+									in_collection="challenges" in_field="content"}}
+
+		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
 			<a class="btn btn-theme" href="onboarding_job_registration">
-				Show me my candidates profile
+				Continue (only one steps left)
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -93,36 +147,65 @@
 			<img style="width: 300px" src="/images/mooqita.jpg">
 		</h1>
 
-		{{#unless user_profile}}
-			<div class="row padding-top">
-				<div class="col-sm-5">
-					<div class="raised">
-						{{>persona persona_data=persona_data has_text=true
-											 width=300 height=180}}
-					</div>
-				</div>
+		<h1>Candidate Profile</h1>
 
-				<div class="col-sm-7">
-					<h1>Persona</h1>
+		<p style="text-align: left">
+			<div class="raised  float-container col-md-6 col-sm-6 col-ms-7 col-xs-12">
+				{{>persona persona_data=persona_data has_text=true
+									 width=300 height=180}}
+			</div>
+			With your information our AI has created a personality profile of your candidate
+			and a skill set. With these information we can already look for a candidate.
+			{{#unless user_profile}}
+				<p>
+					To save your candidates profile and further improve it you need to:
+				</p>
 
-					<p class="padding-next">
-						Excellent you created <em><b>a persona</b></em> for your candidate.
-						This persona <em><b>represents a schema of traits</b></em> that we can
-						scan for in our talent pool to best complement your team.
-						To save your progress please register an account.
-						By adding <em><b>the personality of your team members</b></em> and <em><b>example
-						challenges</b></em> you can get even better results.
-					</p>
-
+				<div class="btn-group">
 					<button type="submit" id="register"
 									class="btn btn-theme">
 						Register
 					</button>
 				</div>
-			</div>
-		{{else}}
-			{{>onboarding_job_owner}}
-		{{/unless}}
+			{{else}}
+				<p>
+					To further improve your candidates profile:
+				</p>
+
+				<div class="btn-group">
+					<button class="btn btn-theme" id="job_overview">
+						Job Overview
+					</button>
+				</div>
+			{{/unless}}
+
+
+			{{#if has_concepts}}
+				<p>
+					From your job description we extracted <em style="font-weight: bold">{{n_concepts}} concepts</em>.
+
+					{{#each c in concepts}}
+						[<em style="font-weight: 600">{{c}}</em>]
+					{{/each}}
+				</p>
+
+				{{#if n_challenges}}
+					<p>
+						Based on these concepts we found <em style="font-weight: bold">{{n_challenges}}
+						challenges</em> that match your job description. Each challenge
+						improves your chances to find the prefect candidate. Think of it
+						as having that many additional job adds.
+					</p>
+				{{/if}}
+
+				{{#if n_profiles}}
+					<p>
+						We also found <em style="font-weight: bold">{{n_profiles}} profiles</em> of
+						learners that match your job description.
+					</p>
+				{{/if}}
+			{{/if}}
+		</p>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -242,54 +325,6 @@
 			{{/let}}
 		{{/if}}
 	{{/unless}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding job description and title
-|
--------------------------------------------------->
-<template name="onboarding_describe_job">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Describe your job opening</h1>
-
-		<p>
-			This description we help us find challenges
-			related to your job. Learner who score high
-			on these challenges will be part of your
-			recruitment pool. No worries you can add
-			your own challenges later.
-		</p>
-
-		<p class="padding-next alert alert-info">
-			<em style="font-weight: bold">Important:</em>
-			We at Mooqita do things a little different.
-			This description is only for you and our
-			AI (artificial intelligence). Your candidates
-			will never see it. The more honest you write
-			this the better our AI can match you with
-			candidates.
-		</p>
-
-		{{>text_input variable=text
-									placeholder="A short description of what you are looking for in your own words."}}
-
-		<div class="btn-group btn-group-justified">
-			<div class="btn-group">
-				{{>match_button variable=text	in_collection="challenges"
-												in_field="content" text="Find challenges"}}
-			</div>
-		</div>
-
-		<hr>
-
-		{{>match_tags variable=text	in_collection="challenges" in_field="content"}}
-	{{/mooqita_wide_spacing}}
 </template>
 
 

@@ -26,8 +26,8 @@ Meteor.publish "my_matches", (parameter) ->
 	check parameter, pattern
 
 	user_id = this.userId
-	if not user_id
-		throw new Meteor.Error("Not permitted")
+#	if not user_id
+#		throw new Meteor.Error("Not permitted")
 
 	filter =
 		ids: parameter.item_id

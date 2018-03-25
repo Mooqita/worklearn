@@ -9,6 +9,29 @@
 ################################################################################
 
 ################################################################################
+@concepts_from_context = (context) ->
+		context = Template.instance()
+		data = context.data
+
+		res = new Set()
+		for m in Matches.find().fetch()
+			for c in m.c
+				res.add(c)
+
+		if _has_doc(context)
+			item_id = data.item_id
+			collection = get_collection(data.collection_name)
+			item = collection.findOne(item_id)
+
+			if item.concepts
+				for c in item.concepts
+					res.add(c)
+
+		concepts = Array.from(res)
+		return concepts
+
+
+################################################################################
 _has_doc = (context) ->
 	data = context.data
 
@@ -40,6 +63,7 @@ Template.match_button.onCreated () ->
 		if not _has_doc(self)
 			text = get_value_from_context(self)
 			item_id = fast_hash(text)
+			console.log item_id
 
 		parameter =
 			page: 0
@@ -68,6 +92,7 @@ Template.match_button.events
 
 		context = Template.instance()
 		context.matching.set true
+
 		data = context.data
 		value = get_value_from_context(context)
 
@@ -83,7 +108,11 @@ Template.match_button.events
 			if err
 				sAlert.error(err)
 				return
-			context.subscribe("active_nlp_task", res.match_id)
+			if not res.match_id
+				msg = "Hmm not yet."
+				sAlert.warning(msg)
+			else
+				context.subscribe("active_nlp_task", res.match_id)
 
 		if not _has_doc(context)
 			Meteor.call "match_text", value, in_collection, in_field, handle
@@ -101,6 +130,7 @@ Template.match_button.events
 Template.match_tags.onCreated () ->
 	self = this
 	self.concepts = new ReactiveVar([])
+	self.matching = new ReactiveVar(false)
 
 	self.autorun () ->
 		item_id = self.data.item_id
@@ -130,25 +160,9 @@ Template.match_tags.helpers
 
 	concepts: () ->
 		context = Template.instance()
-		data = context.data
+		concepts = concepts_from_context(context)
 
-		res = new Set()
-		for m in Matches.find().fetch()
-			for c in m.c
-				res.add(c)
-
-		if _has_doc(context)
-			item_id = data.item_id
-			collection = get_collection(data.collection_name)
-			item = collection.findOne(item_id)
-
-			if item.concepts
-				for c in item.concepts
-					res.add(c)
-
-		concepts = Array.from(res)
 		context.concepts.set(concepts)
-
 		return concepts
 
 	n_concepts: () ->
@@ -179,20 +193,32 @@ Template.match_tags.helpers
 Template.match_tags.events
 	"change #new_tag":(event)->
 		context = Template.instance()
+		context.matching.set(true)
+
 		data = context.data
 
-		context.matching.set true
-
+		item_id = data.item_id
 		concept = event.target.value
 		collection_name = data.collection_name
-		item_id = context.item_id.get()
+
+		if not _has_doc(context)
+			item_id = get_value_from_context(context)
+			item_id = fast_hash(item_id)
 
 		Meteor.call "add_concept", concept, collection_name, item_id,
 			(err, res)->
-				context.matching.set false
+				sAlert.warning("Found: " + res.found_concepts + " " + res.found_text)
+				context.matching.set(false)
+
 				if err
 					sAlert.error(err)
 					return
-				context.subscribe("active_nlp_task", res.match_id)
+
+				if res.found == 0
+					msg = "Sorry, my bad, I can not improve your results "
+					msg += "using the concept: '" + concept + "'."
+					sAlert.warning(msg)
+				else
+					context.subscribe("active_nlp_task", res.match_id)
 
 

@@ -55,3 +55,10 @@ Template.registerHelper "g_rating_options", () ->
 		{value:"5", label:"(5) Great"}]
 	return opts
 
+########################################################
+Template.registerHelper "g_value", (data) ->
+	context =
+		data: data.hash
+
+	return get_value_from_context(context)
+

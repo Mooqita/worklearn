@@ -5,7 +5,7 @@
 ###############################################################################
 @fast_hash = (str) ->
 	hash = 0;
-	if (str.length == 0)
+	if not str
 		return "#" + hash
 
 	for i in [0..str.length-1]
