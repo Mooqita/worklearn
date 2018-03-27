@@ -16,6 +16,8 @@
         <div class="row padding-top">
             <div class="col-md-12">
                 <h1>Welcome to Mooqita, NAME</h1>
+            </div>
+                <div class="col-md-8">
                 <p>You signed up as a learner. We take it that you are interested in solving challenges to build up a
                     portfolio,
                     as well as in getting suggested matches with potential employers from us. In order to provide great
@@ -24,15 +26,20 @@
                     drastically
                     improve
                     the matches.</p>
-                <a class="btn btn-theme" href="onboard_learner_role">Interests & Abilities</a>
-                <p>This is crucial for finding great matching challenges and organizations for you.</p>
-                <a class="btn btn-theme" href="onboarding_time">Work Habits</a>
+                </div>
+                {{>obprogress percent=".25"}}
+                <div class="col-md-12">
+                        <a class="btn btn-theme" href="onboard_learner_role">1. Interests & Abilities</a>
+                        <p>This is crucial for finding great matching challenges and organizations for you.</p>
+                </div>
+            <div class="col-md-12">
+                <a class="btn btn-theme" href="onboarding_time">2. Work Habits</a>
                 <p>This helps us coordinate you with others on the platform.</p>
-                <a class="btn btn-theme" href="personality">Personality</a>
+                <a class="btn btn-theme" href="personality">3. Personality</a>
                 <p>So we can make sure that you fit well with challenge and work teams.</p>
-                <a class="btn btn-theme" href="profile">Profile</a>
-                <p>Just some general information about you. Provide a classic CV to improve our matching. Here you can
-                    also ajust any of the choices from this onboarding process later on.</p>
+                <a class="btn btn-theme" href="profile">4. Profile</a>
+                <p>Just some general information about you. Here you can also adjust any of the choices from
+                     this onboarding process later on.</p>
 
                 <div class="row">
                     <p>After completing these steps, make sure to head over to your PROFILE and enable 'job search' if

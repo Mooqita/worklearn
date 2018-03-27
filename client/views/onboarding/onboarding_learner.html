@@ -18,25 +18,99 @@
         </h1>
 
         <div class="col-md-12">
-            <h1>Get practical experience and find the job you love!</h1>
+            <h1>Gain practical experience and find the job you love!</h1>
 
             <p style="padding-bottom: 25px">
                 We make it easy for you to find the perfect job based
                 on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
             </p>
 
-            <p>To get started complete our five-minute onboarding phase. We will first ask you to <b>select</b> some
-                <b>challenges that represent your interests and abilities</b>.
+            <p>To get started complete our 5 minute onboarding phase. We will first ask you to <b>create a challenge
+                that represents the type of work you'd like to do</b>.
                 Afterwards we will ask a few additional questions so that we get a better understanding of your:</p>
             <ol>
-                <li>interests & abilities</li>
-                <li>time you have to work on Mooqita challenges</li>
-                <li>team work preferences</li>
-                <li>personality</li>
+                <li>Interests & Abilities</li>
+                <li>Work Habits</li>
+                <li>Personality</li>
             </ol>
             <br>
-            <a class="btn btn-theme" href="onboarding_learner_challenge_select">Get started</a>
+            <a class="btn btn-theme" href="onboarding_learner_vision">Get started</a>
         </div>
+    {{/mooqita_wide_spacing}}
+</template>
+
+<template name="onboarding_learner_vision">
+    {{#mooqita_wide_spacing}}
+        <h1 style="text-align: center; padding-top: 30px">
+            <img style="width: 300px" src="/images/mooqita.jpg">
+        </h1>
+
+        <h1>Where do you see yourself in 1 year?</h1>
+
+        <p>
+            At Mooqita we <em><b>tailor your experience to your goals</b></em>. In order to <em><b>match you with potential employers and their
+            challenges</b></em>, please provide us with a few short statements about your <em><b>career vision and learning aims</b></em>.
+            <!-- TODO: highest-priority: also implement task selection from pre-filtered lists. -->
+            <br>
+            <em>TODO: do this later button</em>
+            <!-- The challenges on this page represent tasks that a future employer might ask you to work on.
+            Please select 1 to 3 challenges that represent your interests. You can select challenges that you would
+            already be able to solve, but you can also select challenges that you would like to be able to solve after
+            completing some additional training.
+            If the challenges do not represent your interests and abilities, please use the 'new challenge' button to
+            generate your own challenge .
+            We use these challenges to match you with potential employers and to recommend courses that you can do
+            to learn more about the topics that interest you. -->
+        </p>
+
+        <h3>Main Tasks</h3>
+        <p class="editable">
+            {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
+                    placeholder="Click here to provide examples of major tasks you would like to perform in one year."}}
+        </p>
+
+        <h3>Level of Responsibility</h3>
+        <p class="editable">
+            {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
+                    placeholder="Please describe your desired level of responsibilities (contributer or project owner, supervisor, etc.)."}}
+        </p>
+
+        <h3>Newly Acquired Skills</h3>
+        <p class="editable">
+            {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
+                    placeholder="Please describe new skills you would like to acquire within the next year."}}
+        </p>
+
+        <h3>Main Qualifications</h3>
+        <p class="editable">
+            {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
+                    placeholder="Please summarize the main qualifications you will bring so you can fulfill your tasks and responsibilities."}}
+        </p>
+
+        <br>
+
+        <div class="row">
+            <div class="col-sm-6 padding-next">
+                {{>toggle_button icon="fa-paint-brush color-theme"
+                        href="onboarding_learner_challenge_select"
+                        session="own_challenge"
+                        key="recommendations_wanted" label="I want course recommendations"
+                        explain="Check this if you would like to receive recommendations for online learning courses that match the vision you provided."}}
+            </div>
+            <div class="col-sm-6 padding-next">
+                {{>toggle_button icon="fa-paint-brush color-theme"
+                        href="onboarding_learner_challenge_select"
+                        session="own_challenge"
+                        key="can_do_already" label="I could already fill this role"
+                        explain="Please check this box if you think that you could already fill the role described in your vision statement."}}
+            </div>
+        </div>
+
+        <div class="row">
+            <a class="btn btn-theme" href="../app/onboard_learner_registered">do this later</a>
+            <a class="btn btn-theme" href="../app/onboard_learner_registered">next</a>
+        </div>
+
     {{/mooqita_wide_spacing}}
 </template>
 
@@ -65,7 +139,7 @@
             <img style="width: 300px" src="/images/mooqita.jpg">
         </h1>
 
-        <h1>Challenges of Interest</h1>
+        <h1>A challenge I'd like to do</h1>
 
         <p>
             Practical challenges play a crucial role in the Mooqita process. We use challenges by real-world
@@ -74,6 +148,7 @@
             Defining your own example challenge that represents your abilities, interests, or both, is a great way to
             start.
             <!-- TODO: highest-priority: also implement task selection from pre-filtered lists. -->
+            <em>TODO: do this later button</em>
             <!-- The challenges on this page represent tasks that a future employer might ask you to work on.
             Please select 1 to 3 challenges that represent your interests. You can select challenges that you would
             already be able to solve, but you can also select challenges that you would like to be able to solve after
@@ -99,20 +174,20 @@
                 {{>toggle_button icon="fa-paint-brush color-theme"
                                             href="onboarding_learner_challenge_select"
                                             session="own_challenge"
-                                            key="recommendations_wanted" label="Course Recommendations Wanted"
+                                            key="recommendations_wanted" label="I want course recommendations"
                                             explain="Check this if you would like to receive recommendations for online learning courses that match the challenge you provided."}}
             </div>
             <div class="col-sm-6 padding-next">
                 {{>toggle_button icon="fa-paint-brush color-theme"
                         href="onboarding_learner_challenge_select"
                         session="own_challenge"
-                        key="can_solve_already" label="Prepared to Solve"
+                        key="can_solve_already" label="I could already solve this task"
                         explain="Please check this box if you think that you can already solve the task you just created."}}
             </div>
         </div>
 
         <div class="bottom-right">
-                <a class="btn btn-theme" href="onboard_learner_registered">next</a>
+                <a class="btn btn-theme" href="../app/onboard_learner_registered">next</a>
         </div>
 
     {{/mooqita_wide_spacing}}
