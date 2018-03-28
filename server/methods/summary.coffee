@@ -1,4 +1,15 @@
-###############################################
+################################################################
+#
+# Markus 1/23/2017
+#
+################################################################
+
+################################################################
+# TODO: this does not conform to mooqita's seperation of concern
+# Moving logic and only keep security checks.
+################################################################
+
+################################################################
 Meteor.methods
 	export_data_to_csv: () ->
 		user = Meteor.user()
@@ -6,7 +17,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if not Roles.userIsInRole user, "admin"
+		if not has_role WILDCARD, WILDCARD, user, ADMIN
 			throw new Meteor.Error('Not permitted.')
 
 		res = [["solution_owner_name", "solution_owner_id",
@@ -27,21 +38,21 @@ Meteor.methods
 
 			reviews = Reviews.find filter_r
 			reviews.forEach (review) ->
-
 				filter_f =
 					review_id: review._id
 				feedback = Feedback.findOne filter_f
 
+				s_owner = get_document_owner Solutions, solution
+				r_owner = get_document_owner Reviews, review
+
+				s_name = get_profile_name_by_user_id s_owner, true, false
+				r_name = get_profile_name_by_user_id r_owner, true, false
+
 				r = []
-				s_name = get_profile_name_by_user_id solution.owner_id, true, false
-				r_name = get_profile_name_by_user_id review.owner_id, true, false
-
 				r.push(s_name)
-				r.push(solution.owner_id)
-
 				r.push(r_name)
-				r.push(review.owner_id)
-
+				r.push(s_owner)
+				r.push(r_owner)
 				r.push(solution._id)
 				r.push(solution.challenge_id)
 

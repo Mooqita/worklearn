@@ -2,24 +2,24 @@
   <div class="dropcontainer">
 		<form id="dropbox_{{box_id}}" class="dropbox {{upload_style}}"
 					method="post" action="" enctype="multipart/form-data">
-			<div class="dropbox__input">
+			<div class="dropbox_input">
 				{{#unless mini}}
-					<div class="glyphicon glyphicon-cloud-upload dropbox__icon" aria-hidden="true"></div>
+					<div class="glyphicon glyphicon-cloud-upload dropbox_icon" aria-hidden="true"></div>
 
-					<input class="dropbox__file" type="file" name="files[]"
-								 id="file" data-multiple-caption="{count} files selected" multiple />
+					<input class="dropbox_file" type="file" name="files[]"
+								 id="file_{{box_id}}" data-multiple-caption="{count} files selected" multiple />
 
-					<label for="file">
+					<label for="file_{{box_id}}">
 						<em>Choose a file</em>
-						<span class="dropbox__dragndrop"> or drag it here</span>.
+						<span class="dropbox_dragndrop"> or drag it here</span>.
 					</label>
 
-					<button class="dropbox__button" type="submit">Upload</button>
+					<button class="dropbox_button" type="submit">Upload</button>
 				{{else}}
-					<input class="dropbox__file" type="file" name="files[]"
-								 id="file" data-multiple-caption="{count} files selected" multiple />
+					<input class="dropbox_file" type="file" name="files[]"
+								 id="file_{{box_id}}" data-multiple-caption="{count} files selected" multiple />
 
-					<label for="file">
+					<label for="file_{{box_id}}">
 						Drop file.
 					</label>
 				{{/unless}}
@@ -31,16 +31,16 @@
 				</p>
 			{{/if}}
 
-			<div class="dropbox__uploading">
+			<div class="dropbox_uploading">
 				Uploading
 				<span class="glyphicon glyphicon-refresh spin"></span>
 			</div>
 
-			<div class="dropbox__success">Done!</div>
+			<div class="dropbox_success">Done!</div>
 
-			<div class="dropbox__error">
+			<div class="dropbox_error">
 				Error!
-				<a id="restart" class="dropbox__restart" role="button">Try again!</a>
+				<a id="restart" class="dropbox_restart" role="button">Try again!</a>
 			</div>
 		</form>
   </div>

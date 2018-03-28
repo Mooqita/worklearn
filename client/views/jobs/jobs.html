@@ -1,0 +1,237 @@
+<!------------------------------------------------
+|
+| Find all job postings
+|
+-------------------------------------------------->
+<template name="jobs">
+	{{#mooqita_wide_spacing}}
+		<div class="item-set padding-top">
+			<h1>
+				Active Job Postings
+				<div class="btn btn-theme pull-right"
+						 style="min-width: 50px;"
+						 id="add_job">
+
+					{{>popout_base title="Add Challenge"
+							content="Click to add a new challenge."
+							icon_class="fa fa-2x fa-plus"}}
+				</div>
+			</h1>
+
+			<p class="padding-next">
+				Find the jobs you posted to our system.
+			</p>
+
+			{{#paging subscription="my_jobs" page=0 count=10
+								parameter=parameter collection_name="jobs"}}
+				{{#each items}}
+					{{>job_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Jobs yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+			{{/paging}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Job posting preview
+|
+-------------------------------------------------->
+<template name="job_preview">
+	<hr>
+
+	{{#let org=get_organization}}
+		<a href="{{g_build_url "job_posting" (g_object job_id=_id organization_id=organization_id)}}"
+			 class="item-set-element animated_0_5_s">
+			<h2>
+				{{title}}
+
+				<div class="pull-right" style="font-size: 16px;">
+					{{#if org.name}}
+						<div class="badge fa background-contrast"
+								 style="padding: 3px 8px;">
+							{{org.name}}
+						</div>
+					{{/if}}
+
+					{{#if get_role}}
+						<div class="badge fa background-contrast"
+								 style="padding: 3px 8px;">
+							{{get_role}}
+						</div>
+					{{/if}}
+
+					{{#unless published}}
+						{{>popout_base title="Not public"
+											content="Your job post is not active at the moment"
+											icon_class="badge background-theme fa fa-clock-o"}}
+					{{else}}
+						{{>popout_base title="Public"
+											content="Your job post is live"
+											icon_class="badge background-contrast fa fa-check"}}
+					{{/unless}}
+				</div>
+			</h2>
+
+			{{>more content=description}}
+		</a>
+	{{/let}}
+</template>
+
+<!------------------------------------------------
+|
+| Job Posting
+|
+-------------------------------------------------->
+<template name="job_posting">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			<h1 style="padding-top: 45px; text-align: center">
+				Please wait we are loading your Job Post.
+			</h1>
+			{{>wait}}
+		{{else}}
+			{{#let job=get_job}}
+				<div class="padding-top">
+					<div class="text-right">
+					{{#if g_is_public "jobs" job._id}}
+						<span class="badge background-contrast ready-badge">
+							LIVE
+						</span>
+					{{else}}
+						<span class="badge background-theme ready-badge">
+							Not yet public
+						</span>
+					{{/if}}
+					</div>
+
+					<h1>Role</h1>
+					<p>
+						Please select the main role of your candidate.
+					</p>
+					{{>job_role collection_name="jobs" item_id=job._id field="role"}}
+
+
+					<h1>Competencies</h1>
+					<p>
+						Finding the candidate with the right skill set is important.
+						However, Mooqita can do more for you. We can help you find the person
+						that will complement your teams social fabric.
+					</p>
+					{{>job_competency collection_name="jobs" item_id=job._id}}
+
+
+					<h1>Description and Title</h1>
+					<p>
+						This description will help us to find the right challenges for your candidates.
+					</p>
+					{{>job_describe}}
+
+
+					<h1>Challenges</h1>
+					<p>
+						Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks
+						which candidates should be able to solve</b></em>. We make sure they can. This step
+						is <em><b>very important</b></em> to guarantee that we can <em><b>match you with the
+						right talent</b></em>. After adding new challenges it may take a few days until a
+						great match has been found. <br/> We will alert you via email!
+					</p>
+					{{>job_challenges}}
+
+
+					<h1>Team Members</h1>
+					<p>
+						These are the members of your organization. To improve your job
+						search you can add the people your candidate will work with. And
+						do not forget about yourself. Use the edit button to complete your profile.
+					</p>
+					{{>group_page organization_id=organization_id}}
+
+
+					<h1>Optimized Persona</h1>
+					{{>job_persona}}
+				</div>
+
+				<div class="row padding-top">
+						<div class="row">
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									<div class="btn btn-theme" id="save">
+										Save <span class="fa fa-save"></span>
+									</div>
+								</span>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<span class="btn-group btn-group-justified">
+									{{#unless g_is_public "Jobs" job._id}}
+										{{>input_button classes="btn btn-theme" icon="glyphicon glyphicon-cloud-upload"
+												collection_name="jobs" item_id=job._id field="published" value=true
+												text="Publish Job Posting"}}
+									{{else}}
+										{{>input_button classes="btn btn-theme" icon="fa fa-remove"
+												collection_name="jobs" item_id=job._id field="published" value=false
+												text="Deactivate Job Post"}}
+									{{/unless}}
+								</span>
+							</div>
+						</div>
+				</div>
+			{{/let}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Add new Job select organization
+|
+-------------------------------------------------->
+<template name="job_select_org">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">
+						Select the Organization
+					</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>Please select the company for which you want to add a job posting.</p>
+					{{#unless Template.subscriptionsReady}}
+						{{>wait}}
+					{{else}}
+						<select class="selectpicker user_select_class form-control"
+								title="Select organization" data-live-search="true" id="org_id">
+							{{#each organizations}}
+								<option value="{{_id}}">{{name}}</option>
+							{{/each}}
+						</select>
+					{{/unless}}
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Cancel</a>
+						{{#if org_selected}}
+							<a type="button" class="btn btn-theme" id="add_job" data-dismiss="modal">Add job posting</a>
+						{{else}}
+							<a type="button" class="btn btn-theme" disabled="true">Select an Organization</a>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

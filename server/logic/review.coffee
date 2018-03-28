@@ -4,9 +4,8 @@
 	provided = num_provided_reviews solution
 	credits = provided - requested
 
-	if not Roles.userIsInRole user, "challenge_designer"
-		if credits < 0
-			throw new Meteor.Error "User needs more credits to request reviews."
+	if credits < 0
+		throw new Meteor.Error "User needs more credits to request reviews."
 
 	#WordPOS = require("wordpos")
 	#wordpos = new WordPOS()
@@ -14,24 +13,21 @@
 
 	review_id = Random.id()
 	challenge = Challenges.findOne solution.challenge_id
+	owner_id = get_document_owner "solutions", solution
 
 	review =
 		_id: review_id
-		owner_id: null
-		parent_id: solution._id
 		solution_id: solution._id
 		challenge_id: challenge._id
-		requester_id: solution.owner_id
-		visible_to: "owner"
-		template_id: "review"
+		requester_id: owner_id
 		requested: new Date()
 		assigned: false
 		published: false
 
-	store_document_unprotected Reviews, review
+	store_document_unprotected Reviews, review, null
 	gen_feedback solution, review, user
 
-	msg = "Solution (" + solution.id + ") review requested by: " + get_user_mail user
+	msg = "Solution (" + solution._id + ") review requested by: " + get_user_mail user
 	log_event msg, event_logic, event_info
 
 	return review_id
@@ -40,16 +36,13 @@
 ###############################################
 _find_review = (user, challenge) ->
 	# find all solutions this user has already reviewed
-	filter =
-		owner_id: user._id
-
 	mod =
 		fields:
 			solution_id: 1
 
-	crs = Reviews.find(filter, mod).fetch()
-
-	handled = _.uniq(_.pluck(crs, 'solution_id'))
+	crs = get_documents user, OWNER, "reviews", {}, mod
+	reviews = crs.fetch()
+	handled = _.uniq(_.pluck(reviews, 'solution_id'))
 
 	# find the keywords for the user to make sure they understand what they review
 	#corpus = collect_keywords user._id
@@ -84,18 +77,13 @@ _find_review = (user, challenge) ->
 	if challenge
 		filter.challenge_id = challenge._id
 
-	return Reviews.findOne filter, mod
+	review = Reviews.findOne filter, mod
+	return review
 
 
 ###############################################
-@assign_review = (challenge, solution, user) ->
-	if solution
-		filter =
-			solution_id: solution._id
-			published: false
-		review = Reviews.findOne filter
-	else
-		review = _find_review user, challenge
+@assign_review = (challenge, user) ->
+	review = _find_review user, challenge
 
 	if not review
 		throw new Meteor.Error "no-review", "There are no solutions to review at the moment."
@@ -108,12 +96,15 @@ _find_review = (user, challenge) ->
 
 	solution = Solutions.findOne review.solution_id
 	if not solution
-		throw new Meteor.Error "no-solution","solution not found"
+		throw new Meteor.Error "no-solution", "solution not found"
 
 	if review.assigned
 		send_review_timeout_message review
 
-	modify_field_unprotected Reviews, review._id, "owner_id", user._id
+	recipient_id = get_document_owner(Solutions, review.solution_id)
+
+	gen_admission Reviews, review, user, OWNER
+	gen_admission Reviews, review, recipient_id, RECIPIENT
 	modify_field_unprotected Reviews, review._id, "assigned", true
 
 	res =
@@ -125,6 +116,16 @@ _find_review = (user, challenge) ->
 	log_event msg, event_logic, event_info
 
 	return res
+
+
+###############################################
+@get_open_review_for_solution = (solution) ->
+	filter =
+		solution_id: solution._id
+		published: false
+	review = Reviews.findOne filter
+
+	return review
 
 
 ###############################################
@@ -141,14 +142,15 @@ _find_review = (user, challenge) ->
 	# Find the solution the review provider submitted.
 	# The solution has to be submitted to the same challenge
 	# as the solution in the review.
+	owner_id = get_document_owner "reviews", review
 	filter =
-		requester_id: review.owner_id
+		requester_id: owner_id
 		challenge_id: review.challenge_id
 
 	request = Reviews.findOne filter
 	if not request
-		if Roles.userIsInRole review.owner_id, "tutor"
-			return review._id
+		if not has_role Challenges, challenge, user, TUTOR
+			return request._id
 
 		throw new Meteor.Error "A non tutor provided a review without a solution."
 
@@ -158,11 +160,9 @@ _find_review = (user, challenge) ->
 	requested = num_requested_reviews solution
 	required = 	challenge.num_reviews
 
-	r_owner = Meteor.users.findOne review.owner_id
-
 	if solution.published
 		if required > requested
-			request_review solution, r_owner
+			request_review solution, owner_id
 
 	msg = "Review (" + review._id + ") review finished by: " + get_user_mail user
 	log_event msg, event_logic, event_info

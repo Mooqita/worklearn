@@ -1,0 +1,21 @@
+<!------------------------------------------------
+|
+| Persona
+|
+-------------------------------------------------->
+<template name="persona">
+	{{redraw}}
+
+	<div class="persona" style="{{#unless data_ready}}opacity:0.4;{{/unless}}">
+		{{#unless data_ready}}
+			<div class="fa fa-question-circle-o fa-2x color-theme center-icon">
+			</div>
+		{{/unless}}
+
+		<div class="persona-wait animated" id="{{persona_wait_id}}">
+			<span class="fa fa-refresh fa-spin fa-2x color-theme center-icon"></span>
+		</div>
+
+		<div class="svg-holder animated" id="{{persona_id}}"></div>
+	</div>
+</template>

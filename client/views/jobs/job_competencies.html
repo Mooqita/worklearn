@@ -1,0 +1,55 @@
+<!------------------------------------------------
+|
+| Onboarding Competency
+|
+-------------------------------------------------->
+<template name="job_competency">
+	<div class="row" style="padding: 20px 0px">
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Individual Contributor"
+					explain="A candidate who quickly understands what is needed and focuses on getting it done."
+					collection_name=collection_name item_id=item_id field="contributor"
+					session=session key="contributor"}}
+		</div>
+
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Strategic Decisions"
+					explain="Decisions that influence the shape of your product or your companies culture require a special kind of person."
+					collection_name=collection_name item_id=item_id field="strategic"
+					session=session key="strategic"}}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Social Hub"
+					explain="A candidate who brings everyone together and strengthens the teams social fabric."
+					collection_name=collection_name item_id=item_id field="social"
+					session=session key="social"}}
+		</div>
+
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Leading People"
+					explain="Does the candidate need to lead other members of your team?"
+					collection_name=collection_name item_id=item_id field="team"
+					session=session key="team"}}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Contributing Ideas"
+					explain="Do you need fresh and new ideas for products or features?"
+					collection_name=collection_name item_id=item_id field="idea"
+					session=session key="idea"}}
+		</div>
+
+		<div class="col-sm-6 padding-next">
+			{{>toggle_button id=item_id label="Process Design"
+					explain="The gritty little things that need to be done again and again require someone who can develop efficient processes."
+					collection_name=collection_name item_id=item_id field="process"
+					session=session key="process"}}
+		</div>
+	</div>
+</template>
+

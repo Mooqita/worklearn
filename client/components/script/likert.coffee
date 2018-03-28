@@ -29,14 +29,8 @@ Template.likert_item.events
 		value = Number(event.target.innerText)
 		self = Template.instance().data
 		item_id = self.item_id
-		method = self.method
 		collection = self.collection_name
 		item_id = self.item_id
 		field = self.field
 
-		Meteor.call method, collection, item_id, field, value,
-			(err, res)->
-				if(err)
-					sAlert.error("Likert item error: " + err)
-				if res
-					sAlert.success("Updated: " + field)
+		set_field collection, item, field, value

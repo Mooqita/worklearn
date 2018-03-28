@@ -1,0 +1,53 @@
+<template name="job_challenges">
+	{{#unless Template.subscriptionsReady}}
+		{{>wait}}
+	{{else}}
+		<h2>Add a new challenge:</h2>
+
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-ms-6" id="add_challenge">
+				{{>hover_card icon="fa-edit color-theme"
+						message="Create your own challenge"
+						text="Create your own challenge. From scratch or our templates."}}
+			</div>
+
+			<div class="col-md-6 col-sm-6 col-ms-6">
+				{{>hover_card icon="fa-bell-o color-theme" href="mailto:info@mooqita.org"
+						message="Let us help you"
+						text="Let our experts design challenges optimized for you company."}}
+			</div>
+		</div>
+
+		<!--div class="input-group">
+			<div class="input-group-addon">
+				<span class="fa fa-book"></span>
+			</div>
+
+			<select class="form-control" id="challenges_id">
+				<option>Select one of your existing challenges</option>
+				{{#each challenges}}
+					<option value="{{_id}}">{{title}}</option>
+				{{/each}}
+			</select>
+		</div>-->
+
+		{{#if job}}
+			{{>job_challenges_preview job}}
+		{{/if}}
+	{{/unless}}
+</template>
+
+
+<template name="job_challenges_preview">
+	{{#if has_challenges}}
+		<h2>Challenges linked to this job posting:</h2>
+		<div class="item-set" style="padding: 0px">
+			{{#each challenges}}
+				{{>challenge_preview}}
+			{{/each}}
+			<hr>
+		</div>
+	{{/if}}
+</template>
+
+

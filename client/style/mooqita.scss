@@ -93,9 +93,32 @@
 // forms
 ////////////////////////////////////////////////
 .mooqita-layout .form-control{
-	border: 2px solid #ddd;
-	min-height: 40.5px;
+	border-color: $theme;
+	border-width: 2px;
 	font-size: 16px;
+}
+
+.mooqita-layout input.form-control,
+.mooqita-layout select.form-control{
+	height: 40.5px;
+}
+
+.mooqita-layout .form-control.tags{
+	background: $background;
+	color: $text;
+}
+
+.mooqita-layout .form-control.tags:focus{
+	background: $background;
+	color: $text;
+}
+
+.mooqita-layout .badge .form-control{
+	min-height: 0px;
+	font-size: 14px;
+	padding: 0px;
+	height: auto;
+	margin: 8px 0px 4px 0px;
 }
 
 .mooqita-layout .editable .form-control{
@@ -122,7 +145,7 @@
 }
 
 ////////////////////////////////////////////////
-// itemized an item encompasses other elements
+// itemized: an item encompasses other elements
 // with a border
 ////////////////////////////////////////////////
 
@@ -134,77 +157,93 @@
 	border-radius: 20px;
 }
 
-.mooqita-layout .item {
-	border: 2px solid #ddd;
+.mooqita-layout .item-set {
+	//border: 2px solid #ddd;
 	padding: 25px;
 	margin: 0 0 25px 0;
 }
 
-.mooqita-layout .item.padding-top{
+.mooqita-layout .item-set.padding-top{
 	margin-top: 35px;
 }
 
-.mooqita-layout .item h1{
+.mooqita-layout .item-set h1{
 	margin: 0;
 	padding: 0 0 20px 0;
 }
 
-.mooqita-layout .item h1{
+.mooqita-layout .item-set h1{
 	margin: 45px 0 0 0;
 	padding: 0 0 15px 0;
 }
 
-.mooqita-layout .item h1:first-child{
+.mooqita-layout .item-set h1:first-child{
 	margin: 0;
 }
 
-.mooqita-layout .item h2{
+.mooqita-layout .item-set h2{
 	font-size: 18px;
 	font-weight: bold;
 	margin-bottom: 25px;
+	color: $theme;
 }
 
 a.mooqita,
-.mooqita-layout .item h2 a{
+.mooqita-layout .item-set h2 a{
 	color: $theme;
 }
 
 a.mooqita:hover,
-.mooqita-layout .item h2 a:hover{
-	color: $contrast-on-theme;
+.mooqita-layout .item-set h2 a:hover{
+	color: $theme;
+	background: inherit;
 	cursor: pointer;
 	text-decoration: none;
 }
 
-.mooqita-layout .item .media-body{
-	padding-left: 20px;
+.mooqita-layout .item-set .item-set-element{
+	padding: 20px;
+	padding-top: 5px;
+	padding-bottom: 30px;
+	color: $text;
+	display: block;
 }
 
-.mooqita-layout .item .media-body h2{
-	margin: 0;
-	padding: 0 0 10px 0;
+.mooqita-layout .item-set .item-set-element:hover{
+	background: $contrast-on-theme;
+	text-decoration: none;
 }
 
-.mooqita-layout .item hr {
-	margin-bottom: 30px;
+.mooqita-layout .item-set hr {
+	margin: 0px;
+	padding: 0px
 }
 
-.mooqita-layout .item .rating_line{
+.mooqita-layout .item-set .rating_line{
 	padding: 0px 0px 20px 0px;
 	text-align: right;
 }
 
-.mooqita-layout .item .wide_link{
+.mooqita-layout .item-set .wide_link{
 	padding-top: 15px;
 	text-align: center;
 }
 
-.mooqita-layout .item .edit-toggle{
+.mooqita-layout .item-set .edit-toggle{
 	color: $theme;
 }
 
-.mooqita-layout .item .edit-toggle:hover{
+.mooqita-layout .item-set .edit-toggle:hover{
 	color: $theme;
+}
+
+.mooqita-layout .item-set .media-body{
+	padding-left: 20px;
+}
+
+.mooqita-layout .item-set .media-body h2{
+	margin: 0;
+	padding: 0 0 10px 0;
 }
 
 ////////////////////////////////////////////////
@@ -217,7 +256,7 @@ a.mooqita:hover,
 	text-align: center;
 }
 
-.mooqita-layout .select-occupation .item:hover{
+.mooqita-layout .select-occupation .item-set:hover{
 	border-color: $theme;
 }
 
@@ -226,8 +265,8 @@ a.mooqita:hover,
 	color: $theme;
 }
 
-.mooqita-layout .select-occupation.select-disabled .item,
-.mooqita-layout .select-occupation.select-disabled .item:hover,
+.mooqita-layout .select-occupation.select-disabled .item-set,
+.mooqita-layout .select-occupation.select-disabled .item-set:hover,
 .mooqita-layout .select-occupation.select-disabled .glyphicon{
 	border-color: #ddd;
 	color: #ddd;
@@ -313,5 +352,118 @@ a.mooqita:hover,
 .mooqita-layout .hero-background{
 //	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
 	background-image: linear-gradient(rgba(#ffb804,0.4), rgba($theme,0.6)), url(/images/bg.jpg);
+}
+
+////////////////////////////////////////////////
+// Ready Badges
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+.ready-badge{
+	font-size: 16px;
+	padding: 8px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Rasied with shadow
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.raised {
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+	padding: 5px;
+}
+
+.float-container{
+	float: right;
+	margin-left: 15px;
+	margin-bottom: 35px;
+	padding: 15px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Floating Button
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.btn-float{
+	display: inline-block;
+	vertical-align: middle;
+
+	position: absolute;
+	margin: 10px;
+	right: 0px;
+	top: 0px;
+
+	border-radius: 50%;
+
+	//overflow: hidden;
+	cursor: pointer;
+	z-index: 100;
+}
+
+.btn-float.raised{
+	margin: 10px;
+	padding: 10px;
+}
+
+.btn-float.raised:hover{
+	padding: 11px;
+	margin: 9px;
+
+  -webkit-box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.35);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Pop Icons
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.pop-icon-circle {
+	position: absolute;
+	top: -25px;
+	right: -25px;
+	font-size: 100px;
+
+	width: 100px;
+	height: 100px;
+
+	background: white;
+	border-radius: 100%;
+
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.35);
+          box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.35);
+}
+
+.pop-icon{
+	position: absolute;
+}
+
+// centered Icons
+
+.center-icon{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -14px;
+	margin-top: -18px;
+}
+
+.sign-in{
+	color: $text-on-theme;
+}
+
+.sign-in:hover{
+	color: $contrast-on-theme;
+	text-decoration: none;
+}
+
+.requirement-row{
+	width: 100%;
+	display: inline-block;
+	padding-bottom: 20px;
 }
 

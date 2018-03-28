@@ -1,0 +1,661 @@
+////////////////////////////////////////////////
+@import "{}/client/style/_color.scss";
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Testimonial
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.testimonial .text {
+  color: #888;
+	font-size: 0.8em;
+  margin-bottom: 20px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.name-picture {
+  float: left;
+  width: 100%;
+  text-align: left;
+	margin-bottom: 10px;
+}
+
+.name-picture h5 {
+  font-size: 0.9em;
+  letter-spacing: 0.08em;
+}
+
+.name-picture p {
+  color: #888;
+  margin: 0;
+  font-size: 0.8em;
+}
+
+.name-picture img {
+  float: left;
+  width: 74px;
+  border-radius: 37px;
+  margin-right: 10px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.icon-with-background{
+	padding: 5px;
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 5px;
+}
+
+.text-after-icon{
+  padding-top: 5px;
+  padding-left: -5px;
+  margin-left: -15px;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Hover cards
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// base
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-padding{
+	//padding: 0px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-container{
+	text-align: center;
+	text-align: -moz-center;
+	text-align: -webkit-center;
+
+	padding: 5px;
+}
+
+a.hover-card-container{
+	text-decoration: none;
+}
+
+a.hover-card-container:not([href]):not([tabindex]):focus,
+a.hover-card-container:not([href]):not([tabindex]):hover {
+	color: $text;
+	background: none;
+}
+
+.hover-card-container .animated,
+.hover-card-container.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card{
+  cursor: pointer;
+	position: relative;
+
+	display: block;
+	text-align: center;
+
+	z-index: 1;
+
+	color: $text;
+	background: $background;
+
+	//border: 2px solid #dddddd;
+
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+
+	-webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.hover_box .hover-card{
+		min-height: 150px;
+}
+
+.hover-card:hover{
+	background: $contrast-on-theme;
+	text-decoration: none;
+	z-index: 20;
+
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+.hover-card:active{
+	background: $contrast-on-theme-dark;
+	text-decoration: none;
+	z-index: 20;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-icon{
+	font-size: 6em;
+}
+
+.hover-card:hover .hover-icon{
+	font-size: 9.5em;
+	text-decoration: none;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-text{
+	font-size: 1em;
+}
+
+.hover-card:hover .hover-text{
+	font-size: 1.5em;
+	color: #222;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-info{
+	font-size: 0.8em;
+	color: #888;
+}
+
+.hover-card:hover .hover-info{
+	color: #444;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// small
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card{
+	padding: 5px;
+	min-height: 130px;
+}
+
+.hover-card-small .hover-card:hover{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-select{
+	font-size: 1em;
+	padding: 5px;
+	border-radius: 100px;
+	background: $contrast-on-theme;
+	color: $theme;
+}
+
+.hover-card-small .hover-card:hover .hover-select{
+	font-size: 1em;
+	background: $background;
+	color: $theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-icon{
+	font-size: 2em;
+}
+
+.hover-card-small .hover-card:hover .hover-icon{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card-small .hover-card .hover-text{
+	font-size: 1em;
+}
+
+.hover-card-small .hover-card:hover .hover-text{
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+.hover-card .hover-info{
+	font-size: 0.8em;
+	color: #888;
+}
+
+.hover-card:active .hover-info{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Quick Survey
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.element-container{
+	//display: none;
+	opacity: 1.0;
+}
+
+.element-container .animated,
+.element-container.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Toggle button
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// Toggle button styles
+///////////////////////////////////////////////////////////////////////////////
+
+.toggle-button {
+//  margin: 0 20px;
+}
+
+.toggle-button {
+  position: relative;
+  display: inline-block;
+}
+
+.toggle-button label {
+    display: inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left;
+}
+
+.toggle-button input {
+    display: none;
+}
+
+.toggle-button label {
+  line-height: 20px;
+  text-indent: 30px;
+}
+
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon {
+  background: $theme;
+}
+
+.toggle-button-icon {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.toggle-button-icon:before,
+.toggle-button-icon:after {
+	content: "";
+	position: absolute;
+	top: 45%;
+	left: 35%;
+	transition: 0.2s ease-out;
+}
+
+.toggle-button .toggle-button-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s;
+  border: 2px solid $theme;
+  border-radius: 1px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button .toggle-button-icon:before,
+.toggle-button .toggle-button-icon:after {
+	left: 2px;
+	width: 12px;
+	height: 2px;
+	border-radius: 3px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	top: 35%;
+	background: $contrast-on-theme;
+	opacity: 0;
+	transform-origin: left center;
+}
+
+.toggle-button .toggle-button-icon:before {
+    transform: translate(0, 0) rotate(45deg) scale(0.6, 1);
+}
+
+.toggle-button .toggle-button-icon:after {
+    transform: translate(4px, 6px) rotate(-45deg);
+}
+
+.toggle-button:hover input[type=checkbox]:not(:checked) ~ .toggle-button-icon {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon:before,
+.toggle-button input[type=checkbox]:checked ~ .toggle-button-icon:after {
+    opacity: 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Persona
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.persona {
+	z-index: 10;
+	position: relative;
+	//border: 1px solid #ff0000;
+}
+
+.persona.visible{
+	right: 0px;
+}
+
+.persona .persona-wait{
+	opacity: 0.0;
+	overflow: visible;
+}
+
+.persona .waiting{
+	opacity: 1.0;
+}
+
+.persona .animated,
+.persona.animated{
+	-webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.svg-holder {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+	font-size: 12px;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Personality explanation
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.single-chart {
+	width: 33%;
+	justify-content: space-around ;
+}
+
+.circular-chart {
+	display: block;
+}
+
+.circle-bg {
+	fill: none;
+	stroke: #eee;
+	stroke-width: 4.0;
+	stroke-linecap: round;
+}
+
+.circle {
+	fill: none;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+}
+
+.marker {
+	fill: none;
+	stroke-width: 5;
+	stroke-linecap: round;
+}
+
+.circular-chart .light {
+	stroke: #eee;
+}
+
+.circular-chart .orange {
+	stroke: #ff9f00;
+}
+
+.circular-chart .green {
+	stroke: #4CC790;
+}
+
+.circular-chart .blue {
+	stroke: #3c9ee5;
+}
+
+.circular-chart .theme {
+	stroke: $theme;
+}
+
+.circular-chart .legend {
+	fill: #666;
+	font-family: sans-serif;
+	font-size: 4px;
+	text-anchor: middle;
+}
+
+.circular-chart .orange-fill {
+	fill: #ff9f00;
+}
+
+.circular-chart .green-fill {
+	fill: #4CC790;
+}
+
+.circular-chart .blue-fill {
+	fill: #3c9ee5;
+}
+
+.circular-chart .theme-fill {
+	fill: $theme;
+	font-size: 6px;
+	font-weight: 600;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.personality-explain {
+	text-align: left;
+}
+
+.personality-explain ul{
+	padding: 0px;
+}
+
+.personality-explain li{
+	position: relative;
+	display: block;
+	padding: .4em .4em .4em .8em;
+	*padding: .4em;
+	margin: .5em 0 .5em 2.5em;
+	background: #eee;
+	color: #444;
+	text-decoration: none;
+	transition: all .3s ease-out;
+}
+
+.personality-explain li:before{
+	font-family: 'FontAwesome';
+	content: '\f067';
+	background: $contrast-on-theme;
+	position: absolute;
+	left: -2.5em;
+	top: 50%;
+	margin-top: -1em;
+	height: 2em;
+	width: 2em;
+	line-height: 2em;
+	text-align: center;
+	font-weight: bold;
+}
+
+.personality-explain .positive li:before{
+	content: '\f067';
+	background: $contrast-on-theme;
+}
+
+.personality-explain .negative li:before {
+	content: '\f068';
+	background: $theme-light;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Register modal
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal{
+	width: 100%;
+	height: 100%;
+	background: rgba(170, 170, 170, 0.5);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-frame{
+	position: relative;
+	top: 10%;
+
+	padding-bottom: 0px;
+	background: white;
+	border-radius: 10px;
+	margin: auto;
+	max-width: 450px;
+
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .register-finish{
+	padding: 10px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .close-register{
+	position: absolute;
+	border-radius: 100%;
+	right: -15px;
+	top: -15px;
+	padding: 6px 10px;
+	background: $theme;
+	border-color: $theme-dark;
+	color: white;
+}
+
+.register-modal .close-register:hover{
+	color: $contrast-on-theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .at-form{
+	padding-bottom: 0px;
+}
+
+.register-modal #at-btn{
+	border-color: $theme-dark;
+	background: $theme;
+	color: white;
+}
+
+.register-modal #at-btn:hover{
+	color: $contrast-on-theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .modal-body{
+	padding-bottom: 0px;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.register-modal .modal-dialog{
+	width: 450px;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Auto Complete List
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.auto-complete-list{
+	padding-left: 0px;
+}
+
+.auto-complete-list li{
+	position: relative;
+	display: block;
+	padding: .4em .0em;
+	margin: 2px 0px;
+	background: #eee;
+	color: #444;
+	text-decoration: none;
+}
+
+.auto-complete-list .list-remove{
+	background: $contrast-on-theme;
+	color: $theme;
+	margin: -6px 10px 0px 0px;
+	padding: 9px;
+	float: left;
+}
+
+.auto-complete-list .list-remove:hover{
+	cursor: pointer;
+	background: $theme;
+	color: $text-on-theme;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Team Member
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.team-member-text-block{
+	padding: 15px;
+}
+
+.team-member-text-block h2{
+	padding: 0px;
+	margin: 0px;
+	padding-bottom: 15px;
+}
+
+.team-member-text-block p{
+}
+
+.team-member-persona{
+	margin: 0px -5px;
+	position: absolute;
+	bottom: 10px;
+	left: 5px;
+}

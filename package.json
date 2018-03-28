@@ -2,25 +2,29 @@
   "name": "worklearn",
   "private": true,
   "scripts": {
-    "clean": "sh docker/scripts/docker-clean.sh"
+    "clean": "sh docker/scripts/docker-clean.sh",
+    "start": "meteor start"
   },
   "dependencies": {
     "atob": "^2.0.3",
     "babel-runtime": "^6.23.0",
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.3",
     "core-js": "^2.4.1",
     "csv": "^1.1.1",
     "csv-string": "^2.3.2",
-    "dragula": "^3.7.2",
     "dropbox": "^2.5.3",
     "file-saver": "^1.3.3",
     "file-type": "^4.1.0",
     "fingerprintjs2": "^1.5.0",
     "get-ipinfo": "^1.0.0",
+    "js-base64": "^2.3.2",
     "jszip": "^3.1.3",
     "mathjs": "^3.14.2",
     "meteor-node-stubs": "~0.2.0",
     "mime": "^1.3.4",
+    "png-chunk-text": "^1.0.0",
+    "png-chunks-encode": "^1.0.0",
+    "png-chunks-extract": "^1.0.0",
     "request": "^2.81.0",
     "upwork-api": "^1.2.2",
     "wordpos": "^1.1.2"

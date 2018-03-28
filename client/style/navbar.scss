@@ -21,41 +21,56 @@
 	padding: 5px 0px 0px 0px;
 }
 
-.navbar a{
+.navbar-nav .nav-item a{
 	font-size: 1.5em;
 	font-weight: 300;
 	color: $theme;
 }
 
-.nav > li > a:hover,
-.nav > li > a:focus{
+a:not([href]):not([tabindex]):focus,
+a:not([href]):not([tabindex]):hover {
 	color: $text-on-theme;
 	background: $theme;
 }
 
-.navbar .active .btn{
+.navbar-nav .active .btn{
 	color: $text-on-theme;
 	background: $theme;
 }
 
-.navbar .active .btn:hover{
+.navbar-nav .active .btn:hover{
 	padding: 16px 14px 14px 16px;
 }
 
-.navbar-toggle {
-	margin-top: 12px;
+.navbar-light .navbar-toggler {
+	color: $theme;
 	border: 2px solid $theme;
 }
 
-.navbar-toggle:hover{
-	padding: 9px 9px 9px 11px;
+.navbar-toggle{
+	background: $theme;
+	color: $background;
 
+	padding: 12px 9px 12px 9px;
+}
+
+.icon-bar{
+	background: $background;
+}
+
+.navbar-toggle:hover{
+	padding: 13px 8px 11px 10px;
+  -webkit-box-shadow: inset 2px 2px 5px rgba(0, 0, 0, .7);
+          box-shadow: inset 2px 2px 5px rgba(0, 0, 0, .7);
+}
+
+.navbar-toggle:focus{
   -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
           box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .5);
 }
 
-.navbar-toggle .icon-bar{
-	background: $theme;
+.navbar-toggler .icon{
+	color: $theme;
 }
 
 
@@ -64,34 +79,29 @@
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
-.navigation-background{
-	padding: 15px;
-	padding-left: 35px;
+.control-navigate{
+	font-size: 1em;
+	font-weight: 600;
+
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
 }
 
-.navigation-background .credit-score{
-	font-size: 20px;
-	margin-right: 25px
-}
-
-.navigation-background .control-navigate{
-	font-size: 20px;
-}
-
-.navigation-button{
-	color: #eee;
+.nav > li > a.navigation-button{
+	color: $theme;
 	padding: 15px;
 	margin: 5px;
 	font-style: normal;
 	text-decoration: none;
 }
 
-.navigation-button:hover{
-	color: $contrast-on-theme;
-	padding: 15px;
-	margin: 5px;
-	font-style: normal;
-	text-decoration: none;
-	cursor: pointer;
+.nav > li > a.navigation-button:active,
+.nav > li > a.navigation-button:focus{
 }
 
+.nav > li > a.navigation-button:hover{
+	padding: 16px 14px 14px 16px;
+
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .27);
+          box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .27);
+}

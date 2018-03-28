@@ -1,0 +1,435 @@
+<!-----------------------------------------------------------------------------
+|
+| Testimonials
+|
+------------------------------------------------------------------------------>
+
+<!--template name="testimonial">
+<div>
+	<div class="testimonial" style="width: 280px">
+		<div class="name-picture">
+			<img class="" alt="" src="/images/marco.jpg">
+			<h5>Marko Russiver</h5>
+			<p>Founder, CEO</p>
+			<p>Guaana</p>
+		</div>
+
+		<div class="text">
+			<p>Led by genius developers and PhD’s from Berkley,
+				Mooqita is the next epic thing in student to work
+				evaluation process. Guaana says yes.</p>
+		</div>
+	</div>
+
+	<div class="testimonial" style="width: 280px">
+		<div class="name-picture">
+			<img class="" alt="" src="/images/sergio.jpg">
+			<h5>Sergio L Hernandez A</h5>
+			<p>Engineer</p>
+			<p>Mooqita Learner</p>
+		</div>
+
+		<div class="text">
+			<p>Mooqita is the perfect chance to have an
+				international experience and share ideas
+				with people around the world.</p>
+		</div>
+	</div>
+
+	<div class="testimonial" style="width: 280px">
+		<div class="name-picture">
+			<img class="" alt="" src="/images/icon.png">
+			<h5>Xiaohong</h5>
+			<p>Student</p>
+			<p>Mooqita Learner</p>
+		</div>
+
+		<div class="text">
+			<p>As a MOOC junkie, I found myself benefit from Mooqita
+				and got a job that pays as a Rails developer. There should
+				be more people join the force to help online students the
+				way Mooqita is doing.</p>
+		</div>
+	</div>
+</div>
+</template>
+
+
+<template name="onboarding_left_menu">
+	<ul class="list-group" style="font-size: 10px">
+		<li class="list-group-item background-theme" style="padding: 5px">
+			<span style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em;">fingerprint</i>
+			</span>
+			<span>Define Your Companies Social DNA.</span>
+			<div style="text-align: right"><b>(0 of 10)</b></div>
+		</li>
+
+		<li class="list-group-item" style="padding: 5px">
+			<div style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em">rowing</i>
+			</div>
+			<span>Define the Skill Sets You Need</span>
+			<div style="text-align: right"><b>(0 of 3)</b></div>
+		</li>
+
+		<li class="list-group-item" style="padding: 5px">
+			<div style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em">people</i>
+			</div>
+			<span>See your matches. Make sure people are aware that lower numbers are better.</span>
+			<div style="text-align: right"><b>~20,000</b></div>
+		</li>
+
+		<li class="list-group-item" style="padding: 5px">
+			<div style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em">card_membership</i>
+			</div>
+			<span>Sign up to get in touch with your Talents</span>
+		</li>
+
+		<li class="list-group-item" style="padding: 5px">
+			<div style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em">album</i>
+			</div>
+			<span>Add your Team</span>
+		</li>
+
+		<li class="list-group-item" style="padding: 5px">
+			<div style="float: left; padding-right: 10px">
+				<i class="material-icons" style="font-size: 4em">album</i>
+			</div>
+			<span>Onboard new team members support</span>
+		</li>
+	</ul>
+</template>
+
+
+<template name="onboarding_social">
+	<div class="container">
+		<div class="row padding-top padding-next">
+			<div class="col-md-6 offset-md-3 no-gutters">
+				<h1 style="text-align: center;">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
+				<h1 style="text-align: right">Social Factors</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<p style="text-align: right">Which personality traits would thrive most in your company? <b>(Select <em>5</em>)</b></p>
+
+				<div class="row no-gutters">
+					<div class="col-md">
+						{{>select_item icon="" message="curiosity" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="flexibility" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="assertiveness" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="compassion" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="confidence" href="onboarding_sign_in"}}
+					</div>
+				</div>
+
+				<div class="row no-gutters">
+					<div class="col-md ">
+						{{>select_item icon="" message="commitment" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="dependabile" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="independance" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="competitive" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="optimisim" href="onboarding_sign_in"}}
+					</div>
+				</div>
+
+				<hr>
+
+				<p>Which personality traits would be every ones pet pew? <b>(Select <em>5</em>)</b></p>
+
+				<div class="row no-gutters">
+					<div class="col-md">
+						{{>select_item icon="" message="curiosity" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="flexibility" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="assertiveness" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="compassion" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="confidence" href="onboarding_sign_in"}}
+					</div>
+				</div>
+
+				<div class="row no-gutters">
+					<div class="col-md ">
+						{{>select_item icon="" message="commitment" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="dependabile" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md ">
+						{{>select_item icon="" message="independance" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="competitive" href="onboarding_sign_in"}}
+					</div>
+
+					<div class="col-md">
+						{{>select_item icon="" message="optimisim" href="onboarding_sign_in"}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="onboarding_2">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				{{>onboarding_left_menu}}
+			</div>
+
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-12 align-content-center text-center">
+						<h1>Does your company value<br>ambition over curiosity?</h1>
+					</div>
+				</div>
+
+				<div class="row padding-top">
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Yea</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">???</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Nay</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 align-content-center text-center">
+						<h1>Alternatively</h1>
+						<h1>Select <em>4</em> values your company stands most for.</h1>
+						<div class="badge badge-pill"> Ambitious </div>
+						<div class="badge badge-pill"> Approachable </div>
+						<div class="badge badge-pill background-theme"> Articulate </div>
+						<div class="badge badge-pill"> Autonomous </div>
+						<div class="badge badge-pill"> Calm </div>
+						<div class="badge badge-pill"> Charismatic </div>
+						<div class="badge badge-pill"> Cheerful </div>
+						<div class="badge badge-pill"> Clever </div>
+						<div class="badge badge-pill"> Competitive </div>
+						<div class="badge badge-pill"> Confident </div>
+						<div class="badge badge-pill"> Cooperative </div>
+						<div class="badge badge-pill"> Courteous </div>
+						<div class="badge badge-pill"> Creative </div>
+						<div class="badge badge-pill"> Curiosity </div>
+						<div class="badge badge-pill"> Determined </div>
+						<div class="badge badge-pill"> Devoted </div>
+						<div class="badge badge-pill"> Diligent </div>
+						<div class="badge badge-pill"> Easygoing </div>
+						<div class="badge badge-pill background-theme"> Educated </div>
+						<div class="badge badge-pill"> Efficient </div>
+						<div class="badge badge-pill"> Eloquent </div>
+						<div class="badge badge-pill"> Energetic </div>
+						<div class="badge badge-pill"> Enthusiastic </div>
+						<div class="badge badge-pill"> Flexible </div>
+						<div class="badge badge-pill"> Focused </div>
+						<div class="badge badge-pill"> Friendly </div>
+						<div class="badge badge-pill"> Honest </div>
+						<div class="badge badge-pill"> Imaginative </div>
+						<div class="badge badge-pill"> Independent </div>
+						<div class="badge badge-pill"> Inexperienced </div>
+						<div class="badge badge-pill"> Inquisitive </div>
+						<div class="badge badge-pill"> Insightful </div>
+						<div class="badge badge-pill"> Intuitive </div>
+						<div class="badge badge-pill"> Meticulous </div>
+						<div class="badge badge-pill"> Neurotic </div>
+						<div class="badge badge-pill"> Open </div>
+						<div class="badge badge-pill"> Opinionated </div>
+						<div class="badge badge-pill"> Organized </div>
+						<div class="badge badge-pill"> Patient </div>
+						<div class="badge badge-pill"> Perceptive </div>
+						<div class="badge badge-pill"> Persuasive </div>
+						<div class="badge badge-pill"> Procedural </div>
+						<div class="badge badge-pill"> Punctual </div>
+						<div class="badge badge-pill"> Quiet </div>
+						<div class="badge badge-pill"> Relaxed </div>
+						<div class="badge badge-pill"> Resourceful </div>
+						<div class="badge badge-pill"> Responsible </div>
+						<div class="badge badge-pill"> Talkative </div>
+						<div class="badge badge-pill"> Technological </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="onboarding_3">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				{{>onboarding_left_menu}}
+			</div>
+
+			<div class="col-md-8">
+				<div class="row">
+					<div class="offset-md-2 col-md-8 align-content-center text-center">
+						<h1>Please let us know whom you are looking for. </h1>
+						<h2>Select the role, a general filed, and a keyword.</h2>
+						<p>Do not worry if you can not find what exactly you are
+							looking for. We will take care of that for you, you
+							will see!</p>
+					</div>
+				</div>
+
+				<div class="row padding-top">
+					<div class="col-md-12">
+						<form class="container" id="needs-validation" novalidate>
+							<div class="row">
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom01">Expertise</label>
+									<input type="text" class="form-control" id="validationCustom01"
+												 placeholder="e.g. machine learning" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										The general area of expertise e.g. machine learning,
+										human subject research, translation, etc.
+									</small>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom02">Function</label>
+									<input type="text" class="form-control" id="validationCustom02"
+												 placeholder="e.g. team-lead" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										Something along the line of intern, team-lead, ceo, etc
+									</small>
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="validationCustom02">A Tag</label>
+									<input type="text" class="form-control" id="validationCustom02"
+												 placeholder="e.g. python" required>
+									<small id="passwordHelpBlock" class="form-text text-muted">
+										Something the person whome you want to hire
+										really needs to know/do/like.
+									</small>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="align-content-center text-center">
+										<a class="btn btn-theme" href="onboarding_4">Add some skill requirements</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="onboarding_4">
+	<div class="container" style="padding-top: 35px">
+		<div class="row">
+			<div class="col-md-2">
+				{{>onboarding_left_menu}}
+			</div>
+
+			<div class="col-md-8">
+				<h1>Challenge title</h1>
+				<p>
+					Voluptate earum consequatur saepe laborum quam exercitationem.
+					Iste labore eius et rerum non nemo reprehenderit neque.
+					Magni hic aperiam culpa libero consequatur.
+					Quis consequatur voluptatum itaque dolor omnis eaque.
+					Ipsam laborum tenetur.
+					Inventore voluptas et quia.
+
+					Enim voluptatum doloremque nostrum ipsam iusto harum.
+					Dicta reprehenderit dolorem delectus rerum harum nulla hic.
+					Neque ullam quaerat.
+					Aut fugit qui officia in.
+					Nostrum enim est.
+					Corrupti sed et quaerat vel quod eius.
+
+					Rerum suscipit excepturi eius molestiae eaque enim ut.
+					Ad accusamus est fugit distinctio porro.
+					Sunt perspiciatis sequi.
+					Voluptates labore et tempore est quo sit eos.
+					Iusto sit enim et quia aut et.
+				</p>
+
+				<div class="row padding-top">
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Yea</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">???</a>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="align-content-center text-center">
+							<a class="btn btn-theme" href="onboarding_3">Nay</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template-->
+

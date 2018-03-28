@@ -1,22 +1,25 @@
 #######################################################
 _message_fields =
 	fields:
-		visible_to: 1
-		owner_id: 1
 		content: 1
 		title: 1
 		seen: 1
 		url: 1
 
 #######################################################
-Meteor.publish "my_messages", () ->
+Meteor.publish "my_messages", (parameter) ->
+	pattern =
+		query: Match.Optional(String)
+		page: Number
+		size: Number
+	check parameter, pattern
+
 	user_id = this.userId
-	restrict =
-		owner_id: user_id
+	if !user_id
+		throw new Meteor.Error "Not permitted."
 
-	filter = filter_visible_documents user_id, restrict
-	crs = Messages.find filter, _message_fields
+	filter = get_my_filter Messages, {}
+	crs = get_documents_paged_unprotected Messages, filter, _message_fields, parameter
 
-	log_publication "Messages", crs, filter,
-			_message_fields, "my_messages", user_id
+	log_publication crs, user_id, "my_messages"
 	return crs

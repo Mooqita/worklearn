@@ -2,10 +2,8 @@
 # Files
 #########################################################
 
-########################################
 import { saveAs } from 'file-saver'
 
-#########################################################
 Template.download.helpers
 	has_download: () ->
 		return get_field_value this
@@ -25,8 +23,6 @@ Template.download.helpers
 
 		return file_name
 
-
-#########################################################
 Template.download.events
 	"click #download": () ->
 		field = this.field

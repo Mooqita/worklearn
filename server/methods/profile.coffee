@@ -1,3 +1,9 @@
+################################################################
+#
+# Markus 1/23/2017
+#
+################################################################
+
 ###############################################
 Meteor.methods
 	add_profile: (param) ->
@@ -12,4 +18,4 @@ Meteor.methods
 		if profile
 			throw new Meteor.Error "Profile already created"
 
-		return gen_profile user, param.occupation
+		return gen_profile user
