@@ -1,0 +1,270 @@
+<!------------------------------------------------
+|
+|	Question
+|
+-------------------------------------------------->
+<template name="designed_questions">
+	{{#mooqita_wide_spacing}}
+        <div class="item-set padding-top">
+            <h1>
+                Questions you designed
+                <div class="btn-group pull-right">
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="add_question">
+
+                    {{>popout_base title="New Blank Question"
+                            content="Click to add a new question."
+                            icon_class="fa fa-2x fa-plus"}}
+                </div>
+                </div>
+            </h1>
+
+			<p class="padding-next">
+				Here you can find all the questions you created from scratch or using a template.
+			</p>
+
+				{{#each items}}
+					{{>question_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Questions yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Question Preview
+|
+-------------------------------------------------->
+<template name="question_preview">
+	<hr>
+
+	<a href="{{g_build_url "question_design" (g_object question_id=_id)}}"
+		 class="item-set-element animated_0_5_s">
+		<div>
+			<h2>
+				{{title}}
+					{{#if g_is_public "questions"}}
+						<span class="badge background-contrast pull-right">
+								Public <span class="fa fa-check"></span>
+						</span>
+					{{else}}
+						<span class="badge background-theme pull-right">
+								Not yet public <span class="fa fa-edit"></span>
+						</span>
+					{{/if}}
+			</h2>
+		</div>
+
+		{{>more content=content}}
+	</a>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Question Editor
+|
+-------------------------------------------------->
+<template name="question_design">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#with question}}
+				<div class="padding-top">
+					{{#unless g_is_public "Questions"}}
+						<div class="alert alert-warning">
+							<h2>Todo List: Question</h2>
+
+							A summary of things you need to do before learners can see your question:
+							<ul>
+								{{#unless title}}
+									<li>Give your task a title (required)</li>
+								{{/unless}}
+
+								{{#unless content}}
+									<li>Provide a description of the task (required)</li>
+								{{/unless}}
+
+								{{#unless num_reviews}}
+									<li>Define how many reviews learners have to write to finish the task</li>
+								{{/unless}}
+
+								{{#unless link}}
+									<li>Add a link to the question context or project (optional)</li>
+								{{/unless}}
+
+								{{#unless material}}
+									<li>Add additional materials (optional)</li>
+								{{/unless}}
+
+								{{#unless g_is_saved "Questions"}}
+									<li>Save it!</li>
+								{{/unless}}
+
+								<li>Publish your solution you find the button below.</li>
+							</ul>
+						</div>
+					{{/unless}}
+				</div>
+
+				{{#if g_is_public "questions"}}
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon btn-theme">
+								Shareable link:
+							</div>
+
+							<div class="form-control"
+									 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
+									 id="question_url">
+								<div style="white-space:nowrap">
+									{{g_build_url "solution" (g_object question_id=_id) "app"}}
+								</div>
+							</div>
+
+							<div class="input-group-btn" id="icon_download" title="select the entire url">
+								<button type="button" class="btn btn-theme">
+									<span class="glyphicon glyphicon-download"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+				{{else}}
+					<span class="badge background-contrast ready-badge">
+						Not yet public
+					</span>
+				{{/if}}
+
+				<h1 class="editable">
+					{{>basic_input method="set_field" collection_name="questions"
+							item_id=_id field="title" placeholder="Click: to give your question a title."}}
+				</h1>
+
+				<div class="form-group">
+					{{>markdown_input method="set_field" collection_name="Questions" item_id=_id
+														field="content" placeholder="In this question you will ..."}}
+				</div>
+
+				<div class="form-group">
+					{{>basic_input method="set_field" collection_name="Questions"
+							type="number" field="num_reviews"	label="Number of reviews required"
+							item_id=_id explain="The number of reviews a learner has to provide."
+							placeholder="Number of reviews required."}}
+				</div>
+
+                <!-- TODO: make sure that the link gets displayed if present in db -->
+                <div class="form-group">
+                    {{>basic_input method="set_field" collection_name="questions"
+                            field="link" label="Question or project link"
+                            item_id=_id placeholder="Link that contextualizes the question."}}
+                </div>
+
+				<div class="form-group">
+					<div class="input-group" style="width: 100%;">
+						<label>Upload additional material</label>
+
+						{{>upload method="upload_file" collection_name="Questions"
+							item_id=_id field="material"}}
+					</div>
+				</div>
+
+				{{#if material}}
+					<div class="input-group" style="width: 100%;">
+						<label>Download Additional material:</label>
+
+						{{>download collection_name="Questions" item_id=_id field="material"}}
+					</div>
+				{{/if}}
+
+				{{#unless g_is_public "Questions"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Make public</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+
+				<h1>Message Learners</h1>
+
+				<p>If you need to get in touch with your learners you can use this message system.</p>
+
+				<div class="form-group">
+					<div class="input-group">
+						<input placeholder="Subject" class="form-control" type="text" id="subject"/>
+
+						<div class="input-group-btn" id="icon_download" title="select the entire url">
+							<div class="btn btn-theme" id="send" {{send_disabled}}>
+								{{#if send_disabled}}
+									Sending mail
+									<span class="glyphicon glyphicon-refresh spin"></span>
+								{{else}}
+									Send Message
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<textarea  class="form-control"
+										 placeholder="Your message"
+										 id="message" rows="8"></textarea>
+				</div>
+
+				{{#if g_is_public "Questions"}}
+					{{>question_solutions .}}
+				{{/if}}
+			{{/with}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+<!------------------------------------------------
+|
+|	Question Delete Modal
+|
+-------------------------------------------------->
+<template name="delete_question">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Delete question</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to delete your question?<br>
+						This operation cannot be undone!
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -456,49 +456,42 @@
   },
   {
     "role": "owner",
-    "field": "question",
+    "field": "title",
     "collection_name": "questions",
     "modify": true,
     "read": true
   },
   {
     "role": "owner",
-    "field": "answer_one",
+    "field": "content",
     "collection_name": "questions",
     "modify": true,
     "read": true
   },
   {
     "role": "owner",
-    "field": "answer_two",
+    "field": "num_reviews",
     "collection_name": "questions",
     "modify": true,
     "read": true
   },
   {
     "role": "owner",
-    "field": "answer_three",
+    "field": "link",
     "collection_name": "questions",
     "modify": true,
     "read": true
   },
   {
     "role": "owner",
-    "field": "answer_four",
+    "field": "origin",
     "collection_name": "questions",
     "modify": true,
     "read": true
   },
   {
     "role": "owner",
-    "field": "correct_answer",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "course",
+    "field": "material",
     "collection_name": "questions",
     "modify": true,
     "read": true

@@ -1,0 +1,18 @@
+<template name="question_learner_summary">
+	<div class="mooqita-layout">
+		<div class="row">
+			<div class="col-sm-3 col-ms-4">
+				{{>avatar collection_name="Profiles"
+					 observe = (g_profile_avatar user_id)
+					 item_id = (g_profile_id user_id)
+					 field = "avatar"}}
+				<div class="text-center">
+					<h2>{{g_profile_name user_id}}</h2>
+					{{#each emails}}
+						<a href="{{address}}">{{address}}</a>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
