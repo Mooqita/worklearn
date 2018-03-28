@@ -453,47 +453,5 @@
     "collection_name": "jobs",
     "modify": true,
     "read": true
-  },
-  {
-    "role": "owner",
-    "field": "title",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "content",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "num_reviews",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "link",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "origin",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
-  },
-  {
-    "role": "owner",
-    "field": "material",
-    "collection_name": "questions",
-    "modify": true,
-    "read": true
   }
 ]
