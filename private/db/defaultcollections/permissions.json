@@ -453,5 +453,89 @@
     "collection_name": "jobs",
     "modify": true,
     "read": true
+  },
+  {
+    "role": "editor",
+    "field": "question",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "answer_one",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "answer_two",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "answer_three",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "answer_four",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "correct_answer",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "question",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_one",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_two",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_three",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "answer_four",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "correct_answer",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
   }
 ]

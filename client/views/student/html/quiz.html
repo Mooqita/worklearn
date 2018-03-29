@@ -11,16 +11,24 @@
 					<div class="quiz_content">
 						{{#each question in quiz}}
 						    <div>
-								<h4>{{question.question}}</h4>
-								{{#let question_num=@index}}
-									{{#each answer in question.answers}}
-										<div>
-											<input type="radio" id="question_{{question_num}}" name="question_{{question_num}}" value="{{answer}}" required>
-											<label for="question_{{question_num}}">{{answer}}</label>
-										</div>
-									{{/each}}
-								{{/let}}
-						    </div>
+								<h3>{{question.question}}</h3>
+								<div>
+									<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_one}}" required>
+									<label for="question_{{@index}}">{{question.answer_one}}</label>
+								</div>
+								<div>
+									<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_two}}" required>
+									<label for="question_{{@index}}">{{question.answer_two}}</label>
+								</div>
+								<div>
+									<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_three}}" required>
+									<label for="question_{{@index}}">{{question.answer_three}}</label>
+								</div>
+								<div>
+									<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_four}}" required>
+									<label for="question_{{@index}}">{{question.answer_four}}</label>
+								</div>
+						    </div> <br />
 						{{/each}}
 					</div>
 					<input type="submit" class="btn btn-theme" name="get_results" value="Get Results">
