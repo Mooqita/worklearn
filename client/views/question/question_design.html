@@ -1,0 +1,121 @@
+<!------------------------------------------------
++|
++|	Quiz
++|
++-------------------------------------------------->
+<template name="designed_questions" template="questions">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<div class="designed_questions">
+					{{#each question in questions}}
+						<div class="well">
+							<div>
+								<span><strong>Question:</strong></span> <br /> <br />
+								<span>{{question.question}}</span>
+							</div> <br />
+							<div>
+								<span><strong>Answer Option 1:</strong> {{question.answer_one}}</span>
+							</div> <br />
+							<div>
+								<span><strong>Answer Option 2:</strong> {{question.answer_two}}</span>
+							</div> <br />
+							<div>
+								<span><strong>Answer Option 3:</strong> {{question.answer_three}}</span>
+							</div> <br />
+							<div>
+								<span><strong>Answer Option 4:</strong> {{question.answer_four}}</span>
+							</div> <br />
+							<a href="" class="btn btn-theme">Edit Question</a>
+						</div>
+					{{/each}}
+				</div>
+				<div>
+					<a href="/app/designed_question" class="btn btn-theme">Add A Question</a>
+				</div>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+<template name="designed_question">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<form class="designed_question" method="post">
+					<h3>New Question</h3>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="question_question">Question Text</label>
+							<input type="text" class="form-control" id="question_question" name="question_question" required>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="question_answer_one">1st Answer Option</label>
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="question_answer_one" name="question_answer_one" required>
+						</div>
+						<div class="col-xs-6">
+							<input type="radio" id="question_correct_answer" name="question_correct_answer" value="1" checked>
+							<label for="question_correct_answer">Mark as the correct answer?</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="question_answer_two">2nd Answer Option</label>
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="question_answer_two" name="question_answer_two" required>
+						</div>
+						<div class="col-xs-6">
+							<input type="radio" id="question_correct_answer" name="question_correct_answer" value="2">
+							<label for="question_correct_answer">Mark as the correct answer?</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="question_answer_three">3rd Answer Option</label>
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="question_answer_three" name="question_answer_three" required>
+						</div>
+						<div class="col-xs-6">
+							<input type="radio" id="question_correct_answer" name="question_correct_answer" value="3">
+							<label for="question_correct_answer">Mark as the correct answer?</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="question_answer_four">4th Answer Option</label>
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="question_answer_four" name="question_answer_four" required>
+						</div>
+						<div class="col-xs-6">
+							<input type="radio" id="question_correct_answer" name="question_correct_answer" value="4">
+							<label for="question_correct_answer">Mark as the correct answer?</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="question_subject">Subject</label>
+						<select class="form-control" id="question_subject" name="question_subject">
+							<option value="comp_thinking">Computational Thinking</option>
+							<option value="python">Python</option>
+							<option value="cobol">COBOL</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="checkbox" id="question_published" name="question_published" value="1">
+						<input type="hidden" id="question_published" name="question_published" value="0">
+						<label for="question_published">Make Question Public?</label>
+					</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-theme" id="submit_question" name="submit_question" value="Add Question">
+					</div>
+				</form>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>

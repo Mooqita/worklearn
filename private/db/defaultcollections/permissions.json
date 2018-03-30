@@ -497,6 +497,20 @@
     "read": true
   },
   {
+    "role": "editor",
+    "field": "subject",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "published",
+    "collection_name": "questions",
+    "modify": false,
+    "read": true
+  },
+  {
     "role": "owner",
     "field": "question",
     "collection_name": "questions",
@@ -534,6 +548,20 @@
   {
     "role": "owner",
     "field": "correct_answer",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "subject",
+    "collection_name": "questions",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "published",
     "collection_name": "questions",
     "modify": true,
     "read": true
