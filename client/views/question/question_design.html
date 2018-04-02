@@ -3,6 +3,7 @@
 +|	Quiz
 +|
 +-------------------------------------------------->
+
 <template name="designed_questions" template="questions">
 	{{#mooqita_wide_spacing}}
 		<div class="item padding-top">
@@ -26,7 +27,6 @@
 							<div>
 								<span><strong>Answer Option 4:</strong> {{question.answer_four}}</span>
 							</div> <br />
-							<a href="" class="btn btn-theme">Edit Question</a>
 						</div>
 					{{/each}}
 				</div>
@@ -105,11 +105,6 @@
 							<option value="python">Python</option>
 							<option value="cobol">COBOL</option>
 						</select>
-					</div>
-					<div class="form-group">
-						<input type="checkbox" id="question_published" name="question_published" value="1">
-						<input type="hidden" id="question_published" name="question_published" value="0">
-						<label for="question_published">Make Question Public?</label>
 					</div>
 					<div class="form-group">
 						<input type="submit" class="btn btn-theme" id="submit_question" name="submit_question" value="Add Question">

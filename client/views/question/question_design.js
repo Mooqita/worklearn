@@ -2,7 +2,6 @@ Template.designed_question.events({
     'submit .designed_question': event => {
         event.preventDefault()
         var correct_answer = ''
-        var published = false
 
         if($('input[name="question_correct_answer"]').val() == '1') {
             correct_answer = 'answer_one'
@@ -16,10 +15,6 @@ Template.designed_question.events({
             throw new Meteor.Error('Invalid Submission.')
         }
 
-        if(($('input[name="question_published"]').val() == '1')) {
-            published = true
-        }
-
         Meteor.call('add_question', {
             question: $('input[name="question_question"]').val(),
             answer_one: $('input[name="question_answer_one"]').val(),
@@ -27,8 +22,7 @@ Template.designed_question.events({
             answer_three: $('input[name="question_answer_three"]').val(),
             answer_four: $('input[name="question_answer_four"]').val(),
             correct_answer: correct_answer,
-            subject: $('select[name="question_subject"]').val(),
-            published: published
+            subject: $('select[name="question_subject"]').val()
         })
 
         location.href = '/app/designed_questions'
