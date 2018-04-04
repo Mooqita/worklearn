@@ -14,6 +14,7 @@ Template.comp_thinking_quiz.onRendered(() => {
         var submitted_answers = this.$('#comp_thinking_quiz').serializeArray()
         var quiz = JSON.parse(localStorage.getItem('comp_thinking_quiz'))
         var count = 0
+        var correct = 0
 
         $('#comp_thinking_quiz').html('')
 
@@ -23,6 +24,7 @@ Template.comp_thinking_quiz.onRendered(() => {
                 $('#comp_thinking_quiz').append('<strong>Question ' + (count + 1) + ' Correct:</strong> <br />')
                 $('#comp_thinking_quiz').append(quiz[count][quiz[count].correct_answer])
                 $('#comp_thinking_quiz').append('</div> <br />')
+                correct += 1
             } else {
                 $('#comp_thinking_quiz').append('<div>')
                 $('#comp_thinking_quiz').append('<strong>Question ' + (count + 1) + ' Incorrect:</strong> <br />')
@@ -31,9 +33,10 @@ Template.comp_thinking_quiz.onRendered(() => {
                 $('#comp_thinking_quiz').append('</div> <br />')
             }
 
-            count++
+            count += 1
         }
 
+        Meteor.call('set_comp_thinking_score', ((correct / submitted_answers.length) * 100).toFixed(2))
         return false
     })
 })

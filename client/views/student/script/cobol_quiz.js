@@ -14,15 +14,17 @@ Template.cobol_quiz.onRendered(() => {
         var submitted_answers = this.$('#cobol_quiz').serializeArray()
         var quiz = JSON.parse(localStorage.getItem('cobol_quiz'))
         var count = 0
+        var correct = 0
 
         $('#cobol_quiz').html('')
 
         for(let i = 0; i < submitted_answers.length; i++) {
-            if(submitted_answers[i].value   == quiz[count][quiz[count].correct_answer]) {
+            if(submitted_answers[i].value == quiz[count][quiz[count].correct_answer]) {
                 $('#cobol_quiz').append('<div>')
                 $('#cobol_quiz').append('<strong>Question ' + (count + 1) + ' Correct:</strong> <br />')
                 $('#cobol_quiz').append(quiz[count][quiz[count].correct_answer])
                 $('#cobol_quiz').append('</div> <br />')
+                correct += 1
             } else {
                 $('#cobol_quiz').append('<div>')
                 $('#cobol_quiz').append('<strong>Question ' + (count + 1) + ' Incorrect:</strong> <br />')
@@ -31,9 +33,10 @@ Template.cobol_quiz.onRendered(() => {
                 $('#cobol_quiz').append('</div> <br />')
             }
 
-            count++
+            count += 1
         }
 
+        Meteor.call('set_cobol_score', ((correct / submitted_answers.length) * 100).toFixed(2))
         return false
     })
 })

@@ -14,6 +14,7 @@ Template.python_quiz.onRendered(() => {
         var submitted_answers = this.$('#python_quiz').serializeArray()
         var quiz = JSON.parse(localStorage.getItem('python_quiz'))
         var count = 0
+        var correct = 0
 
         $('#python_quiz').html('')
 
@@ -23,6 +24,7 @@ Template.python_quiz.onRendered(() => {
                 $('#python_quiz').append('<strong>Question ' + (count + 1) + ' Correct:</strong> <br />')
                 $('#python_quiz').append(quiz[count][quiz[count].correct_answer])
                 $('#python_quiz').append('</div> <br />')
+                correct += 1
             } else {
                 $('#python_quiz').append('<div>')
                 $('#python_quiz').append('<strong>Question ' + (count + 1) + ' Incorrect:</strong> <br />')
@@ -34,6 +36,7 @@ Template.python_quiz.onRendered(() => {
             count++
         }
 
+        Meteor.call('set_python_score', ((correct / submitted_answers.length) * 100).toFixed(2))
         return false
     })
 })

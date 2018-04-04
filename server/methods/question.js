@@ -123,5 +123,23 @@ Meteor.methods({
         }
 
         return questions
+    },
+
+    set_cobol_score: score => {
+        var user = Meteor.user()
+        var profile = Profiles.findOne({user_id: user._id})
+        modify_field_unprotected(Profiles, profile._id, 'cobol_quiz_score', score)
+    },
+
+    set_comp_thinking_score: score => {
+        var user = Meteor.user()
+        var profile = Profiles.findOne({user_id: user._id})
+        modify_field_unprotected(Profiles, profile._id, 'comp_thinking_quiz_score', score)
+    },
+
+    set_python_score: score => {
+        var user = Meteor.user()
+        var profile = Profiles.findOne({user_id: user._id})
+        modify_field_unprotected(Profiles, profile._id, 'python_quiz_score', score)
     }
 })
