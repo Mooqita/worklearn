@@ -31,12 +31,12 @@ Template.designed_question.events({
 
 Template.designed_questions.onRendered(() => {
     Meteor.call('get_questions', (err, res) => {
-        localStorage.setItem('questions', JSON.stringify(res))
+        Session.set('questions', res)
     })
 })
 
 Template.designed_questions.helpers({
     questions: () => {
-        return JSON.parse(localStorage.getItem('questions'))
+        return Session.get('questions')
     }
 })
