@@ -1,12 +1,26 @@
 Template.comp_thinking_quiz.helpers({
     quiz: () => {
         return JSON.parse(localStorage.getItem('comp_thinking_quiz'))
+    },
+
+    comp_thinking_quiz_score: () => {
+        var comp_thinking_quiz_score = JSON.parse(localStorage.getItem('comp_thinking_quiz_score'))
+
+        if(comp_thinking_quiz_score == undefined) {
+            comp_thinking_quiz_score = false
+        }
+
+        return comp_thinking_quiz_score
     }
 })
 
 Template.comp_thinking_quiz.onRendered(() => {
     Meteor.call('get_comp_thinking_questions', (err, res) => {
         localStorage.setItem('comp_thinking_quiz', JSON.stringify(res))
+    })
+
+    Meteor.call('get_quiz_scores', (err, res) => {
+        localStorage.setItem('comp_thinking_quiz_score', res.comp_thinking_quiz_score)
     })
 
     this.$('#comp_thinking_quiz').submit(event => {

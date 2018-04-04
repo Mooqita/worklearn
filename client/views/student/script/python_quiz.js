@@ -1,12 +1,26 @@
 Template.python_quiz.helpers({
     quiz: () => {
         return JSON.parse(localStorage.getItem('python_quiz'))
+    },
+
+    python_quiz_score: () => {
+        var python_quiz_score = JSON.parse(localStorage.getItem('python_quiz_score'))
+
+        if(python_quiz_score == undefined) {
+            python_quiz_score = false
+        }
+
+        return python_quiz_score
     }
 })
 
 Template.python_quiz.onRendered(() => {
     Meteor.call('get_python_questions', (err, res) => {
         localStorage.setItem('python_quiz', JSON.stringify(res))
+    })
+
+    Meteor.call('get_quiz_scores', (err, res) => {
+        localStorage.setItem('python_quiz_score', res.python_quiz_score)
     })
 
     this.$('#python_quiz').submit(event => {
