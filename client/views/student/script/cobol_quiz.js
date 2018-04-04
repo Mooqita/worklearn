@@ -1,10 +1,10 @@
 Template.cobol_quiz.helpers({
     quiz: () => {
-        return JSON.parse(localStorage.getItem('cobol_quiz'))
+        return Session.get('cobol_quiz')
     },
 
     cobol_quiz_score: () => {
-        var cobol_quiz_score = JSON.parse(localStorage.getItem('cobol_quiz_score'))
+        var cobol_quiz_score = Session.get('cobol_quiz_score')
 
         if(cobol_quiz_score == undefined) {
             cobol_quiz_score = false
@@ -16,17 +16,17 @@ Template.cobol_quiz.helpers({
 
 Template.cobol_quiz.onRendered(() => {
     Meteor.call('get_cobol_questions', (err, res) => {
-        localStorage.setItem('cobol_quiz', JSON.stringify(res))
+        Session.set('cobol_quiz', res)
     })
 
     Meteor.call('get_quiz_scores', (err, res) => {
-        localStorage.setItem('cobol_quiz_score', res.cobol_quiz_score)
+        Session.set('cobol_quiz_score', res.cobol_quiz_score)
     })
 
     this.$('#cobol_quiz').submit(event => {
         event.preventDefault()
         var submitted_answers = this.$('#cobol_quiz').serializeArray()
-        var quiz = JSON.parse(localStorage.getItem('cobol_quiz'))
+        var quiz = Session.get('cobol_quiz')
         var count = 0
         var correct = 0
 

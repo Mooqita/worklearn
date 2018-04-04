@@ -1,10 +1,10 @@
 Template.comp_thinking_quiz.helpers({
     quiz: () => {
-        return JSON.parse(localStorage.getItem('comp_thinking_quiz'))
+        return Session.get('comp_thinking_quiz')
     },
 
     comp_thinking_quiz_score: () => {
-        var comp_thinking_quiz_score = JSON.parse(localStorage.getItem('comp_thinking_quiz_score'))
+        var comp_thinking_quiz_score = Session.get('comp_thinking_quiz_score')
 
         if(comp_thinking_quiz_score == undefined) {
             comp_thinking_quiz_score = false
@@ -16,17 +16,17 @@ Template.comp_thinking_quiz.helpers({
 
 Template.comp_thinking_quiz.onRendered(() => {
     Meteor.call('get_comp_thinking_questions', (err, res) => {
-        localStorage.setItem('comp_thinking_quiz', JSON.stringify(res))
+        Session.set('comp_thinking_quiz', res)
     })
 
     Meteor.call('get_quiz_scores', (err, res) => {
-        localStorage.setItem('comp_thinking_quiz_score', res.comp_thinking_quiz_score)
+        Session.set('comp_thinking_quiz_score', res.comp_thinking_quiz_score)
     })
 
     this.$('#comp_thinking_quiz').submit(event => {
         event.preventDefault()
         var submitted_answers = this.$('#comp_thinking_quiz').serializeArray()
-        var quiz = JSON.parse(localStorage.getItem('comp_thinking_quiz'))
+        var quiz = Session.get('comp_thinking_quiz')
         var count = 0
         var correct = 0
 

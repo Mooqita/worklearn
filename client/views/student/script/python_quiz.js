@@ -1,10 +1,10 @@
 Template.python_quiz.helpers({
     quiz: () => {
-        return JSON.parse(localStorage.getItem('python_quiz'))
+        return Session.get('python_quiz')
     },
 
     python_quiz_score: () => {
-        var python_quiz_score = JSON.parse(localStorage.getItem('python_quiz_score'))
+        var python_quiz_score = Session.get('python_quiz_score')
 
         if(python_quiz_score == undefined) {
             python_quiz_score = false
@@ -16,17 +16,17 @@ Template.python_quiz.helpers({
 
 Template.python_quiz.onRendered(() => {
     Meteor.call('get_python_questions', (err, res) => {
-        localStorage.setItem('python_quiz', JSON.stringify(res))
+        Session.set('python_quiz', res)
     })
 
     Meteor.call('get_quiz_scores', (err, res) => {
-        localStorage.setItem('python_quiz_score', res.python_quiz_score)
+        Session.set('python_quiz_score', res.python_quiz_score)
     })
 
     this.$('#python_quiz').submit(event => {
         event.preventDefault()
         var submitted_answers = this.$('#python_quiz').serializeArray()
-        var quiz = JSON.parse(localStorage.getItem('python_quiz'))
+        var quiz = Session.get('python_quiz')
         var count = 0
         var correct = 0
 
