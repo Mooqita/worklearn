@@ -26,12 +26,23 @@
 					field = "avatar"}}
 			</div>
 
-			<div class="col-sm-8 col-ms-8">
+			<div class="col-sm-8 col-md-8">
 				<h2>
 					<em>{{name}}</em>
 				</h2>
 
 				{{>more content=self_description}}
+			</div>
+			<div class="col-sm-8 col-md-8">
+				{{#if quiz_scores.cobol_quiz_score}}
+					<h3><strong>COBOL Score:</strong> {{quiz_scores.cobol_quiz_score}}%</h3> <br />
+				{{/if}}
+				{{#if quiz_scores.comp_thinking_quiz_score}}
+					<h3><strong>Computational Thinking Score:</strong> {{quiz_scores.comp_thinking_quiz_score}}%</h3> <br />
+				{{/if}}
+				{{#if quiz_scores.python_quiz_score}}
+					<h3><strong>Python Score:</strong> {{quiz_scores.python_quiz_score}}%</h3> <br />
+				{{/if}}
 			</div>
 		</div>
 	</div>

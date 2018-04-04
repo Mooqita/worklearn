@@ -128,18 +128,33 @@ Meteor.methods({
     set_cobol_score: score => {
         var user = Meteor.user()
         var profile = Profiles.findOne({user_id: user._id})
+
+        if(profile.cobol_quiz_score) {
+            throw new Meteor.Error('COBOL score already set')
+        }
+
         modify_field_unprotected(Profiles, profile._id, 'cobol_quiz_score', score)
     },
 
     set_comp_thinking_score: score => {
         var user = Meteor.user()
         var profile = Profiles.findOne({user_id: user._id})
+
+        if(profile.comp_thinking_quiz_score) {
+            throw new Meteor.Error('Computational Thinking score already set')
+        }
+
         modify_field_unprotected(Profiles, profile._id, 'comp_thinking_quiz_score', score)
     },
 
     set_python_score: score => {
         var user = Meteor.user()
         var profile = Profiles.findOne({user_id: user._id})
+
+        if(profile.python_quiz_score) {
+            throw new Meteor.Error('Python score already set')
+        }
+
         modify_field_unprotected(Profiles, profile._id, 'python_quiz_score', score)
     }
 })

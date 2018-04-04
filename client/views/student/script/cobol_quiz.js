@@ -23,20 +23,27 @@ Template.cobol_quiz.onRendered(() => {
                 $('#cobol_quiz').append('<div>')
                 $('#cobol_quiz').append('<strong>Question ' + (count + 1) + ' Correct:</strong> <br />')
                 $('#cobol_quiz').append(quiz[count][quiz[count].correct_answer])
-                $('#cobol_quiz').append('</div> <br />')
+                $('#cobol_quiz').append('</div> <br /> <br />')
                 correct += 1
             } else {
                 $('#cobol_quiz').append('<div>')
                 $('#cobol_quiz').append('<strong>Question ' + (count + 1) + ' Incorrect:</strong> <br />')
                 $('#cobol_quiz').append('<span>You said: ' + submitted_answers[i].value + '<span> <br />')
                 $('#cobol_quiz').append('<span>The correct answer was: ' + quiz[count][quiz[count].correct_answer] + '<span> <br />')
-                $('#cobol_quiz').append('</div> <br />')
+                $('#cobol_quiz').append('</div> <br /> <br />')
             }
 
             count += 1
         }
 
-        Meteor.call('set_cobol_score', ((correct / submitted_answers.length) * 100).toFixed(2))
+        var score = ((correct / submitted_answers.length) * 100).toFixed(2)
+
+        Meteor.call('set_cobol_score', score, err => {
+            $('#cobol_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')
+        })
+
+        $('#cobol_quiz').append('<h1><strong>Score</strong>: ' + score + '%</h1>')
+
         return false
     })
 })
