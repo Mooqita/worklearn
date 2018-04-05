@@ -74,8 +74,8 @@
 		{{>job_competency session="onboarding_job_posting"}}
 
 		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
-			<a class="btn btn-theme" href="onboarding_describe_job">
-				Continue (only two steps left)
+			<a class="btn btn-theme" href="onboarding_job_registration">
+				Show me my candidates profile
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -84,7 +84,7 @@
 
 <!------------------------------------------------
 |
-| Onboarding job description and title
+| Onboarding registration time
 |
 -------------------------------------------------->
 <template name="onboarding_describe_job">
@@ -127,13 +127,48 @@
 		{{>match_tags session="onboarding_job_description"
 									in_collection="challenges" in_field="content"}}
 
-		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
-			<a class="btn btn-theme" href="onboarding_job_registration">
-				Continue (only one steps left)
-			</a>
-		</div>
+		{{#unless currentUser}}
+			<div class="btn-group btn-group-justified">
+				<div class="btn btn-theme" id="register">
+					Register to see your candidates
+				</div>
+			</div>
+		{{else}}
+			{{#each matches}}
+				{{#each concept in c}}
+					[<em style="font-weight: 600;">{{concept}}</em>]
+				{{/each}}
+			{{/each}}
+		{{/unless}}
+
 	{{/mooqita_wide_spacing}}
 </template>
+
+<template name="onboarding_job_register">
+	<div class="modal fade register-modal">
+		<div class="register-frame animated">
+			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
+				<div class="fa fa-times"></div>
+			</button>
+
+			{{>atForm}}
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding registration time
+|
+-------------------------------------------------->
+<template name="onboarding_match">
+
+</template>
+
+
+
+
 
 
 <!------------------------------------------------
@@ -209,19 +244,6 @@
 	{{/mooqita_wide_spacing}}
 </template>
 
-<template name="onboarding_job_register">
-	<div class="modal fade register-modal">
-		<div class="register-frame animated">
-			<button type="button" class="btn btn-default close-register" data-dismiss="modal">
-				<div class="fa fa-times"></div>
-			</button>
-
-			{{>atForm}}
-		</div>
-	</div>
-</template>
-
-
 <!------------------------------------------------
 |
 | Onboarding job owner and organization
@@ -260,17 +282,17 @@
 				<div class="col-sm-8 col-ms-6">
 					<div class="form-group">
 						{{>basic_input method="set_field" collection_name="Profiles" label="Given Name"
-							item_id=profile._id field="given_name" placeholder="Sophia (Wisdom, Greek)"}}
+							item_id=profile._id field="given_name" placeholder="Sophia"}}
 					</div>
 
 					<div class="form-group">
 						{{>basic_input method="set_field" collection_name="Profiles" label="Middle Name"
-							item_id=profile._id field="middle_name" placeholder="Ode (Born on the road, Nigeria)"}}
+							item_id=profile._id field="middle_name" placeholder="Ode"}}
 					</div>
 
 					<div class="form-group">
 						{{>basic_input method="set_field" collection_name="Profiles" label="Family Name"
-							item_id=profile._id field="family_name" placeholder="Sharma, (Happiness, India)"}}
+							item_id=profile._id field="family_name" placeholder="Sharma"}}
 					</div>
 
 					<div class="form-group">
@@ -325,6 +347,28 @@
 			{{/let}}
 		{{/if}}
 	{{/unless}}
+</template>
+
+
+<!------------------------------------------------
+|
+| Onboarding job description and title
+|
+-------------------------------------------------->
+<template name="onboarding_describe_job">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		{{>job_describe}}
+
+		<div class="btn-group btn-group-justified">
+			<a class="btn btn-theme" href="{{get_url}}">
+				Find the challenges
+			</a>
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 

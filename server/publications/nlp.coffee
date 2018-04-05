@@ -3,8 +3,8 @@ Meteor.publish "active_nlp_task", (task_id) ->
 	check task_id, String
 
 	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
+#	if !user_id
+#		throw new Meteor.Error "Not permitted."
 
 	crs = NLPTasks.find({_id: task_id}, {_id:1})
 
