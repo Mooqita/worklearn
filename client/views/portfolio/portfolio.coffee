@@ -51,4 +51,4 @@ Template.portfolio_review.helpers
 
 Template.portfolio_basic.helpers
 	quiz_scores: () ->
-		return JSON.parse(Session.get('quiz_scores'))
+		return Session.get('quiz_scores')
