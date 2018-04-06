@@ -49,6 +49,13 @@
     "read": true
   },
   {
+    "role": "owner",
+    "field": "couse",
+    "collection_name": "challenges",
+    "modify": true,
+    "read": true
+  },
+  {
     "role": "db_admin",
     "field": "read",
     "collection_name": "permissions",
