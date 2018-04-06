@@ -74,7 +74,7 @@
 					{{/if}}
 			</h2>
 		</div>
-
+		{{course}}
 		{{>more content=content}}
 	</a>
 </template>
@@ -160,6 +160,10 @@
 					{{>basic_input method="set_field" collection_name="challenges"
 							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
 				</h1>
+				<h2 class="header">Subject</h2>
+					{{>select_input method="modify_field" collection_name="challenges"
+							item_id=_id field="course"
+							options=course_options}}
 
 				<div class="form-group">
 					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
