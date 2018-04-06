@@ -72,6 +72,12 @@ Template.challenge_preview.helpers
 			return this.content
 
 		return "No description available, yet."
+	
+	course: () ->
+		if this.course
+			return this.course
+
+		return "This challenge does not yet have a subject"
 
 
 ########################################
@@ -117,6 +123,12 @@ Template.challenge_design.helpers
 			return "disabled"
 
 		return ""
+	
+	course_options:() ->
+		return [{value:"", label:"No subject"}
+			{value:"comp_thinking", label:"Comp Thinking"}
+			{value:"cobol", label:"COBOL"}
+			{value:"py", label:"Python"}]
 
 ########################################
 Template.challenge_design.events
