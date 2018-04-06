@@ -6,13 +6,15 @@
 
 ###############################################
 Meteor.methods
-	add_solution: (challenge_id) ->
+	add_solution: (challenge_id, company_tag) ->
+		check company_tag, Match.Maybe(String)
+
 		user = Meteor.user()
 		if not user._id
 			throw new Meteor.Error('Not permitted.')
 
 		challenge = get_document_unprotected Challenges, challenge_id
-		solution_id = gen_solution challenge, user
+		solution_id = gen_solution challenge, user, company_tag
 		res =
 			solution_id: solution_id
 			challenge_id: challenge_id
