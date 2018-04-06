@@ -38,3 +38,8 @@ Meteor.publish "my_matches", (parameter) ->
 	return crs
 
 
+#######################################################
+Meteor.publish "match_by_id", () ->
+	return Ma
+
+

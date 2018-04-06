@@ -74,8 +74,8 @@
 		{{>job_competency session="onboarding_job_posting"}}
 
 		<div class="btn-group btn-group-justified" style="padding-bottom: 50px">
-			<a class="btn btn-theme" href="onboarding_job_registration">
-				Show me my candidates profile
+			<a class="btn btn-theme" href="onboarding_describe_job">
+				Add a job description
 			</a>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -135,14 +135,13 @@
 			</div>
 		{{else}}
 			{{#each matches}}
-				{{#each concept in c}}
-					[<em style="font-weight: 600;">{{concept}}</em>]
-				{{/each}}
+				{{>onboarding_match}}
 			{{/each}}
 		{{/unless}}
 
 	{{/mooqita_wide_spacing}}
 </template>
+
 
 <template name="onboarding_job_register">
 	<div class="modal fade register-modal">
@@ -159,305 +158,12 @@
 
 <!------------------------------------------------
 |
-| Onboarding registration time
+| Show each match
 |
 -------------------------------------------------->
 <template name="onboarding_match">
-
-</template>
-
-
-
-
-
-
-<!------------------------------------------------
-|
-| Onboarding registration time
-|
--------------------------------------------------->
-<template name="onboarding_job_registration">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Candidate Profile</h1>
-
-		<p style="text-align: left">
-			<div class="raised  float-container col-md-6 col-sm-6 col-ms-7 col-xs-12">
-				{{>persona persona_data=persona_data has_text=true
-									 width=300 height=180}}
-			</div>
-			With your information our AI has created a personality profile of your candidate
-			and a skill set. With these information we can already look for a candidate.
-			{{#unless user_profile}}
-				<p>
-					To save your candidates profile and further improve it you need to:
-				</p>
-
-				<div class="btn-group">
-					<button type="submit" id="register"
-									class="btn btn-theme">
-						Register
-					</button>
-				</div>
-			{{else}}
-				<p>
-					To further improve your candidates profile:
-				</p>
-
-				<div class="btn-group">
-					<button class="btn btn-theme" id="job_overview">
-						Job Overview
-					</button>
-				</div>
-			{{/unless}}
-
-
-			{{#if has_concepts}}
-				<p>
-					From your job description we extracted <em style="font-weight: bold">{{n_concepts}} concepts</em>.
-
-					{{#each c in concepts}}
-						[<em style="font-weight: 600">{{c}}</em>]
-					{{/each}}
-				</p>
-
-				{{#if n_challenges}}
-					<p>
-						Based on these concepts we found <em style="font-weight: bold">{{n_challenges}}
-						challenges</em> that match your job description. Each challenge
-						improves your chances to find the prefect candidate. Think of it
-						as having that many additional job adds.
-					</p>
-				{{/if}}
-
-				{{#if n_profiles}}
-					<p>
-						We also found <em style="font-weight: bold">{{n_profiles}} profiles</em> of
-						learners that match your job description.
-					</p>
-				{{/if}}
-			{{/if}}
-		</p>
-	{{/mooqita_wide_spacing}}
-</template>
-
-<!------------------------------------------------
-|
-| Onboarding job owner and organization
-|
--------------------------------------------------->
-<template name="onboarding_job_owner">
-	<h1>Add Your Profiles</h1>
-
-	<p class="padding-next">
-		To personalize the invitation to your team members
-		we need to know your name and that of your organization.
-		Adding a profile picture and logo helps others recognize
-		you and your organization.
-	</p>
-
-	{{#unless Template.subscriptionsReady}}
-		Loading user and organization profile {{>wait}}
-	{{else}}
-		{{#let profile=user_profile}}
-			<div class="row">
-				<div class="col-sm-4 col-ms-6">
-					<div class="form-group">
-						<div class="raised text-center">
-							{{>avatar collection_name = "Profiles"
-												observable = profile.avatar
-												item_id = profile._id
-												field = "avatar"
-												explain = "Upload an image as your avatar (png, jpg, svg, etc). Maximum size ~1MB."}}
-
-							{{>upload method="upload_file" collection_name="Profiles"
-												item_id=profile._id field="avatar" max_size=1200000}}
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-8 col-ms-6">
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Given Name"
-							item_id=profile._id field="given_name" placeholder="Sophia"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Middle Name"
-							item_id=profile._id field="middle_name" placeholder="Ode"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Family Name"
-							item_id=profile._id field="family_name" placeholder="Sharma"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Your Role"
-							item_id=profile._id field="role" placeholder="CEO, Hiring Lead, etc."}}
-					</div>
-				</div>
-			</div>
-		{{/let}}
-
-		<hr class="mooqita-line">
-
-		{{#if currentUser}}
-			{{#let organization=organization_profile}}
-				<div class="row">
-					<div class="col-sm-8 col-ms-8">
-						<div class="form-group">
-							{{>basic_input method="set_field" collection_name="Organizations" label="Organization Name"
-									item_id=organization._id field="name" placeholder="ACME Inc."}}
-						</div>
-
-						<div class="form-group">
-							{{>text_input method="set_field" collection_name="organizations"
-									item_id=organization._id field="description"
-									placeholder="Let us know about your mission."}}
-						</div>
-					</div>
-
-					<div class="col-sm-4 col-ms-4">
-						<div class="form-group">
-							<div class="raised text-center">
-								{{>avatar collection_name = "Organizations"
-													observable = organization.avatar
-													item_id = organization._id
-													field = "avatar"
-													explain = "Upload your company logo (png, jpg, svg, etc). Max ~2MB."}}
-
-								{{>upload method="upload_file" collection_name="Organizations"
-													item_id=organization._id field="avatar" max_size=2400000}}
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<hr>
-
-				<div class="btn-group btn-group-justified">
-					<div class="btn btn-theme" id="describe_challenge">
-						Describe your challenges
-					</div>
-				</div>
-			{{/let}}
-		{{/if}}
-	{{/unless}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding job description and title
-|
--------------------------------------------------->
-<template name="onboarding_describe_job">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		{{>job_describe}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Find the challenges
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding job challenges
-|
--------------------------------------------------->
-<template name="onboarding_select_challenges">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Challenges</h1>
-
-		<p>
-			Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
-			should be able to solve</b></em>.
-			We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
-			<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
-			days until a great match has been found. <br/> We will alert you via email!
-		</p>
-
-		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
-
-		{{>job_challenges}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Get in your team culture
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding team members
-|
--------------------------------------------------->
-<template name="onboarding_team_members">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Team Members</h1>
-
-		<p>
-			These are the members of your organization. To improve your job
-			search you can add the people your candidate will work with. And
-			do not forget about yourself. Use the edit button to complete your profile.
-		</p>
-
-		<!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
-
-		{{>group_page organization_id=organization_id}}
-
-		<div class="btn-group btn-group-justified padding-top">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Overview
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding the fruits of your hard labor
-|
--------------------------------------------------->
-<template name="onboarding_job_overview">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Optimized Persona</h1>
-
-		{{>job_persona}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Job Overview
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
+	{{#each concept in c}}
+		[<em style="font-weight: 600;">{{concept}}</em>]
+	{{/each}}
 </template>
 
