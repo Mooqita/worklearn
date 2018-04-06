@@ -5,7 +5,7 @@ Template.portfolio.onCreated () ->
 
 	Meteor.call 'get_quiz_scores',
 		(err, res) ->
-			localStorage.setItem('quiz_scores', JSON.stringify(res))
+			Session.set('quiz_scores', res)
 
 	self.autorun () ->
 		s_id = FlowRouter.getParam('user_id')
@@ -51,4 +51,4 @@ Template.portfolio_review.helpers
 
 Template.portfolio_basic.helpers
 	quiz_scores: () ->
-		return JSON.parse(localStorage.getItem('quiz_scores'))
+		return JSON.parse(Session.get('quiz_scores'))
