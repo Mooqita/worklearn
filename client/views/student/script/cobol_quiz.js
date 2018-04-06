@@ -53,7 +53,9 @@ Template.cobol_quiz.onRendered(() => {
         var score = ((correct / submitted_answers.length) * 100).toFixed(2)
 
         Meteor.call('set_cobol_score', score, err => {
-            $('#cobol_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')
+            if(!score) {
+                $('#cobol_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')    
+            }
         })
 
         $('#cobol_quiz').append('<h1><strong>Score</strong>: ' + score + '%</h1>')

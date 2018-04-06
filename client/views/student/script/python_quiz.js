@@ -53,7 +53,9 @@ Template.python_quiz.onRendered(() => {
         var score = ((correct / submitted_answers.length) * 100).toFixed(2)
 
         Meteor.call('set_python_score', score, err => {
-            $('#python_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')
+            if(!score) {
+                $('#python_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')    
+            }
         })
 
         $('#python_quiz').append('<h1><strong>Score</strong>: ' + score + '%</h1>')

@@ -53,7 +53,9 @@ Template.comp_thinking_quiz.onRendered(() => {
         var score = ((correct / submitted_answers.length) * 100).toFixed(2)
 
         Meteor.call('set_comp_thinking_score', score, err => {
-            $('#comp_thinking_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')
+            if(!score) {
+                $('#comp_thinking_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')    
+            }
         })
 
         $('#comp_thinking_quiz').append('<h1><strong>Score</strong>: ' + score + '%</h1>')
