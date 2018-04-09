@@ -19,7 +19,7 @@
   "default_permissions_asset_path": "db/defaultcollections/permissions.json",
   "init_test_data": true,
   "admin": {
-    "email": "admin@mooqita-sfh.org",
-    "password": "password"
+    "email": "jorge@jorge.com",
+    "password": "jorgee"
   }
 }
