@@ -31,6 +31,7 @@
     "answer_one": "A program got hacked!",
     "answer_two": "A program produces the wrong output",
     "answer_three": "a character or string is incorrectly placed in a command or instruction that causes a failure in execution",
+    "answer_four": "Either B or C",
     "correct_answer": "answer_four",
     "subject": "comp_thinking"
   },
@@ -88,6 +89,7 @@
     "answer_one": "A high-level language that has specific syntax",
     "answer_two": "A way of describing a set of instructions that doesn’t use specific syntax",
     "answer_three": "A diagram that represents a set of instructions",
+    "answer_four": "A set of configuration instructions given to a compiler.",
     "correct_answer": "answer_two",
     "subject": "comp_thinking",
     "published": true
@@ -97,6 +99,7 @@
     "answer_one": "Patterns and trends used to solve a problem",
     "answer_two": "A set of step-by-step instructions to resolve a problem",
     "answer_three": "A programming language",
+    "answer_four": "A complex theoretical computer science concept.",
     "correct_answer": "answer_two",
     "subject": "comp_thinking",
     "published": true
@@ -106,6 +109,7 @@
     "answer_one": "Planning out your route when going to meet a friend",
     "answer_two": "When going to meet a friend, wandering around until you find them",
     "answer_three": "When going to meet a friend, asking a parent to plan your route for you",
+    "answer_four": "When you meet a friend, discussing which restaurant to visit.",
     "correct_answer": "answer_one",
     "subject": "comp_thinking",
     "published": true
@@ -115,6 +119,7 @@
     "answer_one": "Planning what to collect and where to exit to complete a video game level",
     "answer_two": "Planning how to beat your enemies in a video game level",
     "answer_three": "Accidentally completing a video game level",
+    "answer_four": "Repeating a step a number of times to defeat and enemy.",
     "correct_answer": "answer_three",
     "subject": "comp_thinking",
     "published": true
@@ -124,6 +129,7 @@
     "answer_one": "Two",
     "answer_two": "Four",
     "answer_three": "Three",
+    "answer_four": "Ten or More",
     "correct_answer": "answer_two",
     "subject": "comp_thinking",
     "published": true
@@ -133,6 +139,7 @@
     "answer_one": "During decomposition",
     "answer_two": "At the end, when programming a computer",
     "answer_three": "When writing algorithms",
+    "answer_four": "At every stage.",
     "correct_answer": "answer_two",
     "subject": "comp_thinking",
     "published": true
@@ -144,7 +151,7 @@
     "answer_three": "var = 10",
     "answer_four": "int VAR == 10;",
     "correct_answer": "answer_three",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -154,7 +161,7 @@
     "answer_three": "+1",
     "answer_four": "var add 1",
     "correct_answer": "answer_two",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -164,7 +171,7 @@
     "answer_three": "list = new list[]",
     "answer_four": "a = []",
     "correct_answer": "answer_four",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -174,7 +181,7 @@
     "answer_three": "Cannot be done",
     "answer_four": "a = [1, [new list], 2]",
     "correct_answer": "answer_one",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -184,7 +191,7 @@
     "answer_three": "if (x >> y) print(\"5 is greater than 1\")",
     "answer_four": "(if x >y):  System.out.print(\"5 is greater than 1\")",
     "correct_answer": "answer_one",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -194,17 +201,17 @@
     "answer_three": " for( a = 10; a < 20; a = a + 1 )",
     "answer_four": "while (count < 9):",
     "correct_answer": "answer_two",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
-    "question": "How would you print \"Hello World!\" in python?",
+    "question": "How would you print \"Hello World!\" in Python?",
     "answer_one": "print(\"Hello World!\")",
     "answer_two": "System.out.print(\"Hello World!\")",
     "answer_three": "printf(\"Hello World!\");",
     "answer_four": "output(\"Hello World!\")",
     "correct_answer": "answer_one",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
@@ -214,27 +221,27 @@
     "answer_three": "Opens file to be read from the current directory",
     "answer_four": "It can never, under any circumstances, exit the loop",
     "correct_answer": "answer_two",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
-    "question": "What are some uses of python?",
+    "question": "What are some uses of Python?",
     "answer_one": "Web-scraping",
     "answer_two": "Bioinformatics applications",
     "answer_three": "General scripting language",
     "answer_four": "All of the above",
     "correct_answer": "answer_four",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
-    "question": "How are different lines of code in python separated?",
+    "question": "How are different lines of code in Python separated?",
     "answer_one": "Tabs",
     "answer_two": "Commas",
     "answer_three": "Colons",
     "answer_four": "Periods",
     "correct_answer": "answer_one",
-    "subject": "python",
+    "subject": "Python",
     "published": true
   },
   {
