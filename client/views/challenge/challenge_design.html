@@ -1,0 +1,673 @@
+<!------------------------------------------------
+|
+|	Challenge
+|
+-------------------------------------------------->
+<template name="designed_challenges">
+	{{#mooqita_wide_spacing}}
+        <div class="item-set padding-top">
+            <h1>
+                Challenges you designed
+                <div class="btn-group pull-right">
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="add_challenge">
+
+                    {{>popout_base title="New Blank Challenge"
+                            content="Click to add a new challenge."
+                            icon_class="fa fa-2x fa-plus"}}
+                </div>
+                <div class="btn btn-theme"
+                     style="min-width: 40px;"
+                     id="template_challenge">
+
+                    {{>popout_base title="Create Challenge from Template"
+                            content="Click to select a template."
+                            icon_class="fa fa-2x fa-file"}}
+                </div>
+                </div>
+            </h1>
+
+			<p class="padding-next">
+				Here you can find all the challenges you created from scratch or using a template.
+			</p>
+
+			{{#paging subscription="my_challenges" page=0 count=10
+								parameter=parameter collection_name="challenges"}}
+				{{#each items}}
+					{{>challenge_preview}}
+				{{else}}
+					<hr>
+					<h1 class="text-center padding-next"
+							style="padding-bottom: 45px">
+						<em>No Challenges yet.</em>
+					</h1>
+				{{/each}}
+				<hr>
+			{{/paging}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Preview
+|
+-------------------------------------------------->
+<template name="challenge_preview">
+	<hr>
+
+	<a href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}"
+		 class="item-set-element animated_0_5_s">
+		<div>
+			<h2>
+				{{title}}
+					{{#if g_is_public "challenges"}}
+						<span class="badge background-contrast pull-right">
+								Public <span class="fa fa-check"></span>
+						</span>
+					{{else}}
+						<span class="badge background-theme pull-right">
+								Not yet public <span class="fa fa-edit"></span>
+						</span>
+					{{/if}}
+			</h2>
+		</div>
+		{{course}}
+		{{>more content=content}}
+	</a>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Editor
+|
+-------------------------------------------------->
+<template name="challenge_design">
+	{{#mooqita_wide_spacing}}
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#with challenge}}
+				<div class="padding-top">
+					{{#unless g_is_public "Challenges"}}
+						<div class="alert alert-warning">
+							<h2>Todo List: Challenge</h2>
+
+							A summary of things you need to do before learners can see your challenge:
+							<ul>
+								{{#unless title}}
+									<li>Give your task a title (required)</li>
+								{{/unless}}
+
+								{{#unless content}}
+									<li>Provide a description of the task (required)</li>
+								{{/unless}}
+
+								{{#unless num_reviews}}
+									<li>Define how many reviews learners have to write to finish the task</li>
+								{{/unless}}
+
+								{{#unless link}}
+									<li>Add a link to the challenge context or project (optional)</li>
+								{{/unless}}
+
+								{{#unless material}}
+									<li>Add additional materials (optional)</li>
+								{{/unless}}
+
+								{{#unless g_is_saved "Challenges"}}
+									<li>Save it!</li>
+								{{/unless}}
+
+								<li>Publish your solution you find the button below.</li>
+							</ul>
+						</div>
+					{{/unless}}
+				</div>
+
+				{{#if g_is_public "challenges"}}
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon btn-theme">
+								Shareable link:
+							</div>
+
+							<div class="form-control"
+									 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
+									 id="challenge_url">
+								<div style="white-space:nowrap">
+									{{g_build_url "solution" (g_object challenge_id=_id) "app"}}
+								</div>
+							</div>
+
+							<div class="input-group-btn" id="icon_download" title="select the entire url">
+								<button type="button" class="btn btn-theme">
+									<span class="glyphicon glyphicon-download"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+				{{else}}
+					<span class="badge background-contrast ready-badge">
+						Not yet public
+					</span>
+				{{/if}}
+
+				<h1 class="editable">
+					{{>basic_input method="set_field" collection_name="challenges"
+							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
+				</h1>
+				<h2 class="header">Subject</h2>
+					{{>select_input method="modify_field" collection_name="challenges"
+							item_id=_id field="course"
+							options=course_options}}
+
+				<div class="form-group">
+					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
+														field="content" placeholder="In this challenge you will ..."}}
+				</div>
+
+				<div class="form-group">
+					{{>basic_input method="set_field" collection_name="Challenges"
+							type="number" field="num_reviews"	label="Number of reviews required"
+							item_id=_id explain="The number of reviews a learner has to provide."
+							placeholder="Number of reviews required."}}
+				</div>
+
+                <!-- TODO: make sure that the link gets displayed if present in db -->
+                <div class="form-group">
+                    {{>basic_input method="set_field" collection_name="challenges"
+                            field="link" label="Challenge or project link"
+                            item_id=_id placeholder="Link that contextualizes the challenge."}}
+                </div>
+
+				<div class="form-group">
+					<div class="input-group" style="width: 100%;">
+						<label>Upload additional material</label>
+
+						{{>upload method="upload_file" collection_name="Challenges"
+							item_id=_id field="material"}}
+					</div>
+				</div>
+
+				{{#if material}}
+					<div class="input-group" style="width: 100%;">
+						<label>Download Additional material:</label>
+
+						{{>download collection_name="Challenges" item_id=_id field="material"}}
+					</div>
+				{{/if}}
+
+				{{#unless g_is_public "Challenges"}}
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" id="save">Save</div>
+							</span>
+						</div>
+
+						<div class="form-group col-sm-6">
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{publish_disabled}}
+										 id="publish">Make public</div>
+							</span>
+						</div>
+					</div>
+				{{/unless}}
+
+				<h1>Message Learners</h1>
+
+				<p>If you need to get in touch with your learners you can use this message system.</p>
+
+				<div class="form-group">
+					<div class="input-group">
+						<input placeholder="Subject" class="form-control" type="text" id="subject"/>
+
+						<div class="input-group-btn" id="icon_download" title="select the entire url">
+							<div class="btn btn-theme" id="send" {{send_disabled}}>
+								{{#if send_disabled}}
+									Sending mail
+									<span class="glyphicon glyphicon-refresh spin"></span>
+								{{else}}
+									Send Message
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<textarea  class="form-control"
+										 placeholder="Your message"
+										 id="message" rows="8"></textarea>
+				</div>
+
+				{{#if g_is_public "Challenges"}}
+					{{>challenge_solutions .}}
+				{{/if}}
+			{{/with}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge solutions
+|
+-------------------------------------------------->
+<template name="challenge_solutions">
+	<h1>Solutions</h1>
+
+	<p>These are solutions your learner submitted so far.</p>
+
+	<div class="form-group text-right">
+		<div class="toggle-button">
+			<input id="public_only" type="checkbox">
+			<label for="public_only">Show only published solutions</label>
+			<div class="toggle-button-icon"></div>
+		</div>
+	</div>
+
+	{{#paging subscription="challenge_summaries" page=0 count=10 parameter=parameter}}
+		{{#each challenge_solutions}}
+			{{>challenge_solution}}
+		{{else}}
+			<hr>
+			<h1 class="text-center padding-next"
+					style="padding-bottom: 45px">
+				<em>No solutions yet.</em>
+			</h1>
+		{{/each}}
+		<hr>
+	{{/paging}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge solution
+|
+-------------------------------------------------->
+<template name="challenge_solution">
+	<div class="row">
+		<div class="col-sm-2 col-ms-3 text-center">
+			{{#each profile in solution_owners}}
+				{{>avatar collection_name="Profiles"
+					 observe = profile.avatar
+					 item_id = profile._id
+					 field = "avatar"}}
+
+				<a class="color-theme">{{g_name_from_profile profile true}}</a>
+			{{/each}}
+		</div>
+
+		<div class="col-sm-10 col-ms-9">
+			<h2>
+				{{{average_rating}}}
+
+				{{#if g_is_owner "Challenges" .}}
+					<em class="pull-right"> <span class="badge background-theme"></span>Author</em>
+				{{/if}}
+
+				{{#if published}}
+					<span class="badge background-contrast">public</span>
+				{{/if}}
+
+				<div class="btn-group pull-right">
+					<span class="btn btn-theme" id="user_info">
+						{{> popout_base title="Info"
+								content="This shows statistics about the user."
+								icon_class="glyphicon glyphicon-stats"}}
+					</span>
+
+					{{#unless recommendation}}
+						{{#if is_adding}}
+							<span class="btn btn-theme">
+								<div class="glyphicon glyphicon-refresh spin">
+								</div>
+							</span>
+						{{else}}
+							<span class="btn btn-theme" id="add_recommendation">
+								{{> popout_base title="Recommendation"
+										content="Add a letter of recommendation for your learner."
+										icon_class="glyphicon glyphicon-plus-sign"}}
+							</span>
+						{{/if}}
+					{{else}}
+						<span class="btn btn-theme" id="edit_recommendation">
+							{{> popout_base title="Recommendation"
+									content="Edit your letter of recommendation."
+									icon_class="glyphicon glyphicon-pencil"}}
+						</span>
+					{{/unless}}
+
+					<span class="btn btn-theme" id="reopen">
+						{{> popout_base title="Reopen"
+								content="Reopens the solution and the learner will be able to edit it again."
+								icon_class="glyphicon glyphicon-repeat"}}
+					</span>
+				</div>
+			</h2>
+
+			<p class="small">{{created}}</p>
+
+			{{>more content=content}}
+
+			{{#if material}}
+				<h2>Additional Material</h2>
+				<h2>
+					{{>download collection_name="Solutions"
+						item_id=_id field="material"}}
+				</h2>
+			{{/if}}
+
+			{{#if reviews}}
+				<h2>
+					<a id="show_reviews" data-toggle="collapse" data-target="#{{_id}}">
+						{{#unless reviews_visible}}
+							<span class="glyphicon glyphicon-expand"></span>
+						{{else}}
+							<span class="glyphicon glyphicon-collapse-down"></span>
+						{{/unless}}
+					</a>
+					Reviews
+				</h2>
+			{{/if}}
+		</div>
+	</div>
+
+	<div id="{{_id}}" class="row collapse">
+		<div class="col-sm-offset-1 col-sm-11 col-ms-offset-1 col-ms-11 row-line-left">
+			{{#each review in reviews}}
+				<div class="row">
+					<div class="col-sm-2 col-ms-3 text-center">
+						{{#each profile in (review_owners review)}}
+							{{>avatar collection_name="Profiles"
+								 observe = profile.avatar
+								 item_id = profile._id
+								 field = "avatar"}}
+
+							<a class="color-theme">{{g_name_from_profile profile true}}</a>
+						{{/each}}
+					</div>
+
+					<div class="col-sm-10 col-ms-9">
+						<div class="row">
+							<div class="col-xs-12">
+								<h2>
+									Rating <em>{{review.rating}}</em> out of <em>5</em>
+								</h2>
+							</div>
+
+							<div class="col-xs-12">
+								{{>more content=review.content}}
+
+								{{#each feedback review._id}}
+									<div class="row" style="margin-left: 25px">
+										<div class="col-xs-6">
+											<h2>
+												Rebuttal <!--a>{{g_profile_name owner_id}}</a-->
+											</h2>
+										</div>
+
+										<div class="col-xs-6">
+											<h2>
+												Rating <em>{{rating}}</em> out of <em>5</em>
+											</h2>
+										</div>
+
+										<div class="col-xs-12">
+											{{>more content=content}}
+										</div>
+									</div>
+							{{/each}}
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge reset solution
+|
+-------------------------------------------------->
+<template name="reopen_solution">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Reopen Solution</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to reopen the solution?
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-theme"
+							 id="reopen" data-dismiss="modal">Reopen</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Learner info modal
+|
+-------------------------------------------------->
+<template name="show_learner_summary">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title"></h1>
+				</div>
+
+				<div class="modal-body">
+					{{>learner_summary}}
+				</div>
+
+				<div class="modal-footer right">
+					<div class="btn-group">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">
+							<span class="glyphicon glyphicon-log-out"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Learner letter of recommendation
+|
+-------------------------------------------------->
+<template name="recommendation">
+	<div class="modal fade">
+		{{# mooqita_wide_spacing}}
+			<div class="modal-dialog" style="width: 100%; margin: 10px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title">
+							Letter of Recommendation
+						</h1>
+					</div>
+
+					<div class="modal-body">
+						{{#with recommendation}}
+							{{#unless g_is_public "Recommendations"}}
+								<div class="alert alert-warning">
+									<h2>Todo List: Recommendation</h2>
+
+									A summary of things you need to do before
+									learners can see your letter of recommendation:
+
+									<ul>
+										{{#unless letter}}
+											<li>Write a letter (required)</li>
+										{{/unless}}
+
+										{{#unless skills}}
+											<li>Provide a list of skills you would like to add for the learner.</li>
+										{{/unless}}
+
+										{{#unless g_is_saved "Recommendations"}}
+											<li>Save it!</li>
+										{{/unless}}
+
+										<li>Publish your recommendation you find the button below.</li>
+									</ul>
+								</div>
+							{{/unless}}
+
+							<div class="padding-next">
+								{{>markdown_input method="set_field" collection_name="Recommendations"
+										item_id=_id field="content" placeholder="Letter of recommendation"}}
+							</div>
+						{{/with}}
+					</div>
+
+					<div class="modal-footer right">
+						<div class="btn-group">
+							<a type="button" class="btn btn-theme" data-dismiss="modal">
+								<span class="glyphicon glyphicon-log-out"></span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/mooqita_wide_spacing}}
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge delete modal
+|
+-------------------------------------------------->
+<template name="delete_challenge">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">Delete challenge</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>
+						Are you sure you want to delete your challenge?<br>
+						This operation cannot be undone!
+					</p>
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Not yet</a>
+						<a type="button" class="btn btn-danger" id="publish" data-dismiss="modal">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Challenge Feedback
+|
+-------------------------------------------------->
+<template name="challenge_feedback">
+	<div class="row">
+		<div class="form-group col-md-7">
+			<label for="feedback"
+						 title="Your rating for this challenge overall">
+				Feedback
+			</label>
+
+			<textarea class="form-control" id="feedback"
+								rows="8" style="height: 183px">{{challenge_feedback}}</textarea>
+
+			<div class="btn-toolbar">
+				<span class="btn-group">
+					{{#if save_state}}
+						<div class="btn btn-red" id="save">Save</div>
+					{{else}}
+						<div class="btn btn-success" id="save">Save</div>
+					{{/if}}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="rating"
+								 title="Your rating for this challenge"
+									>Overall Rating</label>
+					<select class="form-control" id="rating" type="select">
+						<option value="null" disabled {{selected_default challenge_rating}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_rating '5'}}>great</option>
+						<option value="4" {{selected challenge_rating '4'}}>good</option>
+						<option value="3" {{selected challenge_rating '3'}}>mediocre</option>
+						<option value="2" {{selected challenge_rating '2'}}>needs improvement</option>
+						<option value="1" {{selected challenge_rating '1'}}>need lots of improvement</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="ease"
+								 title="Your rating for this challenge overall"
+									>Ease of Challenge</label>
+					<select class="form-control" id="ease" type="select">
+						<option value="null" disabled {{selected_default challenge_ease}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_ease '5'}}>too hard</option>
+						<option value="4" {{selected challenge_ease '4'}}>hard</option>
+						<option value="3" {{selected challenge_ease '3'}}>balanced</option>
+						<option value="2" {{selected challenge_ease '2'}}>easy</option>
+						<option value="1" {{selected challenge_ease '1'}}>too easy</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label for="timing"
+								 title="How much time did you need to solve the challenge."
+									>Time required</label>
+					<select class="form-control" id="timing" type="select">
+						<option value="null" {{selected_default challenge_timing}}> -- not selected -- </option>
+						<option value="5" {{selected challenge_timing '5'}}>much more time required</option>
+						<option value="4" {{selected challenge_timing '4'}}>more time required</option>
+						<option value="3" {{selected challenge_timing '3'}}>balanced</option>
+						<option value="2" {{selected challenge_timing '2'}}>less time required</option>
+						<option value="1" {{selected challenge_timing '1'}}>much less time required</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

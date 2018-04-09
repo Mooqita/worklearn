@@ -1,0 +1,200 @@
+<!------------------------------------------------
+|
+|	Invitations
+|
+-------------------------------------------------->
+<template name="invitations">
+	{{#mooqita_wide_spacing}}
+		<div class="padding-top">
+			<h1>Invitations</h1>
+			{{#each invitations}}
+				{{>invitation_preview}}
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="invitation_preview">
+	<hr>
+
+	<h3>
+		{{#if accepted}}
+			<em><span class="glyphicon glyphicon-check"></span></em>
+		{{else}}
+			<em><span class="glyphicon glyphicon-question-sign"></span></em>
+		{{/if}}
+
+		<a href="{{g_build_url "invitation" (g_object
+																					invitation_id=this._id
+																					organization_id=this.organization_ids)}}">
+			<b>Invitation to join <em>{{company_name}}</em></b>
+		</a>
+	</h3>
+
+	{{>more content=content}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Invitation
+|
+-------------------------------------------------->
+<template name="invitation">
+	{{#mooqita_wide_spacing}}
+		<div class="padding-top">
+			{{#if invitation}}
+				{{#unless currentUser}}
+					<h1 style="text-align: center; padding-top: 30px">
+						<img style="width: 300px" src="/images/mooqita.jpg">
+					</h1>
+
+					{{>invitation_register}}
+				{{else}}
+					{{>invitation_accept}}
+				{{/unless}}
+
+				{{#if invitation.accepted}}
+					<h2><em>You accepted this invitation</em></h2>
+				{{/if}}
+			{{else}}
+				<h1 style="text-align: center; padding-top: 30px">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
+
+				<div class="padding-top">
+					<h1>
+						This invitation is invalid.
+					</h1>
+				</div>
+			{{/if}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="invitation_accept">
+	<h1 class="text-center">Invitation to join Mooqita.</h1>
+
+	<div class="row">
+		<div class="col-ms-3 col-sm-4">
+			{{#with organization}}
+				{{>avatar collection_name = "organizations"
+					observable = avatar
+					item_id = _id
+					field = "avatar"}}
+			{{/with}}
+		</div>
+
+		<div class="col-ms-7 col-sm-8">
+			{{#if is_sender}}
+				<p>
+					You invited: <em><b>{{invitation.email}}</b></em> to join your
+					organization: <em><b>{{organization.name}}</b></em>.
+				</p>
+
+				{{#unless invitation.accepted}}
+					<p>
+						<em><b>They have not yet accepted your invitation.</b></em>
+					</p>
+				{{/unless}}
+			{{else}}
+				<p class="padding-top padding-next">
+					Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
+					their organization <em><b>{{organization.name}}</b></em> on Mooqita.
+
+					Mooqita helps companies like yours to improve their hiring process so you
+					spend less time interviewing candidates.
+				</p>
+
+				{{#unless invitation.accepted}}
+					<div class="text-right">
+						<div class="btn btn-theme" id="accept">Accept Invitation</div>
+					</div>
+				{{/unless}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+
+<template name="invitation_register">
+	<div class="row padding-top">
+		<div class="col-sm-6 padding-next">
+			<h1>Invitation to join Mooqita.</h1>
+
+			<div class="col-md-5 col-sm-6 col-ms-6 col-xs-12" style="float: left">
+				{{#with organization}}
+					{{>avatar collection_name = "organizations"
+						observable = avatar
+						item_id = _id
+						field = "avatar"}}
+					<div class="text-center" style="margin-bottom: 15px">
+						<em style="font-weight: bold;">
+							{{organization.name}}
+						</em>
+					</div>
+				{{/with}}
+			</div>
+
+			<p>
+				Your host <em><b>{{invitation.host_name}}</b></em> has invited you to join
+				their organization on Mooqita.
+			</p>
+
+			<p>
+				Mooqita helps companies like yours to improve
+				their hiring process so you spend less time interviewing candidates.
+			</p>
+
+			<p>
+				To join just select and confirm your password.
+				If you are already have account with:
+				<em><b>{{invitation.email}}</b></em>.
+				Please login and check your open invitations
+				<a href="{{invite_url}}" style="text-decoration: underline;"><b>here</b></a>.
+			</p>
+		</div>
+
+		<div class="col-sm-6">
+			<form>
+				<div class="form-group">
+					<label for="at-field-mail">Registered email</label>
+					<label class="form-control" id="at-field-mail" aria-describedby="mail_explain">
+						{{invitation.email}}
+					</label>
+					<small id="mail_explain" class="form-text text-muted">
+						If you would like to use a different mail let your host
+						re-invite you with that email.
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="at-field-password">Choose your password</label>
+					<input type="password" class="form-control" id="at-field-password"
+								 name="at-field-password" placeholder="Password" autocapitalize="none"
+								 autocorrect="off" aria-describedby="password_explain">
+					<small id="password_explain" class="form-text text-muted">
+						Your password needs to be 8 characters long and contain at least
+						1 digit, 1 lower-case character, and 1 upper-case character.
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="at-field-password_again">Confirm your password</label>
+					<input type="password" class="form-control" id="at-field-password_again"
+								 name="at-field-password_again" placeholder="Password (again)"
+								 autocapitalize="none" autocorrect="off"
+								 aria-describedby="password_again_explain">
+					<small id="password_again_explain" class="form-text text-muted">
+						You probably know the drill... Please retype your password.
+					</small>
+				</div>
+
+				<div class="btn btn-theme" id="register">Register</div>
+			</form>
+		</div>
+	</div>
+</template>
+

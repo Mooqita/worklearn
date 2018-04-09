@@ -1,0 +1,383 @@
+<!-----------------------------------------------------------------------------
+|
+| Questionnaire for Team members
+|
+------------------------------------------------------------------------------>
+<template name="personality">
+	{{#mooqita_wide_spacing}}
+		{{#quick_survey answers=answers questions=questions
+										collection_name="profiles" item_id=g_profile_id field="big_five"}}
+
+			<h1 class="padding-next">
+				Excellent! Thank you for finishing the questionnaire.
+			</h1>
+
+			<p style="text-align: left">
+				<div class="raised  float-container col-md-6 col-sm-6 col-ms-7 col-xs-12">
+					{{>persona	persona_data=persona_data offset_x=-15
+											has_text=true width=310 height=130}}
+				</div>
+
+				This test uses the „Big Five“ personality model. It assumes that personality
+				is a combination of five independent factors: Emotional <em><b>Stability</b></em>,
+				<em><b>Extroversion</b></em>, <em><b>Openness</b></em> for Experiences,
+				<em><b>Agreeableness</b></em>, <em><b>Conscientiousness</b></em>. The figure shows
+				the relation of these factors we calculated from your test results. This model is
+				very useful to describe aspects of personality. It does not represent the entire
+				complexity of a human being. Yet the model provides a good frame to match team members.
+				Research has shown that teams are most efficient when there is a good mix of personality
+				traits. The best performing teams have a variety of low, balanced, and high scores for
+				all five traits. So no matter your results you are a valuable member of a team and we
+				help you find it. Now would also be a good time to complete your profile.
+
+				<div><a class="btn btn-theme pull-right" href="profile">Complete my profile</a></div>
+			</p>
+
+			<div class="personality-explain">
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
+						<h2>Emotional Stability</h2>
+						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Stability")
+																		mean=(mean "Stability")
+																		sd=(sd "Stability")}}
+							</div>
+
+							This personality trait describes how strong a person
+							feels emotions. It also indicates how much an intense
+							situation is perceived as stressful.
+
+							With a score of <em><b>{{score "Stability"}}</b></em>
+							(at a population average of <em><b>{{mean "Stability"}}</b></em>) you
+							reached a <em><b>{{level "Stability"}}</b></em> score.
+							Approximately <em><b>{{percentile "Stability"}}%</b></em> of
+							the population report a similar or lower score.
+
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>high</em> value</b>
+						<ul>
+							<li>are level-headed and carefree</li>
+							<li>are not so easily upset</li>
+							<li>are optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>low</em> value</b>
+						<ul>
+							<li>feel emotions intensively and clearly</li>
+							<li>act carefully and thoughtful</li>
+							<li>are considerate and aware</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>high</em> value</b>
+						<ul>
+							<li>are sometimes perceived as detached</li>
+							<li>may act careless and rash things</li>
+							<li>underestimate risks and danger</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>low</em> value</b>
+						<ul>
+							<li>are susceptible to stress</li>
+							<li>may experience negative feelings stronger</li>
+							<li>may be more concerned</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
+						<h2>Openness to Experiences</h2>
+						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Openness")
+																		mean=(mean "Openness")
+																		sd=(sd "Openness")}}
+							</div>
+
+							This trait describes how much a person is interested in new experiences.
+							With a score of <em><b>{{score "Openness"}}</b></em>
+							(at a population average of <em><b>{{mean "Openness"}}</b></em>) you
+							reached a <em><b>{{level "Openness"}}</b></em> score.
+							Approximately <em><b>{{percentile "Openness"}}%</b></em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>high</em> value</b>
+						<ul>
+							<li>are curious</li>
+							<li>are adventurous</li>
+							<li>question rules and make independent decisions</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>low</em> value</b>
+						<ul>
+							<li>are grounded</li>
+							<li>prefer proven solutions</li>
+							<li>act predictable and consistent</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weakness of people with a <em>high</em> value</b>
+						<ul>
+							<li>are volatile</li>
+							<li>are bored easily</li>
+							<li>sometime resist relevant norms</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weakness of people with a <em>low</em> value</b>
+						<ul>
+							<li>tend to think inside the box</li>
+							<li>tend to reject new ideas</li>
+							<li>do not question existing norms</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
+						<h2>Agreeableness</h2>
+						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Agreeableness")
+																		mean=(mean "Agreeableness")
+																		sd=(sd "Agreeableness")}}
+							</div>
+
+							The trait explains how much a person strives to establish personal relationships.
+							It also describes how considerate a person is towards others.
+							With a score of <em><b>{{score "Agreeableness"}}</b></em>
+							(at a population average of <em><b>{{mean "Agreeableness"}}</b></em>) you
+							reached a <em><b>{{level "Agreeableness"}}</b></em> score.
+							Approximately <em><b>{{percentile "Agreeableness"}}%</b></em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>high</em> value</b>
+						<ul>
+							<li>are cooperative</li>
+							<li>show compassion and warmth</li>
+							<li>are benevolent and approachable</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>low</em> value</b>
+						<ul>
+							<li>are committed to their interests</li>
+							<li>are not easily swayed by others</li>
+							<li>are not afraid of confrontation</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>high</em> value</b>
+						<ul>
+							<li>are less assertive</li>
+							<li>tend to neglect their own needs</li>
+							<li>have a hard time with setting boundaries</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>low</em> value</b>
+						<ul>
+							<li>can be self-centered and relentless</li>
+							<li>may mistrust other peoples intentions</li>
+							<li>can be uncooperative and hard on others</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
+						<h2>Extroversion</h2>
+						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Extroversion")
+																		mean=(mean "Extroversion")
+																		sd=(sd "Extroversion")}}
+							</div>
+
+							The trait describes how much a person strives towards social
+							activities, interactions, and contacts.
+							With a score of <em><b>{{score "Extroversion"}}</b></em>
+							(at a population average of <em><b>{{mean "Extroversion"}}</b></em>) you
+							reached a <em><b>{{level "Extroversion"}}</b></em> score.
+							Approximately <em><b>{{percentile "Extroversion"}}%</b></em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>high</em> value</b>
+						<ul>
+							<li>are sociable</li>
+							<li>are confident and energetic</li>
+							<li>are cheerful and optimistic</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>low</em> value</b>
+						<ul>
+							<li>are reserved</li>
+							<li>think and act independently</li>
+							<li>are even-tempered</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>high</em> value</b>
+						<ul>
+							<li>can appear intimidating on more reserved people</li>
+							<li>can appear intrusive</li>
+							<li>may dominate conversations</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>low</em> value</b>
+						<ul>
+							<li>can be insecure in social situations</li>
+							<li>can appear unsympathetic</li>
+							<li>are difficult to read</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row padding-next">
+					<div class="col-sm-12">
+						<hr class="mooqita-line">
+
+						<h2>Conscientiousness</h2>
+						<p>
+							<div class="raised float-container col-md-4 col-sm-4 col-ms-5 col-xs-12">
+								{{>trait_comparison score=(score "Conscientiousness")
+																		mean=(mean "Conscientiousness")
+																		sd=(sd "Conscientiousness")}}
+							</div>
+
+							This trait describes how controlled, organized, and disciplined
+							a person is. With a score of <em><b>{{score "Conscientiousness"}}</b></em>
+							(at a population average of <em><b>{{mean "Conscientiousness"}}</b></em>) you
+							reached a <em><b>{{level "Conscientiousness"}}</b></em> score.
+							Approximately <em><b>{{percentile "Conscientiousness"}}%</b></em> of
+							the population reach a similar or lower score.
+						</p>
+					</div>
+				</div>
+
+				<div class="row positive padding-next">
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>high</em> value</b>
+						<ul>
+							<li>are persistent and disciplined</li>
+							<li>are neat and accurate</li>
+							<li>are reliable and punctual</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Strength of people with a <em>low</em> value</b>
+						<ul>
+							<li>are spontaneous and carefree</li>
+							<li>do not put pressure on themselves</li>
+							<li>make decisions quickly</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row negative">
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>high</em> value</b>
+						<ul>
+							<li>put high demands on themselves and others</li>
+							<li>can be inefficient due to perfectionism</li>
+							<li>may appear petty</li>
+						</ul>
+					</div>
+
+					<div class="col-sm-6">
+						<b>Weaknesses of people with a <em>low</em> value</b>
+						<ul>
+							<li>pursue goals with less commitment</li>
+							<li>do not pay attention to details</li>
+							<li>switch between tasks quickly</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		{{/quick_survey}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="trait_comparison">
+	<div class="svg-holder">
+		<svg viewbox="0 0 55 32" class="circular-chart">
+			<path class="circle-bg"
+						d = "{{get_arc 0 100 20 7.5 26}}"/>
+			<path class="circle blue"
+						d = "{{get_arc sd_p1_high 100 20 7.5 26}}"/>
+			<path class="circle green"
+						d = "{{get_arc 0 sd_n1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle orange"
+						d = "{{get_arc sd_n1_high sd_p1_low 20 7.5 26}}"/>
+			<path class="circle light"
+						d = "{{get_arc mean_p mean_p 20 7.5 26}}"/>
+			<path class="marker theme"
+						d = "{{get_arc score_p score_p 20 7.5 26}}"/>
+
+			<text x="7.5" y="31" class="legend green-fill">Low (0)</text>
+			<text x="47.5" y="31" class="legend blue-fill">High (40)</text>
+			<text x="27.5" y="2.5" class="legend orange-fill">Balanced ({{mean}})</text>
+			<text x="27.5" y="24" class="legend theme-fill">Score</text>
+			<text x="27.5" y="18" class="legend theme-fill">{{score}}</text>
+		</svg>
+	</div>
+</template>

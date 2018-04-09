@@ -1,0 +1,129 @@
+<!------------------------------------------------
+|
+|	Learner resumes
+|
+-------------------------------------------------->
+<template name="portfolio">
+	{{#mooqita_wide_spacing}}
+		{{#if Template.subscriptionsReady}}
+			<!--{{>popout content="content" title="title" p_url="login"}}-->
+			{{>portfolio_basic current_resume}}
+			{{>portfolio_solutions current_resume}}
+		{{else}}
+			{{>wait}}
+		{{/if}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="portfolio_basic">
+	<div class="item-set padding-top">
+		<div class="row">
+			<div class="col-sm-4 col-ms-4">
+				{{>avatar collection_name = "Profiles"
+					observable = avatar
+					item_id = (g_profile_id _id)
+					field = "avatar"}}
+			</div>
+
+			<div class="col-sm-8 col-md-8">
+				<h2>
+					<em>{{name}}</em>
+				</h2>
+
+				{{>more content=self_description}}
+			</div>
+			<div class="col-sm-8 col-md-8">
+				{{#if quiz_scores.cobol_quiz_score}}
+					<h3><strong>COBOL Score:</strong> {{quiz_scores.cobol_quiz_score}}%</h3> <br />
+				{{/if}}
+				{{#if quiz_scores.comp_thinking_quiz_score}}
+					<h3><strong>Computational Thinking Score:</strong> {{quiz_scores.comp_thinking_quiz_score}}%</h3> <br />
+				{{/if}}
+				{{#if quiz_scores.python_quiz_score}}
+					<h3><strong>Python Score:</strong> {{quiz_scores.python_quiz_score}}%</h3> <br />
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="portfolio_solutions">
+	{{#if solutions}}
+		<div class="item">
+			<h1>Portfolio</h1>
+
+			{{#each solutions}}
+				{{>portfolio_solution}}
+			{{/each}}
+		</div>
+	{{/if}}
+</template>
+
+
+<template name="portfolio_solution">
+	<hr>
+
+	<div class="row">
+		<div class="col-md-4">
+			<h2>Average rating <em>{{average_rating}}</em> of <em>5</em></h2>
+		</div>
+		<div class="col-md-8">
+			<h2>{{challenge_title}}</h2>
+		</div>
+	</div>
+
+	<!--This formatting is required for user
+			generated text to look as intended-->
+	{{>more content=challenge}}
+
+	{{#unless reviews_visible}}
+		<h2>
+			<a id="show_reviews">
+				<em>Show solution and reviews</em>
+			</a>
+		</h2>
+	{{/unless}}
+
+	{{#if reviews_visible}}
+		<h2>
+			Solution
+			<a class="pull-right" id="show_reviews">
+				<em>Hide reviews</em>
+			</a>
+		</h2>
+
+		{{>more content=solution}}
+
+		<h2>Reviews</h2>
+
+		{{#each reviews}}
+			{{>portfolio_review}}
+		{{else}}
+			<div class="well">
+				No reviews yet.
+			</div>
+		{{/each}}
+	{{/if}}
+</template>
+
+
+<template name="portfolio_review">
+	<div class="media" style="padding-bottom: 25px">
+		<div class="media-left">
+			<a href="{{g_build_url "portfolio"}}">
+				<img class="media-object img-circle" src="{{avatar}}" width="64px">
+			</a>
+
+			<h2>
+				<a href="{{g_build_url "portfolio"}}">{{name}}</a>
+			</h2>
+		</div>
+
+		<div class="media-body">
+			<h2>Rating: <em>{{average_rating}}</em> of <em>5</em></h2>
+			{{>more content=review}}
+		</div>
+	</div>
+</template>

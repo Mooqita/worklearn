@@ -1,0 +1,72 @@
+<!-----------------------------------------------------------------------------
+|
+| Survey
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey">
+	{{#let question=current_question}}
+		<div class="padding-top">
+			{{#unless finished}}
+				<div class="progress" style="height: 30px">
+					<div class="progress-bar background-theme" role="progressbar"
+							 style="padding: 5px; min-width: 60px; width: {{percentage}}%;"
+							 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+						<span>{{count}} of {{total}}</span>
+					</div>
+				</div>
+			{{/unless}}
+
+			{{#quick_survey_element answers=answers
+															question=question
+															responses=(g_array 1 2 3 4 5)
+															collection_name=collection_name
+															item_id=item_id
+															field=field
+															max_answer_count=total}}
+				{{>Template.contentBlock}}
+			{{/quick_survey_element}}
+		</div>
+	{{/let}}
+</template>
+
+
+<!-----------------------------------------------------------------------------
+|
+| Survey Question
+|
+------------------------------------------------------------------------------>
+<template name="quick_survey_element">
+	{{redraw}}
+
+	<div class="text-center element-container animated padding-top">
+		{{#if question}}
+			<P>I see myself as someone who...</P>
+			<h2><em>{{question}}</em></h2>
+			<div style="margin-left: 8%">
+				<div class="row">
+					<div class="col-xs-12 col-ms-2 col-sm-2 col-ms-offset-1 col-sm-offset-1 background-theme"
+							 style="padding: 10px">
+						<div class="text-left">Disagree</div>
+					</div>
+					{{#each response in responses}}
+						<div class="col-xs-2 col-sm-1 col-ms-1" style="padding: 0px">
+							<div class="hover-card select-response" id="{{response}}" style="padding: 10px">
+								{{response}}
+							</div>
+						</div>
+					{{/each}}
+					<div class="col-xs-12 col-ms-2 col-sm-2 background-theme" style="padding: 10px">
+						<div class="text-right">Agree</div>
+					</div>
+				</div>
+			</div>
+			<small id="process_explain" class="form-text text-muted">
+				You can either type the number or click it.
+			</small>
+		{{else}}
+			{{>Template.contentBlock}}
+		{{/if}}
+	</div>
+</template>
+
+

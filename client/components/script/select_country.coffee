@@ -310,40 +310,27 @@ Template.country_state.helpers
 Template.country_state.events
 	'change #country': (event) ->
 		obj = event.target
-		text = obj.options[obj.selectedIndex].text
+		value = obj.options[obj.selectedIndex].text
 		index = obj.options[obj.selectedIndex].value
-		Template.instance().country.set text
+		Template.instance().country.set value
 		Template.instance().country_index.set index
 
 		item_id = this.item_id
-		method = this.method
 		collection = this.collection_name
 		item_id = this.item_id
 		field = this.c_field
 
-		Meteor.call method, collection, item_id, field, text, undefined,
-			(err, res) ->
-				if err
-					sAlert.error("Country select error: " + err)
-				if res
-					sAlert.success("Updated country")
+		set_field collection, item_id, field, value
 
 	'change #state': (event) ->
 		obj = event.target
-		text = obj.options[obj.selectedIndex].text
-		Template.instance().state.set text
+		value = obj.options[obj.selectedIndex].text
+		Template.instance().state.set value
 
 		item_id = this.item_id
-		method = this.method
 		collection = this.collection_name
 		item_id = this.item_id
 		field = this.s_field
 
-		Meteor.call method, collection, item_id, field, text, undefined,
-			(err, res) ->
-				if err
-					sAlert.error("State select error: " + err)
-				if res
-					sAlert.success("Updated state")
-
+		set_field collection, item_id, field, value
 

@@ -1,0 +1,51 @@
+<!------------------------------------------------
+|
+| Job Role
+|
+-------------------------------------------------->
+<template name="job_role">
+	<div class="row">
+		<div class="col-lg-4 col-md-6 col-sm-4 col-ms-6 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-paint-brush color-theme" href=href
+					message="Designer" text="UX/UI Designer, Creative Director, etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="design"}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-sm-4 col-ms-6 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-cogs color-theme" href=href
+					message="Operations" text="Finance, Accounting, Human Resources, etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="ops"}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-6 col-sm-4 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-laptop color-theme" href=href
+					message="Developer" text="Mobile / Fullstack Developer, DevOps, etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="dev"}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-6 col-sm-4 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-pie-chart color-theme" href=href
+					message="Sales" text="Sales Manager, Account Manager, etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="sales"}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-6 col-sm-4 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-comments-o color-theme" href=href
+					message="Marketing" text="Content Creator, Marketing Manager, etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="marketing"}}
+		</div>
+
+		<div class="col-lg-4 col-md-6 col-ms-6 col-sm-4 col-xs-12 hover-padding">
+			{{>hover_card icon="fa-question-circle color-theme" href=href
+					message="Others" text="Attorney , etc."
+					collection_name=collection_name item_id=item_id field=field
+					session=session key=key value="other"}}
+		</div>
+	</div>
+</template>
+

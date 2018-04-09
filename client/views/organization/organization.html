@@ -1,0 +1,135 @@
+<!------------------------------------------------
+|
+|	Organizations
+|
+-------------------------------------------------->
+<template name="organizations">
+	{{#mooqita_wide_spacing}}
+		{{#if need_to_register}}
+			<div class="row padding-top" style="margin-top: 60px">
+				<div class="col-sm-6">
+					<h1 style="text-align: center; padding-top: 30px">
+						<img style="width: 300px" src="/images/mooqita.jpg">
+					</h1>
+				</div>
+
+				<div class="col-sm-6">
+					<h1>Register an Organization</h1>
+
+					<p style="padding-bottom: 25px">
+						You did not yet register an organization with us.
+						If you want to do so click here:
+					</p>
+
+					<a class="btn btn-theme" id="get_started" href="{{onboarding_url}}">
+						Get started
+					</a>
+				</div>
+			</div>
+		{{else}}
+			<div class="item-set padding-top">
+				<h1>Organizations</h1>
+
+				<p class="padding-next">
+					Find the organizations you are involved in.
+				</p>
+
+				{{#paging subscription="my_organizations" page=0 count=10
+									parameter=parameter collection_name="organizations"}}
+					{{#each items}}
+						{{>organization_preview}}
+					{{else}}
+						<hr>
+						<h1 class="text-center padding-next"
+								style="padding-bottom: 45px">
+							<em>No Organizations yet.</em>
+						</h1>
+					{{/each}}
+				<hr>
+				{{/paging}}
+			</div>
+		{{/if}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<!------------------------------------------------
+|
+|	Organization preview
+|
+-------------------------------------------------->
+<template name="organization_preview">
+	<hr>
+
+	<a href="{{g_build_url "organization" (g_object organization_id=_id)}}"
+		 class="item-set-element animated_0_5_s">
+		<div class="row">
+			<div class="col-md-2 col-sm-3 col-ms-4">
+				{{#if avatar}}
+					{{>avatar collection_name = "organizations"
+						observable = avatar
+						item_id = _id
+						field = "avatar"}}
+				{{/if}}
+			</div>
+
+			<div class="col-md-10 col-sm-9 col-ms-8">
+				<h2>{{org_name}}</h2>
+
+				{{>more content=org_description}}
+			</div>
+		</div>
+	</a>
+</template>
+
+
+<!------------------------------------------------
+|
+|	Organization profile
+|
+-------------------------------------------------->
+<template name="organization">
+	{{#mooqita_wide_spacing}}
+		{{#with organization}}
+			<div class="row padding-top">
+				<div class="col-sm-4 col-ms-4 col-xs-12">
+					<h2 class="header">Organization Logo</h2>
+
+					{{#if avatar}}
+						{{>avatar collection_name = "organizations"
+							observable = avatar
+							item_id = _id
+							field = "avatar"}}
+					{{/if}}
+
+					{{>upload method="upload_file" collection_name="organizations"
+						item_id=_id field="avatar" max_size=2400000}}
+				</div>
+
+				<div class="col-sm-8 col-ms-8 col-xs-12">
+					<h2>Organization Name</h2>
+					{{>basic_input method="set_field" collection_name="organizations"
+							item_id=_id field="name" placeholder="Name of your organization"}}
+
+					<h2>Organization Description</h2>
+					{{>text_input method="set_field" collection_name="organizations"
+							item_id=_id field="description"
+							placeholder="Let our learners know a little more about your organization."}}
+				</div>
+			</div>
+
+			<h1>Team Member</h1>
+
+			<p class="padding-next">
+				These are the members of your organization. To improve your job
+				search you can add the people your candidate will work with. And
+				do not forget about yourself. So fill out your profile as well.
+			</p>
+
+			{{>group_page organization_id=_id}}
+
+		{{/with}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+

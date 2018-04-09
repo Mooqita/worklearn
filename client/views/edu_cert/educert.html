@@ -1,0 +1,301 @@
+<!------------------------------------------------
+|
+| Edu Cert templates
+|
+-------------------------------------------------->
+<template name="edu_certs">
+	{{#mooqita_wide_spacing}}
+		<div class="item-set padding-top">
+			<div class="padding-next">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group">
+						<button class="btn btn-theme" id="add_cert_template" type="button">
+							Create Certificate Template
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-bottom: 25px">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input placeholder="Search for challenges" id="query"
+								 class="form-control edit-field"/>
+						<span class="input-group-btn">
+
+							<button class="btn btn-theme" type="button" id="search">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					{{>paging subscription="my_cert_templates" page=0 count=10 parameter=parameter}}
+				</div>
+			</div>
+
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				{{#each cert_templates}}
+						{{>cert_template_preview}}
+					{{else}}
+						<h2><em>No templates yet.</em></h2>
+					{{/each}}
+			{{/unless}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="cert_template_preview">
+	<h2>
+		<a href="{{g_build_url "cert_template" (g_object cert_id=_id)}}">
+			{{title}}
+		</a>
+	</h2>
+
+	{{>more content=content}}
+</template>
+
+
+<template name="cert_template">
+	{{#mooqita_wide_spacing}}
+		{{#with cert_template}}
+			<div class="row padding-top">
+				<div class="col-md-12">
+					<h1 class="editable">
+						{{>basic_input method="set_field" collection_name="edu_cert_templates"
+						item_id=_id field="title" placeholder="Your Certificate Title"}}
+					</h1>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<div class="editable" style="padding-bottom: 15px">
+						{{>markdown_input method="set_field" collection_name="edu_cert_templates"
+							item_id=_id field="description" placeholder="The description of your certificate"}}
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					{{>upload method="upload_file" collection_name="edu_cert_templates"
+						item_id=_id field="image" max_size=256000}}
+
+					<img class="img-responsive"
+						 src="{{g_download_field_value "edu_cert_templates" _id "image" image}}"
+						 alt="">
+				</div>
+			</div>
+
+			<div class="row" style="padding-top: 15px">
+				<div class="col-md-12">
+					<div class="item">
+						{{>tags method="set_field" collection_name="edu_cert_templates"
+							item_id=_id field="tags" rating_options=g_rating_options}}
+					</div>
+
+					<div class="editable">
+						{{>markdown_input method="set_field" collection_name="edu_cert_templates"
+							item_id=_id field="criteria" placeholder="Certificate criteria"}}
+					</div>
+				</div>
+			</div>
+		{{/with}}
+
+		{{#with profile currentUser._id}}
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="header">Certificate Issuer Information</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4 col-ms-4 col-xs-12">
+					{{#if avatar}}
+						{{>avatar collection_name = "Profiles"
+							observable = avatar
+							item_id = _id
+							field = "avatar"}}
+					{{/if}}
+				</div>
+
+				<div class="col-sm-8 col-ms-8 col-xs-12">
+					<form class="form-horizontal">
+					  <div class="form-group">
+							<label for="exampleInputEmail1">Name</label>
+							<input type="email" class="form-control" id="exampleInputEmail1"
+										 aria-describedby="emailHelp" readonly
+										 placeholder="{{given_name}} {{middle_name}} {{family_name}}">
+							<small id="emailHelp" class="form-text text-muted">Name taken from your profile.</small>
+						</div>
+
+					  <div class="form-group">
+							<label for="exampleInputEmail1">Email address</label>
+							<input type="email" class="form-control" id="exampleInputEmail1"
+										 aria-describedby="emailHelp" readonly placeholder="{{email}}">
+							<small id="emailHelp" class="form-text text-muted">Email taken from your profile.</small>
+						</div>
+
+						<div class="form-group">
+							<label for="exampleInputEmail1">Your URL</label>
+							{{>basic_input method="set_field" collection_name="Profiles"
+								item_id=g_profile._id field="url"
+								placeholder="Your url"}}
+						</div>
+
+						<div class="form-group">
+							<label for="exampleInputEmail1">Unique Identifier</label>
+							<input type="email" class="form-control" id="exampleInputEmail1"
+										 aria-describedby="emailHelp" readonly placeholder="{{currentUser._id}}">
+							<small id="emailHelp" class="form-text text-muted">ID of your user account on mooqita</small>
+						</div>
+					</form>
+				</div>
+			</div>
+		{{/with}}
+
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="header">Certificate Recipients</h2>
+								<textarea  class="form-control edit-field"
+									 placeholder="List of recipients: one row per e-mail"
+									 id="mail_list" rows="11">public.markus.krause@gmail.com</textarea>
+			</div>
+
+			<div class="col-md-12">
+				<h2 class="header">
+					Recipient List
+					<span class="pull-right">
+						{{#unless send_disabled}}
+							<div class="btn background-theme" id="send_invitations">
+								<span class="glyphicon glyphicon-send"></span>
+							</div>
+						{{else}}
+							<span class="glyphicon glyphicon-refresh spin"></span>
+						{{/unless}}
+					</span>
+				</h2>
+				{{>paging subscription="my_recipients" page=0 count=10}}
+
+				{{#each recipients}}
+					{{>recipient_preview}}
+				{{/each}}
+			</div>
+		</div>
+
+	{{/mooqita_wide_spacing}}
+
+</template>
+
+
+<template name="recipient_preview">
+	<hr>
+
+	<h2>
+		<span class="badge background-contrast">new</span>
+		<a href="{{g_build_url "cert_recipient" (g_object recipient_id=_id)}}">
+			{{email}}
+		</a>
+
+		<em><span class="pull-right"><span class="glyphicon glyphicon-check"></span></span></em>
+	</h2>
+</template>
+
+
+<template name="cert_recipient">
+	{{#mooqita_wide_spacing}}
+		{{#unless assertion}}
+			<div class="row padding-top">
+				<div class="col-md-12">
+					<h1>Recipient</h1>
+					{{#with recipient}}
+						<form>
+							<div class="form-group">
+								<label for="display_name">Name</label>
+								{{>basic_input method="set_field" collection_name="edu_cert_recipients"
+									item_id=_id field="display_name"
+									placeholder="The name how it will appear on your certificate"}}
+								<small id="name_help" class="form-text text-muted">
+									Your name as it appears on the certificate
+								</small>
+							</div>
+
+							<div class="form-group">
+								<label for="email_address">Email address</label>
+								<input type="email" class="form-control" id="email_address"
+											 aria-describedby="emailHelp" readonly placeholder="{{email}}">
+								<small id="email_help" class="form-text text-muted"></small>
+							</div>
+
+							<div class="form-group">
+								<label for="url">Your URL</label>
+								{{>basic_input method="set_field" collection_name="edu_cert_recipients"
+									item_id=_id field="url"
+									placeholder="Your url"}}
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1">Ethereum Public Key</label>
+								{{>basic_input method="set_field" collection_name="edu_cert_recipients"
+									item_id=_id field="etherium_key"
+									placeholder="Your public key"}}
+								<small id="emailHelp" class="form-text text-muted">Your wallet ID</small>
+							</div>
+						</form>
+					{{/with}}
+				</div>
+			</div>
+
+			{{#unless send_disabled}}
+				<div class="btn btn-theme" id="bake_certificate">Generate Certificate</div>
+			{{else}}
+				<span class="glyphicon glyphicon-refresh spin"></span>
+			{{/unless}}
+		{{else}}
+			{{#with assertion}}
+				{{>cert_assertion}}
+			{{/with}}
+		{{/unless}}
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="cert_assertion">
+	{{#mooqita_wide_spacing}}
+		<div class="row padding-top">
+			<div class="col-md-4 col-sm-4 col-ms-5">
+				<img class="img-responsive"
+						 src="{{payload.badge.image}}"
+						 alt="">
+			</div>
+
+			<div class="col-md-8 col-sm-8 col-ms-7" style="text-align: center">
+				<h1>{{payload.recipientProfile.name}}</h1>
+				<h2>{{payload.badge.name}}</h2>
+				{{>more content=payload.badge.description expanded=true}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
+
+<template name="cert_issuer">
+	{{#mooqita_wide_spacing}}
+		<div class="row padding-top">
+			<div class="col-md-4 col-sm-4 col-ms-5">
+				<img class="img-responsive"
+						 src="{{payload.badge.image}}"
+						 alt="">
+			</div>
+
+			<div class="col-md-8 col-sm-8 col-ms-7" style="text-align: center">
+				<h1>{{payload.recipientProfile.name}}</h1>
+				<h2>{{payload.badge.name}}</h2>
+				{{>more content=payload.badge.description expanded=true}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>

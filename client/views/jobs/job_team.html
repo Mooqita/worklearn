@@ -1,0 +1,117 @@
+<!------------------------------------------------
+|
+| Team Member
+|
+-------------------------------------------------->
+<template name="group_page">
+	<h2>Invite new Members</h2>
+
+	<div class="row">
+		<div class="col-sm-8">
+			<select class="selectpicker user_select_class form-control"
+							title="Enter email to invite" data-live-search="true"
+							multiple id="user_select">
+			</select>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="padding-next">
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<div class="btn btn-theme" id="invite">Send Invites</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ul class="auto-complete-list">
+		{{#each mail in selected_users}}
+			<li class="auto-complete-list-item">
+				{{mail}}
+				<span id="{{mail}}" class="list-remove fa fa-remove animated_0_2_s"></span>
+			</li>
+		{{/each}}
+	</ul>
+
+	<h2>Team Personas</h2>
+	<div class="row">
+		{{#each member in members}}
+			<div class="col-sm-4 col-ms-6" style="margin-bottom:20px">
+				<div class="raised" style="min-height: 280px">
+					<div class="team-member-text-block">
+						<h2 style="overflow: hidden;">{{member.name}}</h2>
+						<p>
+							{{#if member.owner}}
+								This is your persona.
+							{{/if}}
+						</p>
+					</div>
+
+					{{#let data=(persona_data member)}}
+						{{#if member.owner}}
+							{{#if data}}
+								<a href="{{g_build_url "profile"}}" target="_blank"
+									 class="btn-float btn-contrast raised animated_0_2_s"
+									 style="right: 15px;">
+									<span class="fa fa-2x fa-edit"></span>
+								</a>
+							{{else}}
+								<a href="{{g_build_url "onboarding_team"}}" target="_blank"
+									 class="btn-float btn-contrast raised animated_0_2_s"
+									 style="right: 15px;">
+									<span class="fa fa-2x fa-edit"></span>
+								</a>
+							{{/if}}
+						{{/if}}
+
+						<div class="team-member-persona">
+							{{#if data}}
+								{{>persona persona_data=data has_text=true
+													 width=300 height=150}}
+							{{else}}
+								{{>persona has_text=true
+													 width=300 height=150}}
+							{{/if}}
+						</div>
+					{{/let}}
+				</div>
+			</div>
+		{{/each}}
+
+		{{#each invitation in invitations}}
+			{{#unless invitation.accepted}}
+				<div class="col-sm-4 col-ms-6" style="margin-bottom:20px">
+					<div class="raised" style="min-height: 280px">
+						<div class="team-member-text-block">
+							<h2 style="overflow: hidden;">{{invitation.email}}</h2>
+							<div>
+								<div class="btn-group pull-right">
+									<span class="btn btn-theme">
+										{{> popout_base title="Pending"
+												content="The invitation was not accepted yet."
+												icon_class="fa fa-clock-o"}}
+									</span>
+
+									<span class="btn btn-theme">
+										<a href="{{invitation_url invitation}}">
+											{{> popout_base title="Link"
+													content="Click this button to go to the invitation link."
+													icon_class="fa fa-link"}}
+										</a>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="team-member-persona">
+							{{>persona has_text=false width=300 height=150}}
+						</div>
+					</div>
+				</div>
+			{{/unless}}
+		{{/each}}
+	</div>
+</template>
+
+

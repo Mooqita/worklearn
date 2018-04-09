@@ -3,52 +3,78 @@
 |  Landing page Template
 |
 ------------------------------------------->
-<template name="mooqita_landing_2">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="hero hero-background">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<div class="row" style="margin-top: 50px">
-							<div class="col-md-7 col-md-offset-0
-													col-sm-8 col-sm-offset-2
-													col-xs-12 col-xs-offset-0
-													vcenter">
-								<h1 style="padding-bottom: 50px">
-									Welcome to the Mooqita app.
-									<hr>
-									Looking for our website? <br>
-									<a href="https://www.mooqita.org"
-										 target="_blank" style="color: #8cc9ac">
-										This way please.
-									</a>
-								</h1>
-							</div><!--
-							This comment is important otherwise
-							the grid system will break. Due to
-							the interpretation of the white spaces!
-							--><div class="	col-md-5 col-md-offset-0
-															col-sm-8 col-sm-offset-2
-															col-xs-12 col-xs-offset-0
-															vcenter">
-	 							{{#unless currentUser}}
-									<div class="well" style="color: black; text-align: center">
-										{{>atForm}}
+<template name="mooqita_landing">
+	<div class="mooqita-layout">
+		<div class="hero hero-background">
+			<div style="float: right; padding: 15px">
+				<a class="sign-in animated_0_2_s" href="app/profile">
+					<span class="fa fa-2x fa-sign-in"></span>
+				</a>
+			</div>
+		</div>
+
+		<div class="container-fluid" style="color: #fff; background: rgb(134, 45, 101);">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="row" style="margin-top: 50px">
+						<div class="col-md-6 col-md-offset-0
+												col-sm-8 col-sm-offset-2
+												col-xs-12 col-xs-offset-0
+												vcenter">
+							<h1 style="font-family: round; font-size: 80px">Mooqita</h1>
+							<h1 style="padding-bottom: 50px">
+								Hiring is hard.
+								<br>
+								We make it easy.
+							</h1>
+						</div><!--
+						This comment is important otherwise
+						the grid system will break. Due to
+						the interpretation of the white spaces!
+						--><div class="	col-md-6 col-md-offset-0
+														col-sm-8 col-sm-offset-2
+														col-xs-12 col-xs-offset-0
+														vcenter">
+							<div class="padding-top"></div>
+							<a class="hover-card-container animated hover-card-small padding-next"
+								 href="{{g_build_url "onboarding_job_intro" (object) "onboarding"}}">
+									<div class="hover-card-box animated" style="padding-right: 25px">
+									<div class="hover-card animated" style="margin: 15px; padding: 15px">
+										<div class="pop-icon-circle">
+											<span class="fa fa-globe color-theme pop-icon"
+														style="left: 7px;">
+											</span>
+										</div>
+
+										<div class="text-left" style="text-align: left">
+											<h2>Organization</h2>
+											Find the perfect candidate
+										</div>
 									</div>
-								{{/unless}}
-							</div>
+								</div>
+							</a>
+
+							<a class="hover-card-container animated hover-card-small"
+								 href="{{g_build_url "profile"}}">
+								<div class="hover-card-box animated" style="padding-right: 25px">
+									<div class="hover-card animated" style="margin: 15px; padding: 15px">
+										<div class="pop-icon-circle">
+											<span class="fa fa-graduation-cap color-theme pop-icon"
+														style="font-size: 70px; position: absolute; left: 6px; top: 15px">
+											</span>
+										</div>
+
+										<div class="text-left" style="text-align: left">
+											<h2>Learner</h2>
+											Discover the job you love
+										</div>
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<section class="container-fluid padding-top">
-		{{#mooqita_wide_spacing}}
-			{{>post_group group_name="frontpage"}}
-		{{/mooqita_wide_spacing}}
-	</section>
 </template>
-
-

@@ -1,0 +1,109 @@
+<!-----------------------------------------
+|
+|  Post entry Template
+|
+------------------------------------------->
+<template name="post_group">
+	{{#if "editor"}}
+		<!--div class="post-maker item">
+			<div class="row">
+				<div class="col-md-8 vcenter">
+					<em>Select template and add new element</em>
+				</div--><!-- Important for vcenter
+			--><!--div class="col-md-4 vcenter">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<div class="btn btn-theme" id="add_post">
+								<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div-->
+	{{/if}}
+
+	{{#unless Template.subscriptionsReady}}
+		{{>wait}}
+	{{else}}
+		{{#each groups}}
+			{{>_post}}
+		{{/each}}
+	{{/unless}}
+</template>
+
+
+<template name="_post">
+	<div id="{{_id}}"></div>
+	{{#Template.dynamic template=template_id data=.}}
+		{{#each children}}
+			{{>_post}}
+		{{/each}}
+	{{/Template.dynamic}}
+</template>
+
+
+<!-----------------------------------------
+|
+|  Post Template
+|
+------------------------------------------->
+<template name="post">
+	{{#if post_can_edit "Posts" _id}}
+		{{>_edit_toggle}}
+	{{/if}}
+
+	{{#if post_is_editing _id}}
+		{{#_edit_tools  collection_name="Posts" _id=_id}}
+			{{>wysiwyg_input method="set_field" collection_name="Posts"
+					field="abstract" item_id=_id}}
+		{{/_edit_tools}}
+	{{else}}
+		<h1>{{title}}</h1>
+		{{#if abstract}}
+			{{{abstract}}}
+		{{/if}}
+	{{/if}}
+
+	{{> UI.contentBlock}}
+</template>
+
+
+<template name="_edit_toggle">
+	<div class="edit-toggle tool-background" id="edit">
+		<span class="glyphicon glyphicon-edit"></span>
+	</div>
+</template>
+
+
+<template name="_edit_tools">
+	{{> UI.contentBlock}}
+
+	{{>basic_input label='Name' method='set_field' collection_name=collection_name
+			field='name' item_id=_id placeholder="A name to find your responses" type="text"}}
+
+	{{>basic_input label='Title' method='set_field' collection_name=collection_name
+			field='title' item_id=_id placeholder="A title that is used in many places"
+			type="text"}}
+
+	{{>basic_input label='Group' method='set_field' collection_name=collection_name
+		field='group_name' item_id=_id placeholder="An identifier to group" type="text" }}
+
+	{{>basic_input label='Index' method='set_field' collection_name=collection_name
+		field='index' item_id=_id placeholder="Index of element" type="number" }}
+
+	{{>basic_input label='View Order' method='set_field' collection_name=collection_name
+		field='view_order' item_id=_id placeholder="View order of element lower comes first"
+		type="number" }}
+
+	{{>select_input label='Template' method='set_field'
+			collection_name=collection_name field='template_id' item_id=_id
+			options=templates}}
+
+	{{>select_input label='Parent' method='set_field' collection_name=collection_name
+		field='parent_id' item_id=_id options=parents}}
+
+	{{>select_input label='Visibility' method='set_field'
+		collection_name=collection_name	field='visible_to' item_id=_id
+		options=_response_visibility}}
+</template>

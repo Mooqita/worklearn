@@ -1,0 +1,63 @@
+<!-----------------------------------------------------------------------------
+|
+| Hover Cards:
+| Are data manipulating buttons.
+|
+| Data Sources:
+|	You can use hover cards in various ways. Depending on your needs you can send set
+| various data sources. You can set multiple but this may lead to conflicts.
+|
+| Session variables: if the parameter "session" is defined the value will be stored
+|										 in the respective variable. If "key" is defined the "value"
+|										 will be stored so that Session.get(session)[key] == value
+|
+| {{>hover_card icon="fa-paint-brush color-theme"
+| 							href="onboarding_competency"
+|								session="onboarding_job_posting"
+| 							key="role" value="design" message="Designer"
+| 							text="UX/UI Designer, Creative Director, etc."}}
+|
+| Reactive Dict: If "dictionary" is defined the "key" parameter is required.
+|								 Then "value" is stored so that dictionary.get(key) == value
+|
+| {{>hover_card ...
+|								dictionary=data_dictionary key="role" value="design"
+| 							...}}
+|
+| Reactive Var: If "variable" is defined the data will be set so that:
+| 							variable.get() == value
+|
+| {{>hover_card ...
+|								variable=data_dictionary value="design"
+| 							...}}
+|
+|	DB Field: To set a field and propagate it to the server you set "collection_name"
+|						"item_id", and "field". This will use the set_field_value function to
+|						to store value on the server and get_field_value to display the value.
+|
+| {{>hover_card ...
+|								collection_name="jobs" item_id=item_id field="role" value="design"
+| 							...}}
+|
+------------------------------------------------------------------------------>
+<template name="hover_card">
+	<a class="hover-card-container animated hover-card-small" href="{{href}}">
+		<div class="hover-card-box animated">
+			<div class="hover-card animated hover-click">
+				{{#if icon}}
+					<span class="hover-icon fa {{icon}}"></span>
+				{{/if}}
+
+				<p class="hover-text animated">{{message}}</p>
+				<small class="form-text hover-info animated">{{text}}</small>
+
+				{{#if selected}}
+					<div style="position: absolute; left:5px; top:5px"
+							 class="badge badge-info hover-select animated">
+						<span class="fa fa-check"></span>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</a>
+</template>

@@ -2,13 +2,12 @@
 @gen_message = (user, title, message, url) ->
 	#save message
 	msg =
-		owner_id: user._id
 		content: message
 		title: title
 		seen: false
 		url: url
 
-	m_id = store_document_unprotected Messages, msg
+	m_id = store_document_unprotected Messages, msg, user, true
 
 	return m_id
 
@@ -22,48 +21,42 @@
 @send_review_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
-
-	filter =
-		owner_id: solution.owner_id
-	solution_profile = Profiles.findOne filter
+	owner_id = get_document_owner "solutions", solution
+	solution_profile = get_profile owner_id
 
 	subject = "Mooqita: You got a new review"
-	url = build_url "learner_solution", {challenge_id: challenge._id}
+	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
 
 	name = if solution_profile then solution_profile.given_name ? "learner" else "learner"
 
 	body = "Hi " + name + ",\n\n"
 	body += "You received a new review in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " +  "https://mooqita.org" + url + "\n\n"
+	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://mooqita.org" + build_url "learner_profile"
+					"" + build_url "profile", {}, "app", true
 
-	owner = Meteor.users.findOne solution.owner_id
-	send_message_mail owner, subject, body
+	send_message_mail owner_id, subject, body
 
 	title = "New Review"
 	text = "You received a new review on one of your solutions in: "
 	text += challenge.title + " "
 
-	gen_message owner, title, text, url
+	gen_message owner_id, title, text, url
 
 	return true
 
 
 @send_review_timeout_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
-	solution = Solutions.findOne review.solution_id
-
-	filter =
-		owner_id: review.owner_id
-	review_profile = Profiles.findOne filter
+	owner_id = get_document_owner "reviews", review
+	review_profile = get_profile owner_id
 
 	subject = "Mooqita: A review timed out"
-	url = build_url "learner_solution", {challenge_id: challenge._id}
+	url = build_url "challenge", {challenge_id: challenge._id}, "app", true
 
 	name = if review_profile then review_profile.given_name ? "learner" else "learner"
 
@@ -77,9 +70,8 @@
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: " +
-					"https://mooqita.org" + build_url "learner_profile"
+					build_url "profile", {}, true
 
-	owner = Meteor.users.findOne solution.owner_id
 	send_message_mail owner, subject, body
 
 	title = "Review timeout"
@@ -98,17 +90,15 @@
 	challenge = Challenges.findOne feedback.challenge_id
 	solution = Solutions.findOne feedback.solution_id
 	review = Reviews.findOne feedback.review_id
-
-	filter =
-		owner_id: review.owner_id
-	review_profile = Profiles.findOne filter
+	owner_id = get_document_owner "reviews", review
+	review_profile = get_profile owner_id
 
 	param =
 		review_id: review._id
 		solution_id: solution._id
 		challenge_id: challenge._id
 
-	url = build_url "learner_review", param
+	url = build_url "review", param, "app", true
 	subject = "Mooqita: New feedback for your reviews"
 
 	name = if review_profile then review_profile.given_name ? "user" else "user"
@@ -116,20 +106,19 @@
 	body = "Hi " + name + ",\n\n"
 	body += "You received feedback to one of your reviews in: \n"
 	body += challenge.title + "\n\n"
-	body += "To check it out, follow this link: " + "https://mooqita.org" + url + "\n\n"
+	body += "To check it out, follow this link: " + url + "\n\n"
 	body += "Kind regards, \n"
 	body += " Your Mooqita Team \n\n"
 
 	body += "You can disable mail notifications in your profile: "+
-					"https://mooqita.org" + build_url "learner_profile"
+					build_url "profile", {}, true, "learner"
 
-	owner = Meteor.users.findOne review.owner_id
-	send_message_mail owner, subject, body, url
+	send_message_mail owner_id, subject, body, url
 
 	title = "New Feedback"
 	text = "You received new feedback on one of your reviews in: "
 	text += challenge.title
 
-	gen_message owner, title, text, url
+	gen_message owner_id, title, text, url
 
 	return true

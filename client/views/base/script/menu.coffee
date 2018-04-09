@@ -1,21 +1,44 @@
-########################################
+###############################################################################
+# Top Base Menu
+###############################################################################
+
+###############################################################################
 Template.mooqita_menu.helpers
-	sub_menu: () ->
-		profile = get_profile()
-		if not profile
-			return false
+	profile: () ->
+		user_id = Meteor.userId()
+		profile = get_profile(user_id)
+		return profile
 
-		switch profile.occupation
-			when "learner" then return "learner_menu"
-			when "student" then return "learner_menu"
-			when "educator" then return "educator_menu"
-			when "teacher" then return "educator_menu"
-			when "organization" then return "organization_menu"
-			when "company" then return "organization_menu"
-			else return false
+	menu_items: () ->
+		unique = get_admission_collection_names()
+
+		items = [	{name: "Organizations", href: build_url("organizations")}]
+
+		if unique.has("organizations")
+		 items.push({name: "Job Postings", href: build_url("jobs")})
+
+		items.push({name: "Challenges", href: build_url("designed_challenges")})
+
+		#{name: "Portfolio", href: build_url("portfolio")}
+		#filter =
+		#	collection_name: "organizations"
+		#if Admissions.find(filter).count() > 0
+
+		if unique.has("solutions")
+		 items.push({name: "Solutions", href: build_url("solutions")})
+		 items.push({name: "Reviews", href: build_url("reviews")})
+		 items.push({name: "Portfolio", href: build_url("portfolio")})
+		if unique.has("profiles")
+		 items.push({name: "Education", href: build_url("learner_education")})
 
 
-########################################
+		return items
+
+	num_new_messages: () ->
+		crs = get_my_documents("messages", {seen:false})
+		return crs.count()
+
+###############################################################################
 Template.mooqita_menu.events
 	'click #logout': (event) ->
 		Meteor.logout()

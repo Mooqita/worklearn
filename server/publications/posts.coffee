@@ -10,13 +10,12 @@ Meteor.publish "posts", (group_name) ->
 	check group_name, String
 
 	user_id = this.userId
-	restrict =
+	filter =
 		group_name: group_name
+		visible_to: "all"
 
-	filter = filter_visible_documents user_id, restrict
-	fields = visible_fields Posts, user_id, filter
-	crs = Posts.find filter, fields
+	crs = Posts.find filter
 
-	log_publication "Posts", crs, filter, restrict, "posts", user_id
+	log_publication crs, user_id, "posts"
 	return crs
 

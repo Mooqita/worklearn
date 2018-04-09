@@ -5,20 +5,23 @@
 ################################################################
 
 ################################################################
+# TODO: are permissions still necessary?
+################################################################
+
+################################################################
 Meteor.methods
 	add_db_permission: (role, collection_name, field) ->
 		user = Meteor.user()
-		if !user
+		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if !Roles.userIsInRole(user._id, 'db_admin')
+		if not has_role Permissions, COLLECTION, user._id, ADMIN
 			throw new Meteor.Error('Not permitted.')
 
 		check role, String
 		check field, String
 		check collection_name, String
 
-# TODO: is this necessary?
 #		secret = Secrets.findOne()
 
 #		if not collection_name in secret.collections
@@ -46,13 +49,13 @@ Meteor.methods
 		return res
 
 	remove_permission: (id) ->
+		check id, String
+
 		user = Meteor.user()
 		if !user
 			throw new Meteor.Error 'Not permitted.'
 
-		if !Roles.userIsInRole user._id, 'db_admin'
+		if  not has_role Permissions, COLLECTION, user._id, 'db_admin'
 			throw new Meteor.Error 'Not permitted.'
-
-		check id, String
 
 		Permissions.remove(id)
