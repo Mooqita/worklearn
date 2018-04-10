@@ -16,6 +16,19 @@ Meteor.methods({
 		return gen_profile(user)
 	},
 
+	get_course_progress: () => {
+		var user = Meteor.user()
+		var profile = Profiles.findOne({user_id: user._id})
+
+		var course_progress = {
+			cobol_course_progress: profile.cobol_course_progress,
+			comp_thinking_course_progress: profile.comp_thinking_course_progress,
+			python_course_progress: profile.python_course_progress,
+		}
+
+		return course_progress
+	},
+
 	get_quiz_scores: () => {
 		var user = Meteor.user()
 		var profile = Profiles.findOne({user_id: user._id})

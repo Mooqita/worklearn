@@ -211,6 +211,27 @@
   },
   {
     "role": "owner",
+    "field": "cobol_course_progress",
+    "collection_name": "profiles",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "comp_thinking_course_progress",
+    "collection_name": "profiles",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
+    "field": "python_course_progress",
+    "collection_name": "profiles",
+    "modify": true,
+    "read": true
+  },
+  {
+    "role": "owner",
     "field": "cobol_quiz_score",
     "collection_name": "profiles",
     "modify": true,
