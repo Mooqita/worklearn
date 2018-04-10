@@ -48,6 +48,9 @@
                 <strong>COBOL</strong>
                 <span type="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#info"></span>
             </h1>
+            {{#if cobol_course_disabled_text}}
+                <h2>You cannot enroll in this course until you have completed Computational Thinking.</h2>
+            {{/if}}
             <div id="info" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -78,14 +81,14 @@
                     <div class="panel-body">
                         <div class="col-md-9 col-xs-12">
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                                    <h2>40%</h2>
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{cobol_course_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{cobol_course_progress}}%">
+                                    <h2>{{cobol_course_progress}}%</h2>
                                 </div>
                             </div>
                         </div>
                         <center>
                             <div class="btn btn-right">
-                                <a href="#" class="btn btn-lg btn-success">Resume Course</a>
+                                <a href="#" class="btn btn-lg btn-success" {{cobol_course_disabled}}>Resume Course</a>
                             </div>
                             <h1>Next Lesson: <strong>Loops</strong></h1>
                         </center>
@@ -113,6 +116,48 @@
                                 <h4 class="list-group-item-heading"><strong>Lesson 3:</strong> The Compiler</h4>
                                 <p class="list-group-item-text">In this lesson you will learn the basics of the compiler.</p>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="containter">
+        </div>
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Recently Posted Challenges</h3>
+                        <h5>Here are a list of recent challenges with COBOL</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #1<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #2<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #3<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #4<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                        </div>
+                    </div>
+                    <center>
+                        <div class="btn btn-right">
+                            <a href="#" class="btn btn-lg btn-success">See More</a>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 col-sm-12" >
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Online Resources</h3>
+                        <p>Here is a list of useful online resources</p>
+                    </div>
+                     <div class="panel-body">
+                        <div class="list-group">
+                            <a href="https://www.w3schools.com/" target="_blank" class="list-group-item"><h2>W3Schools</h2><br/><p>Great resource for practicing what you learn</p></a>
+                            <a href="https://www.youtube.com/" target="_blank" class="list-group-item"><h2>Youtube</h2><br/><p>Great resource for practicing what you learn</p></a>
+                            <a href="#" class="list-group-item"><h2>Other Link</h2><br/><p>Great resource for practicing what you learn</p></a>
                         </div>
                     </div>
                 </div>
