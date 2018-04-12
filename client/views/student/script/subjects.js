@@ -25,14 +25,6 @@ Template.learner_education.onRendered(() => {
 	})
 })
 
-Template.comp_thinking_course.onRendered(() => {
-	Meteor.call('get_course_progress', (err, res) => {
-		Session.set('cobol_course_progress', res.cobol_course_progress)
-		Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
-		Session.set('python_course_progress', res.python_course_progress)
-	})
-})
-
 Template.learner_education.onRendered(() => {
 	Meteor.call('get_course_progress', (err, res) => {
 		Session.set('cobol_course_progress', res.cobol_course_progress)
@@ -42,20 +34,6 @@ Template.learner_education.onRendered(() => {
 })
 
 Template.learner_education.helpers({
-	'cobol_course_progress': () => {
-		return Session.get('cobol_course_progress')
-	},
-
-	'comp_thinking_course_progress': () => {
-		return Session.get('comp_thinking_course_progress')
-	},
-
-	'python_course_progress': () => {
-		return Session.get('python_course_progress')
-	}
-})
-
-Template.comp_thinking_course.helpers({
 	'cobol_course_progress': () => {
 		return Session.get('cobol_course_progress')
 	},

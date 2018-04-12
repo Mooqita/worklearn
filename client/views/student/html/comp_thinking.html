@@ -42,6 +42,30 @@
         }
     </style>
 
+    {{#each module in comp_thinking_modules}}
+        <div id="comp_thinking_module_{{@index}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         <h3 class="modal-title">{{module.title}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <html>
+                                {{{module.content}}}
+                            </html>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#comp_thinking_module_{{comp_thinking_module_back @index}}">Back</button>
+                        <button type="button" class="btn btn-default comp_thinking_module_next" data-dismiss="modal" data-toggle="modal" data-target="#comp_thinking_module_{{comp_thinking_module_next @index}}" value="{{@index}}">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+
     <div class="header">
         <center>
             <br />
@@ -49,7 +73,7 @@
     </div>
     <div class="container">
         <center>
-            <h1>Course Home: <strong>Computational Thinking</strong><!-- Trigger the modal with a button -->
+            <h1>Course Home: <strong>Computational Thinking</strong>
                 <span type="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#info"></span>
             </h1>
             <div id="info" class="modal fade" role="dialog">
@@ -104,18 +128,26 @@
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading"><strong>Lesson 1:</strong> Introduction</h4>
-                                <p class="list-group-item-text">In this lesson you will learn the basics of Computational Thinking.</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading"><strong>Lesson 2:</strong> Variables</h4>
-                                <p class="list-group-item-text">In this lesson you will learn the basics of variables.</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading"><strong>Lesson 3:</strong> The Interpreter</h4>
-                                <p class="list-group-item-text">In this lesson you will learn the basics of the interpreter.</p>
-                            </a>
+                            {{#each module in comp_thinking_modules}}
+                                {{#if is_module_completed @index}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You have completed this module.</em></p>
+                                    </button>
+                                {{else if is_module_disabled @index }}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}" disabled>
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You do not have access to this module yet.</em></p>
+                                    </button>
+                                {{else}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                    </button>
+                                {{/if}}
+                            {{/each}}
                         </div>
                     </div>
                 </div>
