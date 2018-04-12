@@ -4,7 +4,6 @@
     "description": "Learn variables",
     "content": "<h1>This is test content page 1</h1>",
     "module_number": 1,
-    "percent_after_completion": 25,
     "subject": "python",
     "published": true
   },
@@ -13,7 +12,6 @@
     "description": "Learn loops",
     "content": "<h1>This is test content page 2</h1>",
     "module_number": 2,
-    "percent_after_completion":  50,
     "subject": "python",
     "published": true
   },
@@ -22,7 +20,6 @@
     "description": "Learn functions",
     "content": "<h1>This is test content page 3</h1>",
     "module_number": 3,
-    "percent_after_completion": 75,
     "subject": "python",
     "published": true
   },
@@ -31,7 +28,6 @@
     "description": "Learn more",
     "content": "<h1>This is test content page 4</h1>",
     "module_number": 4,
-    "percent_after_completion": 100,
     "subject": "python",
     "published": true
   }
