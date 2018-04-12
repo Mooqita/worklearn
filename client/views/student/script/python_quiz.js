@@ -33,7 +33,7 @@ Template.python_quiz.onRendered(() => {
         $('#python_quiz').html('')
 
         for(let i = 0; i < submitted_answers.length; i++) {
-            if(submitted_answers[i].value   == quiz[count][quiz[count].correct_answer]) {
+            if(submitted_answers[i].value == quiz[count][quiz[count].correct_answer]) {
                 $('#python_quiz').append('<div>')
                 $('#python_quiz').append('<strong>Question ' + (count + 1) + ' Correct:</strong> <br />')
                 $('#python_quiz').append(quiz[count][quiz[count].correct_answer])
@@ -54,7 +54,7 @@ Template.python_quiz.onRendered(() => {
 
         Meteor.call('set_python_score', score, err => {
             if(!score) {
-                $('#python_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')    
+                $('#python_quiz').html('<h1>You can\'t resubmit this quiz.</h1>')
             }
         })
 

@@ -1,4 +1,4 @@
-<template name="python_course">
+<template name="python_course" template="python_modules">
     <style>
         .panel > .panel-heading {
             background-image: none;
@@ -41,6 +41,30 @@
 
         }
     </style>
+
+    {{#each module in python_modules}}
+        <div id="python_module_{{@index}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         <h3 class="modal-title">{{module.title}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <html>
+                                {{{module.content}}}
+                            </html>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#python_module_{{python_module_back @index}}">Back</button>
+                        <button type="button" class="btn btn-default python_module_next" data-dismiss="modal" data-toggle="modal" data-target="#python_module_{{python_module_next @index}}" value="{{@index}}">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
 
     <div class="header">
         <center>
@@ -93,7 +117,7 @@
                     </div>
                     <center>
                         <div class="btn btn-right">
-                            <a href="#" class="btn btn-lg btn-success" {{python_course_disabled}}>Resume Course</a>
+                            <button data-toggle="modal" data-target="#python_module_{{python_module_resume python_course_progress}}" class="btn btn-lg btn-success">Resume Course</button>
                         </div>
                         <h1>Next Lesson: <strong>Loops</strong></h1>
                     </center>
@@ -109,18 +133,26 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <h4 class="list-group-item-heading"><strong>Lesson 1:</strong> Introduction</h4>
-                            <p class="list-group-item-text">In this lesson you will learn the basics of Python.</p>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <h4 class="list-group-item-heading"><strong>Lesson 2:</strong> Variables</h4>
-                            <p class="list-group-item-text">In this lesson you will learn the basics of variables.</p>
-                        </a>
-                       <a href="#" class="list-group-item">
-                            <h4 class="list-group-item-heading"><strong>Lesson 3:</strong> The Interpreter</h4>
-                            <p class="list-group-item-text">In this lesson you will learn the basics of the Interpreter.</p>
-                        </a>
+                        {{#each module in python_modules}}
+                            {{#if is_module_completed @index}}
+                                <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}">
+                                    <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                    <p>{{module.description}}</p>
+                                    <p><em>You have completed this module.</em></p>
+                                </button>
+                            {{else if is_module_disabled @index }}
+                                <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}" disabled>
+                                    <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                    <p>{{module.description}}</p>
+                                    <p><em>You do not have access to this module yet.</em></p>
+                                </button>
+                            {{else}}
+                                <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}">
+                                    <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                    <p>{{module.description}}</p>
+                                </button>
+                            {{/if}}
+                        {{/each}}
                     </div>
                 </div>
             </div>

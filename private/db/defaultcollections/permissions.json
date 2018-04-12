@@ -514,14 +514,14 @@
     "role": "editor",
     "field": "answer_one",
     "collection_name": "questions",
-    "modify": true,
+    "modify": false,
     "read": true
   },
   {
     "role": "editor",
     "field": "answer_two",
     "collection_name": "questions",
-    "modify": true,
+    "modify": false,
     "read": true
   },
   {
@@ -613,6 +613,48 @@
     "field": "published",
     "collection_name": "questions",
     "modify": true,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "title",
+    "collection_name": "modules",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "description",
+    "collection_name": "modules",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "content",
+    "collection_name": "modules",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "module_number",
+    "collection_name": "modules",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "percent_after_completion",
+    "collection_name": "modules",
+    "modify": false,
+    "read": true
+  },
+  {
+    "role": "editor",
+    "field": "subject",
+    "collection_name": "modules",
+    "modify": false,
     "read": true
   }
 ]
