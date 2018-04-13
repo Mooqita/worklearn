@@ -29,10 +29,6 @@ Meteor.methods({
             throw new Meteor.Error('Unable to submit.')
         }
 
-        if(inserted_correctly) {
-            console.log('Inserted correctly. ID is: ' + inserted_correctly)
-        }
-
         return true
     },
 
@@ -133,7 +129,11 @@ Meteor.methods({
             return false
         }
 
-        modify_field_unprotected(Profiles, profile._id, 'cobol_quiz_score', score)
+        if(parseFloat(score) > 70.00) {
+            modify_field_unprotected(Profiles, profile._id, 'cobol_course_progress', 100)
+        }
+
+        modify_field_unprotected(Profiles, profile._id, 'cobol_quiz_score', parseFloat(score))
     },
 
     set_comp_thinking_score: score => {
@@ -143,8 +143,11 @@ Meteor.methods({
         if(profile.comp_thinking_quiz_score != undefined) {
             false
         }
+        if(parseFloat(score) > 70.00) {
+            modify_field_unprotected(Profiles, profile._id, 'comp_thinking_course_progress', 100)
+        }
 
-        modify_field_unprotected(Profiles, profile._id, 'comp_thinking_quiz_score', score)
+        modify_field_unprotected(Profiles, profile._id, 'comp_thinking_quiz_score', parseFloat(score))
     },
 
     set_python_score: score => {
@@ -155,6 +158,10 @@ Meteor.methods({
             return false
         }
 
-        modify_field_unprotected(Profiles, profile._id, 'python_quiz_score', score)
+        if(parseFloat(score) > 70.00) {
+            modify_field_unprotected(Profiles, profile._id, 'python_course_progress', 100)
+        }
+
+        modify_field_unprotected(Profiles, profile._id, 'python_quiz_score', parseFloat(score))
     }
 })
