@@ -133,6 +133,8 @@ Meteor.methods({
 
         if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'cobol_course_progress', 100)
+            new_balance += score_float
+            modify_field_unprotected(Profiles, profile._id, 'my_balance', new_balance)
         } else {
             modify_field_unprotected(Profiles, profile._id, 'cobol_course_progress', 0)
         }
@@ -152,6 +154,8 @@ Meteor.methods({
 
         if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'comp_thinking_course_progress', 100)
+            new_balance += score_float
+            modify_field_unprotected(Profiles, profile._id, 'my_balance', new_balance)
         } else {
             modify_field_unprotected(Profiles, profile._id, 'comp_thinking_course_progress', 0)
         }
@@ -162,15 +166,22 @@ Meteor.methods({
     set_python_score: score => {
         var user = Meteor.user()
         var profile = Profiles.findOne({user_id: user._id})
+        var new_balance = 0
 
         if(profile.python_quiz_score != undefined) {
             return false
+        }
+
+        if(profile.my_balance != undefined) {
+            new_balance = profile.my_balance
         }
 
         var score_float = parseFloat(score)
 
         if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'python_course_progress', 100)
+            new_balance += score_float
+            modify_field_unprotected(Profiles, profile._id, 'my_balance', new_balance)
         } else {
             modify_field_unprotected(Profiles, profile._id, 'python_course_progress', 0)
         }
