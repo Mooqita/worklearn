@@ -52,7 +52,7 @@ Template.python_course.helpers({
 		var resume_progress = (python_course_progress / (100 / num_python_modules))
 		var return_val = false
 
-		if(index > resume_progress) {
+		if(index > resume_progress || (index > 0 && python_course_progress == undefined)) {
 			return_val = true
 		}
 
@@ -75,9 +75,34 @@ Template.python_course.helpers({
         return index + 1
     },
 
-	'python_module_resume': python_course_progress => {
-		var resume_progress = (python_course_progress / (100 / num_python_modules))
+	'python_module_resume': () => {
+		var python_course_progress = Session.get('python_course_progress')
+		var python_modules = Session.get('python_modules')
+		var num_python_modules = python_modules.length
+		var resume_progress = 0
+
+		if(python_course_progress != undefined) {
+			resume_progress = (python_course_progress / (100 / num_python_modules))
+		}
+
 		return resume_progress
+	},
+
+	'python_module_resume_title': () => {
+		var python_course_progress = Session.get('python_course_progress')
+		var python_modules = Session.get('python_modules')
+		var num_python_modules = python_modules.length
+		var resume_progress = 0
+
+		if(python_course_progress != undefined) {
+			resume_progress = (python_course_progress / (100 / num_python_modules))
+		}
+
+		if(python_modules[resume_progress].title == undefined) {
+			return false
+		}
+
+		return python_modules[resume_progress].title
 	}
 })
 
@@ -87,5 +112,11 @@ Template.python_course.events({
 		var num_python_modules = python_modules.length
 
 		Meteor.call('update_python_course_progress', event.toElement.value, num_python_modules)
+
+		Meteor.call('get_course_progress', (err, res) => {
+			Session.set('cobol_course_progress', res.cobol_course_progress)
+			Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
+			Session.set('python_course_progress', res.python_course_progress)
+		})
 	}
 })

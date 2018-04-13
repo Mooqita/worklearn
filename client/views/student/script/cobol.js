@@ -2,7 +2,7 @@ Template.cobol_course.onRendered(() => {
 	Meteor.call('get_course_progress', (err, res) => {
 		Session.set('cobol_course_progress', res.cobol_course_progress)
 		Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
-		Session.set('cobol_course_progress', res.cobol_course_progress)
+		Session.set('python_course_progress', res.python_course_progress)
 	})
 
 	Meteor.call('get_cobol_modules', (err, res) => {
@@ -52,7 +52,7 @@ Template.cobol_course.helpers({
 		var resume_progress = (cobol_course_progress / (100 / num_cobol_modules))
 		var return_val = false
 
-		if(index > resume_progress) {
+		if(index > resume_progress || (index > 0 && cobol_course_progress == undefined)) {
 			return_val = true
 		}
 
@@ -75,9 +75,30 @@ Template.cobol_course.helpers({
         return index + 1
     },
 
-	'cobol_module_resume': cobol_course_progress => {
-		var resume_progress = (cobol_course_progress / (100 / num_cobol_modules))
+	'cobol_module_resume': () => {
+		var cobol_course_progress = Session.get('cobol_course_progress')
+		var cobol_modules = Session.get('cobol_modules')
+		var num_cobol_modules = cobol_modules.length
+		var resume_progress = 0
+
+		if(cobol_course_progress != undefined) {
+			resume_progress = (cobol_course_progress / (100 / num_cobol_modules))
+		}
+
 		return resume_progress
+	},
+
+	'cobol_module_resume_title': () => {
+		var cobol_course_progress = Session.get('cobol_course_progress')
+		var cobol_modules = Session.get('cobol_modules')
+		var num_cobol_modules = cobol_modules.length
+		var resume_progress = 0
+
+		if(cobol_course_progress != undefined) {
+			resume_progress = (cobol_course_progress / (100 / num_cobol_modules))
+		}
+
+		return cobol_modules[resume_progress].title
 	}
 })
 
@@ -87,5 +108,11 @@ Template.cobol_course.events({
 		var num_cobol_modules = cobol_modules.length
 
 		Meteor.call('update_cobol_course_progress', event.toElement.value, num_cobol_modules)
+		
+		Meteor.call('get_course_progress', (err, res) => {
+			Session.set('cobol_course_progress', res.cobol_course_progress)
+			Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
+			Session.set('python_course_progress', res.python_course_progress)
+		})
 	}
 })
