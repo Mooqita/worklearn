@@ -117,10 +117,10 @@
                     </div>
                     <center>
                         <div class="btn btn-right">
-                            <button data-toggle="modal" data-target="#python_module_{{python_module_resume}}" class="btn btn-lg btn-success">Resume Course</button>
+                            <button data-toggle="modal" data-target="#python_module_{{python_module_resume}}" class="btn btn-lg btn-success" {{python_course_disabled}}>Resume Course</button>
                         </div>
                         {{#if python_module_resume_title}}
-                            <h1>Next Lesson: <strong>{{python_module_resume_title}}</strong></h1>
+                            <h1>Current Lesson: <strong>{{python_module_resume_title}}</strong></h1>
                         {{else}}
                             <h1>Course Completed</h1>
                         {{/if}}
