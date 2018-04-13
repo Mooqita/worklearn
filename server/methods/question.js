@@ -129,8 +129,12 @@ Meteor.methods({
             return false
         }
 
-        if(parseFloat(score) > 70.00) {
+        var score_float = parseFloat(score)
+
+        if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'cobol_course_progress', 100)
+        } else {
+            modify_field_unprotected(Profiles, profile._id, 'cobol_course_progress', 0)
         }
 
         modify_field_unprotected(Profiles, profile._id, 'cobol_quiz_score', parseFloat(score))
@@ -143,8 +147,13 @@ Meteor.methods({
         if(profile.comp_thinking_quiz_score != undefined) {
             false
         }
-        if(parseFloat(score) > 70.00) {
+
+        var score_float = parseFloat(score)
+
+        if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'comp_thinking_course_progress', 100)
+        } else {
+            modify_field_unprotected(Profiles, profile._id, 'comp_thinking_course_progress', 0)
         }
 
         modify_field_unprotected(Profiles, profile._id, 'comp_thinking_quiz_score', parseFloat(score))
@@ -158,8 +167,12 @@ Meteor.methods({
             return false
         }
 
-        if(parseFloat(score) > 70.00) {
+        var score_float = parseFloat(score)
+
+        if(score_float >= 70.00) {
             modify_field_unprotected(Profiles, profile._id, 'python_course_progress', 100)
+        } else {
+            modify_field_unprotected(Profiles, profile._id, 'python_course_progress', 0)
         }
 
         modify_field_unprotected(Profiles, profile._id, 'python_quiz_score', parseFloat(score))
