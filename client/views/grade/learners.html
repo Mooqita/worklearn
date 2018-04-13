@@ -1,139 +1,57 @@
 <!------------------------------------------------
 |
-| Find all Learners
+|  all Learners
 |
 -------------------------------------------------->
 <template name="learners">
-    <h2>Learner Gradebook</h2>
-    {{#each mail in mails}}
-    <p>This is the profile{{profile}}</p>
-    {{/each}}
-<!--
-    {{let learner=(has_profile profile)}}
-    {{#if user}}
-        {{#if learner}}
-            <a href="{{g_build_url "profile"}}" target="_blank"></a>
-        {{else}}
-            <a href="{{g_build_url "profile"}}" target="_blank"></a>
-        {{/if}}
-    {{/if}}
-    {{/let}}
--->
+    <style>
+        .panel > .panel-heading {
+            background-image: none;
+            background-color: #A02D67;
+            color: white;
 
-    <p>This is the profile of {{profile}}</p>
-    <div class="row">
-        <div class="col-sm-8">
-            <select class="selectpicker user_select_class form-control"
-                            title="Enter email to invite" data-live-search="true"
-                            multiple id="user_select">
-            </select>
-        </div>
-        <div class="col-sm-4">
-            <div class="padding-next">
-                <div class="btn-group btn-group-justified">
-                    <div class="btn-group">
-                        <div class="btn btn-theme" id="invite">Send Invites</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <ul class="auto-complete-list">
-        {{#each mail in selected_users}}
-            <li class="auto-complete-list-item">
-                {{mail}}
-                <span id="{{mail}}" class="list-remove fa fa-remove animated_0_2_s"></span>
-            </li>
-        {{/each}}
-    </ul>
+        }
+
+        .alert > .alert-success {
+            background-color: #A02D67;
+            color: white;
+        }
+
+        .progress  {
+            background-color: white;
+            color: white;
+            height: 50px;
+        }
+
+        .progress > .progress-bar-success {
+            background-color: #862D65;
+            color: white;
+        }
+
+        .btn-group > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+        }
+
+        .btn > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+            width: 230px;
+        }
+    </style>
+
     <ul>
-        {{#each mail in selected_users}}
+        {{#each profile in all_users}}
             <li>
-                {{mail}}
+                {{profile}}
             </li>
         {{/each}}
     </ul>
-    <h2>Learners</h2>
-    <div class="row">
-        {{#each member in members}}
-            <div class="col-sm-4 col-ms-6" style="margin-bottom:20px">
-                <div class="raised" style="min-height: 280px">
-                    <div class="team-member-text-block">
-                        <h2 style="overflow: hidden;">{{member.name}}</h2>
-                        <p>
-                            {{#if member.owner}}
-                                This is your persona.
-                            {{/if}}
-                        </p>
-                    </div>
-
-                    {{#let data=(persona_data member)}}
-                        {{#if member.owner}}
-                            {{#if data}}
-                                <a href="{{g_build_url "profile"}}" target="_blank"
-                                     class="btn-float btn-contrast raised animated_0_2_s"
-                                     style="right: 15px;">
-                                    <span class="fa fa-2x fa-edit"></span>
-                                </a>
-                            {{else}}
-                                <a href="{{g_build_url "onboarding_team"}}" target="_blank"
-                                     class="btn-float btn-contrast raised animated_0_2_s"
-                                     style="right: 15px;">
-                                    <span class="fa fa-2x fa-edit"></span>
-                                </a>
-                            {{/if}}
-                        {{/if}}
-
-                        <div class="team-member-persona">
-                            {{#if data}}
-                                {{>persona persona_data=data has_text=true
-                                                     width=300 height=150}}
-                            {{else}}
-                                {{>persona has_text=true
-                                                     width=300 height=150}}
-                            {{/if}}
-                        </div>
-                    {{/let}}
-                </div>
-            </div>
-        {{/each}}
-
-        {{#each invitation in invitations}}
-            {{#unless invitation.accepted}}
-                <div class="col-sm-4 col-ms-6" style="margin-bottom:20px">
-                    <div class="raised" style="min-height: 280px">
-                        <div class="team-member-text-block">
-                            <h2 style="overflow: hidden;">{{invitation.email}}</h2>
-                            <div>
-                                <div class="btn-group pull-right">
-                                    <span class="btn btn-theme">
-                                        {{> popout_base title="Pending"
-                                                content="The invitation was not accepted yet."
-                                                icon_class="fa fa-clock-o"}}
-                                    </span>
-
-                                    <span class="btn btn-theme">
-                                        <a href="{{invitation_url invitation}}">
-                                            {{> popout_base title="Link"
-                                                    content="Click this button to go to the invitation link."
-                                                    icon_class="fa fa-link"}}
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="team-member-persona">
-                            {{>persona has_text=false width=300 height=150}}
-                        </div>
-                    </div>
-                </div>
-            {{/unless}}
-        {{/each}}
-    </div>
     <div class="item-set padding-top">
         <h1>
-            Active Learners
+            Active learners and scores to be paid.
             <div class="btn btn-theme pull-right"
                      style="min-width: 50px;"
                      id="make_payment">
@@ -143,39 +61,44 @@
                         icon_class="glyphicon glyphicon-pencil"}}
             </div>
         </h1>
-
-        <p class="padding-next">
-            Find the jobs you posted to our system.
-        </p>
-        <div class="col-sm-2 col-ms-3 text-center">
-			{{#each profile}}
-				{{>avatar collection_name="Profiles"
-					 observe = profile.avatar
-					 item_id = profile._id
-					 field = "avatar"}}
-
-				<a class="color-theme">{{g_name_from_profile profile true}}</a>
-			{{/each}}
-		</div>
-
-        {{#paging subscription="my_jobs" page=0 count=10
-                            parameter=parameter collection_name="jobs"}}
-            {{#each items}}
-                {{>job_preview}}
-            {{else}}
-                <hr>
-                <h1 class="text-center padding-next"
-                        style="padding-bottom: 45px">
-                    <em>No Learners yet.</em>
-                </h1>
-            {{/each}}
-            <hr>
-        {{/paging}}
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>All Profiles</h3>
+                      </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {{#each module in cobol_modules}}
+                                {{#if is_module_completed @index}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You have completed this module.</em></p>
+                                    </button>
+                                {{else if is_module_disabled @index }}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}" disabled>
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You do not have access to this module yet.</em></p>
+                                    </button>
+                                {{else}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                    </button>
+                                {{/if}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <!------------------------------------------------
 |
-| Add new Learner
+| Edit the learner's score or something
 |
 -------------------------------------------------->
 <template name="learner_select">

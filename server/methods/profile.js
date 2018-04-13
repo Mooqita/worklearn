@@ -40,5 +40,9 @@ Meteor.methods({
 		}
 
 		return quiz_scores
+	},
+	
+	get_all: () => {
+		return Profiles.find().fetch()
 	}
 })
