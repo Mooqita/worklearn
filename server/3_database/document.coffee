@@ -6,6 +6,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @store_document_unprotected = (collection, document)->
 	document["created"] = new Date()
 	document["modified"] = new Date()
@@ -24,6 +25,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @find_documents_paged_unprotected = (collection, filter, mod, parameter) ->
 	parameter.size = if parameter.size > 100 then 100 else parameter.size
 
@@ -50,6 +52,7 @@
 
 ###############################################
 ### delete later
+###############################################
 @find_document = (collection, item_id, owner = true) ->
 	check item_id, String
 
@@ -71,6 +74,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @filter_visible_documents = (user_id, restrict={}) ->
 	filter = []
 	roles = ["all"]
@@ -113,6 +117,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @action_permitted = (permission, action) ->
 	if permission[action]!=true
 		return false
@@ -122,6 +127,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @is_owner = (collection, id, user_id) ->
 	if not collection
 		throw new Meteor.Error('Collection not found:' + collection)
@@ -142,6 +148,7 @@
 
 #######################################################
 ## I guess this works
+#######################################################
 @deny_action = (action, collection, item_id, field) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
@@ -182,4 +189,3 @@
 			return false
 
 	throw new Meteor.Error action + ' not permitted: ' + field
-

@@ -6,6 +6,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @modify_field = (collection, id, field, value) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
@@ -24,6 +25,7 @@
 
 #######################################################
 ### delete later
+#######################################################
 @modify_field_unprotected = (collection, id, field, value) ->
 	if not collection
 		throw new Meteor.Error "Collection undefined."
@@ -90,5 +92,3 @@
 		fields: res
 
 	return mod
-
-

@@ -7,6 +7,7 @@
 ###############################################################################
 @set_field = (collection, item_id, field, value) ->
 	user = Meteor.user()
+
 	if not user
 		throw new Meteor.error "Not permitted"
 
@@ -89,4 +90,3 @@
 
 	log_event msg, event_db, event_edit
 	return n
-
