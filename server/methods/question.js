@@ -33,90 +33,36 @@ Meteor.methods({
     },
 
     get_questions: () => {
-        var raw_questions = Questions.find().fetch()
-        var questions = []
-
-        for(let i = 0; i < raw_questions.length; i++) {
-            if(!raw_questions[i]['published'] != true) {
-                questions.push({
-                    id: raw_questions[i]['_id'],
-                    question: raw_questions[i]['question'],
-                    answer_one: raw_questions[i]['answer_one'],
-                    answer_two: raw_questions[i]['answer_two'],
-                    answer_three: raw_questions[i]['answer_three'],
-                    answer_four: raw_questions[i]['answer_four'],
-                    correct_answer: raw_questions[i]['correct_answer'],
-                    subject: raw_questions[i]['subject'],
-                    published: raw_questions[i]['published'],
-                })
-            }
-        }
+        var questions = Questions.find({
+            published: true
+        }).fetch()
 
         return questions
     },
 
     get_cobol_questions: () => {
-        var raw_questions = Questions.find().fetch()
-        var questions = []
-
-        for(let i = 0; i < raw_questions.length; i++) {
-            if(raw_questions[i]['published'] == true && raw_questions[i]['subject'] == 'cobol') {
-                questions.push({
-                    id: raw_questions[i]['_id'],
-                    question: raw_questions[i]['question'],
-                    answer_one: raw_questions[i]['answer_one'],
-                    answer_two: raw_questions[i]['answer_two'],
-                    answer_three: raw_questions[i]['answer_three'],
-                    answer_four: raw_questions[i]['answer_four'],
-                    correct_answer: raw_questions[i]['correct_answer'],
-                    subject: raw_questions[i]['subject']
-                })
-            }
-        }
+        var questions = Questions.find({
+            published: true,
+            subject: 'cobol'
+        }).fetch()
 
         return questions
     },
 
     get_comp_thinking_questions: () => {
-        var raw_questions = Questions.find().fetch()
-        var questions = []
-
-        for(let i = 0; i < raw_questions.length; i++) {
-            if(raw_questions[i]['published'] == true && raw_questions[i]['subject'] == 'comp_thinking') {
-                questions.push({
-                    id: raw_questions[i]['_id'],
-                    question: raw_questions[i]['question'],
-                    answer_one: raw_questions[i]['answer_one'],
-                    answer_two: raw_questions[i]['answer_two'],
-                    answer_three: raw_questions[i]['answer_three'],
-                    answer_four: raw_questions[i]['answer_four'],
-                    correct_answer: raw_questions[i]['correct_answer'],
-                    subject: raw_questions[i]['subject']
-                })
-            }
-        }
+        var questions = Questions.find({
+            published: true,
+            subject: 'comp_thinking'
+        }).fetch()
 
         return questions
     },
 
     get_python_questions: () => {
-        var raw_questions = Questions.find().fetch()
-        var questions = []
-
-        for(let i = 0; i < raw_questions.length; i++) {
-            if(raw_questions[i]['published'] == true && raw_questions[i]['subject'] == 'python') {
-                questions.push({
-                    id: raw_questions[i]['_id'],
-                    question: raw_questions[i]['question'],
-                    answer_one: raw_questions[i]['answer_one'],
-                    answer_two: raw_questions[i]['answer_two'],
-                    answer_three: raw_questions[i]['answer_three'],
-                    answer_four: raw_questions[i]['answer_four'],
-                    correct_answer: raw_questions[i]['correct_answer'],
-                    subject: raw_questions[i]['subject']
-                })
-            }
-        }
+        var questions = Questions.find({
+            published: true,
+            subject: 'python'
+        }).fetch()
 
         return questions
     },

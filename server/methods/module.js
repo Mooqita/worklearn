@@ -2,64 +2,28 @@
 
 Meteor.methods({
     get_cobol_modules: () => {
-        var raw_modules = Modules.find().fetch()
-        var modules = []
-
-        for(let i = 0; i < raw_modules.length; i++) {
-            if(raw_modules[i]['published'] == true && raw_modules[i]['subject'] == 'cobol') {
-                modules.push({
-                    id: raw_modules[i]['_id'],
-                    title: raw_modules[i]['title'],
-                    description: raw_modules[i]['description'],
-                    content: raw_modules[i]['content'],
-                    module_number: raw_modules[i]['module_number'],
-                    percent_after_completion: raw_modules[i]['percent_after_completion'],
-                    subject: raw_modules[i]['subject']
-                })
-            }
-        }
+        var modules = Modules.find({
+            published: true,
+            subject: 'cobol'
+        }).fetch()
 
         return modules
     },
 
     get_comp_thinking_modules: () => {
-        var raw_modules = Modules.find().fetch()
-        var modules = []
-
-        for(let i = 0; i < raw_modules.length; i++) {
-            if(raw_modules[i]['published'] == true && raw_modules[i]['subject'] == 'comp_thinking') {
-                modules.push({
-                    id: raw_modules[i]['_id'],
-                    title: raw_modules[i]['title'],
-                    description: raw_modules[i]['description'],
-                    content: raw_modules[i]['content'],
-                    module_number: raw_modules[i]['module_number'],
-                    percent_after_completion: raw_modules[i]['percent_after_completion'],
-                    subject: raw_modules[i]['subject']
-                })
-            }
-        }
+        var modules = Modules.find({
+            published: true,
+            subject: 'comp_thinking'
+        }).fetch()
 
         return modules
     },
 
     get_python_modules: () => {
-        var raw_modules = Modules.find().fetch()
-        var modules = []
-
-        for(let i = 0; i < raw_modules.length; i++) {
-            if(raw_modules[i]['published'] == true && raw_modules[i]['subject'] == 'python') {
-                modules.push({
-                    id: raw_modules[i]['_id'],
-                    title: raw_modules[i]['title'],
-                    description: raw_modules[i]['description'],
-                    content: raw_modules[i]['content'],
-                    module_number: raw_modules[i]['module_number'],
-                    percent_after_completion: raw_modules[i]['percent_after_completion'],
-                    subject: raw_modules[i]['subject']
-                })
-            }
-        }
+        var modules = Modules.find({
+            published: true,
+            subject: 'python'
+        }).fetch()
 
         return modules
     },
