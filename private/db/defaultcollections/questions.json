@@ -151,7 +151,7 @@
     "answer_three": "var = 10",
     "answer_four": "int VAR == 10;",
     "correct_answer": "answer_three",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -161,7 +161,7 @@
     "answer_three": "+1",
     "answer_four": "var add 1",
     "correct_answer": "answer_two",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -171,7 +171,7 @@
     "answer_three": "list = new list[]",
     "answer_four": "a = []",
     "correct_answer": "answer_four",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -181,7 +181,7 @@
     "answer_three": "Cannot be done",
     "answer_four": "a = [1, [new list], 2]",
     "correct_answer": "answer_one",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -191,7 +191,7 @@
     "answer_three": "if (x >> y) print(\"5 is greater than 1\")",
     "answer_four": "(if x >y):  System.out.print(\"5 is greater than 1\")",
     "correct_answer": "answer_one",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -201,7 +201,7 @@
     "answer_three": " for( a = 10; a < 20; a = a + 1 )",
     "answer_four": "while (count < 9):",
     "correct_answer": "answer_two",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -211,7 +211,7 @@
     "answer_three": "printf(\"Hello World!\");",
     "answer_four": "output(\"Hello World!\")",
     "correct_answer": "answer_one",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -221,7 +221,7 @@
     "answer_three": "Opens file to be read from the current directory",
     "answer_four": "It can never, under any circumstances, exit the loop",
     "correct_answer": "answer_two",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -231,7 +231,7 @@
     "answer_three": "General scripting language",
     "answer_four": "All of the above",
     "correct_answer": "answer_four",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
@@ -241,7 +241,7 @@
     "answer_three": "Colons",
     "answer_four": "Periods",
     "correct_answer": "answer_one",
-    "subject": "Python",
+    "subject": "python",
     "published": true
   },
   {
