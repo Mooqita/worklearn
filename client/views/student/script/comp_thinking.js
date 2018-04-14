@@ -8,6 +8,10 @@ Template.comp_thinking_course.onRendered(() => {
 	Meteor.call('get_comp_thinking_modules', (err, res) => {
 		Session.set('comp_thinking_modules', res)
 	})
+
+	Meteor.call('get_comp_thinking_challenges', (err, res) => {
+		Session.set('comp_thinking_challenges', res)
+	})
 })
 
 Template.comp_thinking_course.helpers({
@@ -83,6 +87,10 @@ Template.comp_thinking_course.helpers({
 		}
 
 		return comp_thinking_modules[resume_progress].title
+	},
+
+	'comp_thinking_challenges': () => {
+		return Session.get('comp_thinking_challenges')
 	}
 })
 

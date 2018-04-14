@@ -43,5 +43,56 @@ Meteor.methods({
         })
 
 		return solutions.count()
+    },
+
+    get_cobol_challenges: () => {
+        /**
+         * Assistance From StackOverflow User Mr.Cocococo
+         * https://stackoverflow.com/questions/24049164/javascript-get-timestamp-of-1-month-ago#24049314
+         */
+        var last_month = new Date()
+        last_month.setMonth(last_month.getMonth() - 1)
+
+        /**
+         * Assistance From StackOverflow User Akshat
+         * https://stackoverflow.com/questions/24481718/search-date-range-in-meteor
+         */
+        var challenges = Challenges.find({
+            modified: {$gte: last_month},
+            course: 'cobol',
+            published: true
+        }).fetch()
+
+        return challenges
+    },
+
+    get_comp_thinking_challenges: () => {
+        /**
+         * Assistance From StackOverflow User Akshat
+         * https://stackoverflow.com/questions/24481718/search-date-range-in-meteor
+         */
+        var challenges = Challenges.find({
+            modified: {$gte: last_month},
+            course: 'comp_thinking',
+            published: true
+        }).fetch()
+
+        return challenges
+    },
+
+    get_python_challenges: () => {
+        /**
+         * Assistance From StackOverflow User Akshat
+         * https://stackoverflow.com/questions/24481718/search-date-range-in-meteor
+         */
+        var challenges = Challenges.find({
+            modified: {$gte: last_month},
+            course: 'python',
+            published: true
+        }).fetch()
+
+        return challenges
+
+        return challenges
     }
 })

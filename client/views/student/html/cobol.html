@@ -164,17 +164,18 @@
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
-                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #1<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
-                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #2<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
-                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #3<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
-                            <a href="#" class="list-group-item"><em>Title: </em>Challenge #4<br/><em>Subject: </em><strong>COBOL</strong><br/><em>Description: </em>A Description goes here.</a>
+                            {{#each challenge in cobol_challenges}}
+                                <a href="{{challenge.link}}" class="list-group-item">
+                                    <em>Title: </em>
+                                    {{challenge.title}} <br />
+                                    <em>Subject: </em>
+                                    <strong>{{challenge.course}}</strong> <br />
+                                    <em>Description: </em>
+                                    {{challenge.content}}
+                                </a>
+                            {{/each}}
                         </div>
                     </div>
-                    <center>
-                        <div class="btn btn-right">
-                            <a href="#" class="btn btn-lg btn-success">See More</a>
-                        </div>
-                    </center>
                 </div>
             </div>
         </div>

@@ -8,6 +8,10 @@ Template.cobol_course.onRendered(() => {
 	Meteor.call('get_cobol_modules', (err, res) => {
 		Session.set('cobol_modules', res)
 	})
+
+	Meteor.call('get_cobol_challenges', (err, res) => {
+		Session.set('cobol_challenges', res)
+	})
 })
 
 Template.cobol_course.helpers({
@@ -99,6 +103,10 @@ Template.cobol_course.helpers({
 		}
 
 		return cobol_modules[resume_progress].title
+	},
+
+	'cobol_challenges': () => {
+		return Session.get('cobol_challenges')
 	}
 })
 
@@ -108,7 +116,7 @@ Template.cobol_course.events({
 		var num_cobol_modules = cobol_modules.length
 
 		Meteor.call('update_cobol_course_progress', event.toElement.value, num_cobol_modules)
-		
+
 		Meteor.call('get_course_progress', (err, res) => {
 			Session.set('cobol_course_progress', res.cobol_course_progress)
 			Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)

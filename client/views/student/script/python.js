@@ -8,6 +8,10 @@ Template.python_course.onRendered(() => {
 	Meteor.call('get_python_modules', (err, res) => {
 		Session.set('python_modules', res)
 	})
+
+	Meteor.call('get_python_challenges', (err, res) => {
+		Session.set('python_challenges', res)
+	})
 })
 
 Template.python_course.helpers({
@@ -103,6 +107,10 @@ Template.python_course.helpers({
 		}
 
 		return python_modules[resume_progress].title
+	},
+
+	'python_challenges': () => {
+		return Session.get('python_challenges')
 	}
 })
 
