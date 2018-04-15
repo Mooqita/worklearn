@@ -2,33 +2,9 @@
   {
     "title": "Variables",
     "description": "Learn variables",
-    "content": "<h1>This is test content page 1</h1>",
+    "content": "<div>Welcome learner! Today we are learning about variables in computer programming, but first take a look at this equation and let us know if it looks familiar.<br><p>X + 1=4<br><p>Is this familiar? Yes? No?<br><p>This is a standard equation, something you may have learned in algebra. In this case X=3, but X outside of that equation could represent any value.<br><p>Meaning that if we started an equation with X=, the value on the other side of the equal sign could be anything.<br><p>For example, we could say X=5000, or X=A, or X={1, 2, 3, 4 ,5}, or X=potato.<br><p>This is the essence of a variable. The concept is that you can assign one value to represent another value, or many values.<br><p>In computer science variable declaration statements look something like:<br><p>variable=value;<br><p>There are a lot reasons why we use variables.<br><p>To represent a value with a name that makes more sense.<br>feetInMiles=5280;<br><p>To use mathematics.<br>X=1;<br>Y=1;<br>Answer=X + Y;<br><p>To store many values. Colors={red, orange, yellow, green, blue, violet};<br><p>You might notice that there are lots of different types of things that can be stored into a variable. For many different programming languages this data type has to be declared before the variable so that the computer knows what type of data to expect. This looks something like:<br><p>(type of data) (name of variable)=(value)<br><p><BLOCKQUOTE>Example:<br>integer x=1<br>decimal x=1.5<br>character a=A<br></BLOCKQUOTE><p>If you’re storing many values it may look like:<br><p>(type of data) (name of variable)={(value), (value), (value)...}<br><p><BLOCKQUOTE>Example:<br>array alphabet={a, b, c, d, e, f, g, h, i}<br></BLOCKQUOTE></div>",
     "module_number": 1,
-    "subject": "python",
-    "published": true
-  },
-  {
-    "title": "Loops",
-    "description": "Learn loops",
-    "content": "<h1>This is test content page 2</h1>",
-    "module_number": 2,
-    "subject": "python",
-    "published": true
-  },
-  {
-    "title": "Functions",
-    "description": "Learn functions",
-    "content": "<h1>This is test content page 3</h1>",
-    "module_number": 3,
-    "subject": "python",
-    "published": true
-  },
-  {
-    "title": "More",
-    "description": "Learn more",
-    "content": "<h1>This is test content page 4</h1>",
-    "module_number": 4,
-    "subject": "python",
+    "subject": "comp_thinking",
     "published": true
   }
 ]
