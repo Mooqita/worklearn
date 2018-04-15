@@ -7,7 +7,7 @@
 ###############################################
 Meteor.methods
 	add_challenge: (job_id) ->
-		check(job_id,Match.Optional(String))
+		check(job_id, Match.Optional(String))
 		user = Meteor.user()
 
 		if not user
@@ -31,22 +31,21 @@ Meteor.methods
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()
-		if not can_edit Challenges, challenge_id, user
+
+		if not Challenges.findOne({_id: challenge_id, owner_id: user._id})
 			throw new Meteor.Error("Not permitted.")
 
 		item = get_document_unprotected Challenges, challenge_id
 		return finish_challenge item, user
 
 	send_message_to_challenge_learners: (challenge_id, subject, message) ->
-		#TODO: move to logic
-
 		user = Meteor.user()
 
 		if not user
 			throw new Meteor.Error('Not permitted.')
 
-		if not has_permission Challenges, challenge_id, user, SEND_MAIL
-			throw new Meteor.Error('Not permitted.')
+		if not Challenges.findOne({_id: challenge_id, owner_id: user._id})
+			throw new Meteor.Error("Not permitted.")
 
 		# we need to know who is registered for a course.
 		filter =
