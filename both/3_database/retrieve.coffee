@@ -363,3 +363,5 @@ _admission_fields =
 ################################################################################
 @can_view = (collection, item, user) ->
 	return has_role collection, item, user, OWNER
+
+

@@ -29,5 +29,3 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 	return url
 
-@redirect_callback = (url) ->
-	FlowRouter.go(url)

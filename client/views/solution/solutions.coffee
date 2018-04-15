@@ -117,7 +117,8 @@ Template.solution.helpers
 Template.solution.events
 	"click #take_challenge":()->
 		id = FlowRouter.getQueryParam("challenge_id")
-		Meteor.call "add_solution", id,
+		company_tag = FlowRouter.getQueryParam("company_tag")
+		Meteor.call "add_solution", id, company_tag,
 			(err, res) ->
 				if err
 					sAlert.error("Take challenge error: " + err)

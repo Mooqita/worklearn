@@ -1,7 +1,8 @@
 ##########################################################
-# Login And Accounts
+# login and accounts
 ##########################################################
 
+##########################################################
 AccountsTemplates.configure
 	confirmPassword: true,
 	enablePasswordChange: true,
@@ -10,6 +11,8 @@ AccountsTemplates.configure
 	sendVerificationEmail: true,
 	lowercaseUsername: true,
 	focusFirstInput: true,
+
+	#Appearance
 	showAddRemoveServices: true,
 	showForgotPasswordLink: true,
 	showLabels: true,
@@ -22,5 +25,5 @@ AccountsTemplates.addField
 	type: "password"
 	required: true
 	minLength: 8
-	# re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])/
-	# errStr: "At least 8 characters, 1 digit, 1 lower-case and 1 upper-case"
+	#re: /(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])/
+	#errStr: "At least 8 characters, 1 digit, 1 lower-case and 1 upper-case"

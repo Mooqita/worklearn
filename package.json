@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean": "sh docker/scripts/docker-clean.sh",
-    "start": "meteor start"
+    "start": "meteor run"
   },
   "dependencies": {
     "atob": "^2.0.3",
@@ -28,5 +28,6 @@
     "request": "^2.81.0",
     "upwork-api": "^1.2.2",
     "wordpos": "^1.1.2"
-  }
+  },
+  "devDependencies": {}
 }

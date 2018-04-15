@@ -1,7 +1,10 @@
 ###############################################################################
+#
 # Markus 16/12/2017
+#
 ###############################################################################
 
+###############################################################################
 @set_field = (collection, document, field, value, verbose=true, callback=null) ->
 	if typeof collection != "string"
 		collection = get_collection_name collection
@@ -32,3 +35,4 @@
 					sAlert.success(field + " saved.")
 
 	Meteor.call "set_field", collection, document, field, value, callback
+
