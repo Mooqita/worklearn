@@ -92,7 +92,5 @@ Meteor.methods({
         }).fetch()
 
         return challenges
-
-        return challenges
     }
 })

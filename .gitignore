@@ -7,3 +7,4 @@ settings.json
 .vscode/
 node_modules/
 tmp/
+private/db/helpertools/heroku-mongo-import.sh

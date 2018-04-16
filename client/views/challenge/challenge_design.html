@@ -157,7 +157,7 @@
 				{{/if}}
 
 				<h1 class="editable">
-					{{>basic_input method="set_field" collection_name="challenges"
+					{{>basic_input method="set_challenge_field" collection_name="challenges"
 							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
 				</h1>
 				<h2 class="header">Subject</h2>
@@ -166,12 +166,12 @@
 							options=course_options}}
 
 				<div class="form-group">
-					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
+					{{>markdown_input method="set_challenge_field" collection_name="Challenges" item_id=_id
 														field="content" placeholder="In this challenge you will ..."}}
 				</div>
 
 				<div class="form-group">
-					{{>basic_input method="set_field" collection_name="Challenges"
+					{{>basic_input method="set_challenge_field" collection_name="Challenges"
 							type="number" field="num_reviews"	label="Number of reviews required"
 							item_id=_id explain="The number of reviews a learner has to provide."
 							placeholder="Number of reviews required."}}
@@ -179,7 +179,7 @@
 
                 <!-- TODO: make sure that the link gets displayed if present in db -->
                 <div class="form-group">
-                    {{>basic_input method="set_field" collection_name="challenges"
+                    {{>basic_input method="set_challenge_field" collection_name="challenges"
                             field="link" label="Challenge or project link"
                             item_id=_id placeholder="Link that contextualizes the challenge."}}
                 </div>
@@ -541,7 +541,7 @@
 							{{/unless}}
 
 							<div class="padding-next">
-								{{>markdown_input method="set_field" collection_name="Recommendations"
+								{{>markdown_input method="set_challenge_field" collection_name="Recommendations"
 										item_id=_id field="content" placeholder="Letter of recommendation"}}
 							</div>
 						{{/with}}
