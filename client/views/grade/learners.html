@@ -41,15 +41,18 @@
             width: 230px;
         }
     </style>
-
-    <ul>
+    <!--<ul>
         {{#each profile in all_users}}
             <li>
-                {{profile}}
+                {{profile.given_name}} {{profile.family_name}}
             </li>
         {{/each}}
-    </ul>
+    </ul>-->
     <div class="item-set padding-top">
+        <p>Admin logged in as: {{email}}</p>
+        {{#if admin}}
+        <h1>Test to see if the user email is admin.</h1>
+        {{/if}}
         <h1>
             Active learners and scores to be paid.
             <div class="btn btn-theme pull-right"
@@ -61,38 +64,43 @@
                         icon_class="glyphicon glyphicon-pencil"}}
             </div>
         </h1>
-        <div class="container">
-            <div class="col-md-12 col-sm-12">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3>All Profiles</h3>
-                      </div>
-                    <div class="panel-body">
-                        <div class="list-group">
-                            {{#each module in cobol_modules}}
-                                {{#if is_module_completed @index}}
-                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
-                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
-                                        <p>{{module.description}}</p>
-                                        <p><em>You have completed this module.</em></p>
-                                    </button>
-                                {{else if is_module_disabled @index }}
-                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}" disabled>
-                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
-                                        <p>{{module.description}}</p>
-                                        <p><em>You do not have access to this module yet.</em></p>
-                                    </button>
-                                {{else}}
-                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
-                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
-                                        <p>{{module.description}}</p>
-                                    </button>
-                                {{/if}}
-                            {{/each}}
-                        </div>
+    <div class="container">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>All Profiles</h3>
+                  </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        {{#each profile in all_users}}
+                                <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                    <div class="row">
+                                    <div class="col-md-6">  
+                                    <h4 class="list-group-item-heading"><strong>{{profile.given_name}}  {{profile.family_name}}</strong></h4>
+                                    </div>
+                                    <div class="col-md-6">   
+                                    {{>basic_input method="set_field" collection_name="Profiles"
+                                                item_id=g_profile field="my_balance"
+                                                placeholder="Balance" type="number"}}
+                                    </div> 
+                                    </div>
+                                    <p><em>Current user balance: {{profile.given_name}}'s balance is ${{profile.my_balance}}.</em></p>
+                                    <p><em>COBOL Score: {{profile.cobol_quiz_score}}</em></p>
+                                    {{#if quiz_scores.cobol_quiz_score}}
+                                    <h3><strong>COBOL Score:</strong> {{quiz_scores.cobol_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                    {{#if quiz_scores.comp_thinking_quiz_score}}
+                                    <h3><strong>Computational Thinking Score:</strong> {{quiz_scores.comp_thinking_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                    {{#if quiz_scores.python_quiz_score}}
+                                    <h3><strong>Python Score:</strong> {{quiz_scores.python_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                </button>
+                        {{/each}}
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </template>
