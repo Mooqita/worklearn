@@ -79,4 +79,6 @@ Template.portfolio_review.helpers
 	portfolio_url: () ->
 		return ""#get_response_url(this.owner_id)
 
-
+Template.portfolio_basic.helpers
+	quiz_scores: () ->
+		return Session.get('quiz_scores')
