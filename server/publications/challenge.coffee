@@ -247,4 +247,3 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	log_publication result, user_id, "challenge_summaries"
 
 	return result
-
