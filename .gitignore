@@ -8,3 +8,4 @@ private/db/helpertools/heroku-mongo-import.sh
 .vscode/
 node_modules/
 tmp/
+private/db/helpertools/heroku-mongo-import.sh

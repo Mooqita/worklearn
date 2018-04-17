@@ -9,31 +9,25 @@
             background-image: none;
             background-color: #A02D67;
             color: white;
-
         }
-
         .alert > .alert-success {
             background-color: #A02D67;
             color: white;
         }
-
         .progress  {
             background-color: white;
             color: white;
             height: 50px;
         }
-
         .progress > .progress-bar-success {
             background-color: #862D65;
             color: white;
         }
-
         .btn-group > .btn-success {
             background-color: #862D65;
             color: white;
             border: none;
         }
-
         .btn > .btn-success {
             background-color: #862D65;
             color: white;
@@ -75,14 +69,14 @@
                         {{#each profile in all_users}}
                                 <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
                                     <div class="row">
-                                    <div class="col-md-6">  
+                                    <div class="col-md-6">
                                     <h4 class="list-group-item-heading"><strong>{{profile.given_name}}  {{profile.family_name}}</strong></h4>
                                     </div>
-                                    <div class="col-md-6">   
+                                    <div class="col-md-6">
                                     {{>basic_input method="set_field" collection_name="Profiles"
                                                 item_id=g_profile field="my_balance"
                                                 placeholder="Balance" type="number"}}
-                                    </div> 
+                                    </div>
                                     </div>
                                     <p><em>Current user balance: {{profile.given_name}}'s balance is ${{profile.my_balance}}.</em></p>
                                     <p><em>COBOL Score: {{profile.cobol_quiz_score}}</em></p>

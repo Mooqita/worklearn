@@ -53,6 +53,19 @@
 
 	return res
 
+@set_profile_field = (item_id, field, value) ->
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error "Not permitted"
+
+	if not Profiles.findOne({_id: item_id, owner_id: user._id})
+		throw new Meteor.Error("Not permitted.")
+
+	res = modify_field_unprotected Profiles, item_id, field, value, user
+
+	return res
+
 ###############################################################################
 @set_element = (collection, item_id, field, value) ->
 	user = Meteor.user()

@@ -8,7 +8,7 @@ Template.learners.helpers({
     email: () => {
 		return get_user_mail()
     },
-    
+
     quiz_scores: () => {
         return Session.get('quiz_scores')
     },
@@ -16,7 +16,7 @@ Template.learners.helpers({
     my_balance: () => {
         return Session.get('my_balance')
     },
-    
+
     admin: () => {
         if (email == 'jorge@gmail.com') {
             return true

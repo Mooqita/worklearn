@@ -31,20 +31,36 @@
 			<p class="padding-next">
 				Here you can find all the challenges you created from scratch or using a template.
 			</p>
-
-			{{#paging subscription="my_challenges" page=0 count=10
-								parameter=parameter collection_name="challenges"}}
-				{{#each items}}
-					{{>challenge_preview}}
-				{{else}}
-					<hr>
-					<h1 class="text-center padding-next"
-							style="padding-bottom: 45px">
-						<em>No Challenges yet.</em>
-					</h1>
-				{{/each}}
+			{{#each challenge in challenges}}
 				<hr>
-			{{/paging}}
+
+				<a href="{{g_build_url "challenge_design" (g_object challenge_id=challenge._id)}}"
+					 class="item-set-element animated_0_5_s">
+					<div>
+						<h2>
+							{{challenge.title}}
+								{{#if challenge.published}}
+									<span class="badge background-contrast pull-right">
+											Public <span class="fa fa-check"></span>
+									</span>
+								{{else}}
+									<span class="badge background-theme pull-right">
+											Not yet public <span class="fa fa-edit"></span>
+									</span>
+								{{/if}}
+						</h2>
+					</div>
+					{{challenge.course}}
+					{{>more content=content}}
+				</a>
+			{{else}}
+				<hr />
+				<h1 class="text-center padding-next"
+						style="padding-bottom: 45px">
+					<em>No Challenges yet.</em>
+				</h1>
+			{{/each}}
+			<hr />
 		</div>
 	{{/mooqita_wide_spacing}}
 </template>

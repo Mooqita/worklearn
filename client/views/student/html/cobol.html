@@ -112,9 +112,13 @@
                         </div>
                         <center>
                             <div class="btn btn-right">
-                                <a href="#" class="btn btn-lg btn-success" {{cobol_course_disabled}}>Resume Course</a>
+                                <button data-toggle="modal" data-target="#cobol_module_{{cobol_module_resume}}" class="btn btn-lg btn-success" {{cobol_course_disabled}}>Resume Course</button>
                             </div>
-                            <h1>Current Lesson: <strong>Loops</strong></h1>
+                            {{#if cobol_module_resume_title}}
+                                <h1>Current Lesson: <strong>{{cobol_module_resume_title}}</strong></h1>
+                            {{else}}
+                                <h1>Course Completed</h1>
+                            {{/if}}
                         </center>
                      </div>
                 </div>
@@ -168,8 +172,6 @@
                                 <a href="{{challenge.link}}" class="list-group-item">
                                     <em>Title: </em>
                                     {{challenge.title}} <br />
-                                    <em>Subject: </em>
-                                    <strong>{{challenge.course}}</strong> <br />
                                     <em>Description: </em>
                                     {{challenge.content}}
                                 </a>
