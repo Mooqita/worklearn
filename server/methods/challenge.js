@@ -12,7 +12,13 @@ Meteor.methods({
     },
 
     get_my_challenges: () => {
-        return Challenges.find().fetch()
+        var user = Meteor.user()
+
+		if(!user) {
+			throw new Meteor.Error('Not permitted.')
+        }
+        
+        return Challenges.find({owner_id: user._id}).fetch()
     },
 
 	finish_challenge: (challenge_id) => {
