@@ -4,6 +4,7 @@ secrets.txt
 settings.json
 .idea
 .meteor/local/
+private/db/helpertools/heroku-mongo-import.sh
 .vscode/
 node_modules/
 tmp/

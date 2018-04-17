@@ -30,6 +30,7 @@ Template.mooqita_menu.helpers
 		 items.push({name: "Reviews", href: build_url("reviews")})
 		 items.push({name: "Portfolio", href: build_url("portfolio")})
 
+
 		return items
 
 	num_new_messages: () ->
@@ -40,4 +41,3 @@ Template.mooqita_menu.helpers
 Template.mooqita_menu.events
 	'click #logout': (event) ->
 		Meteor.logout()
-

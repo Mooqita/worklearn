@@ -8,7 +8,7 @@ _question_fields =
 		answer_two: 1
 		answer_three: 1
 		answer_four: 1
-		course: 1
+		subject: 1
 		correct_answer: 1
 		owner_id: 1
 		published: 1

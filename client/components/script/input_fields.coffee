@@ -251,3 +251,4 @@ Template.code_input.events
 		item = this.item_id
 
 		set_field collection, item, field, value
+

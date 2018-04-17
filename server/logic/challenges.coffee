@@ -1,3 +1,4 @@
+###############################################
 @gen_challenge = (user, job_id) ->
 	challenge =
 		num_reviews: 2
@@ -21,9 +22,12 @@
 		tmp_challenge_ids = []
 
 	tmp_challenge_ids.push(res)
+
 	modify_field_unprotected Jobs, job_id, "challenge_ids", tmp_challenge_ids
+
 	return res
 
+###############################################
 @bake_challenge = (user,title,content,link,origin,job_id) ->
 	challenge =
 		num_reviews: 2
@@ -51,12 +55,19 @@
 		tmp_challenge_ids = []
 
 	tmp_challenge_ids.push(res)
+
 	modify_field_unprotected Jobs, job_id, "challenge_ids", tmp_challenge_ids
+
 	return res
 
+###############################################
 @finish_challenge = (challenge, user) ->
 	modify_field_unprotected Challenges, challenge._id, "published", true
 	modify_field_unprotected Challenges, challenge._id, "visible_to", "anonymous"
+
+	#TODO: inform last round participants
+
 	msg = "Challenge (" + challenge._id + ") published by: " + get_user_mail user
 	log_event msg, event_logic, event_info
+
 	return challenge._id

@@ -2,6 +2,7 @@
 # Avatar
 ###############################################################################
 
+###############################################################################
 Template.avatar.helpers
 	is_downloading: () ->
 		inst = Template.instance()
@@ -17,3 +18,6 @@ Template.avatar.helpers
 			return true
 
 		return false
+
+
+

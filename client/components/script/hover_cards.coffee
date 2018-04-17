@@ -1,7 +1,10 @@
 #########################################################
+#
 # Hover Cards
+#
 #########################################################
 
+#########################################################
 Template.hover_card.helpers
 	selected: () ->
 		inst = Template.instance()
@@ -52,3 +55,7 @@ Template.hover_card.events
 			f = context.field
 			id = context.item_id
 			set_field cn, id, f, value
+
+
+
+

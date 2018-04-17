@@ -31,16 +31,7 @@
 					<span class="icon-bar"></span>
 				</button>
 			</div>
-<!--Search Box Start
-			<div>
-				<div class="active">
-					<div class="form-group">
-						<label for="search">Search:</label>
-						<input type="text" class="form-control" id="search">
-					</div>
-				</div>
-			</div>
-Search Box End-->
+
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					{{#each link in menu_items}}
@@ -89,18 +80,4 @@ Search Box End-->
 			</div>
 		</div>
 	</div>
-</template>
-
-<!------------------------------------------------
-| Optional menu items
--------------------------------------------------->
-<template name="optional_menu">
-	{{#if isInRole 'tutor'}}
-		<li class="active">
-			<a class="navigation-button control-navigate"
-					 href="{{build_url "tutor"}}">
-				Tutor
-			</a>
-		</li>
-	{{/if}}
 </template>

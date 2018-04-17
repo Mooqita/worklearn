@@ -16,58 +16,65 @@ es5-shim@4.6.15               # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.9.0              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.3.0            # Server-side component of the `meteor shell` command
 
-# CoffeeScript #
+# coffeescript
 coffeescript
 
-# User Accounts #
+# user accounts
 service-configuration@1.0.11
-accounts-password@1.4.0
-accounts-base@1.3.1
-accounts-ui@1.1.9
-pauli:accounts-linkedin@1.2.0
+accounts-password@1.5.0
+accounts-base@1.4.0
+#accounts-facebook@1.1.1
+#accounts-google@1.1.1
+#accounts-github@1.2.1
+#accounts-twitter@1.2.1
+
+#facebook-config-ui
+#google-config-ui
+#github-config-ui
+#twitter-config-ui
 useraccounts:core
 useraccounts:bootstrap
+pauli:accounts-linkedin@1.2.0
 
-# Router #
+# CSS
+fourseven:scss
+standard-minifier-css
+twbs:bootstrap
+fortawesome:fontawesome
+peppelg:bootstrap-3-modal
+
+# router
 ostrio:flow-router-extra
 kadira:blaze-layout
 simple:json-routes
 
-# Styling #
-twbs:bootstrap
-fourseven:scss
-standard-minifier-css
-fortawesome:fontawesome
-peppelg:bootstrap-3-modal
-
-# Missing Functionality #
+# missing functionality
 raix:ui-dropped-event
 juliancwirko:s-alert
 
-# Security #
+# security
 check@1.2.5
 jparker:crypto-sha256
-gwendall:impersonate
-force-ssl
 
-# Data Generation #
+# data generation
 random@1.0.10
 practicalmeteor:faker
 
-# Essentials #
+# essentials
 session@1.1.7
 email@1.2.3
 http@1.3.0
 markdown@1.0.12
 reactive-dict@1.2.0
+force-ssl@1.1.0
+force-ssl-common@1.1.0
 
-# Database #
+# database
 meteorhacks:aggregate
 dburles:mongo-collection-instances
-okgrow:analytics
+
 d3js:d3
 jesperwe:bootstrap-select
 
-
-# Temporary Additions #
+# temporary additions
 webapp
