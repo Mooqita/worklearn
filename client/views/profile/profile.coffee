@@ -3,9 +3,18 @@
 ###############################################################################
 
 ###############################################################################
+Template.profile.onRendered ->
+	Meteor.call 'get_profile',
+		(err, res) ->
+			Session.set('g_profile', res)
+
 Template.profile.helpers
+	g_profile: () ->
+		console.log(Session.get('g_profile'))
+		return Session.get('g_profile')
+
 	email: () ->
-		return get_user_mail()
+		return Session.get('g_profile').mail
 
 	mail_notifications_options:() ->
 		return [{value:"", label:"Notifications ?"}
@@ -31,11 +40,11 @@ Template.profile.helpers
 			{value:"local", label:"I want to work on site"}]
 
 	job_interested: () ->
-		profile = get_profile()
+		profile = Session.get('g_profile')
 		return profile.job_interested=="yes"
 
 	profile_done: () ->
-		profile = get_profile()
+		profile = Session.get('g_profile')
 
 		if not profile.job_interested
 			return false
@@ -49,4 +58,3 @@ Template.profile.helpers
 		#	return false
 
 		return true
-

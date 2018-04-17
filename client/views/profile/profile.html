@@ -50,17 +50,17 @@
 				<div class="col-sm-8 col-ms-8 col-xs-12">
 					<div class="row">
 						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Profiles"
+							{{>basic_input method="set_profile_field" collection_name="Profiles"
 								item_id=g_profile._id field="given_name" placeholder="Given name"}}
 						</div>
 
 						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Profiles"
+							{{>basic_input method="set_profile_field" collection_name="Profiles"
 								item_id=g_profile._id field="middle_name" placeholder="Middle name"}}
 						</div>
 
 						<div class="col-md-4">
-							{{>basic_input method="set_field" collection_name="Profiles"
+							{{>basic_input method="set_profile_field" collection_name="Profiles"
 								item_id=g_profile._id field="family_name" placeholder="Family name"}}
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 
 						<div class="col-md-4">
 							<h2 class="header">Notifications</h2>
-							{{>select_input method="set_field" collection_name="Profiles"
+							{{>select_input method="set_profile_field" collection_name="Profiles"
 									item_id=g_profile._id field="mail_notifications"
 									options=mail_notifications_options}}
 						</div>
@@ -106,7 +106,7 @@
 						</div>
 
 						<div class="col-md-12">
-							{{>select_input method="set_field" collection_name="Profiles"
+							{{>select_input method="set_profile_field" collection_name="Profiles"
 									item_id=g_profile._id field="job_interested"
 									options=job_interested_options}}
 						</div>
@@ -123,17 +123,17 @@
 					</div>
 
 					<div class="col-md-4">
-						{{>select_input method="set_field" collection_name="Profiles"
+						{{>select_input method="set_profile_field" collection_name="Profiles"
 							item_id=g_profile._id field="job_type" options=job_type_options}}
 					</div>
 
 					<div class="col-md-4">
-						{{>select_input method="set_field" collection_name="Profiles"
+						{{>select_input method="set_profile_field" collection_name="Profiles"
 							item_id=g_profile._id field="job_locale" options=job_locale_options}}
 					</div>
 
 					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Profiles"
+						{{>basic_input method="set_profile_field" collection_name="Profiles"
 								item_id=g_profile._id field="hours_per_week"
 								placeholder="Hours per week" type="number"}}
 					</div>
@@ -145,12 +145,12 @@
 					</div>
 
 					<div class="col-md-8">
-						{{>country_state method="set_field" collection_name="Profiles"
+						{{>country_state method="set_profile_field" collection_name="Profiles"
 							item_id=g_profile._id c_field="country" s_field="state"}}
 					</div>
 
 					<div class="col-md-4">
-						{{>basic_input method="set_field" collection_name="Profiles"
+						{{>basic_input method="set_profile_field" collection_name="Profiles"
 							item_id=g_profile._id field="city" placeholder="city name"}}
 					</div>
 				</div>
@@ -162,7 +162,7 @@
 					with. This text will not be shown to potential employers or shared in any
 					way.
 				</p>
-				{{>text_input method="set_field" collection_name="Profiles"
+				{{>text_input method="set_profile_field" collection_name="Profiles"
 						item_id=g_profile._id field="resume"
 						placeholder="Tell us a little more about you."}}
 			{{/if}}
@@ -171,17 +171,3 @@
 
 	{{>personality}}
 </template>
-
-
-	<!--div class="col-md-12">
-		<h2>Credits <span class="badge background-contrast">1</span></h2>
-		<p>
-			Credits is the currency in Mooqita.
-			Every time you write a review you get credits.
-			You can spend these credits requesting reviews.
-			Every review that you write will also influence
-			your resume and your score card.
-		</p>
-
-
-	</div-->

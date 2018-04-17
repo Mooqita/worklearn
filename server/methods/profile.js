@@ -41,7 +41,13 @@ Meteor.methods({
 
 		return quiz_scores
 	},
-	
+
+	get_profile: () => {
+		var user = Meteor.user()
+		var profile = Profiles.findOne({user_id: user._id})
+		return profile
+	},
+
 	get_all: () => {
 		return Profiles.find().fetch()
 	}
