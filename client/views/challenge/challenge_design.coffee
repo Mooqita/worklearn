@@ -22,13 +22,18 @@ Template.designed_challenges.onCreated ->
 	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
+	Meteor.call 'get_my_challenges',
+		(err, res) ->
+			Session.set('challenges', res)
+
 ########################################
 Template.designed_challenges.helpers
 	parameter: () ->
 		return Template.instance().parameter
 
 	challenges: () ->
-		return get_my_documents Challenges
+		console.log(Session.get(''))
+		return Session.get('challenges')
 
 ########################################
 Template.designed_challenges.events

@@ -11,6 +11,10 @@ Meteor.methods({
 		return gen_challenge(user)
     },
 
+    get_my_challenges: () => {
+        return Challenges.find().fetch()
+    },
+
 	finish_challenge: (challenge_id) => {
 		var user = Meteor.user()
 		var challenge = find_document(Challenges, challenge_id, true)
