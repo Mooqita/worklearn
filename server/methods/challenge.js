@@ -17,7 +17,7 @@ Meteor.methods({
 		if(!user) {
 			throw new Meteor.Error('Not permitted.')
         }
-        
+
         return Challenges.find({owner_id: user._id}).fetch()
     },
 
@@ -35,11 +35,10 @@ Meteor.methods({
 			throw new Meteor.Error('Not permitted.')
         }
 
-		if(!Roles.userIsInRole(user._id, 'admin')) {
+        if(get_user_mail() != 'jorge@gmail.com') {
             throw new Meteor.Error('Not permitted.')
         }
 
-	    // We need to know who is registered for a course.
 		var filter = { challenge_id: challenge_id }
 		var solutions = Solutions.find(filter)
 
@@ -78,6 +77,13 @@ Meteor.methods({
 
     get_comp_thinking_challenges: () => {
         /**
+         * Assistance From StackOverflow User Mr.Cocococo
+         * https://stackoverflow.com/questions/24049164/javascript-get-timestamp-of-1-month-ago#24049314
+         */
+        var last_month = new Date()
+        last_month.setMonth(last_month.getMonth() - 1)
+
+        /**
          * Assistance From StackOverflow User Akshat
          * https://stackoverflow.com/questions/24481718/search-date-range-in-meteor
          */
@@ -92,12 +98,19 @@ Meteor.methods({
 
     get_python_challenges: () => {
         /**
+         * Assistance From StackOverflow User Mr.Cocococo
+         * https://stackoverflow.com/questions/24049164/javascript-get-timestamp-of-1-month-ago#24049314
+         */
+        var last_month = new Date()
+        last_month.setMonth(last_month.getMonth() - 1)
+
+        /**
          * Assistance From StackOverflow User Akshat
          * https://stackoverflow.com/questions/24481718/search-date-range-in-meteor
          */
         var challenges = Challenges.find({
             modified: {$gte: last_month},
-            course: 'python',
+            course: 'py',
             published: true
         }).fetch()
 
