@@ -110,7 +110,7 @@ Meteor.methods({
          */
         var challenges = Challenges.find({
             modified: {$gte: last_month},
-            course: 'python',
+            course: 'py',
             published: true
         }).fetch()
 

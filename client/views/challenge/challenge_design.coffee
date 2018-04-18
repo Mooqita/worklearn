@@ -32,7 +32,6 @@ Template.designed_challenges.helpers
 		return Template.instance().parameter
 
 	challenges: () ->
-		console.log(Session.get(''))
 		return Session.get('challenges')
 
 ########################################
@@ -130,10 +129,12 @@ Template.challenge_design.helpers
 		return ""
 
 	course_options:() ->
-		return [{value:"", label:"No subject"}
-			{value:"comp_thinking", label:"Comp Thinking"}
-			{value:"cobol", label:"COBOL"}
-			{value:"py", label:"Python"}]
+		return [
+			{value: "", label: "No subject"},
+			{value: "comp_thinking", label: "Comp Thinking"},
+			{value: "cobol", label: "COBOL"},
+			{value: "py", label: "Python"}
+		]
 
 ########################################
 Template.challenge_design.events
