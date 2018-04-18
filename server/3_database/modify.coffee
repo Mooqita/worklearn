@@ -59,7 +59,7 @@
 	if not user
 		throw new Meteor.Error "Not permitted"
 
-	if not Profiles.findOne({_id: item_id, owner_id: user._id})
+	if not Profiles.findOne({_id: item_id, user_id: user._id})
 		throw new Meteor.Error("Not permitted.")
 
 	res = modify_field_unprotected Profiles, item_id, field, value, user
