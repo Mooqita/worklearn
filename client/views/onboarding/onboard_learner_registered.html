@@ -1,6 +1,6 @@
 <template name="onboard_learner_registered">
     {{#mooqita_wide_spacing}}
-        <p><em>TODO:<br/>
+        <!-- <p><em>TODO:<br/>
             (1) implement percentage complete widget to be shown on the right hand side of this page, as
             well as
             on the profile page (for learners only for now. Consider doing this for orgs too.).<br/>
@@ -11,41 +11,38 @@
             "what
             can I
             do here"
-        </em></p>
+        </em></p> -->
 
         <div class="row padding-top">
             <div class="col-md-12">
                 <h1>Welcome to Mooqita, NAME</h1>
             </div>
                 <div class="col-md-8">
-                <p>You signed up as a learner. We take it that you are interested in solving challenges to build up a
-                    portfolio,
-                    as well as in getting suggested matches with potential employers from us. In order to provide great
-                    results
-                    we need to learn a little bit more about you. Completing each of the following steps will
-                    drastically
-                    improve
-                    the matches.</p>
+                <p> Thank you for signing up as a learner.
+                    In order to help us with improving the matching quality, please follow the steps below to complete
+                    and review your profile information. You can also begin working on recommended challenges at any
+                    time.</p>
                 </div>
                 {{>obprogress percent=".25"}}
                 <div class="col-md-12">
                         <a class="btn btn-theme" href="onboard_learner_role">1. Interests & Abilities</a>
-                        <p>This is crucial for finding great matching challenges and organizations for you.</p>
+                        <p><em>This is crucial for finding great matching challenges and organizations for you.</em></p>
                 </div>
             <div class="col-md-12">
                 <a class="btn btn-theme" href="onboarding_time">2. Work Habits</a>
-                <p>This helps us coordinate you with others on the platform.</p>
+                <p><em>This helps us coordinate you with others on the platform.</em></p>
                 <a class="btn btn-theme" href="personality">3. Personality</a>
-                <p>So we can make sure that you fit well with challenge and work teams.</p>
+                <p><em>Improve your fit with challenge and work teams.</em></p>
                 <a class="btn btn-theme" href="profile">4. Profile</a>
-                <p>Just some general information about you. Here you can also adjust any of the choices from
-                     this onboarding process later on.</p>
+                <p><em>Your general information. You can also adjust any of the choices from
+                     this onboarding process later on.</em></p>
 
-                <div class="row">
-                    <p>After completing these steps, make sure to head over to your PROFILE and enable 'job search' if
-                        you want to receive matches with potential employers and invitations to complete challenges by
-                        matching employers.</p>
-                </div>
+                <br/>
+                <p>After completing these steps you will <b>automatically receive suggestions for matching employers</b>
+                    if you are interested. <b>Begin solving Mooqita challenges</b> to <b>build a profile</b> and
+                    drastically <b>improve your chances at finding a great match</b>.</p>
+
+                <a class="btn btn-theme" href="find_challenges">Start a Challenge!</a>
             </div>
         </div>
     {{/mooqita_wide_spacing}}

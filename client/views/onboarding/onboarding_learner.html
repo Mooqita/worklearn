@@ -22,17 +22,12 @@
 
             <p style="padding-bottom: 25px">
                 We make it easy for you to find the perfect job based
-                on your <b>existing skills</b> and how you complete <b>challenges on Mooqita</b>.
+                on your <b>interests and goals</b>, your <b>work habits</b>, <b>existing skills</b>, and on how you
+                complete <b>challenges on Mooqita</b>.
             </p>
 
-            <p>To get started complete our 5 minute onboarding phase. We will first ask you to <b>create a challenge
-                that represents the type of work you'd like to do</b>.
-                Afterwards we will ask a few additional questions so that we get a better understanding of your:</p>
-            <ol>
-                <li>Interests & Abilities</li>
-                <li>Work Habits</li>
-                <li>Personality</li>
-            </ol>
+            <p> To get started we need some information so you can <b>benefit from our AI-based matching</b>.
+                We will first ask you to <b>describe where you would like to see yourself in one year from now.</b>.</p>
             <br>
             <a class="btn btn-theme" href="onboarding_learner_vision">Get started</a>
         </div>
@@ -45,11 +40,12 @@
             <img style="width: 300px" src="/images/mooqita.jpg">
         </h1>
 
-        <h1>Where do you see yourself in 1 year?</h1>
+        <h1>Where would you love to see yourself in 1 year?</h1>
 
         <p>
-            At Mooqita we <em><b>tailor your experience to your goals</b></em>. In order to <em><b>match you with potential employers and their
-            challenges</b></em>, please provide us with a few short statements about your <em><b>career vision and learning aims</b></em>.
+            At Mooqita we <em><b>tailor your experience to your goals</b></em>.
+            Please provide us with a few short statements about your <em><b>career vision and learning aims</b></em>.
+            We will use this information to <em><b>match you with potential employers and their challenges</b></em>.
             <br>
             <!-- The challenges on this page represent tasks that a future employer might ask you to work on.
             Please select 1 to 3 challenges that represent your interests. You can select challenges that you would
@@ -61,25 +57,25 @@
             to learn more about the topics that interest you. -->
         </p>
 
-        <h3>Main Tasks</h3>
+        <h3>The main tasks I would love to do:</h3>
         <p class="editable">
             {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
                     placeholder="Click here to provide examples of major tasks you would like to perform in one year."}}
         </p>
 
-        <h3>Level of Responsibility</h3>
+        <h3>I would love to be in responsible for:</h3>
         <p class="editable">
             {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
-                    placeholder="Please describe your desired level of responsibilities (contributer or project owner, supervisor, etc.)."}}
+                    placeholder="Please describe your desired level of responsibilities (contributor or project owner, supervisor, etc.)."}}
         </p>
 
-        <h3>Newly Acquired Skills</h3>
+        <h3>I would love to have learned more about:</h3>
         <p class="editable">
             {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
                     placeholder="Please describe new skills you would like to acquire within the next year."}}
         </p>
 
-        <h3>Main Qualifications</h3>
+        <h3>I would bring along the following main qualifications:</h3>
         <p class="editable">
             {{>basic_input method="set_field" collection_name="jobs" item_id=job._id field="title"
                     placeholder="Please summarize the main qualifications you will bring so you can fulfill your tasks and responsibilities."}}
@@ -92,8 +88,8 @@
                 {{>toggle_button icon="fa-paint-brush color-theme"
                         href="onboarding_learner_challenge_select"
                         session="own_challenge"
-                        key="recommendations_wanted" label="I want course recommendations"
-                        explain="Check this if you would like to receive recommendations for online learning courses that match the vision you provided."}}
+                        key="recommendations_wanted" label="Give me course recommendations"
+                        explain="Check here if you would like to receive recommendations for online learning courses that match the vision you provided."}}
             </div>
             <div class="col-sm-6 padding-next">
                 {{>toggle_button icon="fa-paint-brush color-theme"
