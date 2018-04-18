@@ -10,6 +10,7 @@ Template.profile.onRendered ->
 
 Template.profile.helpers
 	g_profile: () ->
+		console.log(Session.get('g_profile'))
 		return Session.get('g_profile')
 
 	email: () ->
