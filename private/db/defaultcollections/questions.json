@@ -1,0 +1,457 @@
+[
+  {
+    "question": "What type of loop, can run through a command multiple times?",
+    "answer_one": "If",
+    "answer_two": "Do/While",
+    "answer_three": "For-Loop",
+    "answer_four": "Both B and C",
+    "correct_answer": "answer_five",
+    "subject": "comp_thinking"
+  },
+  {
+    "question": "To start a project, what must you open first?",
+    "answer_one": "IDE",
+    "answer_two": "Loop",
+    "answer_three": "Computational Thinking",
+    "answer_four": "Safari",
+    "correct_answer": "answer_one",
+    "subject": "comp_thinking"
+  },
+  {
+    "question": "What is the output of the following code: int x = 8; for(int i=x; i != 0; i--) { print(\"i, \"); }",
+    "answer_one": "8, 7, 6, 5, 4, 3, 2, 1",
+    "answer_two": "876543210",
+    "answer_three": "87654321",
+    "answer_four": "12345678",
+    "correct_answer": "answer_one",
+    "subject": "comp_thinking"
+  },
+  {
+    "question": "A Syntax error occurs when _____",
+    "answer_one": "A program got hacked!",
+    "answer_two": "A program produces the wrong output",
+    "answer_three": "a character or string is incorrectly placed in a command or instruction that causes a failure in execution",
+    "answer_four": "Either B or C",
+    "correct_answer": "answer_four",
+    "subject": "comp_thinking"
+  },
+  {
+    "question": "Which of the following is an example of a while loop?",
+    "answer_one": "As long as there is still food, chew food.",
+    "answer_two": "For each bite, chew.",
+    "answer_three": "Chew food, as long as there is still bites.",
+    "answer_four": "All of the above",
+    "correct_answer": "answer_one",
+    "subject": "comp_thinking"
+  },
+  {
+    "question": "Breaking a complex problem down into smaller problems and solving each one individually.",
+    "answer_one": "Decomposition",
+    "answer_two": "Abstraction",
+    "answer_three": "Programming",
+    "answer_four": "Algorithmic Thinking",
+    "correct_answer": "answer_one",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "Picking out the important bits of information from the problem, ignoring the specific details that don’t matter.",
+    "answer_one": "Decomposition",
+    "answer_two": "Abstraction",
+    "answer_three": "Programming",
+    "answer_four": "Algorithmic Thinking",
+    "correct_answer": "answer_two",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "A logical way of getting from the problem to the solution. If the steps you take to solve a problem follow an algorithm then they can be reused and adapted to solve similar problems in the future.",
+    "answer_one": "Decomposition",
+    "answer_two": "Abstraction",
+    "answer_three": "Programming",
+    "answer_four": "Algorithmic Thinking",
+    "correct_answer": "answer_three",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "Why do we need to think computationally?",
+    "answer_one": "To help us program",
+    "answer_two": "To help us solve complex problems more easily",
+    "answer_three": "To help us to think like a computer",
+    "answer_four": "All of the above",
+    "correct_answer": "answer_four",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "What is pseudocode?",
+    "answer_one": "A high-level language that has specific syntax",
+    "answer_two": "A way of describing a set of instructions that doesn’t use specific syntax",
+    "answer_three": "A diagram that represents a set of instructions",
+    "answer_four": "A set of configuration instructions given to a compiler.",
+    "correct_answer": "answer_two",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "What is an algorithm?",
+    "answer_one": "Patterns and trends used to solve a problem",
+    "answer_two": "A set of step-by-step instructions to resolve a problem",
+    "answer_three": "A programming language",
+    "answer_four": "A complex theoretical computer science concept.",
+    "correct_answer": "answer_two",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "Which of the following is an example of thinking computationally?",
+    "answer_one": "Planning out your route when going to meet a friend",
+    "answer_two": "When going to meet a friend, wandering around until you find them",
+    "answer_three": "When going to meet a friend, asking a parent to plan your route for you",
+    "answer_four": "When you meet a friend, discussing which restaurant to visit.",
+    "correct_answer": "answer_one",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "Which of the following is NOT an example of computational thinking?",
+    "answer_one": "Planning what to collect and where to exit to complete a video game level",
+    "answer_two": "Planning how to beat your enemies in a video game level",
+    "answer_three": "Accidentally completing a video game level",
+    "answer_four": "Repeating a step a number of times to defeat and enemy.",
+    "correct_answer": "answer_three",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "To create a successful computer program, how many computational thinking techniques are usually required?",
+    "answer_one": "Two",
+    "answer_two": "Four",
+    "answer_three": "Three",
+    "answer_four": "Ten or More",
+    "correct_answer": "answer_two",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "When is a computer most likely to be used when using computational thinking?",
+    "answer_one": "During decomposition",
+    "answer_two": "At the end, when programming a computer",
+    "answer_three": "When writing algorithms",
+    "answer_four": "At every stage.",
+    "correct_answer": "answer_two",
+    "subject": "comp_thinking",
+    "published": true
+  },
+  {
+    "question": "Which is the correct way to create a variable that stores the number 10?",
+    "answer_one": "10",
+    "answer_two": "var#1 = 10",
+    "answer_three": "var = 10",
+    "answer_four": "int VAR == 10;",
+    "correct_answer": "answer_three",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "How can you increase an existing variable by one number?",
+    "answer_one": "var +=",
+    "answer_two": "var += 1",
+    "answer_three": "+1",
+    "answer_four": "var add 1",
+    "correct_answer": "answer_two",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "Which option is the correct way to create and empty list? ",
+    "answer_one": "list = empty",
+    "answer_two": "[empty]",
+    "answer_three": "list = new list[]",
+    "answer_four": "a = []",
+    "correct_answer": "answer_four",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "What is the correct way of making a list inside a list?",
+    "answer_one": "a = [1, 2, [3, 4], 5]",
+    "answer_two": "a = [1, 2, a = [2]]",
+    "answer_three": "Cannot be done",
+    "answer_four": "a = [1, [new list], 2]",
+    "correct_answer": "answer_one",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "Given the following variables: x = 5 and y = 1. Which If statement is correct?",
+    "answer_one": "if x > y: print(‘5 is greater than 1)",
+    "answer_two": "if x greater than y: print(‘5 is greater than 1)",
+    "answer_three": "if (x >> y) print(\"5 is greater than 1\")",
+    "answer_four": "(if x >y):  System.out.print(\"5 is greater than 1\")",
+    "correct_answer": "answer_one",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "How do you write a for loop in Python?",
+    "answer_one": "for (int i = 0; i < Integer.MAX_VALUE; i++)",
+    "answer_two": "for x in range(0, 3):",
+    "answer_three": " for( a = 10; a < 20; a = a + 1 )",
+    "answer_four": "while (count < 9):",
+    "correct_answer": "answer_two",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "How would you print \"Hello World!\" in Python?",
+    "answer_one": "print(\"Hello World!\")",
+    "answer_two": "System.out.print(\"Hello World!\")",
+    "answer_three": "printf(\"Hello World!\");",
+    "answer_four": "output(\"Hello World!\")",
+    "correct_answer": "answer_one",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "What does a while loop do?",
+    "answer_one": "Prints waiting messages for user",
+    "answer_two": "Executes code contained in while loop based on a specific condition",
+    "answer_three": "Opens file to be read from the current directory",
+    "answer_four": "It can never, under any circumstances, exit the loop",
+    "correct_answer": "answer_two",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "What are some uses of Python?",
+    "answer_one": "Web-scraping",
+    "answer_two": "Bioinformatics applications",
+    "answer_three": "General scripting language",
+    "answer_four": "All of the above",
+    "correct_answer": "answer_four",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "How are different lines of code in Python separated?",
+    "answer_one": "Tabs",
+    "answer_two": "Commas",
+    "answer_three": "Colons",
+    "answer_four": "Periods",
+    "correct_answer": "answer_one",
+    "subject": "python",
+    "published": true
+  },
+  {
+    "question": "Which of these is the correct order for the divisions of a COBOL program?",
+    "answer_one": "Identification, Environment, Data, Procedure",
+    "answer_two": "Identification, Environment, Procedure, Data",
+    "answer_three": "Environment, Procedure, Data, Identification",
+    "answer_four": "Environment, Identification, Procedure, Data",
+    "correct_answer": "answer_one",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "How do you comment a line in a COBOL program?",
+    "answer_one": "Code an asterisk (*) or slash (/) at the 1st column",
+    "answer_two": "Code a pound (#) or asterisk (*) at the 1st column",
+    "answer_three": "Code an asterisk (*) or slash (/) at the 7th column",
+    "answer_four": "Code a pound (#) or asterisk (*) at the 7th column",
+    "correct_answer": "answer_three",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which of these is the only mandatory division of a COBOL program?",
+    "answer_one": "Environment",
+    "answer_two": "Data",
+    "answer_three": "Identification",
+    "answer_four": "Procedure",
+    "correct_answer": "answer_three",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which of these is NOT a COBOL data type?",
+    "answer_one": "Numeric",
+    "answer_two": "Alpha-Numeric",
+    "answer_three": "Alphabetic",
+    "answer_four": "Boolean",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "What does the DISPLAY verb do?",
+    "answer_one": "Starts a program.",
+    "answer_two": "Prints output to screen.",
+    "answer_three": "Plays a video",
+    "answer_four": "Prints output to storage device",
+    "correct_answer": "answer_two",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "What does the DISPLAY verb do?",
+    "answer_one": "Starts a program.",
+    "answer_two": "Prints output to screen.",
+    "answer_three": "Plays a video",
+    "answer_four": "Prints output to storage device",
+    "correct_answer": "answer_two",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "All of these are COBOL verbs for handling files except...",
+    "answer_one": "READ",
+    "answer_two": "REWRITE",
+    "answer_three": "START",
+    "answer_four": "STOP",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "This code belongs in the ______ division and is an example of a(n) _______: MOVE 5 TO X. PERFORM X TIMES.",
+    "answer_one": "PROCEDURE, LOOP",
+    "answer_two": "IDENTIFICATION, LOOP",
+    "answer_three": "IDENTIFICATION, CONDITION",
+    "answer_four": "PROCEDURE, CONDITION",
+    "correct_answer": "answer_one",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "All of the following is can be used in making conditional statements except:",
+    "answer_one": "AND, OR",
+    "answer_two": "GREATER THAN, LESS THAN",
+    "answer_three": "EQUAL, NOT",
+    "answer_four": "NONE OF THE ABOVE",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "A COBOL STRING is:",
+    "answer_one": "Tied in a knot",
+    "answer_two": "A single data item that can be any data type",
+    "answer_three": "limited by size",
+    "answer_four": "A single data item that can only be alphabetic or alpha-numeric",
+    "correct_answer": "answer_two",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "The verb used split a STRING in COBOL is:",
+    "answer_one": "DESTRING",
+    "answer_two": "SPLIT",
+    "answer_three": "UNSTRING",
+    "answer_four": "PARSE",
+    "correct_answer": "answer_three",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "What does COBOL stand for?",
+    "answer_one": "Common Business Oriented Language",
+    "answer_two": "Common Business Object Language",
+    "answer_three": "Common Oriented Business Language",
+    "answer_four": "Common Object Business Language",
+    "correct_answer": "answer_one",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which of the alphanumeric literal is invalid?",
+    "answer_one": "’COBOL12’",
+    "answer_two": "\"COBOL12\"",
+    "answer_three": "COBOL\"12\"",
+    "answer_four": "COBOL12",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "For deleting a record, in which mode should we open the file?",
+    "answer_one": "Input-Output",
+    "answer_two": "Input",
+    "answer_three": "Output",
+    "answer_four": "Extend",
+    "correct_answer": "answer_one",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "What is the length of PIC 999v9",
+    "answer_one": "6",
+    "answer_two": "5",
+    "answer_three": "3",
+    "answer_four": "4",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which of the following is a valid COBOL word?",
+    "answer_one": "B12-4",
+    "answer_two": "-GROSS",
+    "answer_three": "OVER TIME",
+    "answer_four": "GROSS_SALARY",
+    "correct_answer": "answer_one",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which division is used to specify the computer used by the program",
+    "answer_one": "Identification Division",
+    "answer_two": "Environment Division",
+    "answer_three": "Data Division",
+    "answer_four": "Procedure Division",
+    "correct_answer": "answer_two",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Which of the following is not a figurative constant?",
+    "answer_one": "Spaces",
+    "answer_two": "Quote",
+    "answer_three": "Blank",
+    "answer_four": "Low-Value",
+    "correct_answer": "answer_three",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "Terminates program execution (processing)",
+    "answer_one": "Value Spaces",
+    "answer_two": "Display Statement",
+    "answer_three": "Stop Run Statement",
+    "answer_four": "Accept Statement",
+    "correct_answer": "answer_three",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "A Constant Value",
+    "answer_one": "Compiler",
+    "answer_two": "Clean Compile",
+    "answer_three": "Data Size",
+    "answer_four": "Literal",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  },
+  {
+    "question": "The act of finding programming errors",
+    "answer_one": "Undoing",
+    "answer_two": "Unbugging",
+    "answer_three": "Rebugging",
+    "answer_four": "Debugging",
+    "correct_answer": "answer_four",
+    "subject": "cobol",
+    "published": true
+  }
+]

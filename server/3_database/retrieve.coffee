@@ -121,4 +121,3 @@
 	collection = get_collection_save collection_name
 	data = export_data(collection)
 	return data
-
