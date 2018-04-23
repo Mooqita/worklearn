@@ -9,11 +9,19 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 ##############################################
 Template.registerHelper "layout_selected_menu", ()->
+	no_login = FlowRouter.getQueryParam("nlg")
+	if no_login
+		return "mooqita_logo_menu"
+
 	Session.get "menu_template"
 
 ##############################################
 Template.registerHelper "layout_selected_login", ()->
-	Session.get "login_template"
+	no_login = FlowRouter.getQueryParam("nlg")
+	if no_login
+		return undefined
+
+	return Session.get "login_template"
 
 ##############################################
 Template.registerHelper "layout_selected_layout", ()->

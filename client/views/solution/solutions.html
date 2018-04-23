@@ -98,17 +98,35 @@
 						{{/if}}
 					{{/with}}
 
-					{{#each solutions}}
-						{{>solution_reviews}}
-					{{else}}
-						<div class="alert alert-warning">
-							You have not yet submitted a solution to this challenge.
-						</div>
+					{{#if logged_in}}
+						{{#each solutions}}
+							{{>solution_reviews}}
+						{{else}}
+							<div class="alert alert-warning">
+								You have not yet submitted a solution to this challenge.
+							</div>
 
-						<div class="text-right">
-							<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+							<div class="text-right">
+								<div class="btn btn-theme" id="take_challenge">Take challenge</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<h2>Please register to start the challenge</h2>
+						<div class="row">
+							<div class="col-sm-6">
+								<p>
+									To start the challenge please register.
+									It is quick and will help us to connect you
+									with the best career opportunities.
+								</p>
+							</div>
+							<div class="col-sm-6">
+								<div class="well">
+									{{>atForm}}
+								</div>
+							</div>
 						</div>
-					{{/each}}
+					{{/if}}
 				{{/unless}}
 			{{/unless}}
 		</div>

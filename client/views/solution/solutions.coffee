@@ -93,6 +93,14 @@ Template.solution.onCreated ->
 
 ########################################
 Template.solution.helpers
+	logged_in: () ->
+		user = Meteor.user()
+		if user
+			return true
+
+		AccountsTemplates.setState("signUp")
+		return false
+
 	challenge: () ->
 		id = FlowRouter.getQueryParam "challenge_id"
 		res = Challenges.findOne id
@@ -108,6 +116,9 @@ Template.solution.helpers
 	has_solutions: () ->
 		filter =
 			challenge_id: FlowRouter.getQueryParam "challenge_id"
+
+		if not Meteor.user()
+			return false
 
 		crs = get_my_documents "solutions", filter
 		return crs.count() > 0

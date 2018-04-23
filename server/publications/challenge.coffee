@@ -72,12 +72,16 @@ Meteor.publish "challenge_by_id", (challenge_id) ->
 	check challenge_id, String
 
 	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
+	publish = if user_id then false else true
+
+#	if !user_id
+#		throw new Meteor.Error "Not permitted."
 
 	filter =
 		_id: challenge_id
-#		published: true
+
+	if publish
+		filter.published = true
 
 	crs = Challenges.find filter, _challenge_fields
 	log_publication crs, user_id, "challenge_by_id"
