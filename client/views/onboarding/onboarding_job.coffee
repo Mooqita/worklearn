@@ -68,15 +68,11 @@ Template.onboarding_describe_job.helpers
 		text = Session.get("text")
 		return text.length>10
 
-	matches: () ->
-		return Matches.find()
-
 
 ################################################################################
 Template.onboarding_describe_job.events
 	"click #register": () ->
 		Modal.show 'onboarding_job_register'
-
 
 
 ################################################################################
@@ -86,12 +82,24 @@ Template.onboarding_describe_job.events
 ################################################################################
 
 ################################################################################
-Template.onboarding_match.onCreated () ->
-	Meteor.publish("match_by_id")
+Template.onboarding_candidates.onCreated () ->
+	self = this
+	self.autorun () ->
+		mod =
+			fields:
+				_id:1
+				ids:1
+				cb:1
+
+		matches = Matches.find({}, mod).fetch()
+		Meteor.subscribe("user_resumes_by_matched_challenges", matches)
 
 
 ################################################################################
-Template.onboarding_match.helpers
+Template.onboarding_candidates.helpers
+	candidates: () ->
+		return UserResumes.find()
+
 
 
 

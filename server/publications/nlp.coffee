@@ -36,10 +36,3 @@ Meteor.publish "my_matches", (parameter) ->
 
 	log_publication crs, user_id, "my_matches"
 	return crs
-
-
-#######################################################
-Meteor.publish "match_by_id", () ->
-	return Ma
-
-

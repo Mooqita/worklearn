@@ -116,7 +116,7 @@ Meteor.methods
 		_clean_admissions()
 
 
-	test_predaid: () ->
+	add_documents: () ->
 		user = Meteor.user()
 		if not user
 			throw new Meteor.Error "Not permitted"
@@ -124,8 +124,9 @@ Meteor.methods
 		msg = "test_database called by: " + get_user_mail()
 		log_event msg, event_db, event_info
 
-		ch = Challenges.findOne()
-		handle_text(Challenges, ch._id, "content", "")
+		cs = Challenges.find()
+		cs.forEach (c) ->
+			add_field_to_documents(Challenges, c._id, "content", user)
 
 
 	migrate_database: () ->

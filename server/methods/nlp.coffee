@@ -13,14 +13,13 @@ _get_document = (collection_name, item_id, field) ->
 
 ###############################################################################
 Meteor.methods
-	match_text: (text, in_collection, in_field) ->
+	match_text: (text, in_collection) ->
 #		user = Meteor.user()
 #		if not user
 #			throw new Meteor.Error("Not permitted")
 
 		check text, String
 		check in_collection, String
-		check in_field, String
 
 		if not text
 			res =
@@ -35,7 +34,7 @@ Meteor.methods
 			ids: hash_id
 		Matches.remove(filter)
 
-		match_id = match_text(text, hash_id, null)
+		match_id = match_text(text, hash_id, in_collection)
 
 		res =
 			add_id: null
@@ -44,7 +43,7 @@ Meteor.methods
 		return res
 
 	###############################################################################
-	match_document: (collection_name, item_id, field, in_collection, in_field) ->
+	match_document: (collection_name, item_id, field, in_collection) ->
 		user = Meteor.user()
 		if not user
 			throw new Meteor.Error("Not permitted")
@@ -52,7 +51,6 @@ Meteor.methods
 		check item_id, String
 		check field, String
 		check in_collection, String
-		check in_field, String
 
 		collection = get_collection(collection_name)
 		item = collection.findOne(item_id)
@@ -66,8 +64,8 @@ Meteor.methods
 			ids: item_id
 		Matches.remove(filter)
 
-		add_id = handle_text(collection, item_id, field, user)
-		match_id = match_document(collection, item_id, field, in_collection, in_field, user)
+		add_id = add_field_to_documents(collection, item_id, field, user)
+		match_id = match_document(collection, item_id, field, in_collection, user)
 		modify_field_unprotected(collection, item_id, "matched", true)
 
 		res =
@@ -112,7 +110,7 @@ Meteor.methods
 		add_id = null
 		if collection
 			collection.update(item_id, {$addToSet: {concepts:concept}})
-			add_id = handle_text(collection, item_id, "concepts", user_id)
+			add_id = add_field_to_documents(collection, item_id, "concepts", user_id)
 			match_id = match_document(collection_name, item_id, "concepts", user_id)
 		else
 			match_id = match_text(concept, item_id, user_id)

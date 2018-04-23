@@ -4,12 +4,12 @@
 
 ###############################################################################
 _task_map =
-	"profiles_resume": "n_gram"
-	"organizations_description": "n_gram"
-	"jobs_description": "n_gram"
-	"jobs_title": "n_gram"
-	"challenges_title": "n_gram"
-	"challenges_content": "n_gram"
+	"profiles_resume": "add_document"
+	"organizations_description": "add_document"
+	"jobs_description": "add_document"
+	"jobs_title": "add_document"
+	"challenges_title": "add_document"
+	"challenges_content": "add_document"
 	"profiles_city": ["entity", "place"]
 	"profiles_state": ["entity", "place"]
 	"profiles_given_name": ["entity", "person"]
@@ -37,7 +37,7 @@ class @NLPTask
 ###############################################################################
 
 ###############################################################################
-@handle_text = (collection, item, field, user) ->
+@add_field_to_documents = (collection, item, field, user) ->
 	if typeof collection != "string"
 		collection = get_collection_name(collection)
 
@@ -76,7 +76,7 @@ class @NLPTask
 
 
 ###############################################################################
-@match_text = (text, hash_id, user) ->
+@match_text = (text, hash_id, match_collection, user) ->
 	if user
 		if typeof user != "string"
 			user = user._id
@@ -85,6 +85,7 @@ class @NLPTask
 		text: text
 		hash_id: hash_id
 		owner_id: user
+		match_collection: match_collection
 
 	task = "match_text"
 
@@ -95,7 +96,7 @@ class @NLPTask
 
 
 ###############################################################################
-@match_document = (collection, item, field, in_collection, in_field, user) ->
+@match_document = (collection, item, field, match_collection, user) ->
 	if typeof collection != "string"
 		collection = get_collection_name(collection)
 
@@ -110,6 +111,7 @@ class @NLPTask
 			user = user._id
 
 	meta_data =
+		match_collection: match_collection
 		collection_name: collection
 		item_id: item
 		field: field

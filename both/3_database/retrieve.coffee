@@ -67,7 +67,8 @@
 		collection = collection._name
 
 	if typeof resource != "string"
-		resource = resource._id
+		if not Array.isArray(resource)
+			resource = resource._id
 
 	if typeof user != "string"
 		user = user._id
@@ -96,7 +97,10 @@
 	admission_filter = {}
 
 	if resource != IGNORE
-		admission_filter["i"] = resource
+		if Array.isArray(resource)
+			admission_filter["i"] = { $in:resource }
+		else
+			admission_filter["i"] = resource
 
 	if collection != IGNORE
 		admission_filter["c"] = collection

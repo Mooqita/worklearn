@@ -10,25 +10,25 @@
 
 ################################################################################
 @concepts_from_context = (context) ->
-		context = Template.instance()
-		data = context.data
+	context = Template.instance()
+	data = context.data
 
-		res = new Set()
-		for m in Matches.find().fetch()
-			for c in m.c
+	res = new Set()
+	for m in Matches.find().fetch()
+		for c in m.c
+			res.add(c[0])
+
+	if _has_doc(context)
+		item_id = data.item_id
+		collection = get_collection(data.collection_name)
+		item = collection.findOne(item_id)
+
+		if item.concepts
+			for c in item.concepts
 				res.add(c)
 
-		if _has_doc(context)
-			item_id = data.item_id
-			collection = get_collection(data.collection_name)
-			item = collection.findOne(item_id)
-
-			if item.concepts
-				for c in item.concepts
-					res.add(c)
-
-		concepts = Array.from(res)
-		return concepts
+	concepts = Array.from(res)
+	return concepts
 
 
 ################################################################################
@@ -101,7 +101,6 @@ Template.match_button.events
 		field = data.field
 
 		in_collection = data.in_collection
-		in_field = data.in_field
 
 		handle = (err, res)->
 			context.matching.set false
@@ -115,11 +114,11 @@ Template.match_button.events
 				context.subscribe("active_nlp_task", res.match_id)
 
 		if not _has_doc(context)
-			Meteor.call "match_text", value, in_collection, in_field, handle
+			Meteor.call "match_text", value, in_collection, handle
 			return
 
 		Meteor.call "match_document", collection_name, item_id, field,
-																	in_collection, in_field, handle
+																	in_collection, handle
 
 
 ################################################################################
@@ -220,5 +219,3 @@ Template.match_tags.events
 					sAlert.warning(msg)
 				else
 					context.subscribe("active_nlp_task", res.match_id)
-
-

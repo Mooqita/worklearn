@@ -88,6 +88,37 @@
 |
 -------------------------------------------------->
 <template name="onboarding_describe_job">
+	<style>
+div[class*="col-"] > .square-responsive,
+span[class*="col-"] > .square-responsive,
+ol[class*="col-"] > .square-responsive,
+ul[class*="col-"] > .square-responsive,
+li[class*="col-"] > .square-responsive{
+   padding-bottom:100%;
+}
+div[class*="col-"] > .rect-responsive,
+span[class*="col-"] > .rect-responsive,
+ol[class*="col-"] > .rect-responsive,
+ul[class*="col-"] > .rect-responsive,
+li[class*="col-"] > .rect-responsive{
+   padding-bottom:50%;
+}
+.square-responsive,
+.rect-responsive{
+     position:relative;
+     overflow:hidden;
+}
+.square-responsive > *,
+.rect-responsive > *{
+     position:absolute;
+}
+.square-responsive > .content,
+.rect-responsive > .content {
+     width:100%;
+     height:100%;
+}
+	</style>
+
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
@@ -117,15 +148,13 @@
 		<div class="btn-group btn-group-justified">
 			<div class="btn-group">
 				{{>match_button session="onboarding_job_description"
-												in_collection="challenges" in_field="content"
-												text="Find challenges"}}
+												in_collection="challenges" text="Find challenges"}}
 			</div>
 		</div>
 
 		<hr>
 
-		{{>match_tags session="onboarding_job_description"
-									in_collection="challenges" in_field="content"}}
+		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
 
 		{{#unless currentUser}}
 			<div class="btn-group btn-group-justified">
@@ -134,9 +163,7 @@
 				</div>
 			</div>
 		{{else}}
-			{{#each matches}}
-				{{>onboarding_match}}
-			{{/each}}
+			{{>onboarding_candidates}}
 		{{/unless}}
 
 	{{/mooqita_wide_spacing}}
@@ -161,9 +188,100 @@
 | Show each match
 |
 -------------------------------------------------->
-<template name="onboarding_match">
-	{{#each concept in c}}
-		[<em style="font-weight: 600;">{{concept}}</em>]
+<template name="onboarding_candidates">
+	{{#each candidates}}
+		<div class="row">
+			<div class="col-sm-2 col-ms-3 text-center">
+				<div class="square-responsive background-theme">
+					<div class="content" style="font-size: 2em;">
+						Hello
+					</div>
+				</div>
+
+				<a class="color-theme">{{name}}</a>
+			</div>
+
+			<div class="col-sm-10 col-ms-9">
+				{{#each solutions}}
+					{{>onboarding_solution}}
+					<br>
+				{{/each}}
+			</div>
+		</div>
 	{{/each}}
 </template>
 
+
+<!------------------------------------------------
+|
+|	Challenge solution
+|
+-------------------------------------------------->
+<template name="onboarding_solution">
+	<div class="padding-next">
+		<div class="row">
+			<div class="col-xs-6">
+				<h2>{{challenge.title}}</h2>
+			</div>
+
+			<div class="col-xs-6">
+				<h2 class="text-right">Rating <em>{{average}}</em> out of <em>5</em></h2>
+			</div>
+		</div>
+
+		{{>more content=challenge.content}}
+
+		<h2>
+			<a id="show_reviews" data-toggle="collapse" data-target="#{{id}}">
+				{{#unless reviews_visible}}
+					<span class="glyphicon glyphicon-expand"></span>
+				{{else}}
+					<span class="glyphicon glyphicon-collapse-down"></span>
+				{{/unless}}
+			</a>
+			Show Solution and Individual Reviews
+		</h2>
+
+		<div id="{{id}}" class="row collapse">
+			<div style="margin-left: 25px">
+				{{>more content=content}}
+
+				{{#each reviews}}
+					<div class="row">
+						<div class="col-xs-6">
+							<h2>Review</h2>
+						</div>
+
+						<div class="col-xs-6">
+							<h2 class="text-right">
+								Rating <em>{{rating}}</em> out of <em>5</em>
+							</h2>
+						</div>
+					</div>
+
+					{{>more content=review}}
+
+					{{#with feedback}}
+						<div class="row" style="margin-left: 25px">
+							<div class="col-xs-6">
+								<h2>
+									Rebuttal
+								</h2>
+							</div>
+
+							<div class="col-xs-6">
+								<h2 class="text-right">
+									Rating <em>{{rating}}</em> out of <em>5</em>
+								</h2>
+							</div>
+
+							<div class="col-xs-12">
+								{{>more content=content}}
+							</div>
+						</div>
+					{{/with}}
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>
