@@ -12,6 +12,7 @@ Template.comp_thinking_course.onRendered(() => {
 	Meteor.call('get_comp_thinking_challenges', (err, res) => {
 		Session.set('comp_thinking_challenges', res)
 	})
+
 })
 
 Template.comp_thinking_course.helpers({
@@ -75,7 +76,7 @@ Template.comp_thinking_course.helpers({
 	'comp_thinking_module_resume_title': () => {
 		var comp_thinking_course_progress = Session.get('comp_thinking_course_progress')
 		var comp_thinking_modules = Session.get('comp_thinking_modules')
-		var num_python_modules = python_modules.length
+		var num_comp_thinking_modules = comp_thinking_modules.length
 		var resume_progress = 0
 
 		if(comp_thinking_course_progress != undefined) {
@@ -87,6 +88,25 @@ Template.comp_thinking_course.helpers({
 		}
 
 		return comp_thinking_modules[resume_progress].title
+	},
+	
+	'completed': () => {
+		var course_complete = Session.get('comp_thinking_course_progress')
+		if (course_complete >= 100) {
+			return true
+		} else {
+			return false
+		}
+	},
+
+
+	'comp_thinking_pretest': () => {
+		var course_complete = Session.get('comp_thinking_course_progress')
+		if (course_complete >= 100) {
+			return false
+		} else {
+			return true
+		}
 	},
 
 	'comp_thinking_challenges': () => {
@@ -106,5 +126,11 @@ Template.comp_thinking_course.events({
 			Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
 			Session.set('python_course_progress', res.python_course_progress)
 		})
+	},
+
+	'click #comp_thinking_exam': event => {
+		redirect_callback(build_url('comp_thinking_quiz'))
+		console.log('this is fucking broken');
 	}
+
 })
