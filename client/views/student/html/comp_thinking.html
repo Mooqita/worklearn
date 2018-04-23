@@ -111,13 +111,26 @@
                             </div>
                         </div>
                         <center>
+                            {{#if completed}}
+                            <div class="btn btn-right">    
+                                    <button id="comp_thinking_exam" class="btn btn-lg btn-success">Take Final Exam</button>
+                                </div>
+                            {{else}}
                             <div class="btn btn-right">
                                 <button data-toggle="modal" data-target="#comp_thinking_module_{{comp_thinking_module_resume}}" class="btn btn-lg btn-success">Resume Course</button>
                             </div>
+                            {{/if}}
                             {{#if comp_thinking_module_resume_title}}
                                 <h1>Current Lesson: <strong>{{comp_thinking_module_resume_title}}</strong></h1>
                             {{else}}
                                 <h1>Course Completed</h1>
+                            {{/if}}
+                        </center>
+                        <center>
+                            {{#if comp_thinking_pretest}}
+                            <div class="btn btn-right"> 
+                                <button id="comp_thinking_exam" class="btn btn-lg btn-success">Test Out</button>
+                            </div>
                             {{/if}}
                         </center>
                     </div>
@@ -129,6 +142,7 @@
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3>Course Content</h3>
+                        <h5>Here are a list of lessons</h5>
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
@@ -137,7 +151,7 @@
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
                                         <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                         <p>{{module.description}}</p>
-                                        <p><em>You have completed this module.</em></p>
+                                        <p><em>You have completed this module. Click to revisit</em></p>
                                     </button>
                                 {{else if is_module_disabled @index }}
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}" disabled>
@@ -149,6 +163,7 @@
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
                                         <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                         <p>{{module.description}}</p>
+                                        <p><em>Click to learn about {{module.title}}</em></p>
                                     </button>
                                 {{/if}}
                             {{/each}}
