@@ -85,10 +85,12 @@ Template.solution.onCreated ->
 			return
 
 		challenge_id = FlowRouter.getQueryParam("challenge_id")
+		sol_admissions = get_admissions(Meteor.user(), OWNER, Solutions, IGNORE, {challenge_id:challenge_id})
+		rev_admissions = get_admissions(Meteor.user(), OWNER, Reviews, IGNORE, {challenge_id:challenge_id})
 
 		self.subscribe "challenge_by_id", challenge_id
-		self.subscribe "my_solutions_by_challenge_id", challenge_id
-		self.subscribe "reviews_by_challenge_id", challenge_id
+		self.subscribe "my_solutions_by_challenge_id", challenge_id, sol_admissions.fetch()
+		self.subscribe "reviews_by_challenge_id", challenge_id, rev_admissions.fetch()
 
 
 ########################################
