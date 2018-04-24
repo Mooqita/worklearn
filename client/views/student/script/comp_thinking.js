@@ -109,7 +109,9 @@ Template.comp_thinking_course.helpers({
 		}
 	},
 
+	// TODO: Hide challenges if current user is challenge owner
 	'comp_thinking_challenges': () => {
+		//user_id = Meteor.userId() 
 		return Session.get('comp_thinking_challenges')
 	}
 })
@@ -130,7 +132,10 @@ Template.comp_thinking_course.events({
 
 	'click #comp_thinking_exam': event => {
 		redirect_callback(build_url('comp_thinking_quiz'))
-		console.log('this is fucking broken');
-	}
+	},
+
+	'click #accept_challenge': event => {
+		redirect_callback(build_url('solution?challenge_id='+event.target.value))
+	},
 
 })
