@@ -1,0 +1,202 @@
+<!------------------------------------------------
+|
+|	Learner Education
+|
+-------------------------------------------------->
+
+<template name="learner_education">
+		<div class="container-fluid">
+			{{#mooqita_wide_spacing}}
+				<div class="col-md-12">
+					<br>
+					<h1 style="text-align:center">Click a subject to learn about the course!</h1>
+				</div>
+				<a class="hover-card-container animated hover-card-small">
+					<div class="hover-card-box animated" style="padding-right: 25px">
+						<div class="item" id="learner_comp_thinking">
+							<div class="hover-card animated" style="margin: 5px; padding: 5px">
+								<div class="pop-icon-circle">
+									<div class="glyphicon glyphicon-console"
+										style="font-size: 60px; position: absolute; left: 15px; top: 15px">
+									</div>
+								</div>
+								<div class="text-left" style="text-align: left">
+									<h2>Computational Thinking</h2>
+									<h2 style="color:red;">5 New Challenges Available!</h2>
+								</div>
+								<div class="progress">
+										<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="{{comp_thinking_course_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{comp_thinking_course_progress}}%">
+											{{comp_thinking_course_progress}}%
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				<a class="hover-card-container animated hover-card-small">
+						<div class="hover-card-box animated" style="padding-right: 25px">
+							<div class="item" id="learner_python">
+								<div class="hover-card animated" style="margin: 5px; padding: 5px">
+									<div class="pop-icon-circle">
+										<div class="glyphicon glyphicon-education"
+											style="font-size: 60px; position: absolute; left: 20px; top: 20px">
+										</div>
+									</div>		
+									<div class="text-left" style="text-align: left">
+										<h2>Python</h2>
+										<h2 style="color:red;">1 New Job Posting</h2>
+									</div>
+									<div class="progress">
+											<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="{{python_course_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{python_course_progress}}%">
+												{{python_course_progress}}%
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+				<a class="hover-card-container animated hover-card-small">
+						<div class="hover-card-box animated" style="padding-right: 25px">
+							<div class="item" id="learner_cobol">
+								<div class="hover-card animated" style="margin: 5px; padding: 5px">
+									<div class="pop-icon-circle">
+										<div class="glyphicon glyphicon-briefcase"
+											style="font-size: 60px; position: absolute; left: 20px; top: 20px">
+										</div>
+									</div>		
+									<div class="text-left" style="text-align: left">
+										<h2>COBOL</h2>
+										<br>
+									</div>
+									<div class="progress">
+										<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="{{cobol_course_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{cobol_course_progress}}%">
+											{{cobol_course_progress}}%
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+						</a>	
+			{{/mooqita_wide_spacing}}
+		</div>
+	</template>
+	<!------------------------------------------------
+	|
+	|	COBOL Modal
+	|
+	-------------------------------------------------->
+	<template name="learner_cobol">
+		<div class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Common Business-Oriented Language (COBOL)</h2>
+					</div>
+	
+					<div class="modal-body">
+						<p>
+							Despite its status as a legacy programming language, COBOL is still widely used and highly valued in business, finance, and government applications.
+							The rise of experienced COBOL programmers retiring has created a market for nearly anyone who can maintain existing systems - without being a professional programmer.<br><br>
+							This course will teach skills that are critical to understanding, writing, debugging, and maintaining COBOL programs. Topics that will be covered include language design basics, data types and manipulation, arithmetic, logical operations, and real world examples.
+							<br><br>
+						</p>
+	
+						<p>
+							<em><b>Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.</b></em>
+						</p>
+					</div>
+	
+					<div class="modal-footer">
+						<div class="btn-group btn-group-justified">
+							<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+							<a type="button" class="btn btn-theme" id="cobol_course">See more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	
+	<!------------------------------------------------
+	|
+	|	Comp. Thinking Modal
+	|
+	-------------------------------------------------->
+	<template name="learner_comp_thinking">
+			<div class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Computational Thinking</h2>
+						</div>
+	
+						<div class="modal-body">
+							<p>
+								This course will teach you the very basics of computer science programming. It is meant for users with little to no prior computer programming experience. This course discusses the necessary tools and programs to get you started in programming. It will teach the user the computational logic behind most computer programming languages. These elements include variables, operators, operands, and data types. It will teach the user to implement these elements in analytical thought processes such if, if/else, while, and for looping.
+								<br>
+							</p>
+	
+							<p>
+								<em><b>Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.</b></em>
+							</p>
+						</div>
+	
+						<div class="modal-footer">
+							<div class="btn-group btn-group-justified">
+								<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+								<a type="button" class="btn btn-theme" id="comp_thinking_course">See more</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+	<!------------------------------------------------
+	|
+	|	Python Modal
+	|
+	-------------------------------------------------->
+	<template name="learner_python">
+			<div class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Python</h2>
+						</div>
+	
+						<div class="modal-body">
+							<p>
+								Python is a widely used language for diverse uses such as web development, scientific research, machine learning, data analytics, etc. It is a highly flexible interpreted language that is in high demand.<br><br>
+								This course will take a beginning programmer through Hello World through variables, arithmetic operations, conditionals, loops, lists, dictionaries, and basic file processing. At the end of this course the student will be able to post a certificate to their LinkedIn account and be able to complete challenges to gain a better grasp of the language and how to use it in the real world.<br><br>
+	
+							</p>
+	
+							<p>
+								<em><b>Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.</b></em>
+							</p>
+						</div>
+	
+						<div class="modal-footer">
+							<div class="btn-group btn-group-justified">
+								<a type="button" class="btn btn-theme" data-dismiss="modal">Not interested</a>
+								<a type="button" class="btn btn-theme" id="python_course">See more</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+	
+	
+		<!--div class="col-md-12">
+			<h2>Credits <span class="badge background-contrast">1</span></h2>
+			<p>
+				Credits is the currency in Mooqita.
+				Every time you write a review you get credits.
+				You can spend these credits requesting reviews.
+				Every review that you write will also influence
+				your resume and your score card.
+			</p>
+	
+	
+		</div-->

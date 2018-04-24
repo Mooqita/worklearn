@@ -18,6 +18,7 @@ Template.mooqita_menu.helpers
 		 items.push({name: "Job Postings", href: build_url("jobs")})
 
 		items.push({name: "Challenges", href: build_url("designed_challenges")})
+		items.push({name: "Education", href: build_url("learner_education")})
 
 		#{name: "Portfolio", href: build_url("portfolio")}
 		#filter =
@@ -40,4 +41,3 @@ Template.mooqita_menu.helpers
 Template.mooqita_menu.events
 	'click #logout': (event) ->
 		Meteor.logout()
-

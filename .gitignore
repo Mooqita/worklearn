@@ -1,6 +1,11 @@
-node_modules/
-.idea
+docker/env/*
+!docker/env/*.example
 secrets.txt
+settings.json
+.idea
+.meteor/local/
+private/db/helpertools/heroku-mongo-import.sh
+.vscode/
+node_modules/
 tmp/
-
-/package-lock.json
+private/db/helpertools/heroku-mongo-import.sh

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  worklearn:
+    image: golden/meteor-dev
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    env_file:
+      - ./docker/env/.worklearn-env
+    entrypoint: meteor --settings settings.json
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  adminmongo:
+    image: mrvautin/adminmongo
+    ports:
+      - 1234:1234

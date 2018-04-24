@@ -1,0 +1,56 @@
+<!------------------------------------------------
+|
+|	Learner menu
+|
+-------------------------------------------------->
+<template name="learner_menu">
+	{{>optional_menu}}
+
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "learner_education"}}">
+			Education
+		</a>
+	</li>		
+
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "learner_solutions"}}">
+			My Challenges
+		</a>
+	</li>
+
+	<!--
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "learner_reviews"}}">
+			Reviews
+		</a>
+	</li>
+
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "learner_resumes"}}">
+			Resume
+		</a>
+	</li>
+	
+	<li>
+		<a class="navigation-button control-navigate"
+			 href="{{build_url "learner_messages"}}">
+			Messages
+			{{#if num_new_messages}}
+				<span class="badge background-contrast">{{num_new_messages}}</span>
+			{{/if}}
+		</a>
+	</li>
+	-->
+	
+	<li>
+		<a class="navigation-button control-navigate"
+			href="{{build_url "learner_profile"}}">
+			Profile
+		</a>
+	</li>
+</template>
+
