@@ -53,7 +53,7 @@ Meteor.publish "solution_by_id", (solution_id) ->
 
 
 #######################################################
-Meteor.publish "my_solutions_by_challenge_id", (challenge_id) ->
+Meteor.publish "my_solutions_by_challenge_id", (challenge_id, admisssions) ->
 	check challenge_id, String
 	user_id = this.userId
 
