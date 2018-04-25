@@ -109,6 +109,24 @@ Template.python_course.helpers({
 		return python_modules[resume_progress].title
 	},
 
+	'completed': () => {
+		var course_complete = Session.get('python_course_progress')
+		if (course_complete >= 100) {
+			return true
+		} else {
+			return false
+		}
+	},
+
+	'python_pretest': () => {
+		var course_complete = Session.get('python_course_progress')
+		if (course_complete >= 100) {
+			return false
+		} else {
+			return true
+		}
+	},
+
 	'python_challenges': () => {
 		return Session.get('python_challenges')
 	}
@@ -126,5 +144,13 @@ Template.python_course.events({
 			Session.set('comp_thinking_course_progress', res.comp_thinking_course_progress)
 			Session.set('python_course_progress', res.python_course_progress)
 		})
-	}
+	},
+
+	'click #python_exam': event => {
+		redirect_callback(build_url('python_quiz'))
+	},
+
+	'click #accept_challenge': event => {
+		redirect_callback(build_url('solution?challenge_id='+event.target.value))
+	},
 })

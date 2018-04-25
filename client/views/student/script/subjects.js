@@ -3,17 +3,32 @@
 Template.learner_education.events({
 	'click #learner_cobol': event => {
 		var data = {feedback_id: this._id}
-		Modal.show('learner_cobol', data)
+
+		if(Session.get('cobol_course_progress') != undefined && parseFloat(Session.get('cobol_course_progress')) > 0) {
+			redirect_callback(build_url('cobol_course'))
+		} else {
+			Modal.show('learner_cobol', data)
+		}
 	},
 
 	'click #learner_comp_thinking': event => {
 		var data = {feedback_id: this._id}
-		Modal.show('learner_comp_thinking', data)
+
+		if(Session.get('comp_thinking_course_progress') != undefined && parseFloat(Session.get('comp_thinking_course_progress')) > 0) {
+			redirect_callback(build_url('comp_thinking_course'))
+		} else {
+			Modal.show('learner_comp_thinking', data)
+		}
 	},
 
 	'click #learner_python': event => {
 		var data = {feedback_id: this._id}
-		Modal.show('learner_python', data)
+
+		if(Session.get('python_course_progress') != undefined && parseFloat(Session.get('python_course_progress')) > 0) {
+			redirect_callback(build_url('python_course'))
+		} else {
+			Modal.show('learner_python', data)
+		}
 	}
 })
 

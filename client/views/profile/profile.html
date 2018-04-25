@@ -16,7 +16,7 @@
 
 					<ul>
 						{{#unless g_profile.given_name}}
-							<li>Fill in your given name</li>
+							<li>Fill in your first name</li>
 						{{/unless}}
 						{{#unless g_profile.family_name}}
 							<li>And your family name</li>
@@ -51,7 +51,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							{{>basic_input method="set_profile_field" collection_name="Profiles"
-								item_id=g_profile._id field="given_name" placeholder="Given name"}}
+								item_id=g_profile._id field="given_name" placeholder="First name"}}
 						</div>
 
 						<div class="col-md-4">

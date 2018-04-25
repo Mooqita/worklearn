@@ -74,7 +74,7 @@
     <div class="container">
         <center>
             <h1>Course Home: <strong>Computational Thinking</strong>
-                <span type="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#info"></span>
+                <span type="button" class="glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#info"></span>
             </h1>
             <div id="info" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -114,7 +114,7 @@
                             {{#if completed}}
                             <div class="btn btn-right">    
                                     <button id="comp_thinking_exam" class="btn btn-lg btn-success">Take Final Exam</button>
-                                </div>
+                            </div>
                             {{else}}
                             <div class="btn btn-right">
                                 <button data-toggle="modal" data-target="#comp_thinking_module_{{comp_thinking_module_resume}}" class="btn btn-lg btn-success">Resume Course</button>
@@ -151,19 +151,19 @@
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
                                         <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                         <p>{{module.description}}</p>
-                                        <p><em>You have completed this module. Click to revisit</em></p>
+                                        <p style="color:green;">You have completed this module. Click to revisit</p>
                                     </button>
                                 {{else if is_module_disabled @index }}
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}" disabled>
                                         <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                         <p>{{module.description}}</p>
-                                        <p><em>You do not have access to this module yet.</em></p>
+                                        <p style="color:red;">You do not have access to this module yet.</p>
                                     </button>
                                 {{else}}
                                     <button class="list-group-item" data-toggle="modal" data-target="#comp_thinking_module_{{@index}}">
                                         <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                         <p>{{module.description}}</p>
-                                        <p><em>Click to learn about {{module.title}}</em></p>
+                                        <p style="color:#f49d41;">Click to learn about {{module.title}}</p>
                                     </button>
                                 {{/if}}
                             {{/each}}
@@ -184,12 +184,23 @@
                     <div class="panel-body">
                         <div class="list-group">
                             {{#each challenge in comp_thinking_challenges}}
-                                <a href="{{challenge.link}}" class="list-group-item">
+                                {{#if completed}}
+                                <button id="accept_challenge" value="{{challenge._id}}" class="list-group-item">
                                     <em>Title: </em>
                                     {{challenge.title}} <br />
                                     <em>Description: </em>
                                     {{challenge.content}}
-                                </a>
+                                    <p style="color:green;">Click to work on a solution to this challenge!</p>
+                                </button>
+                                {{else}}
+                                <button class="list-group-item">
+                                    <em>Title: </em>
+                                    {{challenge.title}} <br />
+                                    <em>Description: </em>
+                                    {{challenge.content}}<br />
+                                    <p style="color:red;">You have to complete this course before attempting the challenge</p>
+                                </button>
+                                {{/if}}
                             {{/each}}
                         </div>
                     </div>

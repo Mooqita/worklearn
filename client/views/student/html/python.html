@@ -74,7 +74,7 @@
     <div class="container">
         <center>
             <h1>Course Home: <strong>Python</strong>
-                <span type="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#info"></span>
+                <span type="button" class="glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#info"></span>
             </h1>
             {{#if python_course_disabled_text}}
                 <h2>You cannot enroll in this course until you have completed Computational Thinking.</h2>
@@ -116,13 +116,26 @@
                         </div>
                     </div>
                     <center>
+                        {{#if completed}}
+                        <div class="btn btn-right">    
+                                <button id="python_exam" class="btn btn-lg btn-success">Take Final Exam</button>
+                            </div>
+                        {{else}}
                         <div class="btn btn-right">
                             <button data-toggle="modal" data-target="#python_module_{{python_module_resume}}" class="btn btn-lg btn-success" {{python_course_disabled}}>Resume Course</button>
                         </div>
+                        {{/if}}
                         {{#if python_module_resume_title}}
                             <h1>Current Lesson: <strong>{{python_module_resume_title}}</strong></h1>
                         {{else}}
                             <h1>Course Completed</h1>
+                        {{/if}}
+                    </center>
+                    <center>
+                        {{#if python_pretest}}
+                        <div class="btn btn-right"> 
+                            <button id="python_exam" class="btn btn-lg btn-success">Test Out</button>
+                        </div>
                         {{/if}}
                     </center>
                 </div>
@@ -134,6 +147,7 @@
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h3>Course Content</h3>
+                    <h5>Here are a list of lessons</h5>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
@@ -142,18 +156,19 @@
                                 <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}">
                                     <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                     <p>{{module.description}}</p>
-                                    <p><em>You have completed this module.</em></p>
+                                    <p style="color:green;">You have completed this module. Click to revisit</p>
                                 </button>
                             {{else if is_module_disabled @index }}
                                 <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}" disabled>
                                     <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                     <p>{{module.description}}</p>
-                                    <p><em>You do not have access to this module yet.</em></p>
+                                    <p style="color:red;">You do not have access to this module yet.</p>
                                 </button>
                             {{else}}
                                 <button class="list-group-item" data-toggle="modal" data-target="#python_module_{{@index}}">
                                     <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
                                     <p>{{module.description}}</p>
+                                    <p style="color:#f49d41;">Click to learn about {{module.title}}</p>
                                 </button>
                             {{/if}}
                         {{/each}}
@@ -174,12 +189,23 @@
                 <div class="panel-body">
                     <div class="list-group">
                         {{#each challenge in python_challenges}}
-                            <a href="{{challenge.link}}" class="list-group-item">
+                            {{#if completed}}
+                            <button id="accept_challenge" value="{{challenge._id}}" class="list-group-item">
                                 <em>Title: </em>
                                 {{challenge.title}} <br />
                                 <em>Description: </em>
-                                {{challenge.content}}
-                            </a>
+                                {{challenge.content}}<br />
+                                <p style="color:green;">Click to work on a solution to this challenge!</p>
+                            </button>
+                            {{else}}
+                            <button class="list-group-item">
+                                <em>Title: </em>
+                                {{challenge.title}} <br />
+                                <em>Description: </em>
+                                {{challenge.content}}<br />
+                                <p style="color:red;">You have to complete this course before attempting the challenge</p>
+                            </button>
+                            {{/if}}
                         {{/each}}
                     </div>
                 </div>
