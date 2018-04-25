@@ -11,9 +11,18 @@
     "title": "Loops",
     "description": "Learn looping concepts and functional applications.",
     "content": "<p>Hey Learner!</p><p>Today we are learning about loops in computer science and programming.</p><p>When you think of the word loop, what is the first thing you imagine? A circle, rubber band, infinity sign, or hair tie? If so, well, you are not that far off.</p><p>Loops are used in computer programming to easily repeat a task or series of tasks for a certain amount of time.</p><p>Think about all the repetitive things you do in your day, chewing for example:<br/>You pick up a utensil<br/>You use the utensil to pick up food<br/>You bring it to your mouth<br/>You put the utensil down<br/>You chew the food<br/>And on it goes, repeating those tasks.</p><p>Computers need to do repetitive tasks as well for them it might look something like:<br/>Look at a list of data<br/>Look for the next item in a list of data<br/>Print the item to a list<br/>The computer needs to keep printing items until there is no more data, much like we keep eating until there is no more food.</p><p>That will lead us into our next section on looping conditions.<br/></p>",
+    "module_number": 2,
     "subject": "comp_thinking",
     "published": true
-  }
+  },
+  {
+    "title": "Loops Part 2",
+    "description": "Learn popular types of loops.",
+    "content": "<p>Hey Learner!</p><p>Today we are learning about loops in computer science and programming.</p><p>When you think of the word loop, what is the first thing you imagine? A circle, rubber band, infinity sign, or hair tie? If so, well, you are not that far off.</p><p>Loops are used in computer programming to easily repeat a task or series of tasks for a certain amount of time.</p><p>Think about all the repetitive things you do in your day, chewing for example:<br/>You pick up a utensil<br/>You use the utensil to pick up food<br/>You bring it to your mouth<br/>You put the utensil down<br/>You chew the food<br/>And on it goes, repeating those tasks.</p><p>Computers need to do repetitive tasks as well for them it might look something like:<br/>Look at a list of data<br/>Look for the next item in a list of data<br/>Print the item to a list<br/>The computer needs to keep printing items until there is no more data, much like we keep eating until there is no more food.</p><p>That will lead us into our next section on looping conditions.<br/></p>",
+    "module_number": 3,
+    "subject": "comp_thinking",
+    "published": true
+  },
   {
     "title": "Program Structure",
     "description": "This section of the COBOL course will teach you about how to structure of a COBOL program would be setup and how it will run.",
