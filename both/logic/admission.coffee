@@ -60,7 +60,7 @@
 @_get_admission_filter = (user, role, collection, resource) ->
 	check role, String
 
-	if user == null
+	if not user
 		user = ""
 
 	if typeof collection != "string"
