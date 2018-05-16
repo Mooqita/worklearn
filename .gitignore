@@ -1,6 +1,6 @@
+docker/env/.worklearn-env
 node_modules/
+tmp/
 .idea
 secrets.txt
-tmp/
-
-/package-lock.json
+settings.json
