@@ -2,6 +2,15 @@
 # The Mooqita Worklearn Platform
 The worklearn platform powers the [Mooqita](https://app.mooqita.org) app. Mooqita is built on [Meteor](https://www.meteor.com/) and most of this repository is forked from [Mooqita’s Worklearn](https://github.com/Mooqita/worklearn) project page.
 
+## Before you begin working
+Here is a side-by-side comparison of coffeescript and javascript. This will show you how the syntax compares and helps so much when converting to or from ES6: http://coffeescript.org/#language
+
+Jordan used this and suggests it when working with Meteor: https://www.udemy.com/share/1001ki/
+This class is cheap and while we do not use the React framework, it is important for Meteor fundamentals and how we need to change the User Accounts, Authentication, and Routing.
+
+Before you install Docker on Windows you must read this: https://docs.docker.com/docker-for-windows/install/#what-to-know-before-you-install
+
+
 ## Local Development
 As part of University of Nebraska at Omaha’s ITIN4440-001 Agile Development Methods class in collaboration with the non-profits: [Siena Francis House](https://sienafrancis.org) and [Mooqita](https://www.mooqita.org/); we have created a development environment for building on the worklearn platform with [Docker](https://www.docker.com/).
 
