@@ -94,6 +94,14 @@ Template.solution.onCreated ->
 
 ########################################
 Template.solution.helpers
+	nlg_answer: () ->
+		no_login = FlowRouter.getQueryParam("nlg")
+		if no_login == "answer"
+			return true
+
+		return false
+
+
 	logged_in: () ->
 		user = Meteor.user()
 		if user
@@ -127,6 +135,20 @@ Template.solution.helpers
 
 ########################################
 Template.solution.events
+	"click #send_answer_only_solution": (event, template)->
+		id = FlowRouter.getQueryParam "challenge_id"
+
+		mail = template.$("#at-field-email")[0].value
+		name = template.$("#at-field-name")[0].value
+		solution = template.$("#answer_solution")[0].value
+
+		Meteor.call "add_answer_only_solution", mail, name, solution, id,
+			(err, res) ->
+				if err
+					sAlert.error("There was an error sending your idea please try again later.")
+				if res
+					sAlert.success("You successfully send your idea.")
+
 	"click #take_challenge":()->
 		id = FlowRouter.getQueryParam("challenge_id")
 		company_tag = FlowRouter.getQueryParam("company_tag")

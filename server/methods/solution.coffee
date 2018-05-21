@@ -6,6 +6,33 @@
 
 ###############################################################################
 Meteor.methods
+	add_answer_only_solution: (name, email, solution, challenge_id) ->
+		check name, String
+		check email, String
+		check solution, String
+		check challenge_id, String
+
+		challenge = Challenges.findOne(challenge_id)
+		if not challenge
+			throw new Meteor.Error("Not authorized")
+
+		if not challenge.published
+			throw new Meteor.Error("Not authorized")
+
+		solution =
+			name: "Solution: " + challenge.title
+			challenge_id: challenge._id
+			published: true
+			owner_name: name
+			owner_email: email
+			content: solution
+
+		solution_id = Solutions.insert(solution)
+
+		return solution_id
+
+
+
 	add_solution: (challenge_id, company_tag) ->
 		check company_tag, Match.Maybe(String)
 
