@@ -10,7 +10,7 @@
 ##########################################################
 
 ##########################################################
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+# import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
 
 ########################################

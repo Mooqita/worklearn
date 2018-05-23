@@ -1,4 +1,5 @@
-import JSZip from 'jszip'
+JSZip = require('jszip').JSZip
+
 
 _format_data =
 	csv: (data) ->
