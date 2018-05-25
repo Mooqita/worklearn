@@ -149,7 +149,11 @@ Template.match_tags.onCreated () ->
 ################################################################################
 Template.match_tags.helpers
 	tasks: () ->
-		return NLPTasks.find().count()>0
+		nlp_task = NLPTasks.findOne()
+		if not nlp_task
+			return false
+
+		return not nlp_task.solved
 
 	n_matches: () ->
 		return Matches.find().count()

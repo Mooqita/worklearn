@@ -89,34 +89,34 @@
 -------------------------------------------------->
 <template name="onboarding_describe_job">
 	<style>
-div[class*="col-"] > .square-responsive,
-span[class*="col-"] > .square-responsive,
-ol[class*="col-"] > .square-responsive,
-ul[class*="col-"] > .square-responsive,
-li[class*="col-"] > .square-responsive{
-   padding-bottom:100%;
-}
-div[class*="col-"] > .rect-responsive,
-span[class*="col-"] > .rect-responsive,
-ol[class*="col-"] > .rect-responsive,
-ul[class*="col-"] > .rect-responsive,
-li[class*="col-"] > .rect-responsive{
-   padding-bottom:50%;
-}
-.square-responsive,
-.rect-responsive{
-     position:relative;
-     overflow:hidden;
-}
-.square-responsive > *,
-.rect-responsive > *{
-     position:absolute;
-}
-.square-responsive > .content,
-.rect-responsive > .content {
-     width:100%;
-     height:100%;
-}
+		div[class*="col-"] > .square-responsive,
+		span[class*="col-"] > .square-responsive,
+		ol[class*="col-"] > .square-responsive,
+		ul[class*="col-"] > .square-responsive,
+		li[class*="col-"] > .square-responsive{
+			 padding-bottom:100%;
+		}
+		div[class*="col-"] > .rect-responsive,
+		span[class*="col-"] > .rect-responsive,
+		ol[class*="col-"] > .rect-responsive,
+		ul[class*="col-"] > .rect-responsive,
+		li[class*="col-"] > .rect-responsive{
+			 padding-bottom:50%;
+		}
+		.square-responsive,
+		.rect-responsive{
+				 position:relative;
+				 overflow:hidden;
+		}
+		.square-responsive > *,
+		.rect-responsive > *{
+				 position:absolute;
+		}
+		.square-responsive > .content,
+		.rect-responsive > .content {
+				 width:100%;
+				 height:100%;
+		}
 	</style>
 
 	{{#mooqita_wide_spacing}}
@@ -140,6 +140,9 @@ li[class*="col-"] > .rect-responsive{
 			intelligence). Do not think too much about
 			it right now. Just give us a few lines to
 			get working. You can add more later on.
+			Write this as if you were talking to a colleague
+			at your company this way our algorithm can
+			perform at its best.
 		</p>
 
 		{{>text_input session="onboarding_job_description"
