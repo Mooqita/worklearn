@@ -211,25 +211,22 @@ Template.solution_reviews.helpers
 		res = "" + n
 		return res
 
-	num_reviews: () ->
+	can_start_review: () ->
 		filter =
 			challenge_id: this.challenge_id
 
-		res = Reviews.find filter
-		return res.count()
-
-	can_start_review: () ->
 		challenge = Challenges.findOne this.challenge_id
 		items_required = challenge.num_reviews
-		filter =
-			requester_id: Meteor.userId()
-			challenge_id: this.challenge_id
-		res = Reviews.find filter
-		return items_required > res.count()
+		items_provided = get_my_documents(Reviews, filter).count()
 
-	reviews: () ->
+		return items_required > items_provided
+
+	reviews_received: () ->
 		filter =
-			solution_id: this._id
+			challenge_id: this.challenge_id
+			requester_id: Meteor.userId()
+			published: true
+
 		res = Reviews.find filter
 		return res
 

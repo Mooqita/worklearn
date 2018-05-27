@@ -230,11 +230,11 @@
 								<b>Publish your solution to start writing reviews.</b>
 							{{else}}
 								{{#unless searching}}
-										<div class="text-right" style="padding-top:15px">
-											{{#if can_start_review}}
-												<div id="find_review" class="btn btn-theme">Start a review</div>
-											{{/if}}
-										</div>
+									<div class="text-right" style="padding-top:15px">
+										{{#if can_start_review}}
+											<div id="find_review" class="btn btn-theme">Start a review</div>
+										{{/if}}
+									</div>
 								{{else}}
 									<div class="text-right" style="padding-top:15px">
 										<span class="btn btn-theme" disabled="true">
@@ -312,7 +312,7 @@
 
 		{{#if g_is_public "Solutions"}}
 			<h1>Reviews you received</h1>
-			{{#each reviews}}
+			{{#each reviews_received}}
 				{{>feedback_solution}}
 			{{else}}
 				<p>No reviews yet.</p>
