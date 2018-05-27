@@ -27,7 +27,7 @@ FlowRouter.route "/",
 		Session.set	"layout_template", "mooqita_layout"
 		Session.set	"content_template", "mooqita_landing"
 
-		BlazeLayout.render "body_template", {base_url:"index"}
+		this.render "body_template", {base_url:"index"}
 
 
 ##########################################################
@@ -45,7 +45,7 @@ FlowRouter.route "/onboarding/:template",
 		Session.set	"content_template", "mooqita_view"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "body_template", {base_url:"onboarding"}
+		this.render "body_template", {base_url:"onboarding"}
 
 
 ##########################################################
@@ -58,7 +58,7 @@ FlowRouter.route "/app/:template",
 		Session.set	"content_template", "mooqita_view"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "body_template", {base_url:"app"}
+		this.render "body_template", {base_url:"app"}
 
 
 ##########################################################
@@ -76,7 +76,7 @@ FlowRouter.route "/help",
 		Session.set	"content_template", "mooqita_help"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "mooqita_help", {base_url:"help"}
+		this.render "mooqita_help", {base_url:"help"}
 
 
 ##########################################################
@@ -94,7 +94,7 @@ FlowRouter.route "/privacy",
 		Session.set	"content_template", "mooqita_privacy"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "mooqita_privacy", {base_url:"privacy"}
+		this.render "mooqita_privacy", {base_url:"privacy"}
 
 ##########################################################
 FlowRouter.route "/terms-of-use",
@@ -107,7 +107,7 @@ FlowRouter.route "/terms-of-use",
 		Session.set	"content_template", "mooqita_terms"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "mooqita_terms", {base_url:"terms"}
+		this.render "mooqita_terms", {base_url:"terms"}
 
 
 ##########################################################
@@ -127,5 +127,5 @@ FlowRouter.route '/admin',
 		Session.set	"content_template", "mooqita_admin"
 		Session.set	"footer_template", "mooqita_footer"
 
-		BlazeLayout.render "body_template", {base_url:"admin"}
+		this.render "body_template", {base_url:"admin"}
 
