@@ -1,13 +1,13 @@
-########################################
-import { saveAs } from 'file-saver'
+###############################################################################
+saveAs = require('file-saver').saveAs
 
-#########################################################
+###############################################################################
 Template.mooqita_admin.onCreated ->
 	self = this
 	self.autorun () ->
 		self.subscribe "permissions"
 
-#########################################################
+###############################################################################
 Template.mooqita_admin.helpers
 	"permissions": ->
 		filter = {}
@@ -20,7 +20,7 @@ Template.mooqita_admin.helpers
 
 		return Permissions.find(filter, mod)
 
-#########################################################
+###############################################################################
 Template.mooqita_admin.events
 	"click #download_csv": () ->
 		Meteor.call "export_data_to_csv",

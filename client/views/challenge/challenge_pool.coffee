@@ -1,7 +1,7 @@
 ###############################################################################
 # GitHub challenges
 ###############################################################################
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 Template.challenge_pool.onCreated ->
   this.parameter = new ReactiveDict()

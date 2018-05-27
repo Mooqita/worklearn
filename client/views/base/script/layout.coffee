@@ -5,7 +5,7 @@
 ################################################
 
 ##########################################################
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 ##############################################
 Template.registerHelper "layout_selected_menu", ()->
