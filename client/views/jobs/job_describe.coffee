@@ -11,9 +11,10 @@ FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 ################################################################################
 Template.job_describe.onCreated ->
-	this.autorun () ->
+	self = this
+	self.autorun () ->
 		id = FlowRouter.getQueryParam("job_id")
-		Meteor.subscribe("job_by_id", id)
+		self.subscribe("job_by_id", id)
 
 ################################################################################
 Template.job_describe.helpers

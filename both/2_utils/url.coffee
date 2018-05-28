@@ -17,7 +17,7 @@ FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 
 ##############################################
-@build_url = (template, query, base_name="app", absolute=false) ->
+@build_url = (template, query, base_name="app", absolute=false, login_type="") ->
 	if not base_name
 		base_name = "app"
 

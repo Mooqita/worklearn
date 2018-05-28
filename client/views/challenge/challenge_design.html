@@ -34,8 +34,8 @@
 
 			{{#paging subscription="my_challenges" page=0 count=10
 								parameter=parameter collection_name="challenges"}}
-				{{#each items}}
-					{{>challenge_preview}}
+				{{#each item in items}}
+					{{>challenge_preview challenge=item template="challenge_design"}}
 				{{else}}
 					<hr>
 					<h1 class="text-center padding-next"
@@ -58,20 +58,21 @@
 <template name="challenge_preview">
 	<hr>
 
-	<a href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}"
+	<a href="{{g_build_url template (g_object challenge_id=challenge._id) app login_type}}"
 		 class="item-set-element animated_0_5_s">
 		<div>
 			<h2>
 				{{title}}
-					{{#if g_is_public "challenges"}}
-						<span class="badge background-contrast pull-right">
-								Public <span class="fa fa-check"></span>
-						</span>
-					{{else}}
-						<span class="badge background-theme pull-right">
-								Not yet public <span class="fa fa-edit"></span>
-						</span>
-					{{/if}}
+
+				{{#if challenge.published}}
+					<span class="badge background-contrast pull-right">
+							Public <span class="fa fa-check"></span>
+					</span>
+				{{else}}
+					<span class="badge background-theme pull-right">
+							Not yet public <span class="fa fa-edit"></span>
+					</span>
+				{{/if}}
 			</h2>
 		</div>
 

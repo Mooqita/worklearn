@@ -22,6 +22,15 @@
 			or does it make more sense to show jobs to find challenges?
 		</div>
 
+		<div class="item-set padding-top">
+		{{#paging subscription="challenges" page=0 size=10
+							parameter=parameter collection_name="Challenges"}}
+			{{#each item in items}}
+				{{>challenge_preview challenge=item template="solution" login_type="1"}}
+			{{/each}}
+		{{/paging}}
+		</div>
+
 	{{/mooqita_wide_spacing}}
 </template>
 

@@ -85,7 +85,7 @@ Template.job_preview.onCreated () ->
 	self.autorun ()->
 		data = self.data
 		id = data.organization_id
-		Meteor.subscribe("organization_by_id", id)
+		self.subscribe("organization_by_id", id)
 
 #########################################################
 Template.job_preview.helpers
@@ -127,9 +127,10 @@ Template.job_preview.helpers
 
 #########################################################
 Template.job_posting.onCreated () ->
+	self = this
 	this.autorun () ->
 		job_id = FlowRouter.getQueryParam("job_id")
-		Meteor.subscribe("job_by_id", job_id)
+		self.subscribe("job_by_id", job_id)
 
 
 #########################################################

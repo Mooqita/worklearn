@@ -10,9 +10,10 @@ Template.paging.onCreated ->
 	size = self.data.count || 10
 	size = if size > 100 then 100 else size
 
-	self.page = new ReactiveVar page
-	self.size = new ReactiveVar size
-	self.query = new ReactiveVar parameter.query || ""
+	self.page = new ReactiveVar(page)
+	self.size = new ReactiveVar(size)
+	self.sort_by = new ReactiveVar(undefined)
+	self.query = new ReactiveVar(parameter.query || "")
 	self.parameter = parameter
 
 	self.autorun () ->
@@ -21,6 +22,7 @@ Template.paging.onCreated ->
 		parameter.page = self.page.get()
 		parameter.size = self.size.get()
 		parameter.query = self.query.get()
+		parameter.sort_by = self.sort_by.get()
 
 		handler =
 			onStop: (err) ->
@@ -34,6 +36,15 @@ Template.paging.onCreated ->
 
 ########################################
 Template.paging.helpers
+	sort_by: () ->
+		inst = Template.instance()
+		sort = inst.sort_by.get()
+		switch sort
+			when undefined then return "Sorted by"
+			when "relevance" then return "Relevance"
+			when "date_created_dec" then return "Created (newest first)"
+			when "date_created_inc" then return "Created (oldest first)"
+
 	page: () ->
 		return String(Template.instance().page.get())
 
@@ -53,21 +64,28 @@ Template.paging.helpers
 
 ########################################
 Template.paging.events
-	"click #next":()->
+	"click #next": () ->
 		ins = Template.instance()
 		p = ins.page.get()
 		ins.page.set p+1
 
-	"click #prev":()->
+	"click #prev": () ->
 		ins = Template.instance()
 		p = ins.page.get()
 		if p == 0
 			return
 		ins.page.set p-1
 
-	"change #query":(event)->
+	"change #query": (event) ->
 		event.preventDefault()
 		q = event.target.value
 		ins = Template.instance()
 		ins.query.set q
+
+	"click .select_sort": (event) ->
+		sort_by = event.currentTarget.id
+		console.log(sort_by)
+		ins = Template.instance()
+		ins.sort_by.set(sort_by)
+
 
