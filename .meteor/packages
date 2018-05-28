@@ -4,17 +4,17 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-base@1.4.0-rc17.11     # Packages every Meteor app needs to have
+meteor-base@1.4.0-rc17.13     # Packages every Meteor app needs to have
 mobile-experience@1.0.5       # Packages for a great mobile UX
-mongo@1.5.0-rc17.11           # The database Meteor supports right now
+mongo@1.5.0-rc17.13           # The database Meteor supports right now
 blaze-html-templates@1.0.4		# Compile .html files into Meteor Blaze views
 reactive-var@1.0.11           # Reactive variable for tracker
 jquery@1.11.10                # Helpful client-side library
-tracker@1.2.0-rc17.11         # Meteor's client-side reactive programming library
-standard-minifier-js    			# JS minifier run for production mode
-es5-shim@4.8.0-rc17.11        # ECMAScript 5 compatibility for older browsers.
-ecmascript@0.11.0-rc17.11     # Enable ECMAScript2015+ syntax in app code
-shell-server            			# Server-side component of the `meteor shell` command
+tracker@1.2.0-rc17.13         # Meteor's client-side reactive programming library
+standard-minifier-js@2.3.4    			# JS minifier run for production mode
+es5-shim@4.8.0-rc17.13        # ECMAScript 5 compatibility for older browsers.
+ecmascript@0.11.0-rc17.13     # Enable ECMAScript2015+ syntax in app code
+shell-server@0.3.1            			# Server-side component of the `meteor shell` command
 
 
 # user accounts
@@ -41,7 +41,7 @@ useraccounts:bootstrap
 # CSS
 
 fourseven:scss
-standard-minifier-css
+standard-minifier-css@1.4.1
 twbs:bootstrap
 fortawesome:fontawesome
 peppelg:bootstrap-3-modal
@@ -93,7 +93,7 @@ jesperwe:bootstrap-select
 
 # temporary additions
 
-webapp@1.6.0-rc17.11
-dynamic-import
-underscore
+webapp@1.6.0-rc17.13
+dynamic-import@0.4.0-rc17.13
+underscore@1.0.10
 coffeescript
