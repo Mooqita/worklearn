@@ -5,28 +5,28 @@
 -------------------------------------------------->
 <template name="designed_challenges">
 	{{#mooqita_wide_spacing}}
-        <div class="item-set padding-top">
-            <h1>
-                Challenges you designed
-                <div class="btn-group pull-right">
-                <div class="btn btn-theme"
-                     style="min-width: 40px;"
-                     id="add_challenge">
+		<div class="item-set padding-top">
+			<h1>
+				Challenges you designed
+				<div class="btn-group pull-right">
+					<div class="btn btn-theme"
+							 style="min-width: 40px;"
+							 id="add_challenge">
+						{{>popout_base title="New Blank Challenge"
+										content="Click to add a new challenge."
+										icon_class="fa fa-2x fa-plus"}}
+					</div>
 
-                    {{>popout_base title="New Blank Challenge"
-                            content="Click to add a new challenge."
-                            icon_class="fa fa-2x fa-plus"}}
-                </div>
-                <div class="btn btn-theme"
-                     style="min-width: 40px;"
-                     id="template_challenge">
+					<div class="btn btn-theme"
+							 style="min-width: 40px;"
+							 id="template_challenge">
 
-                    {{>popout_base title="Create Challenge from Template"
-                            content="Click to select a template."
-                            icon_class="fa fa-2x fa-file"}}
-                </div>
-                </div>
-            </h1>
+					{{>popout_base title="Create Challenge from Template"
+									content="Click to select a template."
+									icon_class="fa fa-2x fa-file"}}
+					</div>
+				</div>
+			</h1>
 
 			<p class="padding-next">
 				Here you can find all the challenges you created from scratch or using a template.
@@ -34,8 +34,8 @@
 
 			{{#paging subscription="my_challenges" page=0 count=10
 								parameter=parameter collection_name="challenges"}}
-				{{#each items}}
-					{{>challenge_preview}}
+				{{#each item in items}}
+					{{>challenge_preview challenge=item template="challenge_design"}}
 				{{else}}
 					<hr>
 					<h1 class="text-center padding-next"
@@ -58,22 +58,25 @@
 <template name="challenge_preview">
 	<hr>
 
-	<a href="{{g_build_url "challenge_design" (g_object challenge_id=_id)}}"
+	<a href="{{g_build_url template (g_object challenge_id=challenge._id) app login_type}}"
 		 class="item-set-element animated_0_5_s">
 		<div>
 			<h2>
 				{{title}}
-					{{#if g_is_public "challenges"}}
-						<span class="badge background-contrast pull-right">
-								Public <span class="fa fa-check"></span>
-						</span>
-					{{else}}
-						<span class="badge background-theme pull-right">
-								Not yet public <span class="fa fa-edit"></span>
-						</span>
-					{{/if}}
+
+				{{#if challenge.published}}
+					<span class="badge background-contrast pull-right">
+							Public <span class="fa fa-check"></span>
+					</span>
+				{{else}}
+					<span class="badge background-theme pull-right">
+							Not yet public <span class="fa fa-edit"></span>
+					</span>
+				{{/if}}
 			</h2>
 		</div>
+
+		<p class="small">{{challenge.created}}</p>
 
 		{{>more content=content}}
 	</a>
@@ -275,7 +278,7 @@
 			<hr>
 			<h1 class="text-center padding-next"
 					style="padding-bottom: 45px">
-				<em>No Jobs yet.</em>
+				<em>No solutions yet.</em>
 			</h1>
 		{{/each}}
 		<hr>
@@ -348,6 +351,8 @@
 					</span>
 				</div>
 			</h2>
+
+			<p class="small">{{created}}</p>
 
 			{{>more content=content}}
 
@@ -666,4 +671,48 @@
 	</div>
 </template>
 
+
+<!------------------------------------------------
+|
+|	Challenge
+|
+-------------------------------------------------->
+<template name="learner_summary">
+	<div class="mooqita-layout">
+		<div class="row">
+			<div class="col-sm-3 col-ms-4">
+				{{>avatar collection_name="Profiles"
+					 observe = (g_profile_avatar user_id)
+					 item_id = (g_profile_id user_id)
+					 field = "avatar"}}
+				<div class="text-center">
+					<h2>{{g_profile_name user_id}}</h2>
+					{{#each emails}}
+						<a href="{{address}}">{{address}}</a>
+					{{/each}}
+				</div>
+			</div>
+
+			<div class="col-sm-9 col-ms-8">
+				<h2>Solutions</h2>
+				<p>Number solutions <em>{{solution_count}}</em></p>
+				<p>Average solution quality <em>{{average_solution_quality}}</em></p>
+				<p>Average solution length <em>{{solution_length}}</em></p>
+				{{#each solutions}}
+					<p>{{content}}</p>
+				{{/each}}
+
+				<h2>Reviews</h2>
+				<p>
+					<em>{{g_profile_name user_id}}</em> wrote <em>{{review_count}} reviews</em>
+					with an average length of <em>{{review_length}} words</em>
+					and gave on average a score of <em>{{average_review_quality}} out of 5</em>.
+				</p>
+				{{#each reviews}}
+					<p>{{content}}</p>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>
 

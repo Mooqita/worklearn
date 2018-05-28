@@ -3,7 +3,7 @@
 ##########################################################
 
 ##########################################################
-# import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 
 #########################################################

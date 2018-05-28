@@ -11,15 +11,16 @@
 
 ###############################################################################
 _challenge_fields =
-	fields:
-		title: 1
-		content: 1
-		material: 1
-		published: 1
-		num_reviews: 1
-		link: 1
-		origin: 1
-		job_ids: 1
+	title: 1
+	content: 1
+	material: 1
+	published: 1
+	num_reviews: 1
+	created: 1
+	link: 1
+	origin: 1
+	job_ids: 1
+	pined: 1
 
 ###############################################################################
 # challenges
@@ -29,21 +30,41 @@ _challenge_fields =
 Meteor.publish "challenges", (parameter) ->
 	pattern =
 		admissions: Match.Optional(admission_list)
+		sort_by: Match.Optional(String)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
 	check parameter, pattern
 
 	user_id = this.userId
-	if !user_id
-		throw new Meteor.Error "Not permitted."
-
 	filter =
 		published: true
 
-	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
+	mod =
+		fields: _challenge_fields
 
+	crs = get_documents_paged_unprotected Challenges, filter, mod, parameter
 	log_publication crs, user_id, "challenges"
+
+	return crs
+
+
+###############################################################################
+Meteor.publish "published_challenge_by_id", (challenge_id) ->
+	check challenge_id, String
+
+	user_id = this.userId
+
+	filter =
+		_id: challenge_id
+		published: true
+
+	mod =
+		fields: _challenge_fields
+
+	crs = Challenges.find filter, mod
+	log_publication crs, user_id, "published_challenge_by_id"
+
 	return crs
 
 
@@ -51,6 +72,7 @@ Meteor.publish "challenges", (parameter) ->
 Meteor.publish "my_challenges", (parameter) ->
 	pattern =
 		admissions: Match.Optional(admission_list)
+		sort_by: Match.Optional(String)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
@@ -61,26 +83,29 @@ Meteor.publish "my_challenges", (parameter) ->
 		throw new Meteor.Error "Not permitted."
 
 	filter = get_my_filter Challenges, {}
-	crs = get_documents_paged_unprotected Challenges, filter, _challenge_fields, parameter
+	mod =
+		fields: _challenge_fields
 
+	crs = get_documents_paged_unprotected Challenges, filter, mod, parameter
 	log_publication crs, user_id, "my_challenges"
+
 	return crs
 
 
 ###############################################################################
-Meteor.publish "challenge_by_id", (challenge_id) ->
+Meteor.publish "my_challenge_by_id", (challenge_id) ->
 	check challenge_id, String
 
 	user_id = this.userId
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
-	filter =
-		_id: challenge_id
-#		published: true
+	filter = get_my_filter Challenges, {_id: challenge_id}
+	mod =
+		fields: _challenge_fields
 
-	crs = Challenges.find filter, _challenge_fields
-	log_publication crs, user_id, "challenge_by_id"
+	crs = Challenges.find filter, mod
+	log_publication crs, user_id, "my_challenge_by_id"
 
 	return crs
 
@@ -101,8 +126,12 @@ Meteor.publish "challenges_by_admissions", (admissions) ->
 		_id:
 			$in: ids
 
-	crs = get_documents IGNORE, IGNORE, Challenges, filter, _challenge_fields
+	mod =
+		fields: _challenge_fields
+
+	crs = get_documents IGNORE, IGNORE, Challenges, filter, mod
 	log_publication crs, user_id, "challenges_by_admissions"
+
 	return crs
 
 
@@ -121,10 +150,12 @@ Meteor.publish "challenges_by_ids", (challenge_ids) ->
 		_id:
 			$in: challenge_ids
 
-	#filter = get_filter user, IGNORE, Challenges, {filter}
-	crs = Challenges.find filter, _challenge_fields
+	mod =
+		fields: _challenge_fields
 
+	crs = Challenges.find filter, mod
 	log_publication crs, user_id, "challenges_by_ids"
+
 	return crs
 
 ###############################################################################
@@ -156,6 +187,8 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	mod =
 		fields:
 			content: 1
+			created: 1
+			modified: 1
 			material: 1
 			published: 1
 			challenge_id: 1

@@ -90,13 +90,6 @@ Template.feedback_solution.helpers
 
 		return ""
 
-	is_feedback_broken: () ->
-		filter =
-			review_id: this._id
-		feedback = Feedback.findOne filter
-
-		return not feedback
-
 ########################################
 Template.feedback_solution.events
 	"click #publish_feedback":(event)->

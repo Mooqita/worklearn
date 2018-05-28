@@ -55,7 +55,7 @@ Template.solution_preview.onCreated ->
 		if not challenge_id
 			return
 
-		self.subscribe "challenge_by_id", challenge_id
+		self.subscribe "published_challenge_by_id", challenge_id
 
 
 ########################################
@@ -84,17 +84,33 @@ Template.solution.onCreated ->
 		if not FlowRouter.getQueryParam("challenge_id")
 			return
 
+		console.log("subscribe")
 		challenge_id = FlowRouter.getQueryParam("challenge_id")
 		sol_admissions = get_admissions(Meteor.user(), OWNER, Solutions, IGNORE, {challenge_id:challenge_id})
 		rev_admissions = get_admissions(Meteor.user(), OWNER, Reviews, IGNORE, {challenge_id:challenge_id})
 
-		self.subscribe "challenge_by_id", challenge_id
+		self.subscribe "published_challenge_by_id", challenge_id,
 		self.subscribe "my_solutions_by_challenge_id", challenge_id, sol_admissions.fetch()
 		self.subscribe "reviews_by_challenge_id", challenge_id, rev_admissions.fetch()
 
-
 ########################################
 Template.solution.helpers
+	nlg_answer: () ->
+		no_login = FlowRouter.getQueryParam("nlg")
+		if no_login == "answer"
+			return true
+
+		return false
+
+
+	logged_in: () ->
+		user = Meteor.user()
+		if user
+			return true
+
+		AccountsTemplates.setState("signUp")
+		return false
+
 	challenge: () ->
 		id = FlowRouter.getQueryParam "challenge_id"
 		res = Challenges.findOne id
@@ -111,15 +127,33 @@ Template.solution.helpers
 		filter =
 			challenge_id: FlowRouter.getQueryParam "challenge_id"
 
+		if not Meteor.user()
+			return false
+
 		crs = get_my_documents "solutions", filter
 		return crs.count() > 0
 
 
 ########################################
 Template.solution.events
+	"click #send_answer_only_solution": (event, template)->
+		id = FlowRouter.getQueryParam "challenge_id"
+
+		mail = template.$("#at-field-email")[0].value
+		name = template.$("#at-field-name")[0].value
+		solution = template.$("#answer_solution")[0].value
+
+		Meteor.call "add_answer_only_solution", mail, name, solution, id,
+			(err, res) ->
+				if err
+					sAlert.error("There was an error sending your idea please try again later.")
+				if res
+					sAlert.success("You successfully send your idea.")
+
 	"click #take_challenge":()->
 		id = FlowRouter.getQueryParam("challenge_id")
-		Meteor.call "add_solution", id,
+		company_tag = FlowRouter.getQueryParam("company_tag")
+		Meteor.call "add_solution", id, company_tag,
 			(err, res) ->
 				if err
 					sAlert.error("Take challenge error: " + err)
@@ -178,25 +212,22 @@ Template.solution_reviews.helpers
 		res = "" + n
 		return res
 
-	num_reviews: () ->
+	can_start_review: () ->
 		filter =
 			challenge_id: this.challenge_id
 
-		res = Reviews.find filter
-		return res.count()
-
-	can_start_review: () ->
 		challenge = Challenges.findOne this.challenge_id
 		items_required = challenge.num_reviews
-		filter =
-			requester_id: Meteor.userId()
-			challenge_id: this.challenge_id
-		res = Reviews.find filter
-		return items_required > res.count()
+		items_provided = get_my_documents(Reviews, filter).count()
 
-	reviews: () ->
+		return items_required > items_provided
+
+	reviews_received: () ->
 		filter =
-			solution_id: this._id
+			challenge_id: this.challenge_id
+			requester_id: Meteor.userId()
+			published: true
+
 		res = Reviews.find filter
 		return res
 

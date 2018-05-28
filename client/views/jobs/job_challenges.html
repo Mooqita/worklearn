@@ -42,8 +42,8 @@
 	{{#if has_challenges}}
 		<h2>Challenges linked to this job posting:</h2>
 		<div class="item-set" style="padding: 0px">
-			{{#each challenges}}
-				{{>challenge_preview}}
+			{{#each challenge in challenges}}
+				{{>challenge_preview challenge=challenge template="challenge_design"}}
 			{{/each}}
 			<hr>
 		</div>

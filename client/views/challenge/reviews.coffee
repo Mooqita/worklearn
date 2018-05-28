@@ -94,7 +94,7 @@ Template.review_preview.onCreated ->
 	self = this
 	self.autorun () ->
 		id = self.data.challenge_id
-		self.subscribe "challenge_by_id", id
+		self.subscribe "published_challenge_by_id", id
 
 
 ########################################
@@ -116,9 +116,10 @@ Template.review.onCreated ->
 		if not FlowRouter.getQueryParam("solution_id")
 			return
 
-		self.subscribe "solution_by_id", FlowRouter.getQueryParam("solution_id")
-		self.subscribe "challenge_by_id", FlowRouter.getQueryParam("challenge_id")
 		self.subscribe "review_by_id", FlowRouter.getQueryParam("review_id")
+		self.subscribe "solution_by_id", FlowRouter.getQueryParam("solution_id")
+		self.subscribe "published_challenge_by_id", FlowRouter.getQueryParam("challenge_id")
+
 
 ########################################
 Template.review.helpers

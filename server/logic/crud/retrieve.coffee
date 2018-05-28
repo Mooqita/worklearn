@@ -28,14 +28,29 @@
 		mod.fields.score = {$meta: "textScore"}
 
 	mod.limit = parameter.size
-	mod.skip = parameter.size*parameter.page
+	mod.skip = parameter.size * parameter.page
+	mod.sort =
+		pined: 1
 
 	if parameter.query
 		mod.sort =
 			score:
 				$meta: "textScore"
 
-	crs = collection.find filter, mod
+	switch parameter.sort_by
+		when "relevance" then true
+		when "date_created_inc" then mod.sort.created = 1
+		when "date_created_dec" then mod.sort.created = -1
+		when "date_modified_inc" then mod.sort.modified = 1
+		when "date_modified_dec" then mod.sort.modified = -1
+		when "rated_inc" then mod.sort.rated = 1
+		when "rated_dec" then mod.sort.rated = -1
+		when "time_needed_inc" then mod.sort.rated = 1
+		when "time_needed_dec" then mod.sort.rated = -1
+		when "complexity_inc" then mod.sort.complexity = 1
+		when "complexity_dec" then mod.sort.complexity = -1
+
+	crs = collection.find(filter, mod)
 	return crs
 
 

@@ -5,6 +5,7 @@
 ##########################################################
 FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
+
 ########################################
 # tutor
 ########################################
@@ -51,7 +52,7 @@ Template.tutor_solutions.onCreated ->
 
 	self.autorun () ->
 		challenge_id = self.parameter.get "challenge_id"
-		self.subscribe "challenge_by_id", challenge_id
+		self.subscribe "published_challenge_by_id", challenge_id
 
 ########################################
 Template.tutor_solutions.helpers
@@ -91,7 +92,7 @@ Template.tutor_solution.onCreated ->
 	self.autorun () ->
 		challenge_id = FlowRouter.getQueryParam "challenge_id"
 		solution_id = FlowRouter.getQueryParam "solution_id"
-		self.subscribe "challenge_by_id", challenge_id
+		self.subscribe "published_challenge_by_id", challenge_id
 		self.subscribe "solution_by_id", solution_id
 
 ########################################

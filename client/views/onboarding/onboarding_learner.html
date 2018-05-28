@@ -1,0 +1,37 @@
+<!------------------------------------------------
+|
+| Onboarding Intro
+|
+-------------------------------------------------->
+<template name="onboarding_learner_intro">
+	{{#mooqita_wide_spacing}}
+		<h1 style="text-align: center; padding-top: 30px">
+			<img style="width: 300px" src="/images/mooqita.jpg">
+		</h1>
+
+		<h1>Find the job you love</h1>
+
+		<p>
+			Here is a list of challenges companies are interested in.
+			Choose the challenges you like and learn the skills you
+			need to fill the role.
+		</p>
+
+		<div class="alert alert-danger">
+			Does it make more sense to show the challenges to find jobs
+			or does it make more sense to show jobs to find challenges?
+		</div>
+
+		<div class="item-set padding-top">
+		{{#paging subscription="challenges" page=0 size=10
+							parameter=parameter collection_name="Challenges"}}
+			{{#each item in items}}
+				{{>challenge_preview challenge=item template="solution" login_type="1"}}
+			{{/each}}
+		{{/paging}}
+		</div>
+
+	{{/mooqita_wide_spacing}}
+</template>
+
+

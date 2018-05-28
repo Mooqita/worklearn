@@ -1,6 +1,7 @@
+###############################################################################
 JSZip = require('jszip').JSZip
 
-
+###############################################################################
 _format_data =
 	csv: (data) ->
 		str_csv = require('csv-string')
@@ -15,6 +16,7 @@ _format_data =
 		return res
 
 
+###############################################################################
 @export_pandas_zip = (data, name) ->
 	formattedData = _format_data["csv"](data)
 
@@ -24,6 +26,8 @@ _format_data =
 
 	return promise.await()
 
+
+###############################################################################
 @export_collection_zip = (collection) ->
 	data = get_my_documents collection
 	data = data.fetch()
@@ -35,5 +39,7 @@ _format_data =
 
 	return promise.await()
 
+
+###############################################################################
 @import_data = (data) ->
 	return "nope"

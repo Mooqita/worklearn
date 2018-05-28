@@ -1,28 +1,28 @@
-########################################
+###############################################################################
 #
 # organization challenges view
 #
-########################################
+###############################################################################
 
 
-##########################################################
+###############################################################################
 # import
-##########################################################
+###############################################################################
 
-##########################################################
-# import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+###############################################################################
+FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 
-########################################
+###############################################################################
 # organization challenges
-########################################
+###############################################################################
 
-########################################
+###############################################################################
 Template.designed_challenges.onCreated ->
 	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
-########################################
+###############################################################################
 Template.designed_challenges.helpers
 	parameter: () ->
 		return Template.instance().parameter
@@ -30,7 +30,7 @@ Template.designed_challenges.helpers
 	challenges: () ->
 		return get_my_documents Challenges
 
-########################################
+###############################################################################
 Template.designed_challenges.events
 	"change #query":(event)->
 		event.preventDefault()
@@ -53,44 +53,44 @@ Template.designed_challenges.events
 		url = build_url "challenge_pool"
 		FlowRouter.go url
 
-########################################
+###############################################################################
 #
 # challenge_preview
 #
-#########################################
+###############################################################################
 
-########################################
+###############################################################################
 Template.challenge_preview.helpers
 	title: () ->
-		if this.title
-			return this.title
+		if this.challenge.title
+			return this.challenge.title
 
 		return "This challenge does not yet have a title."
 
 	content: () ->
-		if this.content
-			return this.content
+		if this.challenge.content
+			return this.challenge.content
 
 		return "No description available, yet."
 
 
-########################################
+###############################################################################
 #
 # challenge
 #
-########################################
+###############################################################################
 
-########################################
+###############################################################################
 Template.challenge_design.onCreated ->
 	self = this
 	self.send_disabled = new ReactiveVar(false)
 
 	self.autorun () ->
 		id = FlowRouter.getQueryParam("challenge_id")
-		Meteor.subscribe("challenge_by_id", id)
+		self.subscribe("my_challenge_by_id", id)
 
 
-########################################
+###############################################################################
 Template.challenge_design.helpers
 	challenge: () ->
 		id = FlowRouter.getQueryParam("challenge_id")
@@ -119,7 +119,7 @@ Template.challenge_design.helpers
 		return ""
 
 
-########################################
+###############################################################################
 Template.challenge_design.events
 	"click #icon_download": (e, n)->
 		if document.selection
@@ -167,18 +167,18 @@ Template.challenge_design.events
 					sAlert.success "Message send."
 
 
-########################################
+###############################################################################
 #
 # challenge solutions
 #
-########################################
+###############################################################################
 
-########################################
+###############################################################################
 Template.challenge_solutions.onCreated ->
 	this.parameter = new ReactiveDict()
 	this.parameter.set "challenge_id", FlowRouter.getQueryParam("challenge_id")
 
-########################################
+###############################################################################
 Template.challenge_solutions.helpers
 	parameter: () ->
 		return Template.instance().parameter
@@ -190,7 +190,7 @@ Template.challenge_solutions.helpers
 		return Solutions.find filter
 
 
-########################################
+###############################################################################
 Template.challenge_solutions.events
 	"change #public_only": () ->
 		event.preventDefault()
@@ -204,13 +204,13 @@ Template.challenge_solutions.events
 		ins = Template.instance()
 		ins.parameter.set "query", q
 
-########################################
+###############################################################################
 #
 # challenge solutions
 #
-########################################
+###############################################################################
 
-########################################
+###############################################################################
 Template.challenge_solution.onCreated ->
 	self = this
 
@@ -227,7 +227,7 @@ Template.challenge_solution.onCreated ->
 #		self.subscribe "my_recommendation_by_recipient_id",
 #			owner_ids
 
-########################################
+###############################################################################
 Template.challenge_solution.helpers
 	solution_owners: () ->
 		inst = Template.instance()
@@ -301,7 +301,7 @@ Template.challenge_solution.helpers
 		return Template.instance().reviews_visible.get()
 
 
-########################################
+###############################################################################
 Template.challenge_solution.events
 	"click #show_reviews": ->
 		f = Template.instance().reviews_visible.get()
@@ -332,11 +332,11 @@ Template.challenge_solution.events
 		Meteor.call "add_recommendation", this.challenge_id, this.owner_id
 
 
-##############################################
+################################################################################
 # publish modal
-##############################################
+################################################################################
 
-##############################################
+################################################################################
 Template.reopen_solution.events
 	'click #reopen': ->
 		self = this

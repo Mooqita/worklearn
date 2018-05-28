@@ -9,8 +9,11 @@
 			{{#unless profile_done}}
 				<div class="alert alert-warning" style="margin-top: 25px">
 					<h2>Todo List: Profile</h2>
+
 					<hr>
+
 					Here is a list of things you should do to complete your profile.
+
 					<ul>
 						{{#unless g_profile.given_name}}
 							<li>Fill in your given name</li>
@@ -21,9 +24,9 @@
 						{{#unless g_profile.avatar}}
 							<li>Upload a picture of you or choose an avatar.</li>
 						{{/unless}}
-						{{#unless g_profile.resume}}
+						<!--{{#unless g_profile.resume}}
 							<li>Please write your resume.</li>
-						{{/unless}}
+						{{/unless}}-->
 						{{#unless g_profile.job_interested}}
 							<li>Let us know if you are interested in job offerings from our partners.</li>
 						{{/unless}}
@@ -32,8 +35,6 @@
 			{{/unless}}
 
 			<div class="row padding-top">
-				<h1>Profile</h1>
-
 				<div class="col-sm-4 col-ms-4 col-xs-12">
 					{{#if g_profile.avatar}}
 						{{>avatar collection_name = "Profiles"
@@ -153,12 +154,18 @@
 							item_id=g_profile._id field="city" placeholder="city name"}}
 					</div>
 				</div>
-			{{/if}}
 
-			<h1>Resume</h1>
-			{{>markdown_input method="set_field" collection_name="Profiles"
-					item_id=g_profile._id field="resume"
-					placeholder="Tell us a little more about you."}}
+				<h2 class="padding-top">Where do you want to go?</h2>
+				<p>
+					Please describe where you would like to be in 5 years from now. The more
+					honest you are the easier it is for our AI to find a team you love working
+					with. This text will not be shown to potential employers or shared in any
+					way.
+				</p>
+				{{>text_input method="set_field" collection_name="Profiles"
+						item_id=g_profile._id field="resume"
+						placeholder="Tell us a little more about you."}}
+			{{/if}}
 		{{/with}}
 	{{/mooqita_wide_spacing}}
 
