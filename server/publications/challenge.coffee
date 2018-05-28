@@ -16,6 +16,7 @@ _challenge_fields =
 	material: 1
 	published: 1
 	num_reviews: 1
+	created: 1
 	link: 1
 	origin: 1
 	job_ids: 1
