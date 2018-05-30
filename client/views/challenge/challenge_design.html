@@ -176,12 +176,12 @@
 							placeholder="Number of reviews required."}}
 				</div>
 
-                <!-- TODO: make sure that the link gets displayed if present in db -->
-                <div class="form-group">
-                    {{>basic_input method="set_field" collection_name="challenges"
-                            field="link" label="Challenge or project link"
-                            item_id=_id placeholder="Link that contextualizes the challenge."}}
-                </div>
+				<!-- TODO: make sure that the link gets displayed if present in db -->
+				<div class="form-group">
+						{{>basic_input method="set_field" collection_name="challenges"
+										field="link" label="Challenge or project link"
+										item_id=_id placeholder="Link that contextualizes the challenge."}}
+				</div>
 
 				<div class="form-group">
 					<div class="input-group" style="width: 100%;">
@@ -216,6 +216,9 @@
 						</div>
 					</div>
 				{{/unless}}
+
+				{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
+												 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
 
 				<h1>Message Learners</h1>
 

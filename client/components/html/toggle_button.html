@@ -12,11 +12,9 @@
 |										 be stored in the respective variable. If "key" is defined it
 |										 will be stored so that Session.get(session)[key] == button state
 |
-| {{>toggle_button icon="fa-paint-brush color-theme"
-| 							href="onboarding_competency"
-|								session="onboarding_job_posting"
-| 							key="role" message="Designer"
-| 							text="UX/UI Designer, Creative Director, etc."}}
+| {{>toggle_button session="onboarding_job_posting"
+| 								 key="role" label="Designer"
+| 								 explain="something to activate"}}
 |
 | Reactive Dict: If "dictionary" is defined the "key" parameter is required.
 |								 Then "value" is stored so that dictionary.get(key) == button state

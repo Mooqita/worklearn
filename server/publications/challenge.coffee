@@ -21,6 +21,7 @@ _challenge_fields =
 	origin: 1
 	job_ids: 1
 	pined: 1
+	discoverable: 1
 
 ###############################################################################
 # challenges
@@ -39,6 +40,7 @@ Meteor.publish "challenges", (parameter) ->
 	user_id = this.userId
 	filter =
 		published: true
+		discoverable: 1
 
 	mod =
 		fields: _challenge_fields
@@ -163,6 +165,7 @@ Meteor.publish "challenge_summaries", (parameter) ->
 	pattern =
 		challenge_id: String
 		published: Match.Optional(Boolean)
+		sort_by: Match.Optional(String)
 		query: Match.Optional(String)
 		page: Number
 		size: Number
