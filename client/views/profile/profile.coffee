@@ -3,6 +3,9 @@
 ###############################################################################
 
 ###############################################################################
+saveAs = require("file-saver").saveAs
+
+###############################################################################
 Template.profile.helpers
 	email: () ->
 		return get_user_mail()
@@ -49,4 +52,60 @@ Template.profile.helpers
 		#	return false
 
 		return true
+
+###############################################################################
+# All my data
+###############################################################################
+
+###############################################################################
+Template.all_my_data.onCreated () ->
+	self = this
+	self.my_data = ReactiveVar()
+	self.my_data_json = ReactiveVar()
+
+	Meteor.call "all_my_data",
+		(err, res) ->
+			if err
+				sAlert.error(err)
+			self.my_data.set(res)
+
+###############################################################################
+Template.all_my_data.helpers
+	my_data_json: () ->
+		inst = Template.instance()
+		data = inst.my_data_json.get()
+		return data
+
+	my_data: () ->
+		inst = Template.instance()
+		data = inst.my_data.get()
+
+		res = []
+		for k, d of data
+			res.push({type:k, items:d})
+
+		return res
+
+	field: (data) ->
+		res = []
+		for k,d of data
+			res.push({label:k, value:d})
+
+		return res
+
+
+###############################################################################
+Template.all_my_data.events
+	"click .export-data": (event, template) ->
+		$(event.target).button("loading")
+
+		Meteor.call "all_my_data_json",
+			(err, res) ->
+				if err
+					sAlert.error(err)
+					return
+
+				data = new Blob([res], {type: "text/json"})
+				saveAs(data, "user_data_mooqita.json")
+				$(event.target).button("reset")
 

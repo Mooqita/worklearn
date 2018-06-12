@@ -5,20 +5,24 @@
 -------------------------------------------------->
 <template name="body_template" xmlns="http://www.w3.org/1999/html">
 	{{>sAlert}}
-	{{#if layout_selected_login}}
-		{{#unless currentUser}}
-			{{>Template.dynamic template=layout_selected_login}}
-		{{else}}
-			{{#profile_loader}}
-				{{#Template.dynamic template=layout_selected_layout}}
-					{{>Template.dynamic template=layout_selected_content}}
-				{{/Template.dynamic}}
-			{{/profile_loader}}
-		{{/unless}}
+	{{#if password_reset}}
+		{{>reset_password}}
 	{{else}}
-		{{#Template.dynamic template=layout_selected_layout}}
-			{{>Template.dynamic template=layout_selected_content}}
-		{{/Template.dynamic}}
+		{{#if layout_selected_login}}
+			{{#unless currentUser}}
+				{{>Template.dynamic template=layout_selected_login}}
+			{{else}}
+				{{#profile_loader}}
+					{{#Template.dynamic template=layout_selected_layout}}
+						{{>Template.dynamic template=layout_selected_content}}
+					{{/Template.dynamic}}
+				{{/profile_loader}}
+			{{/unless}}
+		{{else}}
+			{{#Template.dynamic template=layout_selected_layout}}
+				{{>Template.dynamic template=layout_selected_content}}
+			{{/Template.dynamic}}
+		{{/if}}
 	{{/if}}
 </template>
 

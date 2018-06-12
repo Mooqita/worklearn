@@ -51,5 +51,3 @@ JsonRoutes.add "get", "/api/0.1/cert_issuer/:issuer_id", (req, res, next) ->
 	issuer = issuer_from_user_id(id)
 	JsonRoutes.sendResult res, {data: issuer}
 
-
-

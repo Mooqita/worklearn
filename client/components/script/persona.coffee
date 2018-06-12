@@ -4,6 +4,7 @@
 
 ##########################################################
 FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
+d3 = require("d3")
 
 ##########################################################
 _default_persona = [ { label: "Manager", value: 1 },
@@ -64,28 +65,36 @@ _draw_persona = (instance, width = 400, height = 200) ->
 	mid_c = if has_text then 0.85 else 0.99
 	out_c = if has_text then 0.9 else 0.99
 
-	arc = d3.svg.arc()
+	arc = d3.arc()
 		.outerRadius(radius * mid_c)
 		.innerRadius(radius * in_c)
 
-	outerArc = d3.svg.arc()
+	outerArc = d3.arc()
 		.innerRadius(radius * out_c)
 		.outerRadius(radius * out_c)
 
 	sorter = (a, b) ->
 		return a.label.localeCompare(b.label)
 
-	pie = d3.layout.pie()
+	pie = d3.pie()
 		.sort(sorter)
 		.value (d) ->
 			return d.value
 
-	color = d3.scale.ordinal()
-		.domain(["Manager", "Builder", "Mediator", "Organizer", "Visionary"])
-		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
-
 	key = (d) ->
 		return d.data.label
+
+	color_map =
+		Manager:"#98abc5"
+		Builder:"#8a89a6"
+		Mediator:"#7b6888"
+		Organizer:"#6b486b"
+		Visionary:"#a05d56"
+
+	color_map = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]
+
+	color_mapping = (d) ->
+		return color_map[d.index]
 
 	#############################################################################
 	# Donut Slices
@@ -96,7 +105,7 @@ _draw_persona = (instance, width = 400, height = 200) ->
 
 	slice.enter()
 		.insert("path")
-		.style("fill", (d) -> return color(d.data.label) )
+		.style("fill", color_mapping )
 		.attr("class", "slice")
 
 	slice

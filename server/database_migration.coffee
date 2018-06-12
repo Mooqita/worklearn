@@ -87,6 +87,47 @@ _clean_test_objects = () ->
 
 ###############################################################################
 Meteor.methods
+	all_my_data: () ->
+		user = Meteor.user()
+		if not user
+			throw new Meteor.Error "Not permitted"
+
+		crs = get_my_admissions IGNORE, IGNORE, IGNORE
+		log_publication crs, user._id, "my_admissions"
+
+		data = {}
+		crs.forEach (ad) ->
+			collection = get_collection(ad.c)
+			if not (ad.c of data)
+				data[ad.c] = []
+
+			item = collection.findOne(ad.i)
+			item.type = ad.c
+			data[ad.c].push(item)
+
+		return data
+
+	all_my_data_json: () ->
+		user = Meteor.user()
+		if not user
+			throw new Meteor.Error "Not permitted"
+
+		crs = get_my_admissions OWNER, IGNORE, IGNORE
+		log_publication crs, user._id, "my_admissions"
+
+		data = {}
+		crs.forEach (ad) ->
+			collection = get_collection(ad.c)
+			if not (ad.c of data)
+				data[ad.c] = []
+
+			item = collection.findOne(ad.i)
+			item.type = ad.c
+			data[ad.c].push(item)
+
+		return JSON.stringify(data, null, 2)
+
+
 	test_database: () ->
 		user = Meteor.user()
 		if not user

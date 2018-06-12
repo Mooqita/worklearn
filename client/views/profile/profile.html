@@ -173,6 +173,38 @@
 </template>
 
 
+<template name="all_my_data">
+	{{#mooqita_wide_spacing}}
+		<div class="item-set">
+			<h1>Export</h1>
+			<p>To export your data, click the button below.</p>
+			<button class="export-data btn btn-success" data-loading-text="Exporting...">Export Data</button>
+
+			{{#each my_data}}
+				<h1>{{type}}</h1>
+				{{#each item in items}}
+
+					<hr>
+
+					<div class="item-set-element">
+						{{#each field item}}
+							<div class="row">
+								<div class="col-md-3">
+									<b><em>{{label}}</em></b>
+								</div>
+
+								<div class="col-md-9">
+									{{value}}
+								</div>
+							</div>
+						{{/each}}
+					</div>
+				{{/each}}
+			{{/each}}
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>
+
 	<!--div class="col-md-12">
 		<h2>Credits <span class="badge background-contrast">1</span></h2>
 		<p>
