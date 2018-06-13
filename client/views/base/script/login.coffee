@@ -47,7 +47,7 @@ Template.reset_password.events
 
 		token = Accounts._resetPasswordToken
 		token = token.replace("=", "")
-		sAlert.warning(token)
+		#sAlert.warning(token)
 
 		pwd1 = t.find("#at-field-password")
 		pwd2 = t.find("#at-field-password_again")
