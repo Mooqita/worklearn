@@ -1,12 +1,12 @@
 ###############################################################################
 # Permissible values for the admission filter function:
 #
-# collection <string> (WILDCARD | IGNORE | group_id | user_id)
-# resource_id 		<string> (WILDCARD | IGNORE | resource)
-# consumer_id 		<string> (WILDCARD | IGNORE | resource)
-# role	 					<string> (IGNORE | role_string)
+# collection 		<string> (WILDCARD | IGNORE | group_id | user_id)
+# resource_id 	<string> (WILDCARD | IGNORE | resource)
+# consumer_id 	<string> (WILDCARD | IGNORE | resource)
+# role	 				<string> (IGNORE | role_string)
 #
-# role_string <string> (RECIPIENT | PUBLIC | OWNER | USER)
+# role_string 	<string> (RECIPIENT | PUBLIC | OWNER | USER)
 #
 # WILDCARD <string>:
 # IGNORE <string>:
@@ -55,7 +55,6 @@
 # filter
 ###############################################################################
 
-#user, role, collection, resource,
 ###############################################################################
 @_get_admission_filter = (user, role, collection, resource) ->
 	check role, String

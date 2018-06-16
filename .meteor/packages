@@ -41,3 +41,5 @@ peppelg:bootstrap-3-modal
 reactive-dict@1.2.0
 markdown
 dynamic-import
+raix:ui-dropped-event
+http
