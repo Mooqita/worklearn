@@ -4,3 +4,9 @@ secrets.txt
 tmp/
 
 /package-lock.json
+public/images/iris.csv
+public/images/main.rb
+public/images/marco.jpg
+public/images/neuro.rb
+public/images/sergio.jpg
+public/images/Thumbs.db
