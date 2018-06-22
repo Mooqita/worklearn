@@ -2,7 +2,7 @@ accounts-base@1.4.2
 accounts-password@1.5.1
 allow-deny@1.1.0
 autoupdate@1.4.0
-babel-compiler@7.1.0
+babel-compiler@7.1.1
 babel-runtime@1.2.2
 base64@1.0.11
 binary-heap@1.0.10
@@ -23,8 +23,8 @@ ddp-rate-limiter@1.0.7
 ddp-server@2.2.0
 deps@1.0.12
 diff-sequence@1.1.0
-dynamic-import@0.4.0
-ecmascript@0.11.0
+dynamic-import@0.4.1
+ecmascript@0.11.1
 ecmascript-runtime@0.7.0
 ecmascript-runtime-client@0.7.1
 ecmascript-runtime-server@0.7.0
@@ -62,9 +62,12 @@ mongo-dev-server@1.1.0
 mongo-id@1.0.7
 npm-bcrypt@0.9.3
 npm-mongo@3.0.7
+oauth@1.2.3
+oauth2@1.2.0
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 ostrio:flow-router-extra@3.5.0
+pauli:linkedin@1.3.1
 peppelg:bootstrap-3-modal@1.0.4
 practicalmeteor:faker@3.0.1_1
 promise@0.11.1
@@ -81,7 +84,7 @@ session@1.1.7
 sha@1.0.9
 shell-server@0.3.1
 simple:json-routes@2.1.0
-socket-stream-client@0.2.1
+socket-stream-client@0.2.2
 softwarerero:accounts-t9n@1.3.11
 spacebars@1.0.15
 spacebars-compiler@1.1.3
@@ -99,5 +102,5 @@ underscore@1.0.10
 url@1.2.0
 useraccounts:bootstrap@1.14.2
 useraccounts:core@1.14.2
-webapp@1.6.0
+webapp@1.6.1
 webapp-hashing@1.0.9

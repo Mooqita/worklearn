@@ -18,6 +18,8 @@ ecmascript@0.11.0     # Enable ECMAScript2015+ syntax in app code
 shell-server            # Server-side component of the `meteor shell` command
 
 accounts-password@1.5.1
+pauli:linkedin
+service-configuration
 useraccounts:bootstrap
 
 ostrio:flow-router-extra

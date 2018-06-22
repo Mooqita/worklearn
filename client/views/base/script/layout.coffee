@@ -55,6 +55,7 @@ Template.registerHelper "layout_selected_view", ()->
 		selected = "landing_page"
 	return selected
 
+
 ###############################################################################
 Template.profile_loader.onCreated ->
 	Meteor.call "log_user",

@@ -2,12 +2,10 @@
 # local variables and methods
 ###############################################################################
 
-##########################################################
+###############################################################################
 FlowRouter = require("meteor/ostrio:flow-router-extra").FlowRouter
 
-# Do not forget to add the email package: $ meteor add email
-# and to configure the SMTP: https://gist.github.com/LeCoupa/9879221
-
+###############################################################################
 _checkForm = (pwd1, pwd2) ->
 	if(pwd1.value != "" && pwd1.value == pwd2.value)
 		if(pwd1.value.length < 6)
@@ -41,6 +39,16 @@ _checkForm = (pwd1, pwd2) ->
 	return true
 
 
+###############################################################################
+# login
+###############################################################################
+
+###############################################################################
+Template.mooqita_login.onRendered () ->
+
+###############################################################################
+# reset password
+###############################################################################
 Template.reset_password.events
 	"submit #at-pwd-form": (e, t) ->
 		e.preventDefault()
