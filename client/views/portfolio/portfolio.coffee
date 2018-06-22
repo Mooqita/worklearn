@@ -21,6 +21,10 @@ FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 Template.portfolio.onCreated () ->
 	self = this
 
+	Meteor.call 'get_quiz_scores',
+		(err, res) ->
+			Session.set('quiz_scores', res)
+
 	self.autorun () ->
 		s_id = FlowRouter.getParam("user_id")
 		if !s_id
@@ -75,4 +79,6 @@ Template.portfolio_review.helpers
 	portfolio_url: () ->
 		return ""#get_response_url(this.owner_id)
 
-
+Template.portfolio_basic.helpers
+	quiz_scores: () ->
+		return Session.get('quiz_scores')

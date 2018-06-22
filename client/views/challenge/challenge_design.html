@@ -76,6 +76,7 @@
 			</h2>
 		</div>
 
+		{{course}}
 		<p class="small">{{challenge.created}}</p>
 
 		{{>more content=content}}
@@ -106,7 +107,7 @@
 								{{/unless}}
 
 								{{#unless content}}
-									<li>Provide a description of the task(required)</li>
+									<li>Provide a description of the task (required)</li>
 								{{/unless}}
 
 								{{#unless num_reviews}}
@@ -163,6 +164,10 @@
 					{{>basic_input method="set_field" collection_name="challenges"
 							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
 				</h1>
+				<h2 class="header">Subject</h2>
+					{{>select_input method="modify_field" collection_name="challenges"
+							item_id=_id field="course"
+							options=course_options}}
 
 				<div class="form-group">
 					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
@@ -216,9 +221,6 @@
 						</div>
 					</div>
 				{{/unless}}
-
-				{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
-												 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
 
 				<h1>Message Learners</h1>
 

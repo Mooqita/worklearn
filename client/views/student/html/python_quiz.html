@@ -1,0 +1,45 @@
+<!------------------------------------------------
+|
+|	Python Quiz
+|
+-------------------------------------------------->
+
+<template name="python_quiz" template="quiz">
+	{{#mooqita_wide_spacing}}
+		<div class="item padding-top">
+			<div class="padding-next">
+				<h1>Python Quiz</h1>
+				{{#unless python_quiz_score}}
+					<form id="python_quiz" method="post">
+						<div class="quiz_content">
+							{{#each question in quiz}}
+							    <div>
+									<h3>{{question.question}}</h3>
+									<div>
+										<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_one}}" required>
+										<label for="question_{{@index}}">{{question.answer_one}}</label>
+									</div>
+									<div>
+										<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_two}}" required>
+										<label for="question_{{@index}}">{{question.answer_two}}</label>
+									</div>
+									<div>
+										<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_three}}" required>
+										<label for="question_{{@index}}">{{question.answer_three}}</label>
+									</div>
+									<div>
+										<input type="radio" id="question_{{@index}}" name="question_{{@index}}" value="{{question.answer_four}}" required>
+										<label for="question_{{@index}}">{{question.answer_four}}</label>
+									</div>
+							    </div> <br />
+							{{/each}}
+						</div>
+						<input type="submit" class="btn btn-theme" name="get_results" value="Get Results">
+					</form>
+				{{else}}
+					<h1>You have already submitted this quiz.</h1>
+				{{/unless}}
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
+</template>

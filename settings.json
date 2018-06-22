@@ -1,21 +1,25 @@
 {
   "public": {
     "analyticsSettings": {
-      "Keen IO"          : {
-        "projectId": "",
-        "writeKey": ""},
-      "Amplitude"        : {"apiKey": ""},
-      "Segment.io"       : {"apiKey": ""}
+      "Keen IO": {
+        "projectId": "5a89e5fe46e0fb00016bc2bb",
+        "writeKey": "ec2c1cf6749fe2efd687f11b1ebf25c4286b4adb6c7d8029a4fa43be3925172d37d21a1f9efab231c879321df40adefed5b29204c405af0ee63c8406d1b3a76fa7307886bfdc73f084f150fa2ee311a9c0553a2ada053475a19708f2e5d28861"
+      },
+      "Amplitude": {
+        "projectId": "192177",
+        "apiKey": "245e057e83981024e6bb7fa06fa42ef7"
+      },
+      "Segment.io": {
+        "sourceId": "1YXdUO0OzV",
+        "apiKey": "XoR0KhJXFz8aW8l5R921pJobY7GSvo9J"
+      }
     }
   },
-
-  "init_default_permissions":false,
-  "default_permissions_asset_path":"db/defaultcollections/permissions.json",
-
-  "init_test_data":true,
-  "admin":
-  {
-    "email":"admin@mooqita.org",
-    "password":"whatever"
+  "init_default_permissions": true,
+  "default_permissions_asset_path": "db/defaultcollections/permissions.json",
+  "init_test_data": true,
+  "admin": {
+    "email": "admin@mooqita-sfh.org",
+    "password": "password"
   }
 }

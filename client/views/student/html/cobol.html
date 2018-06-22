@@ -1,0 +1,202 @@
+<template name="cobol_course">
+    <style>
+        .panel > .panel-heading {
+            background-image: none;
+            background-color: #A02D67;
+            color: white;
+
+        }
+
+        .alert > .alert-success {
+            background-color: #A02D67;
+            color: white;
+        }
+
+        .progress  {
+            background-color: white;
+            color: white;
+            height: 50px;
+        }
+
+        .progress > .progress-bar-success {
+            background-color: #862D65;
+            color: white;
+        }
+
+        .btn-group > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+        }
+
+        .btn > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+            width: 230px;
+        }
+    </style>
+
+    {{#each module in cobol_modules}}
+        <div id="cobol_module_{{@index}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         <h3 class="modal-title">{{module.title}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <html>
+                                {{{module.content}}}
+                            </html>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#cobol_module_{{cobol_module_back @index}}">Back</button>
+                        <button type="button" class="btn btn-default cobol_module_next" data-dismiss="modal" data-toggle="modal" data-target="#cobol_module_{{cobol_module_next @index}}" value="{{@index}}">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+
+    <div class="header">
+        <center>
+            <br />
+        </center>
+    </div>
+    <div class="container">
+        <center>
+            <h1>Course Home:
+                <strong>COBOL</strong>
+                <span type="button" class="glyphicon glyphicon-info-sign" data-toggle="modal" data-target="#info"></span>
+            </h1>
+            {{#if cobol_course_disabled_text}}
+                <h2>You cannot enroll in this course until you have completed Computational Thinking. {{cobol_course_progress}}</h2>
+            {{/if}}
+            <div id="info" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">About Common Business-Oriented Language (COBOL)</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Despite its status as a legacy programming language, COBOL is still widely used and highly valued in business, finance, and government applications. The rise of experienced COBOL programmers retiring has created a market for nearly anyone who can maintain existing systems - without being a professional programmer.
+                                This course will teach skills that are critical to understanding, writing, debugging, and maintaining COBOL programs. Topics that will be covered include language design basics, data types and manipulation, arithmetic, logical operations, and real world examples.
+                                Successful completion of this course will permit you to attempt paid challenges and offer a certificate to showcase on your LinkedIn profile.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </center>
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Course Progress</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-9 col-xs-12">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{cobol_course_progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{cobol_course_progress}}%">
+                                    <h2>{{cobol_course_progress}}%</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <center>
+                            <div class="btn btn-right">
+                                <button data-toggle="modal" data-target="#cobol_module_{{cobol_module_resume}}" class="btn btn-lg btn-success" {{cobol_course_disabled}}>Resume Course</button>
+                            </div>
+                            {{#if cobol_module_resume_title}}
+                                <h1>Current Lesson: <strong>{{cobol_module_resume_title}}</strong></h1>
+                            {{else}}
+                                <h1>Course Completed</h1>
+                            {{/if}}
+                        </center>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Course Content</h3>
+                      </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {{#each module in cobol_modules}}
+                                {{#if is_module_completed @index}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You have completed this module.</em></p>
+                                    </button>
+                                {{else if is_module_disabled @index }}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}" disabled>
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                        <p><em>You do not have access to this module yet.</em></p>
+                                    </button>
+                                {{else}}
+                                    <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                        <h4 class="list-group-item-heading"><strong>Lesson {{module.module_number}}:</strong> {{module.title}}</h4>
+                                        <p>{{module.description}}</p>
+                                    </button>
+                                {{/if}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="containter">
+        </div>
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Recently Posted Challenges</h3>
+                        <h5>Here are a list of recent challenges with COBOL</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {{#each challenge in cobol_challenges}}
+                                <a href="{{challenge.link}}" class="list-group-item">
+                                    <em>Title: </em>
+                                    {{challenge.title}} <br />
+                                    <em>Description: </em>
+                                    {{challenge.content}}
+                                </a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 col-sm-12" >
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Online Resources</h3>
+                        <p>Here is a list of useful online resources</p>
+                    </div>
+                     <div class="panel-body">
+                        <div class="list-group">
+                            <a href="https://www.w3schools.com/" target="_blank" class="list-group-item"><h2>W3Schools</h2><br/><p>Great resource for practicing what you learn</p></a>
+                            <a href="https://www.youtube.com/" target="_blank" class="list-group-item"><h2>Youtube</h2><br/><p>Great resource for practicing what you learn</p></a>
+                            <a href="#" class="list-group-item"><h2>Other Link</h2><br/><p>Great resource for practicing what you learn</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

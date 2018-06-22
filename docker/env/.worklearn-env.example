@@ -1,0 +1,11 @@
+# Worklearn #
+ROOT_URL=http://0.0.0.0:3000
+
+# Database #
+MONGO_URL=mongodb://mongo:27017/worklearndb
+
+# Mail #
+MAIL_URL=smtp://<username>:<password>@<host>:<port>
+
+# Storage #
+DROP_BOX_ACCESS_TOKEN=<token>

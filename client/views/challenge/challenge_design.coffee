@@ -22,7 +22,7 @@ Template.designed_challenges.onCreated ->
 	this.parameter = new ReactiveDict()
 	Session.set "selected_challenge", 0
 
-###############################################################################
+########################################
 Template.designed_challenges.helpers
 	parameter: () ->
 		return Template.instance().parameter
@@ -73,6 +73,12 @@ Template.challenge_preview.helpers
 
 		return "No description available, yet."
 
+	course: () ->
+		if this.course
+			return this.course
+
+		return "This challenge does not yet have a subject"
+
 
 ###############################################################################
 #
@@ -118,6 +124,13 @@ Template.challenge_design.helpers
 
 		return ""
 
+	course_options:() ->
+		return [
+			{value: "", label: "No subject"},
+			{value: "comp_thinking", label: "Comp Thinking"},
+			{value: "cobol", label: "COBOL"},
+			{value: "py", label: "Python"}
+		]
 
 ###############################################################################
 Template.challenge_design.events
@@ -136,7 +149,7 @@ Template.challenge_design.events
 
 		return true
 
-	"click #publish": (event)->
+	"click #publish": (event) ->
 		if event.target.attributes.disabled
 			return
 

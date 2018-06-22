@@ -2,6 +2,7 @@
   "name": "login",
   "private": true,
   "scripts": {
+    "clean": "sh docker/scripts/docker-clean.sh",
     "start": "meteor run"
   },
   "dependencies": {

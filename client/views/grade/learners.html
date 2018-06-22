@@ -1,0 +1,143 @@
+<!------------------------------------------------
+|
+|  all Learners
+|
+-------------------------------------------------->
+<template name="learners">
+    <style>
+        .panel > .panel-heading {
+            background-image: none;
+            background-color: #A02D67;
+            color: white;
+        }
+        .alert > .alert-success {
+            background-color: #A02D67;
+            color: white;
+        }
+        .progress  {
+            background-color: white;
+            color: white;
+            height: 50px;
+        }
+        .progress > .progress-bar-success {
+            background-color: #862D65;
+            color: white;
+        }
+        .btn-group > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+        }
+        .btn > .btn-success {
+            background-color: #862D65;
+            color: white;
+            border: none;
+            width: 230px;
+        }
+    </style>
+    <!--<ul>
+        {{#each profile in all_users}}
+            <li>
+                {{profile.given_name}} {{profile.family_name}}
+            </li>
+        {{/each}}
+    </ul>-->
+    <div class="item-set padding-top">
+        <p>Admin logged in as: {{email}}</p>
+        {{#if admin}}
+        <h1>Test to see if the user email is admin.</h1>
+        {{/if}}
+        <h1>
+            Active learners and scores to be paid.
+            <div class="btn btn-theme pull-right"
+                     style="min-width: 50px;"
+                     id="make_payment">
+
+                {{>popout_base title="Pay Them!"
+                        content="Click to change account balance"
+                        icon_class="glyphicon glyphicon-pencil"}}
+            </div>
+        </h1>
+    <div class="container">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>All Profiles</h3>
+                  </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        {{#each profile in all_users}}
+                                <button class="list-group-item" data-toggle="modal" data-target="#cobol_module_{{@index}}">
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <h4 class="list-group-item-heading"><strong>{{profile.given_name}}  {{profile.family_name}}</strong></h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                    {{>basic_input method="set_field" collection_name="Profiles"
+                                                item_id=g_profile field="my_balance"
+                                                placeholder="Balance" type="number"}}
+                                    </div>
+                                    </div>
+                                    <p><em>Current user balance: {{profile.given_name}}'s balance is ${{profile.my_balance}}.</em></p>
+                                    <p><em>COBOL Score: {{profile.cobol_quiz_score}}</em></p>
+                                    {{#if quiz_scores.cobol_quiz_score}}
+                                    <h3><strong>COBOL Score:</strong> {{quiz_scores.cobol_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                    {{#if quiz_scores.comp_thinking_quiz_score}}
+                                    <h3><strong>Computational Thinking Score:</strong> {{quiz_scores.comp_thinking_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                    {{#if quiz_scores.python_quiz_score}}
+                                    <h3><strong>Python Score:</strong> {{quiz_scores.python_quiz_score}}%</h3> <br />
+                                    {{/if}}
+                                </button>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</template>
+<!------------------------------------------------
+|
+| Edit the learner's score or something
+|
+-------------------------------------------------->
+<template name="learner_select">
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title">
+						Select a Learner
+					</h1>
+				</div>
+
+				<div class="modal-body">
+					<p>Please select a learner</p>
+					{{#unless Template.subscriptionsReady}}
+						{{>wait}}
+					{{else}}
+						<select class="selectpicker user_select_class form-control"
+								title="Select organization" data-live-search="true" id="org_id">
+							{{#each organizations}}
+								<option value="{{_id}}">{{name}}</option>
+							{{/each}}
+						</select>
+					{{/unless}}
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group btn-group-justified">
+						<a type="button" class="btn btn-theme" data-dismiss="modal">Cancel</a>
+						{{#if org_selected}}
+							<a type="button" class="btn btn-theme" id="learner_select" data-dismiss="modal">Add job posting</a>
+						{{else}}
+							<a type="button" class="btn btn-theme" disabled="true">Select</a>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

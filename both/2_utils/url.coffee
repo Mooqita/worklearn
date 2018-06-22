@@ -29,3 +29,5 @@ FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 	return url
 
+@redirect_callback = (url) ->
+	FlowRouter.go(url)

@@ -7,8 +7,9 @@
 ###############################################################################
 @set_field = (collection, item_id, field, value) ->
 	user = Meteor.user()
+
 	if not user
-		throw new Meteor.error "Not permitted"
+		throw new Meteor.Error "Not permitted"
 
 	if not collection
 		throw new Meteor.Error "Collection undefined."
@@ -32,13 +33,38 @@
 
 	csn = can_edit collection, item_id, user
 
-	if not csn
-		throw new Meteor.Error "Not permitted."
+	if not collection.findOne({owner_id: user._id})
+		throw new Meteor.Error("Not permitted.")
 
 	res = modify_field_unprotected collection, item_id, field, value, user
 
 	return res
 
+@set_challenge_field = (item_id, field, value) ->
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error "Not permitted"
+
+	if not Challenges.findOne({_id: item_id, owner_id: user._id})
+		throw new Meteor.Error("Not permitted.")
+
+	res = modify_field_unprotected Challenges, item_id, field, value, user
+
+	return res
+
+@set_profile_field = (item_id, field, value) ->
+	user = Meteor.user()
+
+	if not user
+		throw new Meteor.Error "Not permitted"
+
+	if not Profiles.findOne({_id: item_id, user_id: user._id})
+		throw new Meteor.Error("Not permitted.")
+
+	res = modify_field_unprotected Profiles, item_id, field, value, user
+
+	return res
 
 ###############################################################################
 @set_element = (collection, item_id, field, value) ->
@@ -89,4 +115,3 @@
 
 	log_event msg, event_db, event_edit
 	return n
-
