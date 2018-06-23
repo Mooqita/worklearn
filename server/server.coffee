@@ -6,9 +6,18 @@
 
 #####################################################
 _handle_startup_setting = () ->
-	# make sure all indices are created
+
+	#Configure simple:rest to only expose certain collections:
+	#SimpleRest.configure({
+		#collections: ['challenges']
+		#collections: []
+	#});
+
+  # make sure all indices are created
 	_initialize_indices()
 	_check_environment_variables()
+
+	_configureAPI()
 
 	# The rest only works with a settings file and on localhost.
 	# For security reasons we do not create default admin access.
@@ -31,6 +40,16 @@ _handle_startup_setting = () ->
 	if Meteor.settings.init_test_data
 		run_database_test_bed()
 
+
+_configureAPI = () ->
+	# Global API configuration
+	Api = new Restivus
+		useDefaultAuth: true
+		prettyJson: true
+
+	Api.addCollection @Challenges,
+		routeOptions:
+			authRequired: true
 
 #####################################################
 _add_admin = (email, password) ->

@@ -32,9 +32,14 @@ Meteor.publish "challenges", (parameter) ->
 		query: Match.Optional(String)
 		page: Number
 		size: Number
+		#userid: Match.Optional(String)
 	check parameter, pattern
 
 	user_id = this.userId
+
+	#if !user_id or user_id is undefined
+		#user_id = parameter.userid
+
 	if !user_id
 		throw new Meteor.Error "Not permitted."
 
@@ -54,6 +59,7 @@ Meteor.publish "my_challenges", (parameter) ->
 		query: Match.Optional(String)
 		page: Number
 		size: Number
+		userid: Match.Optional(String)
 	check parameter, pattern
 
 	user_id = this.userId
