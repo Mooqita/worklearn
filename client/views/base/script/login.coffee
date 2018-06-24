@@ -44,7 +44,10 @@ _checkForm = (pwd1, pwd2) ->
 ###############################################################################
 
 ###############################################################################
-Template.mooqita_login.onRendered () ->
+Template.mooqita_login.events
+	"click #linkedin": () ->
+		Meteor.loginWithLinkedin (err) ->
+			sAlert.error err
 
 ###############################################################################
 # reset password
@@ -55,7 +58,6 @@ Template.reset_password.events
 
 		token = Accounts._resetPasswordToken
 		token = token.replace("=", "")
-		#sAlert.warning(token)
 
 		pwd1 = t.find("#at-field-password")
 		pwd2 = t.find("#at-field-password_again")

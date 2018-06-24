@@ -1,14 +1,15 @@
-#####################################################
+###############################################################################
 #
 # Created by Markus on 26/10/2015.
 #
-#####################################################
+###############################################################################
 
-#####################################################
+###############################################################################
 _handle_startup_setting = () ->
 	# make sure all indices are created
-	_initialize_indices()
 	_check_environment_variables()
+	_initialize_variables()
+	_initialize_indices()
 
 	# The rest only works with a settings file and on localhost.
 	# For security reasons we do not create default admin access.
@@ -32,7 +33,7 @@ _handle_startup_setting = () ->
 		run_database_test_bed()
 
 
-#####################################################
+###############################################################################
 _add_admin = (email, password) ->
 	log_event "Adding admin"
 	user = Accounts.findUserByEmail(email)
@@ -57,11 +58,93 @@ _add_admin = (email, password) ->
 	return profile_id
 
 
-#####################################################
-# Prepare indices
-#####################################################
+###############################################################################
+# Checks
+###############################################################################
 
-#####################################################
+###############################################################################
+_check_environment_variables = () ->
+	msg = "Checking enviromnent variables"
+	log_event msg
+
+	variable = process.env.LINKED_IN_SECRET
+	if variable
+		msg = "-- LINKED_IN_SECRET is set."
+		log_event msg
+	else
+		msg = "-- LINKED_IN_SECRET not set. LinkedIn integration disabled!"
+		log_event msg, event_general, event_warn
+
+	variable = process.env.LINKED_IN_CLIENT
+	if variable
+		msg = "-- LINKED_IN_CLIENT is set."
+		log_event msg
+	else
+		msg = "-- LINKED_IN_CLIENT not set. LinkedIn integration disabled!"
+		log_event msg, event_general, event_warn
+
+	variable = process.env.OAUTH_ENCRYPT_SECRET
+	if variable
+		msg = "-- OAUTH_ENCRYPT_SECRET is set."
+		log_event msg
+	else
+		msg = "-- OAUTH_ENCRYPT_SECRET not set. Service secrets will not be encrypted in database!"
+		log_event msg, event_general, event_warn
+
+	url = process.env.MAIL_URL
+	if url
+		msg = "-- MAIL_URL is set."
+		log_event msg
+	else
+		msg = "-- MAIL_URL not set. Mail notifications disabled!"
+		log_event msg, event_general, event_warn
+
+	token = process.env.DROP_BOX_ACCESS_TOKEN
+	if token
+		msg = "-- DROP_BOX_ACCESS_TOKEN is set."
+		log_event msg
+	else
+		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files disabled!"
+		log_event msg, event_general, event_warn
+
+	token = process.env.MONGO_URL
+	if token
+		msg = "-- MONGO_URL is set."
+		log_event msg
+
+	msg = "Environment variables checked"
+	log_event msg
+
+
+###############################################################################
+# Load variables
+###############################################################################
+
+###############################################################################
+_initialize_variables = () ->
+	check process.env.OAUTH_ENCRYPT_SECRET, String
+	check process.env.LINKED_IN_CLIENT, String  # See table below for correct property name!
+	check process.env.LINKED_IN_SECRET, String
+
+	Accounts.config
+		oauthSecretKey: process.env.OAUTH_ENCRYPT_SECRET, String
+
+		service =
+			service: "linkedin"
+
+		prop =
+			$set:
+				loginStyle: "popup"
+				clientId: process.env.LINKED_IN_CLIENT  # See table below for correct property name!
+				secret: process.env.LINKED_IN_SECRET
+
+	ServiceConfiguration.configurations.upsert(service, prop)
+
+###############################################################################
+# Prepare indices
+###############################################################################
+
+###############################################################################
 _initialize_indices = ()->
 	msg = "Validating MongoDB indices"
 	log_event msg
@@ -141,44 +224,9 @@ _initialize_indices = ()->
 	log_event msg
 
 
-#####################################################
-# Checks
-#####################################################
-
-#####################################################
-_check_environment_variables = () ->
-	msg = "Checking enviromnent variables"
-	log_event msg
-
-	url = process.env.MAIL_URL
-	if url
-		msg = "-- MAIL_URL is set."
-		log_event msg
-	else
-		msg = "-- MAIL_URL not set. Mail notifications disabled!"
-		log_event msg, event_general, event_warn
-
-
-	token = process.env.DROP_BOX_ACCESS_TOKEN
-	if token
-		msg = "-- DROP_BOX_ACCESS_TOKEN is set."
-		log_event msg
-	else
-		msg = "-- DROP_BOX_ACCESS_TOKEN not set. Saving files disabled!"
-		log_event msg, event_general, event_warn
-
-	token = process.env.MONGO_URL
-	if token
-		msg = "-- MONGO_URL is set."
-		log_event msg
-
-	msg = "Environment variables checked"
-	log_event msg
-
-
-#####################################################
+###############################################################################
 # start up
-#####################################################
+###############################################################################
 Meteor.startup () ->
 	try
 		_handle_startup_setting()

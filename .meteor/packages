@@ -17,8 +17,10 @@ es5-shim@4.8.0        # ECMAScript 5 compatibility for older browsers
 ecmascript@0.11.0     # Enable ECMAScript2015+ syntax in app code
 shell-server            # Server-side component of the `meteor shell` command
 
+oauth-encryption
+pauli:accounts-linkedin
+pauli:linkedin-config-ui
 accounts-password@1.5.1
-pauli:linkedin
 service-configuration
 useraccounts:bootstrap
 
