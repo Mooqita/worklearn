@@ -13,6 +13,7 @@ _job_fields =
 		organization_id: 1
 		challenge_ids: 1
 		published: 1
+		concepts: 1
 
 
 ###############################################################################

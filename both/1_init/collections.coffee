@@ -39,3 +39,8 @@
 @EduCertAssertions = new Mongo.Collection("edu_cert_assertions")
 @EduCertRecipients = new Mongo.Collection("edu_cert_recipients")
 
+#######################################################
+@Matches = new Mongo.Collection("matches")
+@NLPTasks = new Mongo.Collection("nlp_tasks")
+
+

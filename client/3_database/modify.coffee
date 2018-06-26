@@ -36,3 +36,27 @@
 
 	Meteor.call "set_field", collection, document, field, value, callback
 
+
+###############################################################################
+@set_value_in_context = (value, context) ->
+	inst = context
+	data = context.data
+
+	if data.session
+		if data.key
+			dict = Session.get data.session
+			dict[data.key] = value
+			value = dict
+		Session.set data.session, value
+	else if data.variable
+		variable = data.variable
+		variable.set value
+	else if inst.dictionary
+		dict = inst.dictionary
+		key = inst.data.key
+		dict.set key, value
+	else if data.collection_name
+		cn = data.collection_name
+		f = data.field
+		id = data.item_id
+		set_field cn, id, f, value

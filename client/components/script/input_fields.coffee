@@ -79,12 +79,10 @@ Template.text_input.helpers
 ###############################################################################
 Template.text_input.events
 	"change .edit-field": (event) ->
-		field = event.target.id
+		context = Template.instance()
 		value = event.target.value
-		collection = this.collection_name
-		item_id = this.item_id
 
-		set_field collection, item_id, field, value
+		set_form_value(context, value)
 
 ###############################################################################
 # markdown_input

@@ -27,8 +27,8 @@
 	color: $theme;
 }
 
-a:not([href]):not([tabindex]):focus,
-a:not([href]):not([tabindex]):hover {
+.navbar-nav a:not([href]):not([tabindex]):focus,
+.navbar-nav a:not([href]):not([tabindex]):hover {
 	color: $text-on-theme;
 	background: $theme;
 }

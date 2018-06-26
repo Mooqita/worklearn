@@ -86,16 +86,12 @@ Template.solution.onCreated ->
 
 		console.log("subscribe")
 		challenge_id = FlowRouter.getQueryParam("challenge_id")
-		#sol_admissions = get_admissions(Meteor.user(), OWNER, Solutions, IGNORE, {challenge_id:challenge_id})
-		#rev_admissions = get_admissions(Meteor.user(), OWNER, Reviews, IGNORE, {challenge_id:challenge_id})
+		sol_admissions = get_admissions(Meteor.user(), OWNER, Solutions, IGNORE, {challenge_id:challenge_id})
+		rev_admissions = get_admissions(Meteor.user(), OWNER, Reviews, IGNORE, {challenge_id:challenge_id})
 
 		self.subscribe "published_challenge_by_id", challenge_id,
-			(err, res) ->
-				console.log "WHAT!"
-				console.log Challenges.find().count()
-
-		self.subscribe "my_solutions_by_challenge_id", challenge_id #, sol_admissions.fetch()
-		self.subscribe "reviews_by_challenge_id", challenge_id #, rev_admissions.fetch()
+		self.subscribe "my_solutions_by_challenge_id", challenge_id, sol_admissions.fetch()
+		self.subscribe "reviews_by_challenge_id", challenge_id, rev_admissions.fetch()
 
 ########################################
 Template.solution.helpers
@@ -116,7 +112,6 @@ Template.solution.helpers
 		return false
 
 	challenge: () ->
-		console.log "challenge"
 		id = FlowRouter.getQueryParam "challenge_id"
 		res = Challenges.findOne id
 		return res

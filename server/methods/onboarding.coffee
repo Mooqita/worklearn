@@ -28,6 +28,7 @@ Meteor.methods
 			strategic:Match.Optional(Number)
 			contributor:Match.Optional(Number)
 			social: Match.Optional(Number)
+			description: Match.Optional(String)
 		check data, pattern
 
 		user = Meteor.user()

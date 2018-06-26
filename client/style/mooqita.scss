@@ -155,6 +155,8 @@
 	border-color: $theme-light;
 	border-width: 2px;
 	border-radius: 20px;
+	margin-left: 15px;
+	padding-left: 25px;
 }
 
 .mooqita-layout .item-set {
@@ -414,6 +416,15 @@ a.mooqita:hover,
 
   -webkit-box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.35);
           box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.35);
+}
+
+
+.btn-float.raised:active{
+	padding: 10px;
+	margin: 10px;
+
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
 }
 
 

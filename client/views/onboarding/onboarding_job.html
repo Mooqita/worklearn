@@ -5,6 +5,24 @@
 -------------------------------------------------->
 <template name="onboarding_job_intro">
 	{{#mooqita_wide_spacing}}
+		<div class="row padding-top" style="margin-top: 20%">
+			<div class="col-sm-6">
+				<h1 style="text-align: center; padding-top: 30px">
+					<img style="width: 300px" src="/images/mooqita.jpg">
+				</h1>
+			</div>
+
+			<div class="col-sm-6">
+				<h1>Find the talent you need!</h1>
+
+				<p style="padding-bottom: 25px">
+					Complete our quick onboarding steps to find and
+          attract matching talent to grow your business.
+				</p>
+
+				<a class="btn btn-theme" href="onboarding_job_role">Find a perfect candidate</a>
+			</div>
+		</div>
 	{{/mooqita_wide_spacing}}
 </template>
 
@@ -23,10 +41,12 @@
 		<h1>Role</h1>
 
 		<p>
-			The main role of your candidate.
+			Please select the main role of your candidate.
+			Don't worry you can change this later.
 		</p>
 
-		{{>job_role session="onboarding_job_posting" key="role" href="onboarding_job_competency"}}
+		{{>job_role session="onboarding_job_posting" key="role"
+				href="onboarding_job_competency"}}
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="right">
@@ -292,44 +312,91 @@
 | Onboarding registration time
 |
 -------------------------------------------------->
-<template name="onboarding_job_registration">
+<template name="onboarding_describe_job">
+	<style>
+		div[class*="col-"] > .square-responsive,
+		span[class*="col-"] > .square-responsive,
+		ol[class*="col-"] > .square-responsive,
+		ul[class*="col-"] > .square-responsive,
+		li[class*="col-"] > .square-responsive{
+			 padding-bottom:100%;
+		}
+		div[class*="col-"] > .rect-responsive,
+		span[class*="col-"] > .rect-responsive,
+		ol[class*="col-"] > .rect-responsive,
+		ul[class*="col-"] > .rect-responsive,
+		li[class*="col-"] > .rect-responsive{
+			 padding-bottom:50%;
+		}
+		.square-responsive,
+		.rect-responsive{
+				 position:relative;
+				 overflow:hidden;
+		}
+		.square-responsive > *,
+		.rect-responsive > *{
+				 position:absolute;
+		}
+		.square-responsive > .content,
+		.rect-responsive > .content {
+				 width:100%;
+				 height:100%;
+		}
+	</style>
+
 	{{#mooqita_wide_spacing}}
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
 		</h1>
 
-		{{#unless user_profile}}
-			<div class="row padding-top">
-				<div class="col-sm-5">
-					<div class="raised">
-						{{>persona persona_data=persona_data has_text=true
-											 width=300 height=180}}
-					</div>
-				</div>
+		<h1>Describe your job opening</h1>
 
-				<div class="col-sm-7">
-					<h1>Persona</h1>
+		<p>
+			This description will help us find challenges
+			related to your job. Learner who score high
+			on these challenges will be part of your
+			recruitment pool.
+		</p>
 
-					<p class="padding-next">
-						Excellent you created <em><b>a persona</b></em> for your candidate.
-						This persona <em><b>represents a schema of traits</b></em> that we can
-						scan for in our talent pool to best complement your team.
-						To save your progress please register an account.
-						By adding <em><b>the personality of your team members</b></em> and <em><b>example
-						challenges</b></em> you can get even better results.
-					</p>
+		<p class="padding-next alert alert-theme">
+			<em style="font-weight: bold">Important:</em>
+			We at Mooqita do things a little different.
+			This description is for our AI (artificial
+			intelligence). Do not think too much about
+			it right now. Just give us a few lines to
+			get working. You can add more later on.
+			Write this as if you were talking to a colleague
+			at your company this way our algorithm can
+			perform at its best.
+		</p>
 
-					<button type="submit" id="register"
-									class="btn btn-theme">
-						Register
-					</button>
+		{{>text_input session="onboarding_job_description"
+									placeholder="A short description of what you are looking for in your own words."}}
+
+		<div class="btn-group btn-group-justified">
+			<div class="btn-group">
+				{{>match_button session="onboarding_job_description"
+												in_collection="challenges" text="Find challenges"}}
+			</div>
+		</div>
+
+		<hr>
+
+		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
+
+		{{#unless currentUser}}
+			<div class="btn-group btn-group-justified">
+				<div class="btn btn-theme" id="register">
+					Register to see your candidates
 				</div>
 			</div>
 		{{else}}
-			{{>onboarding_job_owner}}
+			{{>onboarding_candidates}}
 		{{/unless}}
+
 	{{/mooqita_wide_spacing}}
 </template>
+
 
 <template name="onboarding_job_register">
 	<div class="modal fade register-modal">
@@ -346,218 +413,103 @@
 
 <!------------------------------------------------
 |
-| Onboarding job owner and organization
+| Show each match
 |
 -------------------------------------------------->
-<template name="onboarding_job_owner">
-	<h1>Add Your Profiles</h1>
-
-	<p class="padding-next">
-		To personalize the invitation to your team members
-		we need to know your name and that of your organization.
-		Adding a profile picture and logo helps others recognize
-		you and your organization.
-	</p>
-
-	{{#unless Template.subscriptionsReady}}
-		Loading user and organization profile {{>wait}}
-	{{else}}
-		{{#let profile=user_profile}}
-			<div class="row">
-				<div class="col-sm-4 col-ms-6">
-					<div class="form-group">
-						<div class="raised text-center">
-							{{>avatar collection_name = "Profiles"
-												observable = profile.avatar
-												item_id = profile._id
-												field = "avatar"
-												explain = "Upload an image as your avatar (png, jpg, svg, etc). Maximum size ~1MB."}}
-
-							{{>upload method="upload_file" collection_name="Profiles"
-												item_id=profile._id field="avatar" max_size=1200000}}
-						</div>
+<template name="onboarding_candidates">
+	{{#each candidates}}
+		<div class="row">
+			<div class="col-sm-2 col-ms-3 text-center">
+				<div class="square-responsive background-theme">
+					<div class="content" style="font-size: 2em;">
+						Hello
 					</div>
 				</div>
 
-				<div class="col-sm-8 col-ms-6">
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Given Name"
-							item_id=profile._id field="given_name" placeholder="Sophia (Wisdom, Greek)"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Middle Name"
-							item_id=profile._id field="middle_name" placeholder="Ode (Born on the road, Nigeria)"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Family Name"
-							item_id=profile._id field="family_name" placeholder="Sharma, (Happiness, India)"}}
-					</div>
-
-					<div class="form-group">
-						{{>basic_input method="set_field" collection_name="Profiles" label="Your Role"
-							item_id=profile._id field="role" placeholder="CEO, Hiring Lead, etc."}}
-					</div>
-				</div>
+				<a class="color-theme">{{name}}</a>
 			</div>
-		{{/let}}
 
-		<hr class="mooqita-line">
+			<div class="col-sm-10 col-ms-9">
+				{{#each solutions}}
+					{{>onboarding_solution}}
+					<br>
+				{{/each}}
+			</div>
+		</div>
+	{{/each}}
+</template>
 
-		{{#if currentUser}}
-			{{#let organization=organization_profile}}
-				<div class="row">
-					<div class="col-sm-8 col-ms-8">
-						<div class="form-group">
-							{{>basic_input method="set_field" collection_name="Organizations" label="Organization Name"
-									item_id=organization._id field="name" placeholder="ACME Inc."}}
+
+<!------------------------------------------------
+|
+|	Challenge solution
+|
+-------------------------------------------------->
+<template name="onboarding_solution">
+	<div class="padding-next">
+		<div class="row">
+			<div class="col-xs-6">
+				<h2>{{challenge.title}}</h2>
+			</div>
+
+			<div class="col-xs-6">
+				<h2 class="text-right">Rating <em>{{average}}</em> out of <em>5</em></h2>
+			</div>
+		</div>
+
+		{{>more content=challenge.content}}
+
+		<h2>
+			<a id="show_reviews" data-toggle="collapse" data-target="#{{id}}">
+				{{#unless reviews_visible}}
+					<span class="glyphicon glyphicon-expand"></span>
+				{{else}}
+					<span class="glyphicon glyphicon-collapse-down"></span>
+				{{/unless}}
+			</a>
+			Show Solution and Individual Reviews
+		</h2>
+
+		<div id="{{id}}" class="row collapse">
+			<div style="margin-left: 25px">
+				{{>more content=content}}
+
+				{{#each reviews}}
+					<div class="row">
+						<div class="col-xs-6">
+							<h2>Review</h2>
 						</div>
 
-						<div class="form-group">
-							{{>text_input method="set_field" collection_name="organizations"
-									item_id=organization._id field="description"
-									placeholder="Let us know about your mission."}}
+						<div class="col-xs-6">
+							<h2 class="text-right">
+								Rating <em>{{rating}}</em> out of <em>5</em>
+							</h2>
 						</div>
 					</div>
 
-					<div class="col-sm-4 col-ms-4">
-						<div class="form-group">
-							<div class="raised text-center">
-								{{>avatar collection_name = "Organizations"
-													observable = organization.avatar
-													item_id = organization._id
-													field = "avatar"
-													explain = "Upload your company logo (png, jpg, svg, etc). Max ~2MB."}}
+					{{>more content=review}}
 
-								{{>upload method="upload_file" collection_name="Organizations"
-													item_id=organization._id field="avatar" max_size=2400000}}
+					{{#with feedback}}
+						<div class="row" style="margin-left: 25px">
+							<div class="col-xs-6">
+								<h2>
+									Rebuttal
+								</h2>
+							</div>
+
+							<div class="col-xs-6">
+								<h2 class="text-right">
+									Rating <em>{{rating}}</em> out of <em>5</em>
+								</h2>
+							</div>
+
+							<div class="col-xs-12">
+								{{>more content=content}}
 							</div>
 						</div>
-					</div>
-				</div>
-
-				<hr>
-
-				<div class="btn-group btn-group-justified">
-					<div class="btn btn-theme" id="describe_challenge">
-						Describe your challenges
-					</div>
-				</div>
-			{{/let}}
-		{{/if}}
-	{{/unless}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding job description and title
-|
--------------------------------------------------->
-<template name="onboarding_describe_job">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		{{>job_describe}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Find the challenges
-			</a>
+					{{/with}}
+				{{/each}}
+			</div>
 		</div>
-	{{/mooqita_wide_spacing}}
+	</div>
 </template>
-
-
-<!------------------------------------------------
-|
-| Onboarding job challenges
-|
--------------------------------------------------->
-<template name="onboarding_select_challenges">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Challenges</h1>
-
-		<p>
-			Add some <em><b>challenges</b></em> to the job posting that represent <em><b>tasks which candidates
-			should be able to solve</b></em>.
-			We make sure they can. This step is <em><b>very important</b></em> to guarantee that we can
-			<em><b>match you with the right talent</b></em>. After adding new challenges it may take a few
-			days until a great match has been found. <br/> We will alert you via email!
-		</p>
-
-		<!-- TODO: Consider enforcing that at least one example challenge is added! -->
-
-		{{>job_challenges}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Get in your team culture
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding team members
-|
--------------------------------------------------->
-<template name="onboarding_team_members">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Team Members</h1>
-
-		<p>
-			These are the members of your organization. To improve your job
-			search you can add the people your candidate will work with. And
-			do not forget about yourself. Use the edit button to complete your profile.
-		</p>
-
-		<!-- TODO: Consider enforcing that at least one team member (or own profile) is added! -->
-
-		{{>group_page organization_id=organization_id}}
-
-		<div class="btn-group btn-group-justified padding-top">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Overview
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-
-
-<!------------------------------------------------
-|
-| Onboarding the fruits of your hard labor
-|
--------------------------------------------------->
-<template name="onboarding_job_overview">
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		<h1>Optimized Persona</h1>
-
-		{{>job_persona}}
-
-		<div class="btn-group btn-group-justified">
-			<a class="btn btn-theme" href="{{get_url}}">
-				Job Overview
-			</a>
-		</div>
-	{{/mooqita_wide_spacing}}
-</template>
-

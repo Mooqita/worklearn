@@ -62,6 +62,3 @@ Template.profile_loader.onCreated ->
 		(err, res) ->
 			if err
 				console.log ["error", err]
-
-
-

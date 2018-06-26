@@ -33,3 +33,21 @@
 
 	return item[field]
 
+#######################################################
+@get_value_from_context = (context) ->
+	data = context.data
+
+	if data.session
+		value = Session.get data.session
+		if data.key
+			value = value[data.key]
+	else if data.variable
+		dv = data.variable
+		value = dv.get()
+	else if data.dictionary
+		dd = data.dictionary
+		value = dd.get data.key
+	else if data.collection_name
+		value = get_field_value data
+
+	return value
