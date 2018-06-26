@@ -11,13 +11,15 @@ Template.mooqita_menu.helpers
 
 	menu_items: () ->
 		unique = get_admission_collection_names()
+		items = []
 
-		items = [	{name: "Organizations", href: build_url("organizations")}]
+		#items = [	{name: "Organizations", href: build_url("organizations")}]
 
-		if unique.has("organizations")
-		 items.push({name: "Job Postings", href: build_url("jobs")})
+		#if unique.has("organizations")
+		# items.push({name: "Job Postings", href: build_url("jobs")})
 
-		items.push({name: "Challenges", href: build_url("designed_challenges")})
+		if unique.has("challenges")
+			items.push({name: "Challenges", href: build_url("designed_challenges")})
 
 		#{name: "Portfolio", href: build_url("portfolio")}
 		#filter =
@@ -28,7 +30,6 @@ Template.mooqita_menu.helpers
 		 items.push({name: "Solutions", href: build_url("solutions")})
 		 items.push({name: "Reviews", href: build_url("reviews")})
 		 items.push({name: "Portfolio", href: build_url("portfolio")})
-
 
 		return items
 

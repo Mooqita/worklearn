@@ -467,3 +467,54 @@ a.mooqita:hover,
 	padding-bottom: 20px;
 }
 
+
+.onboarding .left {
+	float: left;
+	border: solid 1px red;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Onboarding navigation
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+.onboarding-nav{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.onboarding-nav .left {
+	float: left;
+}
+
+.onboarding-nav .mid {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.onboarding-nav .right {
+	float: right;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+.onboarding-nav .page-number{
+	border: 1px solid $theme;
+	border-radius: 50%;
+	color: $theme;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+}
+
+.onboarding-nav .page-number.selected{
+	color: $text-on-theme;
+	background: $theme;
+}
+
+.onboarding-nav a.page-number:hover{
+	color:$text-on-theme;
+	background: $contrast-on-theme;
+	text-decoration: none;
+}

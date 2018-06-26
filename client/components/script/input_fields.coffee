@@ -5,50 +5,10 @@
 ###############################################################################
 
 ###############################################################################
-_get_editor_id = () ->
-	editor_id = Template.instance().editor_id.get()
-	if not editor_id
-		sAlert.error("Object does not have a editor_id")
-
-	return editor_id
-
-###############################################################################
-_get_textarea = () ->
-	editor_id = _get_editor_id()
-	frm = $("#editor_"+editor_id)
-	return frm
-
-###############################################################################
-# check input
-###############################################################################
-
-###############################################################################
-Template.check_input.helpers
-	checked: () ->
-		field = get_field_value Template.instance().data
-		if field
-			return "checked"
-
-		return ""
-
-#########################################################
-Template.check_input.events
-	"change .edit-field": (event) ->
-		field = event.target.id
-		value = event.target.checked
-		collection = this.collection_name
-		item_id = this.item_id
-
-		if item_id == -1
-			return
-
-		set_field collection, item_id, field, value
-
-#########################################################
 # select input
-#########################################################
+###############################################################################
 
-#########################################################
+###############################################################################
 Template.select_input.helpers
 	is_selected: (val) ->
 		field = get_field_value Template.instance().data
@@ -59,7 +19,7 @@ Template.select_input.helpers
 		if String(val) in field
 			return "selected"
 
-#########################################################
+###############################################################################
 Template.select_input.events
 	"change .edit-field": (event) ->
 		target = event.target
@@ -79,45 +39,44 @@ Template.select_input.events
 		set_field collection, item_id, field, value
 
 
-#########################################################
+###############################################################################
 # basic input
-#########################################################
+###############################################################################
 
-#########################################################
+###############################################################################
 Template.basic_input.helpers
 	value: () ->
-		value = get_field_value(this)
-		return value
+		inst = Template.instance()
+		context = inst.data
 
-#########################################################
+		return get_form_value(context)
+
+###############################################################################
 Template.basic_input.events
 	"change .edit-field": (event) ->
-		field = event.target.id
+		inst = Template.instance()
+		context = inst.data
 		value = event.target.value
-		collection = this.collection_name
-		item_id = this.item_id
 
 		if this.type == "number"
 			value = Number(value)
 
-		set_field collection, item_id, field, value
+		set_form_value(context, value)
 
-#########################################################
+
+###############################################################################
 # Text
-#########################################################
+###############################################################################
 
-#########################################################
+###############################################################################
 Template.text_input.helpers
 	value: () ->
-		return get_field_value(this)
+		inst = Template.instance()
+		context = inst.data
 
-	is_selected: () ->
-		return ""
+		return get_form_value(context)
 
-	options: () ->
-		return []
-
-#########################################################
+###############################################################################
 Template.text_input.events
 	"change .edit-field": (event) ->
 		field = event.target.id
@@ -127,15 +86,15 @@ Template.text_input.events
 
 		set_field collection, item_id, field, value
 
-#########################################################
+###############################################################################
 # markdown_input
-#########################################################
+###############################################################################
 
-#########################################################
+###############################################################################
 Template.markdown_input.onCreated ->
 	this.preview = new ReactiveVar(false)
 
-#########################################################
+###############################################################################
 Template.markdown_input.helpers
 	value: () ->
 		return get_field_value(this)
@@ -149,7 +108,7 @@ Template.markdown_input.helpers
 	preview: () ->
 		return Template.instance().preview.get()
 
-#########################################################
+###############################################################################
 Template.markdown_input.events
 	"click #preview_toggle": (event) ->
 		tmpl = Template.instance()
@@ -164,16 +123,30 @@ Template.markdown_input.events
 
 		set_field collection, item_id, field, value
 
-#########################################################
+###############################################################################
 # wysiwyg_input input
-#########################################################
+###############################################################################
 
-##############################################
+###############################################################################
+_get_editor_id = () ->
+	editor_id = Template.instance().editor_id.get()
+	if not editor_id
+		sAlert.error("Object does not have a editor_id")
+
+	return editor_id
+
+###############################################################################
+_get_textarea = () ->
+	editor_id = _get_editor_id()
+	frm = $("#editor_"+editor_id)
+	return frm
+
+###############################################################################
 Template.wysiwyg_input.onCreated ->
 	editor_id = Math.floor(Math.random()*10000000)
 	this.editor_id = new ReactiveVar(editor_id)
 
-#######################################################
+###############################################################################
 Template.wysiwyg_input.onRendered () ->
 	conf =
 		height: 200
@@ -186,7 +159,7 @@ Template.wysiwyg_input.onRendered () ->
 	res = area.summernote(conf)
 	res.summernote("code", value)
 
-##############################################
+###############################################################################
 Template.wysiwyg_input.helpers
 	editor_id: ->
 		return _get_editor_id()
@@ -207,7 +180,7 @@ Template.wysiwyg_input.helpers
 		res.summernote("code", value)
 
 
-#######################################################
+###############################################################################
 Template.wysiwyg_input.events
 	"click #save": ( event, template ) ->
 		value = _get_textarea().summernote("code")
@@ -217,16 +190,16 @@ Template.wysiwyg_input.events
 
 		set_field collection, item, field, value
 
-#########################################################
+###############################################################################
 # code_input input
-#########################################################
+###############################################################################
 
-##############################################
+###############################################################################
 Template.code_input.onCreated ->
 	editor_id = Math.floor(Math.random()*10000000)
 	this.editor_id = new ReactiveVar(editor_id)
 
-###################################################
+###############################################################################
 Template.code_input.helpers
 	editor_id: ->
 		return "editor_"+_get_editor_id()
@@ -242,7 +215,7 @@ Template.code_input.helpers
 
 		return res
 
-#######################################################
+###############################################################################
 Template.code_input.events
 	"click #save": ( event, template ) ->
 		value = _get_textarea()[0].value

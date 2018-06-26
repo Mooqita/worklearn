@@ -1,10 +1,25 @@
+<!-----------------------------------------------------------------------------
+| Select Input
+------------------------------------------------------------------------------>
+<template name="select_input">
+	<select class="form-control edit-field" id="{{field}}">
+		{{#each options}}
+			<option value="{{value}}" {{is_selected value}}>{{label}}</option>
+		{{/each}}
+	</select>
+</template>
+
+
+<!-----------------------------------------------------------------------------
+| Basic Input
+------------------------------------------------------------------------------>
 <template name="basic_input">
 	{{#if label}}
-		<label for="{{field}}">{{label}}</label>
+		<label class="{{label_class}}" for="{{field}}">{{label}}</label>
 	{{/if}}
 
 	<input placeholder="{{placeholder}}"
-				 class="form-control edit-field"
+				 class="form-control edit-field" {{special}}
 				 type="{{type}}" id="{{field}}" value="{{value}}"
 				 aria-describedby="{{field}}_explain"/>
 
@@ -15,24 +30,19 @@
 	{{/if}}
 </template>
 
-<template name="select_input">
-	<select class="form-control edit-field" id="{{field}}">
-		{{#each options}}
-			<option value="{{value}}" {{is_selected value}}>{{label}}</option>
-		{{/each}}
-	</select>
-</template>
 
-<template name="check_input">
-	<input class="form-control edit-field" placeholder="{{placeholder}}"
-				 type="checkbox" id="{{field}}" {{checked}}/>
-</template>
-
+<!-----------------------------------------------------------------------------
+| Text Input using a TextArea
+------------------------------------------------------------------------------>
 <template name="text_input">
 	<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
-						 id="{{field}}" rows="10">{{value}}</textarea>
+						 id="{{field}}" rows="{{rows}}">{{value}}</textarea>
 </template>
 
+
+<!-----------------------------------------------------------------------------
+| Text Input using a markdown field
+------------------------------------------------------------------------------>
 <template name="markdown_input">
 	{{#if label}}
 		<label for="{{field}}">{{label}}</label>
@@ -82,6 +92,9 @@
 </template>
 
 
+<!-----------------------------------------------------------------------------
+| Text Input using code mirror what you see is what you get editor
+------------------------------------------------------------------------------>
 <template name="wysiwyg_input">
 	<div class="row">
 		<div class="col-md-12">
@@ -99,6 +112,10 @@
 	</div>
 </template>
 
+
+<!-----------------------------------------------------------------------------
+| Text Input using code mirror what you see is what you get editor
+------------------------------------------------------------------------------>
 <template name="code_input">
 	<div style="border: solid 1px #bbb; margin-bottom: 25px">
 		{{> CodeMirror id=editor_id options=editorOptions code=editorCode}}
