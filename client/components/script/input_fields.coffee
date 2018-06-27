@@ -79,7 +79,8 @@ Template.text_input.helpers
 ###############################################################################
 Template.text_input.events
 	"change .edit-field": (event) ->
-		context = Template.instance()
+		inst = Template.instance()
+		context = inst.data
 		value = event.target.value
 
 		set_form_value(context, value)

@@ -94,7 +94,7 @@ Template.match_button.events
 		context.matching.set true
 
 		data = context.data
-		value = get_value_from_context(context)
+		value = get_form_value(data)
 
 		collection_name = data.collection_name
 		item_id = data.item_id
@@ -114,7 +114,8 @@ Template.match_button.events
 				context.subscribe("active_nlp_task", res.match_id)
 
 		if not _has_doc(context)
-			Meteor.call "match_text", value, in_collection, handle
+			if value
+				Meteor.call "match_text", value, in_collection, handle
 			return
 
 		Meteor.call "match_document", collection_name, item_id, field,

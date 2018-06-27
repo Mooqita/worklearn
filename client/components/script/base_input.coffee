@@ -38,9 +38,11 @@
 	else if context.variable
 		variable = context.variable
 		variable.set value
-	else if inst.dictionary
-		dict = inst.dictionary
-		key = inst.data.key
+	else if context.dictionary
+		dict = context.dictionary
+		if not dict
+			console.log("Missing dictionary")
+		key = context.data.key
 		dict.set key, value
 	else if context.collection_name
 		cn = context.collection_name

@@ -13,14 +13,17 @@
 			</div>
 
 			<div class="col-sm-6">
-				<h1>Find the talent you need!</h1>
+				<h1>Optimize your hiring process!</h1>
 
 				<p style="padding-bottom: 25px">
-					Complete our quick onboarding steps to find and
-          attract matching talent to grow your business.
+					Mooqita can help you to evaluate all your applicants before you have even read one resume.
+					Mooqita allows you to rank your candidates based on their real life performance in your
+					individually designed Mooqita-Challenge and our Mooqita-Team-Fit personality score.
 				</p>
 
-				<a class="btn btn-theme" href="onboarding_job_role">Find a perfect candidate</a>
+				<a class="btn btn-theme" href="onboarding_job_role">
+					Design a Mooqita-Challenge to assess your candidates
+				</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -46,7 +49,7 @@
 		</p>
 
 		{{>job_role session="onboarding_job_posting" key="role"
-				href="onboarding_job_competency"}}
+								href="onboarding_job_competency"}}
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="right">
@@ -80,6 +83,7 @@
 		</h1>
 
 		<h1>Competencies</h1>
+
 		<p>
 			Finding the candidate with the right skill set is important.
 			However, Mooqita can do more for you. We can help you find the person
@@ -129,14 +133,40 @@
 
 		<h1>Job Description</h1>
 
-		<p style="padding-bottom: 20px">
+		<p>
 			Give us a short description of your job so we can generate
 			a challenge to screen your candidates. You do not have to
 			go into detail. We will get to you with questions if necessary.
 		</p>
 
-		{{>text_input session="onboarding_job_posting" key="job_info" rows="4"
+		<div class="alert alert-theme" style="padding-bottom: 20px">
+			{{#unless has_text}}
+				<p>
+					Please provide us with some information about your job offer to
+					get an immediate quote on challenges to assess your candidates.
+				</p>
+			{{else}}
+				<p>
+					Based on your input a challenge draft will take no longer than 2 work days.
+				</p>
+			{{/unless}}
+		</div>
+
+		{{>text_input session="onboarding_job_description" rows="4"
 				placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
+
+		<div class="btn-group btn-group-justified">
+			<div class="btn-group">
+				{{>match_button session="onboarding_job_description"
+												in_collection="challenges" text="Find challenges"}}
+			</div>
+		</div>
+
+		<hr>
+
+		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
+
+		{{>onboarding_candidates}}
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="left">
@@ -191,8 +221,7 @@
 			</div>
 
 			<div style="padding: 15px;">
-				<a href="{{href}}" target="_top"
-					 class="btn" style="width: 100%; background: {{background}}; color: {{color}}">
+				<a href="{{href}}" class="btn" style="width: 100%; background: {{background}}; color: {{color}}">
 					{{button}}
 				</a>
 			</div>
@@ -249,23 +278,25 @@
 
 				<div class="row">
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
-						{{>payment_option price="0" name="Free" background="#8d0162AA" color="#fff" button="Try"
-								text="<li>Public challenges only</li><li>Up to 5 Candidates screened</li><li>Performance screening only</li>" href="onboarding_job_registration"}}
+						{{>payment_option price="0" name="Trial" background="#8d0162AA" color="#fff" button="Try"
+								text="<li>Up to 5 Candidates screened</li><li>Performance screening only</li>"
+								href="onboarding_job_registration"}}
 					</div>
 
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
 						{{>payment_option price="25" name="Basic" background="#048BA8AA" color="#fff" button="Buy Basic"
-								text="<li>Private challenges enabled</li><li>Unlimited number of candidates</li><li>Performance screening only</li>" href="onboarding_job_registration"}}
+								text="<li>Unlimited number of candidates</li><li>Performance screening only</li>"
+								href="onboarding_job_registration"}}
 					</div>
 
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
 						{{>payment_option price="45" name="Plus" background="#14A619AA" color="#fff" button="Contact Us"
-								text="<li>Private challenges enabled</li><li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li>" href="mailto:info@mooqita.com?Subject=Extra%20subscription%20information"}}
+								text="<li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li>" href="mailto:info@mooqita.com?Subject=Extra%20subscription%20information"}}
 					</div>
 
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
 						{{>payment_option price="75" name="Extra" background="#e96606aa" color="#fff" button="Contact Us"
-								text="<li>Private challenges enabled</li><li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li><li>Team fit analysis</li><li>External candidates</li>"
+								text="<li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li><li>Team fit analysis</li><li>Access External candidates</li>"
 								href="mailto:info@mooqita.com?Subject=Extra%20subscription%20information"}}
 					</div>
 				</div>
@@ -288,7 +319,7 @@
 
 					<div class="right">
 						<a class="pull-right btn btn-theme" href="onboarding_job_registration">
-							Free trial
+							Trial
 							<span class="glyphicon glyphicon-chevron-right"></span>
 						</a>
 					</div>
@@ -312,7 +343,7 @@
 | Onboarding registration time
 |
 -------------------------------------------------->
-<template name="onboarding_describe_job">
+<template name="onboarding_job_registration">
 	<style>
 		div[class*="col-"] > .square-responsive,
 		span[class*="col-"] > .square-responsive,
@@ -321,6 +352,7 @@
 		li[class*="col-"] > .square-responsive{
 			 padding-bottom:100%;
 		}
+
 		div[class*="col-"] > .rect-responsive,
 		span[class*="col-"] > .rect-responsive,
 		ol[class*="col-"] > .rect-responsive,
@@ -328,15 +360,18 @@
 		li[class*="col-"] > .rect-responsive{
 			 padding-bottom:50%;
 		}
+
 		.square-responsive,
 		.rect-responsive{
 				 position:relative;
 				 overflow:hidden;
 		}
+
 		.square-responsive > *,
 		.rect-responsive > *{
 				 position:absolute;
 		}
+
 		.square-responsive > .content,
 		.rect-responsive > .content {
 				 width:100%;
@@ -348,27 +383,6 @@
 		<h1 style="text-align: center; padding-top: 30px">
 			<img style="width: 300px" src="/images/mooqita.jpg">
 		</h1>
-
-		<h1>Describe your job opening</h1>
-
-		<p>
-			This description will help us find challenges
-			related to your job. Learner who score high
-			on these challenges will be part of your
-			recruitment pool.
-		</p>
-
-		<p class="padding-next alert alert-theme">
-			<em style="font-weight: bold">Important:</em>
-			We at Mooqita do things a little different.
-			This description is for our AI (artificial
-			intelligence). Do not think too much about
-			it right now. Just give us a few lines to
-			get working. You can add more later on.
-			Write this as if you were talking to a colleague
-			at your company this way our algorithm can
-			perform at its best.
-		</p>
 
 		{{>text_input session="onboarding_job_description"
 									placeholder="A short description of what you are looking for in your own words."}}
@@ -393,7 +407,6 @@
 		{{else}}
 			{{>onboarding_candidates}}
 		{{/unless}}
-
 	{{/mooqita_wide_spacing}}
 </template>
 

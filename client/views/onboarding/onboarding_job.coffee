@@ -34,7 +34,7 @@ _check_session = () ->
 
 ################################################################################
 Template.onboarding_job_role.onCreated ->
-	_check_session()
+	#_check_session()
 
 
 ################################################################################
@@ -45,7 +45,7 @@ Template.onboarding_job_role.onCreated ->
 
 ################################################################################
 Template.onboarding_job_competency.onCreated ->
-	_check_session()
+	#_check_session()
 
 
 ################################################################################
@@ -55,24 +55,24 @@ Template.onboarding_job_competency.onCreated ->
 ################################################################################
 
 ################################################################################
-Template.onboarding_describe_job.onCreated () ->
-	_check_session()
+#Template.onboarding_job_registration.onCreated () ->
+	#_check_session()
 
 
 ################################################################################
-Template.onboarding_describe_job.helpers
-	text: () ->
-		return Session.get("text")
+#Template.onboarding_job_registration.helpers
+#	text: () ->
+#		return Session.get("text")
 
-	has_text: () ->
-		text = Session.get("text")
-		return text.length>10
+#	has_text: () ->
+#		text = Session.get("text")
+#		return text.length>10
 
 
 ################################################################################
-Template.onboarding_describe_job.events
-	"click #register": () ->
-		Modal.show 'onboarding_job_register'
+#Template.onboarding_job_registration.events
+#	"click #register": () ->
+#		Modal.show 'onboarding_job_register'
 
 
 ################################################################################
