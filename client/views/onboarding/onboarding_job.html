@@ -64,7 +64,6 @@
 				<a class="page-number" href="onboarding_job_competency">2</a>
 				<a class="page-number" href="onboarding_job_info">3</a>
 				<a class="page-number" href="onboarding_job_tier">4</a>
-				<a class="page-number" href="onboarding_job_registration">5</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -113,7 +112,6 @@
 				<a class="page-number selected" href="onboarding_job_competency">2</a>
 				<a class="page-number" href="onboarding_job_info">3</a>
 				<a class="page-number" href="onboarding_job_tier">4</a>
-				<a class="page-number" href="onboarding_job_registration">5</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -146,9 +144,22 @@
 					get an immediate quote on challenges to assess your candidates.
 				</p>
 			{{else}}
-				<p>
-					Based on your input a challenge draft will take no longer than 2 work days.
-				</p>
+
+				{{#if enough_challenges}}
+					We found <span style="font-weight: bold" class="color-theme">{{num_challenges}}</span>
+					challenges on our platform that match your requirement.
+					{{#if enough_candidates}}
+						There were <span style="font-weight: bold" class="color-theme">{{num_candidates}}</span>
+						candidates who successfully solved these challenges looking for a job.
+					{{/if}}
+				{{else}}
+					<p>
+						Based on your input a challenge draft will take no longer than
+						<span style="font-weight: bold" class="color-theme">{{work_days}}</span>
+						work days.
+					</p>
+				{{/if}}
+
 			{{/unless}}
 		</div>
 
@@ -158,15 +169,13 @@
 		<div class="btn-group btn-group-justified">
 			<div class="btn-group">
 				{{>match_button session="onboarding_job_description"
-												in_collection="challenges" text="Find challenges"}}
+												in_collection="challenges" text="Get quote"}}
 			</div>
 		</div>
 
-		<hr>
-
+		<!-- <hr>
 		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
-
-		{{>onboarding_candidates}}
+		{{>onboarding_candidates}}-->
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="left">
@@ -188,7 +197,6 @@
 				<a class="page-number" href="onboarding_job_competency">2</a>
 				<a class="page-number selected" href="onboarding_job_info">3</a>
 				<a class="page-number" href="onboarding_job_tier">4</a>
-				<a class="page-number" href="onboarding_job_registration">5</a>
 			</div>
 		</div>
 	{{/mooqita_wide_spacing}}
@@ -329,7 +337,6 @@
 						<a class="page-number" href="onboarding_job_competency">2</a>
 						<a class="page-number" href="onboarding_job_info">3</a>
 						<a class="page-number selected" href="onboarding_job_tier">4</a>
-						<a class="page-number" href="onboarding_job_registration">5</a>
 					</div>
 				</div>
 			</div>
@@ -433,13 +440,13 @@
 	{{#each candidates}}
 		<div class="row">
 			<div class="col-sm-2 col-ms-3 text-center">
-				<div class="square-responsive background-theme">
-					<div class="content" style="font-size: 2em;">
-						Hello
-					</div>
+				<div class="square-responsive"
+						 style="border-radius: 50%;
+						 box-shadow: 1px 1px 5px #00000055;">
+					{{>avatar source=avatar}}
 				</div>
 
-				<a class="color-theme">{{name}}</a>
+				<a class="color-theme">{{user_name}}</a>
 			</div>
 
 			<div class="col-sm-10 col-ms-9">

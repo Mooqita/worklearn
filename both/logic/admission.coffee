@@ -202,17 +202,22 @@ _admission_fields =
 
 ################################################################################
 @get_admission_collection_names = () ->
-		mod =
-			fields:
-				c: 1
+	filter = {}
+	mod =
+		fields:
+			c: 1
 
-		adms = Admissions.find({}, mod).fetch()
-		unique = new Set()
+	user_id = Meteor.userId()
+	if user_id
+		filter.u = user_id
 
-		for a in adms
-			unique.add(a.c)
+	adms = Admissions.find(filter, mod).fetch()
+	unique = new Set()
 
-		return unique
+	for a in adms
+		unique.add(a.c)
+
+	return unique
 
 
 ###############################################################################

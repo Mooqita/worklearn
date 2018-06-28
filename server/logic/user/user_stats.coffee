@@ -35,6 +35,7 @@
 
 	if profile
 		resume.user_name = get_profile_name profile, false, false
+		resume.avatar = get_avatar(profile)
 
 	solution_list = []
 	solution_cursor = get_documents user, OWNER, Solutions, {published: true}

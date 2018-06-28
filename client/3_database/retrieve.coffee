@@ -1,3 +1,56 @@
+###############################################################################
+#
+# Bas input functions
+#
+###############################################################################
+
+###############################################################################
+@get_form_value = (context) ->
+	if context.session
+		value = Session.get context.session
+		if context.key
+			if not value
+				Session.set(context.session, {})
+				value = Session.get(context.session)
+			value = value[context.key]
+	else if context.variable
+		data = context.variable
+		value = data.get()
+	else if context.dictionary
+		data = context.dictionary
+		value = data.get context.key
+	else if context.collection_name
+		value = get_field_value context
+
+	return value
+
+
+###############################################################################
+@set_form_value = (context, value) ->
+	if context.session
+		if context.key
+			dict = Session.get context.session
+			if not dict
+				dict = {}
+			dict[context.key] = value
+			value = dict
+		Session.set context.session, value
+	else if context.variable
+		variable = context.variable
+		variable.set value
+	else if context.dictionary
+		dict = context.dictionary
+		if not dict
+			console.log("Missing dictionary")
+		key = context.data.key
+		dict.set key, value
+	else if context.collection_name
+		cn = context.collection_name
+		f = context.field
+		id = context.item_id
+		set_field cn, id, f, value
+
+
 #######################################################
 @get_field_value = (self, field, item_id, collection_name) ->
 	#TODO: replace collection_name with collection object if possible to enhance consistency
@@ -32,22 +85,3 @@
 		return undefined
 
 	return item[field]
-
-#######################################################
-@get_value_from_context = (context) ->
-	data = context.data
-
-	if data.session
-		value = Session.get data.session
-		if data.key
-			value = value[data.key]
-	else if data.variable
-		dv = data.variable
-		value = dv.get()
-	else if data.dictionary
-		dd = data.dictionary
-		value = dd.get data.key
-	else if data.collection_name
-		value = get_field_value data
-
-	return value

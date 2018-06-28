@@ -60,5 +60,5 @@ Template.registerHelper "g_value", (data) ->
 	context =
 		data: data.hash
 
-	return get_value_from_context(context)
+	return get_form_value(context)
 

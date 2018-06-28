@@ -74,6 +74,61 @@ Template.onboarding_job_competency.onCreated ->
 #	"click #register": () ->
 #		Modal.show 'onboarding_job_register'
 
+################################################################################
+Template.onboarding_job_info.onCreated () ->
+	self = this
+	self.autorun () ->
+		mod =
+			fields:
+				_id:1
+				ids:1
+				cb:1
+
+		matches = Matches.find({}, mod).fetch()
+		Meteor.subscribe("users_by_matched_challenges", matches)
+
+		item_id = self.data.item_id
+		text = Session.get("onboarding_job_description")
+		item_id = fast_hash(text)
+
+		parameter =
+			page: 0
+			size: 100
+			item_id: item_id
+
+		self.subscribe("my_matches", parameter)
+
+
+################################################################################
+Template.onboarding_job_info.helpers
+	has_text: () ->
+		text = Session.get("onboarding_job_description")
+		if not text
+			return false
+
+		return text.length > 5
+
+	work_days: () ->
+		text = Session.get("onboarding_job_description")
+		if not text
+			return false
+
+		days = if text.length > 1500 then 3 else 2
+		return days
+
+	enough_challenges: () ->
+		return Matches.find().count() > 2
+
+	enough_candidates: () ->
+		return UserResumes.find().count() > 5
+
+	num_challenges: () ->
+		return Matches.find().count()
+
+	num_candidates: () ->
+		return UserResumes.find().count()
+
+
 
 ################################################################################
 #

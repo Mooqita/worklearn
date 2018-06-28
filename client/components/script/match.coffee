@@ -32,8 +32,8 @@
 
 
 ################################################################################
-_has_doc = (context) ->
-	data = context.data
+_has_doc = (instance) ->
+	data = instance.data
 
 	if not data.collection_name
 		return false
@@ -61,9 +61,8 @@ Template.match_button.onCreated () ->
 		item_id = self.data.item_id
 
 		if not _has_doc(self)
-			text = get_value_from_context(self)
+			text = get_form_value(self.data)
 			item_id = fast_hash(text)
-			console.log item_id
 
 		parameter =
 			page: 0
@@ -90,20 +89,20 @@ Template.match_button.events
 		if event.target.attributes.disabled
 			return
 
-		context = Template.instance()
-		context.matching.set true
+		inst = Template.instance()
+		inst.matching.set true
 
-		data = context.data
-		value = get_form_value(data)
+		context = inst.data
+		value = get_form_value(context)
 
-		collection_name = data.collection_name
-		item_id = data.item_id
-		field = data.field
+		collection_name = context.collection_name
+		item_id = context.item_id
+		field = context.field
 
-		in_collection = data.in_collection
+		in_collection = context.in_collection
 
 		handle = (err, res)->
-			context.matching.set false
+			inst.matching.set false
 			if err
 				sAlert.error(err)
 				return
@@ -111,11 +110,10 @@ Template.match_button.events
 				msg = "Hmm not yet."
 				sAlert.warning(msg)
 			else
-				context.subscribe("active_nlp_task", res.match_id)
+				inst.subscribe("active_nlp_task", res.match_id)
 
-		if not _has_doc(context)
-			if value
-				Meteor.call "match_text", value, in_collection, handle
+		if not _has_doc(inst)
+			Meteor.call "match_text", value, in_collection, handle
 			return
 
 		Meteor.call "match_document", collection_name, item_id, field,
@@ -136,7 +134,7 @@ Template.match_tags.onCreated () ->
 		item_id = self.data.item_id
 
 		if not _has_doc(self)
-			text = get_value_from_context(self)
+			text = get_form_value(self)
 			item_id = fast_hash(text)
 
 		parameter =
@@ -181,7 +179,7 @@ Template.match_tags.helpers
 		item_id = data.item_id
 
 		if not _has_doc(context)
-			text = get_value_from_context(context)
+			text = get_form_value(context)
 			item_id = fast_hash(text)
 
 		o =
@@ -206,7 +204,7 @@ Template.match_tags.events
 		collection_name = data.collection_name
 
 		if not _has_doc(context)
-			item_id = get_value_from_context(context)
+			item_id = get_form_value(context)
 			item_id = fast_hash(item_id)
 
 		Meteor.call "add_concept", concept, collection_name, item_id,

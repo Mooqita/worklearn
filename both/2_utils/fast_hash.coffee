@@ -13,5 +13,5 @@
 		hash = ((hash<<5)-hash)+char
 		hash = hash & hash
 
-	return "#" + hash
+	return "#" + hash * hash
 

@@ -92,8 +92,8 @@ Meteor.publish "user_resumes_by_matched_challenges", (matches) ->
 	check matches, [match]
 
 	user_id = this.userId
-	if not user_id
-		throw new Meteor.Error("Not permitted")
+#	if not user_id
+#		throw new Meteor.Error("Not permitted")
 
 	ids = (i.ids[1] for i in matches)
 	flr = {challenge_id:{$in:ids}}
@@ -104,6 +104,41 @@ Meteor.publish "user_resumes_by_matched_challenges", (matches) ->
 	self = this
 	prepare_resume = (user) ->
 		resume = gen_resume(user)
+		self.added("user_resumes", user._id, resume)
+
+	filter =
+		_id:
+			$in:owner_ids
+
+	crs = Meteor.users.find(filter)
+	crs.forEach(prepare_resume)
+
+	log_publication crs, user_id, "user_resumes_by_matched_challenges"
+	self.ready()
+
+
+#######################################################
+Meteor.publish "users_by_matched_challenges", (matches) ->
+	match =
+		_id: String
+		cb: String
+		ids: [String]
+
+	check matches, [match]
+
+	user_id = this.userId
+#	if not user_id
+#		throw new Meteor.Error("Not permitted")
+
+	ids = (i.ids[1] for i in matches)
+	flr = {challenge_id:{$in:ids}}
+	mod = {fields:{_id:1}}
+	solution_ids = (i._id for i in Solutions.find(flr, mod).fetch())
+	owner_ids = get_document_owners(Solutions, solution_ids)
+
+	self = this
+	prepare_resume = (user) ->
+		resume = {}
 		self.added("user_resumes", user._id, resume)
 
 	filter =

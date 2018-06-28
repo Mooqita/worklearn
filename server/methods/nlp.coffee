@@ -14,6 +14,7 @@ _get_document = (collection_name, item_id, field) ->
 ###############################################################################
 Meteor.methods
 	match_text: (text, in_collection) ->
+		console.log(text)
 #		user = Meteor.user()
 #		if not user
 #			throw new Meteor.Error("Not permitted")
