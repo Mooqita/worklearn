@@ -106,7 +106,14 @@ Template.onboarding_job_info.helpers
 		if not text
 			return false
 
-		return text.length > 5
+		return text.length > 15
+
+	saved: () ->
+		text = Session.get("onboarding_job_description")
+		if not text
+			return false
+
+		return text.length > 0
 
 	work_days: () ->
 		text = Session.get("onboarding_job_description")

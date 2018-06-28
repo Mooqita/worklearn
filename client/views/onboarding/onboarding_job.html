@@ -137,41 +137,43 @@
 			go into detail. We will get to you with questions if necessary.
 		</p>
 
-		<div class="alert alert-theme" style="padding-bottom: 20px">
-			{{#unless has_text}}
-				<p>
-					Please provide us with some information about your job offer to
-					get an immediate quote on challenges to assess your candidates.
-				</p>
-			{{else}}
-
-				{{#if enough_challenges}}
-					We found <span style="font-weight: bold" class="color-theme">{{num_challenges}}</span>
-					challenges on our platform that match your requirement.
-					{{#if enough_candidates}}
-						There were <span style="font-weight: bold" class="color-theme">{{num_candidates}}</span>
-						candidates who successfully solved these challenges looking for a job.
-					{{/if}}
-				{{else}}
-					<p>
-						Based on your input a challenge draft will take no longer than
-						<span style="font-weight: bold" class="color-theme">{{work_days}}</span>
-						work days.
-					</p>
-				{{/if}}
-
-			{{/unless}}
-		</div>
-
 		{{>text_input session="onboarding_job_description" rows="4"
 				placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
 
 		<div class="btn-group btn-group-justified">
 			<div class="btn-group">
 				{{>match_button session="onboarding_job_description"
-												in_collection="challenges" text="Save"}}
+												in_collection="challenges" text="Get quote"}}
 			</div>
 		</div>
+
+		{{#if saved}}
+			<div class="alert alert-theme" style="padding-bottom: 20px">
+				{{#unless has_text}}
+					<p>
+						Please provide us with some more information about your job offer
+						to get an immediate quote on challenges to assess your candidates.
+					</p>
+				{{else}}
+
+					{{#if enough_challenges}}
+						We found <span style="font-weight: bold" class="color-theme">{{num_challenges}}</span>
+						challenges on our platform that match your description.
+						{{#if enough_candidates}}
+							There were <span style="font-weight: bold" class="color-theme">{{num_candidates}}</span>
+							candidates who successfully solved these challenges looking for a job.
+						{{/if}}
+					{{else}}
+						<p>
+							Based on your input a challenge draft will take no longer than
+							<span style="font-weight: bold" class="color-theme">{{work_days}}</span>
+							work days.
+						</p>
+					{{/if}}
+
+				{{/unless}}
+			</div>
+		{{/if}}
 
 		<!-- <hr>
 		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
