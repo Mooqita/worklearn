@@ -48,7 +48,7 @@
 			Don't worry you can change this later.
 		</p>
 
-		{{>job_role session="onboarding_job_posting" key="role"
+		{{>job_role session="onboarding_job_data" key="role"
 								href="onboarding_job_competency"}}
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
@@ -90,7 +90,7 @@
 			competencies you deem important for candidates for this job posting.
 		</p>
 
-		{{>job_competency session="onboarding_job_posting"}}
+		{{>job_competency session="onboarding_job_data"}}
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="left">
@@ -137,12 +137,12 @@
 			go into detail. We will get to you with questions if necessary.
 		</p>
 
-		{{>text_input session="onboarding_job_description" rows="4"
+		{{>text_input session="onboarding_job_data" key="description" rows="4"
 				placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
 
 		<div class="btn-group btn-group-justified">
 			<div class="btn-group">
-				{{>match_button session="onboarding_job_description"
+				{{>match_button session="onboarding_job_data" key="description"
 												in_collection="challenges" text="Get quote"}}
 			</div>
 		</div>
@@ -159,6 +159,7 @@
 					{{#if enough_challenges}}
 						We found <span style="font-weight: bold" class="color-theme">{{num_challenges}}</span>
 						challenges on our platform that match your description.
+
 						{{#if enough_candidates}}
 							There were <span style="font-weight: bold" class="color-theme">{{num_candidates}}</span>
 							candidates worked on these challenges looking for a job.
@@ -174,10 +175,6 @@
 				{{/unless}}
 			</div>
 		{{/if}}
-
-		<!-- <hr>
-		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
-		{{>onboarding_candidates}}-->
 
 		<div class="onboarding-nav" style="padding-bottom: 20px; padding-top: 30px">
 			<div class="left">
@@ -221,8 +218,9 @@
 			<div style="padding-bottom: 20px;">
 				<div style="font-size: 60px; text-align: center; background: {{background}};">
 					<i style="vertical-align: super; font-size: 30px; margin-right: -10px;">$</i>
-					{{price}}
+						{{price}}
 					<i style="vertical-align: super; font-size: 30px; margin-left: -15px;">.00</i>
+
 					<div class="text-right" style="font-size: 16px; text-align: right;
 																				 padding: 3px 5px; margin-top: -15px;">
 						per candidate
@@ -231,7 +229,8 @@
 			</div>
 
 			<div style="padding: 15px;">
-				<a href="{{href}}" class="btn" style="width: 100%; background: {{background}}; color: {{color}}">
+				<a href="{{href}}" class="btn register-button"
+					 style="width: 100%; background: {{background}}; color: {{color}}">
 					{{button}}
 				</a>
 			</div>
@@ -301,7 +300,7 @@
 
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
 						{{>payment_option price="45" name="Plus" background="#14A619AA" color="#fff" button="Contact Us"
-								text="<li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li>" href="mailto:info@mooqita.com?Subject=Extra%20subscription%20information"}}
+								text="<li>Unlimited number of candidates</li><li>Performance screening</li><li>Soft skill evaluation</li>" href="mailto:info@mooqita.com?Subject=Plus%20subscription%20information"}}
 					</div>
 
 					<div class="col-sm-6 col-ms-6 col-md-3 hover-padding">
@@ -328,7 +327,7 @@
 					</div>
 
 					<div class="right">
-						<a class="pull-right btn btn-theme" href="onboarding_job_registration">
+						<a class="pull-right btn btn-theme register-button" href="#">
 							Trial
 							<span class="glyphicon glyphicon-chevron-right"></span>
 						</a>
@@ -347,79 +346,6 @@
 </template>
 
 
-<!------------------------------------------------
-|
-| Onboarding registration time
-|
--------------------------------------------------->
-<template name="onboarding_job_registration">
-	<style>
-		div[class*="col-"] > .square-responsive,
-		span[class*="col-"] > .square-responsive,
-		ol[class*="col-"] > .square-responsive,
-		ul[class*="col-"] > .square-responsive,
-		li[class*="col-"] > .square-responsive{
-			 padding-bottom:100%;
-		}
-
-		div[class*="col-"] > .rect-responsive,
-		span[class*="col-"] > .rect-responsive,
-		ol[class*="col-"] > .rect-responsive,
-		ul[class*="col-"] > .rect-responsive,
-		li[class*="col-"] > .rect-responsive{
-			 padding-bottom:50%;
-		}
-
-		.square-responsive,
-		.rect-responsive{
-				 position:relative;
-				 overflow:hidden;
-		}
-
-		.square-responsive > *,
-		.rect-responsive > *{
-				 position:absolute;
-		}
-
-		.square-responsive > .content,
-		.rect-responsive > .content {
-				 width:100%;
-				 height:100%;
-		}
-	</style>
-
-	{{#mooqita_wide_spacing}}
-		<h1 style="text-align: center; padding-top: 30px">
-			<img style="width: 300px" src="/images/mooqita.jpg">
-		</h1>
-
-		{{>text_input session="onboarding_job_description"
-									placeholder="A short description of what you are looking for in your own words."}}
-
-		<div class="btn-group btn-group-justified">
-			<div class="btn-group">
-				{{>match_button session="onboarding_job_description"
-												in_collection="challenges" text="Find challenges"}}
-			</div>
-		</div>
-
-		<hr>
-
-		{{>match_tags session="onboarding_job_description" in_collection="challenges"}}
-
-		{{#unless currentUser}}
-			<div class="btn-group btn-group-justified">
-				<div class="btn btn-theme" id="register">
-					Register to see your candidates
-				</div>
-			</div>
-		{{else}}
-			{{>onboarding_candidates}}
-		{{/unless}}
-	{{/mooqita_wide_spacing}}
-</template>
-
-
 <template name="onboarding_job_register">
 	<div class="modal fade register-modal">
 		<div class="register-frame animated">
@@ -432,106 +358,3 @@
 	</div>
 </template>
 
-
-<!------------------------------------------------
-|
-| Show each match
-|
--------------------------------------------------->
-<template name="onboarding_candidates">
-	{{#each candidates}}
-		<div class="row">
-			<div class="col-sm-2 col-ms-3 text-center">
-				<div class="square-responsive"
-						 style="border-radius: 50%;
-						 box-shadow: 1px 1px 5px #00000055;">
-					{{>avatar source=avatar}}
-				</div>
-
-				<a class="color-theme">{{user_name}}</a>
-			</div>
-
-			<div class="col-sm-10 col-ms-9">
-				{{#each solutions}}
-					{{>onboarding_solution}}
-					<br>
-				{{/each}}
-			</div>
-		</div>
-	{{/each}}
-</template>
-
-
-<!------------------------------------------------
-|
-|	Challenge solution
-|
--------------------------------------------------->
-<template name="onboarding_solution">
-	<div class="padding-next">
-		<div class="row">
-			<div class="col-xs-6">
-				<h2>{{challenge.title}}</h2>
-			</div>
-
-			<div class="col-xs-6">
-				<h2 class="text-right">Rating <em>{{average}}</em> out of <em>5</em></h2>
-			</div>
-		</div>
-
-		{{>more content=challenge.content}}
-
-		<h2>
-			<a id="show_reviews" data-toggle="collapse" data-target="#{{id}}">
-				{{#unless reviews_visible}}
-					<span class="glyphicon glyphicon-expand"></span>
-				{{else}}
-					<span class="glyphicon glyphicon-collapse-down"></span>
-				{{/unless}}
-			</a>
-			Show Solution and Individual Reviews
-		</h2>
-
-		<div id="{{id}}" class="row collapse">
-			<div style="margin-left: 25px">
-				{{>more content=content}}
-
-				{{#each reviews}}
-					<div class="row">
-						<div class="col-xs-6">
-							<h2>Review</h2>
-						</div>
-
-						<div class="col-xs-6">
-							<h2 class="text-right">
-								Rating <em>{{rating}}</em> out of <em>5</em>
-							</h2>
-						</div>
-					</div>
-
-					{{>more content=review}}
-
-					{{#with feedback}}
-						<div class="row" style="margin-left: 25px">
-							<div class="col-xs-6">
-								<h2>
-									Rebuttal
-								</h2>
-							</div>
-
-							<div class="col-xs-6">
-								<h2 class="text-right">
-									Rating <em>{{rating}}</em> out of <em>5</em>
-								</h2>
-							</div>
-
-							<div class="col-xs-12">
-								{{>more content=content}}
-							</div>
-						</div>
-					{{/with}}
-				{{/each}}
-			</div>
-		</div>
-	</div>
-</template>

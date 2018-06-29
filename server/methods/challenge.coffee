@@ -7,7 +7,7 @@
 ###############################################
 Meteor.methods
 	add_challenge: (job_id) ->
-		check(job_id,Match.Optional(String))
+		check(job_id, Match.Optional(String))
 		user = Meteor.user()
 
 		if not user
@@ -15,12 +15,13 @@ Meteor.methods
 
 		return gen_challenge user, job_id
 
-	make_challenge: (title,content,link,origin,job_id) ->
-		check(title,String)
-		check(content,String)
-		check(link,String)
-		check(origin,String)
-		check(job_id,Match.Maybe(String))
+
+	make_challenge: (title, content, link, origin, job_id) ->
+		check(link, String)
+		check(title, String)
+		check(origin, String)
+		check(content, String)
+		check(job_id, Match.Maybe(String))
 
 		user = Meteor.user()
 
@@ -28,6 +29,7 @@ Meteor.methods
 			throw new Meteor.Error('Not permitted.')
 
 		return bake_challenge user, title, content, link, origin, job_id
+
 
 	finish_challenge: (challenge_id) ->
 		user = Meteor.user()

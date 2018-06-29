@@ -12,67 +12,10 @@
 FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 ################################################################################
-_check_session = () ->
-	if not Session.get "onboarding_job_description"
-		Session.set "onboarding_job_description", ""
-
-	if not Session.get "user_occupation"
-		Session.set "user_occupation", "company"
-
-	if not Session.get "onboarding_job_posting"
-		Session.set "onboarding_job_posting", {}
-
-	if not Session.get "onboarding_persona_data"
-		Session.set "onboarding_persona_data", persona_job
-
-
-################################################################################
-#
-# Onboarding Role
-#
-################################################################################
-
-################################################################################
-Template.onboarding_job_role.onCreated ->
-	#_check_session()
-
-
-################################################################################
-#
-# Onboarding Competency
-#
-################################################################################
-
-################################################################################
-Template.onboarding_job_competency.onCreated ->
-	#_check_session()
-
-
-################################################################################
 #
 # Describe your job post
 #
 ################################################################################
-
-################################################################################
-#Template.onboarding_job_registration.onCreated () ->
-	#_check_session()
-
-
-################################################################################
-#Template.onboarding_job_registration.helpers
-#	text: () ->
-#		return Session.get("text")
-
-#	has_text: () ->
-#		text = Session.get("text")
-#		return text.length>10
-
-
-################################################################################
-#Template.onboarding_job_registration.events
-#	"click #register": () ->
-#		Modal.show 'onboarding_job_register'
 
 ################################################################################
 Template.onboarding_job_info.onCreated () ->
@@ -102,21 +45,33 @@ Template.onboarding_job_info.onCreated () ->
 ################################################################################
 Template.onboarding_job_info.helpers
 	has_text: () ->
-		text = Session.get("onboarding_job_description")
+		text = Session.get("onboarding_job_data")
+		if not text
+			return false
+
+		text = text.description
 		if not text
 			return false
 
 		return text.length > 15
 
 	saved: () ->
-		text = Session.get("onboarding_job_description")
+		text = Session.get("onboarding_job_data")
+		if not text
+			return false
+
+		text = text.description
 		if not text
 			return false
 
 		return text.length > 0
 
 	work_days: () ->
-		text = Session.get("onboarding_job_description")
+		text = Session.get("onboarding_job_data")
+		if not text
+			return false
+
+		text = text.description
 		if not text
 			return false
 
@@ -136,32 +91,51 @@ Template.onboarding_job_info.helpers
 		return UserResumes.find().count()
 
 
-
 ################################################################################
-#
-# Onboarding Finish
-#
+# Job tier
 ################################################################################
 
+_on_login = (res) ->
+	data = Session.get("onboarding_job_data")
+	title = "New challenge"
+	content = data.description
+	link = ""
+	origin = "mooqita"
+	job_id = null
+
+	Meteor.call "make_challenge", title, content, link, origin, job_id,
+		(err, res) ->
+			if err
+				sAlert.error("Error creating your challenge: " + err)
+				return
+
+			query =
+				challenge_id: res
+			FlowRouter.go(build_url("challenge_design", query))
+
+
 ################################################################################
-Template.onboarding_candidates.onCreated () ->
+Template.onboarding_job_tier.onCreated () ->
 	self = this
-	self.autorun () ->
-		mod =
-			fields:
-				_id:1
-				ids:1
-				cb:1
 
-		matches = Matches.find({}, mod).fetch()
-		Meteor.subscribe("user_resumes_by_matched_challenges", matches)
+	self.autorun () ->
+		user_id = Meteor.userId()
+		if user_id
+			_on_login(null)
 
 
 ################################################################################
-Template.onboarding_candidates.helpers
-	candidates: () ->
-		return UserResumes.find()
+Template.onboarding_job_tier.events
+	"click .register-button": () ->
+		if not Meteor.user()
+			Modal.show 'onboarding_job_register'
 
 
+################################################################################
+Template.onboarding_job_register.onCreated () ->
+	AccountsTemplates.setState("signUp")
 
 
+################################################################################
+Template.onboarding_job_register.onDestroyed () ->
+	AccountsTemplates.setState("signIn")

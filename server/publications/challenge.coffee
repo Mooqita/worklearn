@@ -22,6 +22,7 @@ _challenge_fields =
 	job_ids: 1
 	pined: 1
 	discoverable: 1
+	self_service: 1
 
 ###############################################################################
 # challenges

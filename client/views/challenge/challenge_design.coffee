@@ -83,18 +83,25 @@ Template.challenge_preview.helpers
 ###############################################################################
 Template.challenge_design.onCreated ->
 	self = this
+	self.main_template = new ReactiveVar("self_design")
 	self.send_disabled = new ReactiveVar(false)
+	self.item_id = null
 
 	self.autorun () ->
-		id = FlowRouter.getQueryParam("challenge_id")
-		self.subscribe("my_challenge_by_id", id)
+		self.item_id = FlowRouter.getQueryParam("challenge_id")
+		self.subscribe("my_challenge_by_id", self.item_id)
 
 
 ###############################################################################
 Template.challenge_design.helpers
+	main_template: () ->
+		inst = Template.instance()
+		return inst.main_template.get()
+
 	challenge: () ->
-		id = FlowRouter.getQueryParam("challenge_id")
-		return Challenges.findOne id
+		inst = Template.instance()
+		obj = Challenges.findOne inst.item_id
+		return obj
 
 	send_disabled: () ->
 		if Template.instance().send_disabled.get()
@@ -121,6 +128,13 @@ Template.challenge_design.helpers
 
 ###############################################################################
 Template.challenge_design.events
+	"click .menu-main-item": (e, t) ->
+		inst = Template.instance()
+		template = e.target.id
+		console.log(template)
+		inst.main_template.set(template)
+
+
 	"click #icon_download": (e, n)->
 		if document.selection
 			range = document.body.createTextRange()

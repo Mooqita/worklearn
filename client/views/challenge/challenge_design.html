@@ -89,170 +89,230 @@
 |
 -------------------------------------------------->
 <template name="challenge_design">
-	{{#mooqita_wide_spacing}}
-		{{#unless Template.subscriptionsReady}}
-			{{>wait}}
-		{{else}}
-			{{#with challenge}}
-				<div class="padding-top">
-					{{#unless g_is_public "Challenges"}}
-						<div class="alert alert-warning">
-							<h2>Todo List: Challenge</h2>
+	{{#mooqita_with_sidebar}}
+		{{#mooqita_sidebar}}
+			<ul class="nav nav-stacked" style="width:100%; padding-top: 45px; margin: 0px">
+				<li role="presentation">
+					<a class="navigation-button control-navigate menu-main-item"
+						 id="basic_design">
+						Settings
+					</a>
+				</li>
 
-							A summary of things you need to do before learners can see your challenge:
-							<ul>
-								{{#unless title}}
-									<li>Give your task a title (required)</li>
-								{{/unless}}
-
-								{{#unless content}}
-									<li>Provide a description of the task(required)</li>
-								{{/unless}}
-
-								{{#unless num_reviews}}
-									<li>Define how many reviews learners have to write to finish the task</li>
-								{{/unless}}
-
-								{{#unless link}}
-									<li>Add a link to the challenge context or project (optional)</li>
-								{{/unless}}
-
-								{{#unless material}}
-									<li>Add additional materials (optional)</li>
-								{{/unless}}
-
-								{{#unless g_is_saved "Challenges"}}
-									<li>Save it!</li>
-								{{/unless}}
-
-								<li>Publish your solution you find the button below.</li>
-							</ul>
-						</div>
-					{{/unless}}
-				</div>
-
-				{{#if g_is_public "challenges"}}
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon btn-theme">
-								Shareable link:
-							</div>
-
-							<div class="form-control"
-									 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
-									 id="challenge_url">
-								<div style="white-space:nowrap">
-									{{g_build_url "solution" (g_object challenge_id=_id) "app"}}
-								</div>
-							</div>
-
-							<div class="input-group-btn" id="icon_download" title="select the entire url">
-								<button type="button" class="btn btn-theme">
-									<span class="glyphicon glyphicon-download"></span>
-								</button>
-							</div>
-						</div>
-					</div>
-				{{else}}
-					<span class="badge background-contrast ready-badge">
-						Not yet public
-					</span>
+				{{#if self_service}}
+					<li role="presentation">
+						<a class="navigation-button control-navigate menu-main-item"
+							 id="self_design">
+							Edit
+						</a>
+					</li>
 				{{/if}}
 
-				<h1 class="editable">
-					{{>basic_input method="set_field" collection_name="challenges"
-							item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
-				</h1>
+				<li role="presentation">
+					<a class="navigation-button control-navigate menu-main-item"
+						 id="message_candidates">
+						Message
+					</a>
+				</li>
 
-				<div class="form-group">
-					{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
-														field="content" placeholder="In this challenge you will ..."}}
+				<li role="presentation">
+					<a class="navigation-button control-navigate menu-main-item"
+						 id="challenge_solutions">
+						Candidates
+					</a>
+				</li>
+			</ul>
+		{{/mooqita_sidebar}}
+
+		{{#mooqita_main}}
+			{{#unless Template.subscriptionsReady}}
+				{{>wait}}
+			{{else}}
+				<div style="padding-top: 45px">
+					{{>Template.dynamic template=main_template data=challenge}}
 				</div>
+			{{/unless}}
+		{{/mooqita_main}}
+	{{/mooqita_with_sidebar}}
+</template>
 
-				<div class="form-group">
-					{{>basic_input method="set_field" collection_name="Challenges"
-							type="number" field="num_reviews"	label="Number of reviews required"
-							item_id=_id explain="The number of reviews a learner has to provide."
-							placeholder="Number of reviews required."}}
+
+<template name="basic_design">
+	<h1>Basic Challenge Settings</h1>
+
+	<p>
+		Let us know some basics about your plans with this challenge
+	</p>
+
+	{{>text_input method="set_field" collection_name="challenges"
+			field="content" label="Let us know what you want to learn about your candidates with this challenge."
+			item_id=_id placeholder="Challenge description"}}
+
+	{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
+									 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
+
+	{{>toggle_button collection_name="Challenges" item_id=_id field="self_service"
+			label="Design my challenge"
+			explain="We design the challenge for you. This normally takes only one or two days."}}
+
+</template>
+
+
+<template name="message_candidates">
+	<h1>Write your candidates</h1>
+
+	<p>If you need to get in touch with your learners you can use this message system.</p>
+
+	<div class="form-group">
+		<div class="input-group">
+			<input placeholder="Subject" class="form-control" type="text" id="subject"/>
+
+			<div class="input-group-btn" id="icon_download" title="select the entire url">
+				<div class="btn btn-theme" id="send" {{send_disabled}}>
+					{{#if send_disabled}}
+						Sending mail
+						<span class="glyphicon glyphicon-refresh spin"></span>
+					{{else}}
+						Send Message
+					{{/if}}
 				</div>
+			</div>
+		</div>
+	</div>
 
-				<!-- TODO: make sure that the link gets displayed if present in db -->
-				<div class="form-group">
-						{{>basic_input method="set_field" collection_name="challenges"
-										field="link" label="Challenge or project link"
-										item_id=_id placeholder="Link that contextualizes the challenge."}}
-				</div>
+	<div class="form-group">
+		<textarea  class="form-control"
+							 placeholder="Your message"
+							 id="message" rows="8"></textarea>
+	</div>
+</template>
 
-				<div class="form-group">
-					<div class="input-group" style="width: 100%;">
-						<label>Upload additional material</label>
 
-						{{>upload method="upload_file" collection_name="Challenges"
-							item_id=_id field="material"}}
-					</div>
-				</div>
+<template name="self_design">
+	{{#unless g_is_public "Challenges"}}
+		<div class="alert alert-warning">
+			<h2>Todo List: Challenge</h2>
 
-				{{#if material}}
-					<div class="input-group" style="width: 100%;">
-						<label>Download Additional material:</label>
-
-						{{>download collection_name="Challenges" item_id=_id field="material"}}
-					</div>
-				{{/if}}
-
-				{{#unless g_is_public "Challenges"}}
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" id="save">Save</div>
-							</span>
-						</div>
-
-						<div class="form-group col-sm-6">
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" {{publish_disabled}}
-										 id="publish">Make public</div>
-							</span>
-						</div>
-					</div>
+			A summary of things you need to do before learners can see your challenge:
+			<ul>
+				{{#unless title}}
+					<li>Give your task a title (required)</li>
 				{{/unless}}
 
-				{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
-												 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
+				{{#unless content}}
+					<li>Provide a description of the task(required)</li>
+				{{/unless}}
 
-				<h1>Message Learners</h1>
+				{{#unless num_reviews}}
+					<li>Define how many reviews learners have to write to finish the task</li>
+				{{/unless}}
 
-				<p>If you need to get in touch with your learners you can use this message system.</p>
+				{{#unless link}}
+					<li>Add a link to the challenge context or project (optional)</li>
+				{{/unless}}
 
-				<div class="form-group">
-					<div class="input-group">
-						<input placeholder="Subject" class="form-control" type="text" id="subject"/>
+				{{#unless material}}
+					<li>Add additional materials (optional)</li>
+				{{/unless}}
 
-						<div class="input-group-btn" id="icon_download" title="select the entire url">
-							<div class="btn btn-theme" id="send" {{send_disabled}}>
-								{{#if send_disabled}}
-									Sending mail
-									<span class="glyphicon glyphicon-refresh spin"></span>
-								{{else}}
-									Send Message
-								{{/if}}
-							</div>
-						</div>
+				{{#unless g_is_saved "Challenges"}}
+					<li>Save it!</li>
+				{{/unless}}
+
+				<li>Publish your solution you find the button below.</li>
+			</ul>
+		</div>
+	{{/unless}}
+
+	{{#if g_is_public "challenges"}}
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon btn-theme">
+					Shareable link:
+				</div>
+
+				<div class="form-control"
+						 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
+						 id="challenge_url">
+					<div style="white-space:nowrap">
+						{{g_build_url "solution" (g_object challenge_id=_id) "app"}}
 					</div>
 				</div>
 
-				<div class="form-group">
-					<textarea  class="form-control"
-										 placeholder="Your message"
-										 id="message" rows="8"></textarea>
+				<div class="input-group-btn" id="icon_download" title="select the entire url">
+					<button type="button" class="btn btn-theme">
+						<span class="glyphicon glyphicon-download"></span>
+					</button>
 				</div>
+			</div>
+		</div>
+	{{else}}
+		<span class="badge background-contrast ready-badge">
+			Not yet public
+		</span>
+	{{/if}}
 
-				{{#if g_is_public "Challenges"}}
-					{{>challenge_solutions .}}
-				{{/if}}
-			{{/with}}
-		{{/unless}}
-	{{/mooqita_wide_spacing}}
+	<h1 class="editable">
+		{{>basic_input method="set_field" collection_name="challenges"
+				item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
+	</h1>
+
+	<div class="form-group">
+		{{>markdown_input method="set_field" collection_name="Challenges" item_id=_id
+											field="content" placeholder="In this challenge you will ..."}}
+	</div>
+
+	<div class="form-group">
+		{{>basic_input method="set_field" collection_name="Challenges"
+				type="number" field="num_reviews"	label="Number of reviews required"
+				item_id=_id explain="The number of reviews a learner has to provide."
+				placeholder="Number of reviews required."}}
+	</div>
+
+	<!-- TODO: make sure that the link gets displayed if present in db -->
+	<div class="form-group">
+		{{>basic_input method="set_field" collection_name="challenges"
+						field="link" label="Challenge or project link"
+						item_id=_id placeholder="Link that contextualizes the challenge."}}
+	</div>
+
+	<div class="form-group">
+		<div class="input-group" style="width: 100%;">
+			<label>Upload additional material</label>
+
+			{{>upload method="upload_file" collection_name="Challenges"
+				item_id=_id field="material"}}
+		</div>
+	</div>
+
+	{{#if material}}
+		<div class="input-group" style="width: 100%;">
+			<label>Download Additional material:</label>
+
+			{{>download collection_name="Challenges" item_id=_id field="material"}}
+		</div>
+	{{/if}}
+
+	{{#unless g_is_public "Challenges"}}
+		<div class="row">
+			<div class="form-group col-sm-6">
+				<span class="btn-group btn-group-justified">
+					<div class="btn btn-theme" id="save">Save</div>
+				</span>
+			</div>
+
+			<div class="form-group col-sm-6">
+				<span class="btn-group btn-group-justified">
+					<div class="btn btn-theme" {{publish_disabled}}
+							 id="publish">Make public</div>
+				</span>
+			</div>
+		</div>
+	{{/unless}}
+
+	{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
+									 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
+
 </template>
 
 

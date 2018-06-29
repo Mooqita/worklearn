@@ -28,7 +28,7 @@
 	return res
 
 ###############################################
-@bake_challenge = (user,title,content,link,origin,job_id) ->
+@bake_challenge = (user, title, content, link, origin, job_id) ->
 	challenge =
 		num_reviews: 2
 		title: title
@@ -55,7 +55,6 @@
 		tmp_challenge_ids = []
 
 	tmp_challenge_ids.push(res)
-
 	modify_field_unprotected Jobs, job_id, "challenge_ids", tmp_challenge_ids
 
 	return res
