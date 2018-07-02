@@ -297,7 +297,17 @@
 		</div>
 	</div>
 
-	<form style="padding-top: 15px">
+	<div style="padding-top: 15px">
+		<div class="form-group">
+			{{#if promo}}
+				<label>Used Promotion Code</label>
+				<div class="form-control">{{promo}}</div>
+			{{else}}
+				{{>basic_input label="Promotion Code" collection_name="challenges" item_id=_id field="promo"
+						placeholder="SKYDECK"	explain="Enter your promotion code."}}
+			{{/if}}
+		</div>
+
 		<div class="form-group">
 			{{>toggle_button collection_name="Challenges"
 					item_id=_id field="no_solution_notification" label="Stop notifications"
@@ -317,7 +327,7 @@
 						explain="In case you want us to help you design the challenge check this box."}}
 			</div>
 		{{/if}}
-	</form>
+	</div>
 </template>
 
 
@@ -390,8 +400,8 @@
 		<a href="mailto:info@mooqita.com?Subject=Challenge%20description%20help">support team</a>.
 	</p>
 
-	{{>text_input method="set_field" collection_name="challenges"
-			field="description" item_id=_id rows=8 placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
+	{{>text_input collection_name="challenges" field="description" item_id=_id rows=8
+			placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
 </template>
 
 
@@ -425,8 +435,8 @@
 
 <template name="self_design">
 	<h1 class="editable" style="padding-top: 5px">
-		{{>basic_input method="set_field" collection_name="challenges"
-				item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
+		{{>basic_input collection_name="challenges" item_id=_id field="title"
+				placeholder="Click: to give your challenge a title."}}
 	</h1>
 
 	<div class="form-group">

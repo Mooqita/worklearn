@@ -35,6 +35,7 @@ _challenge_fields =
 	contributor: 1
 	description: 1
 	# system set TODO: should not be in here
+	promo: 1
 	pined: 1
 	requested: 1
 	discoverable: 1
