@@ -37,11 +37,12 @@
 	solution = Solutions.findOne solution._id
 
 	request_review solution, user
+	send_solution_message(solution)
+
+	#TODO: inform people on the waiting list for reviews.
 
 	msg = "Solution (" + solution._id + ") published by: " + get_user_mail user
 	log_event msg, event_logic, event_info
-
-	#TODO: inform people on the waiting list for reviews.
 
 	return solution._id
 

@@ -1,4 +1,7 @@
-###############################################
+###############################################################################
+Email = require('meteor/email').Email
+
+###############################################################################
 @send_message_mail = (user, subject, body) ->
 	msg = "@send_message_mail trying to send mail message"
 	log_event msg, event_mail, event_info
@@ -22,7 +25,7 @@
 		send_mail to, subject, body
 
 
-###############################################
+###############################################################################
 @send_mail = (to, subject, text) ->
 	from = "no-reply@mooqita.org"
 

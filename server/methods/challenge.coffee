@@ -6,6 +6,26 @@
 
 ###############################################
 Meteor.methods
+	request_challenge: (challenge_id) ->
+		check(challenge_id, String)
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		challenge_owner_id = get_document_owner(Challenges, challenge_id)
+		if not (challenge_owner_id == user._id)
+			throw new Meteor.Error('Not permitted.')
+
+		subject = "Challenge design request" + challenge_id
+		url = build_url("challenge_design", {challenge_id: challenge_id}, "app", true)
+		send_mail("markus@mooqita.com", subject, url)
+
+		modify_field_unprotected(Challenges, challenge_id, "requested", true, user)
+
+		return true
+
+
 	add_challenge: (job_id) ->
 		check(job_id, Match.Optional(String))
 		user = Meteor.user()
@@ -14,6 +34,16 @@ Meteor.methods
 			throw new Meteor.Error('Not permitted.')
 
 		return gen_challenge user, job_id
+
+
+	add_challenge_from_data: (data) ->
+		check(data, Match.Optional(match_obj))
+		user = Meteor.user()
+
+		if not user
+			throw new Meteor.Error('Not permitted.')
+
+		return gen_challenge_from_data user, data
 
 
 	make_challenge: (title, content, link, origin, job_id) ->

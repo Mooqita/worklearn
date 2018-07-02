@@ -57,8 +57,6 @@ Template.registerHelper "g_rating_options", () ->
 
 ########################################################
 Template.registerHelper "g_value", (data) ->
-	context =
-		data: data.hash
-
+	context = data.hash
 	return get_form_value(context)
 

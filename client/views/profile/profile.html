@@ -159,17 +159,29 @@
 				<p>
 					Please describe where you would like to be in 5 years from now. The more
 					honest you are the easier it is for our AI to find a team you love working
-					with. This text will not be shown to potential employers or shared in any
-					way.
+					with. This text will not be shared with anyone else.
 				</p>
 				{{>text_input method="set_field" collection_name="Profiles"
 						item_id=g_profile._id field="resume"
 						placeholder="Tell us a little more about you."}}
 			{{/if}}
 		{{/with}}
-	{{/mooqita_wide_spacing}}
 
-	{{>all_my_data}}
+		<div class="padding-top">
+			<h1>Your Data</h1>
+
+			<p>
+				We have some data about you and you have the right to know what we know.
+				This page shows you all the data that is connected to your account.
+			</p>
+
+			<div class="text-right">
+				<span class="btn-group">
+					<a class="btn btn-theme" href="all_my_data">Show me</a>
+				</span>
+			</div>
+		</div>
+	{{/mooqita_wide_spacing}}
 </template>
 
 

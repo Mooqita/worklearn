@@ -212,6 +212,7 @@ _test_challenge = (title, designer) ->
 	modify_field_unprotected Challenges, challenge_id, "title", title
 	modify_field_unprotected Challenges, challenge_id, "content", content
 	modify_field_unprotected Challenges, challenge_id, "test_object", true
+	modify_field_unprotected Challenges, challenge_id, "discoverable", true
 
 	#TODO: add test for material
 

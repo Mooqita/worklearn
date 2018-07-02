@@ -7,7 +7,7 @@
 	{{#mooqita_wide_spacing}}
 		<div class="item-set padding-top">
 			<h1>
-				Challenges you designed
+				Challenges
 				<div class="btn-group pull-right">
 					<div class="btn btn-theme"
 							 style="min-width: 40px;"
@@ -29,7 +29,7 @@
 			</h1>
 
 			<p class="padding-next">
-				Here you can find all the challenges you created from scratch or using a template.
+				Here you can find all your challenges.
 			</p>
 
 			{{#paging subscription="my_challenges" page=0 count=10
@@ -90,78 +90,270 @@
 -------------------------------------------------->
 <template name="challenge_design">
 	{{#mooqita_with_sidebar}}
-		{{#mooqita_sidebar}}
-			<ul class="nav nav-stacked" style="width:100%; padding-top: 45px; margin: 0px">
-				<li role="presentation">
-					<a class="navigation-button control-navigate menu-main-item"
-						 id="basic_design">
-						Settings
-					</a>
-				</li>
-
-				{{#if self_service}}
+		<div class="col-xs-12">
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right" style="padding: 10px 0px;">
 					<li role="presentation">
 						<a class="navigation-button control-navigate menu-main-item"
-							 id="self_design">
-							Edit
+							 id="challenge_settings">
+							Settings
 						</a>
 					</li>
-				{{/if}}
 
-				<li role="presentation">
-					<a class="navigation-button control-navigate menu-main-item"
-						 id="message_candidates">
-						Message
-					</a>
-				</li>
+					<li role="presentation">
+						<a class="navigation-button control-navigate menu-main-item"
+							 id="challenge_role">
+							Role
+						</a>
+					</li>
 
-				<li role="presentation">
-					<a class="navigation-button control-navigate menu-main-item"
-						 id="challenge_solutions">
-						Candidates
-					</a>
-				</li>
-			</ul>
-		{{/mooqita_sidebar}}
+					<li role="presentation">
+						<a class="navigation-button control-navigate menu-main-item"
+							 id="challenge_competencies">
+							Competencies
+						</a>
+					</li>
 
-		{{#mooqita_main}}
-			{{#unless Template.subscriptionsReady}}
-				{{>wait}}
-			{{else}}
-				<div style="padding-top: 45px">
-					{{>Template.dynamic template=main_template data=challenge}}
-				</div>
-			{{/unless}}
-		{{/mooqita_main}}
+					{{#if challenge.self_service}}
+						<li role="presentation">
+							<a class="navigation-button control-navigate menu-main-item"
+								 id="self_design">
+								Edit
+							</a>
+						</li>
+					{{else}}
+						<li role="presentation">
+							<a class="navigation-button control-navigate menu-main-item"
+								 id="mooqita_design">
+								Description
+							</a>
+						</li>
+
+						<li role="presentation">
+							<a class="navigation-button control-navigate menu-main-item"
+								 id="challenge_review">
+								Challenge
+							</a>
+						</li>
+					{{/if}}
+
+					<li role="presentation">
+						<a class="navigation-button control-navigate menu-main-item"
+							 id="challenge_solutions">
+							Candidates
+						</a>
+					</li>
+
+					{{#if has_solutions}}
+						<li role="presentation">
+							<a class="navigation-button control-navigate menu-main-item"
+								 id="message_candidates">
+								Message
+							</a>
+						</li>
+					{{/if}}
+				</ul>
+			</div>
+		</div>
+
+		{{#unless Template.subscriptionsReady}}
+			{{>wait}}
+		{{else}}
+			{{#mooqita_sidebar}}
+				{{#with challenge}}
+					{{> challenge_todo_list}}
+				{{/with}}
+			{{/mooqita_sidebar}}
+
+			{{#mooqita_main}}
+				{{>Template.dynamic template=main_template data=challenge}}
+			{{/mooqita_main}}
+		{{/unless}}
 	{{/mooqita_with_sidebar}}
 </template>
 
 
-<template name="basic_design">
-	<h1>Basic Challenge Settings</h1>
+<template name="challenge_todo_list">
+	<div class="alert {{theme}}" style="margin: 5px;">
+		<h2 style="	padding: 0px; margin: 0px 0px 10px 0px;">
+			Todo List: Challenge
+		</h2>
 
-	<p>
-		Let us know some basics about your plans with this challenge
+		{{#if self_service}}
+			A summary of things you need to do before publishing your challenge:
+
+			<ul>
+				{{#unless title}}
+					<li>Give your challenge a title (required).</li>
+				{{/unless}}
+
+				{{#unless content}}
+					<li>Provide a description of the challenge (required).</li>
+				{{/unless}}
+
+				{{#unless num_reviews}}
+					<li>Define how many reviews learners have to write to finish the challenge.</li>
+				{{/unless}}
+
+				{{#unless link}}
+					<li>Add a link to the challenge context or project (optional).</li>
+				{{/unless}}
+
+				{{#unless material}}
+					<li>Add additional materials (optional).</li>
+				{{/unless}}
+
+				{{#unless g_is_saved "Challenges"}}
+					<li>Save it!</li>
+				{{/unless}}
+			</ul>
+		{{else}}
+			{{#unless self_service}}
+				{{#if is_publishable}}
+					<p>
+						Your challenge is ready! If you are ready publish it.
+					</p>
+				{{else}}
+					{{#if requested}}
+						<p>
+							Nothing much for you to do right now.
+							We let you know once your challenge is ready.
+						</p>
+					{{else}}
+						<ul>
+							{{#unless description}}
+								<li>Please give us a short description of the challenge you want (required).</li>
+							{{/unless}}
+
+							{{#unless role}}
+								<li>Let us know which role your candidate will fill (required).</li>
+							{{/unless}}
+						</ul>
+						{{#unless requested}}
+							<p class="padding-next">
+								If you think you have all information for us just click the
+								request button below and one of our challenge designer will
+								take care of the rest.
+							</p>
+
+							<span class="btn-group btn-group-justified">
+								<div class="btn btn-theme" {{request_disabled}}
+										 id="request">Request Challenge</div>
+							</span>
+						{{/unless}}
+					{{/if}}
+				{{/if}}
+			{{/unless}}
+		{{/if}}
+
+		{{#if is_publishable}}
+			{{#if published}}
+				<h2>Congratulation your challenge is online</h2>
+				<p>
+					Share the link with your candidates and see how they perform.
+					You can monitor the progress under "Candidates".
+				</p>
+			{{else}}
+				<h2>You can now publish your challenge</h2>
+			{{/if}}
+		{{else}}
+			<h2>You can not yet publish your challenge</h2>
+		{{/if}}
+	</div>
+</template>
+
+
+<template name="challenge_settings">
+	<h1 style="padding-top: 5px">Basic Settings</h1>
+
+	<p style="padding-bottom: 10px;">
+		This is the link you can share with your candidates.
+		You can monitor their progress under "Candidates".
 	</p>
 
-	{{>text_input method="set_field" collection_name="challenges"
-			field="content" label="Let us know what you want to learn about your candidates with this challenge."
-			item_id=_id placeholder="Challenge description"}}
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon btn-theme">
+				Shareable link:
+			</div>
 
-	{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
-									 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
+			<div class="form-control"
+					 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
+					 id="challenge_url">
+				<div style="white-space:nowrap">
+					{{#if g_is_public "challenges"}}
+						{{g_build_url "solution" (g_object challenge_id=_id) "app"}}
+					{{else}}
+						Not yet public
+					{{/if}}
+				</div>
+			</div>
 
-	{{>toggle_button collection_name="Challenges" item_id=_id field="self_service"
-			label="Design my challenge"
-			explain="We design the challenge for you. This normally takes only one or two days."}}
+			<div class="input-group-btn" id="icon_download" title="select the entire url">
+				<button type="button" class="btn btn-theme">
+					<span class="glyphicon glyphicon-download"></span>
+				</button>
+			</div>
+		</div>
+	</div>
 
+	<form style="padding-top: 15px">
+		<div class="form-group">
+			{{>toggle_button collection_name="Challenges"
+					item_id=_id field="no_solution_notification" label="Stop notifications"
+					explain="In case you do want to receive email notifications about candidates."}}
+		</div>
+
+		<div class="form-group">
+			{{>toggle_button collection_name="Challenges"
+					item_id=_id field="self_service" label="Do it yourself"
+					explain="In case you want to design the challenge yourself check this box."}}
+		</div>
+
+		{{#if self_service}}
+			<div class="form-group">
+				{{>toggle_button collection_name="Challenges"
+						item_id=_id field="self_service_help" label="Design support"
+						explain="In case you want us to help you design the challenge check this box."}}
+			</div>
+		{{/if}}
+	</form>
+</template>
+
+
+<template name="challenge_role">
+	<h1 style="padding-top: 5px">Role</h1>
+
+	<p>
+		The role your candidate is supposed to fill will help us to reach right
+		candidates and help you designing your challenge.
+	</p>
+
+	{{>job_role collection_name="challenges" item_id=_id field="role"}}
+</template>
+
+
+<template name="challenge_competencies">
+	<h1 style="padding-top: 5px">Competencies</h1>
+
+	<p>
+		Finding the candidate with the right skill set is important.
+		However, Mooqita can do more for you. We can help you find the person
+		that will complement your teams social fabric. Select any number of
+		competencies you deem important for candidates for this job posting.
+	</p>
+
+	{{>job_competency collection_name="challenges" item_id=_id}}
 </template>
 
 
 <template name="message_candidates">
-	<h1>Write your candidates</h1>
+	<h1 style="padding-top: 5px">Write your candidates</h1>
 
-	<p>If you need to get in touch with your learners you can use this message system.</p>
+	<p>
+		If you need to get in touch with your learners
+		you can use this message system.
+	</p>
 
 	<div class="form-group">
 		<div class="input-group">
@@ -188,71 +380,51 @@
 </template>
 
 
-<template name="self_design">
-	{{#unless g_is_public "Challenges"}}
-		<div class="alert alert-warning">
-			<h2>Todo List: Challenge</h2>
+<template name="mooqita_design">
+	<h1 style="padding-top: 5px">Challenge Description</h1>
 
-			A summary of things you need to do before learners can see your challenge:
-			<ul>
-				{{#unless title}}
-					<li>Give your task a title (required)</li>
-				{{/unless}}
+	<p>
+		Let us know what you want to learn about your candidates with this challenge.
+		You do not have to go into detail. We will get in touch with to you if necessary.
+		If you have any questions please contact our
+		<a href="mailto:info@mooqita.com?Subject=Challenge%20description%20help">support team</a>.
+	</p>
 
-				{{#unless content}}
-					<li>Provide a description of the task(required)</li>
-				{{/unless}}
+	{{>text_input method="set_field" collection_name="challenges"
+			field="description" item_id=_id rows=8 placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
+</template>
 
-				{{#unless num_reviews}}
-					<li>Define how many reviews learners have to write to finish the task</li>
-				{{/unless}}
 
-				{{#unless link}}
-					<li>Add a link to the challenge context or project (optional)</li>
-				{{/unless}}
+<template name="challenge_review">
+	<h1 style="padding-top: 5px">The challenge</h1>
 
-				{{#unless material}}
-					<li>Add additional materials (optional)</li>
-				{{/unless}}
+	<p>
+		This is the challenge to to share with your candidates.
+		To publish the challenge and share it with your candidates.
+		click on "Settings".
+	</p>
 
-				{{#unless g_is_saved "Challenges"}}
-					<li>Save it!</li>
-				{{/unless}}
+	{{#if g_value collection_name="challenges" field="content" item_id=_id}}
+		<h1>
+			{{{g_value collection_name="challenges" field="title" item_id=_id}}}
+		</h1>
 
-				<li>Publish your solution you find the button below.</li>
-			</ul>
-		</div>
-	{{/unless}}
-
-	{{#if g_is_public "challenges"}}
-		<div class="form-group">
-			<div class="input-group">
-				<div class="input-group-addon btn-theme">
-					Shareable link:
-				</div>
-
-				<div class="form-control"
-						 style="background: #f5f5f5; overflow: hidden; min-height: 40.5px;"
-						 id="challenge_url">
-					<div style="white-space:nowrap">
-						{{g_build_url "solution" (g_object challenge_id=_id) "app"}}
-					</div>
-				</div>
-
-				<div class="input-group-btn" id="icon_download" title="select the entire url">
-					<button type="button" class="btn btn-theme">
-						<span class="glyphicon glyphicon-download"></span>
-					</button>
-				</div>
-			</div>
-		</div>
+		<p>
+			{{{g_value collection_name="challenges" field="content" item_id=_id}}}
+		</p>
 	{{else}}
-		<span class="badge background-contrast ready-badge">
-			Not yet public
-		</span>
+		<div class="alert alert-theme">
+			Your challenge is not yet ready. We expect your challenge
+			to be ready within two work days. If you have any questions.
+			Please contact our
+			<a href="mailto:info@mooqita.com?Subject=Mooqita%20designed%20challenge%20question">team</a>.
+		</div>
 	{{/if}}
+</template>
 
-	<h1 class="editable">
+
+<template name="self_design">
+	<h1 class="editable" style="padding-top: 5px">
 		{{>basic_input method="set_field" collection_name="challenges"
 				item_id=_id field="title" placeholder="Click: to give your challenge a title."}}
 	</h1>
@@ -295,24 +467,13 @@
 
 	{{#unless g_is_public "Challenges"}}
 		<div class="row">
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-offset-6 col-sm-6">
 				<span class="btn-group btn-group-justified">
 					<div class="btn btn-theme" id="save">Save</div>
 				</span>
 			</div>
-
-			<div class="form-group col-sm-6">
-				<span class="btn-group btn-group-justified">
-					<div class="btn btn-theme" {{publish_disabled}}
-							 id="publish">Make public</div>
-				</span>
-			</div>
 		</div>
 	{{/unless}}
-
-	{{>toggle_button collection_name="Challenges" item_id=_id field="discoverable" label="Make discoverable"
-									 explain="This makes the challenge discoverable through the mooqita interface for students all around the world"}}
-
 </template>
 
 
@@ -322,7 +483,7 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	<h1>Solutions</h1>
+	<h1>Candidates</h1>
 
 	<p>These are solutions your learner submitted so far.</p>
 

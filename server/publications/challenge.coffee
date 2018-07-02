@@ -11,18 +11,33 @@
 
 ###############################################################################
 _challenge_fields =
-	title: 1
-	content: 1
-	material: 1
 	published: 1
-	num_reviews: 1
-	created: 1
+	# client
 	link: 1
+	title: 1
 	origin: 1
 	job_ids: 1
-	pined: 1
-	discoverable: 1
+	content: 1
+	created: 1
+	material: 1
+	concepts: 1
+	num_reviews: 1
 	self_service: 1
+	self_service_help: 1
+	no_solution_notification: 1
+	# client to designer
+	role: 1
+	idea: 1
+	team: 1
+	social: 1
+	process: 1
+	strategic: 1
+	contributor: 1
+	description: 1
+	# system set TODO: should not be in here
+	pined: 1
+	requested: 1
+	discoverable: 1
 
 ###############################################################################
 # challenges
@@ -41,7 +56,7 @@ Meteor.publish "challenges", (parameter) ->
 	user_id = this.userId
 	filter =
 		published: true
-		discoverable: 1
+		discoverable: true
 
 	mod =
 		fields: _challenge_fields

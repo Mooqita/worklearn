@@ -1,4 +1,4 @@
-###############################################
+###############################################################################
 @gen_message = (user, title, message, url) ->
 	#save message
 	msg =
@@ -12,12 +12,45 @@
 	return m_id
 
 
-###############################################
+###############################################################################
 @finish_message = (message_id) ->
 	return modify_field_unprotected Messages, message_id, "seen", true
 
 
-###############################################
+###############################################################################
+@send_solution_message = (solution) ->
+	challenge = Challenges.findOne solution.challenge_id
+	challenge_owner_id = get_document_owner Challenges, challenge
+	challenge_profile = get_profile challenge_owner_id
+	challenge_name = get_profile_name challenge_profile, true
+
+	solution_owner_id = get_document_owner Solutions, solution
+	solution_profile = get_profile solution_owner_id
+	solution_name = get_profile_name solution_profile, true
+
+	subject = "Mooqita: " + solution_name + " submitted a solution for " + challenge.title
+	url = build_url "challenge_design", {challenge_id: challenge._id}, "app", true
+
+	body = "Hi " + challenge_name + ",\n\n"
+	body += "You received a new solution for your challenge: \n"
+	body += challenge.title + "\n\n"
+	body += "To check it out, follow this link: " + url + "\n\n"
+	body += "Kind regards, \n"
+	body += " Your Mooqita Team \n\n"
+
+	if not challenge.no_solution_notification
+		send_message_mail challenge_owner_id, subject, body
+
+	title = "New solution"
+	text = "You received a new solution from " + solution_name + " "
+	text += "For your challenge: " + challenge.title + " "
+
+	gen_message challenge_owner_id, title, text, url
+
+	return true
+
+
+###############################################################################
 @send_review_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	solution = Solutions.findOne review.solution_id
@@ -50,6 +83,7 @@
 	return true
 
 
+###############################################################################
 @send_review_timeout_message = (review) ->
 	challenge = Challenges.findOne review.challenge_id
 	owner_id = get_document_owner "reviews", review
@@ -85,7 +119,7 @@
 
 	return true
 
-###############################################
+###############################################################################
 @send_feedback_message = (feedback) ->
 	challenge = Challenges.findOne feedback.challenge_id
 	solution = Solutions.findOne feedback.solution_id

@@ -97,13 +97,8 @@ Template.onboarding_job_info.helpers
 
 _on_login = (res) ->
 	data = Session.get("onboarding_job_data")
-	title = "New challenge"
-	content = data.description
-	link = ""
-	origin = "mooqita"
-	job_id = null
 
-	Meteor.call "make_challenge", title, content, link, origin, job_id,
+	Meteor.call "add_challenge_from_data", data,
 		(err, res) ->
 			if err
 				sAlert.error("Error creating your challenge: " + err)

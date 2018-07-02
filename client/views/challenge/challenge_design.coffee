@@ -14,6 +14,17 @@ FlowRouter = require('meteor/ostrio:flow-router-extra').FlowRouter
 
 
 ###############################################################################
+_publishable = (challenge) ->
+	if not challenge.title
+		return false
+
+	if not challenge.content
+		return false
+
+	return true
+
+
+###############################################################################
 # organization challenges
 ###############################################################################
 
@@ -81,9 +92,88 @@ Template.challenge_preview.helpers
 ###############################################################################
 
 ###############################################################################
+# ChallengeTodo List
+###############################################################################
+
+###############################################################################
+Template.challenge_todo_list.helpers
+	theme: () ->
+		inst = Template.instance()
+		context = inst.data
+
+		if context.published
+			return "alert-contrast"
+
+		if _publishable(context)
+			return "alert-contrast"
+
+		return "alert-theme"
+
+	is_publishable: () ->
+		inst = Template.instance()
+		context = inst.data
+
+		if _publishable(context)
+			return true
+
+		return false
+
+	publish_disabled: () ->
+		inst = Template.instance()
+		context = inst.data
+		is_p = _publishable(context)
+
+		if context.published
+			return "disabled"
+
+		if is_p
+			return ""
+
+		return "disabled"
+
+
+###############################################################################
+Template.challenge_todo_list.events
+	"click #publish": (event) ->
+		if event.target.attributes.disabled
+			return
+
+		Meteor.call "finish_challenge", this._id,
+			(err, res) ->
+				if err
+					sAlert.error("Finish challenge error: " + err)
+				if res
+					sAlert.success "Challenge published!"
+
+	"click #request": (event) ->
+		if event.target.attributes.disabled
+			return
+
+		Meteor.call "request_challenge", this._id,
+			(err, res) ->
+				if err
+					sAlert.error("Finish challenge error: " + err)
+				if res
+					sAlert.success "Request send!"
+
+
+
+###############################################################################
+# Challenge settings
+###############################################################################
+
+###############################################################################
+Template.challenge_settings.helpers
+
+
+###############################################################################
+# Challenge design tool
+###############################################################################
+
+###############################################################################
 Template.challenge_design.onCreated ->
 	self = this
-	self.main_template = new ReactiveVar("self_design")
+	self.main_template = new ReactiveVar("challenge_settings")
 	self.send_disabled = new ReactiveVar(false)
 	self.item_id = null
 
@@ -108,24 +198,6 @@ Template.challenge_design.helpers
 			return "disabled"
 		return ""
 
-	publish_disabled: () ->
-		data = Template.currentData()
-
-		content = get_field_value data, "content", data._id, "Challenges"
-		if not content
-			return "disabled"
-
-		title = get_field_value data, "title", data._id, "Challenges"
-		if not title
-			return "disabled"
-
-		published = get_field_value data, "published", data._id, "Challenges"
-		if published
-			return "disabled"
-
-		return ""
-
-
 ###############################################################################
 Template.challenge_design.events
 	"click .menu-main-item": (e, t) ->
@@ -133,7 +205,6 @@ Template.challenge_design.events
 		template = e.target.id
 		console.log(template)
 		inst.main_template.set(template)
-
 
 	"click #icon_download": (e, n)->
 		if document.selection
@@ -149,18 +220,6 @@ Template.challenge_design.events
 			selection.addRange(range)
 
 		return true
-
-	"click #publish": (event)->
-		if event.target.attributes.disabled
-			return
-
-		Meteor.call "finish_challenge", this._id,
-			(err, res) ->
-				if err
-					sAlert.error("Finish challenge error: " + err)
-				if res
-					sAlert.success "Challenge published!"
-
 
 	"click #send": (event, template)->
 		if event.target.attributes.disabled

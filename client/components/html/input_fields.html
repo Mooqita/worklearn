@@ -35,8 +35,18 @@
 | Text Input using a TextArea
 ------------------------------------------------------------------------------>
 <template name="text_input">
-	<textarea  class="form-control edit-field" placeholder="{{placeholder}}"
-						 id="{{field}}" rows="{{rows}}">{{value}}</textarea>
+	{{#if label}}
+		<label for="{{field}}">{{label}}</label>
+	{{/if}}
+
+	<textarea  class="form-control edit-field" placeholder="{{placeholder}}" id="{{field}}"
+						 rows="{{rows}}" aria-describedby="{{field}}_explain">{{value}}</textarea>
+
+	{{#if explain}}
+		<small id="{{field}}_explain" class="form-text text-muted">
+			{{explain}}
+		</small>
+	{{/if}}
 </template>
 
 

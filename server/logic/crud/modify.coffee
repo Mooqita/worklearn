@@ -13,20 +13,7 @@
 	if not collection
 		throw new Meteor.Error "Collection undefined."
 
-	type = Match.OneOf String, Number, Boolean
-	array = [type]
-	obj = Match.Where (x) ->
-		l = Object.keys(x).length
-		if l > 1000
-			return false
-
-		for key, val of x
-			check key, String
-			check val, type
-
-		return true
-
-	check value, Match.OneOf type, array, obj
+	check value, Match.OneOf match_basic, match_array, match_obj
 	check item_id, String
 	check field, String
 
@@ -78,10 +65,8 @@
 	n = collection.update(id, mod)
 	collection_name = get_collection_name collection
 
-	msg = "[" + collection_name + "] "
-	msg += "[" + field + "] "
-	msg += "[" + id + "] "
-	msg += "set to [" + value.toString().substr(0, 30) + "]"
+	msg = collection_name + "." + id + "." + field
+	msg += " = " + value.toString().substr(0, 30)
 
 	log_event msg, event_db, event_edit
 	return n

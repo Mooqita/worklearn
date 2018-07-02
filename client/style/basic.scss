@@ -150,6 +150,7 @@ footer{
 	background-color: inherit;
 }
 
+
 ///////////////////////////////////////////////
 // More colors
 ////////////////////////////////////////////////
@@ -159,6 +160,15 @@ footer{
 	border-color: $theme;
 	background-color: $theme-15;
 	font-size: 16px;
+	color: $theme-dark;
+}
+
+////////////////////////////////////////////////
+.alert-contrast {
+	border-color: $contrast-on-theme;
+	background-color: $contrast-on-theme-15;
+	font-size: 16px;
+	color: $contrast-on-theme-dark;
 }
 
 

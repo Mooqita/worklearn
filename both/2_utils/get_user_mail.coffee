@@ -1,7 +1,12 @@
 _getEmailFromService = ( services ) ->
-	for service in services
-		current = services[ service ];
-		return service == if 'twitter' then current.screenName else current.email
+	for name, service of services
+		if name == 'twitter'
+			return service.screenName
+
+		if name == "linkedin"
+			return service.emailAddress
+
+		return service.email
 
 ###############################################
 @get_user_mail = (user) ->

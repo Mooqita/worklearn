@@ -1,7 +1,8 @@
-###############################################
+###############################################################################
 @gen_challenge = (user, job_id) ->
 	challenge =
 		num_reviews: 2
+		discoverable: true
 
 	if job_id
 		challenge.job_ids = [job_id]
@@ -27,7 +28,33 @@
 
 	return res
 
-###############################################
+
+###############################################################################
+@gen_challenge_from_data = (user, data) ->
+	check data, match_obj
+	challenge_id = gen_challenge(user, null)
+
+	if data.role
+		modify_field_unprotected Challenges, challenge_id, "role", data.role
+	if data.idea
+		modify_field_unprotected Challenges, challenge_id, "idea", data.idea
+	if data.team
+		modify_field_unprotected Challenges, challenge_id, "team", data.team
+	if data.social
+		modify_field_unprotected Challenges, challenge_id, "social", data.social
+	if data.process
+		modify_field_unprotected Challenges, challenge_id, "process", data.process
+	if data.strategic
+		modify_field_unprotected Challenges, challenge_id, "strategic", data.strategic
+	if data.contributor
+		modify_field_unprotected Challenges, challenge_id, "strategic", data.contributor
+	if data.description
+		modify_field_unprotected Challenges, challenge_id, "description", data.description
+
+	return challenge_id
+
+
+###############################################################################
 @bake_challenge = (user, title, content, link, origin, job_id) ->
 	challenge =
 		num_reviews: 2
@@ -59,7 +86,7 @@
 
 	return res
 
-###############################################
+###############################################################################
 @finish_challenge = (challenge, user) ->
 	modify_field_unprotected Challenges, challenge._id, "published", true
 	modify_field_unprotected Challenges, challenge._id, "visible_to", "anonymous"

@@ -63,11 +63,11 @@
 		console.log "collection_name is undefined"
 		return undefined
 
-	if not item_id = item_id
+	if not item_id
 		console.log "item_id is undefined"
 		return undefined
 
-	if not field = field
+	if not field
 		console.log "field is undefined"
 		return undefined
 
