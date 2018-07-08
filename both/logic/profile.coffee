@@ -17,7 +17,7 @@
 
 
 ###############################################
-@get_profile_name_by_user_id = (user, short = false, plus_id=true) ->
+@get_profile_name_by_user = (user, short = false, plus_id=true) ->
 	profile = get_profile user
 	return get_profile_name(profile, short, plus_id)
 

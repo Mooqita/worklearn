@@ -34,8 +34,9 @@
 	profile = get_profile user
 
 	if profile
-		resume.user_name = get_profile_name profile, false, false
+		resume.given_name = profile.given_name
 		resume.avatar = get_avatar(profile)
+		resume.resume = profile.resume
 
 	solution_list = []
 	solution_cursor = get_documents user, OWNER, Solutions, {published: true}

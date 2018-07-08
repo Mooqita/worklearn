@@ -17,8 +17,13 @@ Meteor.methods
 		if not (challenge_owner_id == user._id)
 			throw new Meteor.Error('Not permitted.')
 
-		subject = "Challenge design request" + challenge_id
 		url = build_url("challenge_design", {challenge_id: challenge_id}, "app", true)
+		mail = get_user_mail(user)
+		name = get_profile_name_by_user(user)
+		subject = "Challenge design request" + challenge_id
+
+		body = ""
+
 		send_mail("markus@mooqita.com", subject, url)
 
 		modify_field_unprotected(Challenges, challenge_id, "requested", true, user)
@@ -88,7 +93,7 @@ Meteor.methods
 
 		solutions.forEach (solution) ->
 			owner_id = get_document_owner "solutions", solution
-			name = get_profile_name_by_user_id owner_id, true, false
+			name = get_profile_name_by_user owner_id, true, false
 			subject =	subject.replace("<<name>>", name)
 			message =	message.replace("<<name>>", name)
 			send_mail user, subject, message

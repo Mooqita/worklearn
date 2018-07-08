@@ -28,7 +28,6 @@ Template.mooqita_menu.helpers
 		 items.push({name: "Solutions", href: build_url("solutions")})
 		 items.push({name: "Reviews", href: build_url("reviews")})
 		 items.push({name: "Portfolio", href: build_url("portfolio")})
-		 items.push({name: "Portfolio", href: build_url("portfolio")})
 
 		return items
 

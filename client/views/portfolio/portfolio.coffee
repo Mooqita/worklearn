@@ -22,7 +22,7 @@ Template.portfolio.onCreated () ->
 	self = this
 
 	self.autorun () ->
-		s_id = FlowRouter.getParam("user_id")
+		s_id = FlowRouter.getQueryParam("user_id")
 		if !s_id
 			s_id = Meteor.userId()
 		self.subscribe "user_resumes", s_id
@@ -43,6 +43,9 @@ Template.portfolio_solution.onCreated () ->
 
 ##############################################
 Template.portfolio_solution.helpers
+	shorten: (data) ->
+		return data.slice(0, 250)
+
 	average_rating: () ->
 		if this.average
 			return this.average

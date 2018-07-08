@@ -25,6 +25,17 @@ _publishable = (challenge) ->
 
 
 ###############################################################################
+_requestable = (challenge) ->
+	if not challenge.role
+		return false
+
+	if not challenge.description
+		return false
+
+	return true
+
+
+###############################################################################
 # organization challenges
 ###############################################################################
 
@@ -96,10 +107,18 @@ Template.challenge_preview.helpers
 ###############################################################################
 
 ###############################################################################
+Template.challenge_todo_list.onCreated () ->
+	this.requested = new ReactiveVar(false)
+
+
+###############################################################################
 Template.challenge_todo_list.helpers
 	theme: () ->
 		inst = Template.instance()
 		context = inst.data
+
+		if not context
+			return "alert-theme"
 
 		if context.published
 			return "alert-contrast"
@@ -131,6 +150,23 @@ Template.challenge_todo_list.helpers
 
 		return "disabled"
 
+	request_disabled: () ->
+		inst = Template.instance()
+		requested = inst.requested
+		if not requested
+			return "disabled"
+
+		if requested.get()
+			return "disabled"
+
+		context = inst.data
+		is_p = _requestable(context)
+
+		if is_p
+			return ""
+
+		return "disabled"
+
 
 ###############################################################################
 Template.challenge_todo_list.events
@@ -149,8 +185,13 @@ Template.challenge_todo_list.events
 		if event.target.attributes.disabled
 			return
 
+		inst = Template.instance()
+		inst.requested.set(true)
+
 		Meteor.call "request_challenge", this._id,
 			(err, res) ->
+				inst.requested.set(false)
+
 				if err
 					sAlert.error("Finish challenge error: " + err)
 				if res

@@ -55,11 +55,6 @@ Meteor.publish "my_profile", () ->
 Meteor.publish "user_resumes", (user_id) ->
 	if user_id
 		check user_id, String
-		if not has_role Profiles, WILDCARD, this.userId, ADMIN
-			if this.userId != user_id
-				profile = get_document user_id, "owner", Profiles
-				if profile.locale
-					throw new Meteor.Error("Not permitted.")
 
 	if !user_id
 		user_id = this.userId
@@ -68,9 +63,9 @@ Meteor.publish "user_resumes", (user_id) ->
 		throw new Meteor.Error("Not permitted.")
 
 	self = this
-	prepare_resume = () ->
+	prepare_resume = (user) ->
 		resume = gen_resume(user)
-		self.added("user_resumes", user_id, resume)
+		self.added("user_resumes", user._id, resume)
 
 	filter =
 		_id: user_id

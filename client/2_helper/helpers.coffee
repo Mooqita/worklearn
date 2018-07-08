@@ -20,8 +20,10 @@ Template.registerHelper "g_is_public", (collection_name, obj=null) ->
 	else
 		data = Template.currentData()
 
-	field_value = get_field_value data, "published", data._id, collection_name
+	if not data
+		return false
 
+	field_value = get_field_value data, "published", data._id, collection_name
 	if not field_value
 		return false
 

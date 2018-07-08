@@ -45,6 +45,7 @@ _add_admin = (email, password) ->
 
 		user = Accounts.createUser(user)
 		user = Accounts.findUserByEmail(email)
+		Roles.addUsersToRoles(user, "admin")
 
 	profile = get_profile user._id
 

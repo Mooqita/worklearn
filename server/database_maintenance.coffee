@@ -92,7 +92,7 @@ Meteor.methods
 		if not user
 			throw new Meteor.Error "Not permitted"
 
-		crs = get_my_admissions IGNORE, IGNORE, IGNORE
+		crs = get_my_admissions OWNER, IGNORE, IGNORE
 		log_publication crs, user._id, "my_admissions"
 
 		data = {}

@@ -75,7 +75,7 @@ FlowRouter.route "/help",
 		Session.set	"content_template", "mooqita_help"
 		Session.set	"footer_template", "mooqita_footer"
 
-		this.render "mooqita_help", {base_url:"help"}
+		this.render "body_template", {base_url:"help"}
 
 
 ###############################################################################

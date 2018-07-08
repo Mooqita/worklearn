@@ -104,6 +104,9 @@
 						<a class="navigation-button control-navigate menu-main-item"
 							 id="challenge_role">
 							Role
+							{{#unless challenge.role}}
+								<span class="fa fa-question-circle color-contrast"></span>
+							{{/unless}}
 						</a>
 					</li>
 
@@ -126,6 +129,9 @@
 							<a class="navigation-button control-navigate menu-main-item"
 								 id="mooqita_design">
 								Description
+								{{#unless challenge.description}}
+									<span class="fa fa-question-circle color-contrast"></span>
+								{{/unless}}
 							</a>
 						</li>
 
@@ -160,9 +166,7 @@
 			{{>wait}}
 		{{else}}
 			{{#mooqita_sidebar}}
-				{{#with challenge}}
-					{{> challenge_todo_list}}
-				{{/with}}
+				{{>challenge_todo_list challenge}}
 			{{/mooqita_sidebar}}
 
 			{{#mooqita_main}}
@@ -179,10 +183,17 @@
 			Todo List: Challenge
 		</h2>
 
-		{{#if self_service}}
-			A summary of things you need to do before publishing your challenge:
+		<p>
+			A summary of things you need to do before
+			publishing your challenge:
+		</p>
 
-			<ul>
+		<ul style="padding: 10px 0px 10px 15px;">
+			{{#unless promo}}
+				<li>Do not forget to use your promo code if you have one.</li>
+			{{/unless}}
+
+			{{#if self_service}}
 				{{#unless title}}
 					<li>Give your challenge a title (required).</li>
 				{{/unless}}
@@ -206,55 +217,61 @@
 				{{#unless g_is_saved "Challenges"}}
 					<li>Save it!</li>
 				{{/unless}}
-			</ul>
-		{{else}}
-			{{#unless self_service}}
-				{{#if is_publishable}}
-					<p>
-						Your challenge is ready! If you are ready publish it.
-					</p>
-				{{else}}
-					{{#if requested}}
-						<p>
-							Nothing much for you to do right now.
-							We let you know once your challenge is ready.
-						</p>
-					{{else}}
-						<ul>
-							{{#unless description}}
-								<li>Please give us a short description of the challenge you want (required).</li>
-							{{/unless}}
+			{{else}}
+				{{#unless requested}}
+					{{#unless description}}
+						<li>Please give us a short description of the challenge you want (required).</li>
+					{{/unless}}
 
-							{{#unless role}}
-								<li>Let us know which role your candidate will fill (required).</li>
-							{{/unless}}
-						</ul>
-						{{#unless requested}}
-							<p class="padding-next">
-								If you think you have all information for us just click the
-								request button below and one of our challenge designer will
-								take care of the rest.
-							</p>
+					{{#unless role}}
+						<li>Let us know which role your candidate will fill (required).</li>
+					{{/unless}}
+				{{/unless}}
+			{{/if}}
+		</ul>
 
-							<span class="btn-group btn-group-justified">
-								<div class="btn btn-theme" {{request_disabled}}
-										 id="request">Request Challenge</div>
-							</span>
-						{{/unless}}
-					{{/if}}
-				{{/if}}
+		{{#unless self_service}}
+			{{#unless requested}}
+				<p class="padding-next">
+					If you think you have all information for us just click the
+					request button below and one of our challenge designer will
+					take care of the rest.
+				</p>
+
+				{{#unless is_publishable}}
+					<span class="btn-group btn-group-justified">
+						<div class="btn btn-theme" {{request_disabled}}
+								 id="request">Request Challenge</div>
+					</span>
+				{{/unless}}
+			{{else}}
+				<p>
+					Nothing much for you to do right now. Just relax and let us
+					do the work. We let you know once your challenge is ready.
+				</p>
 			{{/unless}}
-		{{/if}}
+		{{/unless}}
 
 		{{#if is_publishable}}
 			{{#if published}}
 				<h2>Congratulation your challenge is online</h2>
+
 				<p>
 					Share the link with your candidates and see how they perform.
 					You can monitor the progress under "Candidates".
 				</p>
 			{{else}}
 				<h2>You can now publish your challenge</h2>
+
+				<p class="padding-next">
+					If you checked your challenge and like what you see just click
+					the publish button below and share the link with your candidates.
+				</p>
+
+				<span class="btn-group btn-group-justified">
+					<div class="btn btn-contrast" {{publish_disabled}}
+							 id="publish">Publish Challenge</div>
+				</span>
 			{{/if}}
 		{{else}}
 			<h2>You can not yet publish your challenge</h2>
@@ -264,7 +281,7 @@
 
 
 <template name="challenge_settings">
-	<h1 style="padding-top: 5px">Basic Settings</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Basic Settings</h1>
 
 	<p style="padding-bottom: 10px;">
 		This is the link you can share with your candidates.
@@ -301,17 +318,20 @@
 		<div class="form-group">
 			{{#if promo}}
 				<label>Used Promotion Code</label>
-				<div class="form-control">{{promo}}</div>
+				<div class="tags">{{promo}} <span class="fa fa-check color-contrast"></span></div>
+				<small id="{{field}}_explain" class="form-text text-muted">
+					This is the promo code for this challenge.
+				</small>
 			{{else}}
 				{{>basic_input label="Promotion Code" collection_name="challenges" item_id=_id field="promo"
-						placeholder="SKYDECK"	explain="Enter your promotion code."}}
+						placeholder="your code here"	explain="Enter your promotion code."}}
 			{{/if}}
 		</div>
 
 		<div class="form-group">
 			{{>toggle_button collection_name="Challenges"
 					item_id=_id field="no_solution_notification" label="Stop notifications"
-					explain="In case you do want to receive email notifications about candidates."}}
+					explain="Get rid of all those email notifications about candidates for this challenge."}}
 		</div>
 
 		<div class="form-group">
@@ -332,7 +352,7 @@
 
 
 <template name="challenge_role">
-	<h1 style="padding-top: 5px">Role</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Role</h1>
 
 	<p>
 		The role your candidate is supposed to fill will help us to reach right
@@ -344,7 +364,7 @@
 
 
 <template name="challenge_competencies">
-	<h1 style="padding-top: 5px">Competencies</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Competencies</h1>
 
 	<p>
 		Finding the candidate with the right skill set is important.
@@ -358,7 +378,7 @@
 
 
 <template name="message_candidates">
-	<h1 style="padding-top: 5px">Write your candidates</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Write your candidates</h1>
 
 	<p>
 		If you need to get in touch with your learners
@@ -391,7 +411,7 @@
 
 
 <template name="mooqita_design">
-	<h1 style="padding-top: 5px">Challenge Description</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Challenge Description</h1>
 
 	<p>
 		Let us know what you want to learn about your candidates with this challenge.
@@ -402,11 +422,18 @@
 
 	{{>text_input collection_name="challenges" field="description" item_id=_id rows=8
 			placeholder="We look for a frontend developer with some design skills. Great if the person is versed in React and Bootstrap 4. The candidate would design our website based on designs from a graphics artist."}}
+
+	<div class="text-right" style="padding-top: 15px">
+		<span class="btn-group">
+			<div class="btn btn-theme" {{request_disabled}}
+					 id="request">Save</div>
+		</span>
+	</div>
 </template>
 
 
 <template name="challenge_review">
-	<h1 style="padding-top: 5px">The challenge</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">The challenge</h1>
 
 	<p>
 		This is the challenge to to share with your candidates.
@@ -434,7 +461,7 @@
 
 
 <template name="self_design">
-	<h1 class="editable" style="padding-top: 5px">
+	<h1 class="editable" style="padding-top: 5px; margin-top: 0px">
 		{{>basic_input collection_name="challenges" item_id=_id field="title"
 				placeholder="Click: to give your challenge a title."}}
 	</h1>
@@ -493,7 +520,7 @@
 |
 -------------------------------------------------->
 <template name="challenge_solutions">
-	<h1>Candidates</h1>
+	<h1 style="padding-top: 5px; margin-top: 0px">Candidates</h1>
 
 	<p>These are solutions your learner submitted so far.</p>
 

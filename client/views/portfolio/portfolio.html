@@ -17,21 +17,18 @@
 
 
 <template name="portfolio_basic">
-	<div class="item-set padding-top">
+	<div class="padding-top">
 		<div class="row">
-			<div class="col-sm-4 col-ms-4">
-				{{>avatar collection_name = "Profiles"
-					observable = avatar
-					item_id = (g_profile_id _id)
-					field = "avatar"}}
+			<div class="col-sm-4 col-ms-4 padding-next">
+				{{>avatar source=avatar}}
 			</div>
 
 			<div class="col-sm-8 col-ms-8">
 				<h2>
-					<em>{{name}}</em>
+					<em>{{given_name}}</em>
 				</h2>
 
-				{{>more content=self_description}}
+				{{>more content=resume expanded=true}}
 			</div>
 		</div>
 	</div>
@@ -42,6 +39,13 @@
 	{{#if solutions}}
 		<div class="item">
 			<h1>Portfolio</h1>
+
+			<p>
+				These are the public challenges {{given_name}} has solved.
+				For a detailed analysis of their work you can expand each
+				challenge to see {{given_name}}'s solution and the rating
+				they received from their peers.
+			</p>
 
 			{{#each solutions}}
 				{{>portfolio_solution}}
@@ -55,35 +59,37 @@
 	<hr>
 
 	<div class="row">
-		<div class="col-md-4">
-			<h2>Average rating <em>{{average_rating}}</em> of <em>5</em></h2>
-		</div>
 		<div class="col-md-8">
-			<h2>{{challenge_title}}</h2>
+			<h2>{{challenge.title}}</h2>
+		</div>
+
+		<div class="col-md-4 text-right">
+			<h2>Achieved rating <em>{{average_rating}}</em> of <em>5</em></h2>
 		</div>
 	</div>
 
-	<!--This formatting is required for user
-			generated text to look as intended-->
-	{{>more content=challenge}}
-
 	{{#unless reviews_visible}}
+		{{#markdown}} {{shorten challenge.content}} {{/markdown}}
+
 		<h2>
 			<a id="show_reviews">
-				<em>Show solution and reviews</em>
+				<em>Show evaluation</em>
 			</a>
 		</h2>
 	{{/unless}}
 
 	{{#if reviews_visible}}
+		{{#markdown}} {{challenge.content}} {{/markdown}}
+
 		<h2>
-			Solution
-			<a class="pull-right" id="show_reviews">
-				<em>Hide reviews</em>
+			<a id="show_reviews">
+				<em>Hide evaluation</em>
 			</a>
 		</h2>
 
-		{{>more content=solution}}
+		<h2>Solution</h2>
+
+		{{#markdown}} {{content}} {{/markdown}}
 
 		<h2>Reviews</h2>
 
@@ -112,7 +118,7 @@
 
 		<div class="media-body">
 			<h2>Rating: <em>{{average_rating}}</em> of <em>5</em></h2>
-			{{>more content=review}}
+			{{#markdown}} {{review}} {{/markdown}}
 		</div>
 	</div>
 </template>

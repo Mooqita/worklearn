@@ -45,8 +45,8 @@ Meteor.methods
 				s_owner = get_document_owner Solutions, solution
 				r_owner = get_document_owner Reviews, review
 
-				s_name = get_profile_name_by_user_id s_owner, true, false
-				r_name = get_profile_name_by_user_id r_owner, true, false
+				s_name = get_profile_name_by_user s_owner, true, false
+				r_name = get_profile_name_by_user r_owner, true, false
 
 				r = []
 				r.push(s_name)
